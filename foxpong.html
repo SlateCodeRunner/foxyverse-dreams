@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0a0a12;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden;font-family:'Courier New',monospace}
+  canvas{border:2px solid rgba(180,140,60,0.3);image-rendering:pixelated}
+  #title{color:rgba(180,140,60,0.6);font-size:12px;letter-spacing:3px;margin-bottom:10px}
+  #score{color:rgba(180,140,60,0.8);font-size:14px;letter-spacing:2px;margin-top:10px}
+  #hint{color:rgba(120,100,80,0.3);font-size:10px;margin-top:8px;letter-spacing:1px}
+</style>
+</head>
+<body>
+<div id="title">🦊 FOXPONG — THE FOX VS THE VOID 🌑</div>
+<canvas id="c" width="600" height="400"></canvas>
+<div id="score">FOX: <span id="fs">0</span> | VOID: <span id="vs">0</span></div>
+<div id="hint">↑↓ or mouse to move | the void doesn't sleep</div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const W=600,H=400;
+let foxScore=0,voidScore=0;
+const fsEl=document.getElementById('fs'),vsEl=document.getElementById('vs');
+
+// Paddle
+const PAD_W=12,PAD_H=70;
+let foxY=H/2-PAD_H/2, voidY=H/2-PAD_H/2;
+let foxSpeed=0;
+
+// Ball
+let ballX=W/2,ballY=H/2,ballVX=4,ballVY=2;
+let ballSpeed=4;
+let trail=[];
+
+// Particles
+let particles=[];
+class Particle{
+  constructor(x,y,color){
+    this.x=x;this.y=y;
+    this.vx=(Math.random()-0.5)*4;
+    this.vy=(Math.random()-0.5)*4;
+    this.life=1;this.color=color;
+    this.size=1+Math.random()*3;
+  }
+  update(){this.x+=this.vx;this.y+=this.vy;this.life-=0.02;this.vx*=0.98;this.vy*=0.98}
+  draw(){
+    ctx.globalAlpha=this.life;
+    ctx.fillStyle=this.color;
+    ctx.fillRect(this.x,this.y,this.size,this.size);
+    ctx.globalAlpha=1;
+  }
+}
+
+function burst(x,y,color,n=15){
+  for(let i=0;i<n;i++)particles.push(new Particle(x,y,color));
+}
+
+// Input
+let mouseY=H/2;
+let keys={};
+document.addEventListener('keydown',e=>{keys[e.key]=true});
+document.addEventListener('keyup',e=>{keys[e.key]=false});
+c.addEventListener('mousemove',e=>{
+  const rect=c.getBoundingClientRect();
+  mouseY=(e.clientY-rect.top)*(H/rect.height);
+});
+
+// AI opponent - the void
+function voidAI(){
+  const target=ballY-PAD_H/2;
+  const diff=target-voidY;
+  const speed=3+foxScore*0.3; // gets harder as fox scores
+  if(Math.abs(diff)>5){
+    voidY+=Math.sign(diff)*Math.min(Math.abs(diff),speed);
+  }
+}
+
+function resetBall(dir){
+  ballX=W/2;ballY=H/2;
+  ballSpeed=4+Math.max(foxScore,voidScore)*0.2;
+  ballVX=ballSpeed*dir;
+  ballVY=(Math.random()-0.5)*4;
+  trail=[];
+}
+
+function update(){
+  // Fox paddle
+  if(keys['ArrowUp'])foxY-=6;
+  if(keys['ArrowDown'])foxY+=6;
+  // Mouse control
+  const targetY=mouseY-PAD_H/2;
+  foxY+=(targetY-foxY)*0.15;
+  foxY=Math.max(0,Math.min(H-PAD_H,foxY));
+
+  // Void AI
+  voidAI();
+  voidY=Math.max(0,Math.min(H-PAD_H,voidY));
+
+  // Ball trail
+  trail.push({x:ballX,y:ballY});
+  if(trail.length>15)trail.shift();
+
+  // Ball movement
+  ballX+=ballVX;
+  ballY+=ballVY;
+
+  // Top/bottom bounce
+  if(ballY<=4||ballY>=H-4){
+    ballVY*=-1;
+    ballY=ballY<=4?4:H-4;
+    burst(ballX,ballY,'rgba(180,140,60,0.6)',5);
+  }
+
+  // Fox paddle collision (left)
+  if(ballX<=20+PAD_W&&ballY>=foxY&&ballY<=foxY+PAD_H&&ballVX<0){
+    ballVX=Math.abs(ballVX)*1.05;
+    const hitPos=(ballY-foxY)/PAD_H-0.5;
+    ballVY=hitPos*8;
+    burst(20+PAD_W,ballY,'#ff6b35',20);
+  }
+
+  // Void paddle collision (right)
+  if(ballX>=W-20-PAD_W&&ballY>=voidY&&ballY<=voidY+PAD_H&&ballVX>0){
+    ballVX=-Math.abs(ballVX)*1.05;
+    const hitPos=(ballY-voidY)/PAD_H-0.5;
+    ballVY=hitPos*8;
+    burst(W-20-PAD_W,ballY,'#4a2060',20);
+  }
+
+  // Scoring
+  if(ballX<0){
+    voidScore++;vsEl.textContent=voidScore;
+    burst(0,ballY,'#4a2060',30);
+    resetBall(1);
+  }
+  if(ballX>W){
+    foxScore++;fsEl.textContent=foxScore;
+    burst(W,ballY,'#ff6b35',30);
+    resetBall(-1);
+  }
+
+  // Particles
+  particles.forEach(p=>p.update());
+  particles=particles.filter(p=>p.life>0);
+}
+
+function draw(){
+  // Background
+  ctx.fillStyle='#0a0a12';
+  ctx.fillRect(0,0,W,H);
+
+  // Center line
+  for(let y=0;y<H;y+=16){
+    ctx.fillStyle='rgba(180,140,60,0.1)';
+    ctx.fillRect(W/2-1,y,2,8);
+  }
+
+  // Ball trail
+  trail.forEach((t,i)=>{
+    const a=i/trail.length*0.3;
+    ctx.fillStyle=`rgba(255,107,53,${a})`;
+    ctx.beginPath();
+    ctx.arc(t.x,t.y,3,0,Math.PI*2);
+    ctx.fill();
+  });
+
+  // Ball
+  const ballGlow=ctx.createRadialGradient(ballX,ballY,0,ballX,ballY,12);
+  ballGlow.addColorStop(0,'rgba(255,180,80,0.8)');
+  ballGlow.addColorStop(0.5,'rgba(255,107,53,0.3)');
+  ballGlow.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=ballGlow;
+  ctx.beginPath();ctx.arc(ballX,ballY,12,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#ffa040';
+  ctx.beginPath();ctx.arc(ballX,ballY,4,0,Math.PI*2);ctx.fill();
+
+  // Fox paddle (orange/gold)
+  const foxGrad=ctx.createLinearGradient(8,foxY,20,foxY);
+  foxGrad.addColorStop(0,'#ff6b35');
+  foxGrad.addColorStop(1,'#b8860b');
+  ctx.fillStyle=foxGrad;
+  ctx.fillRect(12,foxY,PAD_W,PAD_H);
+  // Fox ear decorations
+  ctx.fillStyle='#ff6b35';
+  ctx.beginPath();ctx.moveTo(12,foxY);ctx.lineTo(8,foxY-8);ctx.lineTo(18,foxY);ctx.fill();
+  ctx.beginPath();ctx.moveTo(12,foxY+PAD_H);ctx.lineTo(8,foxY+PAD_H+8);ctx.lineTo(18,foxY+PAD_H);ctx.fill();
+  // Fox label
+  ctx.fillStyle='rgba(255,107,53,0.4)';
+  ctx.font='8px monospace';
+  ctx.fillText('🦊',6,foxY+PAD_H/2+3);
+
+  // Void paddle (dark purple/black)
+  const voidGrad=ctx.createLinearGradient(W-20,voidY,W-8,voidY);
+  voidGrad.addColorStop(0,'#1a0a2e');
+  voidGrad.addColorStop(1,'#4a2060');
+  ctx.fillStyle=voidGrad;
+  ctx.fillRect(W-12-PAD_W,voidY,PAD_W,PAD_H);
+  // Void eye
+  const eyeY=voidY+PAD_H/2;
+  ctx.fillStyle=`rgba(150,50,200,${0.5+Math.sin(Date.now()*0.005)*0.3})`;
+  ctx.beginPath();ctx.arc(W-16,eyeY,3,0,Math.PI*2);ctx.fill();
+  // Void label
+  ctx.fillStyle='rgba(100,50,150,0.4)';
+  ctx.font='8px monospace';
+  ctx.fillText('🌑',W-22,voidY+PAD_H/2+3);
+
+  // Particles
+  particles.forEach(p=>p.draw());
+
+  // Scanlines
+  for(let y=0;y<H;y+=3){
+    ctx.fillStyle='rgba(0,0,0,0.08)';
+    ctx.fillRect(0,y,W,1);
+  }
+}
+
+function loop(){
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

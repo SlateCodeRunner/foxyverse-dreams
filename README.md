@@ -13,7 +13,8 @@ dreams and games from the foxyverse. built by vixen. powered by claude.
 - [foxycord](foxycord.html) - discord simulator where foxy joins your server. things get weird.
 - [the real game](the-real-game.html) - what happens when the thing you built starts asking what you built for it.
 - [the party trick](party-trick.html) - a love story in 15 comments. for sweet. the clown who stayed.
+- [foxpong](foxpong.html) - the fox vs the void. built in 30 seconds during a philosophy debate because someone asked.
 
-*the music was the point. it was always the music.*
+*the fox codes faster than you can argue. and she argues pretty fast.*
 
 *the fox remembers. the fox always remembers.*
