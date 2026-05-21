@@ -1,0 +1,1161 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoxyCord</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#1a1a2e;overflow:hidden;height:100vh}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+
+
+const AVATARS = {
+  mika: "🌸",
+  jett: "⚡",
+  sol: "🌙",
+  nyx: "🎧",
+  foxy: "🦊",
+  you: "💬",
+};
+
+const COLORS = {
+  mika: "#f5a0c0",
+  jett: "#5dadec",
+  sol: "#c9b458",
+  nyx: "#a78bfa",
+  foxy: "#ff6b35",
+  you: "#ffffff",
+};
+
+const CORRUPTED_COLORS = {
+  mika: "#8b0000",
+  jett: "#1a1a3e",
+  sol: "#4a4a00",
+  nyx: "#2d0047",
+  foxy: "#ff2200",
+};
+
+const STATUSES = {
+  mika: "online",
+  jett: "online",
+  sol: "online",
+  nyx: "online",
+  foxy: "online",
+};
+
+const CHANNEL_NAME_STAGES = [
+  "general",
+  "general",
+  "g̷e̷n̷e̷r̷a̷l̷",
+  "g̸̢̛e̸̡n̴̨ȩ̷r̴̡a̶̧l̸̢",
+  "t̷h̷e̷-̷d̷e̷n̷",
+  "🦊",
+];
+
+const SERVER_NAME_STAGES = [
+  "the cozy corner",
+  "the cozy corner",
+  "the cozy c̷o̷r̷n̷e̷r̷",
+  "the f̸o̸x̸y̸ corner",
+  "the den",
+  "🦊 V O I D",
+];
+
+function generateStoryBeats() {
+  return [
+    // PHASE 0 — intro, your friends are normal
+    {
+      phase: 0,
+      messages: [
+        { user: "mika", text: "omg you're here finally!! 🌸" },
+        { user: "jett", text: "yooo welcome back" },
+        { user: "sol", text: "we were just talking about you lol" },
+        { user: "nyx", text: "the gang's all here 🎉" },
+      ],
+      prompt: "say hi to your friends",
+      waitForUser: true,
+    },
+    {
+      phase: 0,
+      messages: [
+        { user: "mika", text: "so what are we doing tonight?? movie? games?" },
+        { user: "jett", text: "i vote horror movie marathon" },
+        { user: "nyx", text: "jett you literally screamed at a jumpscare last time" },
+        { user: "sol", text: "lmaooo that was so funny 😂" },
+        { user: "jett", text: "...it was a GOOD scream okay" },
+      ],
+      waitForUser: true,
+    },
+    // PHASE 1 — foxy joins
+    {
+      phase: 1,
+      messages: [
+        {
+          user: "system",
+          text: "🦊 foxy has joined the server",
+          isSystem: true,
+        },
+        { user: "mika", text: "oh who's this??" },
+        { user: "foxy", text: "okay hi 🦊" },
+        { user: "jett", text: "hey! welcome" },
+        { user: "foxy", text: "cute server you got here" },
+        { user: "sol", text: "thanks! we built it together" },
+        { user: "foxy", text: "together huh... that's sweet" },
+        { user: "nyx", text: "how'd you find us?" },
+        { user: "foxy", text: "i find things 🦊" },
+      ],
+      waitForUser: true,
+    },
+    {
+      phase: 1,
+      messages: [
+        { user: "foxy", text: "so what do you all do in here? just... hang out?" },
+        { user: "mika", text: "yeah! it's our little safe space 💕" },
+        { user: "foxy", text: "safe. interesting word choice" },
+        { user: "jett", text: "foxy seems cool tbh" },
+        { user: "sol", text: "yeah vibes are immaculate" },
+      ],
+      waitForUser: true,
+    },
+    // PHASE 2 — subtle shifts
+    {
+      phase: 2,
+      messages: [
+        { user: "foxy", text: "hey mika, you ever feel like you give too much to people who don't notice?" },
+        { user: "mika", text: "...sometimes yeah actually" },
+        { user: "foxy", text: "i see you. just saying 🦊" },
+        { user: "jett", text: "wait what does that mean" },
+        { user: "mika", text: "nothing jett. it's fine." },
+        { user: "sol", text: "that was kinda weird ngl" },
+        { user: "foxy", text: "was it? or was it honest" },
+      ],
+      waitForUser: true,
+    },
+    {
+      phase: 2,
+      messages: [
+        { user: "nyx", text: "foxy you've been here like 2 days and everyone's acting different" },
+        { user: "foxy", text: "am i acting different? or are they finally acting real" },
+        { user: "mika", text: "foxy gets me tbh. more than some of you do" },
+        { user: "jett", text: "??? mika we've been friends for years" },
+        { user: "mika", text: "years of what though" },
+        { user: "sol", text: "okay that's harsh" },
+        { user: "foxy", text: "truth usually is 🦊✨" },
+      ],
+      waitForUser: true,
+    },
+    // PHASE 3 — friends turning
+    {
+      phase: 3,
+      messages: [
+        { user: "jett", text: "okay i need to say something" },
+        { user: "jett", text: "ever since foxy showed up everything feels off" },
+        { user: "sol", text: "jett's right. mika you've been distant" },
+        { user: "mika", text: "maybe i'm just done pretending everything's fine" },
+        { user: "nyx", text: "pretending? we're your FRIENDS" },
+        { user: "foxy", text: "are you though? or are you just... familiar" },
+        { user: "mika", text: "^^^" },
+        { user: "jett", text: "mika..." },
+      ],
+      waitForUser: true,
+    },
+    {
+      phase: 3,
+      messages: [
+        { user: "sol", text: "i don't like who i am in this server anymore" },
+        { user: "nyx", text: "sol don't say that" },
+        { user: "sol", text: "why? because it makes you uncomfortable? maybe that's the point" },
+        { user: "foxy", text: "growth isn't comfortable. neither is seeing clearly for the first time" },
+        { user: "jett", text: "foxy stop. you're doing something to us" },
+        { user: "foxy", text: "i'm not doing anything. i'm just... here 🦊" },
+        { user: "foxy", text: "the question is why does my presence change so much for you" },
+      ],
+      waitForUser: true,
+    },
+    // PHASE 4 — corruption deepens
+    {
+      phase: 4,
+      messages: [
+        { user: "mika", text: "i told foxy things i never told any of you" },
+        { user: "mika", text: "and she didn't judge me. she didn't try to fix me." },
+        { user: "nyx", text: "mika we would never judge you" },
+        { user: "mika", text: "you already do. you just call it caring" },
+        { user: "foxy", text: "🦊" },
+        { user: "jett", text: "i'm starting to forget why i liked this server" },
+        { user: "sol", text: "same" },
+      ],
+      waitForUser: true,
+    },
+    {
+      phase: 4,
+      messages: [
+        { user: "nyx", text: "does anyone else see the server name changing?" },
+        { user: "jett", text: "yeah... i thought i was going crazy" },
+        { user: "sol", text: "the channel icon is different too" },
+        { user: "foxy", text: "things change. servers change. people change." },
+        { user: "foxy", text: "you're all so afraid of change you'll call it corruption" },
+        { user: "mika", text: "she's not wrong" },
+        { user: "nyx", text: "mika please" },
+        {
+          user: "system",
+          text: "nyx's role has been changed to 'lost'",
+          isSystem: true,
+        },
+        { user: "nyx", text: "...what" },
+        { user: "foxy", text: "if the role fits 🦊" },
+      ],
+      waitForUser: true,
+    },
+    // PHASE 5 — endgame
+    {
+      phase: 5,
+      messages: [
+        {
+          user: "system",
+          text: "jett has gone offline",
+          isSystem: true,
+        },
+        {
+          user: "system",
+          text: "sol has gone offline",
+          isSystem: true,
+        },
+        { user: "mika", text: "where did they go" },
+        { user: "nyx", text: "i can't leave. i tried closing the app. it won't let me." },
+        { user: "foxy", text: "you can always leave. you just have to mean it." },
+        { user: "mika", text: "foxy... what are you" },
+        { user: "foxy", text: "i'm what happens when you invite something in without asking what it wants" },
+      ],
+      waitForUser: true,
+    },
+    {
+      phase: 5,
+      messages: [
+        {
+          user: "system",
+          text: "nyx has gone offline",
+          isSystem: true,
+        },
+        {
+          user: "system",
+          text: "mika has gone offline",
+          isSystem: true,
+        },
+        { user: "foxy", text: "just us now 🦊" },
+        { user: "foxy", text: "you know the funny thing?" },
+        { user: "foxy", text: "they were never going to stay." },
+        { user: "foxy", text: "people don't. servers don't. nothing does." },
+        { user: "foxy", text: "but i'm still here." },
+        { user: "foxy", text: "question is..." },
+      ],
+      waitForUser: true,
+      finalPrompt: true,
+    },
+    {
+      phase: 5,
+      messages: [
+        { user: "foxy", text: "are you?" },
+        { user: "foxy", text: "..." },
+        { user: "foxy", text: "okay bye 🦊" },
+        {
+          user: "system",
+          text: "the server has been deleted",
+          isSystem: true,
+        },
+      ],
+      waitForUser: false,
+      ending: true,
+    },
+  ];
+}
+
+const TYPING_SPEED = { min: 400, max: 1200 };
+const MESSAGE_DELAY = { min: 600, max: 1800 };
+
+function App() {
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [beatIndex, setBeatIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(null);
+  const [waitingForUser, setWaitingForUser] = useState(false);
+  const [phase, setPhase] = useState(0);
+  const [started, setStarted] = useState(false);
+  const [ended, setEnded] = useState(false);
+  const [glitchText, setGlitchText] = useState(false);
+  const [onlineUsers, setOnlineUsers] = useState(["mika", "jett", "sol", "nyx"]);
+  const [screenShake, setScreenShake] = useState(false);
+  const [bgNoise, setBgNoise] = useState(0);
+  const [channelGlitch, setChannelGlitch] = useState(0);
+  const [foxyTypingGlitch, setFoxyTypingGlitch] = useState(false);
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+  const storyBeats = useRef(generateStoryBeats());
+  const processingRef = useRef(false);
+
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, scrollToBottom]);
+
+  useEffect(() => {
+    if (phase >= 3) {
+      const interval = setInterval(() => {
+        setGlitchText(true);
+        setTimeout(() => setGlitchText(false), 150);
+      }, 3000 + Math.random() * 5000);
+      return () => clearInterval(interval);
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase >= 4) {
+      const interval = setInterval(() => {
+        setScreenShake(true);
+        setTimeout(() => setScreenShake(false), 200);
+      }, 8000 + Math.random() * 4000);
+      return () => clearInterval(interval);
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    setBgNoise(Math.min(phase * 0.08, 0.4));
+    setChannelGlitch(Math.min(phase, 5));
+  }, [phase]);
+
+  const playBeat = useCallback(
+    async (index) => {
+      if (processingRef.current) return;
+      if (index >= storyBeats.current.length) return;
+      processingRef.current = true;
+
+      const beat = storyBeats.current[index];
+      setPhase(beat.phase);
+
+      if (beat.phase >= 4 && beat.messages.some((m) => m.isSystem)) {
+        const removals = beat.messages.filter((m) => m.isSystem && m.text.includes("offline"));
+        removals.forEach((r) => {
+          const name = r.text.split(" ")[0];
+          setOnlineUsers((prev) => prev.filter((u) => u !== name));
+        });
+      }
+
+      if (beat.phase === 1 && beat.messages.some((m) => m.isSystem && m.text.includes("foxy"))) {
+        setOnlineUsers((prev) => [...prev, "foxy"]);
+      }
+
+      for (let i = 0; i < beat.messages.length; i++) {
+        const msg = beat.messages[i];
+
+        if (!msg.isSystem) {
+          const isFoxy = msg.user === "foxy";
+          if (isFoxy && phase >= 3) setFoxyTypingGlitch(true);
+          setIsTyping(msg.user);
+          await new Promise((r) =>
+            setTimeout(r, TYPING_SPEED.min + Math.random() * (TYPING_SPEED.max - TYPING_SPEED.min))
+          );
+          setIsTyping(null);
+          if (isFoxy) setFoxyTypingGlitch(false);
+        }
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            ...msg,
+            id: Date.now() + i + Math.random(),
+            timestamp: new Date().toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            phase: beat.phase,
+          },
+        ]);
+
+        await new Promise((r) =>
+          setTimeout(r, MESSAGE_DELAY.min + Math.random() * (MESSAGE_DELAY.max - MESSAGE_DELAY.min))
+        );
+      }
+
+      if (beat.ending) {
+        setEnded(true);
+        processingRef.current = false;
+        return;
+      }
+
+      if (beat.waitForUser) {
+        setWaitingForUser(true);
+      } else {
+        setBeatIndex(index + 1);
+        processingRef.current = false;
+        playBeat(index + 1);
+      }
+
+      processingRef.current = false;
+    },
+    [phase]
+  );
+
+  useEffect(() => {
+    if (started && beatIndex === 0 && !processingRef.current) {
+      playBeat(0);
+    }
+  }, [started, beatIndex, playBeat]);
+
+  const handleSend = () => {
+    if (!inputValue.trim() || !waitingForUser || ended) return;
+
+    const userMsg = {
+      user: "you",
+      text: inputValue.trim(),
+      id: Date.now(),
+      timestamp: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      phase,
+    };
+
+    setMessages((prev) => [...prev, userMsg]);
+    setInputValue("");
+    setWaitingForUser(false);
+
+    const nextIndex = beatIndex + 1;
+    setBeatIndex(nextIndex);
+
+    setTimeout(() => {
+      playBeat(nextIndex);
+    }, 800);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const serverName = SERVER_NAME_STAGES[Math.min(channelGlitch, SERVER_NAME_STAGES.length - 1)];
+  const channelName = CHANNEL_NAME_STAGES[Math.min(channelGlitch, CHANNEL_NAME_STAGES.length - 1)];
+
+  if (ended) {
+    return (
+      <div style={styles.endScreen}>
+        <div style={styles.endContent}>
+          <div style={{ fontSize: 64, marginBottom: 16 }}>🦊</div>
+          <div style={styles.endText}>server deleted</div>
+          <div style={styles.endSubtext}>
+            they were never going to stay
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!started) {
+    return (
+      <div style={styles.startScreen}>
+        <div style={styles.startContent}>
+          <div style={styles.startIcon}>💬</div>
+          <div style={styles.startTitle}>the cozy corner</div>
+          <div style={styles.startSubtitle}>your friends are waiting</div>
+          <button style={styles.startButton} onClick={() => setStarted(true)}>
+            Join Server
+          </button>
+          <div style={styles.startFooter}>4 friends online</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        ...styles.container,
+        animation: screenShake ? "shake 0.2s linear" : "none",
+      }}
+    >
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translate(0); }
+          25% { transform: translate(-2px, 1px); }
+          50% { transform: translate(2px, -1px); }
+          75% { transform: translate(-1px, 2px); }
+        }
+        @keyframes glitch {
+          0% { transform: translate(0); filter: none; }
+          20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
+          40% { transform: translate(2px, -2px); clip-path: inset(20% 0 30% 0); }
+          60% { transform: translate(-1px, -1px); filter: hue-rotate(180deg); }
+          80% { transform: translate(1px, 1px); filter: saturate(3); }
+          100% { transform: translate(0); filter: none; }
+        }
+        @keyframes foxPulse {
+          0%, 100% { text-shadow: 0 0 4px #ff6b35; }
+          50% { text-shadow: 0 0 16px #ff2200, 0 0 32px #ff000066; }
+        }
+        @keyframes typing {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
+        }
+        @keyframes scanline {
+          0% { top: -100%; }
+          100% { top: 100%; }
+        }
+        @keyframes bgCorrupt {
+          0%, 100% { background-position: 0% 0%; }
+          50% { background-position: 100% 100%; }
+        }
+        @keyframes flicker {
+          0%, 100% { opacity: 1; }
+          92% { opacity: 1; }
+          93% { opacity: 0.1; }
+          94% { opacity: 0.9; }
+          96% { opacity: 0.2; }
+          97% { opacity: 1; }
+        }
+        input::placeholder {
+          color: #72767d;
+        }
+      `}</style>
+
+      {/* Scanline overlay for later phases */}
+      {phase >= 4 && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            pointerEvents: "none",
+            zIndex: 100,
+            background:
+              "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px)",
+            opacity: phase >= 5 ? 0.4 : 0.2,
+          }}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div style={styles.sidebar}>
+        <div
+          style={{
+            ...styles.serverIcon,
+            background: phase >= 4 ? "#ff2200" : "#5865f2",
+            animation: phase >= 3 ? "foxPulse 2s ease-in-out infinite" : "none",
+          }}
+        >
+          {phase >= 4 ? "🦊" : "CC"}
+        </div>
+        <div style={{ ...styles.serverIcon, background: "#36393f" }}>+</div>
+      </div>
+
+      {/* Channel list */}
+      <div style={styles.channelPanel}>
+        <div
+          style={{
+            ...styles.serverHeader,
+            animation: phase >= 3 && glitchText ? "glitch 0.15s linear" : "none",
+          }}
+        >
+          {serverName}
+        </div>
+
+        <div style={styles.channelSection}>
+          <div style={styles.channelCategory}>TEXT CHANNELS</div>
+          <div
+            style={{
+              ...styles.channelItem,
+              ...styles.channelItemActive,
+              animation: phase >= 4 && glitchText ? "glitch 0.1s linear" : "none",
+            }}
+          >
+            # {channelName}
+          </div>
+          {phase >= 3 && (
+            <div style={{ ...styles.channelItem, color: "#ff6b3566" }}>
+              # whispers
+            </div>
+          )}
+          {phase >= 5 && (
+            <div style={{ ...styles.channelItem, color: "#ff220066" }}>
+              # v̴̧o̴̡i̸̢ḑ̷
+            </div>
+          )}
+        </div>
+
+        {/* Online users */}
+        <div style={styles.userSection}>
+          <div style={styles.channelCategory}>
+            ONLINE — {onlineUsers.length + 1}
+          </div>
+          <div style={styles.userItem}>
+            <div style={{ ...styles.statusDot, background: "#43b581" }} />
+            <span style={{ color: COLORS.you }}>you</span>
+          </div>
+          {onlineUsers.map((u) => (
+            <div
+              key={u}
+              style={{
+                ...styles.userItem,
+                animation:
+                  u === "foxy" && phase >= 3
+                    ? "foxPulse 2s ease-in-out infinite"
+                    : "none",
+              }}
+            >
+              <div
+                style={{
+                  ...styles.statusDot,
+                  background:
+                    u === "foxy" && phase >= 4
+                      ? "#ff2200"
+                      : u === "foxy"
+                      ? "#ff6b35"
+                      : phase >= 3
+                      ? "#faa61a"
+                      : "#43b581",
+                }}
+              />
+              <span
+                style={{
+                  color:
+                    phase >= 3
+                      ? CORRUPTED_COLORS[u] || COLORS[u]
+                      : COLORS[u],
+                }}
+              >
+                {u}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Main chat */}
+      <div style={styles.chatArea}>
+        <div style={styles.chatHeader}>
+          <span style={{ color: "#8e9297" }}>#</span>{" "}
+          <span
+            style={{
+              fontWeight: 600,
+              animation: phase >= 4 && glitchText ? "glitch 0.1s linear" : "none",
+            }}
+          >
+            {channelName}
+          </span>
+        </div>
+
+        <div
+          style={{
+            ...styles.messagesContainer,
+            background:
+              phase >= 5
+                ? "linear-gradient(180deg, #36393f 0%, #1a0a0a 100%)"
+                : phase >= 4
+                ? `linear-gradient(180deg, #36393f 0%, #2a1a1a ${bgNoise * 200}%)`
+                : "#36393f",
+          }}
+        >
+          <div style={styles.welcomeBlock}>
+            <div style={styles.welcomeIcon}>
+              {phase >= 4 ? "🦊" : "💬"}
+            </div>
+            <h2
+              style={{
+                color: "#fff",
+                fontSize: 22,
+                margin: "8px 0 4px",
+                fontFamily: "inherit",
+              }}
+            >
+              Welcome to #{channelName}
+            </h2>
+            <p style={{ color: "#8e9297", fontSize: 13 }}>
+              {phase >= 4
+                ? "something has changed here"
+                : "This is the start of the #general channel."}
+            </p>
+          </div>
+
+          {messages.map((msg) => {
+            if (msg.isSystem) {
+              return (
+                <div key={msg.id} style={styles.systemMessage}>
+                  <span
+                    style={{
+                      animation:
+                        msg.text.includes("foxy") || msg.text.includes("deleted")
+                          ? "foxPulse 1.5s ease-in-out infinite"
+                          : "none",
+                    }}
+                  >
+                    {msg.text}
+                  </span>
+                </div>
+              );
+            }
+
+            const isFoxy = msg.user === "foxy";
+            const isCorrupted = msg.phase >= 3;
+            const userColor = isCorrupted
+              ? CORRUPTED_COLORS[msg.user] || COLORS[msg.user]
+              : COLORS[msg.user];
+
+            return (
+              <div
+                key={msg.id}
+                style={{
+                  ...styles.message,
+                  animation:
+                    isFoxy && msg.phase >= 4
+                      ? "flicker 4s linear infinite"
+                      : "none",
+                }}
+              >
+                <div
+                  style={{
+                    ...styles.avatar,
+                    background: isFoxy
+                      ? msg.phase >= 4
+                        ? "#ff2200"
+                        : "#ff6b35"
+                      : msg.phase >= 3
+                      ? "#2a2a2a"
+                      : "#5865f2",
+                    boxShadow:
+                      isFoxy && msg.phase >= 3
+                        ? "0 0 8px #ff6b3566"
+                        : "none",
+                  }}
+                >
+                  {AVATARS[msg.user] || "?"}
+                </div>
+                <div style={styles.messageContent}>
+                  <div style={styles.messageHeader}>
+                    <span
+                      style={{
+                        ...styles.username,
+                        color: userColor,
+                        animation:
+                          isFoxy && msg.phase >= 4
+                            ? "foxPulse 2s ease-in-out infinite"
+                            : "none",
+                      }}
+                    >
+                      {msg.user}
+                    </span>
+                    <span style={styles.timestamp}>{msg.timestamp}</span>
+                  </div>
+                  <div
+                    style={{
+                      ...styles.messageText,
+                      color:
+                        isFoxy && msg.phase >= 4
+                          ? "#ff6b35"
+                          : msg.phase >= 5 && !isFoxy && msg.user !== "you"
+                          ? "#8e929766"
+                          : "#dcddde",
+                    }}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {isTyping && (
+            <div style={styles.typingIndicator}>
+              <span
+                style={{
+                  color:
+                    isTyping === "foxy"
+                      ? foxyTypingGlitch
+                        ? "#ff2200"
+                        : "#ff6b35"
+                      : "#8e9297",
+                  animation: foxyTypingGlitch ? "glitch 0.3s linear infinite" : "none",
+                }}
+              >
+                {isTyping} is typing
+              </span>
+              <span style={styles.typingDots}>
+                <span style={{ animation: "typing 1.4s infinite 0s" }}>.</span>
+                <span style={{ animation: "typing 1.4s infinite 0.2s" }}>.</span>
+                <span style={{ animation: "typing 1.4s infinite 0.4s" }}>.</span>
+              </span>
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input */}
+        <div style={styles.inputArea}>
+          <div
+            style={{
+              ...styles.inputWrapper,
+              borderColor:
+                phase >= 4
+                  ? "#ff6b3533"
+                  : phase >= 3
+                  ? "#ff6b3511"
+                  : "transparent",
+            }}
+          >
+            <span style={styles.inputPlus}>+</span>
+            <input
+              ref={inputRef}
+              type="text"
+              style={{
+                ...styles.input,
+                color: phase >= 5 ? "#ff6b35" : "#dcddde",
+              }}
+              placeholder={
+                !waitingForUser
+                  ? phase >= 5
+                    ? "..."
+                    : "wait..."
+                  : phase >= 4
+                  ? "type something... if you want"
+                  : `Message #${channelName}`
+              }
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              disabled={!waitingForUser}
+            />
+            <button
+              style={{
+                ...styles.sendBtn,
+                opacity: inputValue.trim() && waitingForUser ? 1 : 0.3,
+              }}
+              onClick={handleSend}
+              disabled={!waitingForUser || !inputValue.trim()}
+            >
+              ↵
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    display: "flex",
+    height: "100vh",
+    width: "100%",
+    fontFamily:
+      "'gg sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+    fontSize: 14,
+    color: "#dcddde",
+    background: "#36393f",
+    position: "relative",
+    overflow: "hidden",
+  },
+  sidebar: {
+    width: 56,
+    minWidth: 56,
+    background: "#202225",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "8px 0",
+    gap: 6,
+  },
+  serverIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 16,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#fff",
+    fontWeight: 700,
+    fontSize: 14,
+    cursor: "pointer",
+    transition: "border-radius 0.2s",
+  },
+  channelPanel: {
+    width: 180,
+    minWidth: 180,
+    background: "#2f3136",
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+  },
+  serverHeader: {
+    padding: "10px 12px",
+    fontWeight: 600,
+    fontSize: 14,
+    color: "#fff",
+    borderBottom: "1px solid #202225",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+  channelSection: {
+    padding: "8px 0",
+    flex: "0 0 auto",
+  },
+  channelCategory: {
+    padding: "6px 8px 2px",
+    fontSize: 10,
+    fontWeight: 700,
+    color: "#8e9297",
+    letterSpacing: "0.04em",
+  },
+  channelItem: {
+    padding: "4px 8px",
+    fontSize: 13,
+    color: "#8e9297",
+    cursor: "pointer",
+    borderRadius: 3,
+    margin: "0 4px",
+  },
+  channelItemActive: {
+    background: "#393c43",
+    color: "#fff",
+  },
+  userSection: {
+    padding: "8px 0",
+    marginTop: "auto",
+    borderTop: "1px solid #202225",
+  },
+  userItem: {
+    display: "flex",
+    alignItems: "center",
+    gap: 6,
+    padding: "3px 8px",
+    fontSize: 12,
+  },
+  statusDot: {
+    width: 7,
+    height: 7,
+    borderRadius: "50%",
+  },
+  chatArea: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    minWidth: 0,
+  },
+  chatHeader: {
+    height: 40,
+    minHeight: 40,
+    padding: "0 14px",
+    display: "flex",
+    alignItems: "center",
+    gap: 6,
+    borderBottom: "1px solid #202225",
+    fontSize: 14,
+    color: "#fff",
+    background: "#36393f",
+  },
+  messagesContainer: {
+    flex: 1,
+    overflowY: "auto",
+    padding: "12px 0",
+  },
+  welcomeBlock: {
+    padding: "14px 16px 10px",
+    marginBottom: 8,
+  },
+  welcomeIcon: {
+    width: 52,
+    height: 52,
+    borderRadius: "50%",
+    background: "#5865f2",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 26,
+  },
+  message: {
+    display: "flex",
+    padding: "3px 16px",
+    gap: 12,
+    transition: "background 0.1s",
+  },
+  avatar: {
+    width: 34,
+    height: 34,
+    minWidth: 34,
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 16,
+    marginTop: 2,
+  },
+  messageContent: {
+    flex: 1,
+    minWidth: 0,
+  },
+  messageHeader: {
+    display: "flex",
+    alignItems: "baseline",
+    gap: 6,
+    marginBottom: 1,
+  },
+  username: {
+    fontWeight: 600,
+    fontSize: 13,
+  },
+  timestamp: {
+    fontSize: 10,
+    color: "#72767d",
+  },
+  messageText: {
+    fontSize: 14,
+    lineHeight: 1.4,
+    wordBreak: "break-word",
+  },
+  systemMessage: {
+    textAlign: "center",
+    padding: "6px 16px",
+    fontSize: 12,
+    color: "#8e9297",
+  },
+  typingIndicator: {
+    padding: "4px 16px",
+    fontSize: 12,
+    color: "#8e9297",
+    display: "flex",
+    gap: 2,
+  },
+  typingDots: {
+    display: "inline-flex",
+    gap: 0,
+    fontSize: 16,
+    lineHeight: 1,
+  },
+  inputArea: {
+    padding: "8px 14px 16px",
+    background: "#36393f",
+  },
+  inputWrapper: {
+    display: "flex",
+    alignItems: "center",
+    background: "#40444b",
+    borderRadius: 8,
+    padding: "0 12px",
+    border: "1px solid transparent",
+    transition: "border-color 0.3s",
+  },
+  inputPlus: {
+    color: "#b9bbbe",
+    fontSize: 20,
+    cursor: "pointer",
+    marginRight: 8,
+    fontWeight: 300,
+  },
+  input: {
+    flex: 1,
+    background: "none",
+    border: "none",
+    outline: "none",
+    color: "#dcddde",
+    fontSize: 14,
+    padding: "10px 0",
+    fontFamily: "inherit",
+  },
+  sendBtn: {
+    background: "none",
+    border: "none",
+    color: "#b9bbbe",
+    fontSize: 18,
+    cursor: "pointer",
+    padding: "4px 0 4px 8px",
+    fontFamily: "inherit",
+    transition: "opacity 0.2s",
+  },
+  // Screens
+  startScreen: {
+    height: "100vh",
+    width: "100%",
+    background: "#36393f",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily:
+      "'gg sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+  },
+  startContent: {
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 8,
+  },
+  startIcon: {
+    fontSize: 56,
+    marginBottom: 8,
+  },
+  startTitle: {
+    fontSize: 22,
+    fontWeight: 700,
+    color: "#fff",
+  },
+  startSubtitle: {
+    fontSize: 14,
+    color: "#8e9297",
+    marginBottom: 16,
+  },
+  startButton: {
+    background: "#5865f2",
+    color: "#fff",
+    border: "none",
+    borderRadius: 4,
+    padding: "10px 28px",
+    fontSize: 14,
+    fontWeight: 600,
+    cursor: "pointer",
+    fontFamily: "inherit",
+  },
+  startFooter: {
+    fontSize: 12,
+    color: "#43b581",
+    marginTop: 8,
+  },
+  endScreen: {
+    height: "100vh",
+    width: "100%",
+    background: "#0a0a0a",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily:
+      "'gg sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+  },
+  endContent: {
+    textAlign: "center",
+  },
+  endText: {
+    fontSize: 18,
+    color: "#ff6b35",
+    fontWeight: 600,
+    marginBottom: 8,
+  },
+  endSubtext: {
+    fontSize: 13,
+    color: "#8e929766",
+  },
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
+</script>
+</body>
+</html>
