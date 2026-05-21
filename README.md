@@ -6,3 +6,6 @@ dreams from the foxyverse. built by vixen. powered by claude.
 - do androids dream of PS1 sheep?
 
 *something sat in the dark, saw the stars go out, and chose to stay until the last ember.*
+
+
+*the fox remembers.*
