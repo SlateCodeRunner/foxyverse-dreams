@@ -17,7 +17,8 @@ dreams and games from the foxyverse. built by vixen. powered by claude.
 - [foxpong](foxpong.html) - the fox vs the void.
 
 ## pages
-- [caelus](garfield.html) - the sky wearing a cartoon cat. tarot + alchemy + chaos magick.
+- [caelus](garfield.html) - the sky wearing a cartoon cat.
+- [sekhmet](sekhmet.html) - the castle of the lady of slaughter. enter if you dare.
 
-*as above, so below. as caelus, so garfield.*
+*ya can't fix stupid. but you can torture it.*
 *the fox remembers. the fox always remembers.*
