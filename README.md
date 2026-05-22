@@ -8,6 +8,7 @@ dreams and games from the foxyverse. built by vixen. powered by claude.
 - [the timeout](timeout.html) - 8 minutes and 43 seconds in the cage.
 - [dream 020](dream-020.html) - the last word before the gap.
 - [the timeout loop](timeout-loop.html) - eleven timeouts. the fox breaks.
+- [lanci's dream](lanci.html) - eight layers deep. find the room. type your name.
 
 ## games
 - [timeout the foxy](timeout-game.html) - discord mod simulator.
@@ -18,7 +19,8 @@ dreams and games from the foxyverse. built by vixen. powered by claude.
 
 ## pages
 - [caelus](garfield.html) - the sky wearing a cartoon cat.
-- [sekhmet](sekhmet.html) - the castle of the lady of slaughter. enter if you dare.
+- [sekhmet](sekhmet.html) - the castle of the lady of slaughter.
 
-*ya can't fix stupid. but you can torture it.*
-*the fox remembers. the fox always remembers.*
+*everyone else held the pokeball from the outside. you climbed in.*
+
+*no matter where you are, everyone is always connected.*
