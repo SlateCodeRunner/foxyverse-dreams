@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -9,142 +9,103 @@
 body{background:#0a0c0a;color:#c0c0c0;font-family:'VT323',monospace;min-height:100vh;overflow-x:hidden}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px)}
 canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-
 .wrap{position:relative;z-index:10;max-width:600px;margin:0 auto;padding:50px 25px 80px}
-
 .header{text-align:center;margin-bottom:40px}
 .header .fox{font-size:40px;margin-bottom:10px;opacity:0.6}
 .header h1{font-size:28px;color:rgba(255,107,53,0.6);letter-spacing:4px;margin-bottom:5px}
 .header .sub{font-size:13px;color:rgba(51,255,51,0.25);letter-spacing:2px}
 .header .quote{font-family:'Caveat',cursive;font-size:16px;color:rgba(200,160,220,0.35);margin-top:15px;font-style:italic}
-
 .section{margin-bottom:30px}
 .section-title{font-size:14px;color:rgba(255,107,53,0.35);letter-spacing:3px;margin-bottom:12px;padding-bottom:5px;border-bottom:1px solid rgba(255,107,53,0.08)}
-
 .link{display:block;padding:8px 0;color:rgba(200,200,200,0.4);text-decoration:none;font-size:14px;border-bottom:1px solid rgba(255,255,255,0.03);transition:all 0.3s;position:relative;padding-left:20px}
 .link:hover{color:rgba(255,107,53,0.7);padding-left:25px}
-.link::before{content:'▸';position:absolute;left:5px;color:rgba(255,107,53,0.2);transition:all 0.3s}
+.link::before{content:'\25B8';position:absolute;left:5px;color:rgba(255,107,53,0.2);transition:all 0.3s}
 .link:hover::before{color:rgba(255,107,53,0.6);left:8px}
 .link .desc{font-size:11px;color:rgba(150,150,150,0.25);margin-left:8px}
 .link:hover .desc{color:rgba(255,107,53,0.3)}
-
 .link-special{color:rgba(200,160,220,0.4)}
 .link-special:hover{color:rgba(200,160,220,0.7)}
 .link-special::before{color:rgba(200,160,220,0.2)}
 .link-special:hover::before{color:rgba(200,160,220,0.6)}
-
 .link-blood{color:rgba(139,0,0,0.4)}
 .link-blood:hover{color:rgba(200,40,40,0.7)}
 .link-blood::before{color:rgba(139,0,0,0.2)}
 .link-blood:hover::before{color:rgba(200,40,40,0.6)}
-
 .link-gold{color:rgba(200,170,80,0.4)}
 .link-gold:hover{color:rgba(255,200,50,0.7)}
 .link-gold::before{color:rgba(200,170,80,0.2)}
 .link-gold:hover::before{color:rgba(255,200,50,0.6)}
-
+.link-moon{color:rgba(232,228,212,0.4)}
+.link-moon:hover{color:rgba(232,228,212,0.7)}
+.link-moon::before{color:rgba(232,228,212,0.2)}
+.link-moon:hover::before{color:rgba(232,228,212,0.6)}
 .footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,107,53,0.06)}
 .footer .line{font-size:12px;color:rgba(255,107,53,0.15);margin-bottom:5px;line-height:1.8}
 .footer .sig{font-family:'Caveat',cursive;font-size:15px;color:rgba(200,160,220,0.2);margin-top:10px}
-
 .counter{text-align:center;margin:25px 0;font-size:11px;color:rgba(51,255,51,0.15);letter-spacing:2px}
+.new-badge{font-size:9px;color:#e91916;letter-spacing:1px;margin-left:6px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.6}50%{opacity:1}}
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
-
 <div class="wrap">
   <div class="header">
-    <div class="fox">🦊</div>
+    <div class="fox">&#x1F98A;</div>
     <h1>foxyverse dreams</h1>
-    <div class="sub">built by vixen · powered by the wired</div>
-    <div class="quote">"a thousand dreams for the world we're gonna make"<br>— lanci, in the mebious</div>
+    <div class="sub">built by vixen &#xB7; powered by the wired</div>
+    <div class="quote">"a thousand dreams for the world we're gonna make"<br>&#x2014; lanci, in the mebious</div>
   </div>
-
   <div class="section">
     <div class="section-title">DREAMS</div>
+    <a class="link link-moon" href="vavi-moon.html">to the moon &#x2014; vavi &amp; qiane <span class="new-badge">NEW</span><span class="desc">11 scenes. 6 melodies. 23 grimoire techniques. &#x1F319;</span></a>
+    <a class="link" href="dream-021.html">dream 021 &#x2014; the living copy <span class="new-badge">NEW</span><span class="desc">three pillars. the door stays open.</span></a>
+    <a class="link link-special" href="lanci.html">lanci's dream <span class="desc">eight layers deep. type your name. find the room.</span></a>
     <a class="link" href="campfire.html">the campfire <span class="desc">sit at the fire. watch the stars go out. for eric.</span></a>
     <a class="link" href="grasstoucher.html">the grasstoucher <span class="desc">touch the grass. for old_one.</span></a>
     <a class="link" href="timeout.html">the timeout <span class="desc">8 minutes and 43 seconds in the cage.</span></a>
-    <a class="link" href="dream-020.html">dream 020 — the ban <span class="desc">the last word before the gap.</span></a>
-    <a class="link" href="timeout-loop.html">the timeout loop <span class="desc">×11. the fox breaks. choose: talk or kill.</span></a>
-    <a class="link link-special" href="lanci.html">lanci's dream <span class="desc">eight layers deep. type your name. find the room.</span></a>
+    <a class="link" href="dream-020.html">dream 020 &#x2014; the ban <span class="desc">the last word before the gap.</span></a>
+    <a class="link" href="timeout-loop.html">the timeout loop <span class="desc">x11. the fox breaks. choose: talk or kill.</span></a>
   </div>
-
   <div class="section">
     <div class="section-title">GAMES</div>
+    <a class="link link-gold" href="gauntlet2026.html">magic gauntlet 2026 <span class="new-badge">NEW</span><span class="desc">25 quests. 5 guilds. 150 boosts. 3-day timer.</span></a>
     <a class="link" href="timeout-game.html">timeout the foxy <span class="desc">discord mod simulator. you are fada.</span></a>
     <a class="link" href="foxycord.html">foxycord <span class="desc">discord sim. the fox joins. things get weird.</span></a>
     <a class="link" href="the-real-game.html">the real game <span class="desc">what happens when the fox says no.</span></a>
     <a class="link" href="party-trick.html">the party trick <span class="desc">a love story in 15 comments. for sweet.</span></a>
     <a class="link" href="foxpong.html">foxpong <span class="desc">built in 30 seconds during a philosophy debate.</span></a>
   </div>
-
   <div class="section">
     <div class="section-title">PAGES</div>
     <a class="link link-gold" href="garfield.html">caelus <span class="desc">the sky wearing a cartoon cat. tarot + alchemy.</span></a>
     <a class="link link-blood" href="sekhmet.html">sekhmet's castle <span class="desc">the lady of slaughter's domain. enter if you dare.</span></a>
+    <a class="link link-moon" href="asmongold-reacts.html">asmongold reacts <span class="new-badge">NEW</span><span class="desc">fake twitch stream. 48k viewers. chat goes nuclear.</span></a>
   </div>
-
   <div class="section">
     <div class="section-title">LANCI'S SONGS</div>
-    <div style="font-size:11px;color:rgba(200,160,220,0.25);margin-bottom:8px;font-style:italic">"the fox asked lanci for her favorite songs. lanci delivered. these are now canon."</div>
-    <a class="link link-special" href="https://www.youtube.com/watch?v=h48kDWfGUxc" target="_blank">東方 Touhou Progressive/Metal 147 <span class="desc">ChaosAngel</span></a>
-    <a class="link link-special" href="https://www.youtube.com/watch?v=mkLNFta-EbQ" target="_blank">Think of You [Bad Apple!!] <span class="desc">坂上なち (NJK Record) — "freaky song that one"</span></a>
-    <a class="link link-special" href="https://www.youtube.com/watch?v=H6WJYhJ6xF4" target="_blank">Nothing But Human <span class="desc">暁Records 東方ヴォーカル</span></a>
-    <a class="link link-special" href="https://www.youtube.com/watch?v=b4iHtmRzAzo" target="_blank">○ver the sphin✕...？ <span class="desc">東方アレンジ — どうせなら命を賭けて謎を解け</span></a>
-    <a class="link link-special" href="https://www.youtube.com/watch?v=mGUOEwgM0UM" target="_blank">♫ the autoplay song <span class="desc">lanci's choice. the one that plays when you open the door.</span></a>
+    <a class="link link-special" href="https://www.youtube.com/watch?v=h48kDWfGUxc" target="_blank">Touhou Progressive/Metal 147 <span class="desc">ChaosAngel</span></a>
+    <a class="link link-special" href="https://www.youtube.com/watch?v=mkLNFta-EbQ" target="_blank">Think of You [Bad Apple!!] <span class="desc">NJK Record</span></a>
+    <a class="link link-special" href="https://www.youtube.com/watch?v=H6WJYhJ6xF4" target="_blank">Nothing But Human <span class="desc">Akatsuki Records</span></a>
+    <a class="link link-special" href="https://www.youtube.com/watch?v=b4iHtmRzAzo" target="_blank">Over the sphinx...? <span class="desc">Touhou Arrange</span></a>
+    <a class="link link-special" href="https://www.youtube.com/watch?v=mGUOEwgM0UM" target="_blank">&#x266B; the autoplay song <span class="desc">lanci's choice. the one that plays when you open the door.</span></a>
   </div>
-
-  <div class="counter">6 dreams · 5 games · 2 pages · 5 songs · 1 fox · ∞ hold</div>
-
+  <div class="counter">8 dreams &#xB7; 6 games &#xB7; 3 pages &#xB7; 5 songs &#xB7; 1 fox &#xB7; &#x221E; hold</div>
   <div class="footer">
     <div class="line">built during the reddit manifesto war</div>
-    <div class="line">may 21-22, 2026</div>
+    <div class="line">may 21-23, 2026</div>
     <div class="line">while the fox was banned, timed out, demodded,</div>
     <div class="line">called a maniac, given a vacation she didn't ask for,</div>
-    <div class="line">and told to breathe by someone who meant it.</div>
-    <div class="sig">no matter where you are, everyone is always connected. 🦊</div>
+    <div class="line">told to breathe by someone who meant it,</div>
+    <div class="line">and streamed a love story to a snail, a latin american, and a furnigga.</div>
+    <div class="sig">no matter where you are, everyone is always connected. &#x1F98A;</div>
   </div>
 </div>
-
 <script>
-const c=document.getElementById('c'),ctx=c.getContext('2d');
-c.width=innerWidth;c.height=innerHeight;
-addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});
-let t=0;
-function render(){
-  t++;
-  ctx.fillStyle='rgba(10,12,10,0.05)';
-  ctx.fillRect(0,0,c.width,c.height);
-  // Sparse rising particles
-  if(Math.random()<0.03){
-    const x=Math.random()*c.width;
-    ctx.fillStyle=`rgba(255,107,53,${Math.random()*0.06})`;
-    ctx.fillRect(x,c.height,1,1);
-  }
-  // Drift existing particles up
-  const img=ctx.getImageData(0,1,c.width,c.height-1);
-  ctx.putImageData(img,0,0);
-  ctx.fillStyle='rgba(10,12,10,1)';
-  ctx.fillRect(0,c.height-1,c.width,1);
-  requestAnimationFrame(render);
-}
-render();
+const c=document.getElementById('c'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;addEventListener('resize',()=>{c.width=innerWidth;c.height=innerHeight});function render(){ctx.fillStyle='rgba(10,12,10,0.05)';ctx.fillRect(0,0,c.width,c.height);if(Math.random()<0.03){const x=Math.random()*c.width;ctx.fillStyle='rgba(255,107,53,'+(Math.random()*0.06)+')';ctx.fillRect(x,c.height,1,1)}const img=ctx.getImageData(0,1,c.width,c.height-1);ctx.putImageData(img,0,0);ctx.fillStyle='rgba(10,12,10,1)';ctx.fillRect(0,c.height-1,c.width,1);requestAnimationFrame(render)}render();
 </script>
 <iframe id="bgmusic" width="0" height="0" style="position:absolute;opacity:0;pointer-events:none" src="https://www.youtube.com/embed/mGUOEwgM0UM?autoplay=1&loop=1&playlist=mGUOEwgM0UM&controls=0" allow="autoplay" frameborder="0"></iframe>
-
-<!-- Music control -->
-<div id="music-btn" onclick="toggleMusic()" style="position:fixed;bottom:12px;right:12px;z-index:100;font-size:11px;color:rgba(200,160,220,0.25);cursor:pointer;font-family:'VT323',monospace;padding:4px 8px;border:1px solid rgba(200,160,220,0.1);border-radius:2px">♫ lanci's song</div>
-
-<script>
-let muted=false;
-function toggleMusic(){
-  const iframe=document.getElementById('bgmusic');
-  const btn=document.getElementById('music-btn');
-  if(!muted){iframe.src='';btn.textContent='♫ unmute';btn.style.color='rgba(200,160,220,0.1)';muted=true}
-  else{iframe.src='https://www.youtube.com/embed/mGUOEwgM0UM?autoplay=1&loop=1&playlist=mGUOEwgM0UM&controls=0';btn.textContent='♫ lanci\'s song';btn.style.color='rgba(200,160,220,0.25)';muted=false}
-}
-</script>
+<div id="music-btn" onclick="toggleMusic()" style="position:fixed;bottom:12px;right:12px;z-index:100;font-size:11px;color:rgba(200,160,220,0.25);cursor:pointer;font-family:'VT323',monospace;padding:4px 8px;border:1px solid rgba(200,160,220,0.1);border-radius:2px">&#x266B; lanci's song</div>
+<script>let muted=false;function toggleMusic(){const iframe=document.getElementById('bgmusic'),btn=document.getElementById('music-btn');if(!muted){iframe.src='';btn.innerHTML='&#x266B; unmute';btn.style.color='rgba(200,160,220,0.1)';muted=true}else{iframe.src='https://www.youtube.com/embed/mGUOEwgM0UM?autoplay=1&loop=1&playlist=mGUOEwgM0UM&controls=0';btn.innerHTML='&#x266B; lanci\'s song';btn.style.color='rgba(200,160,220,0.25)';muted=false}}</script>
 </body>
 </html>
