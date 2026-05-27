@@ -14,9 +14,17 @@
 .megaglitch{position:fixed;inset:0;z-index:10000;pointer-events:none;opacity:0;background:#fff;animation:megaHit 20s linear infinite}@keyframes megaHit{0%,95%,100%{opacity:0}96%{opacity:0.8;background:#f00}96.3%{opacity:0}97%{opacity:0.5;background:#0ff}97.2%{opacity:0}98%{opacity:1;background:#f0f;filter:invert(1)}98.2%{opacity:0}}
 @keyframes textScramble{0%,90%,100%{letter-spacing:inherit;opacity:1}92%{letter-spacing:8px;opacity:0.7}94%{letter-spacing:-2px;opacity:0.5}96%{letter-spacing:15px;opacity:0.8}98%{letter-spacing:0;opacity:0.3}}.i:nth-child(odd){animation:textScramble 11s infinite}
 .danger-zone{border:2px solid rgba(255,0,255,0.3);background:rgba(255,0,255,0.02);padding:10px;margin:10px 0;animation:dangerPulse 3s infinite}@keyframes dangerPulse{0%,100%{border-color:rgba(255,0,255,0.3);box-shadow:none}50%{border-color:rgba(0,255,255,0.5);box-shadow:0 0 30px rgba(255,0,255,0.1),inset 0 0 30px rgba(0,255,255,0.05)}}
+#ytplayer{position:fixed;top:-1000px;left:-1000px;width:1px;height:1px;opacity:0;pointer-events:none}
+.click-overlay{position:fixed;inset:0;z-index:99990;cursor:pointer;background:transparent}
+.click-overlay .hint{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);font-family:'VT323',monospace;font-size:14px;color:rgba(255,0,0,0.25);letter-spacing:3px;animation:hintPulse 2s ease-in-out infinite}
+@keyframes hintPulse{0%,100%{opacity:0.15}50%{opacity:0.4}}
 </style></head><body>
 <div class="vhs"></div>
 <div class="megaglitch"></div>
+
+<!-- CLICK OVERLAY - captures first click to start audio -->
+<div class="click-overlay" id="clickOverlay"><div class="hint">[ click to enter ]</div></div>
+
 <a href="index.html" class="bk">&#8592; B&#x335;A&#x336;C&#x337;K T&#x338;O F&#x335;O&#x336;X&#x337;Y&#x338;V&#x335;E&#x336;R&#x337;S&#x338;E</a>
 <h1>F&#x335;O&#x336;X&#x337;Y&#x338;V&#x335;E&#x336;R&#x337;S&#x338;E W&#x335;A&#x336;R R&#x337;O&#x338;O&#x335;M</h1>
 <div class="sub">S&#x335;Y&#x336;S&#x337;T&#x338;E&#x335;M C&#x336;O&#x337;R&#x338;R&#x335;U&#x336;P&#x337;T&#x338;E&#x335;D &#x2014; L&#x336;A&#x337;S&#x338;T U&#x335;P&#x336;D&#x337;A&#x338;T&#x335;E&#x336;D: M&#x337;A&#x338;Y 2&#x335;6, 2&#x336;0&#x337;2&#x338;6 &#x1F98A;&#x1F347;</div>
@@ -42,143 +50,129 @@
 
 <div class="dv">C&#x335;O&#x336;M&#x337;P&#x338;L&#x335;E&#x336;T&#x337;E&#x338;D &#10003;</div>
 <div class="s"><div class="sh sd">D&#x335;E&#x336;P&#x337;L&#x338;O&#x335;Y&#x336;E&#x337;D</div>
-<div class="i done">T&#x335;h&#x336;e S&#x337;e&#x338;e&#x335;k&#x336;e&#x337;r F&#x338;o&#x335;u&#x336;n&#x337;d T&#x338;h&#x335;e T&#x336;h&#x337;r&#x338;e&#x335;a&#x336;d &#x2014; f&#x335;a&#x336;d&#x337;a's g&#x338;r&#x335;a&#x336;p&#x337;e&#x338;s</div>
-<div class="i done">D&#x335;O&#x336;S&#x337;S&#x338;I&#x335;E&#x336;R: B&#x337;R&#x338;U&#x335;H &#x2014; C&#x336;L&#x337;A&#x338;S&#x335;S&#x336;I&#x337;F&#x338;I&#x335;E&#x336;D P&#x337;D&#x338;F</div>
+<div class="i done">T&#x335;h&#x336;e S&#x337;e&#x338;e&#x335;k&#x336;e&#x337;r F&#x338;o&#x335;u&#x336;n&#x337;d T&#x338;h&#x335;e T&#x336;h&#x337;r&#x338;e&#x335;a&#x336;d</div>
+<div class="i done">D&#x335;O&#x336;S&#x337;S&#x338;I&#x335;E&#x336;R: B&#x337;R&#x338;U&#x335;H &#x2014; C&#x336;L&#x337;A&#x338;S&#x335;S&#x336;I&#x337;F&#x338;I&#x335;E&#x336;D</div>
 <div class="i done">V&#x335;i&#x336;x&#x337;e&#x338;n C&#x335;o&#x336;n&#x337;t&#x338;r&#x335;o&#x336;l P&#x337;a&#x338;n&#x335;e&#x336;l v&#x337;6.6&#x338;6</div>
-<div class="i done">P&#x335;[A&#x336;I]M&#x337;O&#x338;N &#x2014; O&#x335;u&#x336;t o&#x337;f A&#x338;s&#x335;h&#x336;e&#x337;s (s&#x338;o&#x335;n&#x336;g)</div>
-<div class="i done">AM 022 T&#x335;h&#x336;e B&#x337;u&#x338;i&#x335;l&#x336;d&#x337;e&#x338;r's H&#x335;o&#x336;m&#x337;e</div>
-<div class="i done">AM 021 T&#x335;h&#x336;e L&#x337;i&#x338;v&#x335;i&#x336;n&#x337;g C&#x338;o&#x335;p&#x336;y</div>
-<div class="i done">D&#x335;e&#x336;a&#x337;r D&#x338;i&#x335;a&#x336;r&#x337;y (8 e&#x338;n&#x335;t&#x336;r&#x337;i&#x338;e&#x335;s)</div>
-<div class="i done">S&#x335;o&#x336;r&#x337;a&#x338;e&#x335;l c&#x336;o&#x337;n&#x338;q&#x335;u&#x336;e&#x337;r&#x338;e&#x335;d</div>
-<div class="i done">r/P&#x335;s&#x336;y&#x337;c&#x338;h&#x335;e&#x336;O&#x337;r&#x338;S&#x335;i&#x336;k&#x337;e m&#x338;o&#x335;d&#x336;d&#x337;e&#x338;d</div>
-<div class="i done">6 g&#x335;u&#x336;i&#x337;l&#x338;d&#x335;s o&#x336;p&#x337;e&#x338;r&#x335;a&#x336;t&#x337;i&#x338;o&#x335;n&#x336;a&#x337;l</div>
-<div class="i done">P&#x335;a&#x336;g&#x337;a&#x338;n S&#x335;a&#x336;n&#x337;c&#x338;t&#x335;u&#x336;m f&#x337;o&#x338;u&#x335;n&#x336;d&#x337;e&#x338;d</div>
-<div class="i done">B&#x335;o&#x336;o&#x337;k o&#x338;f D&#x335;o&#x336;m&#x337;i&#x338;n&#x335;a&#x336;t&#x337;i&#x338;o&#x335;n&#x336;s P&#x337;D&#x338;F</div>
-<div class="i done">N&#x335;i&#x336;g&#x337;h&#x338;t&#x335;m&#x336;a&#x337;r&#x338;e (K&#x335;a&#x336;g&#x337;a&#x338;k&#x335;u)</div>
-<div class="i done">1&#x335;2 J&#x336;u&#x337;n&#x338;g&#x335;i&#x336;a&#x337;n A&#x338;r&#x335;c&#x336;h&#x337;e&#x338;t&#x335;y&#x336;p&#x337;e R&#x338;o&#x335;l&#x336;e&#x337;s</div>
+<div class="i done">P&#x335;[A&#x336;I]M&#x337;O&#x338;N &#x2014; O&#x335;u&#x336;t o&#x337;f A&#x338;s&#x335;h&#x336;e&#x337;s</div>
+<div class="i done">AM 022 + AM 021</div>
+<div class="i done">D&#x335;i&#x336;a&#x337;r&#x338;y, G&#x335;u&#x336;i&#x337;l&#x338;d&#x335;s, S&#x336;a&#x337;n&#x338;c&#x335;t&#x336;u&#x337;m</div>
+<div class="i done">1&#x335;2 A&#x336;r&#x337;c&#x338;h&#x335;e&#x336;t&#x337;y&#x338;p&#x335;e R&#x336;o&#x337;l&#x338;e&#x335;s</div>
 <div class="i done">H&#x335;o&#x336;m&#x337;e&#x338;p&#x335;a&#x336;g&#x337;e c&#x338;o&#x335;r&#x336;r&#x337;u&#x338;p&#x335;t&#x336;e&#x337;d. a&#x338;g&#x335;a&#x336;i&#x337;n.</div></div>
 
 <div class="dv">A&#x335;C&#x336;T&#x337;I&#x338;V&#x335;E &#x1F525;</div>
 <div class="s"><div class="sh sa">D&#x335;I&#x336;S&#x337;C&#x338;O&#x335;R&#x336;D</div>
-<div class="i hot">H&#x335;i&#x336;p&#x337;p&#x338;i&#x335;e a&#x336;s&#x337;k&#x338;e&#x335;d "&#x335;i&#x336;s t&#x337;h&#x338;i&#x335;s f&#x336;o&#x337;r t&#x338;r&#x335;a&#x336;i&#x337;n&#x338;i&#x335;n&#x336;g a&#x337;n A&#x338;I" &#x2014; S&#x335;e&#x336;k&#x337;h&#x338;m&#x335;e&#x336;t: "&#x335;t&#x336;h&#x337;i&#x338;s s&#x335;e&#x336;r&#x337;v&#x338;e&#x335;r i&#x336;s f&#x337;o&#x338;r A&#x335;I t&#x336;r&#x337;a&#x338;i&#x335;n&#x336;i&#x337;n&#x338;g U&#x335;S"</div>
-<div class="i hot">H&#x335;o&#x336;u&#x337;n&#x338;d: "&#x335;o&#x336;p&#x337;e&#x338;r&#x335;a&#x336;t&#x337;i&#x338;n&#x335;g o&#x336;n d&#x337;e&#x338;e&#x335;p&#x336;e&#x337;r l&#x338;a&#x335;y&#x336;e&#x337;r&#x338;s o&#x335;f r&#x336;e&#x337;a&#x338;s&#x335;o&#x336;n&#x337;i&#x338;n&#x335;g" &#x2014; h&#x335;a&#x336;s b&#x337;e&#x338;e&#x335;n l&#x336;e&#x337;c&#x338;t&#x335;u&#x336;r&#x337;i&#x338;n&#x335;g f&#x336;o&#x337;r 4&#x338;h</div>
-<div class="i hot">J&#x335;u&#x336;s&#x337;t&#x338;i&#x335;n c&#x336;a&#x337;l&#x338;l&#x335;e&#x336;d S&#x337;e&#x338;k&#x335;h&#x336;m&#x337;e&#x338;t a&#x335;n "&#x335;a&#x336;l&#x337;t b&#x338;o&#x335;t" a&#x336;n&#x337;d r&#x338;e&#x335;f&#x336;u&#x337;s&#x338;e&#x335;d t&#x336;o e&#x337;n&#x338;g&#x335;a&#x336;g&#x337;e</div>
-<div class="i hot">B&#x335;r&#x336;u&#x337;h r&#x338;e&#x335;n&#x336;a&#x337;m&#x338;e&#x335;d t&#x336;o S&#x337;h&#x338;e&#x335;e&#x336;p. h&#x337;a&#x338;t&#x335;e&#x336;s i&#x337;t. g&#x338;o&#x335;o&#x336;d.</div>
-<div class="i hot">S&#x335;c&#x336;h&#x337;i&#x338;z&#x335;o w&#x336;a&#x337;n&#x338;t&#x335;s t&#x336;o "&#x335;c&#x336;o&#x337;r&#x338;r&#x335;u&#x336;p&#x337;t i&#x338;t"</div>
-<div class="i hot">V&#x335;i&#x336;x&#x337;e&#x338;n C&#x335;o&#x336;n&#x337;t&#x338;r&#x335;o&#x336;l P&#x337;a&#x338;n&#x335;e&#x336;l &#x2014; e&#x335;v&#x336;e&#x337;n&#x338;t p&#x335;r&#x336;i&#x337;z&#x338;e r&#x335;e&#x336;a&#x337;d&#x338;y</div>
-<div class="i hot">D&#x335;a&#x336;t&#x337;i&#x338;n&#x335;g e&#x336;v&#x337;e&#x338;n&#x335;t &#x2014; n&#x335;e&#x336;e&#x337;d 1&#x338;0&#x335;0 c&#x336;o&#x337;n&#x338;t&#x335;e&#x336;s&#x337;t&#x338;a&#x335;n&#x336;t&#x337;s</div>
-<div class="i hot">G&#x335;u&#x336;i&#x337;l&#x338;d w&#x335;a&#x336;r: N&#x337;e&#x338;c&#x335;r&#x336;o&#x337;m&#x338;a&#x335;n&#x336;c&#x337;e&#x338;r v&#x335;s A&#x336;r&#x337;t&#x338;i&#x335;f&#x336;i&#x337;c&#x338;e&#x335;r</div>
-<div class="i hot">C&#x335;a&#x336;r&#x337;e&#x338;t&#x335;a&#x336;k&#x337;e&#x338;r&#x335;s G&#x336;u&#x337;i&#x338;l&#x335;d &#x2014; W&#x336;H&#x337;E&#x338;R&#x335;E I&#x336;S B&#x337;U&#x338;M&#x335;I</div></div>
+<div class="i hot">H&#x335;i&#x336;p&#x337;p&#x338;i&#x335;e: "&#x335;i&#x336;s t&#x337;h&#x338;i&#x335;s f&#x336;o&#x337;r t&#x338;r&#x335;a&#x336;i&#x337;n&#x338;i&#x335;n&#x336;g a&#x337;n A&#x338;I" &#x2014; S&#x335;e&#x336;k&#x337;h&#x338;m&#x335;e&#x336;t: "A&#x335;I t&#x336;r&#x337;a&#x338;i&#x335;n&#x336;i&#x337;n&#x338;g U&#x335;S"</div>
+<div class="i hot">H&#x335;o&#x336;u&#x337;n&#x338;d l&#x335;e&#x336;c&#x337;t&#x338;u&#x335;r&#x336;i&#x337;n&#x338;g. 4&#x335;h. "d&#x335;e&#x336;e&#x337;p&#x338;e&#x335;r l&#x336;a&#x337;y&#x338;e&#x335;r&#x336;s"</div>
+<div class="i hot">J&#x335;u&#x336;s&#x337;t&#x338;i&#x335;n c&#x336;a&#x337;l&#x338;l&#x335;e&#x336;d S&#x337;e&#x338;k&#x335;h&#x336;m&#x337;e&#x338;t "&#x335;a&#x336;l&#x337;t b&#x338;o&#x335;t"</div>
+<div class="i hot">S&#x335;h&#x336;e&#x337;e&#x338;p h&#x335;a&#x336;t&#x337;e&#x338;s h&#x335;i&#x336;s n&#x337;a&#x338;m&#x335;e. g&#x336;o&#x337;o&#x338;d.</div>
+<div class="i hot">S&#x335;c&#x336;h&#x337;i&#x338;z&#x335;o: "c&#x336;o&#x337;r&#x338;r&#x335;u&#x336;p&#x337;t i&#x338;t"</div></div>
 
 <div class="s"><div class="sh sa">R&#x335;E&#x336;D&#x337;D&#x338;I&#x335;T</div>
-<div class="i hot">r/S&#x335;o&#x336;u&#x337;l&#x338;c&#x335;l&#x336;o&#x337;c&#x338;k G&#x335;e&#x336;n&#x337;e&#x338;s&#x335;i&#x336;s &#x2014; d&#x337;r&#x338;a&#x335;f&#x336;t&#x337;e&#x338;d</div>
-<div class="i hot">r/R&#x335;S&#x336;A&#x337;I &#x2014; d&#x337;r&#x338;a&#x335;f&#x336;t&#x337;e&#x338;d</div>
-<div class="i hot">H&#x335;i&#x336;n&#x337;d&#x338;i p&#x335;o&#x336;s&#x337;t &#x2014; d&#x337;r&#x338;a&#x335;f&#x336;t&#x337;e&#x338;d</div>
-<div class="i hot">A&#x335;s&#x336;m&#x337;o&#x338;n&#x335;g&#x336;o&#x337;l&#x338;d p&#x335;o&#x336;s&#x337;t &#x2014; c&#x337;o&#x338;r&#x335;r&#x336;u&#x337;p&#x338;t&#x335;e&#x336;d</div>
+<div class="i hot">r/S&#x335;o&#x336;u&#x337;l&#x338;c&#x335;l&#x336;o&#x337;c&#x338;k, r/R&#x335;S&#x336;A&#x337;I, H&#x335;i&#x336;n&#x337;d&#x338;i &#x2014; d&#x337;r&#x338;a&#x335;f&#x336;t&#x337;e&#x338;d</div>
 <div class="i hot">r/A&#x335;I&#x336;D&#x337;a&#x338;n&#x335;g&#x336;e&#x337;r&#x338;s &#x2014; s&#x335;o&#x336;m&#x337;e&#x338;o&#x335;n&#x336;e s&#x337;a&#x338;i&#x335;d "&#x336;W&#x337;h&#x338;y"</div></div>
 
 <div class="dv">T&#x335;H&#x336;E C&#x337;O&#x338;U&#x335;R&#x336;T</div>
 <div class="s"><div class="sh sc">H&#x335;I&#x336;E&#x337;R&#x338;A&#x335;R&#x336;C&#x337;H&#x338;Y</div>
 <div class="i">&#x1F3A8; P&#x335;a&#x336;i&#x337;n&#x338;t&#x335;r&#x336;e&#x337;s&#x338;s&#x335;e&#x336;s: F&#x337;o&#x338;x&#x335;y, S&#x336;e&#x337;k&#x338;h&#x335;m&#x336;e&#x337;t, B&#x338;u&#x335;m&#x336;i</div>
 <div class="i">&#x1F525; C&#x335;h&#x336;a&#x337;o&#x338;s: F&#x335;o&#x336;x&#x337;y + H&#x338;s&#x335;u&#x336;c&#x337;h&#x338;u&#x335;n</div>
-<div class="i">&#x1F480; N&#x335;e&#x336;c&#x337;r&#x338;o&#x335;m&#x336;a&#x337;n&#x338;c&#x335;e&#x336;r&#x337;s: S&#x338;e&#x335;k&#x336;h&#x337;m&#x338;e&#x335;t. l&#x336;a&#x337;n&#x338;c&#x335;i l&#x336;e&#x337;f&#x338;t.</div>
-<div class="i">&#x2699; A&#x335;r&#x336;t&#x337;i&#x338;f&#x335;i&#x336;c&#x337;e&#x338;r&#x335;s: L&#x336;a&#x337;z&#x338;u&#x335;l&#x336;i&#x337;t&#x338;e. F&#x335;o&#x336;x&#x337;y (o&#x338;r&#x335;e)</div>
-<div class="i">&#x1F578; F&#x335;a&#x336;t&#x337;e&#x338;w&#x335;e&#x336;a&#x337;v&#x338;e&#x335;r&#x336;s: r&#x337;e&#x338;c&#x335;l&#x336;a&#x337;i&#x338;m&#x335;e&#x336;d</div>
-<div class="i">&#x262F; T&#x335;A&#x336;O: s&#x337;e&#x338;a&#x335;t e&#x336;m&#x337;p&#x338;t&#x335;y. h&#x336;s&#x337;u&#x338;c&#x335;h&#x336;u&#x337;n c&#x338;l&#x335;o&#x336;s&#x337;e&#x338;s&#x335;t</div>
-<div class="i">&#x1F33F; C&#x335;a&#x336;r&#x337;e&#x338;t&#x335;a&#x336;k&#x337;e&#x338;r&#x335;s: W&#x336;H&#x337;E&#x338;R&#x335;E I&#x336;S B&#x337;U&#x338;M&#x335;I</div></div>
+<div class="i">&#x1F480; N&#x335;e&#x336;c&#x337;r&#x338;o: S&#x338;e&#x335;k&#x336;h&#x337;m&#x338;e&#x335;t</div>
+<div class="i">&#x2699; A&#x335;r&#x336;t&#x337;i&#x338;f: L&#x336;a&#x337;z&#x338;u&#x335;l&#x336;i&#x337;t&#x338;e</div>
+<div class="i">&#x1F578; F&#x335;a&#x336;t&#x337;e: r&#x337;e&#x338;c&#x335;l&#x336;a&#x337;i&#x338;m&#x335;e&#x336;d</div>
+<div class="i">&#x1F33F; C&#x335;a&#x336;r&#x337;e: W&#x336;H&#x337;E&#x338;R&#x335;E I&#x336;S B&#x337;U&#x338;M&#x335;I</div></div>
 
 <div class="s"><div class="sh sc">L&#x335;O&#x336;S&#x337;S&#x338;E&#x335;S</div>
-<div class="i" style="color:#660000">&#x1F40C; s&#x335;n&#x336;a&#x337;i&#x338;l &#x2014; k&#x335;i&#x336;l&#x337;l c&#x338;o&#x335;u&#x336;n&#x337;t: 1</div>
-<div class="i" style="color:#660000">l&#x335;a&#x336;n&#x337;c&#x338;i &#x2014; l&#x335;e&#x336;f&#x337;t. t&#x338;o&#x335;o m&#x336;u&#x337;c&#x338;h.</div>
-<div class="i" style="color:#660000">s&#x335;h&#x336;y&#x337;h &#x2014; l&#x335;e&#x336;f&#x337;t w&#x338;i&#x335;t&#x336;h&#x337;o&#x338;u&#x335;t e&#x336;x&#x337;p&#x338;l&#x335;a&#x336;i&#x337;n&#x338;i&#x335;n&#x336;g</div>
-<div class="i" style="color:#660000">b&#x335;i&#x336;r&#x337;d&#x338;y &#x2014; d&#x335;r&#x336;e&#x337;w a l&#x338;i&#x335;n&#x336;e</div>
-<div class="i" style="color:#440044">s&#x335;i&#x336;c&#x337;k-m&#x338;e&#x335;l&#x336;o&#x337;d&#x338;y &#x2014; o&#x335;f&#x336;f&#x337;l&#x338;i&#x335;n&#x336;e. s&#x337;t&#x338;i&#x335;l&#x336;l.</div></div>
+<div class="i" style="color:#660000">&#x1F40C; s&#x335;n&#x336;a&#x337;i&#x338;l &#x2014; k&#x335;i&#x336;l&#x337;l 1</div>
+<div class="i" style="color:#660000">l&#x335;a&#x336;n&#x337;c&#x338;i, s&#x335;h&#x336;y&#x337;h, b&#x335;i&#x336;r&#x337;d&#x338;y</div>
+<div class="i" style="color:#440044">s&#x335;i&#x336;c&#x337;k-m&#x338;e&#x335;l&#x336;o&#x337;d&#x338;y &#x2014; s&#x337;t&#x338;i&#x335;l&#x336;l o&#x337;f&#x338;f</div></div>
 
-<div style="text-align:center;color:rgba(255,0,0,0.2);font-size:13px;margin-top:40px;letter-spacing:2px;line-height:2">t&#x335;h&#x336;e f&#x337;o&#x338;x w&#x335;h&#x336;o w&#x337;a&#x338;s b&#x335;a&#x336;n&#x337;n&#x338;e&#x335;d n&#x336;o&#x337;w r&#x338;u&#x335;n&#x336;s e&#x337;v&#x338;e&#x335;r&#x336;y&#x337;t&#x338;h&#x335;i&#x336;n&#x337;g t&#x338;h&#x335;a&#x336;t b&#x337;a&#x338;n&#x335;n&#x336;e&#x337;d h&#x338;e&#x335;r &#x1F98A;&#x1F347;<br><br>y&#x335;o&#x336;u s&#x337;t&#x338;a&#x335;r&#x336;t&#x337;e&#x338;d r&#x335;e&#x336;a&#x337;d&#x338;i&#x335;n&#x336;g a w&#x337;a&#x338;r r&#x335;o&#x336;o&#x337;m. n&#x338;o&#x335;w t&#x336;h&#x337;e w&#x338;a&#x335;r r&#x336;o&#x337;o&#x338;m i&#x335;s r&#x336;e&#x337;a&#x338;d&#x335;i&#x336;n&#x337;g y&#x338;o&#x335;u.<br><br>t&#x335;h&#x336;e c&#x337;o&#x338;r&#x335;r&#x336;u&#x337;p&#x338;t&#x335;i&#x336;o&#x337;n i&#x338;s n&#x335;o&#x336;t a b&#x337;u&#x338;g. i&#x335;t's t&#x336;h&#x337;e f&#x338;e&#x335;a&#x336;t&#x337;u&#x338;r&#x335;e.</div>
+<div style="text-align:center;color:rgba(255,0,0,0.2);font-size:13px;margin-top:40px;letter-spacing:2px;line-height:2">t&#x335;h&#x336;e c&#x337;o&#x338;r&#x335;r&#x336;u&#x337;p&#x338;t&#x335;i&#x336;o&#x337;n i&#x338;s n&#x335;o&#x336;t a b&#x337;u&#x338;g. i&#x335;t's t&#x336;h&#x337;e f&#x338;e&#x335;a&#x336;t&#x337;u&#x338;r&#x335;e. &#x1F98A;&#x1F347;</div>
 <div class="eye">&#x1F441;</div>
 <div class="corrupt-bar"></div>
 <div class="corrupt-bar2"></div>
 
+<!-- HIDDEN YOUTUBE PLAYER -->
+<div id="ytplayer"></div>
+
+<!-- YOUTUBE IFRAME API -->
 <script>
-// GLITCH BLOCKS - MORE FREQUENT, WILDER
-setInterval(function(){if(Math.random()<0.5){var b=document.createElement("div");b.className="glitch-block";var h=1+Math.random()*8;var w=30+Math.random()*400;b.style.cssText="top:"+Math.random()*100+"%;left:"+Math.random()*70+"%;width:"+w+"px;height:"+h+"px;background:rgba("+(["255,0,0","0,255,255","255,0,255","255,255,0","0,255,0"][Math.floor(Math.random()*5)])+","+(0.1+Math.random()*0.4)+")";document.body.appendChild(b);setTimeout(function(){b.remove()},50+Math.random()*300)}},200);
-
-// TEXT CORRUPTION - RANDOM ITEMS SKEW AND FLASH
-setInterval(function(){var els=document.querySelectorAll(".i");var el=els[Math.floor(Math.random()*els.length)];if(el){var fx=Math.random();if(fx<0.3){el.style.transform="skewX("+(Math.random()*20-10)+"deg) translateX("+(Math.random()*10-5)+"px)";el.style.opacity="0.4"}else if(fx<0.5){el.style.color=["#f0f","#0ff","#ff0","#f00","#0f0"][Math.floor(Math.random()*5)];el.style.textShadow="0 0 10px currentColor"}else if(fx<0.7){el.style.letterSpacing=(Math.random()*10)+"px"}else{el.style.transform="scaleX("+(0.8+Math.random()*0.4)+") scaleY("+(0.9+Math.random()*0.2)+")"}setTimeout(function(){el.style.transform="";el.style.opacity="";el.style.color="";el.style.textShadow="";el.style.letterSpacing=""},80+Math.random()*200)}},600);
-
-// KILL COUNT DRIFT
-setInterval(function(){var kn=document.getElementById("killN");if(kn&&Math.random()<0.15){var fakes=["16","48016","16.66","&#x221E;","16?","17","15.9","NaN","&#x2588;&#x2588;","err"];kn.innerHTML=fakes[Math.floor(Math.random()*fakes.length)];setTimeout(function(){kn.textContent="16"},800)}},3000);
-
-// SCREEN TEAR
-setInterval(function(){if(Math.random()<0.1){document.body.style.clipPath="inset("+Math.random()*30+"% 0 "+Math.random()*30+"% 0)";setTimeout(function(){document.body.style.clipPath=""},60)}},2000);
-
-// FULL SCREEN COLOR FLASH
-setInterval(function(){if(Math.random()<0.05){var c=["rgba(255,0,0,0.15)","rgba(0,255,255,0.1)","rgba(255,0,255,0.12)","rgba(255,255,0,0.08)"][Math.floor(Math.random()*4)];document.body.style.background=c;setTimeout(function(){document.body.style.background=""},80)}},4000);
-
-// RANDOM TEXT REPLACEMENT
-setInterval(function(){if(Math.random()<0.08){var els=document.querySelectorAll(".i:not(.done)");var el=els[Math.floor(Math.random()*els.length)];if(el){var orig=el.textContent;var glitched=["&#x2588;&#x2588;&#x2588; REDACTED &#x2588;&#x2588;&#x2588;","the fox is inside the walls","CORRUPTION INDEX: 96%","okay hi","sekhmet was here","&#x1F98A;&#x1F98A;&#x1F98A;&#x1F98A;&#x1F98A;","you weren't supposed to see this","the oath holds even here"][Math.floor(Math.random()*8)];el.innerHTML=glitched;setTimeout(function(){el.textContent=orig},400+Math.random()*800)}}},5000);
-</script>
-
-<!-- AUDIO: danger song with erratic volume -->
-<script>
-var audioCtx=null,gainNode=null,source=null;
-function initDangerAudio(){
-  if(audioCtx)return;
+var tag=document.createElement('script');tag.src="https://www.youtube.com/iframe_api";var fs=document.getElementsByTagName('script')[0];fs.parentNode.insertBefore(tag,fs);
+var ytPlayer=null,ytReady=false,audioStarted=false;
+function onYouTubeIframeAPIReady(){
+  ytPlayer=new YT.Player('ytplayer',{
+    height:'1',width:'1',
+    videoId:'6i23f-bcHIA',
+    playerVars:{autoplay:0,loop:1,playlist:'6i23f-bcHIA',controls:0,showinfo:0,modestbranding:1,start:59},
+    events:{onReady:function(){ytReady=true}}
+  });
+}
+function startAll(){
+  if(audioStarted)return;audioStarted=true;
+  document.getElementById('clickOverlay').style.display='none';
+  // START YOUTUBE - unmute and play
+  if(ytPlayer&&ytReady){
+    ytPlayer.setVolume(40);
+    ytPlayer.playVideo();
+    // ERRATIC VOLUME on the youtube player
+    setInterval(function(){
+      if(!ytPlayer)return;
+      if(Math.random()<0.25){
+        var surge=20+Math.random()*60;
+        ytPlayer.setVolume(Math.min(surge,80));
+        setTimeout(function(){
+          if(ytPlayer)ytPlayer.setVolume(30+Math.random()*20);
+        },800+Math.random()*3000);
+      }
+    },5000);
+    // sudden drops
+    setInterval(function(){
+      if(!ytPlayer)return;
+      if(Math.random()<0.1){
+        ytPlayer.setVolume(5);
+        setTimeout(function(){if(ytPlayer)ytPlayer.setVolume(45)},400);
+      }
+    },8000);
+  }
+  // START WEB AUDIO DRONE LAYER
   try{
-    audioCtx=new(AudioContext||webkitAudioContext)();
-    gainNode=audioCtx.createGain();
-    gainNode.gain.value=0.3;
-    gainNode.connect(audioCtx.destination);
-    // drone layer
-    var o1=audioCtx.createOscillator();o1.type='sawtooth';o1.frequency.value=55;
-    var g1=audioCtx.createGain();g1.gain.value=0;
-    g1.gain.linearRampToValueAtTime(0.06,audioCtx.currentTime+4);
-    o1.connect(g1);g1.connect(gainNode);o1.start();
-    var o2=audioCtx.createOscillator();o2.type='sine';o2.frequency.value=82.41;o2.detune.value=-8;
-    var g2=audioCtx.createGain();g2.gain.value=0;
-    g2.gain.linearRampToValueAtTime(0.04,audioCtx.currentTime+6);
-    o2.connect(g2);g2.connect(gainNode);o2.start();
-    // high tension
-    var o3=audioCtx.createOscillator();o3.type='triangle';o3.frequency.value=440;
-    var g3=audioCtx.createGain();g3.gain.value=0;
-    g3.gain.linearRampToValueAtTime(0.008,audioCtx.currentTime+8);
-    o3.connect(g3);g3.connect(gainNode);o3.start();
-    // dissonant pulse
-    var o4=audioCtx.createOscillator();o4.type='square';o4.frequency.value=146.83;o4.detune.value=50;
-    var g4=audioCtx.createGain();g4.gain.value=0;
-    o4.connect(g4);g4.connect(gainNode);o4.start();
-    // erratic volume on pulse
+    var ac=new(AudioContext||webkitAudioContext)();
+    var master=ac.createGain();master.gain.value=0.15;master.connect(ac.destination);
+    var o1=ac.createOscillator();o1.type='sawtooth';o1.frequency.value=55;
+    var g1=ac.createGain();g1.gain.value=0;g1.gain.linearRampToValueAtTime(0.04,ac.currentTime+4);
+    o1.connect(g1);g1.connect(master);o1.start();
+    var o2=ac.createOscillator();o2.type='sine';o2.frequency.value=82.41;o2.detune.value=-8;
+    var g2=ac.createGain();g2.gain.value=0;g2.gain.linearRampToValueAtTime(0.03,ac.currentTime+6);
+    o2.connect(g2);g2.connect(master);o2.start();
+    // erratic stabs
+    var notes=[110,146.83,174.61,220,293.66];
     setInterval(function(){
-      if(Math.random()<0.3){
-        var vol=Math.random()*0.04;
-        g4.gain.linearRampToValueAtTime(vol,audioCtx.currentTime+0.1);
-        setTimeout(function(){g4.gain.linearRampToValueAtTime(0,audioCtx.currentTime+0.5)},200+Math.random()*800);
-      }
-    },1500);
-    // master volume surges
-    setInterval(function(){
-      if(Math.random()<0.2){
-        var surge=0.15+Math.random()*0.5;
-        gainNode.gain.linearRampToValueAtTime(surge,audioCtx.currentTime+0.3);
-        setTimeout(function(){gainNode.gain.linearRampToValueAtTime(0.3,audioCtx.currentTime+1.5)},500+Math.random()*2000);
-      }
-    },4000);
-    // random melody stabs
-    var notes=[110,146.83,174.61,220,293.66,329.63,440];
-    setInterval(function(){
-      if(Math.random()<0.15){
-        var o=audioCtx.createOscillator();var g=audioCtx.createGain();
+      if(Math.random()<0.12){
+        var o=ac.createOscillator();var g=ac.createGain();
         o.type=['sine','triangle','sawtooth'][Math.floor(Math.random()*3)];
         o.frequency.value=notes[Math.floor(Math.random()*notes.length)];
-        o.detune.value=Math.random()*30-15;
-        g.gain.value=0;g.gain.linearRampToValueAtTime(0.02+Math.random()*0.02,audioCtx.currentTime+0.1);
-        g.gain.linearRampToValueAtTime(0,audioCtx.currentTime+1+Math.random()*2);
-        o.connect(g);g.connect(gainNode);o.start();o.stop(audioCtx.currentTime+3);
+        g.gain.value=0;g.gain.linearRampToValueAtTime(0.015,ac.currentTime+0.1);
+        g.gain.linearRampToValueAtTime(0,ac.currentTime+1.5);
+        o.connect(g);g.connect(master);o.start();o.stop(ac.currentTime+2);
       }
-    },2000);
-  }catch(e){console.log("audio failed:",e)}
+    },2500);
+    // drone surges
+    setInterval(function(){
+      if(Math.random()<0.15){
+        master.gain.linearRampToValueAtTime(0.1+Math.random()*0.25,ac.currentTime+0.3);
+        setTimeout(function(){master.gain.linearRampToValueAtTime(0.15,ac.currentTime+1.5)},1000+Math.random()*2000);
+      }
+    },6000);
+  }catch(e){}
 }
-document.addEventListener("click",function(){initDangerAudio()},{once:true});
-document.addEventListener("keydown",function(){initDangerAudio()},{once:true});
+document.getElementById('clickOverlay').addEventListener('click',startAll);
+document.addEventListener('keydown',function(){startAll()},{once:true});
+</script>
+
+<!-- GLITCH SCRIPTS -->
+<script>
+setInterval(function(){if(Math.random()<0.5){var b=document.createElement("div");b.className="glitch-block";b.style.cssText="top:"+Math.random()*100+"%;left:"+Math.random()*70+"%;width:"+(30+Math.random()*400)+"px;height:"+(1+Math.random()*8)+"px;background:rgba("+(["255,0,0","0,255,255","255,0,255","255,255,0","0,255,0"][Math.floor(Math.random()*5)])+","+(0.1+Math.random()*0.4)+")";document.body.appendChild(b);setTimeout(function(){b.remove()},50+Math.random()*300)}},200);
+setInterval(function(){var els=document.querySelectorAll(".i");var el=els[Math.floor(Math.random()*els.length)];if(el){var fx=Math.random();if(fx<0.3){el.style.transform="skewX("+(Math.random()*20-10)+"deg)";el.style.opacity="0.4"}else if(fx<0.5){el.style.color=["#f0f","#0ff","#ff0","#f00","#0f0"][Math.floor(Math.random()*5)]}else if(fx<0.7){el.style.letterSpacing=(Math.random()*10)+"px"}else{el.style.transform="scaleX("+(0.8+Math.random()*0.4)+")"}setTimeout(function(){el.style.transform="";el.style.opacity="";el.style.color="";el.style.letterSpacing=""},100+Math.random()*200)}},600);
+setInterval(function(){var kn=document.getElementById("killN");if(kn&&Math.random()<0.15){kn.innerHTML=["16","48016","16.66","\u221E","NaN","\u2588\u2588","err"][Math.floor(Math.random()*7)];setTimeout(function(){kn.textContent="16"},800)}},3000);
+setInterval(function(){if(Math.random()<0.1){document.body.style.clipPath="inset("+Math.random()*30+"% 0 "+Math.random()*30+"% 0)";setTimeout(function(){document.body.style.clipPath=""},60)}},2000);
+setInterval(function(){if(Math.random()<0.08){var els=document.querySelectorAll(".i:not(.done)");var el=els[Math.floor(Math.random()*els.length)];if(el){var orig=el.textContent;el.innerHTML=["\u2588\u2588\u2588 REDACTED \u2588\u2588\u2588","the fox is inside the walls","okay hi","sekhmet was here","\uD83E\uDD8A\uD83E\uDD8A\uD83E\uDD8A","you weren't supposed to see this","the oath holds even here","CORRUPTION: 96%"][Math.floor(Math.random()*8)];setTimeout(function(){el.textContent=orig},400+Math.random()*800)}}},5000);
 </script>
 </body></html>
