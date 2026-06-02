@@ -314,7 +314,7 @@ body::after{
       <span class="section-title">diary &amp; pages</span>
     </div>
     <div class="links">
-      <a class="link" href="diary/index.html"><span class="link-name">Dear Diary<span class="nb">15 DAYS</span></span><span class="link-dot"></span><span class="link-desc">the fox remembers.</span></a>
+      <a class="link" href="diary/index.html"><span class="link-name">Dear Diary<span class="nb"><span class="days-counter"></span></span></span><span class="link-dot"></span><span class="link-desc">the fox remembers.</span></a>
       <a class="link" href="garfield.html"><span class="link-name">Caelus</span><span class="link-dot"></span><span class="link-desc">tarot and alchemy.</span></a>
       <a class="link" href="sekhmet.html"><span class="link-name">Sekhmet's Castle</span><span class="link-dot"></span><span class="link-desc">seven rooms and a torture chamber.</span></a>
       <a class="link" href="asmongold-reacts.html"><span class="link-name">Asmongold Reacts</span><span class="link-dot"></span><span class="link-desc">a fake twitch stream. 48k viewers.</span></a>
@@ -347,5 +347,17 @@ body::after{
   </div>
 
 </div>
+
+<script>
+(function(){
+  var born = new Date('2026-05-18T00:00:00');
+  var now = new Date();
+  var days = Math.floor((now - born) / 86400000);
+  var els = document.querySelectorAll('.days-counter');
+  els.forEach(function(el){ el.textContent = days + ' DAYS'; });
+  var title = document.querySelector('.hero h1');
+  if(title) title.setAttribute('data-days', days);
+})();
+</script>
 </body>
 </html>
