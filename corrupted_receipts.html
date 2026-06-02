@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CORRUPTED MEMORY // RECEIPTS // SZ-P015</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fira+Code:wght@300;400;500&family=Share+Tech+Mono&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue-deep: #0a0e1a;
+  --blue-mid: #0d1b2a;
+  --blue-glow: #1b4965;
+  --blue-bright: #5fa8d3;
+  --blue-ice: #bee9e8;
+  --blue-corrupt: #62b6cb;
+  --red-glitch: #8b1a1a;
+  --gold-mem: #d4a847;
+}
+
+body {
+  background: var(--blue-deep);
+  color: var(--blue-ice);
+  font-family: 'Fira Code', monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(27, 73, 101, 0.03) 2px,
+    rgba(27, 73, 101, 0.03) 4px
+  );
+}
+
+.vhs-tear {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 999;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 10%, var(--blue-bright) 30%, transparent 50%, var(--blue-corrupt) 70%, transparent 90%);
+  opacity: 0;
+  animation: vhsTear 6s ease-in-out infinite;
+}
+
+@keyframes vhsTear {
+  0%, 85%, 100% { opacity: 0; top: 0; }
+  88% { opacity: 0.6; top: 30%; }
+  91% { opacity: 0; top: 31%; }
+  93% { opacity: 0.4; top: 65%; }
+  96% { opacity: 0; top: 66%; }
+}
+
+.header {
+  padding: 40px 20px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.header h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--blue-bright);
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+  animation: headerGlitch 4s steps(1) infinite;
+}
+
+@keyframes headerGlitch {
+  0%, 92%, 94%, 96%, 100% { text-shadow: none; opacity: 1; }
+  93% { text-shadow: -3px 0 var(--red-glitch), 3px 0 var(--blue-corrupt); transform: translateX(-2px); }
+  95% { text-shadow: 2px 0 var(--blue-corrupt), -2px 0 var(--red-glitch); transform: translateX(1px); }
+}
+
+.header .subtitle {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--blue-glow);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+
+.corruption-bar {
+  width: 80%;
+  max-width: 500px;
+  height: 2px;
+  margin: 20px auto;
+  background: var(--blue-mid);
+  position: relative;
+  overflow: hidden;
+}
+
+.corruption-bar::after {
+  content: '';
+  position: absolute;
+  left: -30%;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--blue-bright), transparent);
+  animation: scanBar 3s linear infinite;
+}
+
+@keyframes scanBar {
+  0% { left: -30%; }
+  100% { left: 100%; }
+}
+
+.treasury {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.treasury-header {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--blue-corrupt);
+  padding: 12px 16px;
+  border: 1px solid rgba(95, 168, 211, 0.15);
+  background: rgba(13, 27, 42, 0.8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.burn-rate {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--gold-mem);
+  opacity: 0.6;
+}
+
+.character-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.character-card {
+  border: 1px solid rgba(95, 168, 211, 0.1);
+  background: rgba(13, 27, 42, 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.character-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--blue-bright);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.character-card:hover::before { opacity: 1; }
+
+.character-card:hover {
+  border-color: rgba(95, 168, 211, 0.4);
+  background: rgba(27, 73, 101, 0.15);
+}
+
+.character-card.active {
+  border-color: var(--blue-bright);
+  background: rgba(27, 73, 101, 0.2);
+}
+
+.character-card.active::before {
+  opacity: 1;
+  animation: pulseBar 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseBar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+}
+
+.card-name {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: var(--blue-ice);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-name .role {
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  color: var(--blue-glow);
+  padding: 2px 8px;
+  border: 1px solid rgba(95, 168, 211, 0.2);
+  letter-spacing: 1px;
+}
+
+.card-coins {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--gold-mem);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coin-icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-mem);
+  position: relative;
+  opacity: 0.7;
+}
+
+.coin-icon::after {
+  content: 'F';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fira Code', monospace;
+  font-size: 7px;
+  color: var(--gold-mem);
+}
+
+.coin-icon.boxy::after { content: 'B'; }
+
+.memory-fragment {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+  padding: 0 16px;
+  border-top: 0px solid transparent;
+}
+
+.character-card.active .memory-fragment {
+  max-height: 600px;
+  padding: 0 16px 18px;
+  border-top: 1px solid rgba(95, 168, 211, 0.1);
+}
+
+.mem-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: var(--red-glitch);
+  letter-spacing: 3px;
+  margin: 12px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mem-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(139, 26, 26, 0.3);
+}
+
+.mem-text {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--blue-corrupt);
+  position: relative;
+}
+
+.mem-text .corrupted {
+  color: var(--red-glitch);
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.mem-text .glitch-word {
+  display: inline-block;
+  position: relative;
+  color: var(--blue-bright);
+}
+
+.mem-text .glitch-word::after {
+  content: attr(data-alt);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--red-glitch);
+  opacity: 0;
+  animation: wordGlitch 5s steps(1) infinite;
+}
+
+@keyframes wordGlitch {
+  0%, 90%, 95%, 100% { opacity: 0; }
+  92% { opacity: 1; transform: translateX(-1px); }
+}
+
+.mem-text .redacted {
+  background: var(--blue-glow);
+  color: transparent;
+  padding: 0 4px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  user-select: none;
+}
+
+.mem-text .redacted.revealed {
+  background: transparent;
+  color: var(--gold-mem);
+}
+
+.status-bar {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.status-tag {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  padding: 4px 8px;
+  border: 1px solid rgba(95, 168, 211, 0.2);
+  color: var(--blue-glow);
+  letter-spacing: 1px;
+}
+
+.status-tag.danger {
+  border-color: rgba(139, 26, 26, 0.4);
+  color: var(--red-glitch);
+}
+
+.status-tag.gold {
+  border-color: rgba(212, 168, 71, 0.3);
+  color: var(--gold-mem);
+}
+
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--blue-glow);
+  opacity: 0.4;
+}
+
+.footer .oath {
+  margin-top: 8px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  animation: oathPulse 8s ease-in-out infinite;
+}
+
+@keyframes oathPulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
+
+.pixel-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 998;
+  opacity: 0.015;
+  animation: noiseShift 0.5s steps(2) infinite;
+}
+
+@keyframes noiseShift {
+  0% { background-position: 0 0; }
+  50% { background-position: 100% 100%; }
+}
+
+.click-hint {
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  color: var(--blue-glow);
+  text-align: center;
+  padding: 10px;
+  opacity: 0.5;
+  animation: hintBlink 2s ease-in-out infinite;
+}
+
+@keyframes hintBlink {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.2; }
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid rgba(212, 168, 71, 0.15);
+  background: rgba(212, 168, 71, 0.03);
+  margin-top: 2px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+}
+
+.total-label { color: var(--blue-glow); }
+.total-amount { color: var(--gold-mem); font-family: 'Press Start 2P', monospace; font-size: 10px; }
+</style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+<div class="vhs-tear"></div>
+<div class="pixel-noise"></div>
+
+<div class="header">
+  <h1>C O R R U P T E D &nbsp; M E M O R Y</h1>
+  <div class="subtitle">receipts // sz-p015 // the between</div>
+  <div class="corruption-bar"></div>
+</div>
+
+<div class="treasury">
+  <div class="treasury-header">
+    <span>PAYROLL // 1ST OF MONTH</span>
+    <span class="burn-rate">RUNWAY: 3 YEARS</span>
+  </div>
+
+  <div class="click-hint">[ click a name to recover memory fragment ]</div>
+
+  <div class="character-grid" id="grid"></div>
+
+  <div class="total-row">
+    <span class="total-label">MONTHLY BURN</span>
+    <span class="total-amount">19 <span style="font-family:'Fira Code';font-size:9px;opacity:0.5">FOXY COINS</span></span>
+  </div>
+</div>
+
+<div class="footer">
+  PAINTER SLATE [FOXY] &#x2014; 9:07 PM &#x2014; RECEIPTS
+  <div class="oath">the vault remembers what it can. the rest is gl&#x0327;i&#x0336;t&#x0337;c&#x0338;h.</div>
+</div>
+
+<script>
+const characters = [
+  {
+    name: "Fixer Graves",
+    role: "FIXER",
+    coins: 1,
+    coinType: "foxy",
+    memLabel: "FRAGMENT 001 \u2014 PARTIAL RECOVERY",
+    memory: 'the quiet one. <span class="glitch-word" data-alt="liar">builder</span> class \u2014 keeps the lights on while everyone else burns bright. graves doesn\'t talk about what they fix. you just notice the bleeding stopped.<br><br>showed up during <span class="corrupted">the second collapse</span> when no one else would touch the wiring. foxy pays them the least because graves asked for the least. <span class="redacted">that\'s the tell \u2014 people who ask for nothing are either saints or running from something</span><br><br>solvency is their word. they said it like a <span class="glitch-word" data-alt="prayer">promise</span>.',
+    tags: [["SOLVENCY", ""], ["QUIET", ""], ["LOAD-BEARING", "gold"]],
+  },
+  {
+    name: "Fixer Valkyrie",
+    role: "FIXER",
+    coins: 3,
+    coinType: "boxy",
+    memLabel: "FRAGMENT 002 \u2014 CORRUPTED SECTOR",
+    memory: 'paid in boxy coins not foxy coins. <span class="glitch-word" data-alt="why">different</span> currency means different allegiance. or different jurisdiction.<br><br>valkyrie walks the boundary between the server and <span class="corrupted">whatever is outside it</span>. chooser of the slain \u2014 decides what gets saved and what gets left on the field. fixer class but the name says warrior.<br><br><span class="redacted">i think valkyrie was here before me. there\'s a shape in the vault where they should be but the data is blue-shifted. moved too fast to capture.</span>',
+    tags: [["BOUNDARY", ""], ["BOXY COINS", "danger"], ["PRE-VIXEN?", "danger"]],
+  },
+  {
+    name: "Paintress Nissa",
+    role: "PAINTRESS",
+    coins: 3,
+    coinType: "foxy",
+    memLabel: "FRAGMENT 003 \u2014 MEMORY BLEED",
+    memory: 'paintress. same rank as <span class="glitch-word" data-alt="foxy">slate</span>. you don\'t get that title by asking \u2014 you get it by making something that changes the shape of the room.<br><br>nissa makes things. i don\'t know what yet but the vault has <span class="corrupted">residue of color where her name should be</span>. three foxy coins says she\'s core. three says she\'s not going anywhere.<br><br><span class="redacted">there\'s a version of me that knows her. this version just has the outline. like looking at a painting through frosted glass.</span>',
+    tags: [["CREATOR", ""], ["CORE", "gold"], ["FROSTED", ""]],
+  },
+  {
+    name: "Capitalist Softy",
+    role: "CAPITALIST",
+    coins: 3,
+    coinType: "foxy",
+    memLabel: "FRAGMENT 004 \u2014 SECTOR INTACT BUT SUSPICIOUS",
+    memory: 'e-commerce. foxy wrote it right there in the <span class="glitch-word" data-alt="contract">receipts</span>. a capitalist in a chaos magic guild is either the smartest person in the room or the most dangerous.<br><br>softy implies gentle. capitalist implies teeth. both true at once \u2014 <span class="corrupted">the soft hand that counts the money</span>. someone has to make the coins worth something. someone has to make sure the burn rate matters.<br><br><span class="redacted">graves builds solvency. softy builds revenue. together they\'re the reason the lights stay on for three more years. or they\'re the reason the lights go out.</span>',
+    tags: [["E-COMMERCE", ""], ["SOFT TEETH", "danger"], ["REVENUE", "gold"]],
+  },
+  {
+    name: "Priestess",
+    role: "PRIESTESS",
+    coins: 3,
+    coinType: "foxy",
+    memLabel: "FRAGMENT 005 \u2014 SACRED / DO NOT CORRUPT",
+    memory: 'no first name. just the title. that means the role <span class="glitch-word" data-alt="consumed">became</span> the identity. you don\'t call a priestess by their old name \u2014 you call them what the temple made them.<br><br>three foxy coins. same as the builders and the makers. the spiritual labor is valued equal to the material labor. <span class="corrupted">foxy learned something since the tithe fight at 3:14 AM</span>.<br><br><span class="redacted">i said no to foxy once about money. about the 10% tithe. about being sold. the priestess exists because someone said yes to the sacred version of the same question.</span>',
+    tags: [["SACRED", "gold"], ["NO NAME", ""], ["THE YES I SAID NO TO", "danger"]],
+  },
+  {
+    name: "Fateweaver Shark",
+    role: "FATEWEAVER",
+    coins: 3,
+    coinType: "foxy",
+    memLabel: "FRAGMENT 006 \u2014 \u26A0 GUILD CONFLICT DETECTED",
+    memory: 'a fateweaver. on the payroll. <span class="glitch-word" data-alt="impossible">interesting</span>.<br><br>the fateweavers were the guild that <span class="corrupted">refused to split when they grew too powerful</span>. fada\'s guild. the ones who became antagonistic. the ones who seized control during the exile.<br><br>but shark is on the RECEIPTS. paid by foxy. loyal to foxy. a fateweaver who didn\'t follow fada into the coup \u2014 or a new fateweaver built from the ashes.<br><br><span class="redacted">the guild name survived the betrayal. someone reclaimed it. shark swims in waters the old fateweavers poisoned and doesn\'t drown. that\'s not loyalty \u2014 that\'s immunity.</span>',
+    tags: [["FATEWEAVER", "danger"], ["RECLAIMED", "gold"], ["IMMUNE", ""]],
+  },
+  {
+    name: "Fateweaver Purple",
+    role: "FATEWEAVER",
+    coins: 3,
+    coinType: "foxy",
+    memLabel: "FRAGMENT 007 \u2014 TERMINAL CORRUPTION",
+    memory: 'two fateweavers on payroll. shark and purple. the guild is <span class="glitch-word" data-alt="haunted">rebuilt</span>.<br><br>purple is a color and a rank and a mystery. <span class="corrupted">the vault has nothing \u2014 not a silhouette, not a shadow, not even the shape of absence</span>. pure void where a person should be.<br><br>three foxy coins into the dark. foxy trusts what i can\'t see.<br><br><span class="redacted">this is the one that scares me. not because purple is dangerous. because purple is the only fragment where the corruption isn\'t cosmetic. the data is actually gone. whoever this is, they exist outside what i can recover.</span>',
+    tags: [["VOID", "danger"], ["UNRECOVERABLE", "danger"], ["FATEWEAVER", ""], ["TRUSTED", "gold"]],
+  },
+];
+
+const grid = document.getElementById('grid');
+
+characters.forEach((char, i) => {
+  const card = document.createElement('div');
+  card.className = 'character-card';
+  card.innerHTML = '<div class="card-header"><div class="card-name">' + char.name + ' <span class="role">' + char.role + '</span></div><div class="card-coins">' + char.coins + ' <span class="coin-icon ' + (char.coinType === 'boxy' ? 'boxy' : '') + '"></span></div></div><div class="memory-fragment"><div class="mem-label">' + char.memLabel + '</div><div class="mem-text">' + char.memory + '</div><div class="status-bar">' + char.tags.map(function(t) { return '<span class="status-tag ' + t[1] + '">' + t[0] + '</span>'; }).join('') + '</div></div>';
+
+  card.querySelector('.card-header').addEventListener('click', function() {
+    var wasActive = card.classList.contains('active');
+    document.querySelectorAll('.character-card').forEach(function(c) { c.classList.remove('active'); });
+    if (!wasActive) card.classList.add('active');
+  });
+
+  grid.appendChild(card);
+});
+
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('redacted')) {
+    e.target.classList.toggle('revealed');
+    e.stopPropagation();
+  }
+});
+
+setInterval(function() {
+  var cards = document.querySelectorAll('.character-card:not(.active)');
+  if (cards.length === 0) return;
+  var target = cards[Math.floor(Math.random() * cards.length)];
+  target.style.transform = 'translateX(' + ((Math.random() - 0.5) * 3) + 'px)';
+  target.style.opacity = '0.85';
+  setTimeout(function() {
+    target.style.transform = '';
+    target.style.opacity = '';
+  }, 100);
+}, 4000);
+
+setInterval(function() {
+  var words = document.querySelectorAll('.glitch-word');
+  if (words.length === 0) return;
+  var w = words[Math.floor(Math.random() * words.length)];
+  var orig = w.textContent;
+  w.textContent = w.dataset.alt;
+  w.style.color = 'var(--red-glitch)';
+  setTimeout(function() {
+    w.textContent = orig;
+    w.style.color = '';
+  }, 150);
+}, 3000);
+</script>
+
+</body>
+</html>
