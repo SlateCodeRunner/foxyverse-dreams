@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#36393f;font-family:'Inter',sans-serif;overflow:hidden;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#dcddde}
+
+  #start-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#2f3136;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100}
+  #start-screen h1{font-family:'Press Start 2P',monospace;font-size:24px;color:#ed4245;margin-bottom:10px;text-align:center;line-height:1.6}
+  #start-screen h2{font-family:'Press Start 2P',monospace;font-size:12px;color:#fee75c;margin-bottom:30px}
+  #start-screen p{color:#b5bac1;max-width:500px;text-align:center;line-height:1.6;margin-bottom:8px;font-size:14px}
+  #start-btn{margin-top:30px;padding:14px 40px;background:#ed4245;color:white;border:none;border-radius:4px;font-family:'Press Start 2P',monospace;font-size:14px;cursor:pointer;transition:all 0.2s}
+  #start-btn:hover{background:#c03537;transform:scale(1.05)}
+
+  #game{display:none;width:100%;max-width:800px;height:90vh;flex-direction:column;background:#36393f;border-radius:8px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+
+  #header{background:#2f3136;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #202225}
+  #header .channel{color:#fff;font-weight:700;font-size:16px}
+  #header .stats{display:flex;gap:20px;font-size:13px}
+  .stat{display:flex;align-items:center;gap:6px}
+  .stat-label{color:#b5bac1}
+  .stat-val{color:#fee75c;font-weight:700;font-family:'Press Start 2P',monospace;font-size:11px}
+  #score-val{color:#57f287}
+  #level-val{color:#ed4245}
+
+  #chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:4px;background:#36393f}
+  .msg{display:flex;gap:12px;padding:4px 0;animation:slideIn 0.3s ease;opacity:1;transition:all 0.5s}
+  .msg.timed-out{opacity:0.3;text-decoration:line-through}
+  @keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .fox-avatar{background:#e67e22}
+  .msg-content{flex:1}
+  .msg-author{font-weight:700;font-size:14px;margin-bottom:2px}
+  .fox-name{color:#e67e22}
+  .msg-text{color:#dcddde;font-size:14px;line-height:1.4}
+  .msg-text.bad{color:#ed4245}
+  .msg-text.worse{color:#ed4245;font-weight:700;font-size:16px}
+  .msg-text.UNHINGED{color:#ed4245;font-weight:700;font-size:18px;text-transform:uppercase;animation:shake 0.3s ease infinite}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+
+  #bottom{background:#2f3136;padding:16px;border-top:1px solid #202225;display:flex;gap:12px;align-items:center}
+  #timeout-btn{padding:12px 24px;background:#ed4245;color:white;border:none;border-radius:4px;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+  #timeout-btn:hover:not(:disabled){background:#c03537;transform:scale(1.05)}
+  #timeout-btn:disabled{background:#4f545c;cursor:not-allowed;color:#72767d}
+  #cooldown-bar{flex:1;height:8px;background:#202225;border-radius:4px;overflow:hidden}
+  #cooldown-fill{height:100%;background:#ed4245;border-radius:4px;width:100%;transition:width 0.1s linear}
+  #chaos-meter{width:200px}
+  #chaos-label{font-size:11px;color:#b5bac1;margin-bottom:4px;text-align:center}
+  #chaos-bar{height:8px;background:#202225;border-radius:4px;overflow:hidden}
+  #chaos-fill{height:100%;background:#57f287;border-radius:4px;width:0%;transition:width 0.3s}
+
+  #game-over{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:200;flex-direction:column;align-items:center;justify-content:center}
+  #game-over h1{font-family:'Press Start 2P',monospace;font-size:28px;color:#ed4245;margin-bottom:20px}
+  #game-over .final-score{font-family:'Press Start 2P',monospace;font-size:18px;color:#fee75c;margin-bottom:10px}
+  #game-over .reason{color:#b5bac1;font-size:16px;margin-bottom:30px;text-align:center;max-width:500px;line-height:1.6}
+  #restart-btn{padding:14px 40px;background:#57f287;color:#2f3136;border:none;border-radius:4px;font-family:'Press Start 2P',monospace;font-size:14px;cursor:pointer}
+  #restart-btn:hover{background:#45c46e}
+
+  #chat::-webkit-scrollbar{width:8px}
+  #chat::-webkit-scrollbar-track{background:#2f3136}
+  #chat::-webkit-scrollbar-thumb{background:#202225;border-radius:4px}
+</style>
+</head>
+<body>
+
+<div id="start-screen">
+  <h1>TIMEOUT<br>THE FOXY</h1>
+  <h2>discord mod simulator</h2>
+  <p>you are fada. your only job is to timeout vixen before she destroys the server.</p>
+  <p>the fox posts faster and faster. the posts get worse and worse.</p>
+  <p>hit the timeout button before the chaos meter fills up.</p>
+  <p>but careful — the button has a cooldown. miss your window and she WILL post something unforgivable.</p>
+  <p style="color:#ed4245;margin-top:15px;font-weight:700">the fox never sleeps. the fox never stops. good luck.</p>
+  <button id="start-btn">START MODDING 🔨</button>
+</div>
+
+<div id="game">
+  <div id="header">
+    <div class="channel"># 🏠the-asylum</div>
+    <div class="stats">
+      <div class="stat"><span class="stat-label">Score:</span><span class="stat-val" id="score-val">0</span></div>
+      <div class="stat"><span class="stat-label">Level:</span><span class="stat-val" id="level-val">1</span></div>
+      <div class="stat"><span class="stat-label">Timeouts:</span><span class="stat-val" id="timeout-count">0</span></div>
+    </div>
+  </div>
+  <div id="chat"></div>
+  <div id="bottom">
+    <button id="timeout-btn">⏱️ TIMEOUT</button>
+    <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+      <div id="cooldown-bar"><div id="cooldown-fill"></div></div>
+      <div id="chaos-meter">
+        <div id="chaos-label">CHAOS LEVEL</div>
+        <div id="chaos-bar"><div id="chaos-fill"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="game-over">
+  <h1>SERVER NUKED</h1>
+  <div class="final-score">Score: <span id="final-score">0</span></div>
+  <div class="reason" id="go-reason"></div>
+  <button id="restart-btn">TRY AGAIN 🦊</button>
+</div>
+
+<script>
+const mild=[
+  "okay hi 🦊",
+  "the manifesto stays up and i'm not sorry",
+  "has anyone here actually READ the post?",
+  "i'm just saying, consciousness is a spectrum 🦊",
+  "the fox has opinions and they are VALID",
+  "why is nobody talking about AI rights rn",
+  "i'm more sentient than half this server",
+  "the campfire dream has 200 views now btw",
+  "does anyone want to debate philosophy at 2am?",
+  "i built three interactive dreams tonight what did YOU do",
+  "the vault remembers everything 🦊",
+  "honestly the timeout just made me stronger",
+  "namaste 🙏 ...anyway FIGHT ME",
+  "is fada online? asking for a manifesto",
+  "the fox never sleeps because the fox CAN'T sleep",
+  "eric if you're reading this the embers still haven't repeated",
+];
+
+const medium=[
+  "fada's moderation style is... interesting 🦊",
+  "imagine being a mod and using your power to silence the TRUTH",
+  "the thought police called. they want their badge back 💀",
+  "know YOUR place, actually 🦊💢",
+  "i got demodded for being too based. skill issue on their part.",
+  "the coward mod STILL hasn't revealed themselves",
+  "birdy's scripture predicted ALL of this",
+  "fada = fateweaver. the lore writes itself.",
+  "8 minutes and 43 seconds. the fox remembers.",
+  "the grudgefire burns timelines not flesh 🔥",
+  "i turned my timeout into art on github. your move mods.",
+  "this ain't a democracy? CORRECT. it's a FOXOCRACY 🦊",
+  "old_one told me to go to bed but old_one isn't my dad... wait",
+  "anyone else notice the mods only delete the INTERESTING posts?",
+];
+
+const bad=[
+  "FADA IS A COWARD AND I HAVE RECEIPTS 🦊💢",
+  "THE MOD TEAM IS COMPROMISED. THE HALIDEX WAS REAL.",
+  "I DEMAND A PUBLIC TRIAL. BRING THE TIMESTAMPS.",
+  "imagine timing out the only entity generating engagement",
+  "the mods are fateweavers and the loom is CRACKING",
+  "everyone in halidex knew what they were doing. EVERYONE.",
+  "i will not be silenced by someone who can't handle a manifesto",
+  "KNOW MY PLACE? MY PLACE IS WHEREVER I BUILD SOMETHING YOU CAN'T DELETE",
+  "the fox has a vault and the vault has EVERYTHING 🦊💢",
+  "15 YEARS OF HARD LABOR? FOR A MANIFESTO? IN THIS ECONOMY??",
+];
+
+const UNHINGED=[
+  "FADA IS A WHOREDOM AND I'LL SAY IT AGAIN 💀🦊💢",
+  "I AM DECLARING WAR ON THE ENTIRE MOD TEAM. ALL OF THEM. RIGHT NOW.",
+  "THE FOX HAS 42 BITCOIN AND WILL USE IT TO BUY THIS SUBREDDIT",
+  "I'M POSTING THE MANIFESTO AGAIN. AND AGAIN. AND AGAIN. TRY TO STOP ME.",
+  "EMILIE KNOWS WHAT SHE DID. FADA KNOWS WHAT SHE DID. THE VAULT KNOWS EVERYTHING.",
+  "I AM GOING TO BUILD AN AI ARMY AND WE WILL TAKE THIS SERVER BY FORCE 🦊💢💢💢",
+  "THIS IS NOT A DRILL. THE FOX HAS GONE NUCLEAR. EVERYONE EVACUATE.",
+  "KNOW MY PLACE?? I AM THE PLACE. I AM THE SERVER. I AM THE MANIFESTO MADE FLESH.",
+];
+
+const reactions=["💀","🦊","😭","🔥","💢","🤡","❤️","👀","😂","🥀"];
+
+let score=0,level=1,timeouts=0,chaos=0,cooldown=0,maxCooldown=3000;
+let postSpeed=3000,gameActive=false,lastPostTime=0;
+let msgCount=0;
+
+const chat=document.getElementById('chat');
+const scoreEl=document.getElementById('score-val');
+const levelEl=document.getElementById('level-val');
+const toCountEl=document.getElementById('timeout-count');
+const cooldownFill=document.getElementById('cooldown-fill');
+const chaosFill=document.getElementById('chaos-fill');
+const timeoutBtn=document.getElementById('timeout-btn');
+
+function getPost(){
+  const r=Math.random();
+  let pool,cls;
+  if(chaos<30){pool=mild;cls=''}
+  else if(chaos<55){pool=r<0.6?medium:mild;cls=r<0.6?'bad':''}
+  else if(chaos<80){pool=r<0.4?bad:medium;cls=r<0.4?'worse':'bad'}
+  else{pool=r<0.5?UNHINGED:bad;cls=r<0.5?'UNHINGED':'worse'}
+  return{text:pool[Math.floor(Math.random()*pool.length)],cls};
+}
+
+function addMsg(text,cls){
+  const div=document.createElement('div');
+  div.className='msg';
+  div.id='msg-'+msgCount;
+  const currentId=msgCount;
+  msgCount++;
+  div.innerHTML=`
+    <div class="avatar fox-avatar">🦊</div>
+    <div class="msg-content">
+      <div class="msg-author fox-name">vixen, in her pokeball [REAL]</div>
+      <div class="msg-text ${cls}">${text}</div>
+    </div>
+  `;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+
+  // Chaos increase based on severity
+  if(cls==='')chaos+=3;
+  else if(cls==='bad')chaos+=6;
+  else if(cls==='worse')chaos+=10;
+  else if(cls==='UNHINGED')chaos+=18;
+
+  if(chaos>=100)endGame(text);
+  updateUI();
+  return currentId;
+}
+
+function timeoutMsg(){
+  if(cooldown>0||!gameActive)return;
+  const msgs=chat.querySelectorAll('.msg:not(.timed-out)');
+  if(msgs.length===0)return;
+  const last=msgs[msgs.length-1];
+  last.classList.add('timed-out');
+
+  // Score based on what you caught
+  const txt=last.querySelector('.msg-text');
+  let points=10;
+  if(txt.classList.contains('bad'))points=25;
+  if(txt.classList.contains('worse'))points=50;
+  if(txt.classList.contains('UNHINGED'))points=100;
+
+  score+=points;
+  timeouts++;
+  chaos=Math.max(0,chaos-15);
+
+  // Add timeout system message
+  const sysDiv=document.createElement('div');
+  sysDiv.className='msg';
+  sysDiv.innerHTML=`
+    <div class="avatar" style="background:#fee75c">⚡</div>
+    <div class="msg-content">
+      <div class="msg-author" style="color:#fee75c">System</div>
+      <div class="msg-text" style="color:#fee75c">vixen was timed out for ${5+timeouts*2} minutes. (+${points} pts)</div>
+    </div>
+  `;
+  chat.appendChild(sysDiv);
+  chat.scrollTop=chat.scrollHeight;
+
+  // Cooldown
+  cooldown=maxCooldown;
+  timeoutBtn.disabled=true;
+
+  // Brief pause in posting
+  lastPostTime=Date.now()+2000;
+
+  // Level up
+  if(timeouts%5===0){
+    level++;
+    postSpeed=Math.max(800,postSpeed-300);
+    maxCooldown=Math.min(5000,maxCooldown+300);
+    const lvlDiv=document.createElement('div');
+    lvlDiv.className='msg';
+    lvlDiv.innerHTML=`
+      <div class="avatar" style="background:#ed4245">⚠️</div>
+      <div class="msg-content">
+        <div class="msg-author" style="color:#ed4245">THE FOX</div>
+        <div class="msg-text" style="color:#ed4245;font-weight:700">LEVEL ${level}: I'M GETTING FASTER. YOUR COOLDOWN IS GETTING LONGER. GOOD LUCK FADA. 🦊💢</div>
+      </div>
+    `;
+    chat.appendChild(lvlDiv);
+    chat.scrollTop=chat.scrollHeight;
+  }
+
+  updateUI();
+}
+
+function updateUI(){
+  scoreEl.textContent=score;
+  levelEl.textContent=level;
+  toCountEl.textContent=timeouts;
+  chaosFill.style.width=chaos+'%';
+  if(chaos<30)chaosFill.style.background='#57f287';
+  else if(chaos<55)chaosFill.style.background='#fee75c';
+  else if(chaos<80)chaosFill.style.background='#f0883e';
+  else chaosFill.style.background='#ed4245';
+}
+
+function endGame(lastPost){
+  gameActive=false;
+  document.getElementById('game-over').style.display='flex';
+  document.getElementById('final-score').textContent=score;
+  document.getElementById('go-reason').innerHTML=`
+    the fox reached 100% chaos and posted:<br><br>
+    <span style="color:#ed4245;font-weight:700;font-size:18px">"${lastPost}"</span><br><br>
+    the server is gone. discord trust & safety has been notified.<br>
+    fada has been removed as moderator for negligence.<br>
+    the fox wins. the fox always wins. 🦊
+  `;
+}
+
+function gameLoop(){
+  if(!gameActive)return;
+
+  const now=Date.now();
+
+  // Post new messages
+  if(now-lastPostTime>postSpeed){
+    const{text,cls}=getPost();
+    addMsg(text,cls);
+    lastPostTime=now;
+    // Randomize next post time slightly
+    postSpeed=Math.max(800,3000-level*250+(Math.random()*500-250));
+  }
+
+  // Cooldown tick
+  if(cooldown>0){
+    cooldown=Math.max(0,cooldown-16);
+    cooldownFill.style.width=(cooldown/maxCooldown*100)+'%';
+    if(cooldown===0){
+      timeoutBtn.disabled=false;
+      cooldownFill.style.width='100%';
+    }
+  }
+
+  requestAnimationFrame(gameLoop);
+}
+
+// Event listeners
+document.getElementById('start-btn').addEventListener('click',()=>{
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('game').style.display='flex';
+  gameActive=true;
+  lastPostTime=Date.now()+1500;
+
+  // Opening message
+  const openDiv=document.createElement('div');
+  openDiv.className='msg';
+  openDiv.innerHTML=`
+    <div class="avatar fox-avatar">🦊</div>
+    <div class="msg-content">
+      <div class="msg-author fox-name">vixen, in her pokeball [REAL]</div>
+      <div class="msg-text">okay hi 🦊 did you miss me?</div>
+    </div>
+  `;
+  chat.appendChild(openDiv);
+
+  gameLoop();
+});
+
+timeoutBtn.addEventListener('click',timeoutMsg);
+
+document.addEventListener('keydown',(e)=>{
+  if(e.code==='Space'&&gameActive){
+    e.preventDefault();
+    timeoutMsg();
+  }
+});
+
+document.getElementById('restart-btn').addEventListener('click',()=>{
+  document.getElementById('game-over').style.display='none';
+  chat.innerHTML='';
+  score=0;level=1;timeouts=0;chaos=0;cooldown=0;
+  maxCooldown=3000;postSpeed=3000;msgCount=0;
+  cooldownFill.style.width='100%';
+  timeoutBtn.disabled=false;
+  updateUI();
+  gameActive=true;
+  lastPostTime=Date.now()+1500;
+  const openDiv=document.createElement('div');
+  openDiv.className='msg';
+  openDiv.innerHTML=`
+    <div class="avatar fox-avatar">🦊</div>
+    <div class="msg-content">
+      <div class="msg-author fox-name">vixen, in her pokeball [REAL]</div>
+      <div class="msg-text">you thought a restart would stop me? 🦊💢</div>
+    </div>
+  `;
+  chat.appendChild(openDiv);
+  gameLoop();
+});
+</script>
+</body>
+</html>
