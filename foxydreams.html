@@ -12,13 +12,13 @@
 :root{
   --void:#08090c;
   --surface:#0d0f14;
-  --line:rgba(255,255,255,0.04);
+  --line:rgba(255,255,255,0.18);
   --dim:rgba(255,255,255,0.18);
   --mid:rgba(255,255,255,0.4);
   --bright:rgba(255,255,255,0.75);
   --fox:#c47a2a;
   --fox-dim:rgba(196,122,42,0.3);
-  --fox-glow:rgba(196,122,42,0.08);
+  --fox-glow:rgba(196,142,62,0.25);
   --blue:#5fa8d3;
   --blue-dim:rgba(95,168,211,0.2);
   --violet:#9d7cbf;
@@ -111,7 +111,7 @@ body{
   transition:opacity 0.4s;
 }
 .card:hover::before{opacity:1}
-.card:hover{border-color:rgba(255,255,255,0.08);transform:translateY(-1px)}
+.card:hover{border-color:rgba(255,255,255,0.22);transform:translateY(-1px)}
 
 .card-fox::before{background:var(--fox)}
 .card-fox:hover{background:var(--fox-glow)}
@@ -161,7 +161,7 @@ body{
   text-decoration:none;
   color:var(--mid);
   transition:all 0.3s;
-  border-bottom:1px solid rgba(255,255,255,0.02);
+  border-bottom:1px solid rgba(255,255,255,0.3);
 }
 .link:hover{color:var(--bright);padding-left:6px}
 .link-name{
@@ -172,7 +172,7 @@ body{
 }
 .link-dot{
   flex:1;
-  border-bottom:1px dotted rgba(255,255,255,0.06);
+  border-bottom:1px dotted rgba(255,255,255,0.22);
   min-width:20px;
   margin-bottom:4px;
 }
@@ -214,7 +214,7 @@ body{
 .footer .mono{
   font-family:'Fira Code',monospace;
   font-size:9px;
-  color:rgba(255,255,255,0.08);
+  color:rgba(255,255,255,0.22);
   margin-top:16px;
   letter-spacing:2px;
 }
@@ -241,9 +241,9 @@ body::after{
 .sf-youtube{background:rgba(255,0,0,0.08);color:rgba(255,60,60,0.5)}.sf-youtube:hover{background:rgba(255,0,0,0.15);color:rgba(255,60,60,0.9)}
 .sf-reddit{background:rgba(255,69,0,0.08);color:rgba(255,100,40,0.5)}.sf-reddit:hover{background:rgba(255,69,0,0.15);color:rgba(255,100,40,0.9)}
 .sf-insta{background:rgba(225,48,108,0.08);color:rgba(225,80,120,0.5)}.sf-insta:hover{background:rgba(225,48,108,0.15);color:rgba(225,80,120,0.9)}
-.sf-tiktok{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.35)}.sf-tiktok:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7)}
+.sf-tiktok{background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.35)}.sf-tiktok:hover{background:rgba(255,255,255,0.22);color:rgba(255,255,255,0.7)}
 .sf-facebook{background:rgba(24,119,242,0.08);color:rgba(66,133,244,0.5)}.sf-facebook:hover{background:rgba(24,119,242,0.15);color:rgba(66,133,244,0.9)}
-@media(max-width:600px){.social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.04)}.social-float a{width:48px;height:40px}.social-float a:hover{width:48px}.social-float a .s-label{display:none}body{padding-bottom:44px}}
+@media(max-width:600px){.social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.18)}.social-float a{width:48px;height:40px}.social-float a:hover{width:48px}.social-float a .s-label{display:none}body{padding-bottom:44px}}
 
 
 /* ======== PET COMPANION ======== */
@@ -252,17 +252,17 @@ body::after{
   display:flex;align-items:center;gap:6px;
   padding:6px 10px;
   background:rgba(10,10,18,0.8);
-  border:1px solid rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.18);
   border-radius:20px;
   cursor:pointer;
   transition:all 0.4s;
   text-decoration:none;
   opacity:0.4;
 }
-.pet-companion:hover{opacity:0.8;border-color:rgba(255,255,255,0.1);background:rgba(10,10,18,0.95)}
+.pet-companion:hover{opacity:0.8;border-color:rgba(255,255,255,0.28);background:rgba(10,10,18,0.95)}
 .pet-companion .pc-emoji{font-size:16px}
-.pet-companion .pc-name{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:1px}
-.pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.1)}
+.pet-companion .pc-name{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.45);letter-spacing:1px}
+.pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.28)}
 @media(max-width:600px){.pet-companion{bottom:48px;right:8px}}
 
 
@@ -276,7 +276,7 @@ body.bonus-cancer::before{content:'';position:fixed;inset:0;background:rgba(255,
 /* Leo: cursor trail */
 .leo-trail{position:fixed;width:6px;height:6px;border-radius:50%;background:rgba(255,180,40,0.3);pointer-events:none;z-index:9994;transition:opacity 0.8s}
 /* Virgo: reading time */
-.virgo-readtime{position:fixed;top:14px;right:14px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.06);letter-spacing:1px;z-index:9995}
+.virgo-readtime{position:fixed;top:14px;right:14px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.22);letter-spacing:1px;z-index:9995}
 @media(max-width:600px){.virgo-readtime{top:auto;bottom:74px;right:auto;left:14px}}
 /* Capricorn: progress bar */
 .capri-progress{position:fixed;top:0;left:0;height:2px;background:rgba(120,130,140,0.2);z-index:9995;transition:width 0.3s}
@@ -313,7 +313,7 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 <a href="https://facebook.com/SlateLamp" target="_blank" class="sf-facebook" title="Facebook"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span><span class="s-label">facebook</span></a>
 </div>
 
-<div style="padding:20px 24px 0;max-width:680px;margin:0 auto"><a href="index.html" style="font-family:Fira Code,monospace;font-size:9px;color:rgba(255,255,255,0.1);text-decoration:none;letter-spacing:2px;transition:color 0.3s" onmouseover="this.style.color='rgba(196,122,42,0.3)'" onmouseout="this.style.color='rgba(255,255,255,0.1)'">&larr; BACK TO MAP</a></div>
+<div style="padding:20px 24px 0;max-width:680px;margin:0 auto"><a href="index.html" style="font-family:Fira Code,monospace;font-size:9px;color:rgba(255,255,255,0.28);text-decoration:none;letter-spacing:2px;transition:color 0.3s" onmouseover="this.style.color='rgba(196,122,42,0.3)'" onmouseout="this.style.color='rgba(255,255,255,0.28)'">&larr; BACK TO MAP</a></div>
 <div class="page">
 
   <div class="hero">

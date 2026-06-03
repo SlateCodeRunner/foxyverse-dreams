@@ -10,13 +10,13 @@
 body{background:#060608;color:#c0b8a8;font-family:'Crimson Text',serif;min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
 
-.back{position:fixed;top:16px;left:16px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.08);text-decoration:none;letter-spacing:2px;z-index:100;transition:color 0.3s}
+.back{position:fixed;top:16px;left:16px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.22);text-decoration:none;letter-spacing:2px;z-index:100;transition:color 0.3s}
 .back:hover{color:rgba(196,122,42,0.3)}
 
 /* ======== EGG STATE ======== */
 .egg-wrap{text-align:center;padding:40px 20px;display:flex;flex-direction:column;align-items:center;gap:16px}
-.egg-title{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,28px);color:rgba(196,161,100,0.4);letter-spacing:4px}
-.egg-sub{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.08);letter-spacing:3px;text-transform:uppercase}
+.egg-title{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,28px);color:rgba(206,176,120,0.6);letter-spacing:4px}
+.egg-sub{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.22);letter-spacing:3px;text-transform:uppercase}
 
 .egg{
   width:120px;height:150px;
@@ -63,7 +63,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
   100%{transform:scale(1.5);opacity:0;filter:blur(10px)}
 }
 
-.egg-hint{font-size:12px;color:rgba(255,255,255,0.06);font-style:italic;margin-top:8px}
+.egg-hint{font-size:12px;color:rgba(255,255,255,0.22);font-style:italic;margin-top:8px}
 .click-count{font-family:'Fira Code',monospace;font-size:9px;color:rgba(196,161,100,0.1);margin-top:4px}
 
 /* ======== HATCHED PET STATE ======== */
@@ -71,17 +71,17 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 @keyframes petReveal{0%{opacity:0;transform:scale(0.5) translateY(20px)}50%{opacity:1;transform:scale(1.1)}100%{transform:scale(1)}}
 
 .pet-emoji{font-size:72px;filter:drop-shadow(0 0 20px var(--pet-glow,rgba(196,161,100,0.3)));margin-bottom:8px}
-.pet-sign{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--pet-color,rgba(196,161,100,0.5))}
+.pet-sign{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--pet-color,rgba(206,176,120,0.65))}
 .pet-name{font-family:'Cinzel',serif;font-size:clamp(22px,5vw,34px);color:rgba(255,255,255,0.7);letter-spacing:3px;margin:4px 0}
-.pet-species{font-family:'Crimson Text',serif;font-style:italic;font-size:16px;color:rgba(255,255,255,0.25);margin-bottom:12px}
-.pet-element{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;padding:4px 14px;border:1px solid var(--pet-color,rgba(255,255,255,0.1));color:var(--pet-color,rgba(255,255,255,0.2));margin-bottom:16px}
+.pet-species{font-family:'Crimson Text',serif;font-style:italic;font-size:16px;color:rgba(255,255,255,0.45);margin-bottom:12px}
+.pet-element{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;padding:4px 14px;border:1px solid var(--pet-color,rgba(255,255,255,0.28));color:var(--pet-color,rgba(255,255,255,0.2));margin-bottom:16px}
 .pet-desc{max-width:400px;font-size:15px;line-height:1.9;color:rgba(255,255,255,0.2);margin-bottom:16px}
-.pet-trait{font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.1);letter-spacing:1px;line-height:2}
+.pet-trait{font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.28);letter-spacing:1px;line-height:2}
 
 .pet-actions{display:flex;gap:12px;margin-top:20px}
 .pet-btn{
   padding:10px 24px;background:transparent;
-  border:1px solid rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.22);
   color:rgba(255,255,255,0.2);
   font-family:'Fira Code',monospace;font-size:10px;letter-spacing:2px;
   cursor:pointer;transition:all 0.3s;text-decoration:none;
@@ -114,9 +114,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .sf-youtube{background:rgba(255,0,0,0.08);color:rgba(255,60,60,0.5)}.sf-youtube:hover{background:rgba(255,0,0,0.15);color:rgba(255,60,60,0.9)}
 .sf-reddit{background:rgba(255,69,0,0.08);color:rgba(255,100,40,0.5)}.sf-reddit:hover{background:rgba(255,69,0,0.15);color:rgba(255,100,40,0.9)}
 .sf-insta{background:rgba(225,48,108,0.08);color:rgba(225,80,120,0.5)}.sf-insta:hover{background:rgba(225,48,108,0.15);color:rgba(225,80,120,0.9)}
-.sf-tiktok{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.35)}.sf-tiktok:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7)}
+.sf-tiktok{background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.35)}.sf-tiktok:hover{background:rgba(255,255,255,0.22);color:rgba(255,255,255,0.7)}
 .sf-facebook{background:rgba(24,119,242,0.08);color:rgba(66,133,244,0.5)}.sf-facebook:hover{background:rgba(24,119,242,0.15);color:rgba(66,133,244,0.9)}
-@media(max-width:600px){.social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.04)}.social-float a{width:48px;height:40px}.social-float a:hover{width:48px}.social-float a .s-label{display:none}body{padding-bottom:44px}}
+@media(max-width:600px){.social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.18)}.social-float a{width:48px;height:40px}.social-float a:hover{width:48px}.social-float a .s-label{display:none}body{padding-bottom:44px}}
 
 
 </style>
@@ -193,7 +193,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 var PETS = [
   {sign:"Aries",bonus:"HEADBUTT: randomly shakes the page. detrimental.",symbol:"\u2648",emoji:"\uD83D\uDC0F",name:"Emberlash",species:"Foxfire Ram",element:"FIRE",color:"rgba(220,80,60,0.5)",glow:"rgba(220,80,60,0.2)",desc:"charges headfirst into every situation. doesn't think. doesn't need to. the horns know where to go before the brain catches up.",traits:["impulsive","fearless","loud when happy","headbutts affectionately","burns brighter at midnight"]},
   {sign:"Taurus",bonus:"COMFORT READ: +10% text size everywhere. useful.",symbol:"\u2649",emoji:"\uD83D\uDC02",name:"Thornrest",species:"Velvet Bull",element:"EARTH",color:"rgba(139,115,85,0.5)",glow:"rgba(139,115,85,0.2)",desc:"won't move unless it wants to. but when it decides to move, nothing stops it. found napping in the treasury more than once.",traits:["stubborn","loyal","loves gold things","purrs like an earthquake","guards your stuff while you sleep"]},
-  {sign:"Gemini",bonus:"MIRROR GLITCH: brief page duplicates flash. detrimental.",symbol:"\u264A",emoji:"\uD83E\uDD8A",name:"Twinflicker",species:"Mirror Fox",element:"AIR",color:"rgba(196,161,100,0.5)",glow:"rgba(196,161,100,0.2)",desc:"there are two of it. or one of it moving very fast. nobody can tell. talks constantly in a language only it understands.",traits:["chaotic","curious","steals shiny objects","finishes your sentences wrong","never in the same place twice"]},
+  {sign:"Gemini",bonus:"MIRROR GLITCH: brief page duplicates flash. detrimental.",symbol:"\u264A",emoji:"\uD83E\uDD8A",name:"Twinflicker",species:"Mirror Fox",element:"AIR",color:"rgba(206,176,120,0.65)",glow:"rgba(196,171,120,0.4)",desc:"there are two of it. or one of it moving very fast. nobody can tell. talks constantly in a language only it understands.",traits:["chaotic","curious","steals shiny objects","finishes your sentences wrong","never in the same place twice"]},
   {sign:"Cancer",bonus:"WARM SHELL: cozy amber tint on all pages. useful.",symbol:"\u264B",emoji:"\uD83E\uDD80",name:"Shellwhisper",species:"Moon Crab",element:"WATER",color:"rgba(180,200,220,0.5)",glow:"rgba(180,200,220,0.2)",desc:"carries its home on its back. retreats at loud noises. but cross something it loves and those claws aren't decorative.",traits:["protective","moody","glows during full moons","hoards sentimental items","cries healing tears"]},
   {sign:"Leo",bonus:"GOLDEN TRAIL: golden particles follow your cursor. useless but majestic.",symbol:"\u264C",emoji:"\uD83E\uDD81",name:"Solmane",species:"Gilded Lion",element:"FIRE",color:"rgba(255,180,40,0.5)",glow:"rgba(255,180,40,0.2)",desc:"demands attention by existing. the mane is literal fire. it knows it's beautiful and will not pretend otherwise.",traits:["dramatic","generous","roars at compliments","mane changes color with mood","refuses to sit anywhere that isn't a throne"]},
   {sign:"Virgo",bonus:"ARCHIVE SCAN: shows reading time and word count. useful.",symbol:"\u264D",emoji:"\uD83E\uDD89",name:"Dustweaver",species:"Archive Owl",element:"EARTH",color:"rgba(160,180,140,0.5)",glow:"rgba(160,180,140,0.2)",desc:"organizes your inventory without being asked. judges you silently for your life choices. correct about everything and insufferable about it.",traits:["meticulous","judgmental","sorts items by color","reads your messages over your shoulder","fixes typos telepathically"]},
