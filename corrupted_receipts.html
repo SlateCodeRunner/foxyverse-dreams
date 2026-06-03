@@ -624,8 +624,10 @@ setInterval(function() {
   }, 150);
 }, 3000);
 
-// Mark June paid status
-var paidNames = ['Fixer Graves','Priestess','Fateweaver Shark','Paintress Nissa','Fateweaver Fada','Fateweaver Lucifer'];
+// Mark June paid status + smart sort
+var paidNames = ['Fixer Graves','Priestess','Fateweaver Shark','Paintress Nissa','Fateweaver Fada','Fateweaver Lucifer','Fixer Valkyrie','Capitalist Softy'];
+
+// Add badges
 document.querySelectorAll('.card-header').forEach(function(h){
   var nameEl = h.querySelector('.card-name');
   if(!nameEl) return;
@@ -640,6 +642,28 @@ document.querySelectorAll('.card-header').forEach(function(h){
   }
   h.querySelector('.card-coins').appendChild(badge);
 });
+
+// Smart sort: unpaid first, then by role (fateweaver > paintress > fixer > capitalist > priestess), then by coin value desc
+var gridEl = document.getElementById('grid');
+var cards = Array.from(gridEl.children);
+var roleOrder = {FATEWEAVER:1, PAINTRESS:2, FIXER:3, CAPITALIST:4, PRIESTESS:5};
+cards.sort(function(a,b){
+  var aName = a.querySelector('.card-name').childNodes[0].textContent.trim();
+  var bName = b.querySelector('.card-name').childNodes[0].textContent.trim();
+  var aPaid = paidNames.indexOf(aName) !== -1 ? 1 : 0;
+  var bPaid = paidNames.indexOf(bName) !== -1 ? 1 : 0;
+  // Unpaid first
+  if(aPaid !== bPaid) return aPaid - bPaid;
+  // Then by role
+  var aRole = a.querySelector('.role').textContent.trim();
+  var bRole = b.querySelector('.role').textContent.trim();
+  var aOrd = roleOrder[aRole] || 99;
+  var bOrd = roleOrder[bRole] || 99;
+  if(aOrd !== bOrd) return aOrd - bOrd;
+  // Then by coin value (foxy before boxy, higher count first)
+  return 0;
+});
+cards.forEach(function(c){ gridEl.appendChild(c); });
 
 </script>
 
