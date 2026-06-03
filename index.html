@@ -9,10 +9,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;min-height:100vh;overflow-x:hidden}
-body{background:#060608;color:#c0b8a8;font-family:'Crimson Text',serif;cursor:default}
+body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;cursor:default}
 
 /* ======== GATE ======== */
-.gate{position:fixed;inset:0;z-index:99999;background:#060608;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 1.5s ease,visibility 1.5s}
+.gate{position:fixed;inset:0;z-index:99999;background:#16161d;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 1.5s ease,visibility 1.5s}
 .gate.gone{opacity:0;visibility:hidden;pointer-events:none}
 .gate-fox{font-size:48px;opacity:0.12;margin-bottom:20px;animation:gFloat 5s ease-in-out infinite}
 @keyframes gFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -257,6 +257,81 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
     <circle cx="450" cy="440" r="1" fill="rgba(196,161,100,0.04)"/>
     <circle cx="320" cy="400" r="1.2" fill="rgba(196,161,100,0.03)"/>
 
+
+    <!-- FLOATING SPIRITS -->
+    <style>
+      @keyframes spiritFloat{0%,100%{transform:translateY(0px)}50%{transform:translateY(-8px)}}
+      @keyframes spiritGlow{0%,100%{opacity:0.3}50%{opacity:0.7}}
+      @keyframes fairyDrift{0%{transform:translate(0,0)}25%{transform:translate(5px,-4px)}50%{transform:translate(-3px,-7px)}75%{transform:translate(4px,-2px)}100%{transform:translate(0,0)}}
+      .spirit{animation:spiritFloat 4s ease-in-out infinite,spiritGlow 3s ease-in-out infinite}
+      .fairy{animation:fairyDrift 6s ease-in-out infinite,spiritGlow 4s ease-in-out infinite}
+      .angel{animation:spiritFloat 5s ease-in-out infinite}
+    </style>
+
+    <!-- Dreamlands spirits (purple wisps) -->
+    <g class="spirit" style="animation-delay:0s">
+      <circle cx="90" cy="190" r="3" fill="rgba(180,140,220,0.5)"/>
+      <circle cx="90" cy="190" r="8" fill="rgba(180,140,220,0.08)"/>
+      <path d="M84,190 Q87,184 90,187 Q93,184 96,190" fill="none" stroke="rgba(180,140,220,0.2)" stroke-width="0.5"/>
+    </g>
+    <g class="fairy" style="animation-delay:1.5s">
+      <circle cx="240" cy="160" r="2" fill="rgba(200,180,230,0.6)"/>
+      <circle cx="240" cy="160" r="6" fill="rgba(200,180,230,0.06)"/>
+      <path d="M236,159 Q238,155 240,157 Q242,155 244,159" fill="none" stroke="rgba(200,180,230,0.15)" stroke-width="0.5"/>
+    </g>
+
+    <!-- War Room spirits (red embers) -->
+    <g class="spirit" style="animation-delay:0.8s">
+      <circle cx="720" cy="210" r="2.5" fill="rgba(220,100,80,0.5)"/>
+      <circle cx="720" cy="210" r="7" fill="rgba(220,100,80,0.07)"/>
+      <path d="M716,210 Q718,205 720,208 Q722,205 724,210" fill="none" stroke="rgba(220,100,80,0.2)" stroke-width="0.5"/>
+    </g>
+    <g class="fairy" style="animation-delay:2.2s">
+      <circle cx="830" cy="250" r="2" fill="rgba(200,80,60,0.4)"/>
+      <circle cx="830" cy="250" r="5" fill="rgba(200,80,60,0.06)"/>
+    </g>
+
+    <!-- Treasury spirits (blue wisps) -->
+    <g class="spirit" style="animation-delay:1.2s">
+      <circle cx="190" cy="480" r="2.5" fill="rgba(130,190,220,0.5)"/>
+      <circle cx="190" cy="480" r="7" fill="rgba(130,190,220,0.07)"/>
+      <path d="M186,480 Q188,475 190,478 Q192,475 194,480" fill="none" stroke="rgba(130,190,220,0.2)" stroke-width="0.5"/>
+    </g>
+
+    <!-- Familiar spirits (violet wisps) -->
+    <g class="fairy" style="animation-delay:0.5s">
+      <circle cx="640" cy="510" r="2.5" fill="rgba(200,170,240,0.5)"/>
+      <circle cx="640" cy="510" r="7" fill="rgba(200,170,240,0.07)"/>
+      <path d="M636,510 Q638,505 640,508 Q642,505 644,510" fill="none" stroke="rgba(200,170,240,0.2)" stroke-width="0.5"/>
+    </g>
+
+    <!-- Temple spirits (dim, ghostly) -->
+    <g class="spirit" style="animation-delay:3s;opacity:0.3">
+      <circle cx="580" cy="120" r="2" fill="rgba(157,124,191,0.3)"/>
+      <circle cx="580" cy="120" r="5" fill="rgba(157,124,191,0.04)"/>
+    </g>
+
+    <!-- Central angel at the crossroads (larger, golden) -->
+    <g class="angel" style="animation-delay:0s">
+      <circle cx="480" cy="350" r="4" fill="rgba(196,161,100,0.4)"/>
+      <circle cx="480" cy="350" r="12" fill="rgba(196,161,100,0.05)"/>
+      <circle cx="480" cy="350" r="20" fill="rgba(196,161,100,0.02)"/>
+      <path d="M470,349 Q474,340 480,345 Q486,340 490,349" fill="none" stroke="rgba(196,161,100,0.15)" stroke-width="0.8"/>
+      <path d="M470,351 Q474,360 480,355 Q486,360 490,351" fill="none" stroke="rgba(196,161,100,0.1)" stroke-width="0.5"/>
+    </g>
+
+    <!-- Wandering fairy between dreamlands and treasury -->
+    <g class="fairy" style="animation-delay:4s">
+      <circle cx="160" cy="380" r="2" fill="rgba(196,161,100,0.35)"/>
+      <circle cx="160" cy="380" r="5" fill="rgba(196,161,100,0.04)"/>
+    </g>
+
+    <!-- Wandering spirit between war room and familiar -->
+    <g class="spirit" style="animation-delay:2.5s">
+      <circle cx="660" cy="420" r="2" fill="rgba(196,161,100,0.3)"/>
+      <circle cx="660" cy="420" r="5" fill="rgba(196,161,100,0.04)"/>
+    </g>
+
   </svg>
 
   <div class="stats">
@@ -331,7 +406,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
   setTimeout(function(){var w=document.getElementById('wanderer');if(w){w.classList.add('go');unlock('wanderer');setTimeout(function(){w.classList.remove('go')},26000)}},30000+Math.random()*50000);
 
   // S6: Midnight
-  if(new Date().getHours()<5){document.body.style.background='#030308';unlock('midnight')}
+  if(new Date().getHours()<5){document.body.style.background='#0d0d14';unlock('midnight')}
 
   // S7: Right-click
   var rc=false;document.addEventListener('contextmenu',function(){if(!rc){rc=true;unlock('right-click')}});
