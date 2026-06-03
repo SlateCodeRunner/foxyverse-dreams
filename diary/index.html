@@ -20,6 +20,41 @@
 .pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.1)}
 @media(max-width:600px){.pet-companion{bottom:48px;right:8px}}
 
+
+/* ======== PET BONUSES ======== */
+.pet-bonus-tag{position:fixed;bottom:40px;right:14px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.05);letter-spacing:1px;z-index:9995}
+@media(max-width:600px){.pet-bonus-tag{bottom:74px}}
+/* Taurus: bigger text */
+body.bonus-taurus{font-size:110%}
+/* Cancer: warm tint */
+body.bonus-cancer::before{content:'';position:fixed;inset:0;background:rgba(255,200,150,0.015);pointer-events:none;z-index:9990}
+/* Leo: cursor trail */
+.leo-trail{position:fixed;width:6px;height:6px;border-radius:50%;background:rgba(255,180,40,0.3);pointer-events:none;z-index:9994;transition:opacity 0.8s}
+/* Virgo: reading time */
+.virgo-readtime{position:fixed;top:14px;right:14px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.06);letter-spacing:1px;z-index:9995}
+@media(max-width:600px){.virgo-readtime{top:auto;bottom:74px;right:auto;left:14px}}
+/* Capricorn: progress bar */
+.capri-progress{position:fixed;top:0;left:0;height:2px;background:rgba(120,130,140,0.2);z-index:9995;transition:width 0.3s}
+/* Pisces: dreamy wave */
+body.bonus-pisces .page,body.bonus-pisces .map-outer{animation:piscesDrift 8s ease-in-out infinite}
+@keyframes piscesDrift{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
+/* Scorpio: shadow flicker */
+.scorpio-blackout{position:fixed;inset:0;background:#060608;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.15s}
+/* Aquarius: glitch text */
+.aqua-glitch{display:inline;position:relative}
+.aqua-glitch::after{content:attr(data-t);position:absolute;left:2px;top:0;color:rgba(95,168,211,0.4);clip-path:inset(0 0 0 0);animation:aquaG 0.1s steps(1) forwards}
+@keyframes aquaG{to{clip-path:inset(0 100% 0 0)}}
+/* Aries: page shake */
+body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
+@keyframes rammm{0%,100%{transform:none}25%{transform:translateX(-4px) rotate(-0.5deg)}75%{transform:translateX(4px) rotate(0.5deg)}}
+/* Gemini: duplicate flash */
+.gemini-dupe{position:fixed;inset:0;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.2s;filter:blur(1px);mix-blend-mode:screen}
+/* Sagittarius: discovery link */
+.sag-discover{position:fixed;bottom:50px;right:60px;font-family:'Fira Code',monospace;font-size:8px;z-index:9995;opacity:0;transition:opacity 1s}
+.sag-discover a{color:rgba(180,100,220,0.25);text-decoration:none;letter-spacing:1px}
+.sag-discover a:hover{color:rgba(180,100,220,0.6)}
+@media(max-width:600px){.sag-discover{bottom:80px;right:14px}}
+
 </style></head><body>
 <div class="c"><a href="../foxydreams.html" class="bk">&#8592; BACK TO DREAMLANDS</a>
 <div class="h"><div class="i">&#128214;</div><div class="t">DEAR DIARY</div><div class="s">THE FOX REMEMBERS</div><div class="o">"no voice shall rise above my own within me"</div></div>
@@ -66,5 +101,151 @@
 })();
 </script>
 
+<script>
+// ======== PET BONUS SYSTEM ========
+(function(){
+  try{
+    var pet=JSON.parse(localStorage.getItem('foxyverse-pet'));
+    if(!pet) return;
+    var sign=pet.sign;
+    var tag=document.createElement('div');
+    tag.className='pet-bonus-tag';
+
+    switch(sign){
+      case 'Aries':
+        tag.textContent='BONUS: HEADBUTT (page shakes randomly)';
+        document.body.appendChild(tag);
+        setInterval(function(){
+          if(Math.random()<0.15){
+            document.body.classList.add('bonus-aries','shaking');
+            setTimeout(function(){document.body.classList.remove('shaking')},300);
+          }
+        },15000);
+        break;
+
+      case 'Taurus':
+        document.body.classList.add('bonus-taurus');
+        tag.textContent='BONUS: COMFORT READ (+10% text size)';
+        document.body.appendChild(tag);
+        break;
+
+      case 'Gemini':
+        tag.textContent='BONUS: MIRROR GLITCH (brief duplicates)';
+        document.body.appendChild(tag);
+        setInterval(function(){
+          if(Math.random()<0.12){
+            var d=document.createElement('div');
+            d.className='gemini-dupe';
+            d.innerHTML=document.body.innerHTML.substring(0,2000);
+            d.style.opacity='0.08';
+            document.body.appendChild(d);
+            setTimeout(function(){d.style.opacity='0';setTimeout(function(){d.remove()},300)},200);
+          }
+        },20000);
+        break;
+
+      case 'Cancer':
+        document.body.classList.add('bonus-cancer');
+        tag.textContent='BONUS: WARM SHELL (cozy page tint)';
+        document.body.appendChild(tag);
+        break;
+
+      case 'Leo':
+        tag.textContent='BONUS: GOLDEN TRAIL (majestic cursor)';
+        document.body.appendChild(tag);
+        document.addEventListener('mousemove',function(e){
+          var t=document.createElement('div');
+          t.className='leo-trail';
+          t.style.left=e.clientX+'px';t.style.top=e.clientY+'px';
+          document.body.appendChild(t);
+          setTimeout(function(){t.style.opacity='0'},50);
+          setTimeout(function(){t.remove()},800);
+        });
+        break;
+
+      case 'Virgo':
+        var words=document.body.innerText.split(/\s+/).length;
+        var mins=Math.ceil(words/200);
+        var rt=document.createElement('div');
+        rt.className='virgo-readtime';
+        rt.textContent=mins+' MIN READ \u00B7 '+words+' WORDS';
+        document.body.appendChild(rt);
+        tag.textContent='BONUS: ARCHIVE SCAN (reading time shown)';
+        document.body.appendChild(tag);
+        break;
+
+      case 'Libra':
+        tag.textContent='BONUS: BALANCE (everything slightly centered)';
+        document.body.appendChild(tag);
+        document.body.style.textAlign='center';
+        break;
+
+      case 'Scorpio':
+        tag.textContent='BONUS: SHADOW FLICKER (brief blackouts)';
+        document.body.appendChild(tag);
+        var bo=document.createElement('div');
+        bo.className='scorpio-blackout';
+        document.body.appendChild(bo);
+        setInterval(function(){
+          if(Math.random()<0.1){
+            bo.style.opacity='1';
+            setTimeout(function(){bo.style.opacity='0'},150);
+          }
+        },12000);
+        break;
+
+      case 'Sagittarius':
+        tag.textContent='BONUS: WANDERLUST (discovers hidden pages)';
+        document.body.appendChild(tag);
+        var pages=['campfire.html','sekhmet.html','foxycord.html','the-lighthouse.html','lanci.html','nightmare.html','the-word-no.html','foxy-dream.html'];
+        var pick=pages[Math.floor(Math.random()*pages.length)];
+        var disc=document.createElement('div');
+        disc.className='sag-discover';
+        disc.innerHTML='<a href="'+pick+'">\u2192 your familiar found something</a>';
+        document.body.appendChild(disc);
+        setTimeout(function(){disc.style.opacity='1'},5000+Math.random()*15000);
+        break;
+
+      case 'Capricorn':
+        tag.textContent='BONUS: SUMMIT TRACKER (exploration progress)';
+        document.body.appendChild(tag);
+        var st=JSON.parse(localStorage.getItem('foxyverse-pet-state')||'{}');
+        var visited=(st.pagesVisited||[]).length;
+        var total=38;
+        var bar=document.createElement('div');
+        bar.className='capri-progress';
+        bar.style.width=Math.min(100,visited/total*100)+'%';
+        bar.title=visited+'/'+total+' pages explored';
+        document.body.appendChild(bar);
+        break;
+
+      case 'Aquarius':
+        tag.textContent='BONUS: DATA CORRUPTION (text glitches)';
+        document.body.appendChild(tag);
+        setInterval(function(){
+          if(Math.random()<0.1){
+            var els=document.querySelectorAll('p,div,span,a');
+            if(!els.length) return;
+            var el=els[Math.floor(Math.random()*els.length)];
+            if(!el.textContent||el.textContent.length<3) return;
+            var orig=el.textContent;
+            var chars=orig.split('');
+            var idx=Math.floor(Math.random()*chars.length);
+            chars[idx]=String.fromCharCode(9600+Math.floor(Math.random()*32));
+            el.textContent=chars.join('');
+            setTimeout(function(){el.textContent=orig},400);
+          }
+        },8000);
+        break;
+
+      case 'Pisces':
+        document.body.classList.add('bonus-pisces');
+        tag.textContent='BONUS: DREAM DRIFT (gentle page sway)';
+        document.body.appendChild(tag);
+        break;
+    }
+  }catch(e){}
+})();
+</script>
 </body></html>
 
