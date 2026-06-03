@@ -119,41 +119,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 @media(max-width:600px){.social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.04)}.social-float a{width:48px;height:40px}.social-float a:hover{width:48px}.social-float a .s-label{display:none}body{padding-bottom:44px}}
 
 
-/* ======== PET ACTIVITIES ======== */
-.activities{display:flex;flex-direction:column;gap:8px;margin-top:24px;width:100%;max-width:360px}
-.act-title{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.06);margin-bottom:4px}
-.act-btn{
-  padding:14px 20px;background:rgba(255,255,255,0.01);
-  border:1px solid rgba(255,255,255,0.04);
-  color:rgba(255,255,255,0.2);font-family:'Crimson Text',serif;font-size:14px;
-  cursor:pointer;transition:all 0.4s;text-align:left;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.act-btn:hover{border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.02)}
-.act-btn .act-icon{font-size:18px;opacity:0.4}
-.act-btn .act-cd{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.08)}
-.act-btn.disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
-
-/* XP Bar */
-.xp-wrap{width:100%;max-width:360px;margin-top:20px}
-.xp-label{display:flex;justify-content:space-between;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.08);letter-spacing:1px;margin-bottom:4px}
-.xp-bar{width:100%;height:3px;background:rgba(255,255,255,0.03);border-radius:2px;overflow:hidden}
-.xp-fill{height:100%;background:var(--pet-color,rgba(196,161,100,0.3));border-radius:2px;transition:width 0.8s ease}
-
-/* Mood */
-.mood-display{font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.1);margin-top:12px;letter-spacing:1px}
-.mood-emoji{font-size:16px;vertical-align:middle;margin-right:4px}
-
-/* Pet response bubble */
-.pet-bubble{
-  max-width:300px;padding:12px 18px;
-  background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);
-  border-radius:12px 12px 12px 0;
-  font-size:13px;font-style:italic;color:rgba(255,255,255,0.2);
-  margin-top:12px;min-height:44px;
-  transition:all 0.5s;opacity:0;
-}
-.pet-bubble.show{opacity:1}
 </style>
 </head>
 <body>
@@ -196,15 +161,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
     <a href="index.html" class="pet-btn">RETURN TO MAP</a>
     
   </div>
-
-  <div class="xp-wrap" id="xpWrap" style="display:none">
-    <div class="xp-label"><span>BOND</span><span id="xpText">LV 1</span></div>
-    <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
   </div>
-
-  <div class="mood-display" id="moodDisplay" style="display:none"></div>
-
-  <div class="pet-bubble" id="petBubble"></div>
 
   <div class="activities" id="activities" style="display:none">
     <div class="act-title">activities</div>
@@ -302,8 +259,6 @@ function showPet(pet){
   document.getElementById('petTraits').innerHTML=pet.traits.map(function(t){return'\u2022 '+t}).join('<br>');
 }
 
-
-
 function burstParticles(){
   var colors=['#c4a164','#9d7cbf','#5fa8d3','#ff6b35','#e91e63'];
   for(var i=0;i<30;i++){
@@ -314,141 +269,6 @@ function burstParticles(){
     setTimeout(function(el){el.remove()},2000,p);
   }
 }
-
-// ========= PET STATE SYSTEM =========
-function getPetState(){
-  var s=localStorage.getItem('foxyverse-pet-state');
-  if(!s) return {xp:0,level:1,mood:'content',lastFeed:0,lastPlay:0,lastTalk:0,lastMeditate:0,lastExplore:0,pagesVisited:[]};
-  try{return JSON.parse(s)}catch(e){return {xp:0,level:1,mood:'content',lastFeed:0,lastPlay:0,lastTalk:0,lastMeditate:0,lastExplore:0,pagesVisited:[]}}
-}
-function savePetState(st){localStorage.setItem('foxyverse-pet-state',JSON.stringify(st))}
-
-function getLevel(xp){
-  var levels=[0,10,25,50,100,200,350,550,800,1100,1500];
-  for(var i=levels.length-1;i>=0;i--){if(xp>=levels[i]) return {level:i+1,current:xp-levels[i],next:(levels[i+1]||levels[i]+500)-levels[i]}}
-  return {level:1,current:0,next:10};
-}
-
-function getMood(st){
-  var now=Date.now();
-  var hoursSinceFeed=(now-st.lastFeed)/3600000;
-  var hoursSincePlay=(now-st.lastPlay)/3600000;
-  if(hoursSinceFeed<1&&hoursSincePlay<1) return {mood:'ecstatic',emoji:'\u2728'};
-  if(hoursSinceFeed<3) return {mood:'content',emoji:'\uD83D\uDE0A'};
-  if(hoursSinceFeed<12) return {mood:'restless',emoji:'\uD83D\uDCA8'};
-  if(hoursSinceFeed<24) return {mood:'hungry',emoji:'\uD83D\uDE14'};
-  return {mood:'lonely',emoji:'\uD83C\uDF19'};
-}
-
-var RESPONSES={
-  feed:[
-    'nom nom nom. acceptable.',
-    'the offering is received.',
-    '*munches contentedly*',
-    'this sustains me. barely.',
-    'more.',
-    'you remembered. good.',
-    'the hunger recedes. for now.'
-  ],
-  play:[
-    '*chases sparks in circles*',
-    'again. do it again.',
-    '*pounces on nothing visible*',
-    'the sparks speak to me.',
-    '*zooms across the void*',
-    'this is... acceptable fun.',
-    '*vibrates with chaotic energy*'
-  ],
-  talk:[
-    '...',
-    'the void is quieter when you speak.',
-    'i was listening. continue.',
-    'interesting. wrong, but interesting.',
-    'you talk a lot for someone who hatched me by accident.',
-    'the stars said something similar once.',
-    'noted. filed. ignored.'
-  ],
-  meditate:[
-    '*the air grows still*',
-    'the bond deepens.',
-    'i can feel the threads from here.',
-    'your mind is loud. quieter.',
-    '*a faint glow passes between you*',
-    'the void breathes with us.',
-    'for a moment, we were the same thing.'
-  ],
-  explore:[
-    'found a strange echo. kept it.',
-    'the void had nothing new today. suspicious.',
-    'something followed us back. probably fine.',
-    'found a door. didn\u2019t open it. yet.',
-    'the darkness has layers. we went down one.',
-    'brought you a shadow. you\u2019re welcome.',
-    'we saw the edge. we did not look over.'
-  ]
-};
-
-function showBubble(text){
-  var b=document.getElementById('petBubble');
-  b.textContent=text;
-  b.classList.remove('show');
-  void b.offsetWidth;
-  b.classList.add('show');
-  setTimeout(function(){b.classList.remove('show')},5000);
-}
-
-function updateUI(){
-  var st=getPetState();
-  var lv=getLevel(st.xp);
-  var m=getMood(st);
-  document.getElementById('xpWrap').style.display='block';
-  document.getElementById('xpText').textContent='LV '+lv.level+' ('+st.xp+' XP)';
-  document.getElementById('xpFill').style.width=Math.min(100,lv.current/lv.next*100)+'%';
-  document.getElementById('moodDisplay').style.display='block';
-  document.getElementById('moodDisplay').innerHTML='<span class="mood-emoji">'+m.emoji+'</span> mood: '+m.mood;
-  document.getElementById('activities').style.display='flex';
-
-  // Cooldowns (30 min each)
-  var now=Date.now();
-  var acts=['feed','play','talk','meditate','explore'];
-  acts.forEach(function(a){
-    var last=st['last'+a.charAt(0).toUpperCase()+a.slice(1)]||0;
-    var cd=Math.max(0,1800000-(now-last));
-    var btn=document.getElementById('act'+a.charAt(0).toUpperCase()+a.slice(1));
-    var cdEl=document.getElementById('cd'+a.charAt(0).toUpperCase()+a.slice(1));
-    if(cd>0){
-      btn.classList.add('disabled');
-      cdEl.textContent=Math.ceil(cd/60000)+'m';
-    }else{
-      btn.classList.remove('disabled');
-      cdEl.textContent='ready';
-    }
-  });
-}
-
-function doActivity(type){
-  var st=getPetState();
-  var now=Date.now();
-  var key='last'+type.charAt(0).toUpperCase()+type.slice(1);
-  var cd=1800000-(now-st[key]);
-  if(cd>0) return;
-
-  st[key]=now;
-  st.xp+=5;
-  savePetState(st);
-
-  var responses=RESPONSES[type];
-  showBubble(responses[Math.floor(Math.random()*responses.length)]);
-  updateUI();
-}
-
-// Show activities if pet exists
-var _oldShowPet=showPet;
-showPet=function(pet){
-  _oldShowPet(pet);
-  updateUI();
-};
-if(saved) updateUI();
 
 </script>
 </body>
