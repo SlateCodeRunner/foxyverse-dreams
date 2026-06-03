@@ -16,9 +16,9 @@ body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;cursor:de
 .gate.gone{opacity:0;visibility:hidden;pointer-events:none}
 .gate-fox{font-size:48px;opacity:0.12;margin-bottom:20px;animation:gFloat 5s ease-in-out infinite}
 @keyframes gFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.gate-text{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(13px,2.5vw,17px);letter-spacing:10px;text-transform:uppercase;color:rgba(196,161,100,0.15);transition:all 0.5s}
+.gate-text{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(13px,2.5vw,17px);letter-spacing:10px;text-transform:uppercase;color:rgba(196,161,100,0.24);transition:all 0.5s}
 .gate:hover .gate-text{color:rgba(206,176,120,0.6);letter-spacing:12px}
-.gate-sub{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.03);letter-spacing:5px;margin-top:14px;text-transform:uppercase}
+.gate-sub{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.09);letter-spacing:5px;margin-top:14px;text-transform:uppercase}
 
 /* ======== STARS ======== */
 .stars{position:fixed;inset:0;z-index:0;overflow:hidden}
@@ -26,9 +26,9 @@ body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;cursor:de
 @keyframes twinkle{0%,100%{opacity:0.08}50%{opacity:var(--b,0.5)}}
 
 /* ======== MUSIC ======== */
-.music-btn{position:fixed;bottom:14px;left:14px;z-index:9997;width:30px;height:30px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.03);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;opacity:0.2;transition:all 0.3s;color:rgba(255,255,255,0.3)}
+.music-btn{position:fixed;bottom:14px;left:14px;z-index:9997;width:30px;height:30px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.075);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;opacity:0.2;transition:all 0.3s;color:rgba(255,255,255,0.3)}
 .music-btn:hover{opacity:0.6}
-.music-btn.on{opacity:0.4;border-color:rgba(196,122,42,0.12)}
+.music-btn.on{opacity:0.4;border-color:rgba(196,122,42,0.3)}
 @media(max-width:600px){.music-btn{bottom:50px}}
 
 /* ======== MAP CONTAINER ======== */
@@ -38,7 +38,7 @@ body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;cursor:de
 .title-area{text-align:center;padding:20px 0 0}
 .title-area h1{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(20px,4vw,32px);color:rgba(206,176,120,0.65);letter-spacing:8px;cursor:pointer;user-select:none;transition:all 0.6s}
 .title-area h1:hover{color:rgba(196,161,100,0.65);letter-spacing:10px}
-.title-area .sub{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.18);letter-spacing:5px;margin-top:6px;text-transform:uppercase}
+.title-area .sub{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.35);letter-spacing:5px;margin-top:6px;text-transform:uppercase}
 
 /* ======== SVG MAP ======== */
 .world-map{width:100%;max-width:1000px;margin:10px auto 0;display:block}
@@ -74,21 +74,21 @@ body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;cursor:de
 
 /* ======== STATS ======== */
 .stats{display:flex;justify-content:center;gap:24px;padding:8px 0 0;flex-wrap:wrap}
-.stat{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.18);letter-spacing:2px;text-transform:uppercase}
-.stat b{color:rgba(196,161,100,0.12);font-weight:400}
+.stat{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase}
+.stat b{color:rgba(196,161,100,0.3);font-weight:400}
 
 /* ======== FOOTER ======== */
 .footer{text-align:center;padding:24px 0 60px}
-.footer .line{font-size:12px;color:rgba(255,255,255,0.22);font-style:italic;line-height:2}
+.footer .line{font-size:12px;color:rgba(255,255,255,0.33);font-style:italic;line-height:2}
 .footer .sig{font-family:'Cinzel',serif;font-size:12px;color:rgba(196,142,62,0.35);margin-top:6px;letter-spacing:2px}
 .footer .mono{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.3);margin-top:12px;letter-spacing:3px;cursor:pointer;transition:color 0.5s}
-.footer .mono:hover{color:rgba(255,255,255,0.22)}
+.footer .mono:hover{color:rgba(255,255,255,0.33)}
 .invisible{color:transparent;font-size:1px;user-select:text;line-height:0;height:0;overflow:hidden}
 
 /* Secret */
 .secret{position:relative;text-align:center;opacity:0;pointer-events:none;font-family:'Fira Code',monospace;font-size:9px;color:rgba(196,122,42,0.4);transition:opacity 0.8s;letter-spacing:3px;margin-top:10px}
 .secret.found{opacity:1;pointer-events:auto}
-#secret-counter{position:fixed;bottom:10px;right:10px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.03);z-index:999;transition:color 0.5s}
+#secret-counter{position:fixed;bottom:10px;right:10px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.09);z-index:999;transition:color 0.5s}
 
 /* Scanline */
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
@@ -192,7 +192,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
       <ellipse class="zone-glow" cx="170" cy="240" rx="100" ry="70" fill="rgba(140,90,200,0.3)" filter="url(#softglow)"/>
       <!-- Moon -->
       <circle cx="110" cy="175" r="18" fill="rgba(200,180,230,0.04)" stroke="rgba(200,180,230,0.06)" stroke-width="0.5"/>
-      <circle cx="118" cy="172" r="15" fill="#060608"/>
+      <circle cx="118" cy="172" r="15" fill="#16161d"/>
       <!-- Terrain shapes -->
       <path d="M55,310 Q90,280 130,300 Q170,285 210,305 Q250,290 280,320" fill="none" stroke="rgba(100,60,160,0.06)" stroke-width="1.5"/>
       <path d="M70,290 Q120,260 160,275 Q200,260 240,280" fill="none" stroke="rgba(100,60,160,0.04)" stroke-width="1"/>

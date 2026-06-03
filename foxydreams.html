@@ -111,7 +111,7 @@ body{
   transition:opacity 0.4s;
 }
 .card:hover::before{opacity:1}
-.card:hover{border-color:rgba(255,255,255,0.22);transform:translateY(-1px)}
+.card:hover{border-color:rgba(255,255,255,0.33);transform:translateY(-1px)}
 
 .card-fox::before{background:var(--fox)}
 .card-fox:hover{background:var(--fox-glow)}
@@ -214,7 +214,7 @@ body{
 .footer .mono{
   font-family:'Fira Code',monospace;
   font-size:9px;
-  color:rgba(255,255,255,0.22);
+  color:rgba(255,255,255,0.33);
   margin-top:16px;
   letter-spacing:2px;
 }
@@ -259,15 +259,15 @@ body::after{
   text-decoration:none;
   opacity:0.4;
 }
-.pet-companion:hover{opacity:0.8;border-color:rgba(255,255,255,0.28);background:rgba(10,10,18,0.95)}
+.pet-companion:hover{opacity:0.8;border-color:rgba(255,255,255,0.42000000000000004);background:rgba(10,10,18,0.95)}
 .pet-companion .pc-emoji{font-size:16px}
 .pet-companion .pc-name{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.45);letter-spacing:1px}
-.pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.28)}
+.pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.42000000000000004)}
 @media(max-width:600px){.pet-companion{bottom:48px;right:8px}}
 
 
 /* ======== PET BONUSES ======== */
-.pet-bonus-tag{position:fixed;bottom:40px;right:14px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.05);letter-spacing:1px;z-index:9995}
+.pet-bonus-tag{position:fixed;bottom:40px;right:14px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.15);letter-spacing:1px;z-index:9995}
 @media(max-width:600px){.pet-bonus-tag{bottom:74px}}
 /* Taurus: bigger text */
 body.bonus-taurus{font-size:110%}
@@ -276,7 +276,7 @@ body.bonus-cancer::before{content:'';position:fixed;inset:0;background:rgba(255,
 /* Leo: cursor trail */
 .leo-trail{position:fixed;width:6px;height:6px;border-radius:50%;background:rgba(255,180,40,0.3);pointer-events:none;z-index:9994;transition:opacity 0.8s}
 /* Virgo: reading time */
-.virgo-readtime{position:fixed;top:14px;right:14px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.22);letter-spacing:1px;z-index:9995}
+.virgo-readtime{position:fixed;top:14px;right:14px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.33);letter-spacing:1px;z-index:9995}
 @media(max-width:600px){.virgo-readtime{top:auto;bottom:74px;right:auto;left:14px}}
 /* Capricorn: progress bar */
 .capri-progress{position:fixed;top:0;left:0;height:2px;background:rgba(120,130,140,0.2);z-index:9995;transition:width 0.3s}
@@ -284,7 +284,7 @@ body.bonus-cancer::before{content:'';position:fixed;inset:0;background:rgba(255,
 body.bonus-pisces .page,body.bonus-pisces .map-outer{animation:piscesDrift 8s ease-in-out infinite}
 @keyframes piscesDrift{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
 /* Scorpio: shadow flicker */
-.scorpio-blackout{position:fixed;inset:0;background:#060608;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.15s}
+.scorpio-blackout{position:fixed;inset:0;background:#16161d;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.15s}
 /* Aquarius: glitch text */
 .aqua-glitch{display:inline;position:relative}
 .aqua-glitch::after{content:attr(data-t);position:absolute;left:2px;top:0;color:rgba(95,168,211,0.4);clip-path:inset(0 0 0 0);animation:aquaG 0.1s steps(1) forwards}
@@ -313,7 +313,7 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 <a href="https://facebook.com/SlateLamp" target="_blank" class="sf-facebook" title="Facebook"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span><span class="s-label">facebook</span></a>
 </div>
 
-<div style="padding:20px 24px 0;max-width:680px;margin:0 auto"><a href="index.html" style="font-family:Fira Code,monospace;font-size:9px;color:rgba(255,255,255,0.28);text-decoration:none;letter-spacing:2px;transition:color 0.3s" onmouseover="this.style.color='rgba(196,122,42,0.3)'" onmouseout="this.style.color='rgba(255,255,255,0.28)'">&larr; BACK TO MAP</a></div>
+<div style="padding:20px 24px 0;max-width:680px;margin:0 auto"><a href="index.html" style="font-family:Fira Code,monospace;font-size:9px;color:rgba(255,255,255,0.42000000000000004);text-decoration:none;letter-spacing:2px;transition:color 0.3s" onmouseover="this.style.color='rgba(196,122,42,0.3)'" onmouseout="this.style.color='rgba(255,255,255,0.28)'">&larr; BACK TO MAP</a></div>
 <div class="page">
 
   <div class="hero">

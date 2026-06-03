@@ -7,16 +7,16 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#060608;color:#c0b8a8;font-family:'Crimson Text',serif;min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
+body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
 
-.back{position:fixed;top:16px;left:16px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.22);text-decoration:none;letter-spacing:2px;z-index:100;transition:color 0.3s}
+.back{position:fixed;top:16px;left:16px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.33);text-decoration:none;letter-spacing:2px;z-index:100;transition:color 0.3s}
 .back:hover{color:rgba(196,122,42,0.3)}
 
 /* ======== EGG STATE ======== */
 .egg-wrap{text-align:center;padding:40px 20px;display:flex;flex-direction:column;align-items:center;gap:16px}
 .egg-title{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,28px);color:rgba(206,176,120,0.6);letter-spacing:4px}
-.egg-sub{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.22);letter-spacing:3px;text-transform:uppercase}
+.egg-sub{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.33);letter-spacing:3px;text-transform:uppercase}
 
 .egg{
   width:120px;height:150px;
@@ -63,8 +63,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
   100%{transform:scale(1.5);opacity:0;filter:blur(10px)}
 }
 
-.egg-hint{font-size:12px;color:rgba(255,255,255,0.22);font-style:italic;margin-top:8px}
-.click-count{font-family:'Fira Code',monospace;font-size:9px;color:rgba(196,161,100,0.1);margin-top:4px}
+.egg-hint{font-size:12px;color:rgba(255,255,255,0.33);font-style:italic;margin-top:8px}
+.click-count{font-family:'Fira Code',monospace;font-size:9px;color:rgba(196,161,100,0.25);margin-top:4px}
 
 /* ======== HATCHED PET STATE ======== */
 .pet-wrap{text-align:center;padding:40px 20px;display:none;flex-direction:column;align-items:center;gap:10px;animation:petReveal 1.5s ease-out}
@@ -75,19 +75,19 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .pet-name{font-family:'Cinzel',serif;font-size:clamp(22px,5vw,34px);color:rgba(255,255,255,0.7);letter-spacing:3px;margin:4px 0}
 .pet-species{font-family:'Crimson Text',serif;font-style:italic;font-size:16px;color:rgba(255,255,255,0.45);margin-bottom:12px}
 .pet-element{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;padding:4px 14px;border:1px solid var(--pet-color,rgba(255,255,255,0.28));color:var(--pet-color,rgba(255,255,255,0.2));margin-bottom:16px}
-.pet-desc{max-width:400px;font-size:15px;line-height:1.9;color:rgba(255,255,255,0.2);margin-bottom:16px}
-.pet-trait{font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.28);letter-spacing:1px;line-height:2}
+.pet-desc{max-width:400px;font-size:15px;line-height:1.9;color:rgba(255,255,255,0.30000000000000004);margin-bottom:16px}
+.pet-trait{font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.42000000000000004);letter-spacing:1px;line-height:2}
 
 .pet-actions{display:flex;gap:12px;margin-top:20px}
 .pet-btn{
   padding:10px 24px;background:transparent;
   border:1px solid rgba(255,255,255,0.22);
-  color:rgba(255,255,255,0.2);
+  color:rgba(255,255,255,0.30000000000000004);
   font-family:'Fira Code',monospace;font-size:10px;letter-spacing:2px;
   cursor:pointer;transition:all 0.3s;text-decoration:none;
 }
-.pet-btn:hover{border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.5)}
-.pet-btn.danger{border-color:rgba(139,26,43,0.15);color:rgba(139,26,43,0.3)}
+.pet-btn:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.5)}
+.pet-btn.danger{border-color:rgba(139,26,43,0.3);color:rgba(139,26,43,0.44999999999999996)}
 .pet-btn.danger:hover{border-color:rgba(139,26,43,0.4);color:rgba(139,26,43,0.7)}
 
 /* Stars background */

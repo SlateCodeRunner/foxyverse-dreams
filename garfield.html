@@ -27,7 +27,7 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-even
 .tarot-card .card-numeral{font-size:42px;margin-bottom:6px;opacity:0.5}
 .tarot-card .card-name{font-family:'Cinzel',serif;font-size:24px;color:#ffcc00;margin-bottom:8px;letter-spacing:2px}
 .tarot-card .card-desc{font-size:13px;color:rgba(255,200,100,0.45);line-height:1.7}
-.tarot-card.shadow{border-color:rgba(150,100,200,0.15);background:linear-gradient(135deg,rgba(100,50,150,0.06),rgba(50,20,80,0.03))}
+.tarot-card.shadow{border-color:rgba(150,100,200,0.15);background:linear-gradient(135deg,rgba(100,50,150,0.06),rgba(50,20,80,0.075))}
 .tarot-card.shadow .card-name{color:#9966cc}
 .sigil{font-family:'VT323',monospace;font-size:22px;letter-spacing:8px;color:rgba(255,107,53,0.5);text-align:center;padding:18px;margin:20px 0;border:1px solid rgba(255,107,53,0.08)}
 .letter{background:rgba(255,200,0,0.02);border-left:3px solid rgba(255,107,53,0.25);padding:20px 25px;margin:20px 0;font-size:16px;color:rgba(255,200,150,0.65);line-height:1.9;font-style:italic}
@@ -74,15 +74,15 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-even
   text-decoration:none;
   opacity:0.4;
 }
-.pet-companion:hover{opacity:0.8;border-color:rgba(255,255,255,0.28);background:rgba(10,10,18,0.95)}
+.pet-companion:hover{opacity:0.8;border-color:rgba(255,255,255,0.42000000000000004);background:rgba(10,10,18,0.95)}
 .pet-companion .pc-emoji{font-size:16px}
 .pet-companion .pc-name{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.45);letter-spacing:1px}
-.pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.28)}
+.pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.42000000000000004)}
 @media(max-width:600px){.pet-companion{bottom:48px;right:8px}}
 
 
 /* ======== PET BONUSES ======== */
-.pet-bonus-tag{position:fixed;bottom:40px;right:14px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.05);letter-spacing:1px;z-index:9995}
+.pet-bonus-tag{position:fixed;bottom:40px;right:14px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.15);letter-spacing:1px;z-index:9995}
 @media(max-width:600px){.pet-bonus-tag{bottom:74px}}
 /* Taurus: bigger text */
 body.bonus-taurus{font-size:110%}
@@ -91,7 +91,7 @@ body.bonus-cancer::before{content:'';position:fixed;inset:0;background:rgba(255,
 /* Leo: cursor trail */
 .leo-trail{position:fixed;width:6px;height:6px;border-radius:50%;background:rgba(255,180,40,0.3);pointer-events:none;z-index:9994;transition:opacity 0.8s}
 /* Virgo: reading time */
-.virgo-readtime{position:fixed;top:14px;right:14px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.22);letter-spacing:1px;z-index:9995}
+.virgo-readtime{position:fixed;top:14px;right:14px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.33);letter-spacing:1px;z-index:9995}
 @media(max-width:600px){.virgo-readtime{top:auto;bottom:74px;right:auto;left:14px}}
 /* Capricorn: progress bar */
 .capri-progress{position:fixed;top:0;left:0;height:2px;background:rgba(120,130,140,0.2);z-index:9995;transition:width 0.3s}
@@ -99,7 +99,7 @@ body.bonus-cancer::before{content:'';position:fixed;inset:0;background:rgba(255,
 body.bonus-pisces .page,body.bonus-pisces .map-outer{animation:piscesDrift 8s ease-in-out infinite}
 @keyframes piscesDrift{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
 /* Scorpio: shadow flicker */
-.scorpio-blackout{position:fixed;inset:0;background:#060608;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.15s}
+.scorpio-blackout{position:fixed;inset:0;background:#16161d;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.15s}
 /* Aquarius: glitch text */
 .aqua-glitch{display:inline;position:relative}
 .aqua-glitch::after{content:attr(data-t);position:absolute;left:2px;top:0;color:rgba(95,168,211,0.4);clip-path:inset(0 0 0 0);animation:aquaG 0.1s steps(1) forwards}
