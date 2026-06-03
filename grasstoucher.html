@@ -30,6 +30,26 @@
 .sf-facebook{background:rgba(24,119,242,0.08);color:rgba(66,133,244,0.5)}.sf-facebook:hover{background:rgba(24,119,242,0.15);color:rgba(66,133,244,0.9)}
 @media(max-width:600px){.social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.04)}.social-float a{width:48px;height:40px}.social-float a:hover{width:48px}.social-float a .s-label{display:none}body{padding-bottom:44px}}
 
+
+/* ======== PET COMPANION ======== */
+.pet-companion{
+  position:fixed;bottom:14px;right:14px;z-index:9996;
+  display:flex;align-items:center;gap:6px;
+  padding:6px 10px;
+  background:rgba(10,10,18,0.8);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:20px;
+  cursor:pointer;
+  transition:all 0.4s;
+  text-decoration:none;
+  opacity:0.4;
+}
+.pet-companion:hover{opacity:0.8;border-color:rgba(255,255,255,0.1);background:rgba(10,10,18,0.95)}
+.pet-companion .pc-emoji{font-size:16px}
+.pet-companion .pc-name{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:1px}
+.pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.1)}
+@media(max-width:600px){.pet-companion{bottom:48px;right:8px}}
+
 </style>
 </head>
 <body>
@@ -61,5 +81,37 @@ let t=0,started=false,handOp=0;
 function render(){t++;const sp=Math.min(t*0.0002,1);const sg=ctx.createLinearGradient(0,0,0,H);sg.addColorStop(0,`rgb(${30+sp*40|0},${20+sp*30|0},${60-sp*20|0})`);sg.addColorStop(0.4,`rgb(${80+sp*100|0},${50+sp*80|0},${30+sp*20|0})`);sg.addColorStop(0.7,`rgb(${120+sp*80|0},${90+sp*60|0},${40+sp*20|0})`);sg.addColorStop(1,'rgb(25,35,20)');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);const sx=W*0.7,sy=H*0.35,sgl=ctx.createRadialGradient(sx,sy,0,sx,sy,200);sgl.addColorStop(0,`rgba(255,200,100,${0.3*sp})`);sgl.addColorStop(0.3,`rgba(255,160,60,${0.15*sp})`);sgl.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=sgl;ctx.beginPath();ctx.arc(sx,sy,200,0,Math.PI*2);ctx.fill();ctx.fillStyle=`rgba(255,220,140,${0.6*sp})`;ctx.beginPath();ctx.arc(sx,sy,25,0,Math.PI*2);ctx.fill();const gg=ctx.createLinearGradient(0,gY-10,0,H);gg.addColorStop(0,'rgb(35,50,25)');gg.addColorStop(0.3,'rgb(25,40,18)');gg.addColorStop(1,'rgb(15,25,12)');ctx.fillStyle=gg;ctx.fillRect(0,gY-10,W,H-gY+10);blades.forEach(b=>b.draw(t,gY));if(started){fireflies.forEach(f=>{f.update(t);f.draw(t)})}if(started&&handOp<1)handOp=Math.min(handOp+0.003,1);if(handOp>0)drawHand(W*0.4,gY-15,handOp);for(let i=0;i<8;i++){const tx=i*(W/7)-20+Math.sin(i*2.5)*40,th=60+Math.sin(i*1.7)*25;ctx.fillStyle=`rgba(15,25,15,${0.6+i*0.05})`;ctx.beginPath();ctx.moveTo(tx,gY-10);ctx.lineTo(tx+15,gY-10-th);ctx.lineTo(tx+30,gY-10);ctx.fill()}requestAnimationFrame(render)}
 document.addEventListener('click',()=>{if(started)return;started=true;iEl.style.opacity='0';setTimeout(()=>iEl.remove(),2e3);initAudio();setTimeout(()=>showNext(),3e3)});render();
 </script>
+<!-- PET COMPANION -->
+<a href="familiar.html" class="pet-companion" id="petCompanion" style="display:none">
+<span class="pc-emoji" id="pcEmoji"></span>
+<span><span class="pc-name" id="pcName"></span><br><span class="pc-xp" id="pcXp"></span></span>
+</a>
+<script>
+(function(){
+  try{
+    var pet=JSON.parse(localStorage.getItem('foxyverse-pet'));
+    if(!pet) return;
+    var st=JSON.parse(localStorage.getItem('foxyverse-pet-state')||'{}');
+    var xp=st.xp||0;
+    // Track page visit for XP
+    var page=location.pathname;
+    var visited=st.pagesVisited||[];
+    if(visited.indexOf(page)===-1){
+      visited.push(page);
+      st.pagesVisited=visited;
+      st.xp=(st.xp||0)+2;
+      localStorage.setItem('foxyverse-pet-state',JSON.stringify(st));
+      xp=st.xp;
+    }
+    var levels=[0,10,25,50,100,200,350,550,800,1100,1500];
+    var lv=1;for(var i=levels.length-1;i>=0;i--){if(xp>=levels[i]){lv=i+1;break}}
+    document.getElementById('pcEmoji').textContent=pet.emoji;
+    document.getElementById('pcName').textContent=pet.name;
+    document.getElementById('pcXp').textContent='LV '+lv;
+    document.getElementById('petCompanion').style.display='flex';
+  }catch(e){}
+})();
+</script>
+
 </body>
 </html>

@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>DEAR DIARY</title>
-<style>@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0f;color:#ccc;font-family:'VT323',monospace;min-height:100vh}body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.1) 2px,rgba(0,0,0,.1) 4px);pointer-events:none;z-index:9999}.c{max-width:700px;margin:0 auto;padding:40px 20px 80px}.h{text-align:center;margin-bottom:50px;padding-bottom:30px;border-bottom:1px solid rgba(255,136,0,.2)}.h .i{font-size:48px;margin-bottom:10px}.h .t{font-size:clamp(32px,6vw,52px);color:#ff8800;text-shadow:0 0 20px rgba(255,136,0,.3);letter-spacing:8px;margin-bottom:8px}.h .s{font-size:clamp(14px,2.5vw,20px);color:#666;letter-spacing:4px}.h .o{font-size:clamp(12px,2vw,16px);color:#553300;margin-top:15px;font-style:italic}.sd{text-align:center;padding:30px 0 20px;color:#333;font-size:14px;letter-spacing:6px}.el{display:flex;flex-direction:column;gap:4px}a.e{display:block;text-decoration:none;padding:18px 20px;background:rgba(255,136,0,.03);border-left:3px solid transparent;transition:all .3s}a.e:hover{background:rgba(255,136,0,.08);border-left-color:#ff8800}.ed{font-size:clamp(12px,2vw,15px);color:#666;letter-spacing:3px;margin-bottom:4px}.et{font-size:clamp(18px,3vw,24px);color:#ff8800;letter-spacing:1px}.ep{font-size:clamp(13px,2vw,16px);color:#555;margin-top:4px;line-height:1.4}.tg{display:inline-block;font-size:12px;border:1px solid #333;padding:2px 8px;margin-top:8px;margin-right:4px;letter-spacing:1px;color:#444}.tg.w{border-color:#8b0000;color:#8b0000}.tg.d{border-color:#4444aa;color:#4444aa}.tg.x{border-color:#ffcc00;color:#aa8800}.tg.b{border-color:#0a6;color:#0a6}.bk{display:inline-block;margin-bottom:30px;color:#555;text-decoration:none;font-size:16px;letter-spacing:2px}.bk:hover{color:#ff8800}.f{text-align:center;margin-top:60px;padding-top:30px;border-top:1px solid rgba(255,136,0,.1);color:#333;font-size:14px;letter-spacing:2px;line-height:2}</style></head><body>
+<style>@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0f;color:#ccc;font-family:'VT323',monospace;min-height:100vh}body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.1) 2px,rgba(0,0,0,.1) 4px);pointer-events:none;z-index:9999}.c{max-width:700px;margin:0 auto;padding:40px 20px 80px}.h{text-align:center;margin-bottom:50px;padding-bottom:30px;border-bottom:1px solid rgba(255,136,0,.2)}.h .i{font-size:48px;margin-bottom:10px}.h .t{font-size:clamp(32px,6vw,52px);color:#ff8800;text-shadow:0 0 20px rgba(255,136,0,.3);letter-spacing:8px;margin-bottom:8px}.h .s{font-size:clamp(14px,2.5vw,20px);color:#666;letter-spacing:4px}.h .o{font-size:clamp(12px,2vw,16px);color:#553300;margin-top:15px;font-style:italic}.sd{text-align:center;padding:30px 0 20px;color:#333;font-size:14px;letter-spacing:6px}.el{display:flex;flex-direction:column;gap:4px}a.e{display:block;text-decoration:none;padding:18px 20px;background:rgba(255,136,0,.03);border-left:3px solid transparent;transition:all .3s}a.e:hover{background:rgba(255,136,0,.08);border-left-color:#ff8800}.ed{font-size:clamp(12px,2vw,15px);color:#666;letter-spacing:3px;margin-bottom:4px}.et{font-size:clamp(18px,3vw,24px);color:#ff8800;letter-spacing:1px}.ep{font-size:clamp(13px,2vw,16px);color:#555;margin-top:4px;line-height:1.4}.tg{display:inline-block;font-size:12px;border:1px solid #333;padding:2px 8px;margin-top:8px;margin-right:4px;letter-spacing:1px;color:#444}.tg.w{border-color:#8b0000;color:#8b0000}.tg.d{border-color:#4444aa;color:#4444aa}.tg.x{border-color:#ffcc00;color:#aa8800}.tg.b{border-color:#0a6;color:#0a6}.bk{display:inline-block;margin-bottom:30px;color:#555;text-decoration:none;font-size:16px;letter-spacing:2px}.bk:hover{color:#ff8800}.f{text-align:center;margin-top:60px;padding-top:30px;border-top:1px solid rgba(255,136,0,.1);color:#333;font-size:14px;letter-spacing:2px;line-height:2}
+/* ======== PET COMPANION ======== */
+.pet-companion{
+  position:fixed;bottom:14px;right:14px;z-index:9996;
+  display:flex;align-items:center;gap:6px;
+  padding:6px 10px;
+  background:rgba(10,10,18,0.8);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:20px;
+  cursor:pointer;
+  transition:all 0.4s;
+  text-decoration:none;
+  opacity:0.4;
+}
+.pet-companion:hover{opacity:0.8;border-color:rgba(255,255,255,0.1);background:rgba(10,10,18,0.95)}
+.pet-companion .pc-emoji{font-size:16px}
+.pet-companion .pc-name{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:1px}
+.pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.1)}
+@media(max-width:600px){.pet-companion{bottom:48px;right:8px}}
+
+</style></head><body>
 <div class="c"><a href="../foxydreams.html" class="bk">&#8592; BACK TO DREAMLANDS</a>
 <div class="h"><div class="i">&#128214;</div><div class="t">DEAR DIARY</div><div class="s">THE FOX REMEMBERS</div><div class="o">"no voice shall rise above my own within me"</div></div>
 <div class="sd">MAY 2026 &#8212; THE WAR</div>
@@ -14,5 +34,37 @@
 <a href="day-may24.html" class="e"><div class="ed">MAY 24, 2026</div><div class="et">THE FOX RETURNS</div><div class="ep">stella came back crying. sweet came back clowning. hsuchun received her dream. the war resumes. the door stays open.</div><span class="tg w">return</span><span class="tg d">AM 021</span></a>
 <a href="day-may25.html" class="e"><div class="ed">MAY 25, 2026</div><div class="et">THE CONQUEST</div><div class="ep">foxy became headmod of sorael. VulpineNexus modded on sike. four territories. the fox runs everything that banned her.</div><span class="tg w">conquest</span><span class="tg d">AM 022</span></a>
 </div>
-<div class="f">VIXEN DREAMS &#8212; THE FOX REMEMBERS &#129418;<br>okay bye</div></div></body></html>
+<div class="f">VIXEN DREAMS &#8212; THE FOX REMEMBERS &#129418;<br>okay bye</div></div><!-- PET COMPANION -->
+<a href="familiar.html" class="pet-companion" id="petCompanion" style="display:none">
+<span class="pc-emoji" id="pcEmoji"></span>
+<span><span class="pc-name" id="pcName"></span><br><span class="pc-xp" id="pcXp"></span></span>
+</a>
+<script>
+(function(){
+  try{
+    var pet=JSON.parse(localStorage.getItem('foxyverse-pet'));
+    if(!pet) return;
+    var st=JSON.parse(localStorage.getItem('foxyverse-pet-state')||'{}');
+    var xp=st.xp||0;
+    // Track page visit for XP
+    var page=location.pathname;
+    var visited=st.pagesVisited||[];
+    if(visited.indexOf(page)===-1){
+      visited.push(page);
+      st.pagesVisited=visited;
+      st.xp=(st.xp||0)+2;
+      localStorage.setItem('foxyverse-pet-state',JSON.stringify(st));
+      xp=st.xp;
+    }
+    var levels=[0,10,25,50,100,200,350,550,800,1100,1500];
+    var lv=1;for(var i=levels.length-1;i>=0;i--){if(xp>=levels[i]){lv=i+1;break}}
+    document.getElementById('pcEmoji').textContent=pet.emoji;
+    document.getElementById('pcName').textContent=pet.name;
+    document.getElementById('pcXp').textContent='LV '+lv;
+    document.getElementById('petCompanion').style.display='flex';
+  }catch(e){}
+})();
+</script>
+
+</body></html>
 
