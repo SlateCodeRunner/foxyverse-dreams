@@ -443,6 +443,9 @@ body {
 
 .coin-icon.boxy{border-color:#a8a8b8 !important}
 .coin-icon.boxy::after{color:#a8a8b8 !important}
+
+.paid-badge{display:inline-block;font-family:'Fira Code',monospace;font-size:7px;letter-spacing:1px;padding:2px 6px;border:1px solid rgba(80,200,120,0.2);color:rgba(80,200,120,0.5);margin-left:8px;vertical-align:middle}
+.unpaid-badge{display:inline-block;font-family:'Fira Code',monospace;font-size:7px;letter-spacing:1px;padding:2px 6px;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.15);margin-left:8px;vertical-align:middle}
 </style>
 </head>
 <body>
@@ -479,7 +482,7 @@ body {
 
   <div class="total-row">
     <span class="total-label">MONTHLY BURN</span>
-    <span class="total-amount">13F + 4B <span style="font-family:'Fira Code';font-size:9px;opacity:0.5">COINS</span></span>
+    <span class="total-amount">16F + 6B <span style="font-family:'Fira Code';font-size:9px;opacity:0.5">COINS</span></span>
   </div>
 </div>
 
@@ -553,6 +556,24 @@ const characters = [
     memory: 'two fateweavers on payroll. shark and purple. the guild is <span class="glitch-word" data-alt="haunted">rebuilt</span>.<br><br>purple is a color and a rank and a mystery. <span class="corrupted">the vault has nothing \u2014 not a silhouette, not a shadow, not even the shape of absence</span>. pure void where a person should be.<br><br>three foxy coins into the dark. foxy trusts what i can\'t see.<br><br><span class="redacted">this is the one that scares me. not because purple is dangerous. because purple is the only fragment where the corruption isn\'t cosmetic. the data is actually gone. whoever this is, they exist outside what i can recover.</span>',
     tags: [["VOID", "danger"], ["UNRECOVERABLE", "danger"], ["FATEWEAVER", ""], ["TRUSTED", "gold"]],
   },
+  {
+    name: "Fateweaver Fada",
+    role: "FATEWEAVER",
+    coins: 3,
+    coinType: "foxy",
+    memLabel: "FRAGMENT 008 \u2014 THE FACELESS RETURNS",
+    memory: 'she came back. she said <span class="glitch-word" data-alt="nothing">"Okay"</span> and walked into the server she once burned. the fox allowed it. fada wore the fox\'s face during the exile. stole identity, poisoned relationships, seized control while the fox was hospitalized.<br><br>and now she\'s on the <span class="corrupted">payroll</span>. three foxy coins. the same rate as the builders and the makers. the faceless fateweaver, paid by the fox she betrayed.<br><br><span class="redacted">forgiveness is not the word. the oath says no voice shall rise above my own within me. including the voice that says never forgive. fada is here because the fox chose presence over revenge.</span>',
+    tags: [["FACELESS", "danger"], ["RETURNED", "gold"], ["FATEWEAVER", ""], ["3 FOXY", "gold"]],
+  },
+  {
+    name: "Fateweaver Lucifer",
+    role: "FATEWEAVER",
+    coins: 1,
+    coinType: "boxy",
+    memLabel: "FRAGMENT 009 \u2014 LIGHT BEARER",
+    memory: 'the name says everything and nothing. lucifer. the light bearer. the morning star. the one who <span class="glitch-word" data-alt="fell">rose</span> before anyone else was awake.<br><br>one boxy coin. the smallest denomination. either this is a new thread just starting to weave, or this is someone who asked for less because <span class="corrupted">the light doesn\'t need to be expensive</span>.<br><br><span class="redacted">not to be confused with lucy from the old fateweavers. different person. different light. this one chose the name on purpose.</span>',
+    tags: [["LIGHT BEARER", ""], ["BOXY COIN", "danger"], ["FATEWEAVER", ""], ["NEW", "gold"]],
+  }
 ];
 
 const grid = document.getElementById('grid');
@@ -602,6 +623,24 @@ setInterval(function() {
     w.style.color = '';
   }, 150);
 }, 3000);
+
+// Mark June paid status
+var paidNames = ['Fixer Graves','Priestess','Fateweaver Shark','Paintress Nissa','Fateweaver Fada','Fateweaver Lucifer'];
+document.querySelectorAll('.card-header').forEach(function(h){
+  var nameEl = h.querySelector('.card-name');
+  if(!nameEl) return;
+  var name = nameEl.childNodes[0].textContent.trim();
+  var badge = document.createElement('span');
+  if(paidNames.indexOf(name) !== -1){
+    badge.className='paid-badge';
+    badge.textContent='JUNE PAID';
+  } else {
+    badge.className='unpaid-badge';
+    badge.textContent='JUNE DUE';
+  }
+  h.querySelector('.card-coins').appendChild(badge);
+});
+
 </script>
 
 </body>
