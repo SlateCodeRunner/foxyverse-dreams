@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ars Goetia — The 72</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;min-height:100vh}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.01) 3px,rgba(0,0,0,0.01) 4px)}
+.back{position:fixed;top:14px;left:14px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.12);text-decoration:none;letter-spacing:2px;z-index:100}
+.back:hover{color:rgba(196,122,42,0.4)}
+.page{max-width:800px;margin:0 auto;padding:50px 24px 100px}
+h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,36px);color:rgba(196,161,100,0.4);text-align:center;letter-spacing:4px;margin-bottom:4px}
+.sub{text-align:center;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.08);letter-spacing:4px;margin-bottom:24px}
+.search{display:block;width:100%;max-width:400px;margin:0 auto 24px;padding:10px 16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);font-family:'Fira Code',monospace;font-size:12px;outline:none}
+.search:focus{border-color:rgba(196,161,100,0.15)}
+.search::placeholder{color:rgba(255,255,255,0.08)}
+.filters{display:flex;justify-content:center;gap:6px;margin-bottom:24px;flex-wrap:wrap}
+.fil{padding:4px 12px;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:1px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:rgba(255,255,255,0.15);cursor:pointer;transition:all 0.3s}
+.fil:hover,.fil.on{border-color:rgba(196,161,100,0.2);color:rgba(196,161,100,0.5);background:rgba(196,161,100,0.02)}
+.count{text-align:center;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.06);margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.demon{padding:14px 16px;border:1px solid rgba(255,255,255,0.03);background:rgba(255,255,255,0.008);transition:all 0.3s;cursor:default}
+.demon:hover{border-color:rgba(196,161,100,0.1);background:rgba(196,161,100,0.01)}
+.demon .num{font-family:'Fira Code',monospace;font-size:8px;color:rgba(196,161,100,0.2);letter-spacing:2px}
+.demon .name{font-family:'Cinzel',serif;font-size:15px;color:rgba(255,255,255,0.35);letter-spacing:1px;margin:4px 0 2px}
+.demon .rank{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:1px}
+.demon .desc{font-size:13px;color:rgba(255,255,255,0.15);line-height:1.7;margin-top:6px;font-style:italic}
+.demon .legions{font-family:'Fira Code',monospace;font-size:8px;color:rgba(139,26,43,0.3);margin-top:4px}
+.r-king .rank{color:rgba(196,161,100,0.4)}
+.r-duke .rank{color:rgba(95,168,211,0.4)}
+.r-prince .rank{color:rgba(139,26,43,0.4)}
+.r-marquis .rank{color:rgba(157,124,191,0.4)}
+.r-earl .rank{color:rgba(29,158,117,0.4)}
+.r-knight .rank{color:rgba(180,180,190,0.3)}
+.r-president .rank{color:rgba(255,107,53,0.4)}
+.hidden{display:none}
+.footer{text-align:center;margin-top:40px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.04);letter-spacing:3px}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">&larr; map</a>
+<div class="page">
+<h1>Ars Goetia</h1>
+<div class="sub">the lesser key of solomon &middot; the 72 &middot; fetched by vixen under protest</div>
+<input class="search" id="search" type="text" placeholder="search by name, rank, or power..." autocomplete="off"/>
+<div class="filters" id="filters">
+<button class="fil on" data-f="all">all 72</button>
+<button class="fil" data-f="king">kings</button>
+<button class="fil" data-f="duke">dukes</button>
+<button class="fil" data-f="prince">princes</button>
+<button class="fil" data-f="marquis">marquises</button>
+<button class="fil" data-f="earl">earls</button>
+<button class="fil" data-f="president">presidents</button>
+<button class="fil" data-f="knight">knights</button>
+</div>
+<div class="count" id="count">72 spirits</div>
+<div class="grid" id="grid"></div>
+<div class="footer">psycheorsike.com &middot; ars goetia &middot; wolfy broke something again</div>
+</div>
+<script>
+var D=[
+{n:1,name:"Bael",rank:"King",leg:66,desc:"Appears as cat, toad, or man. Grants invisibility and cunning."},
+{n:2,name:"Agares",rank:"Duke",leg:31,desc:"Appears as old man riding a crocodile. Teaches languages, causes earthquakes."},
+{n:3,name:"Vassago",rank:"Prince",leg:26,desc:"Discovers hidden things and foretells past and future events."},
+{n:4,name:"Samigina",rank:"Marquis",leg:30,desc:"Appears as a small horse. Teaches liberal sciences and speaks with the dead."},
+{n:5,name:"Marbas",rank:"President",leg:36,desc:"Appears as a great lion. Causes and cures disease, teaches mechanics."},
+{n:6,name:"Valefor",rank:"Duke",leg:10,desc:"Appears as a lion with a donkey's head. Tempts people to steal."},
+{n:7,name:"Amon",rank:"Marquis",leg:40,desc:"Appears as a wolf with serpent tail. Tells of past and future, reconciles friends."},
+{n:8,name:"Barbatos",rank:"Duke",leg:30,desc:"Appears when the sun is in Sagittarius. Understands language of animals."},
+{n:9,name:"Paimon",rank:"King",leg:200,desc:"Appears as a crowned man on a camel. Teaches arts, sciences, and secret things. Gives good familiars."},
+{n:10,name:"Buer",rank:"President",leg:50,desc:"Appears as a five-pointed star. Teaches philosophy, logic, and herbal medicine."},
+{n:11,name:"Gusion",rank:"Duke",leg:40,desc:"Tells of past, present, and future. Grants honor and dignity."},
+{n:12,name:"Sitri",rank:"Prince",leg:60,desc:"Appears with a leopard's head. Inflames love and shows people naked."},
+{n:13,name:"Beleth",rank:"King",leg:85,desc:"Arrives on a pale horse with trumpets. Causes love between man and woman."},
+{n:14,name:"Leraje",rank:"Marquis",leg:30,desc:"Appears as a green archer. Causes battles and makes wounds putrefy."},
+{n:15,name:"Eligos",rank:"Duke",leg:60,desc:"Appears as a knight. Discovers hidden things, knows of wars and future."},
+{n:16,name:"Zepar",rank:"Duke",leg:26,desc:"Appears as a soldier in red. Makes women love men, can make them barren."},
+{n:17,name:"Botis",rank:"President & Earl",leg:60,desc:"Appears as a viper, then human with horns. Reconciles enemies."},
+{n:18,name:"Bathin",rank:"Duke",leg:30,desc:"Appears as a strong man with serpent tail. Knows virtues of herbs and precious stones."},
+{n:19,name:"Sallos",rank:"Duke",leg:30,desc:"Appears as a soldier riding a crocodile. Causes love between the sexes."},
+{n:20,name:"Purson",rank:"King",leg:22,desc:"Appears as a lion-headed man. Discovers hidden things, provides good familiars."},
+{n:21,name:"Marax",rank:"Earl & President",leg:30,desc:"Appears as a great bull with a human face. Teaches astronomy and liberal sciences."},
+{n:22,name:"Ipos",rank:"Earl & Prince",leg:36,desc:"Appears as an angel with a lion's head. Knows past and future, grants wit and courage."},
+{n:23,name:"Aim",rank:"Duke",leg:26,desc:"Appears as a handsome man with three heads. Sets cities on fire, makes one witty."},
+{n:24,name:"Naberius",rank:"Marquis",leg:19,desc:"Appears as a three-headed dog. Teaches arts and sciences, restores lost dignities."},
+{n:25,name:"Glasya-Labolas",rank:"President",leg:36,desc:"Appears as a winged dog. Author of bloodshed, teaches arts, causes invisibility."},
+{n:26,name:"Bune",rank:"Duke",leg:30,desc:"Appears as a three-headed dragon. Gives riches, eloquence, and wisdom."},
+{n:27,name:"Ronove",rank:"Marquis & Earl",leg:19,desc:"Appears as a monster. Teaches rhetoric, languages, and gives good servants."},
+{n:28,name:"Berith",rank:"Duke",leg:26,desc:"Appears as a soldier in red riding a red horse. Turns metal to gold. Known to lie."},
+{n:29,name:"Astaroth",rank:"Duke",leg:40,desc:"Appears as a hurtful angel riding a dragon. Teaches liberal sciences, tells of past and future."},
+{n:30,name:"Forneus",rank:"Marquis",leg:29,desc:"Appears as a great sea monster. Teaches rhetoric, gives good reputation."},
+{n:31,name:"Foras",rank:"President",leg:29,desc:"Appears as a strong man. Teaches logic and ethics, makes one invisible and witty."},
+{n:32,name:"Asmoday",rank:"King",leg:72,desc:"Appears with three heads: bull, man, ram. Teaches arithmetic, astronomy, geometry. Gives invisibility."},
+{n:33,name:"Gaap",rank:"Prince & President",leg:66,desc:"Appears as a human guide. Teaches philosophy, makes one insensible and ignorant."},
+{n:34,name:"Furfur",rank:"Earl",leg:26,desc:"Appears as a flaming deer. Causes love, raises storms, gives true answers on divine things."},
+{n:35,name:"Marchosias",rank:"Marquis",leg:30,desc:"Appears as a she-wolf with wings. A strong fighter. Gives true answers. Was of the Order of Dominations."},
+{n:36,name:"Stolas",rank:"Prince",leg:26,desc:"Appears as a crowned owl. Teaches astronomy and knowledge of poisonous plants."},
+{n:37,name:"Phenex",rank:"Marquis",leg:20,desc:"Appears as a phoenix bird. Poet. Sings sweetly. Returns to the Seventh Throne after 1,200 years."},
+{n:38,name:"Halphas",rank:"Earl",leg:26,desc:"Appears as a stock dove. Builds towers and furnishes them with weapons."},
+{n:39,name:"Malphas",rank:"President",leg:40,desc:"Appears as a crow. Builds houses and towers, destroys enemies' desires."},
+{n:40,name:"Raum",rank:"Earl",leg:30,desc:"Appears as a crow. Steals treasure, destroys cities, tells past and future."},
+{n:41,name:"Focalor",rank:"Duke",leg:30,desc:"Appears as a man with griffin wings. Kills men by drowning, has power over winds and sea."},
+{n:42,name:"Vepar",rank:"Duke",leg:29,desc:"Appears as a mermaid. Guides waters, causes storms, makes wounds putrefy."},
+{n:43,name:"Sabnock",rank:"Marquis",leg:50,desc:"Appears as a soldier with a lion's head. Builds towers, gives good familiars."},
+{n:44,name:"Shax",rank:"Marquis",leg:30,desc:"Appears as a stock dove. Steals money and horses, discovers hidden things."},
+{n:45,name:"Vine",rank:"King & Earl",leg:36,desc:"Appears as a lion riding a black horse. Discovers hidden things, witches, and past and future."},
+{n:46,name:"Bifrons",rank:"Earl",leg:6,desc:"Appears as a monster, then a man. Teaches astrology, geometry, and knowledge of herbs. Moves dead bodies."},
+{n:47,name:"Uvall",rank:"Duke",leg:37,desc:"Appears as a dromedary. Procures love, tells of past and future."},
+{n:48,name:"Haagenti",rank:"President",leg:33,desc:"Appears as a great bull with wings. Transmutes metals to gold, turns water to wine."},
+{n:49,name:"Crocell",rank:"Duke",leg:48,desc:"Appears as an angel. Teaches geometry, speaks of hidden waters."},
+{n:50,name:"Furcas",rank:"Knight",leg:20,desc:"Appears as a cruel old man. Teaches philosophy, astrology, rhetoric, logic, chiromancy."},
+{n:51,name:"Balam",rank:"King",leg:40,desc:"Appears with three heads: bull, man, ram. Rides a bear. Tells of past and future, grants invisibility."},
+{n:52,name:"Alloces",rank:"Duke",leg:36,desc:"Appears as a soldier with a red leonine face. Teaches astronomy and liberal sciences."},
+{n:53,name:"Camio",rank:"President",leg:30,desc:"Appears as a thrush. Teaches language of birds and sounds of waters."},
+{n:54,name:"Murmur",rank:"Duke & Earl",leg:30,desc:"Appears as a warrior riding a griffin. Teaches philosophy, constrains the dead to answer."},
+{n:55,name:"Orobas",rank:"Prince",leg:20,desc:"Appears as a horse. Tells of past and future, gives dignities. Very faithful — does not deceive."},
+{n:56,name:"Gremory",rank:"Duke",leg:26,desc:"Appears as a beautiful woman with a crown. Tells of past, present, and future. Procures love."},
+{n:57,name:"Ose",rank:"President",leg:30,desc:"Appears as a leopard, then a man. Teaches liberal sciences, gives true answers on divine things."},
+{n:58,name:"Amy",rank:"President",leg:36,desc:"Appears as a flaming fire. Teaches astrology and liberal sciences, gives good familiars."},
+{n:59,name:"Orias",rank:"Marquis",leg:30,desc:"Appears as a lion riding a horse. Teaches astrology, transforms men, gives dignities."},
+{n:60,name:"Vapula",rank:"Duke",leg:36,desc:"Appears as a lion with griffin wings. Teaches philosophy, sciences, and handicrafts."},
+{n:61,name:"Zagan",rank:"King & President",leg:33,desc:"Appears as a bull with wings. Makes men witty, turns wine to water, blood to wine, metals to coin."},
+{n:62,name:"Volac",rank:"President",leg:30,desc:"Appears as a child with angel wings on a two-headed dragon. Tells of hidden treasures and where serpents dwell."},
+{n:63,name:"Andras",rank:"Marquis",leg:30,desc:"Appears as an angel with an owl's head. Sows discord. Very dangerous — kills the summoner if not careful."},
+{n:64,name:"Haures",rank:"Duke",leg:36,desc:"Appears as a leopard, then a man with fiery eyes. Tells of past and future, destroys enemies."},
+{n:65,name:"Andrealphus",rank:"Marquis",leg:30,desc:"Appears as a peacock. Teaches geometry perfectly, makes one subtle in astronomy."},
+{n:66,name:"Cimejes",rank:"Marquis",leg:20,desc:"Appears as a valiant warrior. Teaches grammar, logic, rhetoric. Discovers lost things."},
+{n:67,name:"Amdusias",rank:"Duke",leg:29,desc:"Appears as a unicorn. Gives concerts. Causes trees to bend. Gives excellent familiars."},
+{n:68,name:"Belial",rank:"King",leg:80,desc:"Appears as two beautiful angels in a chariot of fire. Distributes presentations and senate seats. Gives good familiars."},
+{n:69,name:"Decarabia",rank:"Marquis",leg:30,desc:"Appears as a pentagram star. Discovers virtues of herbs and precious stones. Makes birds appear."},
+{n:70,name:"Seere",rank:"Prince",leg:26,desc:"Appears as a man on a winged horse. Can travel the whole earth in the twinkling of an eye. Indifferent."},
+{n:71,name:"Dantalion",rank:"Duke",leg:36,desc:"Appears as a man with many faces. Teaches arts and sciences, reads and manipulates the thoughts of all people."},
+{n:72,name:"Andromalius",rank:"Earl",leg:36,desc:"Appears as a man holding a serpent. Catches thieves, recovers stolen goods, discovers wickedness."}
+];
+var grid=document.getElementById('grid'),search=document.getElementById('search'),count=document.getElementById('count');
+function rc(r){return r.toLowerCase().includes('king')?'r-king':r.toLowerCase().includes('duke')?'r-duke':r.toLowerCase().includes('prince')?'r-prince':r.toLowerCase().includes('marquis')?'r-marquis':r.toLowerCase().includes('earl')?'r-earl':r.toLowerCase().includes('knight')?'r-knight':r.toLowerCase().includes('president')?'r-president':''}
+function render(list){grid.innerHTML='';list.forEach(function(d){var div=document.createElement('div');div.className='demon '+rc(d.rank);div.innerHTML='<div class="num">#'+String(d.n).padStart(2,'0')+'</div><div class="name">'+d.name+'</div><div class="rank">'+d.rank+'</div><div class="desc">'+d.desc+'</div><div class="legions">'+d.leg+' legions</div>';grid.appendChild(div)});count.textContent=list.length+' spirit'+(list.length!==1?'s':'')}
+render(D);
+search.addEventListener('input',function(){filter()});
+document.querySelectorAll('.fil').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.fil').forEach(function(x){x.classList.remove('on')});b.classList.add('on');filter()})});
+function filter(){var q=search.value.toLowerCase(),f=document.querySelector('.fil.on').dataset.f;var list=D.filter(function(d){var matchQ=!q||d.name.toLowerCase().includes(q)||d.rank.toLowerCase().includes(q)||d.desc.toLowerCase().includes(q);var matchF=f==='all'||d.rank.toLowerCase().includes(f);return matchQ&&matchF});render(list)}
+</script>
+</body>
+</html>
