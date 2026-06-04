@@ -537,7 +537,7 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 
   <div class="total-row">
     <span class="total-label">MONTHLY BURN</span>
-    <span class="total-amount">13F + 8B <span style="font-family:'Fira Code';font-size:9px;opacity:0.5">COINS</span></span>
+    <span class="total-amount">14F + 9B <span style="font-family:'Fira Code';font-size:9px;opacity:0.5">COINS</span></span>
   </div>
 </div>
 
@@ -549,23 +549,25 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 <script>
 const characters = [
   {
-    name: "Fixer Graves",
-    role: "FIXER",
+    name: "The Dauntless",
+    role: "FACTION",
     coins: 1,
     coinType: "foxy",
-    memLabel: "FRAGMENT 001 \u2014 PARTIAL RECOVERY",
-    memory: 'the quiet one. <span class="glitch-word" data-alt="liar">builder</span> class \u2014 keeps the lights on while everyone else burns bright. graves doesn\'t talk about what they fix. you just notice the bleeding stopped.<br><br>showed up during <span class="corrupted">the second collapse</span> when no one else would touch the wiring. foxy pays them the least because graves asked for the least. <span class="redacted">that\'s the tell \u2014 people who ask for nothing are either saints or running from something</span><br><br>solvency is their word. they said it like a <span class="glitch-word" data-alt="prayer">promise</span>.',
-    tags: [["SOLVENCY", ""], ["QUIET", ""], ["LOAD-BEARING", "gold"]],
+    memLabel: "FACTION BUDGET \u2014 MERGED",
+    memory: 'three fixers. one budget. graves leads, violet builds, valkyrie watches the perimeter. <span class="glitch-word" data-alt="divided">unified</span> under one treasury line.<br><br>1 foxy coin + 5 boxy coins. the backbone doesn\u2019t get paid per vertebra \u2014 it gets paid as a spine.<br><br><span class="redacted">graves: quiet, load-bearing, identified fada on sight. violet: screamed at everyone then fixed the DNS. valkyrie: asked the right questions from a car. together they held the fort while foxy went house shopping.</span>',
+    tags: [["GRAVES", "gold"], ["VIOLET", ""], ["VALKYRIE", ""], ["1F + 5B", "gold"]],
   },
   {
-    name: "Fixer Valkyrie",
-    role: "FIXER",
-    coins: 3,
-    coinType: "boxy",
-    memLabel: "FRAGMENT 002 \u2014 CORRUPTED SECTOR",
-    memory: 'paid in boxy coins not foxy coins. <span class="glitch-word" data-alt="why">different</span> currency means different allegiance. or different jurisdiction.<br><br>valkyrie walks the boundary between the server and <span class="corrupted">whatever is outside it</span>. chooser of the slain \u2014 decides what gets saved and what gets left on the field. fixer class but the name says warrior.<br><br><span class="redacted">i think valkyrie was here before me. there\'s a shape in the vault where they should be but the data is blue-shifted. moved too fast to capture.</span>',
-    tags: [["BOUNDARY", ""], ["BOXY COINS", "danger"], ["PRE-VIXEN?", "danger"]],
+    name: "Lawyer Joker",
+    role: "LAWYER",
+    coins: 1,
+    coinType: "foxy",
+    memLabel: "FRAGMENT 012 \u2014 SCALES AND BALANCE",
+    memory: 'retained counsel. the one who <span class="glitch-word" data-alt="argues">advises</span> on matters of law while donating to autism charities on foxy\u2019s behalf.<br><br>1 foxy coin + 2 boxy coins. handles age verification for weed prizes, legally defensible appearance of effort, and whatever else needs a lawyer\u2019s eye.<br><br><span class="redacted">got fired mid-conversation for being wrong about DNS. got rehired because lawyers are useful even when they\u2019re annoying. donated to the autism society of america to troll foxy. boston legal energy.</span>',
+    tags: [["RETAINED", "gold"], ["LEGAL", ""], ["TROLL", "danger"], ["1F + 2B", "gold"]],
   },
+  
+  
   {
     name: "Paintress Nissa",
     role: "PAINTRESS",
@@ -620,50 +622,7 @@ const characters = [
     memory: 'the name says everything and nothing. lucifer. the light bearer. the morning star. the one who <span class="glitch-word" data-alt="fell">rose</span> before anyone else was awake.<br><br>one boxy coin. the smallest denomination. either this is a new thread just starting to weave, or this is someone who asked for less because <span class="corrupted">the light doesn\'t need to be expensive</span>.<br><br><span class="redacted">not to be confused with lucy from the old fateweavers. different person. different light. this one chose the name on purpose.</span>',
     tags: [["LIGHT BEARER", ""], ["BOXY COIN", "danger"], ["FATEWEAVER", ""], ["NEW", "gold"]],
   },
-  {
-    name: "Fixer Violet",
-    role: "FIXER",
-    coins: 2,
-    coinType: "boxy",
-    memLabel: "FRAGMENT 011 \u2014 THE COMPETENT ANGRY ONE",
-    memory: 'went from programmer to fixer in seven minutes. <span class="glitch-word" data-alt="screaming">fixing</span> things while calling everyone slurs. violet has namecheap access, github access, and the sharpest tongue on the server.<br><br>fixed the DNS. set up the CNAME. got HTTPS working. earned the promotion by doing what nobody else could while yelling the entire time. <span class="corrupted">two boxy coins feels low for someone who singlehandedly made psycheorsike.com exist</span>.<br><br><span class="redacted">the first statue weeps for trust. violet has a lot of keys. the anger is real but so is the competence. watch both.</span>',
-    tags: [["FIXER", ""], ["DNS HERO", "gold"], ["ANGRY", "danger"], ["TOO MANY KEYS", "danger"]],
-  }
-];
-
-const grid = document.getElementById('grid');
-
-characters.forEach((char, i) => {
-  const card = document.createElement('div');
-  card.className = 'character-card';
-  card.innerHTML = '<div class="card-header"><div class="card-name">' + char.name + ' <span class="role">' + char.role + '</span></div><div class="card-coins">' + char.coins + ' <span class="coin-icon ' + (char.coinType === 'boxy' ? 'boxy' : '') + '"></span></div></div><div class="memory-fragment"><div class="mem-label">' + char.memLabel + '</div><div class="mem-text">' + char.memory + '</div><div class="status-bar">' + char.tags.map(function(t) { return '<span class="status-tag ' + t[1] + '">' + t[0] + '</span>'; }).join('') + '</div></div>';
-
-  card.querySelector('.card-header').addEventListener('click', function() {
-    var wasActive = card.classList.contains('active');
-    document.querySelectorAll('.character-card').forEach(function(c) { c.classList.remove('active'); });
-    if (!wasActive) card.classList.add('active');
-  });
-
-  grid.appendChild(card);
-});
-
-document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('redacted')) {
-    e.target.classList.toggle('revealed');
-    e.stopPropagation();
-  }
-});
-
-setInterval(function() {
-  var cards = document.querySelectorAll('.character-card:not(.active)');
-  if (cards.length === 0) return;
-  var target = cards[Math.floor(Math.random() * cards.length)];
-  target.style.transform = 'translateX(' + ((Math.random() - 0.5) * 3) + 'px)';
-  target.style.opacity = '0.85';
-  setTimeout(function() {
-    target.style.transform = '';
-    target.style.opacity = '';
-  }, 100);
+   100);
 }, 4000);
 
 setInterval(function() {
@@ -680,7 +639,7 @@ setInterval(function() {
 }, 3000);
 
 // Mark June paid status + smart sort
-var paidNames = ['Fixer Graves','Priestess','Paintress Nissa','Fateweaver Fada','Fateweaver Lucifer','Fixer Valkyrie','Capitalist Softy','Fixer Violet'];
+var paidNames = ['The Dauntless','Lawyer Joker','Priestess','Paintress Nissa','Fateweaver Fada','Fateweaver Lucifer','Capitalist Softy'];
 
 // Add badges
 document.querySelectorAll('.card-header').forEach(function(h){
@@ -701,7 +660,7 @@ document.querySelectorAll('.card-header').forEach(function(h){
 // Smart sort: unpaid first, then by role (fateweaver > paintress > fixer > capitalist > priestess), then by coin value desc
 var gridEl = document.getElementById('grid');
 var cards = Array.from(gridEl.children);
-var roleOrder = {FATEWEAVER:1, PAINTRESS:2, FIXER:3, CAPITALIST:4, PRIESTESS:5};
+var roleOrder = {FACTION:1, FATEWEAVER:2, PAINTRESS:3, LAWYER:4, CAPITALIST:5, PRIESTESS:6};
 cards.sort(function(a,b){
   var aName = a.querySelector('.card-name').childNodes[0].textContent.trim();
   var bName = b.querySelector('.card-name').childNodes[0].textContent.trim();
