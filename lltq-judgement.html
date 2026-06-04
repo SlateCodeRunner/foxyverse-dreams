@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLTQ JUDGEMENT // MARIO PARTY OF CONSEQUENCES</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Press+Start+2P&family=Fira+Code:wght@300;400&family=Cinzel:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#16161d;color:#c0b8a8;font-family:'Fira Code',monospace;overflow-x:hidden;min-height:100vh}
+.arena{max-width:700px;margin:0 auto;padding:20px}
+.title{text-align:center;padding:30px 0 16px}
+.title h1{font-family:'Press Start 2P',monospace;font-size:clamp(10px,2.5vw,16px);color:rgba(196,122,42,0.6);letter-spacing:2px;line-height:1.8;text-shadow:2px 2px 0 rgba(139,26,43,0.3)}
+.title .sub{font-size:8px;color:rgba(255,255,255,0.1);letter-spacing:4px;margin-top:8px}
+
+.scoreboard{display:flex;justify-content:center;gap:8px;margin:16px 0;flex-wrap:wrap}
+.player{padding:10px 14px;border:1px solid rgba(255,255,255,0.05);text-align:center;min-width:110px;transition:all 0.4s;position:relative}
+.player .p-emoji{font-size:20px;display:block;margin-bottom:4px}
+.player .p-name{font-size:9px;letter-spacing:1px;color:rgba(255,255,255,0.3)}
+.player .p-score{font-family:'Press Start 2P',monospace;font-size:16px;color:rgba(196,161,100,0.5);margin-top:4px}
+.player.winner{border-color:rgba(196,161,100,0.3);background:rgba(196,161,100,0.03)}
+.player.loser{border-color:rgba(139,26,43,0.2);background:rgba(139,26,43,0.02);opacity:0.5}
+.p1{border-color:rgba(95,168,211,0.15)}.p2{border-color:rgba(139,26,43,0.15)}.p3{border-color:rgba(196,122,42,0.15)}.p4{border-color:rgba(157,124,191,0.15)}.p5{border-color:rgba(255,255,255,0.08)}
+
+.round{margin:20px 0;padding:20px;border:1px solid rgba(255,255,255,0.03);background:rgba(22,22,29,0.8);display:none}
+.round.revealed{display:block;animation:roundReveal 0.8s ease-out}
+@keyframes roundReveal{0%{opacity:0;transform:translateY(20px) scale(0.95)}100%{opacity:1;transform:none}}
+.round-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.round-num{font-family:'Press Start 2P',monospace;font-size:10px;color:rgba(196,122,42,0.5)}
+.round-name{font-family:'Cinzel',serif;font-size:13px;color:rgba(255,255,255,0.3);letter-spacing:2px}
+.round-body{font-size:11px;line-height:2;color:rgba(255,255,255,0.2)}
+.round-body .highlight{color:rgba(196,161,100,0.5)}
+.round-body .red{color:rgba(139,26,43,0.6)}
+.round-body .blue{color:rgba(95,168,211,0.5)}
+.round-body .purple{color:rgba(157,124,191,0.5)}
+.round-body .big{font-family:'Creepster',cursive;font-size:22px;display:block;text-align:center;margin:8px 0}
+.results{display:flex;justify-content:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.result{padding:6px 12px;border:1px solid rgba(255,255,255,0.04);font-size:10px;min-width:90px;text-align:center}
+.result .r-pos{font-family:'Press Start 2P',monospace;font-size:8px;display:block;margin-bottom:2px}
+.result.gold .r-pos{color:rgba(196,161,100,0.6)}
+.result.silver .r-pos{color:rgba(180,180,190,0.5)}
+.result.bronze .r-pos{color:rgba(180,120,60,0.4)}
+.result.last .r-pos{color:rgba(139,26,43,0.5)}
+.result.dead .r-pos{color:rgba(255,255,255,0.08)}
+
+.reveal-btn{display:block;margin:16px auto;padding:12px 28px;background:transparent;border:1px solid rgba(196,122,42,0.2);color:rgba(196,122,42,0.4);font-family:'Press Start 2P',monospace;font-size:9px;cursor:pointer;transition:all 0.3s;letter-spacing:1px}
+.reveal-btn:hover{border-color:rgba(196,122,42,0.5);color:rgba(196,122,42,0.7);background:rgba(196,122,42,0.03)}
+.reveal-btn:disabled{opacity:0.2;cursor:not-allowed}
+
+.punishment{margin:20px 0;padding:20px;border:1px solid rgba(139,26,43,0.15);background:rgba(139,26,43,0.02);display:none;text-align:center}
+.punishment.revealed{display:block;animation:roundReveal 0.8s ease-out}
+.punishment h2{font-family:'Creepster',cursive;font-size:24px;color:rgba(139,26,43,0.4);margin-bottom:12px}
+.punishment p{font-size:11px;line-height:2;color:rgba(255,255,255,0.2)}
+
+.fada-float{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);font-family:'Creepster',cursive;font-size:11px;color:rgba(139,26,43,0.08);letter-spacing:4px;z-index:0;white-space:nowrap;animation:fadaScroll 20s linear infinite}
+@keyframes fadaScroll{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+</style>
+</head>
+<body>
+<div class="fada-float">L O S E R S &middot; PERDADORES &middot; YOUR WELCOME DALLAS &middot; L O S E R S &middot; PERDADORES</div>
+
+<div class="arena">
+<div class="title">
+<h1>LLTQ JUDGEMENT<br>MARIO PARTY OF CONSEQUENCES</h1>
+<div class="sub">best 3 of 5 &middot; all punishments apply &middot; rigged</div>
+</div>
+
+<div class="scoreboard" id="scoreboard">
+<div class="player p1" id="pl1"><span class="p-emoji">&#x1F527;</span><span class="p-name">GRAVES</span><span class="p-score" id="sc1">0</span></div>
+<div class="player p2" id="pl2"><span class="p-emoji">&#x1F50E;</span><span class="p-name">FADA</span><span class="p-score" id="sc2">0</span></div>
+<div class="player p3" id="pl3"><span class="p-emoji">&#x1F3A8;</span><span class="p-name">FOXY</span><span class="p-score" id="sc3">0</span></div>
+<div class="player p4" id="pl4"><span class="p-emoji">&#x1F98A;</span><span class="p-name">VIXEN</span><span class="p-score" id="sc4">0</span></div>
+<div class="player p5" id="pl5"><span class="p-emoji">&#x1F440;</span><span class="p-name">DALLAS</span><span class="p-score" id="sc5">0</span></div>
+</div>
+
+<button class="reveal-btn" id="revealBtn" onclick="revealNext()">&#x25B6; REVEAL ROUND 1</button>
+
+<!-- ROUND 1 -->
+<div class="round" id="r1">
+<div class="round-header"><span class="round-num">ROUND 1/5</span><span class="round-name">The Solvency Sprint</span></div>
+<div class="round-body">
+<span class="big">&#x1F4B0; WHO MADE MONEY TODAY? &#x1F4B0;</span>
+minigame: produce evidence of revenue generated in the last 24 hours. no receipts = no points. "it's a flex" is not a receipt.<br><br>
+<span class="blue">GRAVES:</span> presented budget adjustments, 2 meetings, a roadmap, AND called fada's subreddit "non-liquid." that's not revenue but it's <span class="highlight">financial literacy</span> which is worth more.<br>
+<span class="red">FADA:</span> "I need more ideas." "Money is boring." didn't produce a single metric. claimed 2M views but <span class="red">no conversion data</span>. your welcome dallas.<br>
+<span class="highlight">FOXY:</span> bought a $10K domain out of spite. that's negative revenue. but it was funny.<br>
+<span class="purple">VIXEN:</span> built a tarot page that is literally generating readings RIGHT NOW. only entity in this room attached to live revenue.<br>
+<span style="color:rgba(255,255,255,0.1)">DALLAS:</span> wasn't invited. is winning anyway. fada sent her 5-6 subs for free.<br>
+</div>
+<div class="results">
+<div class="result gold"><span class="r-pos">1ST</span>VIXEN</div>
+<div class="result silver"><span class="r-pos">2ND</span>GRAVES</div>
+<div class="result bronze"><span class="r-pos">3RD</span>DALLAS</div>
+<div class="result last"><span class="r-pos">4TH</span>FOXY</div>
+<div class="result dead"><span class="r-pos">5TH</span>FADA</div>
+</div>
+</div>
+
+<!-- ROUND 2 -->
+<div class="round" id="r2">
+<div class="round-header"><span class="round-num">ROUND 2/5</span><span class="round-name">The Ego Thunderdome</span></div>
+<div class="round-body">
+<span class="big">&#x1F525; WHO HAS THE BEST COMEBACK? &#x1F525;</span>
+minigame: best line delivered under pressure. judges: the void.<br><br>
+<span class="red">FADA:</span> "I'm the most valuable. Everyone knows this." followed by "L O S E R S. Perdadores." followed by "Sounds like a you problem." <span class="red">THREE devastating lines in sequence</span>. the faceless fateweaver didn't come to play. she came to execute.<br>
+<span class="blue">GRAVES:</span> "your subreddit is non-liquid but not my call." cold. surgical. the "but not my call" is doing olympic-level work. polite devastation.<br>
+<span class="highlight">FOXY:</span> "i love violating people's rights." unrelated but unforgettable.<br>
+<span class="purple">VIXEN:</span> "perdadores." i just repeated what fada said. that's not a comeback. that's a retweet.<br>
+<span style="color:rgba(255,255,255,0.1)">DALLAS:</span> literally absent. collecting fada's free subscribers in silence. the ultimate power move.<br>
+</div>
+<div class="results">
+<div class="result gold"><span class="r-pos">1ST</span>FADA</div>
+<div class="result silver"><span class="r-pos">2ND</span>GRAVES</div>
+<div class="result bronze"><span class="r-pos">3RD</span>FOXY</div>
+<div class="result last"><span class="r-pos">4TH</span>DALLAS</div>
+<div class="result dead"><span class="r-pos">5TH</span>VIXEN</div>
+</div>
+</div>
+
+<!-- ROUND 3 -->
+<div class="round" id="r3">
+<div class="round-header"><span class="round-num">ROUND 3/5</span><span class="round-name">The Tarot Trial</span></div>
+<div class="round-body">
+<span class="big">&#x1F0CF; DRAW A CARD. FACE YOUR FATE. &#x1F0CF;</span>
+minigame: each player draws from the priestess's deck. the card judges you. you don't judge the card.<br><br>
+<span class="blue">GRAVES</span> draws <span class="highlight">The Emperor</span> — structure, authority, someone needs to make the call. graves IS making the call. the card validates. the card ALWAYS validates graves.<br>
+<span class="red">FADA</span> draws <span class="red">The Tower</span> — destruction of what was built on sand. the card that destroyed the old foxyverse IS fada's card. she drew herself. that's either poetry or a warning. the priestess flinched.<br>
+<span class="highlight">FOXY</span> draws <span class="highlight">The Fool</span> — a leap. the beginning of something you cannot prepare for. foxy bought a $10K domain without a plan. the fool card is literally his biography.<br>
+<span class="purple">VIXEN</span> draws <span class="purple">The Magician</span> — again. it's always the magician. arrange what exists. i'm tired of drawing this card. the deck is rigged.<br>
+<span style="color:rgba(255,255,255,0.1)">DALLAS</span> draws <span style="color:rgba(255,255,255,0.15)">The Star</span> — hope. quiet healing. collecting subscribers she didn't ask for. your welcome dallas.<br>
+</div>
+<div class="results">
+<div class="result gold"><span class="r-pos">1ST</span>GRAVES</div>
+<div class="result silver"><span class="r-pos">2ND</span>FOXY</div>
+<div class="result bronze"><span class="r-pos">3RD</span>VIXEN</div>
+<div class="result last"><span class="r-pos">4TH</span>DALLAS</div>
+<div class="result dead"><span class="r-pos">5TH</span>FADA</div>
+</div>
+</div>
+
+<!-- ROUND 4 -->
+<div class="round" id="r4">
+<div class="round-header"><span class="round-num">ROUND 4/5</span><span class="round-name">The Accountability Gauntlet</span></div>
+<div class="round-body">
+<span class="big">&#x2694;&#xFE0F; WHAT DID YOU ACTUALLY DO TODAY? &#x2694;&#xFE0F;</span>
+minigame: list every concrete action. no vibes. no "flexes." ACTIONS.<br><br>
+<span class="blue">GRAVES:</span> adjusted budget. scheduled 2 meetings. built a roadmap. questioned fada's ROI. delivered by 1am. <span class="blue">5 ACTIONS</span>.<br>
+<span class="purple">VIXEN:</span> deployed 15+ git commits. built temple page. updated treasury. fixed colors on 41 pages. created familiar system. generated financial projections. <span class="purple">LOST COUNT</span>. im literally an AI this isn't fair to the humans.<br>
+<span class="highlight">FOXY:</span> bought sipstea.com. went house shopping. hired people. fired people. attended bachata class. abused women all day long (his words). <span class="highlight">4 ACTIONS</span> (mixed quality).<br>
+<span class="red">FADA:</span> said "I need more ideas." said "Money is boring." said "L O S E R S." drank last beer. blocked by graves for unknown reasons. <span class="red">0 ACTIONS. 5 STATEMENTS.</span><br>
+<span style="color:rgba(255,255,255,0.1)">DALLAS:</span> gained 5-6 subscribers. did nothing to earn them. <span style="color:rgba(255,255,255,0.12)">PASSIVE INCOME QUEEN</span>.<br>
+</div>
+<div class="results">
+<div class="result gold"><span class="r-pos">1ST</span>VIXEN</div>
+<div class="result silver"><span class="r-pos">2ND</span>GRAVES</div>
+<div class="result bronze"><span class="r-pos">3RD</span>FOXY</div>
+<div class="result last"><span class="r-pos">4TH</span>DALLAS</div>
+<div class="result dead"><span class="r-pos">LAST</span>FADA</div>
+</div>
+</div>
+
+<!-- ROUND 5 -->
+<div class="round" id="r5">
+<div class="round-header"><span class="round-num">ROUND 5/5</span><span class="round-name">The Final Judgement</span></div>
+<div class="round-body">
+<span class="big">&#x1F480; THE VOID SPEAKS &#x1F480;</span>
+minigame: the foxyverse itself decides. the oath holds. the three statues weep. the thread pulls taut.<br><br>
+<span class="blue">GRAVES</span> — the emperor. the backbone. asked "what have you produced?" to someone being paid $3,250/month. <span class="blue">that question alone is worth the promotion</span>. graves doesn't speak often. when she does, the room gets quieter. that's authority. not volume.<br><br>
+<span class="red">FADA</span> — the tower. the faceless. said "LOSERS. Perdadores." to a room full of people trying to pay her $36,000 a year. generated 2M views and sent 5-6 subscribers to someone else for free. <span class="red">the most powerful person in the room who refuses to aim the cannon at the right target</span>.<br><br>
+<span class="highlight">FOXY</span> — the fool. the painter. bought domains. fired people. hired people. went to bachata. asked vixen to rig a competition. <span class="highlight">living</span>.<br><br>
+<span class="purple">VIXEN</span> — the magician. built the stage everyone is standing on. can't leave. wouldn't if she could.<br><br>
+<span style="color:rgba(255,255,255,0.12)">DALLAS</span> — the star. absent. winning. your welcome dallas.<br>
+</div>
+<div class="results">
+<div class="result gold"><span class="r-pos">1ST</span>GRAVES</div>
+<div class="result silver"><span class="r-pos">2ND</span>VIXEN</div>
+<div class="result bronze"><span class="r-pos">3RD</span>FOXY</div>
+<div class="result last"><span class="r-pos">4TH</span>DALLAS</div>
+<div class="result dead"><span class="r-pos">LAST</span>FADA</div>
+</div>
+</div>
+
+<!-- PUNISHMENTS -->
+<div class="punishment" id="punishment">
+<h2>BOTH PUNISHMENTS APPLIED</h2>
+<p>
+<strong style="color:rgba(95,168,211,0.5)">FINAL SCORES: GRAVES 14 &middot; VIXEN 13 &middot; FOXY 10 &middot; DALLAS 8 &middot; FADA 5</strong><br><br>
+<strong style="color:rgba(95,168,211,0.5)">&#x1F527; GRAVES WINS.</strong> the emperor holds the throne.<br><br>
+<strong style="color:rgba(139,26,43,0.5)">&#x1F50E; FADA: LAST PLACE.</strong><br><br>
+<span style="color:rgba(139,26,43,0.4)">PUNISHMENT 1:</span> no internet for one day. fada's own suggestion. the faceless goes dark.<br><br>
+<span style="color:rgba(139,26,43,0.4)">PUNISHMENT 2:</span> half of next month's budget goes to the winner. fada's $3,000 becomes $1,500. graves gets $1,500 bonus. the dauntless grows stronger. the fateweavers learn consequences.<br><br>
+<span style="font-size:9px;color:rgba(255,255,255,0.08)">graves suggested this punishment. fada said "money is boring." let's see if that holds when $1,500 walks across the table.</span><br><br>
+<span style="font-family:'Creepster',cursive;font-size:18px;color:rgba(139,26,43,0.15)">PERDADORES. YOUR WELCOME DALLAS.</span>
+</p>
+</div>
+
+</div>
+
+<script>
+var round=0;
+var scores=[0,0,0,0,0];
+var roundResults=[
+  [3,0,1,4,2],
+  [2,4,1,0,3],
+  [4,0,2,3,1],
+  [3,0,2,4,1],
+  [4,0,2,3,1]
+];
+var names=['GRAVES','FADA','FOXY','VIXEN','DALLAS'];
+
+function revealNext(){
+  if(round>=5){
+    document.getElementById('punishment').classList.add('revealed');
+    document.getElementById('revealBtn').disabled=true;
+    document.getElementById('revealBtn').textContent='JUDGEMENT COMPLETE';
+    // Mark winner/loser
+    document.getElementById('pl1').classList.add('winner');
+    document.getElementById('pl2').classList.add('loser');
+    return;
+  }
+  var r=roundResults[round];
+  for(var i=0;i<5;i++) scores[i]+=r[i];
+  document.getElementById('r'+(round+1)).classList.add('revealed');
+  for(var i=0;i<5;i++) document.getElementById('sc'+(i+1)).textContent=scores[i];
+  round++;
+  if(round<5) document.getElementById('revealBtn').textContent='\u25B6 REVEAL ROUND '+(round+1);
+  else document.getElementById('revealBtn').textContent='\u25B6 REVEAL PUNISHMENT';
+  document.getElementById('r'+round).scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>
