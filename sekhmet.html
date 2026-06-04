@@ -94,24 +94,7 @@ canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-even
 @media(max-width:600px){.social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.18)}.social-float a{width:48px;height:40px}.social-float a:hover{width:48px}.social-float a .s-label{display:none}body{padding-bottom:44px}}
 
 
-/* ======== PET COMPANION ======== */
-.pet-companion{
-  position:fixed;bottom:14px;right:14px;z-index:9996;
-  display:flex;align-items:center;gap:6px;
-  padding:6px 10px;
-  background:rgba(10,10,18,0.8);
-  border:1px solid rgba(255,255,255,0.18);
-  border-radius:20px;
-  cursor:pointer;
-  transition:all 0.4s;
-  text-decoration:none;
-  opacity:0.4;
 }
-.pet-companion:hover{opacity:0.8;border-color:rgba(255,255,255,0.42000000000000004);background:rgba(10,10,18,0.95)}
-.pet-companion .pc-emoji{font-size:16px}
-.pet-companion .pc-name{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.45);letter-spacing:1px}
-.pet-companion .pc-xp{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.42000000000000004)}
-@media(max-width:600px){.pet-companion{bottom:48px;right:8px}}
 
 
 /* ======== PET BONUSES ======== */
@@ -148,6 +131,30 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 .sag-discover a:hover{color:rgba(180,100,220,0.6)}
 @media(max-width:600px){.sag-discover{bottom:80px;right:14px}}
 
+
+.pet-companion{
+  position:fixed !important;
+  bottom:14px !important;
+  right:14px !important;
+  z-index:9996 !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:6px !important;
+  padding:6px 10px !important;
+  background:rgba(10,10,18,0.85) !important;
+  border:1px solid rgba(255,255,255,0.06) !important;
+  border-radius:20px !important;
+  cursor:pointer !important;
+  text-decoration:none !important;
+  opacity:0.5 !important;
+  font-family:monospace !important;
+  line-height:1.2 !important;
+}
+.pet-companion:hover{opacity:0.8 !important}
+.pet-companion .pc-emoji{font-size:16px !important;line-height:1 !important}
+.pet-companion .pc-name{font-size:8px !important;color:rgba(255,255,255,0.3) !important;letter-spacing:1px !important;display:block !important}
+.pet-companion .pc-xp{font-size:7px !important;color:rgba(255,255,255,0.12) !important;display:block !important}
+@media(max-width:600px){.pet-companion{bottom:48px !important;right:8px !important}}
 </style>
 </head>
 <body>
