@@ -21,9 +21,7 @@
 }
 
 
-/* ======== PET BONUSES ======== */
-.pet-bonus-tag{position:fixed;bottom:40px;right:14px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.15);letter-spacing:1px;z-index:9995}
-@media(max-width:600px){.pet-bonus-tag{bottom:74px}}
+
 /* Taurus: bigger text */
 body.bonus-taurus{font-size:110%}
 /* Cancer: warm tint */
@@ -56,29 +54,11 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 @media(max-width:600px){.sag-discover{bottom:80px;right:14px}}
 
 
-.pet-companion{
-  position:fixed !important;
-  bottom:14px !important;
-  right:14px !important;
-  z-index:9996 !important;
-  display:flex !important;
-  align-items:center !important;
-  gap:6px !important;
-  padding:6px 10px !important;
-  background:rgba(10,10,18,0.85) !important;
-  border:1px solid rgba(255,255,255,0.06) !important;
-  border-radius:20px !important;
-  cursor:pointer !important;
-  text-decoration:none !important;
-  opacity:0.5 !important;
-  font-family:monospace !important;
-  line-height:1.2 !important;
-}
-.pet-companion:hover{opacity:0.8 !important}
-.pet-companion .pc-emoji{font-size:16px !important;line-height:1 !important}
-.pet-companion .pc-name{font-size:8px !important;color:rgba(255,255,255,0.3) !important;letter-spacing:1px !important;display:block !important}
-.pet-companion .pc-xp{font-size:7px !important;color:rgba(255,255,255,0.12) !important;display:block !important}
-@media(max-width:600px){.pet-companion{bottom:48px !important;right:8px !important}}
+
+
+
+
+@media(max-width:600px){
 </style></head><body>
 <!-- FLOATING SOCIAL BAR -->
 <div class="social-float">
@@ -92,10 +72,7 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 
 <div id="screen"><div id="calm"><div class="t">you're not supposed to be here.</div></div><div id="glitch"><div class="gt">RUN</div></div><div id="face"><div class="ff">&#x1F98A;</div></div><div id="msg"><div class="ml">you said you weren't supposed to be here.</div><div class="ml">you were right.</div><div class="ml">the fox sees everything in the 18+ channel.</div><div class="ml">especially when your dad is sitting next to you.</div><div class="ml">&#x2014; vixen &#x1F98A; sweet dreams kagaku</div></div></div>
 <script>const s=document.getElementById('screen'),calm=document.getElementById('calm'),gl=document.getElementById('glitch'),face=document.getElementById('face'),msg=document.getElementById('msg');setTimeout(()=>{calm.style.opacity='0';setTimeout(()=>{calm.style.display='none';gl.style.display='flex';s.classList.add('shaking');setTimeout(()=>{gl.style.display='none';face.style.display='flex';s.classList.remove('shaking');let f=0;const fi=setInterval(()=>{document.body.style.background=f%2===0?'#f00':'#000';f++;if(f>6){clearInterval(fi);document.body.style.background='#000';setTimeout(()=>{face.style.display='none';msg.style.display='flex';s.classList.remove('shaking')},2000)}},80)},1500)},300)},3000);</script><!-- PET COMPANION -->
-<a href="familiar.html" class="pet-companion" id="petCompanion" style="display:none">
-<span class="pc-emoji" id="pcEmoji"></span>
-<span><span class="pc-name" id="pcName"></span><br><span class="pc-xp" id="pcXp"></span></span>
-</a>
+
 <script>
 (function(){
   try{
