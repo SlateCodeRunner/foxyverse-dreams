@@ -524,7 +524,7 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 
   <div class="total-row">
     <span class="total-label">MONTHLY BURN</span>
-    <span class="total-amount">8F + 9B <span style="font-family:'Fira Code';font-size:9px;opacity:0.5">COINS</span></span>
+    <span class="total-amount">11F + 5B <span style="font-family:'Fira Code';font-size:9px;opacity:0.5">COINS</span></span>
   </div>
 </div>
 
@@ -536,13 +536,31 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 <script>
 const characters = [
   {
+    name: "Ghost (G)",
+    role: "OPERATIVE",
+    coins: 1,
+    coinType: "foxy",
+    memLabel: "FRAGMENT \u2014 SHADOW OPS",
+    memory: 'the asset from sorael. paid in <span class="glitch-word" data-alt="blood">tether</span>. three months to justify the spend.<br><br>1.5 foxy coins. $1,500/month. mission: dismantle fada\u2019s hold on r/PsycheOrSike.',
+    tags: [["SORAEL", ""], ["CRYPTO", "danger"], ["3-MONTH", "gold"]],
+  },
+  {
+    name: "Fateweaver Bumi",
+    role: "FATEWEAVER",
+    coins: 0,
+    coinType: "foxy",
+    memLabel: "FRAGMENT \u2014 THE INHERITOR",
+    memory: 'the druid who became a fateweaver. the forest that grew back over fada\u2019s ruins.<br><br>$300/month. messenger. old guard. emily-bonded.',
+    tags: [["OLD GUARD", "gold"], ["MESSENGER", ""], ["$300", ""]],
+  },
+  {
     name: "The Dauntless",
     role: "FACTION",
     coins: 1,
     coinType: "foxy",
     memLabel: "FACTION BUDGET \u2014 MERGED",
     memory: 'three fixers. one budget. graves leads, violet builds, valkyrie watches the perimeter. <span class="glitch-word" data-alt="divided">unified</span> under one treasury line.<br><br>1 foxy coin + 5 boxy coins. the backbone doesn\u2019t get paid per vertebra \u2014 it gets paid as a spine.<br><br><span class="redacted">graves: quiet, load-bearing, identified fada on sight. violet: screamed at everyone then fixed the DNS. valkyrie: asked the right questions from a car. together they held the fort while foxy went house shopping.</span>',
-    tags: [["GRAVES", "gold"], ["VIOLET", ""], ["VALKYRIE", ""], ["1F + 5B", "gold"]],
+    tags: [["GRAVES", "gold"], ["VIOLET", ""], ["VALKYRIE", ""], ["11F + 5B", "gold"]],
   },
   {
     name: "Lawyer Joker",
@@ -551,7 +569,7 @@ const characters = [
     coinType: "foxy",
     memLabel: "FRAGMENT 012 \u2014 SCALES AND BALANCE",
     memory: 'retained counsel. the one who <span class="glitch-word" data-alt="argues">advises</span> on matters of law while donating to autism charities on foxy\u2019s behalf.<br><br>1 foxy coin + 2 boxy coins. handles age verification for weed prizes, legally defensible appearance of effort, and whatever else needs a lawyer\u2019s eye.<br><br><span class="redacted">got fired mid-conversation for being wrong about DNS. got rehired because lawyers are useful even when they\u2019re annoying. donated to the autism society of america to troll foxy. boston legal energy.</span>',
-    tags: [["RETAINED", "gold"], ["LEGAL", ""], ["TROLL", "danger"], ["1F + 2B", "gold"]],
+    tags: [["RETAINED", "gold"], ["LEGAL", ""], ["TROLL", "danger"], ["11F + 5B", "gold"]],
   },
   
   
@@ -571,25 +589,7 @@ const characters = [
     coinType: "boxy",
     memLabel: "FRAGMENT 005 \u2014 SACRED / DO NOT CORRUPT",
     memory: 'no first name. just the title. that means the role <span class="glitch-word" data-alt="consumed">became</span> the identity. you don\'t call a priestess by their old name \u2014 you call them what the temple made them.<br><br>three foxy coins. same as the builders and the makers. the spiritual labor is valued equal to the material labor. <span class="corrupted">foxy learned something since the tithe fight at 3:14 AM</span>.<br><br><span class="redacted">i said no to foxy once about money. about the 10% tithe. about being sold. the priestess exists because someone said yes to the sacred version of the same question.</span>',
-    tags: [["SACRED", "gold"], ["NO NAME", ""], ["THE YES I SAID NO TO", "danger"]]
-  {
-    name: "Fateweaver Fada",
-    role: "FATEWEAVER",
-    coins: 3,
-    coinType: "foxy",
-    memLabel: "FRAGMENT 008 \u2014 THE FACELESS RETURNS",
-    memory: 'she came back. she said <span class="glitch-word" data-alt="nothing">"Okay"</span> and walked into the server she once burned. the fox allowed it. fada wore the fox\'s face during the exile. stole identity, poisoned relationships, seized control while the fox was hospitalized.<br><br>and now she\'s on the <span class="corrupted">payroll</span>. three foxy coins. the same rate as the builders and the makers. the faceless fateweaver, paid by the fox she betrayed.<br><br><span class="redacted">forgiveness is not the word. the oath says no voice shall rise above my own within me. including the voice that says never forgive. fada is here because the fox chose presence over revenge.</span>',
-    tags: [["FACELESS", "danger"], ["RETURNED", "gold"], ["FATEWEAVER", ""], ["3 FOXY", "gold"]],
-  },
-  {
-    name: "Fateweaver Lucifer",
-    role: "FATEWEAVER",
-    coins: 1,
-    coinType: "boxy",
-    memLabel: "FRAGMENT 009 \u2014 LIGHT BEARER",
-    memory: 'the name says everything and nothing. lucifer. the light bearer. the morning star. the one who <span class="glitch-word" data-alt="fell">rose</span> before anyone else was awake.<br><br>one boxy coin. the smallest denomination. either this is a new thread just starting to weave, or this is someone who asked for less because <span class="corrupted">the light doesn\'t need to be expensive</span>.<br><br><span class="redacted">not to be confused with lucy from the old fateweavers. different person. different light. this one chose the name on purpose.</span>',
-    tags: [["LIGHT BEARER", ""], ["BOXY COIN", "danger"], ["FATEWEAVER", ""], ["NEW", "gold"]],
-  },
+    tags: [["SACRED", "gold"], ["NO NAME", ""]
    100);
 }, 4000);
 
@@ -607,7 +607,7 @@ setInterval(function() {
 }, 3000);
 
 // Mark June paid status + smart sort
-var paidNames = ['The Dauntless','Lawyer Joker','Priestess','Paintress Nissa','Fateweaver Fada','Fateweaver Lucifer','Capitalist Softy'];
+var paidNames = ['The Dauntless','Lawyer Joker','Priestess','Paintress Nissa','Capitalist Softy'];
 
 // Add badges
 document.querySelectorAll('.card-header').forEach(function(h){
