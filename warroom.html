@@ -285,41 +285,19 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 </div>
 
 <script>
-var tag=document.createElement('script');tag.src="https://www.youtube.com/iframe_api";var fs=document.getElementsByTagName('script')[0];fs.parentNode.insertBefore(tag,fs);
-var ytPlayer=null,ytReady=false,audioStarted=false;
-function onYouTubeIframeAPIReady(){
-  ytPlayer=new YT.Player('ytplayer',{
-    height:'1',width:'1',
-    videoId:'vdOaOzbm_Q8',
-    playerVars:{autoplay:0,loop:1,playlist:'vdOaOzbm_Q8',controls:0,showinfo:0,modestbranding:1},
-    events:{onReady:function(){ytReady=true}}
-  });
-}
+// YouTube API removed - using direct iframe instead
 function startAll(){
   if(audioStarted)return;audioStarted=true;
   document.getElementById('clickOverlay').style.display='none';
   // START YOUTUBE - unmute and play
-  if(ytPlayer&&ytReady){
-    ytPlayer.unMute();
-    ytPlayer.setVolume(40);
-    ytPlayer.playVideo();
-    // ERRATIC VOLUME on the youtube player
-    setInterval(function(){
-      if(!ytPlayer)return;
-      if(Math.random()<0.25){
-        var surge=20+Math.random()*60;
-        ytPlayer.setVolume(Math.min(surge,80));
-        setTimeout(function(){
-          if(ytPlayer)ytPlayer.setVolume(30+Math.random()*20);
-        },800+Math.random()*3000);
+  // START MUSIC - unhide the simple iframe
+  var yt = document.getElementById('ytplayer');
+  if(yt) { yt.src = 'https://www.youtube.com/embed/vdOaOzbm_Q8?autoplay=1&loop=1&playlist=vdOaOzbm_Q8&controls=0&showinfo=0&modestbranding=1'; }
+  if(false){
+    
       }
     },5000);
-    // sudden drops
-    setInterval(function(){
-      if(!ytPlayer)return;
-      if(Math.random()<0.1){
-        ytPlayer.setVolume(5);
-        setTimeout(function(){if(ytPlayer)ytPlayer.setVolume(45)},400);
+    
       }
     },8000);
   }
