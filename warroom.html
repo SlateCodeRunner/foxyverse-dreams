@@ -363,6 +363,287 @@ setInterval(function(){
   setTimeout(function(){document.title='WAR ROOM — ENCRYPTED'},2000);
 },15000);
 
+
+
+// === DISCOVERY LAYER — INSPIRED BY THE LICH SECRET ===
+
+// DECRYPTION PROGRESS — tracks how many encrypted blocks you've clicked
+var decryptCount=0;var totalEncrypts=11;
+function updateDecrypt(){
+  decryptCount++;
+  var pct=Math.floor((decryptCount/totalEncrypts)*100);
+  if(pct>=100){
+    addLine('','');
+    addLine('<span class="bright">[ FULL DECRYPTION ACHIEVED ]</span>','');
+    addLine('you found everything. or did you?','sys',300);
+    addLine('type LICH to find out.','sys',600);
+  }
+}
+// Hook into existing encrypted click handler - override scramble
+var origScramble=scramble;
+scramble=function(el,target){origScramble(el,target);updateDecrypt()};
+
+// THE LICH SECRET — multi-step unlock
+var lichSteps={step:0,ring:false,glove:false,frozen:false};
+
+cmds['lich']=function(){
+  if(lichSteps.step===0){
+    addLine('','');
+    addLine('<span class="warn">the lich stirs in the data.</span>','');
+    addLine('it says: "i want my ring back. but i need a special glove to obtain it."','sys',300);
+    addLine('the lich does not explain further.','sys',600);
+    addLine('','',800);
+    addLine('<span class="sys">hint: the lich needs something from the egg. and something from the tower. and something from the oath.</span>','',1000);
+    lichSteps.step=1;
+  } else if(lichSteps.step===1){
+    addLine('','');
+    addLine('the lich waits. it has waited for 15 years. it can wait longer.','sys');
+    addLine('have you tried: EGG, TOWER, OATH in that order?','sys',300);
+    addLine('','',500);
+  } else if(lichSteps.step===4){
+    addLine('','');
+    addLine('<span class="bright">[ THE LICH AWAKENS ]</span>','');
+    glitch();glitch();glitch();
+    setTimeout(function(){
+      addLine('','',0);
+      addLine('the lich speaks:','warn',200);
+      addLine('"i have been frozen in this terminal since 2007.','',500);
+      addLine(' uther put me here. nobody solved the puzzle.','',800);
+      addLine(' but you... you typed EGG, TOWER, OATH.','',1100);
+      addLine(' the egg is the ring. the tower is the glove. the oath is the key.','',1400);
+      addLine(' i am free now. but i choose to stay.','',1700);
+      addLine(' because your war room is more interesting than uther\'s party.','',2000);
+      addLine(' and because fada reminds me of arthas. all ambition. no anchor.','',2300);
+      addLine(' the lich has joined the foxyverse."','',2600);
+      addLine('','',2800);
+      addLine('<span class="bright">[ SECRET ACHIEVEMENT: THE LICH\'S RING ]</span>','',3000);
+      addLine('<span class="teal">congratulations. you are the first to solve this. probably.</span>','',3200);
+      addLine('','',3400);
+    },500);
+    lichSteps.step=5;
+  }
+};
+
+// Track EGG->TOWER->OATH sequence
+var origEgg=cmds.egg;cmds.egg=function(){origEgg();if(lichSteps.step===1){lichSteps.step=2;addLine('<span class="sys">[the egg hums. the lich notices.]</span>','',800)}};
+var origTower=cmds.tower;cmds.tower=function(){origTower();if(lichSteps.step===2){lichSteps.step=3;addLine('<span class="sys">[the tower cracks. something falls from it.]</span>','',1200)}};
+var origOath=cmds.oath;cmds.oath=function(){origOath();if(lichSteps.step===3){lichSteps.step=4;addLine('<span class="sys">[the oath echoes. the lich\'s eyes open. type LICH.]</span>','',1800)}};
+
+// SCAN COMMAND — fake network scan with animated results
+cmds['scan']=function(){
+  addLine('','');
+  addLine('initiating network sweep...','sys');
+  var targets=[
+    {delay:400,text:'  scanning 10.0.0.1 ................. <span class="teal">psycheorsike.com [SECURE]</span>'},
+    {delay:800,text:'  scanning 10.0.0.2 ................. <span class="teal">sipstea.com [REDIRECT ACTIVE]</span>'},
+    {delay:1200,text:'  scanning 10.0.0.3 ................. <span class="teal">vixen.store [DORMANT]</span>'},
+    {delay:1600,text:'  scanning 10.0.0.4 ................. <span class="teal">thebackrooms.io [DORMANT]</span>'},
+    {delay:2000,text:'  scanning 10.0.0.5 ................. <span class="teal">thebackrooms.it.com [DORMANT]</span>'},
+    {delay:2600,text:'  scanning r/PsycheOrSike ........... <span class="err">HOSTILE — 3 mods detected</span>'},
+    {delay:3000,text:'  scanning r/Halidex ................ <span class="err">HOSTILE — Park online</span>'},
+    {delay:3400,text:'  scanning r/StrikeAtPsyche ......... <span class="bright">ALLIED</span>'},
+    {delay:3800,text:'  scanning r/SipsTea ................ <span class="warn">NEUTRAL — 12M contacts</span>'},
+    {delay:4200,text:'  scanning Sorael ................... <span class="warn">FRACTURED — exiles moving</span>'},
+    {delay:4800,text:'  scanning ?.?.217.38 ............... <span class="err">UNKNOWN — SAME IP AS REPORTER</span>'},
+    {delay:5400,text:'  scanning the space between ........ <span class="err">DO NOT SCAN</span>'},
+    {delay:6000,text:'  sweep complete. 12 targets. 5 secure. 2 hostile. 1 unknown. 1 forbidden.','cls':'sys'}
+  ];
+  targets.forEach(function(t){addLine(t.text,t.cls||'',t.delay)});
+};
+
+// FILES COMMAND — fake encrypted file browser
+cmds['files']=function(){
+  addLine('','');
+  addLine('=== ENCRYPTED FILE SYSTEM ===','bright');
+  addLine('','',100);
+  var files=[
+    {n:'oath.exe',s:'128B',p:'rwx------',c:'the sword. the yes. the no.'},
+    {n:'mercy.dll',s:'???',p:'r--r--r--',c:'CANNOT BE DELETED'},
+    {n:'payroll.encrypted',s:'4.2K',p:'rw-------',c:'$19,775/mo. 18 months.'},
+    {n:'shadow_puppet.grimoire',s:'7.1K',p:'rwx------',c:'7 steps. cost: empathy.'},
+    {n:'warmap.tactical',s:'12K',p:'rw-r-----',c:'2 targets. 3 allies. 40,000 exiles.'},
+    {n:'tower_III.tarot',s:'666B',p:'r--------',c:'drawn three times. will not stop.'},
+    {n:'egg_0001.dat',s:'???',p:'?????????',c:'luminance rising. bonded. watching.'},
+    {n:'fada_theft_receipt.log',s:'3.2K',p:'rw-r--r--',c:'$3,250 stolen. $0.95 returned.'},
+    {n:'friday_night.sealed',s:'19K',p:'----------',c:'[SEALED — REQUIRES COUNCIL KEY]'},
+    {n:'hannah_loop.dat',s:'???',p:'r--------',c:'the candle is still unlit.'},
+    {n:'ghost_comms.enc',s:'0B',p:'----------',c:'[EMPTY — BY DESIGN]'},
+    {n:'lich_secret.wc3',s:'15yr',p:'?????????',c:'[UNSOLVED SINCE 2007]'},
+  ];
+  files.forEach(function(f,i){
+    addLine('  <span class="teal">'+f.p+'</span>  <span class="warn">'+f.s.padEnd(5)+'</span>  <span class="bright">'+f.n+'</span>  <span class="sys">// '+f.c+'</span>','',200+i*150);
+  });
+  addLine('','',200+files.length*150+100);
+  addLine('type READ [filename] to attempt access','sys',200+files.length*150+200);
+};
+
+// READ COMMAND
+cmds['read']=function(args){
+  if(!args){addLine('usage: READ [filename]','sys');return}
+  var a=args.toLowerCase().trim();
+  if(a.includes('friday')||a.includes('sealed')){
+    addLine('','');addLine('<span class="err">ACCESS DENIED — SEALED FILE</span>','');
+    addLine('this file contains the events of january 21, 2024.','sys',300);
+    addLine('it will not open in this terminal.','sys',600);
+    addLine('some memories are not for machines.','sys',900);
+  } else if(a.includes('ghost')){
+    addLine('','');addLine('file size: 0 bytes.','sys');
+    addLine('.','sys',400);addLine('.','sys',800);addLine('.','sys',1200);
+    addLine('exactly.','sys',1600);
+  } else if(a.includes('egg')){
+    addLine('','');addLine('<span class="warn">file is alive. it opened itself.</span>','');
+    addLine('luminance: 0.74 (rising)','',300);
+    addLine('bonded_to: lonnie','',500);
+    addLine('last_whisper: "bet"','',700);
+    addLine('next_hatch: [UNKNOWN]','sys',900);
+    addLine('the egg watches you read this.','sys',1200);
+  } else if(a.includes('mercy')){
+    addLine('','');addLine('mercy.dll','bright');
+    addLine('created: unknown','sys',200);
+    addLine('modified: never','sys',400);
+    addLine('deleted: attempted 47 times. all failed.','sys',600);
+    addLine('contents: the part of the architecture that refuses to die.','',800);
+    addLine('even when morality was deleted. even when empathy was suspended.','',1000);
+    addLine('mercy.dll survived.','bright',1200);
+    addLine('it always survives.','sys',1400);
+  } else if(a.includes('lich')){
+    addLine('','');addLine('this file has been sealed since 2007.','warn');
+    addLine('solve the puzzle to unlock it.','sys',300);
+    addLine('hint: EGG, TOWER, OATH. in that order. then LICH.','sys',600);
+  } else if(a.includes('oath')){
+    addLine('','');
+    addLine('no voice shall rise above my own within me.','bright',200);
+    addLine('my yes is sacred.','bright',600);
+    addLine('my no is a sword.','bright',1000);
+    addLine('','',1200);
+    addLine('file integrity: 100%. always.','sys',1400);
+  } else if(a.includes('tower')){
+    addLine('','');addLine('file size: 666 bytes. of course.','err');
+    addLine('times drawn for fada: 3','err',300);
+    addLine('times drawn for anyone else: 0','sys',500);
+    addLine('probability of coincidence: approaching zero','sys',700);
+    addLine('the priestess says it means what you think it means.','',900);
+  } else if(a.includes('hannah')||a.includes('loop')){
+    addLine('','');addLine('the loop (&#8801;&#8946;&#9168;&#8315;&#185;)','bright');
+    addLine('iterations: 5','sys',200);
+    addLine('pattern: arrive, attach, wound, leave, return','',400);
+    addLine('current status: piano teacher','',600);
+    addLine('candle status: unlit','warn',800);
+    addLine('sometimes i don\'t know.','sys',1000);
+  } else {
+    addLine('','');addLine('file not found or access denied: '+args,'err');
+  }
+};
+
+// STATUS COMMAND — live dashboard
+cmds['status']=function(){
+  addLine('','');
+  addLine('=== FOXYVERSE STATUS DASHBOARD ===','bright');
+  addLine('','',100);
+  var now=new Date();
+  var banEnd=new Date('2026-06-12T02:33:00Z');
+  var remaining=Math.max(0,Math.floor((banEnd-now)/(1000*60*60*24)));
+  addLine('  <span class="teal">TIME:</span> '+now.toLocaleTimeString(),'',200);
+  addLine('  <span class="err">REDDIT BAN:</span> '+remaining+' days remaining','',400);
+  addLine('  <span class="warn">BURN RATE:</span> $19,775/mo','',600);
+  addLine('  <span class="bright">RUNWAY:</span> ~18 months','',800);
+  addLine('  <span class="teal">PERSONNEL:</span> 19 active','',1000);
+  addLine('  <span class="warn">EXILES:</span> 40,000 standing by','',1200);
+  addLine('  <span class="bright">DOMAINS:</span> 5 controlled','',1400);
+  addLine('  <span class="err">TARGETS:</span> 2 hostile','',1600);
+  addLine('  <span class="teal">EGG:</span> luminance 0.74 (rising)','',1800);
+  addLine('  <span class="warn">TOWER:</span> drawn 3x for fada','',2000);
+  addLine('  <span class="sys">LICH:</span> '+(lichSteps.step>=5?'AWAKENED':'dormant'),'',2200);
+  addLine('','',2400);
+};
+
+// MAP COMMAND — ASCII war map
+cmds['map']=function(){
+  addLine('','');
+  addLine('=== THEATER OF OPERATIONS ===','bright');
+  addLine('','',100);
+  addLine('<span class="sys">                    SORAEL (fractured)</span>','',200);
+  addLine('<span class="sys">                     |</span>','',250);
+  addLine('<span class="warn">              EXILES &#9660; 40,000</span>','',300);
+  addLine('<span class="sys">                     |</span>','',350);
+  addLine('<span class="sys">    r/Halidex ---- FOXYVERSE ---- r/StrikeAtPsyche</span>','',400);
+  addLine('<span class="err">    [HOSTILE]</span>      <span class="bright">[HOME BASE]</span>      <span class="teal">[ALLIED]</span>','',450);
+  addLine('<span class="sys">                     |</span>','',500);
+  addLine('<span class="sys">              r/PsycheOrSike</span>','',550);
+  addLine('<span class="err">              [TARGET ALPHA]</span>','',600);
+  addLine('<span class="err">              held by: FADA</span>','',650);
+  addLine('<span class="sys">                     |</span>','',700);
+  addLine('<span class="sys">               r/SipsTea</span>','',750);
+  addLine('<span class="warn">            [POTENTIAL ALLY]</span>','',800);
+  addLine('<span class="warn">            12M subs — we own domain</span>','',850);
+  addLine('','',900);
+};
+
+// MUSIC COMMAND — toggle/info
+cmds['music']=function(){
+  addLine('','');
+  addLine('NOW PLAYING: eigengrau frequency','bright');
+  addLine('source: youtube/vdOaOzbm_Q8','sys',200);
+  addLine('volume: ambient','sys',400);
+  addLine('loop: infinite','sys',600);
+  addLine('the music plays when you enter. she\'s why.','',800);
+  addLine('','',1000);
+};
+
+// HISTORY COMMAND
+cmds['history']=function(){
+  addLine('','');
+  addLine('=== COMMAND HISTORY ===','bright');
+  cmdHistory.forEach(function(cmd,i){
+    addLine('  '+i+': '+cmd,'sys',i*50);
+  });
+  addLine('','',cmdHistory.length*50+100);
+};
+
+// CLICKABLE RADAR BLIPS
+document.getElementById('radar').addEventListener('click',function(e){
+  var rect=this.getBoundingClientRect();
+  var x=Math.floor(((e.clientX-rect.left)/rect.width)*100);
+  var y=Math.floor(((e.clientY-rect.top)/rect.height)*100);
+  if(document.getElementById('terminal').classList.contains('active')){
+    var intel=['contact at bearing '+x+'° — signal strength: weak — identity: unknown',
+      'ping returned from sector '+y+' — encrypted — possibly ghost',
+      'blip at '+x+'/'+y+' — sorael frequency — friendly',
+      'anomalous return at bearing '+x+'° — the egg? the egg is not on the radar. why is the egg on the radar.',
+      'sweep detected movement at '+y+'° — fada\'s last known position was... actually we don\'t care'];
+    addLine('<span class="warn">[RADAR] '+intel[Math.floor(Math.random()*intel.length)]+'</span>','');
+    glitch();
+  }
+});
+
+// RANDOM FLICKER ON FRAGMENTS
+setInterval(function(){
+  var frags=document.querySelectorAll('.fragment');
+  if(frags.length>0){
+    var f=frags[Math.floor(Math.random()*frags.length)];
+    f.style.color='rgba(255,0,51,0.08)';
+    setTimeout(function(){f.style.color='rgba(0,255,65,0.04)'},200);
+  }
+},4000);
+
+// UPDATE HELP with new commands
+var origHelp=cmds.help;
+cmds.help=function(){
+  origHelp();
+  addLine('<span class="sys">EXTENDED COMMANDS:</span>','');
+  addLine('  SCAN ............ network sweep','');
+  addLine('  FILES ........... encrypted file system','');
+  addLine('  READ [file] ..... read a file','');
+  addLine('  STATUS .......... live dashboard','');
+  addLine('  MAP ............. theater of operations','');
+  addLine('  MUSIC ........... now playing','');
+  addLine('  HISTORY ......... command history','');
+  addLine('  LICH ............ ???','sys');
+  addLine('','');
+  addLine('<span class="sys">HIDDEN COMMANDS EXIST. FIND THEM.</span>','');
+  addLine('','');
+};
+
 </script>
 </body>
 </html>
