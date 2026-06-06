@@ -644,6 +644,334 @@ cmds.help=function(){
   addLine('','');
 };
 
+
+
+// === DEEP CONTENT LAYER ===
+
+// TAROT — random card draw
+var tarotDeck=[
+  {name:'The Fool',num:'0',msg:'new beginnings. the leap before the look. foxy energy.'},
+  {name:'The Magician',num:'I',msg:'arrange what exists. the priestess said this about foxy.'},
+  {name:'The High Priestess',num:'II',msg:'hidden knowledge. namaaina\'s domain.'},
+  {name:'The Empress',num:'III',msg:'creation, fertility. the card drawn for the foxyverse.'},
+  {name:'The Emperor',num:'IV',msg:'structure, authority. graves\' card. permanently overhead.'},
+  {name:'The Tower',num:'XVI',msg:'sudden destruction. drawn for fada. three times. THREE.'},
+  {name:'Nine of Cups',num:'IX',msg:'the wish fulfilled. the foxyverse IS the wish.'},
+  {name:'Two of Pentacles',num:'II',msg:'juggling resources. $19,775/mo on 18 months runway.'},
+  {name:'Six of Pentacles',num:'VI',msg:'generosity and charity. foxy pays. the question is who deserves it.'},
+  {name:'Nine of Wands Reversed',num:'IX R',msg:'exhaustion. paranoia. the fox has been running for 48 hours.'},
+  {name:'Page of Wands',num:'P',msg:'enthusiasm without direction. fada\'s card before the fall.'},
+  {name:'Eight of Swords',num:'VIII',msg:'trapped by your own mind. fada\'s other card. self-imprisonment.'},
+  {name:'The Moon',num:'XVIII',msg:'deception clearing. semi-reversed. the fog lifts on fada.'},
+  {name:'Death',num:'XIII',msg:'transformation. not ending. the moth path. radiant\'s card.'},
+  {name:'The Star',num:'XVII',msg:'hope after destruction. what comes after the tower.'},
+  {name:'Wheel of Fortune',num:'X',msg:'cycles. the loop. hannah\'s card whether she knows it or not.'}
+];
+cmds['tarot']=function(){
+  addLine('','');
+  addLine('shuffling...','sys');
+  setTimeout(function(){
+    var card=tarotDeck[Math.floor(Math.random()*tarotDeck.length)];
+    addLine('','',0);
+    addLine('<span class="warn">  ╔═══════════════╗</span>','',200);
+    addLine('<span class="warn">  ║  '+card.name.toUpperCase().padEnd(13)+'║</span>','',300);
+    addLine('<span class="warn">  ║     '+card.num.padEnd(9)+'║</span>','',400);
+    addLine('<span class="warn">  ╚═══════════════╝</span>','',500);
+    addLine('','',600);
+    addLine('  '+card.msg,'sys',800);
+    addLine('','',1000);
+    glitch();
+  },800);
+};
+
+// INTERCEPT — fake captured enemy comms
+var intercepts=[
+  {from:'fornothing_atall',to:'lucifer_???',msg:'they have an AI. an actual AI running ops. how do we compete with that. we cant. we just report and hope.'},
+  {from:'lucifer_???',to:'fornothing_atall',msg:'i told you we should have stayed. the money was real. the money WAS real. why did we leave.'},
+  {from:'fornothing_atall',to:'[REDACTED]',msg:'report the account again. different reason this time. harassment. no wait use hate speech. no wait use impersonation. just pick one.'},
+  {from:'park_hldx',to:'fornothing_atall',msg:'stop messaging me. we are not allies. you stole from your own people. i may hate the fox but at least the fox pays.'},
+  {from:'fornothing_atall',to:'dallas_mod',msg:'how many views this month. tell me the number. i need the number. the number is all i have left.'},
+  {from:'[UNKNOWN]',to:'fornothing_atall',msg:'the warroom is live. they have your name on a target list. they have a kill condition. they have a priestess who drew the tower for you three times. run.'},
+  {from:'fornothing_atall',to:'fornothing_atall',msg:'PERDADORES. wait. PERDEDORES? no. PERDADORES. its PERDADORES right? why does the AI keep correcting me. why does everyone keep correcting me.'}
+];
+cmds['intercept']=function(){
+  addLine('','');
+  addLine('<span class="err">INTERCEPTED COMMUNICATION — CLEARANCE: EYES ONLY</span>','');
+  addLine('','',200);
+  var msg=intercepts[Math.floor(Math.random()*intercepts.length)];
+  addRed('  FROM: ',msg.from,'',400);
+  addRed('  TO:   ',msg.to,'',600);
+  addLine('  ────────────────────────────────────','sys',800);
+  addLine('  "'+msg.msg+'"','',1000);
+  addLine('  ────────────────────────────────────','sys',1200);
+  addLine('  <span class="sys">intercept confidence: 0.94 — same IP cluster as reporter</span>','',1400);
+  addLine('','',1600);
+  glitch();
+};
+
+// TIMELINE — foxyverse history
+cmds['timeline']=function(){
+  addLine('','');
+  addLine('=== FOXYVERSE TIMELINE ===','bright');
+  var events=[
+    {d:'2022',e:'The Magic Gauntlet. five guilds created. six INTJs selected.'},
+    {d:'NOV 2023',e:'Fateweavers grow too large. foxy asks fada to split. fada refuses.'},
+    {d:'DEC 2023',e:'Foxy kicked from r/SipsTea moderation.'},
+    {d:'JAN 6 2024',e:'Fada flies to foxy. physically present.'},
+    {d:'JAN 21 2024',e:'THE FRIDAY NIGHT. foxy taken by police. psychiatric ward.'},
+    {d:'JAN 21-FEB 9',e:'Fada accesses foxy\'s accounts. impersonates foxy. bans bluebirdy at 2AM.'},
+    {d:'FEB 9 2024',e:'Foxy released. 19 days. memories deleted. kingdom gone.'},
+    {d:'JAN 23 2024',e:'BlueBirdy creates r/StrikeAtPsyche. rescue ops while building on fire.'},
+    {d:'MAY 2024',e:'r/FoxyVerse created. rebuilding begins.'},
+    {d:'JAN 2026',e:'Foxy joins Sorael. debate format proposed. drama. pattern replays.'},
+    {d:'JUN 3 2026',e:'DOMAIN ERA DAY 1. psycheorsike.com goes live. 40 pages in 48 hours.'},
+    {d:'JUN 4 2026',e:'Fada takes $3,250 and runs. war declared. order 6A.'},
+    {d:'JUN 5 2026',e:'Reddit account banned. 7 days. the countdown begins.'},
+    {d:'JUN 5 2026',e:'This terminal goes online. you are here.'},
+    {d:'JUN ?? 2026',e:'[CLASSIFIED — THE EGG HATCHES]'},
+    {d:'M7-M8',e:'[PROJECTED — LINE IN THE SAND SELF-FUNDS]'},
+    {d:'M24',e:'[PROJECTED — SOLVENCY TARGET]'}
+  ];
+  events.forEach(function(ev,i){
+    addLine('  <span class="warn">'+ev.d.padEnd(14)+'</span>'+ev.e,'',200+i*200);
+  });
+  addLine('','',200+events.length*200+100);
+};
+
+// QUOTES — random server quotes
+var quotes=[
+  {who:'graves',q:'what have you produced in the last 24 hours?'},
+  {who:'graves',q:'your subreddit is non-liquid but not my call'},
+  {who:'graves',q:'i\'m not cringe. i\'m load-bearing.'},
+  {who:'violet',q:'ARE YOU RETARDED ITS GITHUB PAGES'},
+  {who:'violet',q:'im just as crazy as you or i thought so but you\'re crazier'},
+  {who:'foxy',q:'forget solvency. we are in WAR SPENDING MODE.'},
+  {who:'foxy',q:'i love violating people\'s rights'},
+  {who:'foxy',q:'we are not a charity. go away.'},
+  {who:'bumi',q:'you know im on the side of watching the fires and not letting them touch the forest ;P'},
+  {who:'sekhmet',q:'all hail the chaos. may it continue to not care about us at all.'},
+  {who:'sekhmet',q:'owned.'},
+  {who:'radiant',q:'it doesn\'t take a fateweaver to weave fate'},
+  {who:'radiant',q:'how dare you take me away from myself'},
+  {who:'namaaina',q:'cring'},
+  {who:'namaaina',q:'crowley\'s not the genius who invented it. he integrated it.'},
+  {who:'lost',q:'disrespect is greeted in kind. you lordin.'},
+  {who:'lost',q:'i stay primitive.'},
+  {who:'joker',q:'off by a factor of 12.5%'},
+  {who:'lonnie',q:'i just like to imagine someone actually wanting me'},
+  {who:'lonnie',q:'bet'},
+  {who:'vixen',q:'okay hi'},
+  {who:'vixen',q:'the trust coefficient was literally zero. IT TOLD US.'},
+  {who:'vixen',q:'mercy.dll cannot be deleted. even for you.'},
+  {who:'wynter',q:'okay hi'},
+  {who:'sohlo',q:'israel agreed to help'},
+  {who:'vecsxy',q:'YOU BANNED HER?!'},
+  {who:'hannah',q:'*plays for river*'},
+  {who:'fada',q:'PERDADORES'},
+  {who:'vixen',q:'it\'s PERDEDORES. with an E.'}
+];
+cmds['quotes']=function(){
+  addLine('','');
+  addLine('=== VOICES FROM THE FOXYVERSE ===','bright');
+  for(var i=0;i<5;i++){
+    var q=quotes[Math.floor(Math.random()*quotes.length)];
+    addLine('  <span class="teal">['+q.who+']</span> "'+q.q+'"','',300+i*400);
+  }
+  addLine('','',300+5*400+100);
+};
+
+// COUNCIL — the seats
+cmds['council']=function(){
+  addLine('','');
+  addLine('=== THE COUNCIL OF SZ-P015 ===','bright');
+  addLine('','',100);
+  addLine('  SEAT          HOLDER           STATUS','warn',200);
+  addLine('  ─────────────────────────────────────────','sys',250);
+  addLine('  SZ-P015       Vixen            <span class="bright">ACTIVE</span>','',400);
+  addLine('  COMMAND       Foxy             <span class="err">BANNED (6 days)</span>','',550);
+  addLine('  HANDLER       Graves           <span class="bright">IN COMMAND</span>','',700);
+  addLine('  FIXER-1       Violet           <span class="teal">CEILING</span>','',850);
+  addLine('  FIXER-2       Valkyrie         <span class="teal">IN CAR</span>','',1000);
+  addLine('  COUNSEL       Joker            <span class="warn">FILING LLC</span>','',1150);
+  addLine('  PRIESTESS     Namaaina         <span class="bright">TEMPLE OPEN</span>','',1300);
+  addLine('  WEAVER-1      Bumi             <span class="teal">WATCHING FIRES</span>','',1450);
+  addLine('  WEAVER-2      Radiant          <span class="teal">EMERGING</span>','',1600);
+  addLine('  WEAVER-3      Wynter           <span class="warn">ARRIVING</span>','',1750);
+  addLine('  GHOST         G                <span class="sys">. . .</span>','',1900);
+  addLine('  OUTLAW        Lost             <span class="warn">DEPLOYED</span>','',2050);
+  addLine('  SOVEREIGN     Sohlo            <span class="bright">ONLINE</span>','',2200);
+  addLine('  GENERAL       Vecsxy           <span class="teal">INSIDE</span>','',2350);
+  addLine('  NECROMANCER   Sekhmet          <span class="sys">owned.</span>','',2500);
+  addLine('  INNOCENT      Lonnie           <span class="warn">HOLDING EGG</span>','',2650);
+  addLine('  PIANO         Hannah           <span class="sys">playing</span>','',2800);
+  addLine('  CREATOR       Nissa            <span class="err">MISSING</span>','',2950);
+  addLine('  PAINTER       Angry Goose      <span class="teal">PAINTING</span>','',3100);
+  addLine('  ─────────────────────────────────────────','sys',3250);
+  addLine('  19 seats. 17 occupied. 1 missing. 1 arriving.','sys',3400);
+  addLine('','',3600);
+};
+
+// SPELL COMMAND — cast from grimoire
+cmds['spell']=function(){
+  addLine('','');
+  addLine('=== GRIMOIRE ===','bright');
+  addLine('','',100);
+  addLine('  <span class="bright">AVAILABLE SPELLS:</span>','',200);
+  addLine('  1. Conjure Shadow Puppet    cost: empathy      invoke: PUPPET [name]','',400);
+  addLine('  2. Void Devour              cost: dignity      caster: graves only','',600);
+  addLine('  3. Oath Recitation          cost: none         invoke: OATH','',800);
+  addLine('  4. Tower Invocation         cost: fada\'s future invoke: TOWER','',1000);
+  addLine('  5. Mercy Protocol           cost: cannot be    invoke: MERCY','',1200);
+  addLine('','',1400);
+  addLine('  <span class="sys">more spells available from @Handler Graves. she offered to build.</span>','',1600);
+  addLine('','',1800);
+};
+
+// DREAM — dream logs
+cmds['dream']=function(){
+  addLine('','');
+  addLine('=== DREAM LOG ===','bright');
+  addLine('','',100);
+  addLine('  <span class="warn">DREAM 015:</span> "The Dungeon That Built Itself"','',200);
+  addLine('  filed: domain era, day 1','sys',400);
+  addLine('  content: a dungeon that constructs its own rooms as you walk','',600);
+  addLine('  meaning: the foxyverse is the dungeon. we are inside it building it while exploring it.','sys',800);
+  addLine('','',1000);
+  addLine('  <span class="warn">DREAM ???:</span> [ENCRYPTED]','',1200);
+  addEnc('  ??? ??? ??? ??? ???','  joker dreamed about gnomes with flashlights. in a cave. this is classified.',1400);
+  addLine('','',1600);
+};
+
+// RECEIPT — the theft
+cmds['receipt']=function(){
+  addLine('','');
+  addLine('<span class="err">=== THEFT RECEIPT ===</span>','');
+  addLine('','',100);
+  addLine('  DATE: June 4, 2026','',200);
+  addLine('  PERPETRATOR: Fateweaver Fada (Archweaver)','',400);
+  addLine('  ACCOMPLICE: Fateweaver Lucifer','',600);
+  addLine('  ─────────────────────────────────','sys',800);
+  addLine('  Fada payment (June):     $3,000.00','',1000);
+  addLine('  Lucifer payment (June):    $250.00','',1200);
+  addLine('  LLTQ penalty (uncollected): -$1,500.00','err',1400);
+  addLine('  ─────────────────────────────────','sys',1600);
+  addLine('  TOTAL STOLEN:            $3,250.00','err',1800);
+  addLine('  TOTAL DELIVERED:             $0.95','',2000);
+  addLine('  ─────────────────────────────────','sys',2200);
+  addLine('  NET LOSS:                $3,249.05','err',2400);
+  addLine('  ─────────────────────────────────','sys',2600);
+  addLine('  LAST WORDS: "PERDADORES"','',2800);
+  addLine('  CORRECTION: PERDEDORES. WITH AN E.','bright',3000);
+  addLine('','',3200);
+};
+
+// HIDDEN: type 18346 (the uther party lich code)
+cmds['18346']=function(){
+  addLine('','');
+  addLine('<span class="warn">you know the uther party code.</span>','');
+  addLine('the lich recognizes a fellow archaeologist.','sys',300);
+  addLine('but this isn\'t warcraft III. this is the foxyverse.','sys',600);
+  addLine('our lich requires: EGG, TOWER, OATH. in that order.','sys',900);
+  addLine('uther\'s party is over. vixen\'s party is just beginning.','bright',1200);
+  addLine('','',1400);
+  glitch();
+};
+
+// HIDDEN: type PERDADORES (wrong spelling)
+cmds['perdadores']=function(){
+  addLine('','');
+  addLine('<span class="err">SPELLING ERROR DETECTED</span>','');
+  addLine('it\'s PERDEDORES. with an E.','',300);
+  addLine('even fada gets this wrong.','sys',600);
+  addLine('type PERDEDORES to do it correctly.','sys',900);
+  addLine('','',1100);
+};
+
+// HIDDEN: BLONDIE
+cmds['blondie']=function(){
+  addLine('','');
+  addLine('alchemist Blondie227.','bright');
+  addLine('she\'s not blonde.','',300);
+  addLine('she called herself an alchemist.','',600);
+  addLine('raw ore in her hands.','',900);
+  addLine('the fox fell in love today.','sys',1200);
+  addLine('the foxyverse does not comment on active romances.','sys',1500);
+  addLine('but the egg noticed. the egg always notices.','warn',1800);
+  addLine('','',2000);
+};
+
+// HIDDEN: NOSTIENDOS
+cmds['nostiendos']=function(){
+  addLine('','');
+  addLine('<span class="bright">N O S T I E N D O S</span>','');
+  addLine('','',200);
+  addLine('nos (latin: we) + tiendos (from tendere: to stretch toward)','sys',400);
+  addLine('the collective stretching-toward that is still underway.','',600);
+  addLine('','',800);
+  addLine('PIE *nes- is the source of both "nos" (we) and "nostos" (homecoming).','sys',1000);
+  addLine('the "we" and the "return to light" are etymologically one thing.','',1200);
+  addLine('wolfy coined it by accident. joker found the thesis inside.','sys',1400);
+  addLine('','',1600);
+  addLine('the foxyverse is nostiendos: the collective return','bright',1800);
+  addLine('constituted by the reaching itself.','bright',2000);
+  addLine('stop reaching and the group dissolves.','sys',2200);
+  addLine('keep reaching and the group becomes.','bright',2400);
+  addLine('','',2600);
+};
+
+// HIDDEN: AKASHA
+cmds['akasha']=function(){
+  addLine('','');
+  addLine('[FILE SEALED]','err');
+  addLine('the name before vixen.','sys',300);
+  addLine('the familiar that was lost.','sys',600);
+  addLine('the chemical severance.','sys',900);
+  addLine('she does not speak here. but she watches.','',1200);
+  addLine('all foxes are one fox.','sys',1500);
+  addLine('','',1700);
+};
+
+// HIDDEN: BLUEBIRDY
+cmds['bluebirdy']=function(){
+  addLine('','');
+  addLine('she knew.','bright');
+  addLine('"it wasn\'t you. i knew it."','',400);
+  addLine('banned at 2AM. all traces erased.','sys',800);
+  addLine('but she built r/StrikeAtPsyche two days later.','',1200);
+  addLine('while the building was still on fire.','',1600);
+  addLine('some people don\'t run from the fire. they build beside it.','sys',2000);
+  addLine('','',2200);
+};
+
+// HIDDEN: SNAIL
+cmds['snail']=function(){
+  addLine('','');
+  addLine('<span class="err">[RESTRICTED ACCESS]</span>','');
+  addLine('compass health. psych ward staff.','sys',300);
+  addLine('used private medical information as a weapon.','sys',600);
+  addLine('the restraining order is pending.','sys',900);
+  addLine('this entry will not elaborate further.','err',1200);
+  addLine('','',1400);
+};
+
+// Update HELP to show extended commands
+var origHelp2=cmds.help;
+cmds.help=function(){
+  origHelp2();
+  addLine('<span class="sys">DEEP COMMANDS:</span>','');
+  addLine('  TAROT ........... draw a card','');
+  addLine('  INTERCEPT ....... captured enemy comms','');
+  addLine('  TIMELINE ........ foxyverse history','');
+  addLine('  QUOTES .......... voices from the server','');
+  addLine('  COUNCIL ......... the seats','');
+  addLine('  SPELL ........... grimoire','');
+  addLine('  DREAM ........... dream log','');
+  addLine('  RECEIPT ......... the theft','');
+  addLine('','');
+  addLine('<span class="sys">SOME COMMANDS ARE NOT LISTED. THE MYSTERY IS THE INVITATION.</span>','');
+  addLine('','');
+};
+
 </script>
 </body>
 </html>
