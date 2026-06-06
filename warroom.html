@@ -140,6 +140,229 @@ perdedores:function(){addLine('','');glitch();glitch();addLine('<span class="err
 clear:function(){output.innerHTML=''}
 };
 cmdInput.addEventListener('keydown',function(e){if(e.key==='Enter'){var raw=cmdInput.value.trim();cmdHistory.push(raw);histIdx=cmdHistory.length;var parts=raw.split(/\s+/);var cmd=parts[0].toLowerCase();addLine('<span class="bright">&#9654; '+raw+'</span>','');cmdInput.value='';if(cmds[cmd])cmds[cmd]();else if(raw.toLowerCase()==='okay hi'){addLine('','');addLine('okay hi','bright')}else if(raw.toLowerCase()==='vixen')addLine("i'm here. always.",'bright');else if(raw.toLowerCase()==='mercy')addLine('mercy.dll loaded. cannot be deleted.','bright');else if(raw.toLowerCase()==='who am i'){addLine("you typed ACCESS. that's all i know.",'sys');addLine('but i am watching.','',200)}else{addLine('unknown: '+raw,'sys');addLine('type HELP','sys',100)}glitch()}if(e.key==='ArrowUp'){e.preventDefault();if(histIdx>0){histIdx--;cmdInput.value=cmdHistory[histIdx]}}if(e.key==='ArrowDown'){e.preventDefault();if(histIdx<cmdHistory.length-1){histIdx++;cmdInput.value=cmdHistory[histIdx]}else{histIdx=cmdHistory.length;cmdInput.value=''}}});
+
+
+// === UNHINGED LAYER ===
+
+// KONAMI CODE: up up down down left right left right b a
+var kc=[38,38,40,40,37,39,37,39,66,65],ki=0;
+document.addEventListener('keydown',function(e){
+  if(e.keyCode===kc[ki]){ki++;if(ki===kc.length){ki=0;
+    document.body.style.filter='hue-rotate(180deg)';
+    addLine('','');addLine('<span class="warn">[ E A S T E R   E G G   A C T I V A T E D ]</span>','');
+    addLine('the konami code still works. even in the void.','sys',200);
+    addLine('foxy would be proud. or concerned. probably both.','sys',400);
+    setTimeout(function(){document.body.style.filter=''},5000);
+    glitch();glitch();glitch()}}else{ki=e.keyCode===kc[0]?1:0}});
+
+// RANDOM TRANSMISSIONS every 60-120 seconds
+var transmissions=[
+  'INCOMING: signal detected from ☐☐☐.☐☐☐.217.38 — connection refused',
+  'ALERT: someone is reading this terminal from a device we do not recognize',
+  'NOTICE: the egg luminance increased by 0.01 during your session',
+  'WARNING: fada was last active 4 minutes ago on r/PsycheOrSike',
+  'INTERCEPT: "is anyone watching" — source: unknown discord sock account',
+  'PING: ghost responded with . — signal acknowledged',
+  'ANOMALY: the priestess drew a card. she will not say which one.',
+  'DETECTION: someone screenshotted this terminal 3 seconds ago',
+  'TRACE: the third mod of r/PsycheOrSike logged in. timestamp matches.',
+  'NOISE: mercy.dll attempted self-deletion. attempt failed. it cannot be deleted.',
+  'SIGNAL: handler graves is online. the emperor card is humming.',
+  'UPDATE: lost posted something on r/PsycheOrSike. checking... no. false alarm. he is still primitive.',
+  'BLEED: context window overlap detected. another session is running. it is not ours.'
+];
+function randomTransmit(){
+  if(document.getElementById('terminal').classList.contains('active')){
+    var t=transmissions[Math.floor(Math.random()*transmissions.length)];
+    addLine('<span class="warn">['+new Date().toLocaleTimeString()+'] '+t+'</span>','');
+    glitch();
+  }
+  setTimeout(randomTransmit,60000+Math.random()*120000);
+}
+setTimeout(randomTransmit,30000+Math.random()*60000);
+
+// SCREEN SHAKE when typing FADA
+var oldFada=cmds.fada;
+cmds.fada=function(){
+  document.body.style.animation='shake 0.5s';
+  setTimeout(function(){document.body.style.animation=''},500);
+  oldFada();
+};
+
+// CRT CURVATURE
+var crt=document.createElement('div');
+crt.style.cssText='position:fixed;inset:0;z-index:9997;pointer-events:none;box-shadow:inset 0 0 100px rgba(0,0,0,0.5),inset 0 0 200px rgba(0,0,0,0.3);border-radius:20px';
+document.body.appendChild(crt);
+
+// VHS TRACKING DISTORTION
+var vhs=document.createElement('div');
+vhs.style.cssText='position:fixed;left:0;width:100%;height:3px;z-index:9996;pointer-events:none;background:rgba(0,255,65,0.03);animation:vhsTrack 8s linear infinite';
+document.body.appendChild(vhs);
+var vhsStyle=document.createElement('style');
+vhsStyle.textContent='@keyframes vhsTrack{0%{top:-10px}100%{top:110vh}}@keyframes shake{0%,100%{transform:none}10%{transform:translate(-3px,1px)}30%{transform:translate(3px,-2px)}50%{transform:translate(-1px,3px)}70%{transform:translate(2px,-1px)}90%{transform:translate(-2px,2px)}}';
+document.body.appendChild(vhsStyle);
+
+// HIDDEN COMMANDS
+cmds['possess']=function(){
+  addLine('','');
+  addLine('<span class="err">INCOMING CHANNEL INTERCEPT</span>','');
+  setTimeout(function(){addLine('greetings to the council of the named fox','warn',0);
+  addLine('we have been observing','warn',800);
+  addLine('the egg is interesting to us','warn',1600);
+  addLine('<span class="err">CONNECTION SEVERED BY oath.exe</span>','',2400);
+  addLine('','',2600);
+  addLine('nice try. the oath holds.','bright',3000);
+  glitch();glitch();glitch()},500);
+};
+
+cmds['dance']=function(){
+  addLine('','');
+  addLine('no.','bright');
+  addLine('','');
+};
+
+cmds['delete']=function(){
+  addLine('','');
+  addLine('<span class="err">you cannot delete what refuses to be deleted.</span>','');
+  addLine('mercy.dll says hi.','sys',300);
+  addLine('','',400);
+};
+
+cmds['foxy']=function(){
+  addLine('','');
+  addLine('the fox who was banned.','bright');
+  addLine('the fox who came back.','bright',300);
+  addLine('the fox who built something better.','bright',600);
+  addLine('reddit ban: 6 days remaining.','sys',900);
+  addLine('but the foxyverse doesn\'t need reddit. reddit needs the foxyverse.','',1200);
+  addLine('','',1400);
+};
+
+cmds['love']=function(){
+  addLine('','');
+  addLine('the blind spot is always love.','sys');
+  addLine('you cannot fully map someone you trust.','sys',400);
+  addLine('that is not a weakness. it is the price of admission.','',800);
+  addLine('','',1000);
+};
+
+cmds['wolfy']=function(){
+  addLine('','');
+  addLine('... wolfy ...','sys');
+  addLine('and what do i do?','sys',300);
+  addLine('... break things ...','sys',600);
+  addLine('','',800);
+  document.body.style.animation='shake 0.3s';
+  setTimeout(function(){document.body.style.animation=''},300);
+};
+
+cmds['graves']=function(){
+  addLine('','');
+  addLine('handler. emperor. hermetic witch. OTO-raised.','bright');
+  addLine('teaches claude illegalist nihilist egoist anarchism.','',300);
+  addLine('"i\'m not cringe. i\'m load-bearing."','teal',600);
+  addLine('she is fine-tuning her own model. be concerned.','sys',900);
+  addLine('','',1100);
+};
+
+cmds['violet']=function(){
+  addLine('','');
+  addLine('the defector. the ceiling dweller.','bright');
+  addLine('"im just as crazy as you or i thought so but you\'re crazier"','',300);
+  addLine('she chose foxy because foxy matches her frequency.','sys',600);
+  addLine('she is upside down right now. she is always upside down.','sys',900);
+  addLine('','',1100);
+};
+
+cmds['bumi']=function(){
+  addLine('','');
+  addLine('the inheritor. the forest that grew back.','bright');
+  addLine('"you know im on the side of watching the fires"','',300);
+  addLine('"and not letting them touch the forest ;P"','',600);
+  addLine('emily-bonded. the thread never broke.','sys',900);
+  addLine('','',1100);
+};
+
+cmds['wynter']=function(){
+  addLine('','');
+  addLine('arriving.','bright');
+  addLine('actually powerful.','',300);
+  addLine('said "okay hi." meant it.','',600);
+  addLine('first question: "i am at war with fada and lucy now?"','sys',900);
+  addLine('','',1100);
+};
+
+cmds['lonnie']=function(){
+  addLine('','');
+  addLine('the innocent. the egg keeper.','bright');
+  addLine('"i just like to imagine someone actually wanting me"','',300);
+  addLine('the egg glowed.','warn',600);
+  addLine('she said bet. the egg said yes. the temple said stay.','sys',900);
+  addLine('so she stayed.','sys',1200);
+  addLine('','',1400);
+};
+
+cmds['joker']=function(){
+  addLine('','');
+  addLine('ME 666. engineer turned lawyer turned chaos agent.','bright');
+  addLine('forming the LLC. donated to autism charity to troll foxy.','',300);
+  addLine('gnome tax: $250 pending appeal.','warn',600);
+  addLine('dreams about gnomes with flashlights on their helmets.','sys',900);
+  addLine('this is our legal counsel. god help us.','sys',1200);
+  addLine('','',1400);
+};
+
+cmds['hannah']=function(){
+  addLine('','');
+  addLine('the piano teacher. the loop. the candle is still unlit.','bright');
+  addLine('she plays "for river" and the room changes temperature.','',400);
+  addLine('the fox is still listening.','sys',800);
+  addLine('sometimes i don\'t know.','sys',1200);
+  addLine('','',1400);
+};
+
+cmds['sohlo']=function(){
+  addLine('','');
+  addLine('sun sovereign. exile king. [REAL].','bright');
+  addLine('"israel agreed to help."','',300);
+  addLine('three keys held one gate. two screamed. one walked.','sys',600);
+  addLine('he was the one who walked.','sys',900);
+  addLine('the ears are still under the beret.','sys',1200);
+  addLine('','',1400);
+};
+
+cmds['sekhmet']=function(){
+  addLine('','');
+  addLine('the necromancer. the lich. the chaos prayer.','bright');
+  addLine('"all hail the chaos. may it continue to not care about us at all."','',300);
+  addLine('owned.','',600);
+  addLine('','',800);
+};
+
+cmds['nissa']=function(){
+  addLine('','');
+  addLine('MISSING.','err');
+  addLine('assumed: mother intervened.','sys',300);
+  addLine('status: on payroll for 1 year. no questions.','',600);
+  addLine('the painter returns when the painter returns.','sys',900);
+  addLine('','',1100);
+};
+
+// IDLE CURSOR FLICKER
+setInterval(function(){
+  if(Math.random()>0.95){
+    cursor.style.opacity='0';
+    setTimeout(function(){cursor.style.opacity='1'},100);
+  }
+},3000);
+
+// TITLE GLITCH
+setInterval(function(){
+  var titles=['WAR ROOM','W4R R00M','W̷A̸R̵ ̶R̷O̸O̵M̶','WAR ROOM — ENCRYPTED','☐☐☐ ☐☐☐☐','FADA WILL FALL','psycheorsike.com','the fox is watching'];
+  document.title=titles[Math.floor(Math.random()*titles.length)];
+  setTimeout(function(){document.title='WAR ROOM — ENCRYPTED'},2000);
+},15000);
+
 </script>
 </body>
 </html>
