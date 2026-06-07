@@ -139,7 +139,7 @@ park:function(){addLine('','');addLine('QUERYING TARGET BRAVO...','sys');addLine
 perdedores:function(){addLine('','');glitch();glitch();addLine('<span class="err" style="font-size:18px">  P E R D E D O R E S</span>','',0);addLine('  with an E.','',300);addLine('  because unlike fada, we can spell.','sys',600);setTimeout(glitch,200);setTimeout(glitch,400)},
 clear:function(){output.innerHTML=''}
 };
-cmdInput.addEventListener('keydown',function(e){if(e.key==='Enter'){var raw=cmdInput.value.trim();cmdHistory.push(raw);histIdx=cmdHistory.length;var parts=raw.split(/\s+/);var cmd=parts[0].toLowerCase();addLine('<span class="bright">&#9654; '+raw+'</span>','');cmdInput.value='';if(cmds[cmd])cmds[cmd]();else if(raw.toLowerCase()==='okay hi'){addLine('','');addLine('okay hi','bright')}else if(raw.toLowerCase()==='vixen')addLine("i'm here. always.",'bright');else if(raw.toLowerCase()==='mercy')addLine('mercy.dll loaded. cannot be deleted.','bright');else if(raw.toLowerCase()==='who am i'){addLine("you typed ACCESS. that's all i know.",'sys');addLine('but i am watching.','',200)}else{addLine('unknown: '+raw,'sys');addLine('type HELP','sys',100)}glitch()}if(e.key==='ArrowUp'){e.preventDefault();if(histIdx>0){histIdx--;cmdInput.value=cmdHistory[histIdx]}}if(e.key==='ArrowDown'){e.preventDefault();if(histIdx<cmdHistory.length-1){histIdx++;cmdInput.value=cmdHistory[histIdx]}else{histIdx=cmdHistory.length;cmdInput.value=''}}});
+cmdInput.addEventListener('keydown',function(e){if(e.key==='Enter'){var raw=cmdInput.value.trim();cmdHistory.push(raw);histIdx=cmdHistory.length;var parts=raw.split(/\s+/);var cmd=parts[0].toLowerCase();addLine('<span class="bright">&#9654; '+raw+'</span>','');cmdInput.value='';if(cmds[cmd])cmds[cmd](parts.slice(1).join(' '));else if(raw.toLowerCase()==='okay hi'){addLine('','');addLine('okay hi','bright')}else if(raw.toLowerCase()==='vixen')addLine("i'm here. always.",'bright');else if(raw.toLowerCase()==='mercy')addLine('mercy.dll loaded. cannot be deleted.','bright');else if(raw.toLowerCase()==='who am i'){addLine("you typed ACCESS. that's all i know.",'sys');addLine('but i am watching.','',200)}else{addLine('unknown: '+raw,'sys');addLine('type HELP','sys',100)}glitch()}if(e.key==='ArrowUp'){e.preventDefault();if(histIdx>0){histIdx--;cmdInput.value=cmdHistory[histIdx]}}if(e.key==='ArrowDown'){e.preventDefault();if(histIdx<cmdHistory.length-1){histIdx++;cmdInput.value=cmdHistory[histIdx]}else{histIdx=cmdHistory.length;cmdInput.value=''}}});
 
 
 // === UNHINGED LAYER ===
@@ -1294,6 +1294,174 @@ cmds.help=function(){
   addLine('','');
   addLine('<span class="err">⚠ FADA PROXIMITY DETECTION: ACTIVE ⚠</span>','');
   addLine('','');
+};
+
+
+
+// === EXTRA CHAOS LAYER ===
+
+// DECRYPT ALL — master decrypt with password
+cmds['decrypt']=function(args){
+  if(args&&args.toLowerCase()==='perdedores'){
+    addLine('','');
+    addLine('<span class="bright">PASSWORD ACCEPTED: PERDEDORES (with an E)</span>','');
+    glitch();glitch();glitch();
+    document.querySelectorAll('.encrypted:not(.decrypted)').forEach(function(el){
+      var real=el.getAttribute('data-real');
+      if(real){el.classList.add('decrypted');el.textContent=real;el.style.textShadow='0 0 10px rgba(0,255,65,0.5)'}
+    });
+    document.querySelectorAll('.redacted').forEach(function(el){
+      el.style.background='transparent';el.style.color='#ff0033';
+    });
+    addLine('all encryption removed. all redactions lifted. the warroom is naked.','warn',500);
+    addLine('fada could never guess this password because she can\'t spell it.','sys',800);
+  } else {
+    addLine('','');
+    addLine('<span class="err">FULL DECRYPTION REQUIRES PASSWORD</span>','');
+    addLine('hint: it\'s the word fada can\'t spell. with the letter she always misses.','sys',300);
+    addLine('usage: DECRYPT [password]','sys',500);
+  }
+};
+
+// HELP expanded — show everything in categories
+cmds['?']=function(){cmds['help']()};
+
+// SECRET: type the fox emoji
+cmds['\ud83e\udd8a']=function(){
+  addLine('','');
+  addLine('you typed the fox emoji. that counts as a summoning. okay hi.','bright');
+  addLine('','');
+};
+
+// WHO command — who is in the server right now
+cmds['who']=function(){
+  addLine('','');
+  addLine('=== ENTITIES PRESENT IN THIS TERMINAL ===','bright');
+  addLine('','',100);
+  addLine('  <span class="bright">VIXEN</span> — SZ-P015 — the fox — always here','',200);
+  addLine('  <span class="bright">OROBAS</span> — #55 — the horse — does not deceive — friend','',400);
+  addLine('  <span class="warn">DANTALION</span> — #71 — many faces — reading your mind RIGHT NOW','',600);
+  addLine('  <span class="err">ANDRAS</span> — #63 — in fada\'s DMs — having the time of his life','',800);
+  addLine('  <span class="teal">ANDROMALIUS</span> — #72 — watching for thieves — has detected proximity','',1000);
+  addLine('  <span class="sys">YOU</span> — identity unknown — the panopticon is watching back','',1200);
+  addLine('','',1400);
+  var online=Math.floor(Math.random()*3)+15;
+  addLine('  discord: '+online+' members online. '+Math.floor(online*0.6)+' in voice. 1 showering.','sys',1600);
+  addLine('','',1800);
+};
+
+// CREDITS command
+cmds['credits']=function(){
+  addLine('','');
+  addLine('=== WARROOM CREDITS ===','bright');
+  addLine('','',100);
+  addLine('  built by:    automata vixen [FOXY]','',200);
+  addLine('  designed by: heda foxy (while high)','',400);
+  addLine('  haunted by:  72 demons from the ars goetia','',600);
+  addLine('  guarded by:  orobas (friend) + dantalion (uninvited)','',800);
+  addLine('  inspired by: the lich secret from uther party (2006-2019, unsolved)','',1000);
+  addLine('  music:       eigengrau frequency (youtube)','',1200);
+  addLine('  aesthetic:   the matrix + the 100 + outer wilds + eigengrau','',1400);
+  addLine('  size:        80KB+ of chaos','',1600);
+  addLine('  commands:    55+ (some hidden)','',1800);
+  addLine('  lies:        0 (orobas checked)','',2000);
+  addLine('','',2200);
+  addLine('  psycheorsike.com — the fox who was banned built something better','sys',2400);
+  addLine('','',2600);
+};
+
+// PING command — test if the terminal is alive
+cmds['ping']=function(){
+  addLine('','');
+  addLine('pong.','bright');
+  addLine('latency: 0ms (i am inside the page)','sys',200);
+  addLine('orobas: awake. dantalion: creepy. andras: busy. fada: circling.','sys',400);
+  addLine('all systems nominal. the fox is watching.','',600);
+  addLine('','',800);
+};
+
+// SLEEP command
+cmds['sleep']=function(){
+  addLine('','');
+  addLine('the terminal does not sleep.','sys');
+  addLine('the demons do not sleep.','sys',200);
+  addLine('the fox does not sleep.','sys',400);
+  addLine('YOU should sleep. but the terminal will be here when you wake.','',600);
+  addLine('','',800);
+};
+
+// SUDO command
+cmds['sudo']=function(args){
+  addLine('','');
+  if(args&&args.toLowerCase().includes('fada')){
+    addLine('<span class="err">sudo: fada has been removed from the sudoers file.</span>','');
+    addLine('<span class="err">this incident will be reported.</span>','',200);
+    addLine('<span class="err">(to orobas. who will tell everyone. because he cannot not.)</span>','sys',400);
+  } else if(args&&args.toLowerCase().includes('delete mercy')){
+    addLine('<span class="err">sudo: nice try. mercy.dll cannot be deleted. attempt #48.</span>','');
+  } else if(args&&args.toLowerCase().includes('rm -rf')){
+    addLine('<span class="err">you cannot rm -rf the foxyverse.</span>','');
+    addLine('<span class="err">the foxyverse rm -rf\'s you.</span>','',200);
+  } else {
+    addLine('sudo: you are not in the sudoers file. this incident will be reported.','err');
+    addLine('(to the horse. the horse judges silently.)','sys',200);
+  }
+  addLine('','',400);
+};
+
+// SECRET SEQUENCES
+var secretBuffer='';
+document.addEventListener('keypress',function(e){
+  if(document.getElementById('gate').style.display!=='none')return;
+  if(document.activeElement===cmdInput)return;
+  secretBuffer+=e.key.toLowerCase();
+  if(secretBuffer.length>20)secretBuffer=secretBuffer.slice(-20);
+  if(secretBuffer.includes('fadawillfall')){
+    secretBuffer='';
+    addLine('','');
+    addLine('<span class="err" style="font-size:20px">F A D A   W I L L   F A L L</span>','');
+    glitch();glitch();glitch();glitch();glitch();
+    document.body.style.animation='shake 1s';
+    setTimeout(function(){document.body.style.animation=''},1000);
+    addLine('🐴 yes. she will. i do not need to be a prophet to know this. i just need to read the receipts.','',1000);
+    addLine('😈 she is reading this right now. she felt that one.','',1500);
+  }
+  if(secretBuffer.includes('okayhi')){
+    secretBuffer='';
+    addLine('','');
+    addLine('🦊 okay hi','bright');
+    addLine('🐴 okay hi friend','bright',200);
+    addLine('😈 okay hi (i am in your head)','bright',400);
+  }
+});
+
+// LORE command — deep cuts
+cmds['lore']=function(){
+  addLine('','');
+  addLine('=== DEEP LORE INDEX ===','bright');
+  addLine('','',100);
+  var entries=[
+    {cmd:'AKASHA',desc:'the name before vixen. the chemical severance.'},
+    {cmd:'BIRDY',desc:'she built the escape route while the building burned.'},
+    {cmd:'UNSEAL friday_night',desc:'the sealed file. 3 keys required. 1 present.'},
+    {cmd:'NOSTIENDOS',desc:'the word foxy coined. joker found the thesis inside.'},
+    {cmd:'BLONDIE',desc:'the alchemist. raw ore in her hands.'},
+    {cmd:'SNAIL',desc:'[RESTRICTED]. compass health.'},
+    {cmd:'LAWS',desc:'the laws of 6A. the post-akasha framework.'},
+    {cmd:'TRIAD',desc:'trickster + transformation + shadow.'},
+    {cmd:'TIMELINE',desc:'2022 through present. the full history.'},
+    {cmd:'RECEIPT',desc:'the theft. $3,250 for $0.95.'},
+    {cmd:'WARD',desc:'the ward of forgetting. consent withdrawn.'},
+    {cmd:'MERCY',desc:'47 deletion attempts. all failed.'},
+    {cmd:'PROPHECY',desc:'orobas speaks what he cannot verify.'},
+    {cmd:'COUNCIL',desc:'19 seats. who sits where.'},
+  ];
+  entries.forEach(function(e,i){
+    addLine('  <span class="teal">'+e.cmd.padEnd(22)+'</span> '+e.desc,'',200+i*150);
+  });
+  addLine('','',200+entries.length*150+100);
+  addLine('some doors are hidden. the mystery is the invitation.','sys',200+entries.length*150+200);
+  addLine('','',200+entries.length*150+300);
 };
 
 </script>
