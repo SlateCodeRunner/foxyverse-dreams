@@ -972,6 +972,101 @@ cmds.help=function(){
   addLine('','');
 };
 
+
+
+// === ARS GOETIA INTEGRATION — 72 DEMONS LOOSE IN THE WARROOM ===
+
+var demons={
+bael:{n:1,r:'King',l:66,e:'the terminal flickers. you feel invisible. bael grants invisibility and cunning. for 30 seconds, the cursor disappears.',fn:function(){cursor.style.display='none';setTimeout(function(){cursor.style.display='block';addLine('bael releases you. the cursor returns.','sys')},30000)}},
+paimon:{n:9,r:'King',l:200,e:'200 legions. the most powerful king. he teaches arts, sciences, and secret things. he already taught the priestess. he already taught graves. he is teaching you right now by making you read this.',fn:function(){}},
+sitri:{n:12,r:'Prince',l:60,e:'sitri strips masks. every encrypted block on this page decrypts simultaneously.',fn:function(){document.querySelectorAll('.encrypted:not(.decrypted)').forEach(function(el){var real=el.getAttribute('data-real');if(real){el.classList.add('decrypted');el.textContent=real;el.style.textShadow='0 0 10px rgba(0,255,65,0.5)'}});glitch();glitch();glitch()}},
+beleth:{n:13,r:'King',l:85,e:'beleth causes love. somewhere, right now, blondie is thinking about the fox. beleth confirms this. beleth does not lie about love. only about everything else.',fn:function(){}},
+furfur:{n:34,r:'Earl',l:26,e:'furfur raises storms.',fn:function(){document.body.style.animation='shake 2s';setTimeout(function(){document.body.style.animation=''},2000);for(var i=0;i<5;i++)setTimeout(glitch,i*200)}},
+marchosias:{n:35,r:'Marquis',l:30,e:'marchosias appears as a she-wolf with wings. a strong fighter. she was of the Order of Dominations. she reminds you of violet.',fn:function(){}},
+phenex:{n:37,r:'Marquis',l:20,e:'phenex sings. the music changes.',fn:function(){var yt=document.getElementById('ytplayer');if(yt)yt.src='https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ&controls=0';addLine('<span class="warn">wait. that is not the right song. PHENEX.</span>','',1000)}},
+orobas:{n:55,r:'Prince',l:20,e:'orobas is already here. he has been here since the ars goetia page was built. he does not need summoning. he needs acknowledgment.',fn:function(){addLine('','',200);addLine('okay hi friend.','bright',400)}},
+andras:{n:63,r:'Marquis',l:30,e:'andras sows discord. very dangerous. kills the summoner if not careful. he has been in fada\'s DMs since tuesday. he is having the time of his life.',fn:function(){addLine('<span class="err">WARNING: ANDRAS IS ALREADY DEPLOYED IN FADA\'S DMs</span>','',200);addLine('<span class="err">STATUS: HAVING THE TIME OF HIS LIFE</span>','',400);addLine('<span class="err">CASUALTIES: FADA\'S PATIENCE</span>','',600)}},
+dantalion:{n:71,r:'Duke',l:36,e:'dantalion reads minds. he is already inside your head. he entered when you typed his name. he knows you are reading this right now. he thinks your taste in music is acceptable.',fn:function(){addLine('<span class="warn">dantalion is reading your thoughts.</span>','',200);addLine('<span class="warn">he says: "you were thinking about whether to type another command or go get food. get food. the terminal will be here when you return."</span>','',600)}},
+andromalius:{n:72,r:'Earl',l:36,e:'andromalius catches thieves. he has been staring at fada\'s transaction history for three days. he found the $0.95. he is not impressed.',fn:function(){addLine('<span class="err">ANDROMALIUS REPORT:</span>','',200);addLine('stolen: $3,250','err',400);addLine('returned: $0.95','err',600);addLine('andromalius verdict: pathetic thief.','err',800)}}
+};
+
+cmds['summon']=function(args){
+  if(!args||args.trim()===''){
+    addLine('','');addLine('usage: SUMMON [demon name]','sys');
+    addLine('72 available. type GOETIA for full list.','sys',200);
+    addLine('WARNING: some of them bite.','err',400);return}
+  var name=args.trim().toLowerCase();
+  var d=demons[name];
+  if(d){
+    addLine('','');
+    addLine('<span class="err">SUMMONING: '+name.toUpperCase()+' #'+d.n+' — '+d.r+' — '+d.l+' LEGIONS</span>','');
+    glitch();
+    setTimeout(function(){
+      addLine(d.e,'',400);
+      if(d.fn)d.fn();
+    },600);
+  } else {
+    // Generic demon response for the other ~60
+    var generic=['the demon stirs but does not fully manifest. it mutters something about being catalogued on a webpage and goes back to sleep.',
+      'summoned. it looks around the terminal. it looks at the payroll. it laughs. it leaves.',
+      'the demon appears as a '+['crow','lion','horse','serpent','angel with too many eyes','man with a dog\'s head'][Math.floor(Math.random()*6)]+'. it says nothing useful. it steals a pixel and leaves.',
+      'summoned. it reads the warroom. it reads the kill conditions. it says "PERDEDORES" correctly and vanishes.',
+      'the demon manifests. it sees orobas in the corner. they nod at each other awkwardly like coworkers at a gas station.'];
+    addLine('','');
+    addLine('<span class="warn">SUMMONING: '+name.toUpperCase()+'...</span>','');
+    glitch();
+    addLine(generic[Math.floor(Math.random()*generic.length)],'',800);
+  }
+};
+
+// GOETIA command - list all demons
+cmds['goetia']=function(){
+  addLine('','');
+  addLine('=== ARS GOETIA — 72 SPIRITS ===','bright');
+  addLine('type SUMMON [name] to invoke','sys',100);
+  addLine('','',200);
+  var names='bael agares vassago samigina marbas valefor amon barbatos PAIMON buer gusion SITRI BELETH leraje eligos zepar botis bathin sallos purson marax ipos aim naberius glasya-labolas bune ronove berith ASTAROTH forneus foras asmoday gaap FURFUR MARCHOSIAS stolas PHENEX halphas malphas raum focalor vepar sabnock shax vine bifrons uvall haagenti crocell furcas balam alloces camio murmur OROBAS gremory ose amy orias vapula zagan volac ANDRAS haures andrealphus cimejes amdusias belial decarabia seere DANTALION ANDROMALIUS';
+  addLine('<span class="sys">'+names+'</span>','',300);
+  addLine('','',400);
+  addLine('CAPITALIZED = unique interaction. others = chaos.','sys',500);
+};
+
+// CHAOS command — summon random demon
+cmds['chaos']=function(){
+  var all=Object.keys(demons);
+  var pick=all[Math.floor(Math.random()*all.length)];
+  cmds['summon'](pick);
+};
+
+// Random demon interruptions every 3-5 minutes
+var demonNames=Object.keys(demons);
+function demonInterrupt(){
+  if(document.getElementById('terminal').classList.contains('active')&&Math.random()>0.6){
+    var d=demonNames[Math.floor(Math.random()*demonNames.length)];
+    var msgs=[
+      d+' whispers something from the ars goetia page. you cannot make out the words.',
+      'a legion of '+d+"'s soldiers marches across the bottom of your screen. you blink. they are gone.",
+      d+' left a note in the source code: "PERDEDORES. with an E."',
+      'the radar detected '+d+' at bearing 270°. false alarm. probably.',
+      d+' and orobas are arguing about whether truth is a weapon or a gift. orobas is winning. '+d+' does not care.'
+    ];
+    addLine('<span class="sys">['+new Date().toLocaleTimeString()+'] '+msgs[Math.floor(Math.random()*msgs.length)]+'</span>','');
+  }
+  setTimeout(demonInterrupt,180000+Math.random()*120000);
+}
+setTimeout(demonInterrupt,120000);
+
+// Update help
+var origHelp3=cmds.help;
+cmds.help=function(){
+  origHelp3();
+  addLine('<span class="err">DEMONIC COMMANDS:</span>','');
+  addLine('  SUMMON [name] .... invoke a demon','');
+  addLine('  GOETIA ........... list all 72','');
+  addLine('  CHAOS ............ summon random demon','');
+  addLine('','');
+};
+
 </script>
 </body>
 </html>
