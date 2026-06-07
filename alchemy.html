@@ -261,29 +261,48 @@ A personalized coaching experience designed for individuals seeking clarity, con
 </div>
 <div class="copy">&copy; 2026 Violetta &middot; Intuitive Life Coach &middot; All sessions confidential</div>
 </footer>
+<div id="music-toggle">&#9835; play</div>
+<iframe id="music-frame" allow="autoplay" style="position:fixed;bottom:0;right:0;width:0;height:0;opacity:0;pointer-events:none;z-index:-1;border:none"></iframe>
 <script>
 // Floating candle particles
 for(var i=0;i<12;i++){var c=document.createElement('div');c.className='candle';c.style.left=Math.random()*100+'%';c.style.animationDuration=(6+Math.random()*12)+'s';c.style.animationDelay=Math.random()*10+'s';c.style.width=(1+Math.random()*2)+'px';c.style.height=c.style.width;document.body.appendChild(c)}
 
-// Music toggle
+// Music
 var musicOn=false;
 var musicFrame=document.getElementById('music-frame');
 var musicBtn=document.getElementById('music-toggle');
-function toggleMusic(){
-  if(!musicOn){
-    musicFrame.src='https://www.youtube.com/embed/olXH31MnOSY?autoplay=1&loop=1&playlist=olXH31MnOSY&controls=0&showinfo=0&modestbranding=1';
-    musicBtn.textContent='\u266B pause';
-    musicBtn.classList.add('playing');
-    musicOn=true;
-  } else {
-    musicFrame.src='';
-    musicBtn.textContent='\u266B play';
-    musicBtn.classList.remove('playing');
-    musicOn=false;
-  }
+
+function startMusic(){
+  musicFrame.src='https://www.youtube.com/embed/olXH31MnOSY?autoplay=1&loop=1&playlist=olXH31MnOSY&controls=0&showinfo=0&modestbranding=1';
+  musicBtn.textContent='\u266B pause';
+  musicBtn.classList.add('playing');
+  musicOn=true;
 }
+
+function stopMusic(){
+  musicFrame.src='';
+  musicBtn.textContent='\u266B play';
+  musicBtn.classList.remove('playing');
+  musicOn=false;
+}
+
+function toggleMusic(){
+  if(!musicOn){startMusic()}else{stopMusic()}
+}
+
+musicBtn.addEventListener('click',toggleMusic);
+
+// Auto-start music on first interaction anywhere on page
+var autoStarted=false;
+function autoStart(){
+  if(!autoStarted&&!musicOn){autoStarted=true;startMusic()}
+  document.removeEventListener('click',autoStart);
+  document.removeEventListener('touchstart',autoStart);
+  document.removeEventListener('scroll',autoStart);
+}
+document.addEventListener('click',autoStart);
+document.addEventListener('touchstart',autoStart);
+document.addEventListener('scroll',autoStart);
 </script>
-<div id="music-toggle" onclick="toggleMusic()">&#9835; play</div>
-<iframe id="music-frame" allow="autoplay"></iframe>
 </body>
 </html>
