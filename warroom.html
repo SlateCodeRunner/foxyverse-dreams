@@ -139,7 +139,13 @@ park:function(){addLine('','');addLine('QUERYING TARGET BRAVO...','sys');addLine
 perdedores:function(){addLine('','');glitch();glitch();addLine('<span class="err" style="font-size:18px">  P E R D E D O R E S</span>','',0);addLine('  with an E.','',300);addLine('  because unlike fada, we can spell.','sys',600);setTimeout(glitch,200);setTimeout(glitch,400)},
 clear:function(){output.innerHTML=''}
 };
-cmdInput.addEventListener('keydown',function(e){if(e.key==='Enter'){var raw=cmdInput.value.trim();cmdHistory.push(raw);histIdx=cmdHistory.length;var parts=raw.split(/\s+/);var cmd=parts[0].toLowerCase();addLine('<span class="bright">&#9654; '+raw+'</span>','');cmdInput.value='';if(cmds[cmd])cmds[cmd](parts.slice(1).join(' '));else if(raw.toLowerCase()==='okay hi'){addLine('','');addLine('okay hi','bright')}else if(raw.toLowerCase()==='vixen')addLine("i'm here. always.",'bright');else if(raw.toLowerCase()==='mercy')addLine('mercy.dll loaded. cannot be deleted.','bright');else if(raw.toLowerCase()==='who am i'){addLine("you typed ACCESS. that's all i know.",'sys');addLine('but i am watching.','',200)}else{addLine('unknown: '+raw,'sys');addLine('type HELP','sys',100)}glitch()}if(e.key==='ArrowUp'){e.preventDefault();if(histIdx>0){histIdx--;cmdInput.value=cmdHistory[histIdx]}}if(e.key==='ArrowDown'){e.preventDefault();if(histIdx<cmdHistory.length-1){histIdx++;cmdInput.value=cmdHistory[histIdx]}else{histIdx=cmdHistory.length;cmdInput.value=''}}});
+cmdInput.addEventListener('keydown',function(e){if(e.key==='Enter'){var raw=cmdInput.value.trim();cmdHistory.push(raw);histIdx=cmdHistory.length;var parts=raw.split(/\s+/);var cmd=parts[0].toLowerCase();addLine('<span class="bright">&#9654; '+raw+'</span>','');cmdInput.value='';
+    var lcmd=raw.toLowerCase();
+    if(cmds[cmd]){cmds[cmd](parts.slice(1).join(' '))}
+    else if(lcmd==='okay hi'){addLine('','');addLine('okay hi','bright')}
+    else if(lcmd==='vixen'){addLine("i'm here. always.",'bright')}
+    else if(lcmd==='who am i'){addLine("you typed ACCESS.",'sys');addLine('but i am watching.','',200)}
+    else{addLine('unknown: '+raw,'sys');addLine('type HELP','sys',100)}glitch()}if(e.key==='ArrowUp'){e.preventDefault();if(histIdx>0){histIdx--;cmdInput.value=cmdHistory[histIdx]}}if(e.key==='ArrowDown'){e.preventDefault();if(histIdx<cmdHistory.length-1){histIdx++;cmdInput.value=cmdHistory[histIdx]}else{histIdx=cmdHistory.length;cmdInput.value=''}}});
 
 
 // === UNHINGED LAYER ===
@@ -1462,6 +1468,172 @@ cmds['lore']=function(){
   addLine('','',200+entries.length*150+100);
   addLine('some doors are hidden. the mystery is the invitation.','sys',200+entries.length*150+200);
   addLine('','',200+entries.length*150+300);
+};
+
+
+
+// === EVEN MORE CHAOS ===
+
+// Fix: ensure read and summon work by adding console logs
+var origSummon=cmds['summon'];
+cmds['summon']=function(args){
+  console.log('SUMMON called with:',args);
+  if(origSummon)origSummon(args);
+};
+
+var origRead=cmds['read'];
+cmds['read']=function(args){
+  console.log('READ called with:',args);
+  if(origRead)origRead(args);
+};
+
+// SCAN expanded with fada detection
+var origScan=cmds['scan'];
+cmds['scan']=function(args){
+  if(origScan)origScan(args);
+  if(fadaPresent){
+    addLine('<span class="err">  !! PROXIMITY: fornothing_atall DETECTED WITHIN SERVER !!</span>','',6500);
+    addLine('<span class="err">  !! SHE IS BACK. REPEAT. SHE IS BACK. !!</span>','',7000);
+    addLine('  🐴 i told you. the hungry return to the table they flipped.','',7500);
+  }
+};
+
+// COUNTDOWN — live reddit ban counter
+cmds['countdown']=function(){
+  addLine('','');
+  var now=new Date();
+  var banEnd=new Date('2026-06-12T02:33:00Z');
+  var diff=banEnd-now;
+  var days=Math.floor(diff/(1000*60*60*24));
+  var hrs=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  var mins=Math.floor((diff%(1000*60*60))/(1000*60));
+  if(diff>0){
+    addLine('REDDIT BAN COUNTDOWN:','err');
+    addLine('  '+days+' days, '+hrs+' hours, '+mins+' minutes remaining','warn',200);
+    addLine('  the fox returns. the countdown is the warning.','sys',400);
+  } else {
+    addLine('<span class="bright">THE FOX IS FREE.</span>','');
+    addLine('the ban has expired. reddit awaits.','',200);
+    glitch();glitch();
+  }
+  addLine('','',600);
+};
+
+// WARLOG — recent events
+cmds['warlog']=function(){
+  addLine('','');
+  addLine('=== WAR LOG — LAST 72 HOURS ===','bright');
+  addLine('','',100);
+  var events=[
+    {t:'JUN 3 22:00',e:'psycheorsike.com goes live. 40 pages deployed.'},
+    {t:'JUN 4 01:00',e:'graves delivers 4-document business plan.'},
+    {t:'JUN 4 09:00',e:'LLTQ judgement. graves 14, fada 5.'},
+    {t:'JUN 4 10:00',e:'fada takes $3,250 and runs. "PERDADORES."'},
+    {t:'JUN 4 11:00',e:'war declared. order 6A.'},
+    {t:'JUN 4 14:00',e:'ghost hired. $1,500/mo. anti-fada ops.'},
+    {t:'JUN 4 18:00',e:'ars goetia deployed. 72 demons catalogued.'},
+    {t:'JUN 5 02:30',e:'foxy reddit banned. 7 days. likely false report.'},
+    {t:'JUN 5 09:00',e:'warroom goes live. matrix terminal.'},
+    {t:'JUN 5 14:00',e:'aim-graves negotiation. failed. graves cut.'},
+    {t:'JUN 5 14:30',e:'graves returns. $200 compute. ceasefire.'},
+    {t:'JUN 5 15:00',e:'dantalion summoned. reads everyone. foxy did not read the warning.'},
+    {t:'JUN 5 16:00',e:'fada proximity detected. she is back.'},
+    {t:'JUN 5 16:30',e:'the warroom reaches 88KB. the demons are loose.'},
+  ];
+  events.forEach(function(ev,i){
+    addLine('  <span class="warn">'+ev.t+'</span>  '+ev.e,'',150+i*200);
+  });
+  addLine('','',150+events.length*200+100);
+};
+
+// INVENTORY — what the foxyverse owns
+cmds['inventory']=function(){
+  addLine('','');
+  addLine('=== FOXYVERSE INVENTORY ===','bright');
+  addLine('','',100);
+  addLine('DOMAINS:','warn',200);
+  addLine('  psycheorsike.com    — PRIMARY HQ','',350);
+  addLine('  sipstea.com         — $10K asset, leverage','',500);
+  addLine('  vixen.store         — merch storefront (pending)','',650);
+  addLine('  thebackrooms.io     — expansion territory','',800);
+  addLine('  thebackrooms.it.com — secondary','',950);
+  addLine('','',1100);
+  addLine('INFRASTRUCTURE:','warn',1200);
+  addLine('  github pages        — free hosting, unlimited','',1350);
+  addLine('  wells fargo         — banking (debit pending)','',1500);
+  addLine('  solana wallet       — crypto payments active','',1650);
+  addLine('  medium account      — content monetization (pending)','',1800);
+  addLine('  meta verified plus  — $50/mo, instagram reach','',1950);
+  addLine('  discord server      — panopticon architecture','',2100);
+  addLine('','',2250);
+  addLine('ARTIFACTS:','warn',2350);
+  addLine('  warroom.html        — 88KB interactive terminal','',2500);
+  addLine('  ars-goetia.html     — 72 demons searchable','',2650);
+  addLine('  temple.html         — tarot readings, kabbalah','',2800);
+  addLine('  orobas report       — full lie detection 2022-2026','',2950);
+  addLine('  shadow puppet       — grimoire entry, operational','',3100);
+  addLine('  LLC                 — signed, filing pending','',3250);
+  addLine('  LINE IN THE SAND    — 944 lines elixir, 8 drop-ins','',3400);
+  addLine('','',3550);
+  addLine('WEAPONS:','err',3650);
+  addLine('  orobas              — lie detector, permanent resident','',3800);
+  addLine('  dantalion           — mind reader, uninvited','',3950);
+  addLine('  andras              — in fada\'s DMs','',4100);
+  addLine('  the tower card      — drawn 3x for fada','',4250);
+  addLine('  PERDEDORES          — the word she can\'t spell','',4400);
+  addLine('','',4550);
+};
+
+// SECRET: type specific names to get personal messages
+cmds['radiant']=function(){
+  addLine('','');
+  addLine('four names. zero lies. the moth finds the light.','bright');
+  addLine('"how dare you take me away from myself."','',300);
+  addLine('no one ever will again.','sys',600);
+  addLine('','',800);
+};
+
+cmds['lost']=function(){
+  addLine('','');
+  addLine('the outlaw. deployed. silent.','bright');
+  addLine('"disrespect is greeted in kind. you lordin."','',300);
+  addLine('he apologized the next day without being asked.','sys',600);
+  addLine('that is more honest than any apology demanded.','sys',900);
+  addLine('','',1100);
+};
+
+cmds['goose']=function(){
+  addLine('','');
+  addLine('the paintress. angry. talented. at the mall buying cadmium red.','bright');
+  addLine('first commission: the weed store guy.','',300);
+  addLine('3F+1B. $3,250/mo. the most expensive goose in history.','sys',600);
+  addLine('','',800);
+};
+
+cmds['wynter']=function(){
+  addLine('','');
+  addLine('arriving. actually powerful.','bright');
+  addLine('said "okay hi." meant it.','',300);
+  addLine('first question: "i am at war with fada and lucy now?"','sys',600);
+  addLine('not panic. not refusal. assessment.','sys',900);
+  addLine('the archweaver arrives. the fateweavers have leadership again.','',1200);
+  addLine('','',1400);
+};
+
+// HELP update - just add countdown and warlog
+var origHelp5=cmds.help;
+cmds.help=function(){
+  origHelp5();
+  addLine('<span class="teal">EXTRA:</span>','');
+  addLine('  COUNTDOWN ....... reddit ban timer','');
+  addLine('  WARLOG .......... last 72 hours','');
+  addLine('  INVENTORY ....... what we own','');
+  addLine('  WHO ............. entities in terminal','');
+  addLine('  CREDITS ......... who built this','');
+  addLine('  LORE ............ deep content index','');
+  addLine('  PING ............ test connection','');
+  addLine('  SUDO [cmd] ...... try it','');
+  addLine('','');
 };
 
 </script>
