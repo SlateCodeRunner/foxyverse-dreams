@@ -15,7 +15,7 @@
 --font-d:'Cinzel',serif;--font-b:'Cormorant Garamond',serif;--font-m:'Fira Code',monospace;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:17px;line-height:1.6;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.6;overflow-x:hidden}
 ::selection{background:var(--purple);color:var(--bg)}
 
 /* PARTICLES */
@@ -59,16 +59,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 .tab.on{color:var(--purple);border-bottom-color:var(--purple)}
 
 /* MAIN */
-#app{margin-top:94px;padding:1.5rem;max-width:680px;margin-left:auto;margin-right:auto;display:none}
+#app{margin-top:94px;padding:1.5rem;max-width:860px;margin-left:auto;margin-right:auto;display:none}
 .pg{display:none}.pg.on{display:block;animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* SECTION TITLES */
-.stitle{font-family:var(--font-d);font-size:1.4rem;color:var(--bright);letter-spacing:.08em;padding-bottom:.6rem;border-bottom:1px solid var(--border);margin-bottom:1rem}
-.sdesc{color:var(--dim);font-size:.95rem;margin-bottom:1.5rem}
+.stitle{font-family:var(--font-d);font-size:1.2rem;color:var(--bright);letter-spacing:.08em;padding-bottom:.4rem;border-bottom:1px solid var(--border);margin-bottom:.6rem}
+.sdesc{color:var(--dim);font-size:.9rem;margin-bottom:.8rem}
 
 /* CARDS */
-.card{background:var(--surface);border:1px solid var(--border);padding:1.2rem;border-radius:6px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--border);padding:.9rem 1rem;border-radius:5px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
 .card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
 .card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
 .card h3{font-family:var(--font-d);font-size:.95rem;color:var(--bright)}
@@ -76,17 +76,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 .card .meta{font-family:var(--font-m);font-size:.65rem;color:var(--dim);margin-top:.4rem}
 
 /* HUB STATS */
-.hub-grid{display:grid;grid-template-columns:1fr;gap:.8rem}
-.scard{background:var(--surface);border:1px solid var(--border);padding:1.3rem;border-radius:6px}
+.hub-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.scard{background:var(--surface);border:1px solid var(--border);padding:1rem;border-radius:6px}
 .scard label{font-family:var(--font-d);font-size:.75rem;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
-.scard .val{font-family:var(--font-d);font-size:1.8rem;color:var(--bright);margin-top:.3rem}
+.scard .val{font-family:var(--font-d);font-size:1.5rem;color:var(--bright);margin-top:.3rem}
 .scard .note{font-size:.85rem;color:var(--dim);margin-top:.2rem}
 .bar{height:5px;background:var(--surface2);border-radius:3px;margin-top:.6rem;overflow:hidden}
 .bar-fill{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
 
 /* GUILD CARDS */
 .guilds{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem}
-.gcard{background:var(--surface);border:1px solid var(--border);padding:1.3rem;border-radius:6px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.gcard{background:var(--surface);border:1px solid var(--border);padding:1rem;border-radius:6px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
 .gcard:hover{transform:translateY(-3px)}
 .gcard .gorb{width:50px;height:50px;border-radius:50%;margin:0 auto .8rem;position:relative}
 .gcard .gorb::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px dashed;opacity:.3;animation:spin 20s linear infinite}
@@ -99,9 +99,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 /* ACTIVITY PLAY */
 .act-title{font-family:var(--font-d);font-size:1.3rem;color:var(--bright)}
 .act-course{font-family:var(--font-m);font-size:.75rem;color:var(--purple);margin:.3rem 0 1rem}
-.act-body{background:var(--surface);border:1px solid var(--border);padding:1.5rem;border-radius:6px;margin-bottom:1rem;line-height:1.8;font-size:1.05rem}
+.act-body{background:var(--surface);border:1px solid var(--border);padding:1.2rem;border-radius:6px;margin-bottom:.8rem;line-height:1.7;font-size:1rem}
 .choices{display:flex;flex-direction:column;gap:.7rem}
-.ch{background:var(--surface2);border:1px solid var(--border);padding:14px 16px;border-radius:6px;cursor:pointer;transition:all .25s;font-family:var(--font-b);font-size:1rem;line-height:1.5;text-align:left;color:var(--text);position:relative;overflow:hidden}
+.ch{background:var(--surface2);border:1px solid var(--border);padding:10px 14px;border-radius:6px;cursor:pointer;transition:all .25s;font-family:var(--font-b);font-size:1rem;line-height:1.5;text-align:left;color:var(--text);position:relative;overflow:hidden}
 .ch:hover{border-color:var(--purple);background:var(--surface3)}
 .ch::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(192,132,252,.05),transparent);opacity:0;transition:opacity .3s}
 .ch:hover::after{opacity:1}
@@ -118,7 +118,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 
 /* ARCH GRID */
 .archs{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.8rem}
-.acard{background:var(--surface);border:1px solid var(--border);padding:1rem;border-radius:6px;border-left:3px solid;transition:all .3s}
+.acard{background:var(--surface);border:1px solid var(--border);padding:.8rem;border-radius:5px;border-left:3px solid;transition:all .3s}
 .acard:hover{transform:translateX(3px)}
 .acard h3{font-family:var(--font-d);font-size:.9rem;margin-bottom:.3rem}
 .acard .ad{font-size:.82rem;color:var(--dim);margin:.15rem 0}
@@ -384,17 +384,18 @@ function renderHub(){
 function renderCourses(){
   const colors=[G.ARCANA.c,G.EMBERS.c,G.MYCELIUM.c,G.VIGILANCE.c,G.SIGIL.c];let i=0;
   let h='<div class="stitle">COURSE TREE</div><div class="sdesc">15 courses from Initiate to Vessel. Prerequisites unlock deeper paths.</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">';
   for(const[n,pr]of Object.entries(COURSES)){
     const locked=pr.length>0&&!pr.every(p=>(S.cxp[p]||0)>=10);
     const xp=S.cxp[n]||0;const c=colors[i%5];
-    h+=`<div class="card${locked?' locked':''}" style="margin-bottom:.6rem;${locked?'opacity:.35;cursor:default;':''}cursor:pointer" onclick="${locked?'':`nav('train')`}">
+    h+=`<div class="card${locked?' locked':''}" style="margin-bottom:0;${locked?'opacity:.35;cursor:default;':''}cursor:pointer" onclick="${locked?'':`nav('train')`}">
       <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${c};border-radius:3px 0 0 3px"></div>
       <h3>${n}</h3><p>${CD[n]||''}</p>
       ${pr.length?`<div class="meta" style="color:var(--red)">requires: ${pr.join(', ')}</div>`:''}
       <div class="meta" style="position:absolute;right:1rem;top:1rem;color:var(--green)">${xp} XP</div>
     </div>`;i++;
   }
-  document.getElementById('pg-courses').innerHTML=h;
+  h+='</div>';document.getElementById('pg-courses').innerHTML=h;
 }
 
 function renderGuilds(){
@@ -425,13 +426,15 @@ function renderTrain(){
       <div style="color:var(--dim);margin:.8rem 0">Join the Discord for the full 200+ activity library.</div>
       <button class="nbtn" onclick="window.open('https://discord.gg/psycheorsike')">JOIN DISCORD</button></div>`;
   } else {
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">';
     avail.forEach(a=>{
       const gc=G[a.ch[0].g]?.c||'var(--purple)';
-      h+=`<div class="card" style="margin-bottom:.7rem" onclick="play('${a.id}')">
+      h+=`<div class="card" style="margin-bottom:0" onclick="play('${a.id}')">
         <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${gc}"></div>
         <h3>${a.t}</h3><p>${a.d.slice(0,100)}...</p>
         <div class="meta">${a.co} · ${a.type}</div></div>`;
     });
+    h+='</div>';
   }
   document.getElementById('pg-train').innerHTML=h;
 }
