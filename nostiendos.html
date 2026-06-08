@@ -481,35 +481,76 @@ function pick(id,ci){
 }
 
 function renderProfile(){
-  const topTraits=Object.entries(S.traits).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  const topTraits=Object.entries(S.traits).sort((a,b)=>b[1]-a[1]);
   const maxT=topTraits.length?topTraits[0][1]:1;
-  const guildColors={VIGILANCE:'var(--red)',ARCANA:'var(--purple)',EMBERS:'var(--orange)',MYCELIUM:'var(--green)',SIGIL:'var(--blue)'};
-
-  let h=`<div class="stitle">AGENT PROFILE</div><div class="sdesc">Your psychological fingerprint, built from every choice.</div>`;
+  const tg={curiosity:'ARCANA',analysis:'ARCANA',introspection:'ARCANA',emotionalAwareness:'ARCANA',patternSeeking:'ARCANA',discipline:'VIGILANCE',courage:'VIGILANCE',integrity:'VIGILANCE',patience:'VIGILANCE',duty:'VIGILANCE',initiative:'SIGIL',innovation:'SIGIL',adaptability:'SIGIL',confidence:'SIGIL',collaboration:'MYCELIUM',empathy:'MYCELIUM',humility:'MYCELIUM',deference:'MYCELIUM',assertiveness:'EMBERS',idealism:'EMBERS',detachment:'ARCANA',diplomacy:'SIGIL'};
+  const gc={VIGILANCE:'#f87171',ARCANA:'#c084fc',EMBERS:'#fb923c',MYCELIUM:'#34d399',SIGIL:'#38bdf8'};
+  const rank=getRank();const totalG=Object.values(S.gxp).reduce((a,b)=>a+b,0)||1;
+  let topGuild=null,topGV=0;for(const[k,v]of Object.entries(S.gxp))if(v>topGV){topGV=v;topGuild=k}
+  const pName=params.get('w');const dName=pName?pName.charAt(0).toUpperCase()+pName.slice(1):'Agent';
+  const t3=topTraits.slice(0,3).map(x=>x[0]);
+  const sm={curiosity:'driven by an insatiable need to understand',analysis:'a natural pattern-reader',introspection:'someone who looks inward first',discipline:'anchored by structure and sacred routine',courage:'willing to step into discomfort',integrity:'guided by an internal compass that doesn\'t bend',initiative:'a starter who acts before permission arrives',innovation:'wired to build what doesn\'t exist yet',adaptability:'fluid under pressure',collaboration:'strongest when connected to others',empathy:'attuned to what people feel before they say it',humility:'able to learn because you don\'t pretend to know',assertiveness:'unafraid to hold ground',confidence:'trusts yourself deeply',patience:'willing to wait when others force the moment',emotionalAwareness:'feels the room before entering it'};
+  let psyche='Complete more activities to reveal your psyche map.';
+  if(t3.length>=3)psyche=(sm[t3[0]]||t3[0])+'. Beneath that, '+(sm[t3[1]]||t3[1])+'. And underneath, '+(sm[t3[2]]||t3[2])+'. This shapes how you lead, fight, heal, and build.';
+  let h='';
+  // ID CARD
+  h+=`<div style="background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:8px;padding:1.2rem;margin-bottom:.8rem;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-30px;right:-30px;width:160px;height:160px;background:radial-gradient(circle,${topGuild?gc[topGuild]+'18':'#c084fc08'},transparent);pointer-events:none"></div>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <div style="width:56px;height:56px;border-radius:50%;background:${topGuild?'radial-gradient(circle,'+gc[topGuild]+'40,'+gc[topGuild]+'12)':'var(--surface2)'};display:flex;align-items:center;justify-content:center;font-size:1.6rem;border:2px solid ${topGuild?gc[topGuild]+'50':'var(--border)'}">🦊</div>
+      <div style="flex:1"><div style="font-family:var(--font-d);font-size:1.2rem;color:var(--bright)">${dName}</div>
+        <div style="font-family:var(--font-m);font-size:.68rem;color:${topGuild?gc[topGuild]:'var(--dim)'};margin-top:.15rem">${rank.n} · ${topGuild||'Unaligned'} · ${S.totalXP} XP · 🔥${S.streak}</div></div>
+      <div style="text-align:right"><div style="font-family:var(--font-m);font-size:.55rem;color:var(--dim);letter-spacing:.1em">RANK</div>
+        <div style="font-family:var(--font-d);font-size:1.3rem;color:var(--purple)">${rank.n}</div></div>
+    </div>
+    <div style="margin-top:.8rem;font-size:.88rem;color:var(--dim);line-height:1.5;font-style:italic;border-top:1px solid var(--border);padding-top:.7rem">${psyche}</div>
+  </div>`;
+  // STATS ROW
+  h+=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:.8rem">`;
+  [{l:'DONE',v:S.done.length,c:'var(--green)'},{l:'LEFT',v:ACT.length-S.done.length,c:'var(--dim)'},{l:'STREAK',v:'🔥'+S.streak,c:'var(--orange)'},{l:'XP',v:S.totalXP,c:'var(--gold)'}].forEach(s=>{
+    h+=`<div style="background:var(--surface);border:1px solid var(--border);padding:.6rem;border-radius:5px;text-align:center">
+      <div style="font-family:var(--font-m);font-size:.55rem;color:var(--dim);letter-spacing:.06em">${s.l}</div>
+      <div style="font-family:var(--font-d);font-size:1.1rem;color:${s.c};margin-top:.15rem">${s.v}</div></div>`;
+  });h+=`</div>`;
+  // GUILD BARS
+  h+=`<div class="profile-section"><h3>GUILD ALIGNMENT</h3>`;
+  const gs=Object.entries(S.gxp).sort((a,b)=>b[1]-a[1]);const gMax=Math.max(...Object.values(S.gxp),1);
+  gs.forEach(([gn,gv])=>{const pct=Math.round((gv/totalG)*100);const w=Math.max(2,(gv/gMax)*100);
+    h+=`<div style="display:flex;align-items:center;gap:.5rem;margin:.4rem 0">
+      <div style="width:80px;font-family:var(--font-m);font-size:.68rem;color:${gc[gn]}">${gn}</div>
+      <div style="flex:1;height:16px;background:var(--surface2);border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${w}%;background:linear-gradient(90deg,${gc[gn]}99,${gc[gn]}40);border-radius:3px;transition:width .5s"></div></div>
+      <div style="width:42px;text-align:right;font-family:var(--font-m);font-size:.7rem;color:${gc[gn]}">${pct}%</div></div>`;
+  });h+=`</div>`;
+  // TRAITS
   h+=`<div class="profile-section"><h3>TRAIT SPECTRUM</h3>`;
-  if(topTraits.length){
-    topTraits.forEach(([t,v])=>{
-      const pct=Math.round((v/maxT)*100);
-      const guild=Object.entries({curiosity:'ARCANA',analysis:'ARCANA',introspection:'ARCANA',emotionalAwareness:'ARCANA',patternSeeking:'ARCANA',discipline:'VIGILANCE',courage:'VIGILANCE',integrity:'VIGILANCE',patience:'VIGILANCE',initiative:'SIGIL',innovation:'SIGIL',adaptability:'SIGIL',confidence:'SIGIL',collaboration:'MYCELIUM',empathy:'MYCELIUM',humility:'MYCELIUM',assertiveness:'EMBERS',idealism:'EMBERS'})[t]?.[1]||'ARCANA';
-      h+=`<div class="trait-bar"><div class="tname">${t}</div><div class="tbar"><div class="tfill" style="width:${pct}%;background:${guildColors[guild]||'var(--purple)'}"></div></div><span style="font-family:var(--font-m);font-size:.65rem;color:var(--dim);width:30px;text-align:right">+${v}</span></div>`;
-    });
-  } else h+=`<div style="color:var(--dim)">Complete activities to build your trait map.</div>`;
+  if(topTraits.length){topTraits.slice(0,14).forEach(([t,v])=>{const p=Math.round((v/maxT)*100);const g=tg[t]||'ARCANA';
+    h+=`<div style="display:flex;align-items:center;gap:.4rem;margin:.3rem 0">
+      <div style="width:110px;font-family:var(--font-m);font-size:.65rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t}</div>
+      <div style="flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden"><div style="height:100%;width:${p}%;background:${gc[g]};border-radius:4px"></div></div>
+      <div style="width:24px;font-family:var(--font-m);font-size:.6rem;color:${gc[g]};text-align:right">+${v}</div></div>`;
+  });if(topTraits.length>14)h+=`<div style="font-family:var(--font-m);font-size:.6rem;color:var(--dim);margin-top:.3rem">+${topTraits.length-14} more...</div>`;
+  }else h+=`<div style="color:var(--dim);font-size:.85rem">Traits emerge as you train.</div>`;
   h+=`</div>`;
-
-  h+=`<div class="profile-section"><h3>GUILD ALIGNMENT</h3><div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:.5rem">`;
-  const totalG=Object.values(S.gxp).reduce((a,b)=>a+b,0)||1;
-  for(const[gn,gv]of Object.entries(S.gxp)){
-    const pct=Math.round((gv/totalG)*100);
-    h+=`<div style="text-align:center"><div style="font-family:var(--font-m);font-size:.7rem;color:${G[gn].c}">${gn}</div><div style="font-family:var(--font-d);font-size:1.5rem;color:${G[gn].c}">${pct}%</div><div style="font-family:var(--font-m);font-size:.6rem;color:var(--dim)">${gv} XP</div></div>`;
-  }
-  h+=`</div></div>`;
-
-  h+=`<div class="profile-section"><h3>ACHIEVEMENTS</h3><div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem">`;
-  const achNames={first:'🏆 First Step',five:'🏆 Dedicated',streak3:'🔥 On Fire',guild30:'⚔️ Guild Devotion'};
-  if(S.achievements.length)S.achievements.forEach(a=>{h+=`<span class="tag" style="border-color:var(--gold);color:var(--gold)">${achNames[a]||a}</span>`;});
-  else h+=`<span style="color:var(--dim)">Achievements unlock as you progress.</span>`;
-  h+=`</div></div>`;
-
+  // COURSES
+  h+=`<div class="profile-section"><h3>COURSE PROGRESS</h3>`;
+  const cx=Object.entries(S.cxp).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
+  if(cx.length){cx.forEach(([cn,xp])=>{h+=`<div style="display:flex;align-items:center;margin:.25rem 0">
+    <div style="flex:1;font-size:.82rem;color:var(--text)">${cn}</div>
+    <div style="font-family:var(--font-m);font-size:.68rem;color:var(--gold)">${xp} XP</div></div>`;});
+  }else h+=`<div style="color:var(--dim);font-size:.85rem">No courses started.</div>`;
+  h+=`</div>`;
+  // ACHIEVEMENTS
+  h+=`<div class="profile-section"><h3>ACHIEVEMENTS</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.4rem">`;
+  [{id:'first',n:'First Step',d:'First activity',i:'🏆'},{id:'five',n:'Dedicated',d:'5 activities',i:'🏆'},{id:'streak3',n:'On Fire',d:'3 streak',i:'🔥'},{id:'guild30',n:'Guild Devotion',d:'30+ guild XP',i:'⚔️'}].forEach(a=>{
+    const e=S.achievements.includes(a.id);
+    h+=`<div style="background:${e?'var(--surface2)':'var(--surface)'};border:1px solid ${e?'var(--gold)25':'var(--border)'};padding:.5rem .7rem;border-radius:4px;${e?'':'opacity:.3'}">
+      <span style="font-size:.9rem">${a.i}</span> <span style="font-family:var(--font-d);font-size:.75rem;color:${e?'var(--gold)':'var(--dim)'}">${a.n}</span>
+      <div style="font-family:var(--font-m);font-size:.55rem;color:var(--dim)">${a.d}</div></div>`;
+  });h+=`</div></div>`;
+  // RESET
+  h+=`<div style="text-align:center;margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--border)">
+    <span style="font-family:var(--font-m);font-size:.6rem;color:var(--dim);cursor:pointer;opacity:.5" onclick="if(confirm('Reset all progress?')){localStorage.removeItem('nost-s');location.reload()}">reset progress</span></div>`;
   document.getElementById('pg-profile').innerHTML=h;
 }
 
