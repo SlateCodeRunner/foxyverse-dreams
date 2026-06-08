@@ -149,7 +149,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="gate-sigil">🦊</div>
   <h1>Nostiendos</h1>
   <div class="subtitle">The Finishing College — A gamified journey through 20 courses of psychological transformation, archetypal awakening, and mission readiness.</div>
-  <div class="fada-welcome">Welcome, Fateweaver.</div>
+  <div class="fada-welcome" id="welcome-name" style="display:none"></div>
   <div style="color:var(--dim);font-family:var(--font-m);font-size:.75rem;margin-top:.5rem">⧫ 7-day trial · no account needed · your progress saves locally ⧫</div>
   <button onclick="enter()">BEGIN YOUR TRIAL</button>
 </div>
@@ -371,7 +371,7 @@ function renderHub(){
         <div class="note" style="margin-top:.3rem;font-family:var(--font-m);font-size:.65rem">${nx?`${S.done.length}/${nx.t} to ${nx.n}`:'MAX RANK'}</div>
       </div>
       <div class="scard"><label>TOTAL XP</label><div class="val" style="color:var(--gold)">${S.totalXP}</div><div class="note">${S.done.length} activities · 🔥 ${S.streak} streak</div></div>
-      <div class="scard"><label>DOMINANT GUILD</label><div class="val" style="color:${tg?G[tg].c:'var(--dim)';font-size:'1.4rem'}">${tg||'—'}</div>
+      <div class="scard"><label>DOMINANT GUILD</label><div class="val" style="color:${tg?G[tg].c:'var(--dim)'};font-size:1.4rem">${tg||'—'}</div>
         <div class="note">${tg?G[tg].a+' — '+G[tg].s:'Complete activities to discover alignment'}</div></div>
       <div class="scard"><label>EMERGING TRAITS</label>
         <div style="margin-top:.5rem">${topTraits.length?topTraits.map(([t,v])=>`<span class="tag" style="margin:2px">${t} +${v}</span>`).join(''):'<span style="color:var(--dim);font-size:.85rem">Traits emerge as you train...</span>'}</div>
@@ -508,6 +508,49 @@ function nav(p){
   document.getElementById('pg-'+p).classList.add('on');
   if(p==='train')renderTrain();if(p==='profile')renderProfile();
 }
+
+
+// URL PARAMS
+const params=new URLSearchParams(window.location.search);
+const agentName=params.get('w')||params.get('name');
+if(agentName){
+  const el=document.getElementById('welcome-name');
+  el.style.display='block';
+  el.textContent='Welcome, '+agentName.charAt(0).toUpperCase()+agentName.slice(1)+'.';
+}
+
+// MUSIC
+function startMusic(){
+  if(document.getElementById('nost-music'))return;
+  const iframe=document.createElement('iframe');
+  iframe.id='nost-music';
+  iframe.style.cssText='position:fixed;bottom:-200px;left:0;width:1px;height:1px;opacity:0;pointer-events:none';
+  iframe.allow='autoplay';
+  iframe.src='https://www.youtube.com/embed/HhocbmU6tB8?autoplay=1&loop=1&playlist=HhocbmU6tB8&controls=0';
+  document.body.appendChild(iframe);
+}
+
+// Add music toggle to topbar
+const mtog=document.createElement('div');
+mtog.id='music-tog';
+mtog.innerHTML='♫';
+mtog.style.cssText='cursor:pointer;font-size:1rem;color:var(--dim);transition:color .2s';
+mtog.title='Toggle music';
+let musicOn=false;
+mtog.addEventListener('click',()=>{
+  const fr=document.getElementById('nost-music');
+  if(!fr){startMusic();musicOn=true;mtog.style.color='var(--purple)'}
+  else{fr.remove();musicOn=false;mtog.style.color='var(--dim)'}
+});
+document.getElementById('topbar')?.appendChild(mtog);
+
+// Override enter to start music
+const origEnter=enter;
+enter=function(){
+  startMusic();musicOn=true;
+  if(document.getElementById('music-tog'))document.getElementById('music-tog').style.color='var(--purple)';
+  origEnter();
+};
 
 // INIT
 if(S.ts){
