@@ -186,7 +186,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div id="expired" style="position:fixed;inset:0;background:rgba(8,8,13,.96);z-index:10000;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;text-align:center">
   <div style="font-family:var(--font-d);font-size:2rem;color:var(--red)">TRIAL COMPLETE</div>
   <div style="color:var(--dim);max-width:450px">Your 7-day preview has ended. Join the Discord to unlock all 200+ activities and the full Finishing College.</div>
-  <a href="https://discord.gg/psycheorsike" target="_blank" style="padding:12px 32px;background:var(--purple);color:var(--bg);font-family:var(--font-d);letter-spacing:.1em;border-radius:4px;text-decoration:none;font-size:.95rem">JOIN THE DISCORD</a>
+  <a href="https://discord.gg/foxyverse" target="_blank" style="padding:12px 32px;background:var(--purple);color:var(--bg);font-family:var(--font-d);letter-spacing:.1em;border-radius:4px;text-decoration:none;font-size:.95rem">JOIN THE DISCORD</a>
 </div>
 
 <script>
@@ -274,6 +274,12 @@ const ACT=[
 {x:"Thank them and say nothing else. Let it settle.",tr:["discipline","humility"],g:"VIGILANCE",xp:10},
 {x:"Share something equally vulnerable. Meet them where they are.",tr:["empathy","courage"],g:"MYCELIUM",xp:12}
 ]}
+,
+{id:"r1",co:"Foundations Of Discipline And Ritual",t:"Breath Ritual",d:"A 60-second box breathing exercise. Inhale. Hold. Exhale. Hold. The screen guides you. Your only task is to follow.",type:"ritual",ch:[]},
+{id:"g1",co:"Archetypal Architecture",t:"Guild Sorting Ceremony",d:"Answer 6 rapid-fire instinct questions. No thinking — first impulse only. The guilds are watching.",type:"sorting",ch:[]},
+{id:"f1",co:"Witnessing And The Quantum Self",t:"Focus Pulse",d:"Targets appear on screen. Click them before they vanish. Your reaction speed reveals which archetype is driving your attention.",type:"focus",ch:[]},
+{id:"j1",co:"Shadow Work and Inner Conflict Resolution",t:"Shadow Mirror",d:"Write one sentence about something you've been avoiding. The mirror responds.",type:"journal",ch:[]},
+{id:"m1",co:"Witnessing And The Quantum Self",t:"Stillness Trial",d:"Sit with silence for 30 seconds. Don't click anything. Don't scroll. The trial measures your presence.",type:"meditation",ch:[]}
 ];
 
 // STATE
@@ -427,7 +433,7 @@ function renderTrain(){
   if(!avail.length){
     h+=`<div style="text-align:center;padding:3rem"><div style="font-family:var(--font-d);color:var(--gold);font-size:1.2rem">All trial scenarios completed.</div>
       <div style="color:var(--dim);margin:.8rem 0">Join the Discord for the full 200+ activity library.</div>
-      <button class="nbtn" onclick="window.open('https://discord.gg/psycheorsike')">JOIN DISCORD</button></div>`;
+      <button class="nbtn" onclick="window.open('https://discord.gg/foxyverse')">JOIN DISCORD</button></div>`;
   } else {
     h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">';
     avail.forEach(a=>{
@@ -435,7 +441,7 @@ function renderTrain(){
       h+=`<div class="card" style="margin-bottom:0" onclick="play('${a.id}')">
         <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${gc}"></div>
         <h3>${a.t}</h3><p>${a.d.slice(0,100)}...</p>
-        <div class="meta">${a.co} · ${a.type}</div></div>`;
+        <div class="meta">${a.co} · <span style="color:${a.type==='scenario'?'var(--dim)':a.type==='ritual'?'var(--green)':a.type==='sorting'?'var(--purple)':a.type==='focus'?'var(--blue)':a.type==='journal'?'var(--orange)':a.type==='meditation'?'var(--blue)':'var(--dim)'}">${a.type}</span></div></div>`;
     });
     h+='</div>';
   }
@@ -445,6 +451,12 @@ function renderTrain(){
 function play(id){
   const a=ACT.find(x=>x.id===id);if(!a)return;
   window.scrollTo({top:0,behavior:'smooth'});
+  // SPECIAL TYPES
+  if(a.type==='ritual')return playBreath(a);
+  if(a.type==='sorting')return playSorting(a);
+  if(a.type==='focus')return playFocus(a);
+  if(a.type==='journal')return playJournal(a);
+  if(a.type==='meditation')return playMeditation(a);
   let h=`<div class="act-title">${a.t}</div><div class="act-course">${a.co} · ${a.type}</div>
     <div class="act-body">${a.d}</div><div class="choices" id="choices">`;
   a.ch.forEach((c,i)=>{h+=`<div class="ch" id="ch${i}" onclick="pick('${a.id}',${i})">${c.x}</div>`;});
@@ -553,6 +565,179 @@ function renderProfile(){
     <span style="font-family:var(--font-m);font-size:.6rem;color:var(--dim);cursor:pointer;opacity:.5" onclick="if(confirm('Reset all progress?')){localStorage.removeItem('nost-s');location.reload()}">reset progress</span></div>`;
   document.getElementById('pg-profile').innerHTML=h;
 }
+
+
+// === BREATH RITUAL ===
+function playBreath(a){
+  const pg=document.getElementById('pg-train');
+  pg.innerHTML=`<div class="act-title">${a.t}</div><div class="act-course">${a.co} · ritual</div>
+    <div style="display:flex;flex-direction:column;align-items:center;padding:2rem 0">
+      <div id="breath-circle" style="width:120px;height:120px;border-radius:50%;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1rem;color:var(--purple);transition:all 1.5s"></div>
+      <div id="breath-phase" style="font-family:var(--font-m);font-size:.8rem;color:var(--dim);margin-top:1.5rem">tap to begin</div>
+      <div id="breath-timer" style="font-family:var(--font-m);font-size:.7rem;color:var(--dim);margin-top:.5rem"></div>
+    </div><div id="res"></div>`;
+  let started=false;
+  document.getElementById('breath-circle').onclick=()=>{
+    if(started)return;started=true;
+    const phases=['INHALE','HOLD','EXHALE','HOLD'];const dur=[4,4,4,4];
+    let cycle=0,phase=0,total=0;const maxCycles=4;
+    function tick(){
+      if(cycle>=maxCycles){completeActivity(a.id,'Foundations Of Discipline And Ritual',12,['discipline','patience'],'VIGILANCE');return}
+      const c=document.getElementById('breath-circle');const p=document.getElementById('breath-phase');const t=document.getElementById('breath-timer');
+      if(!c)return;
+      const ph=phases[phase];p.textContent=ph;
+      t.textContent='cycle '+(cycle+1)+'/'+maxCycles;
+      if(ph==='INHALE'){c.style.transform='scale(1.4)';c.style.borderColor='var(--green)';c.style.boxShadow='0 0 40px rgba(52,211,153,.3)'}
+      else if(ph==='EXHALE'){c.style.transform='scale(1)';c.style.borderColor='var(--purple)';c.style.boxShadow='0 0 20px rgba(192,132,252,.2)'}
+      else{c.style.borderColor=ph==='HOLD'&&phase===1?'var(--gold)':'var(--blue)'}
+      phase++;if(phase>=4){phase=0;cycle++}
+      setTimeout(tick,dur[phase]*1000);
+    }
+    tick();
+  };
+}
+
+// === GUILD SORTING ===
+function playSorting(a){
+  const qs=[
+    {q:'A stranger insults someone you care about. You:',o:[{t:'Confront them immediately',g:'EMBERS'},{t:'Observe and calculate',g:'ARCANA'},{t:'Protect the person quietly',g:'MYCELIUM'},{t:'Set a boundary calmly',g:'VIGILANCE'}]},
+    {q:'You find a flaw in a system everyone trusts. You:',o:[{t:'Redesign it yourself',g:'SIGIL'},{t:'Study why it persists',g:'ARCANA'},{t:'Warn people',g:'MYCELIUM'},{t:'Burn it down',g:'EMBERS'}]},
+    {q:'You have one hour of total freedom. You:',o:[{t:'Create something',g:'SIGIL'},{t:'Go somewhere alone',g:'ARCANA'},{t:'Call someone you love',g:'MYCELIUM'},{t:'Train or push limits',g:'EMBERS'}]},
+    {q:'Someone asks you to lead. You:',o:[{t:'Accept with conditions',g:'VIGILANCE'},{t:'Decline unless necessary',g:'ARCANA'},{t:'Lead by building consensus',g:'MYCELIUM'},{t:'Lead by example immediately',g:'EMBERS'}]},
+    {q:'You discover a hidden truth. You:',o:[{t:'Share it with those who need it',g:'MYCELIUM'},{t:'Weaponize it strategically',g:'SIGIL'},{t:'Sit with it until clarity comes',g:'ARCANA'},{t:'Act on it now',g:'EMBERS'}]},
+    {q:'Your deepest fear is:',o:[{t:'Losing control',g:'VIGILANCE'},{t:'Being ordinary',g:'SIGIL'},{t:'Being alone',g:'MYCELIUM'},{t:'Being wrong',g:'ARCANA'}]}
+  ];
+  let qi=0;const gScore={VIGILANCE:0,ARCANA:0,EMBERS:0,MYCELIUM:0,SIGIL:0};
+  function showQ(){
+    const pg=document.getElementById('pg-train');
+    if(qi>=qs.length){
+      let top=null,tv=0;for(const[k,v]of Object.entries(gScore))if(v>tv){tv=v;top=k}
+      S.gxp[top]=(S.gxp[top]||0)+15;S.cxp[a.co]=(S.cxp[a.co]||0)+15;S.totalXP+=15;S.done.push(a.id);
+      S.traits.intuition=(S.traits.intuition||0)+1;S.traits.confidence=(S.traits.confidence||0)+1;
+      updateStreak();save();checkAchievements();renderTopbar();
+      flash(gc[top]+'30');toast('SORTED: '+top,'var(--gold)');
+      pg.innerHTML=`<div style="text-align:center;padding:2rem">
+        <div style="font-family:var(--font-d);font-size:1.5rem;color:${gc[top]};letter-spacing:.15em">${top}</div>
+        <div style="font-family:var(--font-m);font-size:.8rem;color:var(--dim);margin:.5rem 0">${G[top].a} — ${G[top].s}</div>
+        <div style="width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,${gc[top]}50,${gc[top]}15);margin:1rem auto;box-shadow:0 0 40px ${gc[top]}30"></div>
+        <div style="color:var(--text);margin:1rem 0;font-size:.9rem">The sorting is complete. +15 XP.</div>
+        <button class="nbtn" onclick="renderTrain();renderHub();renderTopbar()">CONTINUE →</button>
+      </div>`;return;
+    }
+    const q=qs[qi];
+    pg.innerHTML=`<div class="act-title">Guild Sorting</div><div class="act-course">${a.co} · sorting ceremony · ${qi+1}/${qs.length}</div>
+      <div class="act-body" style="text-align:center;font-size:1.1rem;font-style:italic">${q.q}</div>
+      <div style="font-family:var(--font-m);font-size:.65rem;color:var(--dim);text-align:center;margin-bottom:.5rem">first instinct only</div>
+      <div class="choices">${q.o.map((o,i)=>`<div class="ch" onclick="sortPick('${o.g}',${i})">${o.t}</div>`).join('')}</div>`;
+  }
+  window.sortPick=function(g,i){
+    gScore[g]++;qi++;
+    document.querySelectorAll('.ch').forEach((el,j)=>{el.style.pointerEvents='none';if(j===i)el.classList.add('picked');else el.classList.add('notpicked')});
+    setTimeout(showQ,600);
+  };
+  showQ();
+}
+
+// === FOCUS PULSE ===
+function playFocus(a){
+  const pg=document.getElementById('pg-train');let score=0,round=0,maxR=10;
+  pg.innerHTML=`<div class="act-title">${a.t}</div><div class="act-course">${a.co} · focus test</div>
+    <div id="focus-arena" style="position:relative;height:300px;background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:crosshair">
+      <div id="focus-score" style="position:absolute;top:8px;right:12px;font-family:var(--font-m);font-size:.7rem;color:var(--gold)">0/${maxR}</div>
+      <div id="focus-msg" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);color:var(--purple);font-size:1rem;cursor:pointer" onclick="startFocus()">TAP TO BEGIN</div>
+    </div><div id="res"></div>`;
+  window.startFocus=function(){
+    document.getElementById('focus-msg').remove();spawnTarget();
+  };
+  function spawnTarget(){
+    if(round>=maxR){
+      const xp=Math.round((score/maxR)*14);
+      completeActivity(a.id,a.co,xp,['discipline','curiosity'],'ARCANA');return;
+    }
+    const arena=document.getElementById('focus-arena');if(!arena)return;
+    const t=document.createElement('div');
+    const sz=30+Math.random()*20;const x=Math.random()*(arena.offsetWidth-sz);const y=Math.random()*(arena.offsetHeight-sz-30)+20;
+    t.style.cssText=`position:absolute;left:${x}px;top:${y}px;width:${sz}px;height:${sz}px;border-radius:50%;background:var(--purple);cursor:pointer;transition:transform .1s;box-shadow:0 0 15px rgba(192,132,252,.4)`;
+    t.onclick=()=>{score++;round++;t.style.transform='scale(0)';setTimeout(()=>{t.remove();document.getElementById('focus-score').textContent=score+'/'+maxR;spawnTarget()},150)};
+    arena.appendChild(t);
+    setTimeout(()=>{if(t.parentNode){t.remove();round++;document.getElementById('focus-score').textContent=score+'/'+maxR;spawnTarget()}},1800-round*80);
+  }
+}
+
+// === SHADOW JOURNAL ===
+function playJournal(a){
+  const pg=document.getElementById('pg-train');
+  const reflections=['The thing you avoid names you before you name it.','Avoidance is a map. What you run from shows where the gold is buried.','The shadow doesn\'t disappear when you look away. It just gets comfortable.','What you wrote is the surface. What you felt while writing it is the truth.','You already knew. Naming it is the first act of power.'];
+  pg.innerHTML=`<div class="act-title">${a.t}</div><div class="act-course">${a.co} · shadow work</div>
+    <div class="act-body">Write one sentence about something you've been avoiding. It doesn't leave this screen.</div>
+    <textarea id="shadow-input" style="width:100%;height:80px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-b);font-size:1rem;padding:12px;border-radius:6px;resize:none;outline:none" placeholder="I've been avoiding..."></textarea>
+    <button class="nbtn" style="margin-top:.6rem" onclick="submitShadow()">OFFER TO THE MIRROR</button>
+    <div id="res"></div>`;
+  window.submitShadow=function(){
+    const v=document.getElementById('shadow-input').value.trim();
+    if(!v)return;
+    document.getElementById('shadow-input').disabled=true;
+    document.querySelector('.nbtn').remove();
+    const r=reflections[Math.floor(Math.random()*reflections.length)];
+    flash('rgba(192,132,252,.15)');
+    completeActivity(a.id,a.co,10,['introspection','courage'],'EMBERS');
+    const res=document.getElementById('res');
+    res.innerHTML=`<div style="background:var(--surface);border:1px solid var(--purple);padding:1.2rem;border-radius:6px;margin-top:.8rem;animation:fadeIn .8s">
+      <div style="font-family:var(--font-d);color:var(--purple);font-size:.9rem;margin-bottom:.5rem">THE MIRROR RESPONDS</div>
+      <div style="font-style:italic;color:var(--text);line-height:1.6">${r}</div>
+      <div style="margin-top:.8rem;font-family:var(--font-m);font-size:.7rem;color:var(--gold)">+10 XP · shadow work</div>
+      <button class="nbtn" style="margin-top:.8rem" onclick="renderTrain();renderHub();renderTopbar()">CONTINUE →</button>
+    </div>`;
+    setTimeout(()=>res.scrollIntoView({behavior:'smooth',block:'center'}),300);
+  };
+}
+
+// === MEDITATION ===
+function playMeditation(a){
+  const pg=document.getElementById('pg-train');
+  pg.innerHTML=`<div class="act-title">${a.t}</div><div class="act-course">${a.co} · stillness</div>
+    <div class="act-body" style="text-align:center">Sit with silence for 30 seconds. Don't click. Don't scroll. Just be here.</div>
+    <div style="text-align:center;padding:2rem">
+      <div id="med-circle" style="width:100px;height:100px;border-radius:50%;border:2px solid var(--blue);margin:0 auto;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1.5rem;color:var(--blue);transition:all 1s">30</div>
+      <div id="med-status" style="font-family:var(--font-m);font-size:.75rem;color:var(--dim);margin-top:1rem">tap the circle to begin</div>
+    </div><div id="res"></div>`;
+  let started=false,failed=false;
+  document.getElementById('med-circle').onclick=()=>{
+    if(started)return;started=true;
+    document.getElementById('med-status').textContent='be still...';
+    let t=30;
+    const iv=setInterval(()=>{
+      t--;const c=document.getElementById('med-circle');if(!c){clearInterval(iv);return}
+      c.textContent=t;c.style.borderColor=t>20?'var(--blue)':t>10?'var(--green)':'var(--gold)';
+      c.style.boxShadow=`0 0 ${30-t}px ${t>20?'rgba(56,189,248,.2)':t>10?'rgba(52,211,153,.3)':'rgba(251,191,36,.4)'}`;
+      if(t<=0){clearInterval(iv);
+        const xp=failed?5:14;
+        completeActivity(a.id,a.co,xp,failed?['patience']:['patience','discipline','introspection'],'ARCANA');
+        c.textContent='✓';c.style.borderColor='var(--gold)';
+        document.getElementById('med-status').textContent=failed?'you moved, but you stayed.':'perfect stillness.';
+        document.getElementById('res').innerHTML=`<div class="result" style="text-align:center"><h4>${failed?'MOSTLY STILL':'PERFECT STILLNESS'}</h4>
+          <div style="font-family:var(--font-m);font-size:.8rem;color:var(--gold);margin:.5rem">+${xp} XP</div>
+          <button class="nbtn" onclick="renderTrain();renderHub();renderTopbar()">CONTINUE →</button></div>`;
+        setTimeout(()=>document.getElementById('res').scrollIntoView({behavior:'smooth',block:'center'}),300);
+      }
+    },1000);
+    // detect movement
+    const handler=()=>{if(!failed&&t>0){failed=true;document.getElementById('med-status').textContent='you moved... keep going.'}};
+    document.addEventListener('scroll',handler,{once:true});
+    document.addEventListener('click',function clickH(e){if(e.target.closest('#res'))return;if(!failed&&t>0){failed=true;document.getElementById('med-status').textContent='you clicked... keep sitting.'}},{once:true});
+  };
+}
+
+// === SHARED COMPLETION HELPER ===
+function completeActivity(id,course,xp,traits,guild){
+  traits.forEach(t=>{S.traits[t]=(S.traits[t]||0)+1});
+  S.gxp[guild]=(S.gxp[guild]||0)+xp;
+  S.cxp[course]=(S.cxp[course]||0)+xp;
+  S.totalXP+=xp;S.done.push(id);
+  updateStreak();save();checkAchievements();renderTopbar();renderHub();
+}
+
+const gc={VIGILANCE:'#f87171',ARCANA:'#c084fc',EMBERS:'#fb923c',MYCELIUM:'#34d399',SIGIL:'#38bdf8'};
 
 function nav(p){
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
