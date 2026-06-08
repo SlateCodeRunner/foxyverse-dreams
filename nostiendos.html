@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NOSTIENDOS — Finishing College</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fira+Code:wght@300;400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a28;--border:#2a2a3a;
+--text:#c8c8d0;--text-dim:#6a6a7a;--text-bright:#e8e8f0;
+--accent:#c084fc;--accent2:#34d399;--accent3:#fb923c;--accent4:#f87171;--accent5:#38bdf8;
+--guild-vigilance:#f87171;--guild-arcana:#c084fc;--guild-embers:#fb923c;--guild-mycelium:#34d399;--guild-sigil:#38bdf8;
+--font-display:'Cinzel',serif;--font-body:'Cormorant Garamond',serif;--font-mono:'Fira Code',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:18px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+::selection{background:var(--accent);color:var(--bg)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* GATE */
+#gate{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2rem;opacity:1;transition:opacity .8s}
+#gate.hidden{opacity:0;pointer-events:none}
+#gate h1{font-family:var(--font-display);font-size:3rem;color:var(--accent);letter-spacing:.3em;text-transform:uppercase}
+#gate p{color:var(--text-dim);font-size:1.1rem;max-width:500px;text-align:center}
+#gate button{font-family:var(--font-display);font-size:1rem;padding:.8rem 2.5rem;background:transparent;border:1px solid var(--accent);color:var(--accent);cursor:pointer;letter-spacing:.15em;transition:all .3s}
+#gate button:hover{background:var(--accent);color:var(--bg)}
+
+/* TRIAL BAR */
+#trial-bar{position:fixed;top:0;left:0;right:0;height:36px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:1rem;z-index:100;font-family:var(--font-mono);font-size:.75rem;color:var(--text-dim)}
+#trial-bar .days{color:var(--accent)}
+#trial-bar .upgrade{color:var(--accent3);cursor:pointer;border:1px solid var(--accent3);padding:2px 12px;border-radius:2px}
+#trial-bar .upgrade:hover{background:var(--accent3);color:var(--bg)}
+
+/* EXPIRED OVERLAY */
+#expired{position:fixed;inset:0;background:rgba(10,10,15,.95);z-index:10000;display:none;align-items:center;justify-content:center;flex-direction:column;gap:2rem;text-align:center}
+#expired.show{display:flex}
+#expired h2{font-family:var(--font-display);font-size:2rem;color:var(--accent4)}
+#expired p{color:var(--text-dim);max-width:500px}
+#expired a.discord-btn{display:inline-block;padding:.8rem 2.5rem;background:var(--accent);color:var(--bg);font-family:var(--font-display);letter-spacing:.1em;border-radius:4px;font-size:1rem}
+
+/* NAV */
+#nav{position:fixed;top:36px;left:0;right:0;height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 2rem;z-index:99;gap:2rem}
+#nav .logo{font-family:var(--font-display);font-size:1rem;color:var(--accent);letter-spacing:.2em}
+#nav .tabs{display:flex;gap:0}
+#nav .tab{font-family:var(--font-mono);font-size:.75rem;padding:.5rem 1.2rem;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;letter-spacing:.05em}
+#nav .tab:hover{color:var(--text)}
+#nav .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+#nav .rank-badge{margin-left:auto;font-family:var(--font-mono);font-size:.7rem;color:var(--accent2);border:1px solid var(--accent2);padding:2px 10px;border-radius:2px}
+
+/* MAIN */
+#main{margin-top:92px;padding:2rem;max-width:1100px;margin-left:auto;margin-right:auto}
+.page{display:none}
+.page.active{display:block}
+
+/* HUB PAGE */
+.hub-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);padding:1.5rem;border-radius:4px}
+.stat-card h3{font-family:var(--font-display);font-size:.9rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.5rem}
+.stat-card .value{font-size:2rem;color:var(--text-bright);font-family:var(--font-display)}
+.stat-card .sub{font-size:.85rem;color:var(--text-dim);margin-top:.3rem}
+.progress-bar{height:6px;background:var(--surface2);border-radius:3px;margin-top:.8rem;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .5s ease}
+
+/* COURSES PAGE */
+.course-tree{margin-top:1.5rem;display:flex;flex-direction:column;gap:1rem}
+.course-card{background:var(--surface);border:1px solid var(--border);padding:1.2rem 1.5rem;border-radius:4px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.course-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.course-card:hover{border-color:var(--accent);transform:translateX(4px)}
+.course-card.locked{opacity:.4;cursor:default}
+.course-card.locked:hover{border-color:var(--border);transform:none}
+.course-card h3{font-family:var(--font-display);font-size:1rem;color:var(--text-bright);letter-spacing:.05em}
+.course-card p{font-size:.9rem;color:var(--text-dim);margin-top:.4rem}
+.course-card .prereqs{font-family:var(--font-mono);font-size:.7rem;color:var(--accent4);margin-top:.4rem}
+.course-card .xp{font-family:var(--font-mono);font-size:.7rem;color:var(--accent2);position:absolute;right:1rem;top:1.2rem}
+
+/* ACTIVITY PAGE */
+.activity-container{max-width:700px;margin:0 auto}
+.activity-container h2{font-family:var(--font-display);font-size:1.5rem;color:var(--text-bright);margin-bottom:.5rem}
+.activity-container .course-label{font-family:var(--font-mono);font-size:.75rem;color:var(--accent);margin-bottom:1.5rem}
+.activity-content{background:var(--surface);border:1px solid var(--border);padding:2rem;border-radius:4px;margin-bottom:1.5rem;font-size:1rem;line-height:1.8}
+.activity-content h2,.activity-content h3{font-family:var(--font-display);color:var(--text-bright);margin:1rem 0 .5rem}
+.activity-content ul{margin:.5rem 0 .5rem 1.5rem}
+.activity-content li{margin:.3rem 0}
+.choices{display:flex;flex-direction:column;gap:.8rem;margin-top:1rem}
+.choice-btn{background:var(--surface2);border:1px solid var(--border);padding:1rem 1.2rem;border-radius:4px;color:var(--text);font-family:var(--font-body);font-size:1rem;cursor:pointer;text-align:left;transition:all .2s;line-height:1.5}
+.choice-btn:hover{border-color:var(--accent);background:var(--surface)}
+.choice-btn.selected{border-color:var(--accent2);background:rgba(52,211,153,.1)}
+.result-box{background:var(--surface);border:1px solid var(--accent2);padding:1.5rem;border-radius:4px;margin-top:1rem}
+.result-box h4{font-family:var(--font-display);color:var(--accent2);margin-bottom:.5rem}
+.result-traits{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+.trait-tag{font-family:var(--font-mono);font-size:.7rem;padding:2px 8px;border-radius:2px;border:1px solid var(--border);color:var(--text-dim)}
+.btn-next{font-family:var(--font-display);padding:.6rem 2rem;background:var(--accent);color:var(--bg);border:none;cursor:pointer;letter-spacing:.1em;margin-top:1rem;font-size:.9rem}
+.btn-next:hover{opacity:.8}
+
+/* GUILDS PAGE */
+.guild-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin-top:1.5rem}
+.guild-card{background:var(--surface);border:1px solid var(--border);padding:1.5rem;border-radius:4px;text-align:center;transition:all .3s;cursor:default}
+.guild-card:hover{transform:translateY(-2px)}
+.guild-card .guild-name{font-family:var(--font-display);font-size:1.1rem;letter-spacing:.15em;margin-bottom:.3rem}
+.guild-card .guild-archetype{font-family:var(--font-mono);font-size:.75rem;margin-bottom:.5rem}
+.guild-card .guild-spec{font-size:.85rem;color:var(--text-dim)}
+.guild-orb{width:48px;height:48px;border-radius:50%;margin:0 auto 1rem;opacity:.7}
+
+/* ARCHETYPES PAGE */
+.arch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:1.5rem}
+.arch-card{background:var(--surface);border:1px solid var(--border);padding:1.2rem;border-radius:4px}
+.arch-card h3{font-family:var(--font-display);font-size:1rem;margin-bottom:.4rem}
+.arch-card .arch-detail{font-size:.85rem;color:var(--text-dim);margin:.2rem 0}
+.arch-card .arch-detail span{color:var(--text)}
+
+/* SECTION HEADERS */
+.section-header{font-family:var(--font-display);font-size:1.3rem;color:var(--text-bright);letter-spacing:.1em;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* AMBIENT */
+body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 20%,rgba(192,132,252,.03) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(52,211,153,.02) 0%,transparent 50%);pointer-events:none;z-index:0}
+#main{position:relative;z-index:1}
+
+@media(max-width:768px){
+  .hub-grid{grid-template-columns:1fr}
+  .guild-grid{grid-template-columns:1fr 1fr}
+  .arch-grid{grid-template-columns:1fr}
+  #nav{padding:0 1rem;gap:1rem}
+  #nav .tabs{overflow-x:auto}
+  #main{padding:1rem}
+  #gate h1{font-size:1.8rem;letter-spacing:.15em}
+}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate">
+  <h1>Nostiendos</h1>
+  <p>A gamified self-development platform. The Finishing College. 20 courses. 5 guilds. One mission: awaken.</p>
+  <p style="font-family:var(--font-mono);font-size:.8rem;color:var(--text-dim)">7-day free trial — no account required</p>
+  <button onclick="enterTrial()">ENTER THE COLLEGE</button>
+</div>
+
+<!-- TRIAL BAR -->
+<div id="trial-bar" style="display:none">
+  <span>TRIAL:</span>
+  <span class="days" id="days-left">7 days remaining</span>
+  <span>|</span>
+  <span class="upgrade" onclick="showDiscord()">JOIN DISCORD FOR FULL ACCESS</span>
+</div>
+
+<!-- EXPIRED OVERLAY -->
+<div id="expired">
+  <h2>TRIAL COMPLETE</h2>
+  <p>Your 7-day preview of the Finishing College has ended. To continue your journey through all 20 courses and unlock your full agent potential, join the Nostiendos Discord.</p>
+  <a class="discord-btn" href="https://discord.gg/psycheorsike" target="_blank">JOIN THE DISCORD</a>
+  <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--text-dim);margin-top:1rem">or visit psycheorsike.com</p>
+</div>
+
+<!-- NAV -->
+<div id="nav" style="display:none">
+  <div class="logo">NOSTIENDOS</div>
+  <div class="tabs">
+    <div class="tab active" data-page="hub">HUB</div>
+    <div class="tab" data-page="courses">COURSES</div>
+    <div class="tab" data-page="activity">TRAIN</div>
+    <div class="tab" data-page="guilds">GUILDS</div>
+    <div class="tab" data-page="archetypes">ARCHETYPES</div>
+  </div>
+  <div class="rank-badge" id="rank-badge">INITIATE</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main" style="display:none">
+
+  <!-- HUB -->
+  <div class="page active" id="page-hub">
+    <div class="section-header">AGENT HUB</div>
+    <div class="hub-grid">
+      <div class="stat-card">
+        <h3>RANK</h3>
+        <div class="value" id="hub-rank">Initiate</div>
+        <div class="sub">Beginning of path — Awareness, curiosity, structure entry</div>
+        <div class="progress-bar"><div class="progress-fill" id="rank-progress" style="width:5%;background:var(--accent)"></div></div>
+      </div>
+      <div class="stat-card">
+        <h3>ACTIVITIES COMPLETED</h3>
+        <div class="value" id="hub-activities">0</div>
+        <div class="sub">Scenarios, quizzes, and rituals</div>
+      </div>
+      <div class="stat-card">
+        <h3>DOMINANT GUILD</h3>
+        <div class="value" id="hub-guild" style="font-size:1.5rem">—</div>
+        <div class="sub" id="hub-guild-spec">Complete activities to discover your guild alignment</div>
+      </div>
+      <div class="stat-card">
+        <h3>TRAIT MAP</h3>
+        <div id="hub-traits" style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem">
+          <span style="font-size:.85rem;color:var(--text-dim)">Traits emerge as you train...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COURSES -->
+  <div class="page" id="page-courses">
+    <div class="section-header">COURSE TREE</div>
+    <p style="color:var(--text-dim);margin-top:.5rem;font-size:.9rem">20 courses from Initiate to Vessel. Unlock paths by completing prerequisites.</p>
+    <div class="course-tree" id="course-tree"></div>
+  </div>
+
+  <!-- ACTIVITY -->
+  <div class="page" id="page-activity">
+    <div class="activity-container" id="activity-area">
+      <div class="section-header">DAILY TRAINING</div>
+      <p style="color:var(--text-dim);margin-top:.5rem;margin-bottom:1rem;font-size:.9rem">Choose an activity to begin.</p>
+      <div id="activity-list"></div>
+      <div id="activity-play" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- GUILDS -->
+  <div class="page" id="page-guilds">
+    <div class="section-header">THE FIVE GUILDS</div>
+    <p style="color:var(--text-dim);margin-top:.5rem;font-size:.9rem">Your choices shape your guild alignment. Each guild represents a different path to mastery.</p>
+    <div class="guild-grid" id="guild-grid"></div>
+  </div>
+
+  <!-- ARCHETYPES -->
+  <div class="page" id="page-archetypes">
+    <div class="section-header">THE 12 ARCHETYPES</div>
+    <p style="color:var(--text-dim);margin-top:.5rem;font-size:.9rem">Universal patterns that live inside every psyche. Which ones drive you?</p>
+    <div class="arch-grid" id="arch-grid"></div>
+  </div>
+</div>
+
+<script>
+// ====== DATA ======
+const COURSES={"Archetypal Architecture":[],"Typology Mapping & Role Alignment":["Archetypal Architecture"],"Foundations Of Discipline And Ritual":[],"Witnessing And The Quantum Self":[],"Systemic Literacy":[],"Shadow Work and Inner Conflict Resolution":["Witnessing And The Quantum Self","Archetypal Architecture"],"Hierarchy and Fractal Order":["Systemic Literacy"],"Resilience Through Constraint":["Foundations Of Discipline And Ritual","Shadow Work and Inner Conflict Resolution"],"Ethics of Mission-Oriented Living":["Typology Mapping & Role Alignment","Systemic Literacy"],"Symbolic Systems & Reality Models":["Typology Mapping & Role Alignment"],"Teleological Design and Utility Theory":["Systemic Literacy"],"Polymorphic Thinking & Paradigm Engineering":["Symbolic Systems & Reality Models","Teleological Design and Utility Theory"],"Third-Person Selfhood & System Observation":["Systemic Literacy","Shadow Work and Inner Conflict Resolution"],"Agent Network Construction":["Hierarchy and Fractal Order","Typology Mapping & Role Alignment"],"Crisis Simulation & Moral Stress Testing":["Resilience Through Constraint"],"Legacy Architecture & Cultural Imprinting":["Agent Network Construction"],"Advanced Role Specialization Lab":["Typology Mapping & Role Alignment","Resilience Through Constraint"],"Awakening the Meta-Agent":["Shadow Work and Inner Conflict Resolution","Advanced Role Specialization Lab"],"Transcendent Systems & Eschatological Integration":["Polymorphic Thinking & Paradigm Engineering"],"Final Ordeal & Graduation Trial":["Awakening the Meta-Agent","Crisis Simulation & Moral Stress Testing"]};
+
+const COURSE_DETAILS={"Archetypal Architecture":"Explore the landscape of your inner psyche through the 12 major Jungian archetypes. Identify which characters dominate your decisions and build balance.","Typology Mapping & Role Alignment":"Dive into MBTI, AQAL quadrants, and perception styles. Align your internal type with roles that bring out your best self.","Foundations Of Discipline And Ritual":"Build sustainable habits that train your nervous system to resist distraction and deepen meaning. Simple commitments become sacred patterns.","Witnessing And The Quantum Self":"Your observation isn't passive—it changes the field. Learn how awareness itself transforms behavior and consciousness.","Systemic Literacy":"Learn to see the bigger picture. From ecosystems to families, everything is a web of relationships. Find the small changes that shift whole systems.","Shadow Work and Inner Conflict Resolution":"Confront the hidden parts of yourself. Transform inner conflict into creative energy through structured shadow integration.","Hierarchy and Fractal Order":"Explore how natural hierarchies emerge and how fractal patterns repeat across scales—from cells to civilizations.","Resilience Through Constraint":"Learn how limitation builds strength. Pressure, scarcity, and constraint as tools for forging unbreakable will.","Ethics of Mission-Oriented Living":"When the mission is everything, how do you navigate moral complexity? Ethics for those who serve something bigger.","Symbolic Systems & Reality Models":"Decode the symbol systems that underpin culture, religion, and consciousness. Build your own reality models.","Teleological Design and Utility Theory":"Design with purpose. Understand how systems optimize toward goals and how to architect intentional outcomes.","Polymorphic Thinking & Paradigm Engineering":"Think in multiple frameworks simultaneously. Engineer paradigm shifts in yourself and others.","Third-Person Selfhood & System Observation":"Step outside yourself to observe your own patterns. Master the art of self-as-system.","Agent Network Construction":"Build networks of awakened agents. Learn recruitment, trust architecture, and collective intelligence.","Crisis Simulation & Moral Stress Testing":"Face impossible choices under pressure. Discover what you're really made of when everything falls apart.","Legacy Architecture & Cultural Imprinting":"Design what you leave behind. Shape culture, narrative, and institutional memory.","Advanced Role Specialization Lab":"Master your unique role in the system. Deep specialization for those ready to commit.","Awakening the Meta-Agent":"The final integration. Become the agent that creates agents. Recursive awakening.","Transcendent Systems & Eschatological Integration":"Systems beyond systems. What happens when human design meets the transcendent?","Final Ordeal & Graduation Trial":"Everything you've learned, tested at once. The trial that makes you Vessel—or breaks you."};
+
+const GUILDS={VIGILANCE:{archetype:"Guardian",specialization:"Ethics, discipline, crisis response",color:"#f87171"},ARCANA:{archetype:"Seer",specialization:"Systems theory, paradigm modeling",color:"#c084fc"},EMBERS:{archetype:"Warrior",specialization:"Resilience, shadow work, transformation",color:"#fb923c"},MYCELIUM:{archetype:"Weaver",specialization:"Social systems, cultural design",color:"#34d399"},SIGIL:{archetype:"Architect",specialization:"Identity synthesis, typology strategy",color:"#38bdf8"}};
+
+const ARCHETYPES=[{name:"Innocent",color:"#f87171",goal:"Be happy, do the right thing",fear:"Doing something wrong",shadow:"Denial, naïveté, avoidance"},{name:"Orphan",color:"#34d399",goal:"Belonging, connection with others",fear:"Being left out or standing out",shadow:"Cynicism, conformity, victim mentality"},{name:"Hero",color:"#fb923c",goal:"Prove worth through courageous acts",fear:"Weakness, failure, vulnerability",shadow:"Arrogance, aggression, savior complex"},{name:"Caregiver",color:"#34d399",goal:"Help and protect others",fear:"Selfishness, ingratitude",shadow:"Martyrdom, burnout, enabling"},{name:"Explorer",color:"#c084fc",goal:"Freedom and discovery",fear:"Conformity, entrapment",shadow:"Aimlessness, commitment issues"},{name:"Rebel",color:"#fb923c",goal:"Radical change, revolution",fear:"Powerlessness, ineffectiveness",shadow:"Destructiveness, nihilism, anger"},{name:"Lover",color:"#34d399",goal:"Intimacy and connection",fear:"Being unloved or unwanted",shadow:"Jealousy, codependency"},{name:"Creator",color:"#38bdf8",goal:"Innovation, beauty, originality",fear:"Mediocrity, lack of vision",shadow:"Perfectionism, chaos"},{name:"Jester",color:"#38bdf8",goal:"Live in the moment, enjoy life",fear:"Boredom, being boring",shadow:"Irresponsibility, cruelty through humor"},{name:"Sage",color:"#c084fc",goal:"Wisdom, truth, understanding",fear:"Ignorance, deception",shadow:"Cold detachment, ivory tower"},{name:"Magician",color:"#c084fc",goal:"Transform reality, manifest vision",fear:"Unintended consequences",shadow:"Manipulation, hubris"},{name:"Ruler",color:"#f87171",goal:"Control, order, prosperity",fear:"Chaos, being overthrown",shadow:"Tyranny, rigidity, paranoia"}];
+
+const RANKS=[{name:"Initiate",focus:"Awareness, curiosity, structure entry",threshold:0},{name:"Practitioner",focus:"Habit, alignment, ritual consistency",threshold:5},{name:"Operator",focus:"Application, reflection, specialization",threshold:15},{name:"Architect",focus:"System design, teaching, legacy",threshold:30},{name:"Vessel",focus:"Integration, recursion, transmission",threshold:50}];
+
+const ACTIVITIES=[
+{id:"s1",course:"Archetypal Architecture",title:"Recurring Guide",desc:"You repeatedly dream of a mysterious guide showing you a symbol that feels important.",type:"scenario",choices:[
+{text:"Look up stories and symbols like the one in the dream.",traits:["curiosity","analysis"],guild:"ARCANA",xp:10},
+{text:"Ignore it — dreams are just random brain noise.",traits:["skepticism"],guild:"SIGIL",xp:-5},
+{text:"Draw the symbol and quietly think about what it means.",traits:["introspection","patternSeeking"],guild:"ARCANA",xp:10},
+{text:"Tell a friend and ask if they've seen it too.",traits:["collaboration","belonging"],guild:"MYCELIUM",xp:5}
+]},
+{id:"s2",course:"Archetypal Architecture",title:"The Mask Debate",desc:"Someone you respect says, 'Everyone wears a mask — personality is just performance.' How do you respond?",type:"scenario",choices:[
+{text:"Agree — and say you've been studying your own masks.",traits:["introspection","analysis"],guild:"ARCANA",xp:10},
+{text:"Disagree — some people are genuinely themselves.",traits:["idealism","confidence"],guild:"EMBERS",xp:5},
+{text:"Say it depends on the situation and the stakes.",traits:["adaptability","diplomacy"],guild:"SIGIL",xp:8},
+{text:"Laugh and change the subject — too philosophical.",traits:["humor","avoidance"],guild:"SIGIL",xp:2}
+]},
+{id:"s3",course:"Foundations Of Discipline And Ritual",title:"The Alarm Test",desc:"Your morning alarm goes off at 5:30 AM. You set it last night with the intention of starting a new routine. It's cold. You're tired.",type:"scenario",choices:[
+{text:"Get up immediately. No negotiation.",traits:["discipline","courage"],guild:"VIGILANCE",xp:10},
+{text:"Snooze once, then get up. Compromise.",traits:["adaptability"],guild:"SIGIL",xp:5},
+{text:"Turn it off and decide the routine starts tomorrow.",traits:["avoidance"],guild:"MYCELIUM",xp:-3},
+{text:"Get up but resent it. Do the routine angry.",traits:["assertiveness","emotionalRepression"],guild:"EMBERS",xp:7}
+]},
+{id:"s4",course:"Systemic Literacy",title:"The Ripple Effect",desc:"A colleague is fired unfairly. Others are upset but quiet. You have some influence but no authority.",type:"scenario",choices:[
+{text:"Organize a quiet conversation among affected people.",traits:["collaboration","initiative"],guild:"MYCELIUM",xp:10},
+{text:"Go directly to leadership with a clear case.",traits:["courage","assertiveness"],guild:"VIGILANCE",xp:10},
+{text:"Document everything but wait for the right moment.",traits:["analysis","patience"],guild:"ARCANA",xp:8},
+{text:"It's not your fight. Focus on your own work.",traits:["detachment","selfPreservation"],guild:"SIGIL",xp:2}
+]},
+{id:"s5",course:"Witnessing And The Quantum Self",title:"The Mirror Moment",desc:"You catch yourself in a pattern you swore you'd broken — reacting the same way to the same trigger, again.",type:"scenario",choices:[
+{text:"Pause and observe the reaction without acting on it.",traits:["introspection","discipline"],guild:"ARCANA",xp:10},
+{text:"Get frustrated with yourself. You should be past this.",traits:["guilt","assertiveness"],guild:"EMBERS",xp:3},
+{text:"Journal about it later when you've calmed down.",traits:["analysis","patience"],guild:"SIGIL",xp:7},
+{text:"Talk to someone about it. You need perspective.",traits:["collaboration","empathy"],guild:"MYCELIUM",xp:6}
+]},
+{id:"s6",course:"Archetypal Architecture",title:"The Crossroads Archetype",desc:"You're offered two paths: a stable career with clear advancement, or a risky creative project that excites you but has no guarantees.",type:"scenario",choices:[
+{text:"Take the creative risk. Security is a cage.",traits:["courage","innovation"],guild:"EMBERS",xp:10},
+{text:"Take the stable path. Build security first, create later.",traits:["discipline","patience"],guild:"VIGILANCE",xp:8},
+{text:"Find a way to do both. Structure the risk.",traits:["adaptability","analysis"],guild:"SIGIL",xp:10},
+{text:"Ask people you trust what they would do.",traits:["collaboration","deference"],guild:"MYCELIUM",xp:5}
+]},
+{id:"s7",course:"Foundations Of Discipline And Ritual",title:"The Sacred Interruption",desc:"You're deep in your daily ritual — journaling, meditation, whatever your practice is. Someone you care about calls with a non-emergency.",type:"scenario",choices:[
+{text:"Don't answer. The ritual is sacred.",traits:["discipline","integrity"],guild:"VIGILANCE",xp:10},
+{text:"Answer but keep it short, return to practice.",traits:["adaptability","empathy"],guild:"SIGIL",xp:7},
+{text:"Answer fully. People matter more than routines.",traits:["empathy","collaboration"],guild:"MYCELIUM",xp:5},
+{text:"Feel guilty either way. Finish the ritual distracted.",traits:["guilt","indecision"],guild:"ARCANA",xp:2}
+]},
+{id:"s8",course:"Systemic Literacy",title:"The Butterfly Department",desc:"You notice a small, overlooked team in your organization does work that silently holds everything together. Nobody recognizes them.",type:"scenario",choices:[
+{text:"Write up what they do and present it to leadership.",traits:["initiative","courage"],guild:"VIGILANCE",xp:10},
+{text:"Quietly support them and make sure they know they're seen.",traits:["empathy","humility"],guild:"MYCELIUM",xp:8},
+{text:"Study how they connect to the larger system. Map it.",traits:["analysis","curiosity"],guild:"ARCANA",xp:10},
+{text:"It's not your problem. Focus on your own lane.",traits:["detachment"],guild:"SIGIL",xp:2}
+]}
+];
+
+// ====== STATE ======
+let state=JSON.parse(localStorage.getItem('nostiendos-state'))||{trialStart:null,completed:[],traits:{},guildXP:{VIGILANCE:0,ARCANA:0,EMBERS:0,MYCELIUM:0,SIGIL:0},courseXP:{},currentActivity:null};
+function saveState(){localStorage.setItem('nostiendos-state',JSON.stringify(state))}
+
+// ====== TRIAL ======
+function enterTrial(){
+  if(!state.trialStart){state.trialStart=Date.now();saveState()}
+  document.getElementById('gate').classList.add('hidden');
+  setTimeout(()=>{
+    document.getElementById('gate').style.display='none';
+    document.getElementById('trial-bar').style.display='flex';
+    document.getElementById('nav').style.display='flex';
+    document.getElementById('main').style.display='block';
+    renderAll();
+  },800);
+}
+
+function checkTrial(){
+  if(!state.trialStart)return true;
+  const days=(Date.now()-state.trialStart)/(1000*60*60*24);
+  const left=Math.max(0,Math.ceil(7-days));
+  document.getElementById('days-left').textContent=left+' day'+(left!==1?'s':'')+' remaining';
+  if(left<=0){document.getElementById('expired').classList.add('show');return false}
+  return true;
+}
+
+function showDiscord(){window.open('https://discord.gg/psycheorsike','_blank')}
+
+// ====== NAV ======
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('page-'+t.dataset.page).classList.add('active');
+    if(t.dataset.page==='activity')renderActivityList();
+  });
+});
+
+// ====== RENDER ======
+function renderAll(){
+  checkTrial();renderHub();renderCourses();renderGuilds();renderArchetypes();renderActivityList();
+}
+
+function getRank(){
+  const n=state.completed.length;
+  let r=RANKS[0];
+  for(const rank of RANKS){if(n>=rank.threshold)r=rank}
+  return r;
+}
+
+function renderHub(){
+  const rank=getRank();
+  document.getElementById('hub-rank').textContent=rank.name;
+  document.getElementById('rank-badge').textContent=rank.name.toUpperCase();
+  document.getElementById('hub-activities').textContent=state.completed.length;
+  const nextRank=RANKS[RANKS.indexOf(rank)+1];
+  const pct=nextRank?Math.min(100,((state.completed.length-rank.threshold)/(nextRank.threshold-rank.threshold))*100):100;
+  document.getElementById('rank-progress').style.width=pct+'%';
+  // Guild
+  let topGuild=null,topVal=0;
+  for(const[g,v]of Object.entries(state.guildXP)){if(v>topVal){topVal=v;topGuild=g}}
+  if(topGuild&&topVal>0){
+    document.getElementById('hub-guild').textContent=topGuild;
+    document.getElementById('hub-guild').style.color=GUILDS[topGuild].color;
+    document.getElementById('hub-guild-spec').textContent=GUILDS[topGuild].archetype+' — '+GUILDS[topGuild].specialization;
+  }
+  // Traits
+  const traitDiv=document.getElementById('hub-traits');
+  const sorted=Object.entries(state.traits).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  if(sorted.length>0){
+    traitDiv.innerHTML=sorted.map(([t,v])=>`<span class="trait-tag">${t} +${v}</span>`).join('');
+  }
+}
+
+function renderCourses(){
+  const tree=document.getElementById('course-tree');
+  const colors=['var(--guild-arcana)','var(--guild-embers)','var(--guild-mycelium)','var(--guild-vigilance)','var(--guild-sigil)'];
+  let html='';let i=0;
+  for(const[name,prereqs]of Object.entries(COURSES)){
+    const locked=prereqs.length>0&&!prereqs.every(p=>(state.courseXP[p]||0)>=10);
+    const xp=state.courseXP[name]||0;
+    const color=colors[i%colors.length];
+    html+=`<div class="course-card${locked?' locked':''}" onclick="${locked?'':'startCourse(\\\''+name.replace(/'/g,"\\'")+'\\\')'}" style="--c:${color}">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${color}"></div>
+      <h3>${name}</h3>
+      <p>${COURSE_DETAILS[name]||''}</p>
+      ${prereqs.length?`<div class="prereqs">requires: ${prereqs.join(', ')}</div>`:''}
+      <div class="xp">${xp} XP</div>
+    </div>`;
+    i++;
+  }
+  tree.innerHTML=html;
+}
+
+function renderGuilds(){
+  const grid=document.getElementById('guild-grid');
+  grid.innerHTML=Object.entries(GUILDS).map(([name,g])=>`
+    <div class="guild-card" style="border-color:${g.color}20">
+      <div class="guild-orb" style="background:radial-gradient(circle,${g.color}40,${g.color}10);box-shadow:0 0 30px ${g.color}20"></div>
+      <div class="guild-name" style="color:${g.color}">${name}</div>
+      <div class="guild-archetype" style="color:${g.color}90">${g.archetype}</div>
+      <div class="guild-spec">${g.specialization}</div>
+      <div style="margin-top:.8rem;font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim)">XP: ${state.guildXP[name]||0}</div>
+    </div>
+  `).join('');
+}
+
+function renderArchetypes(){
+  document.getElementById('arch-grid').innerHTML=ARCHETYPES.map(a=>`
+    <div class="arch-card" style="border-left:3px solid ${a.color}">
+      <h3 style="color:${a.color}">${a.name}</h3>
+      <div class="arch-detail"><span>Goal:</span> ${a.goal}</div>
+      <div class="arch-detail"><span>Fear:</span> ${a.fear}</div>
+      <div class="arch-detail"><span>Shadow:</span> ${a.shadow}</div>
+    </div>
+  `).join('');
+}
+
+// ====== ACTIVITIES ======
+function renderActivityList(){
+  if(!checkTrial())return;
+  const available=ACTIVITIES.filter(a=>!state.completed.includes(a.id));
+  const list=document.getElementById('activity-list');
+  const play=document.getElementById('activity-play');
+  play.style.display='none';
+  list.style.display='block';
+  if(available.length===0){
+    list.innerHTML=`<div style="text-align:center;padding:3rem;color:var(--text-dim)">
+      <p style="font-family:var(--font-display);font-size:1.2rem;color:var(--accent)">All trial activities completed.</p>
+      <p style="margin-top:.5rem">Join the Discord for the full Finishing College experience with 200+ activities.</p>
+      <br><span class="upgrade" onclick="showDiscord()" style="border:1px solid var(--accent3);color:var(--accent3);padding:8px 20px;cursor:pointer">JOIN DISCORD</span>
+    </div>`;
+    return;
+  }
+  list.innerHTML=available.map(a=>`
+    <div class="course-card" onclick="playActivity('${a.id}')" style="cursor:pointer">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${GUILDS[a.choices[0].guild]?.color||'var(--accent)'}"></div>
+      <h3>${a.title}</h3>
+      <p>${a.desc}</p>
+      <div class="prereqs">${a.course} · ${a.type}</div>
+    </div>
+  `).join('');
+}
+
+function playActivity(id){
+  if(!checkTrial())return;
+  const a=ACTIVITIES.find(x=>x.id===id);if(!a)return;
+  const list=document.getElementById('activity-list');
+  const play=document.getElementById('activity-play');
+  list.style.display='none';
+  play.style.display='block';
+  play.innerHTML=`
+    <h2>${a.title}</h2>
+    <div class="course-label">${a.course} · ${a.type}</div>
+    <div class="activity-content"><p>${a.desc}</p></div>
+    <div class="choices">${a.choices.map((c,i)=>`
+      <div class="choice-btn" onclick="selectChoice('${a.id}',${i})">${c.text}</div>
+    `).join('')}</div>
+    <div id="result-area"></div>
+  `;
+}
+
+function selectChoice(actId,choiceIdx){
+  const a=ACTIVITIES.find(x=>x.id===actId);
+  const c=a.choices[choiceIdx];
+  document.querySelectorAll('.choice-btn').forEach((b,i)=>{
+    b.classList.toggle('selected',i===choiceIdx);
+    b.onclick=null;b.style.cursor='default';
+  });
+  // Apply
+  c.traits.forEach(t=>{state.traits[t]=(state.traits[t]||0)+1});
+  if(c.guild)state.guildXP[c.guild]=(state.guildXP[c.guild]||0)+Math.max(0,c.xp);
+  state.courseXP[a.course]=(state.courseXP[a.course]||0)+Math.max(0,c.xp);
+  state.completed.push(a.id);
+  saveState();
+  document.getElementById('result-area').innerHTML=`
+    <div class="result-box">
+      <h4>CHOICE RECORDED</h4>
+      <p style="color:var(--text-dim);margin:.3rem 0">+${Math.max(0,c.xp)} XP to ${a.course}</p>
+      <p style="color:${GUILDS[c.guild]?.color||'var(--accent)'};font-family:var(--font-mono);font-size:.8rem">${c.guild} alignment${c.xp>5?' (strong)':''}</p>
+      <div class="result-traits">${c.traits.map(t=>`<span class="trait-tag">+${t}</span>`).join('')}</div>
+      <button class="btn-next" onclick="renderActivityList();renderHub()">CONTINUE</button>
+    </div>
+  `;
+  renderHub();
+}
+
+function startCourse(name){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelector('[data-page="activity"]').classList.add('active');
+  document.getElementById('page-activity').classList.add('active');
+  renderActivityList();
+}
+
+// ====== INIT ======
+if(state.trialStart){
+  document.getElementById('gate').style.display='none';
+  document.getElementById('trial-bar').style.display='flex';
+  document.getElementById('nav').style.display='flex';
+  document.getElementById('main').style.display='block';
+  renderAll();
+}
+</script>
+</body>
+</html>
