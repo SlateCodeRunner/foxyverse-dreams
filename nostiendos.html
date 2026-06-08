@@ -145,6 +145,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </style>
 </head>
 <body>
+<iframe id="nost-music" allow="autoplay; encrypted-media" src="about:blank" style="position:fixed;bottom:0;right:0;width:200px;height:120px;opacity:0.001;pointer-events:none;z-index:-1;border:none"></iframe>
 
 <div id="gate">
   <div class="gate-sigil">🦊</div>
@@ -153,6 +154,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="fada-welcome" id="welcome-name" style="display:none"></div>
   <div style="color:var(--dim);font-family:var(--font-m);font-size:.75rem;margin-top:.5rem">⧫ 7-day trial · no account needed · your progress saves locally ⧫</div>
   <button onclick="enter()">BEGIN YOUR TRIAL</button>
+  <div style="color:var(--dim);font-family:var(--font-m);font-size:.65rem;margin-top:.3rem;cursor:pointer" onclick="startMusic();musicOn=true">tap here if music doesn't autoplay</div>
 </div>
 
 <div id="topbar">
@@ -331,6 +333,7 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
 // ENTER
 function enter(){
   if(!S.ts){S.ts=Date.now();save()}
+  try{startMusic();musicOn=true;var mt=document.getElementById('music-tog');if(mt)mt.style.color='var(--purple)'}catch(e){console.log('music:',e)}
   const g=document.getElementById('gate');g.classList.add('gone');
   setTimeout(()=>{g.style.display='none';
     document.getElementById('topbar').style.display='flex';
@@ -538,12 +541,6 @@ function stopMusic(){
 
 // Music toggle in topbar
 let musicOn=false;
-const origEnter=enter;
-enter=function(){
-  origEnter();
-  startMusic();musicOn=true;
-  const mt=document.getElementById('music-tog');if(mt)mt.style.color='var(--purple)';
-};
 
 // INIT
 if(S.ts){
@@ -554,6 +551,5 @@ if(S.ts){
   renderAll();
 }
 </script>
-<iframe id="nost-music" allow="autoplay" src="about:blank" style="position:fixed;bottom:0;right:0;width:200px;height:120px;opacity:0.001;pointer-events:none;z-index:-1;border:none"></iframe>
 </body>
 </html>
