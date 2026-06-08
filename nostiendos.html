@@ -14,6 +14,7 @@
 --purple:#c084fc;--green:#34d399;--orange:#fb923c;--red:#f87171;--blue:#38bdf8;--gold:#fbbf24;--pink:#f472b6;
 --font-d:'Cinzel',serif;--font-b:'Cormorant Garamond',serif;--font-m:'Fira Code',monospace;
 }
+html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:17px;line-height:1.6;overflow-x:hidden}
 ::selection{background:var(--purple);color:var(--bg)}
 
@@ -58,7 +59,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 .tab.on{color:var(--purple);border-bottom-color:var(--purple)}
 
 /* MAIN */
-#app{margin-top:94px;padding:1.5rem;max-width:960px;margin-left:auto;margin-right:auto;display:none}
+#app{margin-top:94px;padding:1.5rem;max-width:680px;margin-left:auto;margin-right:auto;display:none}
 .pg{display:none}.pg.on{display:block;animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
@@ -67,7 +68,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 .sdesc{color:var(--dim);font-size:.95rem;margin-bottom:1.5rem}
 
 /* CARDS */
-.card{background:var(--surface);border:1px solid var(--border);padding:1.2rem;border-radius:6px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.card{background:var(--surface);border:1px solid var(--border);padding:1.2rem;border-radius:6px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden;max-width:680px}
 .card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
 .card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
 .card h3{font-family:var(--font-d);font-size:.95rem;color:var(--bright)}
@@ -75,7 +76,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 .card .meta{font-family:var(--font-m);font-size:.65rem;color:var(--dim);margin-top:.4rem}
 
 /* HUB STATS */
-.hub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.hub-grid{display:grid;grid-template-columns:1fr;gap:.8rem}
 .scard{background:var(--surface);border:1px solid var(--border);padding:1.3rem;border-radius:6px}
 .scard label{font-family:var(--font-d);font-size:.75rem;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
 .scard .val{font-family:var(--font-d);font-size:1.8rem;color:var(--bright);margin-top:.3rem}
@@ -84,7 +85,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 .bar-fill{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
 
 /* GUILD CARDS */
-.guilds{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem}
+.guilds{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem}
 .gcard{background:var(--surface);border:1px solid var(--border);padding:1.3rem;border-radius:6px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
 .gcard:hover{transform:translateY(-3px)}
 .gcard .gorb{width:50px;height:50px;border-radius:50%;margin:0 auto .8rem;position:relative}
@@ -116,7 +117,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:
 .nbtn:hover{box-shadow:0 0 20px rgba(192,132,252,.3);transform:translateY(-1px)}
 
 /* ARCH GRID */
-.archs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem}
+.archs{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.8rem}
 .acard{background:var(--surface);border:1px solid var(--border);padding:1rem;border-radius:6px;border-left:3px solid;transition:all .3s}
 .acard:hover{transform:translateX(3px)}
 .acard h3{font-family:var(--font-d);font-size:.9rem;margin-bottom:.3rem}
@@ -437,10 +438,12 @@ function renderTrain(){
 
 function play(id){
   const a=ACT.find(x=>x.id===id);if(!a)return;
+  window.scrollTo({top:0,behavior:'smooth'});
   let h=`<div class="act-title">${a.t}</div><div class="act-course">${a.co} · ${a.type}</div>
     <div class="act-body">${a.d}</div><div class="choices" id="choices">`;
   a.ch.forEach((c,i)=>{h+=`<div class="ch" id="ch${i}" onclick="pick('${a.id}',${i})">${c.x}</div>`;});
   h+='</div><div id="res"></div>';
+  setTimeout(()=>document.querySelector('.act-body')?.scrollIntoView({behavior:'smooth',block:'start'}),200);
   document.getElementById('pg-train').innerHTML=h;
 }
 
@@ -460,13 +463,15 @@ function pick(id,ci){
   spawnXP(el,xp,G[c.g]?.c);flash(G[c.g]?.c+'30');
   setTimeout(()=>checkAchievements(),600);
   renderTopbar();
-  document.getElementById('res').innerHTML=`<div class="result">
+  const resEl=document.getElementById('res');
+  resEl.innerHTML=`<div class="result">
     <h4>⚡ CHOICE RECORDED</h4>
     <div class="rxp" style="color:var(--gold)">+${xp} XP → ${a.co}</div>
     <div class="rguild" style="color:${G[c.g]?.c}">${c.g} alignment${xp>=12?' (strong)':''}</div>
     <div class="tags">${c.tr.map(t=>`<span class="tag" style="border-color:var(--green);color:var(--green)">+${t}</span>`).join('')}</div>
     <button class="nbtn" onclick="renderTrain();renderHub();renderTopbar()">CONTINUE →</button>
   </div>`;
+  setTimeout(()=>resEl.scrollIntoView({behavior:'smooth',block:'center'}),300);
 }
 
 function renderProfile(){
