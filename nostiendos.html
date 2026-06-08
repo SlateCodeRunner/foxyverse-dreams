@@ -158,6 +158,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="logo">NOSTIENDOS</div>
   <div class="xp-display">⚡ <span id="total-xp">0</span> XP</div>
   <div class="streak-display">🔥 <span id="streak">0</span></div>
+  <div id="music-tog" onclick="if(musicOn){stopMusic();musicOn=false;this.style.color='var(--dim)'}else{startMusic();musicOn=true;this.style.color='var(--purple)'}" style="cursor:pointer;font-size:1rem;color:var(--dim);transition:color .2s" title="Toggle music">♫</div>
   <div class="rank-pill" id="rank-pill">INITIATE</div>
 </div>
 
@@ -519,37 +520,21 @@ if(agentName){
   el.textContent='Welcome, '+agentName.charAt(0).toUpperCase()+agentName.slice(1)+'.';
 }
 
-// MUSIC
+// MUSIC — matching warroom approach (200x120 iframe, opacity 0.001)
 function startMusic(){
-  if(document.getElementById('nost-music'))return;
-  const iframe=document.createElement('iframe');
-  iframe.id='nost-music';
-  iframe.style.cssText='position:fixed;bottom:-200px;left:0;width:1px;height:1px;opacity:0;pointer-events:none';
-  iframe.allow='autoplay';
-  iframe.src='https://www.youtube.com/embed/HhocbmU6tB8?autoplay=1&loop=1&playlist=HhocbmU6tB8&controls=0';
-  document.body.appendChild(iframe);
+  document.getElementById('nost-music').src='https://www.youtube.com/embed/HhocbmU6tB8?autoplay=1&loop=1&playlist=HhocbmU6tB8&controls=0&showinfo=0&modestbranding=1';
+}
+function stopMusic(){
+  document.getElementById('nost-music').src='about:blank';
 }
 
-// Add music toggle to topbar
-const mtog=document.createElement('div');
-mtog.id='music-tog';
-mtog.innerHTML='♫';
-mtog.style.cssText='cursor:pointer;font-size:1rem;color:var(--dim);transition:color .2s';
-mtog.title='Toggle music';
+// Music toggle in topbar
 let musicOn=false;
-mtog.addEventListener('click',()=>{
-  const fr=document.getElementById('nost-music');
-  if(!fr){startMusic();musicOn=true;mtog.style.color='var(--purple)'}
-  else{fr.remove();musicOn=false;mtog.style.color='var(--dim)'}
-});
-document.getElementById('topbar')?.appendChild(mtog);
-
-// Override enter to start music
 const origEnter=enter;
 enter=function(){
-  startMusic();musicOn=true;
-  if(document.getElementById('music-tog'))document.getElementById('music-tog').style.color='var(--purple)';
   origEnter();
+  startMusic();musicOn=true;
+  const mt=document.getElementById('music-tog');if(mt)mt.style.color='var(--purple)';
 };
 
 // INIT
@@ -561,5 +546,6 @@ if(S.ts){
   renderAll();
 }
 </script>
+<iframe id="nost-music" allow="autoplay" src="about:blank" style="position:fixed;bottom:0;right:0;width:200px;height:120px;opacity:0.001;pointer-events:none;z-index:-1;border:none"></iframe>
 </body>
 </html>
