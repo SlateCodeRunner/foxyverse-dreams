@@ -284,6 +284,7 @@ const ACT=[
 
 // STATE
 let S=JSON.parse(localStorage.getItem('nost-s'))||{ts:null,done:[],traits:{},gxp:{VIGILANCE:0,ARCANA:0,EMBERS:0,MYCELIUM:0,SIGIL:0},cxp:{},totalXP:0,streak:0,lastDay:null,achievements:[]};
+const TE={curiosity:'🔍',analysis:'🧠',introspection:'🪞',emotionalAwareness:'💖',patternSeeking:'🔮',discipline:'🥋',courage:'🛡️',integrity:'⚖️',patience:'🕰️',duty:'📜',initiative:'🚀',innovation:'💡',adaptability:'🌊',confidence:'🦁',collaboration:'🤝',empathy:'🫶',humility:'🧎',deference:'🎓',assertiveness:'📣',idealism:'🌈',detachment:'🪷',diplomacy:'🕊️',skepticism:'🤨',humor:'😏',avoidance:'🫥',guilt:'🥀',selfPreservation:'🛟',intuition:'✨',fear:'😨',inclusivity:'🌐',belonging:'🫂',dependability:'📦',emotionalRepression:'😶'};
 function save(){localStorage.setItem('nost-s',JSON.stringify(S))}
 
 // EFFECTS
@@ -385,7 +386,7 @@ function renderHub(){
       <div class="scard"><label>DOMINANT GUILD</label><div class="val" style="color:${tg?G[tg].c:'var(--dim)'};font-size:1.4rem">${tg||'—'}</div>
         <div class="note">${tg?G[tg].a+' — '+G[tg].s:'Complete activities to discover alignment'}</div></div>
       <div class="scard"><label>EMERGING TRAITS</label>
-        <div style="margin-top:.5rem">${topTraits.length?topTraits.map(([t,v])=>`<span class="tag" style="margin:2px">${t} +${v}</span>`).join(''):'<span style="color:var(--dim);font-size:.85rem">Traits emerge as you train...</span>'}</div>
+        <div style="margin-top:.5rem">${topTraits.length?topTraits.map(([t,v])=>`<span class="tag" style="margin:2px">${TE[t]||'⬡'} ${t} +${v}</span>`).join(''):'<span style="color:var(--dim);font-size:.85rem">Traits emerge as you train...</span>'}</div>
       </div>
     </div>`;
 }
@@ -437,10 +438,10 @@ function renderTrain(){
   } else {
     h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">';
     avail.forEach(a=>{
-      const gc=G[a.ch[0].g]?.c||'var(--purple)';
+      const gc=a.ch.length?G[a.ch[0].g]?.c||'var(--purple)':a.type==='ritual'?'#34d399':a.type==='sorting'?'#c084fc':a.type==='focus'?'#38bdf8':a.type==='journal'?'#fb923c':a.type==='meditation'?'#38bdf8':'#c084fc';
       h+=`<div class="card" style="margin-bottom:0" onclick="play('${a.id}')">
         <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${gc}"></div>
-        <h3>${a.t}</h3><p>${a.d.slice(0,100)}...</p>
+        <h3>${a.type==='ritual'?'🫁 ':a.type==='sorting'?'⚔️ ':a.type==='focus'?'🎯 ':a.type==='journal'?'🪞 ':a.type==='meditation'?'🧘 ':'⚡ '}${a.t}</h3><p>${a.d.slice(0,100)}...</p>
         <div class="meta">${a.co} · <span style="color:${a.type==='scenario'?'var(--dim)':a.type==='ritual'?'var(--green)':a.type==='sorting'?'var(--purple)':a.type==='focus'?'var(--blue)':a.type==='journal'?'var(--orange)':a.type==='meditation'?'var(--blue)':'var(--dim)'}">${a.type}</span></div></div>`;
     });
     h+='</div>';
@@ -486,7 +487,7 @@ function pick(id,ci){
     <h4>⚡ CHOICE RECORDED</h4>
     <div class="rxp" style="color:var(--gold)">+${xp} XP → ${a.co}</div>
     <div class="rguild" style="color:${G[c.g]?.c}">${c.g} alignment${xp>=12?' (strong)':''}</div>
-    <div class="tags">${c.tr.map(t=>`<span class="tag" style="border-color:var(--green);color:var(--green)">+${t}</span>`).join('')}</div>
+    <div class="tags">${c.tr.map(t=>`<span class="tag" style="border-color:var(--green);color:var(--green)">${TE[t]||'⬡'} +${t}</span>`).join('')}</div>
     <button class="nbtn" onclick="renderTrain();renderHub();renderTopbar()">CONTINUE →</button>
   </div>`;
   setTimeout(()=>resEl.scrollIntoView({behavior:'smooth',block:'center'}),300);
@@ -538,7 +539,8 @@ function renderProfile(){
   h+=`<div class="profile-section"><h3>TRAIT SPECTRUM</h3>`;
   if(topTraits.length){topTraits.slice(0,14).forEach(([t,v])=>{const p=Math.round((v/maxT)*100);const g=tg[t]||'ARCANA';
     h+=`<div style="display:flex;align-items:center;gap:.4rem;margin:.3rem 0">
-      <div style="width:110px;font-family:var(--font-m);font-size:.65rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t}</div>
+      <div style="width:18px;text-align:center;font-size:.85rem">${TE[t]||'⬡'}</div>
+      <div style="width:100px;font-family:var(--font-m);font-size:.65rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t}</div>
       <div style="flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden"><div style="height:100%;width:${p}%;background:${gc[g]};border-radius:4px"></div></div>
       <div style="width:24px;font-family:var(--font-m);font-size:.6rem;color:${gc[g]};text-align:right">+${v}</div></div>`;
   });if(topTraits.length>14)h+=`<div style="font-family:var(--font-m);font-size:.6rem;color:var(--dim);margin-top:.3rem">+${topTraits.length-14} more...</div>`;
