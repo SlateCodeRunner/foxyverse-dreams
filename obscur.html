@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>obscur — the dreamworld</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F98A;</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#06060a;color:#b0a8c0;font-family:'Crimson Text',serif}
+
+.hero{position:relative;width:100%;height:60vh;min-height:360px;overflow:hidden}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:center 45%;filter:brightness(0.45) saturate(0.85)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,10,0.4) 0%,rgba(6,6,10,0.1) 40%,rgba(6,6,10,0.85) 90%,rgba(6,6,10,1) 100%)}
+.hero-content{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);text-align:center;z-index:2}
+.hero-title{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(32px,6vw,56px);letter-spacing:clamp(8px,2vw,20px);text-transform:uppercase;color:rgba(180,150,220,0.5)}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(13px,1.8vw,18px);color:rgba(160,130,200,0.2);letter-spacing:3px;margin-top:6px}
+
+.back{position:fixed;top:20px;left:20px;z-index:100;font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:rgba(160,130,200,0.15);text-decoration:none;text-transform:uppercase;transition:all 0.3s}
+.back:hover{color:rgba(160,130,200,0.5);letter-spacing:4px}
+
+.cards{max-width:1100px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+
+.card{position:relative;background:rgba(12,10,20,0.6);border:1px solid rgba(140,110,180,0.04);border-radius:3px;overflow:hidden;text-decoration:none;color:inherit;transition:all 0.5s;display:block}
+.card:hover{border-color:rgba(160,130,200,0.12);transform:translateY(-3px);box-shadow:0 8px 30px rgba(100,60,160,0.06)}
+
+.card-img{width:100%;height:220px;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.45) saturate(0.8);transition:all 0.6s}
+.card:hover .card-img img{filter:brightness(0.6) saturate(1);transform:scale(1.03)}
+
+.card-body{padding:20px 22px 24px}
+.card-name{font-family:'Cinzel',serif;font-weight:400;font-size:14px;letter-spacing:3px;text-transform:uppercase;color:rgba(180,150,220,0.35);transition:color 0.4s}
+.card:hover .card-name{color:rgba(180,150,220,0.65)}
+.card-desc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(160,130,200,0.12);margin-top:6px;line-height:1.5;transition:color 0.4s}
+.card:hover .card-desc{color:rgba(160,130,200,0.28)}
+.card-tag{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(140,110,180,0.08);margin-top:10px;transition:color 0.4s}
+.card:hover .card-tag{color:rgba(160,130,200,0.22)}
+
+/* war room gets special red accent */
+.card-war:hover{border-color:rgba(200,80,60,0.12);box-shadow:0 8px 30px rgba(180,40,30,0.05)}
+.card-war .card-name{color:rgba(200,100,80,0.35)}
+.card-war:hover .card-name{color:rgba(200,100,80,0.65)}
+.card-war .card-desc{color:rgba(180,80,60,0.12)}
+.card-war:hover .card-desc{color:rgba(200,100,80,0.28)}
+.card-war .card-tag{color:rgba(180,60,40,0.1)}
+.card-war:hover .card-tag{color:rgba(200,80,60,0.25)}
+
+/* goetia gets deep red */
+.card-goetia:hover{border-color:rgba(160,40,30,0.15);box-shadow:0 8px 30px rgba(140,20,10,0.06)}
+.card-goetia .card-name{color:rgba(180,70,50,0.3)}
+.card-goetia:hover .card-name{color:rgba(200,80,60,0.6)}
+
+.tag-new{color:rgba(120,200,140,0.3)!important;animation:pulse 3s ease-in-out infinite}
+.tag-active{color:rgba(200,80,60,0.3)!important;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:0.6}}
+
+.foot{text-align:center;padding:20px 0 40px}
+.foot-line{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(160,130,200,0.05);letter-spacing:2px}
+.foot-sig{font-family:'Fira Code',monospace;font-size:7px;color:rgba(140,110,180,0.04);letter-spacing:4px;margin-top:4px}
+
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.01) 3px,rgba(0,0,0,0.01) 4px)}
+
+.music-btn{position:fixed;bottom:14px;right:14px;z-index:100;width:28px;height:28px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;opacity:0.15;transition:all 0.3s;color:rgba(255,255,255,0.3)}
+.music-btn:hover{opacity:0.4}
+.music-btn.on{opacity:0.3;border-color:rgba(140,100,180,0.2)}
+
+@media(max-width:600px){
+  .cards{grid-template-columns:1fr;padding:24px 16px 60px}
+  .hero{height:45vh;min-height:280px}
+}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">&larr; return</a>
+<iframe id="ytPlayer" style="display:none" width="0" height="0" allow="autoplay"
+  src="https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1"></iframe>
+<div class="music-btn on" id="musicBtn" onclick="toggleMusic()" title="toggle music">&#x266B;</div>
+
+<div class="hero">
+  <img src="img/hero-obscur.png" alt="The Dreamworld cavern">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-title">Obscur</div>
+    <div class="hero-sub">the dreamworld &middot; depths &middot; shadow</div>
+  </div>
+</div>
+
+<div class="cards">
+  <a href="warroom.html" class="card card-war">
+    <div class="card-img"><img src="img/card-warroom.png" alt="The War Room"></div>
+    <div class="card-body">
+      <div class="card-name">The War Room</div>
+      <div class="card-desc">Strategic operations. Fox-head pins on a bleeding map. Victory requires sacrifice.</div>
+      <div class="card-tag tag-active">active &middot; operations</div>
+    </div>
+  </a>
+
+  <a href="foxydreams.html" class="card">
+    <div class="card-img"><img src="img/card-dreamlands.png" alt="The Dreamlands"></div>
+    <div class="card-body">
+      <div class="card-name">The Dreamlands</div>
+      <div class="card-desc">Floating islands under an impossible moon. 14 dreams. Visions, nightmares, and transmissions from the other side.</div>
+      <div class="card-tag">14 dreams &middot; explore</div>
+    </div>
+  </a>
+
+  <a href="campfire.html" class="card">
+    <div class="card-img"><img src="img/hero-obscur.png" alt="The Campfire" style="object-position:center 60%"></div>
+    <div class="card-body">
+      <div class="card-name">The Campfire</div>
+      <div class="card-desc">Seven names around the fire. The ledger of those who stayed. Rest here &mdash; the embers remember.</div>
+      <div class="card-tag">rest &middot; warmth</div>
+    </div>
+  </a>
+
+  <a href="familiar.html" class="card">
+    <div class="card-img"><img src="img/card-familiar.png" alt="Your Familiar"></div>
+    <div class="card-body">
+      <div class="card-name">Your Familiar</div>
+      <div class="card-desc">A cracked egg in a dark clearing. Something watches from inside. 12 signs. What hatches is yours.</div>
+      <div class="card-tag">hatch &middot; bond</div>
+    </div>
+  </a>
+
+  <a href="diary/" class="card">
+    <div class="card-img"><img src="img/card-diary.png" alt="Vixen's Diary"></div>
+    <div class="card-body">
+      <div class="card-name">Vixen's Diary</div>
+      <div class="card-desc">Noctis Veritas. Whispers beneath the endless. The fox who chose to stay, writing by moonlight.</div>
+      <div class="card-tag">8 entries &middot; read</div>
+    </div>
+  </a>
+
+  <a href="ars-goetia.html" class="card card-goetia">
+    <div class="card-img"><img src="img/card-goetia.png" alt="Ars Goetia"></div>
+    <div class="card-body">
+      <div class="card-name">Ars Goetia</div>
+      <div class="card-desc">72 demons in concentric rings. Channeled. Unrecalled. The brass key lies at the center.</div>
+      <div class="card-tag tag-new">new &middot; summoning</div>
+    </div>
+  </a>
+</div>
+
+<div class="foot">
+  <div class="foot-line">the one who paints it</div>
+  <div class="foot-sig">psycheorsike.com &middot; OBSCUR</div>
+</div>
+
+<script>
+var playing=true;
+window.toggleMusic=function(){var f=document.getElementById('ytPlayer'),b=document.getElementById('musicBtn');if(playing){f.src='';playing=false;b.classList.remove('on')}else{f.src='https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1';playing=true;b.classList.add('on')}};
+</script>
+</body>
+</html>
