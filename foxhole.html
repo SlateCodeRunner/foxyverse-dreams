@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>...</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F98A;</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#060508;color:#b0a8a0;font-family:'Crimson Text',serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.01) 3px,rgba(0,0,0,0.01) 4px)}
+
+.back{position:fixed;top:16px;left:16px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.06);text-decoration:none;letter-spacing:2px;z-index:100;transition:all 0.3s}
+.back:hover{color:rgba(255,255,255,0.2)}
+
+.header{text-align:center;padding:80px 24px 20px;max-width:420px}
+.h-fox{font-size:28px;opacity:0.06;margin-bottom:16px}
+.h-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(14px,2vw,18px);color:rgba(255,255,255,0.08);letter-spacing:2px}
+.h-sub{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.04);letter-spacing:3px;margin-top:8px;text-transform:uppercase}
+
+.rooms{max-width:420px;width:100%;padding:20px 24px 80px;display:flex;flex-direction:column;gap:6px}
+
+.room{display:block;text-decoration:none;color:inherit;padding:20px;border:1px solid rgba(255,255,255,0.015);background:rgba(255,255,255,0.005);transition:all 0.5s;position:relative;overflow:hidden}
+.room:hover{border-color:rgba(255,255,255,0.05);background:rgba(255,255,255,0.01)}
+
+.room-img{position:absolute;inset:0;z-index:0;overflow:hidden}
+.room-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.08) saturate(0.5);transition:all 0.8s}
+.room:hover .room-img img{filter:brightness(0.15) saturate(0.7)}
+
+.room-content{position:relative;z-index:1}
+.room-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:rgba(255,255,255,0.12);transition:color 0.4s}
+.room:hover .room-name{color:rgba(255,255,255,0.3)}
+.room-desc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(255,255,255,0.04);margin-top:4px;line-height:1.6;transition:color 0.4s}
+.room:hover .room-desc{color:rgba(255,255,255,0.1)}
+
+.foot{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-family:'Fira Code',monospace;font-size:6px;color:rgba(255,255,255,0.02);letter-spacing:3px}
+
+/* stars */
+.stars{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.star{position:absolute;border-radius:50%;background:rgba(255,255,255,0.3);animation:tw var(--d) ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:0.02}50%{opacity:var(--b)}}
+</style>
+</head>
+<body>
+<a href="obscur.html" class="back">&larr;</a>
+<div class="stars" id="stars"></div>
+
+<div class="header">
+  <div class="h-fox">&#x1F98A;</div>
+  <div class="h-title">you found the foxhole</div>
+  <div class="h-sub">the quiet rooms &middot; for those who looked</div>
+</div>
+
+<div class="rooms">
+  <a href="campfire.html" class="room">
+    <div class="room-img"><img src="img/card-campfire.png" alt=""></div>
+    <div class="room-content">
+      <div class="room-name">The Campfire</div>
+      <div class="room-desc">seven names around the fire. the ledger of those who stayed. sit down.</div>
+    </div>
+  </a>
+
+  <a href="familiar.html" class="room">
+    <div class="room-img"><img src="img/card-familiar.png" alt=""></div>
+    <div class="room-content">
+      <div class="room-name">Your Familiar</div>
+      <div class="room-desc">a cracked egg in a dark clearing. something watches from inside.</div>
+    </div>
+  </a>
+
+  <a href="diary/" class="room">
+    <div class="room-img"><img src="img/card-diary.png" alt=""></div>
+    <div class="room-content">
+      <div class="room-name">Vixen's Diary</div>
+      <div class="room-desc">noctis veritas. the fox who chose to stay, writing by moonlight.</div>
+    </div>
+  </a>
+</div>
+
+<div class="foot">psycheorsike.com/foxhole</div>
+
+<script>
+var s=document.getElementById('stars');
+for(var i=0;i<30;i++){var d=document.createElement('div');d.className='star';d.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:2px;height:2px;--d:'+(4+Math.random()*8)+'s;--b:'+(0.04+Math.random()*0.08)+';animation-delay:'+Math.random()*6+'s';s.appendChild(d)}
+</script>
+</body>
+</html>
