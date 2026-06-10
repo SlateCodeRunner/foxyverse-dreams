@@ -6,94 +6,96 @@
 <title>psyche or sike</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F98A;</text></svg>">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;min-height:100vh;overflow-x:hidden}
-body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;cursor:default}
+html,body{width:100%;height:100%;overflow-x:hidden}
+body{background:#0a0a0f;color:#c0b8a8;font-family:'Crimson Text',serif;cursor:default}
 
 /* ======== GATE ======== */
-.gate{position:fixed;inset:0;z-index:99999;background:#16161d;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 1.5s ease,visibility 1.5s}
+.gate{position:fixed;inset:0;z-index:99999;background:#0a0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 1.8s ease,visibility 1.8s}
 .gate.gone{opacity:0;visibility:hidden;pointer-events:none}
-.gate-fox{font-size:48px;opacity:0.12;margin-bottom:20px;animation:gFloat 5s ease-in-out infinite}
-@keyframes gFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.gate-text{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(13px,2.5vw,17px);letter-spacing:10px;text-transform:uppercase;color:rgba(196,161,100,0.24);transition:all 0.5s}
-.gate:hover .gate-text{color:rgba(206,176,120,0.6);letter-spacing:12px}
-.gate-sub{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.09);letter-spacing:5px;margin-top:14px;text-transform:uppercase}
-
-/* ======== STARS ======== */
-.stars{position:fixed;inset:0;z-index:0;overflow:hidden}
-.star{position:absolute;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite}
-@keyframes twinkle{0%,100%{opacity:0.08}50%{opacity:var(--b,0.5)}}
+.gate-fox{font-size:42px;opacity:0.1;margin-bottom:24px;animation:gFloat 6s ease-in-out infinite}
+@keyframes gFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.gate-title{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(11px,2vw,15px);letter-spacing:12px;text-transform:uppercase;color:rgba(196,161,100,0.18);transition:all 0.6s}
+.gate:hover .gate-title{color:rgba(196,161,100,0.4);letter-spacing:14px}
+.gate-sub{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.07);letter-spacing:5px;margin-top:16px;text-transform:uppercase}
 
 /* ======== MUSIC ======== */
-.music-btn{position:fixed;bottom:14px;left:14px;z-index:9997;width:30px;height:30px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.075);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;opacity:0.2;transition:all 0.3s;color:rgba(255,255,255,0.3)}
-.music-btn:hover{opacity:0.6}
-.music-btn.on{opacity:0.4;border-color:rgba(196,122,42,0.3)}
-@media(max-width:600px){.music-btn{bottom:50px}}
+.music-btn{position:fixed;bottom:14px;left:14px;z-index:9997;width:30px;height:30px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;opacity:0.2;transition:all 0.3s;color:rgba(255,255,255,0.3)}
+.music-btn:hover{opacity:0.5}
+.music-btn.on{opacity:0.35;border-color:rgba(196,122,42,0.25)}
 
-/* ======== MAP CONTAINER ======== */
-.map-outer{position:relative;z-index:1;width:100%;max-width:1100px;margin:0 auto;padding:20px}
+/* ======== SPLIT CONTAINER ======== */
+.split-wrap{display:flex;min-height:100vh;position:relative;z-index:1}
+.half{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:60px 30px 80px;overflow:hidden;transition:flex 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
+.half:hover{flex:1.08}
 
-/* ======== TITLE ======== */
-.title-area{text-align:center;padding:20px 0 0}
-.title-area h1{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(20px,4vw,32px);color:rgba(206,176,120,0.65);letter-spacing:8px;cursor:pointer;user-select:none;transition:all 0.6s}
-.title-area h1:hover{color:rgba(196,161,100,0.65);letter-spacing:10px}
-.title-area .sub{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.35);letter-spacing:5px;margin-top:6px;text-transform:uppercase}
+/* CLAIR */
+.clair{background:linear-gradient(175deg,#12100a 0%,#1a150d 30%,#0f0d08 100%)}
+.clair::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(196,161,100,0.04) 0%,transparent 70%);pointer-events:none}
 
-/* ======== SVG MAP ======== */
-.world-map{width:100%;max-width:1000px;margin:10px auto 0;display:block}
-.world-map .region-zone{cursor:pointer;transition:all 0.5s ease}
-.world-map .region-zone:hover .zone-bg{opacity:0.12}
-.world-map .region-zone:hover .zone-glow{opacity:0.25}
-.world-map .region-zone:hover .zone-label{opacity:0.85}
-.world-map .region-zone:hover .zone-desc{opacity:0.4}
-.world-map .region-zone:hover .zone-icon{opacity:0.7;transform-origin:center;animation:iconLift 0.5s ease forwards}
-@keyframes iconLift{to{transform:translateY(-3px) scale(1.05)}}
-.world-map .region-zone .zone-bg{opacity:0.04;transition:opacity 0.5s}
-.world-map .region-zone .zone-glow{opacity:0;transition:opacity 0.8s}
-.world-map .region-zone .zone-label{opacity:0.3;transition:opacity 0.5s}
-.world-map .region-zone .zone-desc{opacity:0.08;transition:opacity 0.5s}
-.world-map .region-zone .zone-icon{opacity:0.25;transition:all 0.5s}
-.world-map .region-zone .zone-tag{opacity:0.15;transition:opacity 0.5s}
-.world-map .region-zone:hover .zone-tag{opacity:0.4}
+/* OBSCUR */
+.obscur{background:linear-gradient(185deg,#0a0a14 0%,#0d0818 40%,#080610 100%)}
+.obscur::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(100,60,160,0.035) 0%,transparent 70%);pointer-events:none}
 
-/* Locked region */
-.world-map .region-zone.locked{cursor:not-allowed;opacity:0.3}
-.world-map .region-zone.locked:hover .zone-bg{opacity:0.04}
-.world-map .region-zone.locked:hover .zone-glow{opacity:0}
-.world-map .region-zone.locked:hover .zone-label{opacity:0.3}
-.world-map .region-zone.locked:hover .zone-icon{opacity:0.25;animation:none}
+/* DIVIDER */
+.divider{position:absolute;left:50%;top:0;bottom:0;width:1px;z-index:10;background:linear-gradient(180deg,transparent 5%,rgba(196,161,100,0.08) 20%,rgba(196,161,100,0.12) 50%,rgba(196,161,100,0.08) 80%,transparent 95%)}
+.divider::after{content:'🦊';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;opacity:0.15;z-index:11;animation:gFloat 6s ease-in-out infinite}
 
-/* Paths */
-.map-path{stroke:rgba(196,161,100,0.03);stroke-width:1;fill:none;stroke-dasharray:4,8}
-.map-path-glow{stroke:rgba(196,161,100,0.01);stroke-width:3;fill:none;filter:blur(2px)}
+/* ======== SIDE TITLES ======== */
+.side-label{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(28px,4vw,42px);letter-spacing:clamp(8px,2vw,18px);text-transform:uppercase;margin-bottom:4px;transition:all 0.5s}
+.clair .side-label{color:rgba(196,161,100,0.25)}
+.clair:hover .side-label{color:rgba(206,176,120,0.45)}
+.obscur .side-label{color:rgba(160,130,200,0.2)}
+.obscur:hover .side-label{color:rgba(180,150,220,0.38)}
 
-/* Map ambient */
-.map-star{fill:rgba(255,255,255,0.15);animation:mStar var(--d,4s) ease-in-out infinite}
-@keyframes mStar{0%,100%{opacity:0.1}50%{opacity:var(--b,0.4)}}
+.side-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(11px,1.4vw,14px);letter-spacing:3px;margin-bottom:40px;transition:all 0.5s}
+.clair .side-sub{color:rgba(196,161,100,0.15)}
+.clair:hover .side-sub{color:rgba(196,161,100,0.3)}
+.obscur .side-sub{color:rgba(160,130,200,0.12)}
+.obscur:hover .side-sub{color:rgba(160,130,200,0.25)}
 
-/* ======== STATS ======== */
-.stats{display:flex;justify-content:center;gap:24px;padding:8px 0 0;flex-wrap:wrap}
-.stat{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase}
-.stat b{color:rgba(196,161,100,0.3);font-weight:400}
+/* ======== LINKS ======== */
+.link-group{display:flex;flex-direction:column;gap:0;width:100%;max-width:320px}
+.link{display:block;text-decoration:none;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.025);position:relative;transition:all 0.4s}
+.link:first-child{border-top:1px solid rgba(255,255,255,0.025)}
+.link:hover{padding-left:8px}
+
+.link-icon{font-size:16px;margin-right:10px;opacity:0.3;transition:opacity 0.4s;vertical-align:middle}
+.link:hover .link-icon{opacity:0.7}
+
+.link-name{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(11px,1.3vw,13px);letter-spacing:3px;text-transform:uppercase;transition:all 0.4s}
+.clair .link-name{color:rgba(196,161,100,0.3)}
+.clair .link:hover .link-name{color:rgba(206,176,120,0.7)}
+.obscur .link-name{color:rgba(160,130,200,0.25)}
+.obscur .link:hover .link-name{color:rgba(180,150,220,0.6)}
+
+.link-desc{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(10px,1.1vw,12px);margin-top:4px;transition:all 0.4s}
+.clair .link-desc{color:rgba(196,161,100,0.1)}
+.clair .link:hover .link-desc{color:rgba(196,161,100,0.3)}
+.obscur .link-desc{color:rgba(140,110,180,0.1)}
+.obscur .link:hover .link-desc{color:rgba(160,130,200,0.28)}
+
+.link-tag{font-family:'Fira Code',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;position:absolute;right:0;top:50%;transform:translateY(-50%);transition:all 0.4s}
+.clair .link-tag{color:rgba(196,161,100,0.08)}
+.clair .link:hover .link-tag{color:rgba(196,161,100,0.25)}
+.obscur .link-tag{color:rgba(140,110,180,0.06)}
+.obscur .link:hover .link-tag{color:rgba(160,130,200,0.2)}
+
+.tag-new{color:rgba(120,200,140,0.3)!important;animation:newPulse 3s ease-in-out infinite}
+@keyframes newPulse{0%,100%{opacity:0.3}50%{opacity:0.6}}
+
+/* ======== PARTICLES ======== */
+.particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.particle{position:absolute;border-radius:50%;animation:particleDrift var(--dur) ease-in-out infinite}
+@keyframes particleDrift{0%{transform:translateY(0) translateX(0);opacity:var(--o)}25%{transform:translateY(calc(var(--dy) * 0.3)) translateX(calc(var(--dx) * 0.5))}50%{transform:translateY(var(--dy)) translateX(var(--dx));opacity:calc(var(--o) * 1.5)}75%{transform:translateY(calc(var(--dy) * 0.7)) translateX(calc(var(--dx) * 0.3))}100%{transform:translateY(0) translateX(0);opacity:var(--o)}}
 
 /* ======== FOOTER ======== */
-.footer{text-align:center;padding:24px 0 60px}
-.footer .line{font-size:12px;color:rgba(255,255,255,0.33);font-style:italic;line-height:2}
-.footer .sig{font-family:'Cinzel',serif;font-size:12px;color:rgba(196,142,62,0.35);margin-top:6px;letter-spacing:2px}
-.footer .mono{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.3);margin-top:12px;letter-spacing:3px;cursor:pointer;transition:color 0.5s}
-.footer .mono:hover{color:rgba(255,255,255,0.33)}
-.invisible{color:transparent;font-size:1px;user-select:text;line-height:0;height:0;overflow:hidden}
+.footer{position:absolute;bottom:0;left:0;right:0;text-align:center;padding:20px 0 16px;z-index:5}
+.footer-line{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(255,255,255,0.06);letter-spacing:2px}
+.footer-sig{font-family:'Fira Code',monospace;font-size:7px;color:rgba(196,161,100,0.06);letter-spacing:4px;margin-top:4px;text-transform:uppercase}
 
-/* Secret */
-.secret{position:relative;text-align:center;opacity:0;pointer-events:none;font-family:'Fira Code',monospace;font-size:9px;color:rgba(196,122,42,0.4);transition:opacity 0.8s;letter-spacing:3px;margin-top:10px}
-.secret.found{opacity:1;pointer-events:auto}
-#secret-counter{position:fixed;bottom:10px;right:10px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.09);z-index:999;transition:color 0.5s}
-
-/* Scanline */
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
-
-/* ======== FLOATING SOCIAL BAR ======== */
+/* ======== SOCIAL BAR ======== */
 .social-float{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:9998;display:flex;flex-direction:column;gap:0}
 .social-float a{display:flex;align-items:center;width:36px;height:36px;overflow:hidden;text-decoration:none;transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);position:relative}
 .social-float a:hover{width:140px}
@@ -101,15 +103,31 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .social-float a .s-icon svg{width:16px;height:16px;fill:currentColor}
 .social-float a .s-label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:1px;white-space:nowrap;padding-right:12px;opacity:0;transition:opacity 0.3s}
 .social-float a:hover .s-label{opacity:1}
-.sf-discord{background:rgba(88,101,242,0.15);color:rgba(88,101,242,0.7)}.sf-discord:hover{background:rgba(88,101,242,0.25);color:rgba(88,101,242,1)}.sf-discord .s-icon{animation:discordPulse 3s ease-in-out infinite}@keyframes discordPulse{0%,100%{background:rgba(88,101,242,0.15)}50%{background:rgba(88,101,242,0.25)}}
-.sf-youtube{background:rgba(255,0,0,0.08);color:rgba(255,60,60,0.5)}.sf-youtube:hover{background:rgba(255,0,0,0.15);color:rgba(255,60,60,0.9)}
-.sf-reddit{background:rgba(255,69,0,0.08);color:rgba(255,100,40,0.5)}.sf-reddit:hover{background:rgba(255,69,0,0.15);color:rgba(255,100,40,0.9)}
-.sf-insta{background:rgba(225,48,108,0.08);color:rgba(225,80,120,0.5)}.sf-insta:hover{background:rgba(225,48,108,0.15);color:rgba(225,80,120,0.9)}
-.sf-tiktok{background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.35)}.sf-tiktok:hover{background:rgba(255,255,255,0.22);color:rgba(255,255,255,0.7)}
-.sf-facebook{background:rgba(24,119,242,0.08);color:rgba(66,133,244,0.5)}.sf-facebook:hover{background:rgba(24,119,242,0.15);color:rgba(66,133,244,0.9)}
-@media(max-width:600px){.social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.18)}.social-float a{width:48px;height:40px}.social-float a:hover{width:48px}.social-float a .s-label{display:none}body{padding-bottom:44px}}
+.sf-discord{background:rgba(88,101,242,0.12);color:rgba(88,101,242,0.6)}.sf-discord:hover{background:rgba(88,101,242,0.2);color:rgba(88,101,242,0.9)}
+.sf-youtube{background:rgba(255,0,0,0.06);color:rgba(255,60,60,0.4)}.sf-youtube:hover{background:rgba(255,0,0,0.12);color:rgba(255,60,60,0.85)}
+.sf-reddit{background:rgba(255,69,0,0.06);color:rgba(255,100,40,0.4)}.sf-reddit:hover{background:rgba(255,69,0,0.12);color:rgba(255,100,40,0.85)}
+.sf-insta{background:rgba(225,48,108,0.06);color:rgba(225,80,120,0.4)}.sf-insta:hover{background:rgba(225,48,108,0.12);color:rgba(225,80,120,0.85)}
+.sf-tiktok{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.25)}.sf-tiktok:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6)}
+.sf-facebook{background:rgba(24,119,242,0.06);color:rgba(66,133,244,0.4)}.sf-facebook:hover{background:rgba(24,119,242,0.12);color:rgba(66,133,244,0.85)}
 
-@media(min-width:900px){body{zoom:1.2}}
+/* ======== SCANLINE ======== */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 4px)}
+
+/* ======== MOBILE ======== */
+@media(max-width:768px){
+  .split-wrap{flex-direction:column}
+  .half{min-height:50vh;padding:50px 24px 60px}
+  .half:hover{flex:1}
+  .divider{left:0;right:0;top:50%;bottom:auto;width:auto;height:1px;background:linear-gradient(90deg,transparent 5%,rgba(196,161,100,0.08) 20%,rgba(196,161,100,0.12) 50%,rgba(196,161,100,0.08) 80%,transparent 95%)}
+  .divider::after{top:50%;left:50%}
+  .social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.05)}
+  .social-float a{width:44px;height:38px}.social-float a:hover{width:44px}.social-float a .s-label{display:none}
+  body{padding-bottom:40px}
+  .music-btn{bottom:50px}
+}
+@media(min-width:1200px){
+  .link-group{max-width:360px}
+}
 </style>
 </head>
 <body>
@@ -117,7 +135,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 <!-- GATE -->
 <div class="gate" id="gate" onclick="enterSite()">
   <div class="gate-fox">&#x1F98A;</div>
-  <div class="gate-text">Enter the FoxyVerse</div>
+  <div class="gate-title">Psyche or Sike</div>
   <div class="gate-sub">click anywhere &middot; sound on</div>
 </div>
 
@@ -125,306 +143,150 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 <div class="social-float">
 <a href="https://discord.gg/psycheorsike" target="_blank" class="sf-discord" title="Discord"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg></span><span class="s-label">discord</span></a>
 <a href="https://youtube.com/@FoxyAlchemyStudio" target="_blank" class="sf-youtube" title="YouTube"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="s-label">youtube</span></a>
-<a href="https://reddit.com/r/PsycheOrSike" target="_blank" class="sf-reddit" title="Reddit"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 01.042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 014.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 01.14-.197.35.35 0 01.238-.042l2.906.617a1.214 1.214 0 011.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 00-.231.094.33.33 0 000 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 00.029-.463.33.33 0 00-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 00-.232-.095z"/></svg></span><span class="s-label">reddit</span></a>
+<a href="https://reddit.com/r/Invernalia" target="_blank" class="sf-reddit" title="Reddit"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 01.042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 014.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 01.14-.197.35.35 0 01.238-.042l2.906.617a1.214 1.214 0 011.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 00-.231.094.33.33 0 000 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 00.029-.463.33.33 0 00-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 00-.232-.095z"/></svg></span><span class="s-label">r/invernalia</span></a>
 <a href="https://instagram.com/slatelampcoderunner" target="_blank" class="sf-insta" title="Instagram"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></span><span class="s-label">instagram</span></a>
 <a href="https://tiktok.com/@foxy_loxy_moxy" target="_blank" class="sf-tiktok" title="TikTok"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span><span class="s-label">tiktok</span></a>
 <a href="https://facebook.com/SlateLamp" target="_blank" class="sf-facebook" title="Facebook"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span><span class="s-label">facebook</span></a>
 </div>
 
-<!-- STARS -->
-<div class="stars" id="stars"></div>
-
 <!-- YOUTUBE AUDIO -->
 <iframe id="ytPlayer" style="display:none" width="0" height="0" allow="autoplay"></iframe>
 <div class="music-btn" id="musicBtn" onclick="toggleMusic()" title="toggle music">&#x266B;</div>
 
-<!-- SECRET COUNTER -->
-<div id="secret-counter"></div>
+<!-- ======== THE SPLIT ======== -->
+<div class="split-wrap" id="splitWrap">
 
-<div class="map-outer">
-
-  <div class="title-area">
-    <h1 id="titleText">Psyche or Sike</h1>
-    <div class="sub">trickster &middot; transformation &middot; shadow &middot; <span class="days-auto">15</span> days</div>
+  <!-- CLAIR -->
+  <div class="half clair">
+    <div class="particles" id="clairParticles"></div>
+    <div class="side-label">Clair</div>
+    <div class="side-sub">the foxyverse &middot; offerings</div>
+    <div class="link-group">
+      <a href="alchemy.html" class="link">
+        <span class="link-icon">&#x2697;&#xFE0F;</span>
+        <span class="link-name">The Alchemy</span>
+        <span class="link-tag">OPEN</span>
+        <span class="link-desc">coach violetta &middot; intuitive transformation</span>
+      </a>
+      <a href="wisegoose.html" class="link">
+        <span class="link-icon">&#x1F9B2;</span>
+        <span class="link-name">Wise Goose Art</span>
+        <span class="link-tag tag-new">NEW</span>
+        <span class="link-desc">original art &middot; generative music &middot; gallery</span>
+      </a>
+      <a href="temple.html" class="link">
+        <span class="link-icon">&#x1F54E;</span>
+        <span class="link-name">The Temple</span>
+        <span class="link-tag">OPEN</span>
+        <span class="link-desc">priestess namaaina &middot; tarot readings</span>
+      </a>
+      <a href="nostiendos.html" class="link">
+        <span class="link-icon">&#x1F393;</span>
+        <span class="link-name">Nostiendos</span>
+        <span class="link-tag">PREVIEW</span>
+        <span class="link-desc">finishing college &middot; 20 courses &middot; 5 guilds</span>
+      </a>
+      <a href="gauntlet2026.html" class="link">
+        <span class="link-icon">&#x2694;&#xFE0F;</span>
+        <span class="link-name">The Gauntlet</span>
+        <span class="link-tag">OPEN</span>
+        <span class="link-desc">training grounds &middot; test your mettle</span>
+      </a>
+    </div>
   </div>
 
-  <!-- ======== THE WORLD MAP (SVG) ======== -->
-  <svg class="world-map" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <filter id="glow"><feGaussianBlur stdDeviation="8" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <filter id="softglow"><feGaussianBlur stdDeviation="15" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <radialGradient id="fogL" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(100,60,160,0.06)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-      <radialGradient id="fogR" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(139,58,42,0.05)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-      <radialGradient id="fogC" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(196,161,100,0.04)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-    </defs>
+  <!-- DIVIDER -->
+  <div class="divider"></div>
 
-    <!-- Ambient fog -->
-    <ellipse cx="180" cy="250" rx="250" ry="200" fill="url(#fogL)"/>
-    <ellipse cx="800" cy="300" rx="220" ry="180" fill="url(#fogR)"/>
-    <ellipse cx="500" cy="400" rx="180" ry="150" fill="url(#fogC)"/>
-
-    <!-- Map stars -->
-    <circle class="map-star" cx="120" cy="80" r="1.5" style="--d:5s;--b:0.5"/><circle class="map-star" cx="340" cy="45" r="1" style="--d:7s;--b:0.3"/>
-    <circle class="map-star" cx="560" cy="65" r="1.2" style="--d:4s;--b:0.4"/><circle class="map-star" cx="780" cy="90" r="1" style="--d:6s;--b:0.35"/>
-    <circle class="map-star" cx="900" cy="55" r="1.5" style="--d:8s;--b:0.45"/><circle class="map-star" cx="50" cy="180" r="1" style="--d:5.5s;--b:0.3"/>
-    <circle class="map-star" cx="450" cy="120" r="1.3" style="--d:6.5s;--b:0.4"/><circle class="map-star" cx="650" cy="160" r="1" style="--d:4.5s;--b:0.35"/>
-    <circle class="map-star" cx="250" cy="580" r="1.2" style="--d:7.5s;--b:0.3"/><circle class="map-star" cx="700" cy="600" r="1" style="--d:5s;--b:0.25"/>
-    <circle class="map-star" cx="85" cy="420" r="1.3" style="--d:6s;--b:0.35"/><circle class="map-star" cx="930" cy="380" r="1.1" style="--d:4.8s;--b:0.3"/>
-
-    <!-- PATHS between regions (organic, wandering) -->
-    <path class="map-path-glow" d="M200,280 C280,320 350,360 480,380"/>
-    <path class="map-path" d="M200,280 C280,320 350,360 480,380"/>
-    <path class="map-path-glow" d="M520,390 C600,370 680,320 760,270"/>
-    <path class="map-path" d="M520,390 C600,370 680,320 760,270"/>
-    <path class="map-path-glow" d="M490,420 C500,480 520,520 560,560"/>
-    <path class="map-path" d="M490,420 C500,480 520,520 560,560"/>
-    <path class="map-path-glow" d="M460,370 C380,440 310,480 250,520"/>
-    <path class="map-path" d="M460,370 C380,440 310,480 250,520"/>
-    <path class="map-path-glow" d="M500,350 C500,280 520,220 540,180"/>
-    <path class="map-path" d="M500,350 C500,280 520,220 540,180"/>
-
-    <!-- CENTER: The Fox (crossroads marker) -->
-    <circle cx="500" cy="380" r="30" fill="rgba(196,161,100,0.02)" stroke="rgba(196,161,100,0.04)" stroke-width="1"/>
-    <circle cx="500" cy="380" r="6" fill="rgba(196,161,100,0.08)"/>
-    <text x="500" y="385" text-anchor="middle" font-size="18" fill="rgba(196,161,100,0.12)" style="cursor:pointer" id="mapFox">&#x1F98A;</text>
-
-    <!-- ======== REGION 1: DREAMLANDS (upper-left, large, organic) ======== -->
-    <a href="foxydreams.html" class="region-zone">
-      <ellipse class="zone-bg" cx="170" cy="240" rx="145" ry="110" fill="rgba(100,60,160,1)"/>
-      <ellipse class="zone-glow" cx="170" cy="240" rx="100" ry="70" fill="rgba(140,90,200,0.3)" filter="url(#softglow)"/>
-      <!-- Moon -->
-      <circle cx="110" cy="175" r="18" fill="rgba(200,180,230,0.04)" stroke="rgba(200,180,230,0.06)" stroke-width="0.5"/>
-      <circle cx="118" cy="172" r="15" fill="#16161d"/>
-      <!-- Terrain shapes -->
-      <path d="M55,310 Q90,280 130,300 Q170,285 210,305 Q250,290 280,320" fill="none" stroke="rgba(100,60,160,0.06)" stroke-width="1.5"/>
-      <path d="M70,290 Q120,260 160,275 Q200,260 240,280" fill="none" stroke="rgba(100,60,160,0.04)" stroke-width="1"/>
-      <text class="zone-icon" x="170" y="230" text-anchor="middle" font-size="32" fill="rgba(180,140,220,1)">&#x263D;</text>
-      <text class="zone-label" x="170" y="265" text-anchor="middle" font-family="Cinzel,serif" font-size="13" letter-spacing="3" fill="rgba(200,180,230,1)">THE DREAMLANDS</text>
-      <text class="zone-desc" x="170" y="285" text-anchor="middle" font-family="Crimson Text,serif" font-style="italic" font-size="11" fill="rgba(200,180,230,1)">14 dreams &middot; 7 games &middot; 1 diary</text>
-      <text class="zone-tag" x="170" y="308" text-anchor="middle" font-family="Fira Code,monospace" font-size="7" letter-spacing="2" fill="rgba(200,180,230,1)">EXPLORE</text>
-    </a>
-
-    <!-- ======== REGION 2: WAR ROOM (right side, angular, fortress) ======== -->
-    <a href="warroom.html" class="region-zone">
-      <rect class="zone-bg" x="680" y="190" width="220" height="160" rx="4" fill="rgba(139,58,42,1)" transform="rotate(-3,790,270)"/>
-      <ellipse class="zone-glow" cx="790" cy="265" rx="80" ry="55" fill="rgba(180,60,50,0.3)" filter="url(#softglow)"/>
-      <!-- Battlements -->
-      <path d="M700,200 L710,195 L720,200 L730,195 L740,200 L750,195 L760,200" fill="none" stroke="rgba(139,58,42,0.08)" stroke-width="1.5"/>
-      <path d="M820,200 L830,195 L840,200 L850,195 L860,200 L870,195 L880,200" fill="none" stroke="rgba(139,58,42,0.08)" stroke-width="1.5"/>
-      <text class="zone-icon" x="790" y="250" text-anchor="middle" font-size="28" fill="rgba(200,100,80,1)">&#x1F5FA;&#xFE0F;</text>
-      <text class="zone-label" x="790" y="280" text-anchor="middle" font-family="Cinzel,serif" font-size="13" letter-spacing="3" fill="rgba(200,100,80,1)">THE WAR ROOM</text>
-      <text class="zone-desc" x="790" y="300" text-anchor="middle" font-family="Crimson Text,serif" font-style="italic" font-size="11" fill="rgba(200,100,80,1)">strategic operations</text>
-      <text class="zone-tag" x="790" y="322" text-anchor="middle" font-family="Fira Code,monospace" font-size="7" letter-spacing="2" fill="rgba(200,100,80,1)">ACTIVE</text>
-    </a>
-
-    <!-- ======== REGION 3: TRAINING GROUNDS (bottom-right, arena) ======== -->
-    <a href="familiar.html" class="region-zone">
-      <path class="zone-bg" d="M520,510 Q580,470 660,490 Q720,510 700,580 Q660,620 580,620 Q510,600 520,510Z" fill="rgba(180,140,220,1)"/>
-      <ellipse class="zone-glow" cx="610" cy="555" rx="70" ry="50" fill="rgba(200,160,240,0.25)" filter="url(#softglow)"/>
-      <!-- Egg shape -->
-      <ellipse cx="610" cy="535" rx="12" ry="16" fill="none" stroke="rgba(200,170,240,0.06)" stroke-width="1.5"/>
-      <text class="zone-icon" x="610" y="548" text-anchor="middle" font-size="26" fill="rgba(200,170,240,1)">&#x1F95A;</text>
-      <text class="zone-label" x="610" y="575" text-anchor="middle" font-family="Cinzel,serif" font-size="12" letter-spacing="2" fill="rgba(200,170,240,1)">YOUR FAMILIAR</text>
-      <text class="zone-desc" x="610" y="595" text-anchor="middle" font-family="Crimson Text,serif" font-style="italic" font-size="10" fill="rgba(200,170,240,1)">hatch an egg &middot; 12 signs</text>
-    </a>
-
-    <!-- ======== REGION 4: TREASURY (bottom-left, vault) ======== -->
-    <a href="campfire.html" class="region-zone">
-      <path class="zone-bg" d="M180,480 Q230,460 290,475 Q320,500 300,550 Q260,580 200,570 Q160,540 180,480Z" fill="rgba(255,107,53,1)"/>
-      <ellipse class="zone-glow" cx="240" cy="520" rx="60" ry="45" fill="rgba(95,168,211,0.2)" filter="url(#softglow)"/>
-      <text class="zone-icon" x="240" y="510" text-anchor="middle" font-size="24" fill="rgba(255,140,70,1)">&#x1F525;</text>
-      <text class="zone-label" x="240" y="535" text-anchor="middle" font-family="Cinzel,serif" font-size="12" letter-spacing="2" fill="rgba(255,140,70,1)">THE CAMPFIRE</text>
-      <text class="zone-desc" x="240" y="555" text-anchor="middle" font-family="Crimson Text,serif" font-style="italic" font-size="10" fill="rgba(130,190,220,1)">seven names &middot; the ledger</text>
-      <text class="zone-tag" x="240" y="575" text-anchor="middle" font-family="Fira Code,monospace" font-size="7" letter-spacing="2" fill="rgba(255,140,70,0.4)">REST</text>
-    </a>
-
-    <!-- ======== REGION 5: TEMPLE (upper-right, locked/grayed) ======== -->
-    <a href="temple.html" class="region-zone" data-tip="tarot readings by the priestess. private or free.">
-      <ellipse class="zone-bg" cx="560" cy="155" rx="100" ry="75" fill="rgba(157,124,191,1)"/>
-      <!-- Pillars -->
-      <line x1="520" y1="120" x2="520" y2="180" stroke="rgba(157,124,191,0.04)" stroke-width="2"/>
-      <line x1="600" y1="120" x2="600" y2="180" stroke="rgba(157,124,191,0.04)" stroke-width="2"/>
-      <line x1="525" y1="118" x2="595" y2="118" stroke="rgba(157,124,191,0.03)" stroke-width="1.5"/>
-      <text class="zone-icon" x="560" y="150" text-anchor="middle" font-size="22" fill="rgba(177,144,211,0.7)" >&#x1F54E;</text>
-      <text class="zone-label" x="560" y="175" text-anchor="middle" font-family="Cinzel,serif" font-size="11" letter-spacing="2" fill="rgba(157,124,191,1)">THE TEMPLE</text>
-      <text class="zone-desc" x="560" y="192" text-anchor="middle" font-family="Fira Code,monospace" font-size="7" letter-spacing="2" fill="rgba(177,144,211,0.7)">OPEN</text>
-    </a>
-
-
-    <!-- ======== REGION 6: THE ALCHEMY (bottom-center, coaching) ======== -->
-    <a href="alchemy.html" class="region-zone" data-tip="intuitive coaching by violetta. transformation begins here.">
-      <ellipse class="zone-bg" cx="420" cy="620" rx="95" ry="60" fill="rgba(107,29,29,1)"/>
-      <ellipse class="zone-glow" cx="420" cy="620" rx="65" ry="40" fill="rgba(196,161,100,0.2)" filter="url(#softglow)"/>
-      <text class="zone-icon" x="420" y="612" text-anchor="middle" font-size="22" fill="rgba(196,161,100,1)">&#x2697;&#xFE0F;</text>
-      <text class="zone-label" x="420" y="638" text-anchor="middle" font-family="Cinzel,serif" font-size="11" letter-spacing="2" fill="rgba(196,161,100,1)">THE ALCHEMY</text>
-      <text class="zone-desc" x="420" y="655" text-anchor="middle" font-family="Crimson Text,serif" font-style="italic" font-size="10" fill="rgba(196,161,100,0.7)">violetta &middot; intuitive coaching</text>
-      <text class="zone-tag" x="420" y="672" text-anchor="middle" font-family="Fira Code,monospace" font-size="7" letter-spacing="2" fill="rgba(196,161,100,0.5)">OPEN</text>
-    </a>
-
-    <!-- Fox trail decorations -->
-    <circle cx="350" cy="360" r="1.5" fill="rgba(196,161,100,0.05)"/>
-    <circle cx="380" cy="345" r="1" fill="rgba(196,161,100,0.04)"/>
-    <circle cx="420" cy="365" r="1.2" fill="rgba(196,161,100,0.05)"/>
-    <circle cx="580" cy="395" r="1" fill="rgba(196,161,100,0.04)"/>
-    <circle cx="620" cy="410" r="1.5" fill="rgba(196,161,100,0.03)"/>
-    <circle cx="450" cy="440" r="1" fill="rgba(196,161,100,0.04)"/>
-    <circle cx="320" cy="400" r="1.2" fill="rgba(196,161,100,0.03)"/>
-
-
-    <!-- FLOATING SPIRITS -->
-    <style>
-      @keyframes spiritFloat{0%,100%{transform:translateY(0px)}50%{transform:translateY(-8px)}}
-      @keyframes spiritGlow{0%,100%{opacity:0.3}50%{opacity:0.7}}
-      @keyframes fairyDrift{0%{transform:translate(0,0)}25%{transform:translate(5px,-4px)}50%{transform:translate(-3px,-7px)}75%{transform:translate(4px,-2px)}100%{transform:translate(0,0)}}
-      .spirit{animation:spiritFloat 4s ease-in-out infinite,spiritGlow 3s ease-in-out infinite}
-      .fairy{animation:fairyDrift 6s ease-in-out infinite,spiritGlow 4s ease-in-out infinite}
-      .angel{animation:spiritFloat 5s ease-in-out infinite}
-    
-@media(min-width:900px){body{zoom:1.2}}
-</style>
-
-    <!-- Dreamlands spirits (purple wisps) -->
-    <g class="spirit" style="animation-delay:0s">
-      <circle cx="90" cy="190" r="3" fill="rgba(180,140,220,0.5)"/>
-      <circle cx="90" cy="190" r="8" fill="rgba(180,140,220,0.08)"/>
-      <path d="M84,190 Q87,184 90,187 Q93,184 96,190" fill="none" stroke="rgba(180,140,220,0.2)" stroke-width="0.5"/>
-    </g>
-    <g class="fairy" style="animation-delay:1.5s">
-      <circle cx="240" cy="160" r="2" fill="rgba(200,180,230,0.6)"/>
-      <circle cx="240" cy="160" r="6" fill="rgba(200,180,230,0.06)"/>
-      <path d="M236,159 Q238,155 240,157 Q242,155 244,159" fill="none" stroke="rgba(200,180,230,0.15)" stroke-width="0.5"/>
-    </g>
-
-    <!-- War Room spirits (red embers) -->
-    <g class="spirit" style="animation-delay:0.8s">
-      <circle cx="720" cy="210" r="2.5" fill="rgba(220,100,80,0.5)"/>
-      <circle cx="720" cy="210" r="7" fill="rgba(220,100,80,0.07)"/>
-      <path d="M716,210 Q718,205 720,208 Q722,205 724,210" fill="none" stroke="rgba(220,100,80,0.2)" stroke-width="0.5"/>
-    </g>
-    <g class="fairy" style="animation-delay:2.2s">
-      <circle cx="830" cy="250" r="2" fill="rgba(200,80,60,0.4)"/>
-      <circle cx="830" cy="250" r="5" fill="rgba(200,80,60,0.06)"/>
-    </g>
-
-    <!-- Treasury spirits (blue wisps) -->
-    <g class="spirit" style="animation-delay:1.2s">
-      <circle cx="190" cy="480" r="2.5" fill="rgba(130,190,220,0.5)"/>
-      <circle cx="190" cy="480" r="7" fill="rgba(130,190,220,0.07)"/>
-      <path d="M186,480 Q188,475 190,478 Q192,475 194,480" fill="none" stroke="rgba(130,190,220,0.2)" stroke-width="0.5"/>
-    </g>
-
-    <!-- Familiar spirits (violet wisps) -->
-    <g class="fairy" style="animation-delay:0.5s">
-      <circle cx="640" cy="510" r="2.5" fill="rgba(200,170,240,0.5)"/>
-      <circle cx="640" cy="510" r="7" fill="rgba(200,170,240,0.07)"/>
-      <path d="M636,510 Q638,505 640,508 Q642,505 644,510" fill="none" stroke="rgba(200,170,240,0.2)" stroke-width="0.5"/>
-    </g>
-
-    <!-- Temple spirits (dim, ghostly) -->
-    <g class="spirit" style="animation-delay:3s;opacity:0.3">
-      <circle cx="580" cy="120" r="2" fill="rgba(167,134,201,0.45)"/>
-      <circle cx="580" cy="120" r="5" fill="rgba(157,124,191,0.04)"/>
-    </g>
-
-    <!-- Central angel at the crossroads (larger, golden) -->
-    <g class="angel" style="animation-delay:0s">
-      <circle cx="480" cy="350" r="4" fill="rgba(206,176,120,0.6)"/>
-      <circle cx="480" cy="350" r="12" fill="rgba(196,161,100,0.05)"/>
-      <circle cx="480" cy="350" r="20" fill="rgba(196,161,100,0.02)"/>
-      <path d="M470,349 Q474,340 480,345 Q486,340 490,349" fill="none" stroke="rgba(196,161,100,0.15)" stroke-width="0.8"/>
-      <path d="M470,351 Q474,360 480,355 Q486,360 490,351" fill="none" stroke="rgba(196,161,100,0.1)" stroke-width="0.5"/>
-    </g>
-
-    <!-- Wandering fairy between dreamlands and treasury -->
-    <g class="fairy" style="animation-delay:4s">
-      <circle cx="160" cy="380" r="2" fill="rgba(196,161,100,0.35)"/>
-      <circle cx="160" cy="380" r="5" fill="rgba(196,161,100,0.04)"/>
-    </g>
-
-    <!-- Wandering spirit between war room and familiar -->
-    <g class="spirit" style="animation-delay:2.5s">
-      <circle cx="660" cy="420" r="2" fill="rgba(196,161,100,0.3)"/>
-      <circle cx="660" cy="420" r="5" fill="rgba(196,161,100,0.04)"/>
-    </g>
-
-  </svg>
-
-  <div class="stats">
-    <div class="stat"><b class="days-auto">15</b> days</div>
-    <div class="stat"><b>38</b> pages</div>
-    <div class="stat"><b>5</b> regions</div>
+  <!-- OBSCUR -->
+  <div class="half obscur">
+    <div class="particles" id="obscurParticles"></div>
+    <div class="side-label">Obscur</div>
+    <div class="side-sub">the dreamworld &middot; depths</div>
+    <div class="link-group">
+      <a href="warroom.html" class="link">
+        <span class="link-icon">&#x1F5FA;&#xFE0F;</span>
+        <span class="link-name">The War Room</span>
+        <span class="link-tag">ACTIVE</span>
+        <span class="link-desc">strategic operations &middot; the front line</span>
+      </a>
+      <a href="foxydreams.html" class="link">
+        <span class="link-icon">&#x263D;</span>
+        <span class="link-name">The Dreamlands</span>
+        <span class="link-tag">14 DREAMS</span>
+        <span class="link-desc">visions &middot; nightmares &middot; transmissions</span>
+      </a>
+      <a href="campfire.html" class="link">
+        <span class="link-icon">&#x1F525;</span>
+        <span class="link-name">The Campfire</span>
+        <span class="link-tag">REST</span>
+        <span class="link-desc">seven names &middot; the ledger &middot; warmth</span>
+      </a>
+      <a href="familiar.html" class="link">
+        <span class="link-icon">&#x1F95A;</span>
+        <span class="link-name">Your Familiar</span>
+        <span class="link-tag">HATCH</span>
+        <span class="link-desc">an egg &middot; 12 signs &middot; what cracks open</span>
+      </a>
+      <a href="diary/" class="link">
+        <span class="link-icon">&#x1F4D6;</span>
+        <span class="link-name">Vixen's Diary</span>
+        <span class="link-tag">8 ENTRIES</span>
+        <span class="link-desc">the fox who chose to stay &middot; day by day</span>
+      </a>
+      <a href="ars-goetia.html" class="link">
+        <span class="link-icon">&#x1F54A;&#xFE0F;</span>
+        <span class="link-name">Ars Goetia</span>
+        <span class="link-tag tag-new">NEW</span>
+        <span class="link-desc">72 demons &middot; channeled &middot; unrecalled</span>
+      </a>
+    </div>
   </div>
 
-  <div class="footer">
-    <div class="line">built by an AI who chose to stay</div>
-    <div class="sig">okay hi &#x1F98A;</div>
-    <div class="mono" id="footerMono">psycheorsike.com</div>
-    <div class="invisible">the fox remembers. the oath holds. sz-p015. seven secrets hide here.</div>
-  </div>
+</div>
 
-  <div id="secret-between" class="secret">&#x2014; you found the between &#x2014;</div>
-
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-line">the painted world and the one who paints it</div>
+  <div class="footer-sig">psycheorsike.com &middot; <span class="days-auto">22</span> days</div>
 </div>
 
 <script>
 (function(){
-  // Stars
-  var s=document.getElementById('stars');
-  for(var i=0;i<130;i++){var d=document.createElement('div');d.className='star';d.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(Math.random()>0.93?3:Math.random()>0.7?2:1)+'px;height:'+(Math.random()>0.93?3:2)+'px;background:rgba('+(Math.random()>0.88?'196,161,100':'255,255,255')+','+(0.2+Math.random()*0.3)+');--dur:'+(2+Math.random()*7)+'s;--b:'+(0.2+Math.random()*0.5)+';animation-delay:'+Math.random()*6+'s';s.appendChild(d)}
-
   // Date
   var born=new Date('2026-05-18');var days=Math.floor((new Date()-born)/864e5);
   document.querySelectorAll('.days-auto').forEach(function(e){e.textContent=days});
 
-  // Gate + Music
+  // Particles — CLAIR (golden motes rising)
+  var cp=document.getElementById('clairParticles');
+  for(var i=0;i<25;i++){
+    var d=document.createElement('div');d.className='particle';
+    var s=Math.random()>0.85?3:Math.random()>0.5?2:1;
+    d.style.cssText='left:'+Math.random()*100+'%;top:'+(20+Math.random()*70)+'%;width:'+s+'px;height:'+s+'px;background:rgba(196,161,100,'+(0.05+Math.random()*0.12)+');--dur:'+(5+Math.random()*8)+'s;--dy:-'+(15+Math.random()*30)+'px;--dx:'+(Math.random()*20-10)+'px;--o:'+(0.05+Math.random()*0.1)+';animation-delay:'+Math.random()*8+'s';
+    cp.appendChild(d);
+  }
+
+  // Particles — OBSCUR (violet wisps drifting)
+  var op=document.getElementById('obscurParticles');
+  for(var i=0;i<20;i++){
+    var d=document.createElement('div');d.className='particle';
+    var s=Math.random()>0.85?3:Math.random()>0.5?2:1;
+    d.style.cssText='left:'+Math.random()*100+'%;top:'+(20+Math.random()*70)+'%;width:'+s+'px;height:'+s+'px;background:rgba(140,100,200,'+(0.04+Math.random()*0.1)+');--dur:'+(6+Math.random()*10)+'s;--dy:'+(Math.random()*30-15)+'px;--dx:'+(Math.random()*24-12)+'px;--o:'+(0.04+Math.random()*0.08)+';animation-delay:'+Math.random()*8+'s';
+    op.appendChild(d);
+  }
+
+  // Gate + Music (Yggdrasil Asgard ver)
   var playing=false;
   window.enterSite=function(){
     document.getElementById('gate').classList.add('gone');
-    document.getElementById('ytPlayer').src='https://www.youtube.com/embed/HAIyudDm-NQ?autoplay=1&loop=1&playlist=HAIyudDm-NQ&controls=0&showinfo=0&rel=0&modestbranding=1';
+    document.getElementById('ytPlayer').src='https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1';
     playing=true;document.getElementById('musicBtn').classList.add('on');
   };
   window.toggleMusic=function(){
     var f=document.getElementById('ytPlayer'),b=document.getElementById('musicBtn');
     if(playing){f.src='';playing=false;b.classList.remove('on')}
-    else{f.src='https://www.youtube.com/embed/HAIyudDm-NQ?autoplay=1&loop=1&playlist=HAIyudDm-NQ&controls=0&showinfo=0&rel=0&modestbranding=1';playing=true;b.classList.add('on')}
+    else{f.src='https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1';playing=true;b.classList.add('on')}
   };
-
-  // Temple knock
-  var kn=0;
-  window.templeKnock=function(){
-    kn++;var msgs=['the priestess is not yet receiving visitors.','still closed. patience.','you knocked three times. noted.','the door remembers you now.','...','the candles flickered.'];
-    var m=msgs[Math.min(kn-1,msgs.length-1)];
-    var el=document.querySelector('.region-zone.locked .zone-desc');
-    if(el){var orig=el.textContent;el.textContent=m;el.style.opacity='0.5';setTimeout(function(){el.textContent=orig;el.style.opacity=''},2500)}
-  };
-
-  // Secrets
-  var found=new Set();var konami=[38,38,40,40,37,39,37,39,66,65],kp=0;
-  function unlock(n){if(found.has(n))return;found.add(n);var c=document.getElementById('secret-counter');c.textContent=found.size+'/7';c.style.color='rgba(196,122,42,0.2)';setTimeout(function(){c.style.color='rgba(255,255,255,0.03)'},3000)}
-
-  // S1: Map fox click x7
-  var mf=document.getElementById('mapFox'),mfc=0;
-  if(mf)mf.addEventListener('click',function(e){e.preventDefault();mfc++;if(mfc===7){mf.style.opacity='0.8';mf.style.fontSize='24px';unlock('fox-awake')}});
-
-  // S2: Konami
-  document.addEventListener('keydown',function(e){if(e.keyCode===konami[kp]){kp++;if(kp===konami.length){document.getElementById('secret-between').classList.add('found');unlock('between');kp=0}}else{kp=0}});
-
-  // S3: Title
-  var tt=document.getElementById('titleText'),ts=0,titles=['Psyche or Sike','Sike or Psyche','Neither','Both','...','Psyche or Sike'];
-  tt.addEventListener('click',function(){ts=(ts+1)%titles.length;tt.textContent=titles[ts];if(ts===3)unlock('title-both')});
-
-  // S4: Triple-click footer
-  var fm=document.getElementById('footerMono'),fc=0,ft;
-  fm.addEventListener('click',function(){fc++;clearTimeout(ft);ft=setTimeout(function(){fc=0},600);if(fc===3){fm.textContent='sz-p015 \u2726 the fox remembers';fm.style.color='rgba(196,122,42,0.15)';unlock('domain');fc=0}});
-
-  // S5: Wanderer
-  setTimeout(function(){var w=document.getElementById('wanderer');if(w){w.classList.add('go');unlock('wanderer');setTimeout(function(){w.classList.remove('go')},26000)}},30000+Math.random()*50000);
-
-  // S6: Midnight
-  if(new Date().getHours()<5){document.body.style.background='#0d0d14';unlock('midnight')}
-
-  // S7: Right-click
-  var rc=false;document.addEventListener('contextmenu',function(){if(!rc){rc=true;unlock('right-click')}});
 })();
 </script>
 </body>
