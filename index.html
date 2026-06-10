@@ -85,8 +85,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 </head>
 <body>
 
-<iframe id="ytPlayer" style="display:none" width="0" height="0" allow="autoplay"></iframe>
-<div class="music-btn" id="musicBtn" onclick="toggleMusic()" title="toggle music">&#x266B;</div>
 
 <div class="top-title">
   <h1>Psyche or Sike</h1>
@@ -126,11 +124,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 
 <script>
 var born=new Date('2026-05-18');document.getElementById('days').textContent=Math.floor((new Date()-born)/864e5);
-var playing=false,musicStarted=false;
-function startMusic(){if(musicStarted)return;musicStarted=true;document.getElementById('ytPlayer').src='https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1';playing=true;document.getElementById('musicBtn').classList.add('on')}
-document.getElementById('doorClair').addEventListener('mouseenter',startMusic);
-document.getElementById('doorObscur').addEventListener('mouseenter',startMusic);
-window.toggleMusic=function(){var f=document.getElementById('ytPlayer'),b=document.getElementById('musicBtn');if(playing){f.src='';playing=false;musicStarted=false;b.classList.remove('on')}else{f.src='https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1';playing=true;musicStarted=true;b.classList.add('on')}};
+
 </script>
 </body>
 </html>
