@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
+body{background:#06060a;color:#c0b8a8;font-family:'Crimson Text',serif;min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
 
 .back{position:fixed;top:16px;left:16px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.33);text-decoration:none;letter-spacing:2px;z-index:100;transition:color 0.3s}
@@ -135,6 +135,12 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 <a href="obscur.html" class="back">&larr; RETURN TO OBSCUR</a>
 <div class="stars" id="stars"></div>
 
+<!-- HERO -->
+<div style="position:relative;width:100%;height:35vh;min-height:220px;overflow:hidden">
+<img src="img/card-familiar.png" alt="Your Familiar" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.3) saturate(0.8)">
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,10,0.3) 0%,rgba(6,6,10,0.1) 40%,rgba(6,6,10,0.9) 88%,rgba(6,6,10,1) 100%)"></div>
+</div>
+
 <!-- EGG STATE -->
 <div class="egg-wrap" id="eggState">
   <div class="egg-title">Your Familiar Awaits</div>
@@ -159,7 +165,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
   <div class="pet-element" id="petBonus" style="margin-top:12px;font-size:8px;letter-spacing:1.5px"></div>
   <div class="pet-trait" id="petTraits"></div>
   <div class="pet-actions">
-    <a href="obscur.html" class="pet-btn">RETURN TO MAP</a>
+    <a href="obscur.html" class="pet-btn">RETURN TO OBSCUR</a>
     
   </div>
   </div>
