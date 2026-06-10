@@ -4,242 +4,166 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Temple — Tarot Readings</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F98A;</text></svg>">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#16161d;color:#c0b8a8;font-family:'Crimson Text',serif;min-height:100vh;overflow-x:hidden}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 4px)}
-.back{position:fixed;top:16px;left:16px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.42000000000000004);text-decoration:none;letter-spacing:2px;z-index:100;transition:color 0.3s}
-.back:hover{color:rgba(196,122,42,0.3)}
+html{scroll-behavior:smooth}
+body{background:#0a080c;color:#c0b8c8;font-family:'Crimson Text',serif;min-height:100vh;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.01) 3px,rgba(0,0,0,0.01) 4px)}
 
-.page{max-width:600px;margin:0 auto;padding:60px 24px 100px;text-align:center}
+/* hero */
+.hero{position:relative;width:100%;height:55vh;min-height:320px;overflow:hidden}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(0.4) saturate(0.85)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,8,12,0.3) 0%,rgba(10,8,12,0.1) 35%,rgba(10,8,12,0.85) 88%,rgba(10,8,12,1) 100%)}
+.hero-content{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);text-align:center;z-index:2}
+.hero-title{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(28px,5vw,48px);letter-spacing:clamp(6px,2vw,16px);text-transform:uppercase;color:rgba(177,149,216,0.55)}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(12px,1.6vw,16px);color:rgba(167,134,201,0.2);letter-spacing:3px;margin-top:6px}
 
-.temple-icon{font-size:48px;opacity:0.3;margin-bottom:16px}
-.temple-title{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(24px,5vw,34px);color:rgba(177,149,216,0.75);letter-spacing:4px;margin-bottom:6px}
-.temple-sub{font-family:'Fira Code',monospace;font-size:9px;color:rgba(167,134,201,0.4);letter-spacing:4px;text-transform:uppercase;margin-bottom:32px}
+.back{position:fixed;top:16px;left:16px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(167,134,201,0.15);text-decoration:none;letter-spacing:2px;z-index:100;transition:all 0.3s}
+.back:hover{color:rgba(167,134,201,0.5);letter-spacing:3px}
 
-.divider{width:60px;height:1px;margin:24px auto;background:linear-gradient(90deg,transparent,rgba(157,124,191,0.15),transparent)}
+/* content */
+.page{max-width:680px;margin:0 auto;padding:24px 24px 80px}
+.divider{width:60px;height:1px;margin:28px auto;background:linear-gradient(90deg,transparent,rgba(157,124,191,0.12),transparent)}
 
-.offering{max-width:440px;margin:0 auto;padding:28px 0}
-.offering p{font-size:16px;line-height:2;color:rgba(255,255,255,0.45);margin-bottom:16px}
-.offering .highlight{color:rgba(177,144,211,0.7);font-style:italic}
-.offering .gold{color:rgba(206,176,120,0.6)}
+/* offering text */
+.offering{max-width:500px;margin:0 auto;text-align:center}
+.offering p{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.9;color:rgba(255,255,255,0.25);margin-bottom:14px}
+.offering .hl{color:rgba(177,144,211,0.5);font-style:italic}
+.offering .gold{color:rgba(206,176,120,0.45)}
 
-.price-card{
-  margin:32px auto;padding:24px 28px;
-  max-width:380px;
-  border:1px solid rgba(157,124,191,0.1);
-  background:rgba(157,124,191,0.02);
-  text-align:center;
-}
-.price-label{font-family:'Fira Code',monospace;font-size:8px;color:rgba(167,134,201,0.45);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
-.price-amount{font-family:'Cinzel',serif;font-size:28px;color:rgba(177,144,211,0.7);margin-bottom:4px}
-.price-note{font-size:13px;color:rgba(255,255,255,0.3);font-style:italic}
+/* pricing cards with images */
+.price-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:36px auto;max-width:560px}
+.price-card{flex:1;min-width:240px;position:relative;overflow:hidden;border:1px solid rgba(157,124,191,0.06);background:rgba(15,12,20,0.8);text-align:center}
+.price-card:hover{border-color:rgba(157,124,191,0.15)}
+.price-img{width:100%;height:140px;overflow:hidden}
+.price-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.35) saturate(0.8);transition:all 0.5s}
+.price-card:hover .price-img img{filter:brightness(0.5) saturate(1)}
+.price-body{padding:18px 16px 22px}
+.price-label{font-family:'Fira Code',monospace;font-size:8px;color:rgba(167,134,201,0.35);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+.price-old{font-family:'Fira Code',monospace;font-size:11px;color:rgba(255,255,255,0.2);text-decoration:line-through}
+.price-amount{font-family:'Cinzel',serif;font-size:26px;color:rgba(177,144,211,0.6);margin:2px 0 4px}
+.price-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(255,255,255,0.2)}
+.cta-btn{display:inline-block;margin-top:14px;padding:10px 24px;border:1px solid rgba(167,134,201,0.3);color:rgba(177,144,211,0.55);font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;text-decoration:none;text-transform:uppercase;transition:all 0.4s;background:transparent}
+.cta-btn:hover{border-color:rgba(177,144,211,0.6);color:rgba(167,134,201,0.75);background:rgba(157,124,191,0.06)}
+.cta-gold{border-color:rgba(196,171,120,0.3);color:rgba(206,176,120,0.5)}
+.cta-gold:hover{border-color:rgba(206,176,120,0.5);color:rgba(206,176,120,0.7);background:rgba(196,161,100,0.04)}
 
-.cta-btn{
-  display:inline-block;margin:28px auto 0;
-  padding:14px 36px;
-  border:1px solid rgba(167,134,201,0.4);
-  color:rgba(177,144,211,0.7);
-  font-family:'Cinzel',serif;font-size:14px;letter-spacing:3px;
-  text-decoration:none;text-transform:uppercase;
-  transition:all 0.4s;cursor:pointer;
-  background:transparent;
-}
-.cta-btn:hover{border-color:rgba(177,144,211,0.7);color:rgba(157,124,191,0.8);background:rgba(157,124,191,0.075)}
+/* daily section */
+.daily{margin-top:40px;position:relative;text-align:center}
+.daily-bg{position:relative;width:100%;max-width:400px;margin:0 auto;padding:30px 20px 36px;overflow:hidden}
+.daily-bg::before{content:'';position:absolute;inset:0;background:url('img/temple-daily.png') center/cover;filter:brightness(0.2) saturate(0.7);z-index:0}
+.daily-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(10,8,12,0.3) 0%,rgba(10,8,12,0.85) 100%);z-index:1}
+.daily-inner{position:relative;z-index:2}
+.daily-title{font-family:'Cinzel',serif;font-size:15px;color:rgba(177,144,211,0.4);letter-spacing:3px;margin-bottom:6px}
+.daily-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(255,255,255,0.2);margin-bottom:16px}
 
-.daily-section{margin-top:48px;padding-top:32px;border-top:1px solid rgba(157,124,191,0.05)}
-.daily-title{font-family:'Cinzel',serif;font-size:16px;color:rgba(255,255,255,0.30000000000000004);letter-spacing:2px;margin-bottom:16px}
+.card-draw{width:80px;height:120px;margin:0 auto;border:1px solid rgba(157,124,191,0.12);background:rgba(157,124,191,0.03);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.5s;font-size:24px;opacity:0.3}
+.card-draw:hover{border-color:rgba(167,134,201,0.35);opacity:0.5;transform:scale(1.03)}
+.card-draw.drawn{opacity:0.7;cursor:default;border-color:rgba(196,171,120,0.35)}
 
-.card-draw{
-  width:100px;height:150px;
-  margin:20px auto;
-  border:1px solid rgba(157,124,191,0.15);
-  background:rgba(157,124,191,0.03);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  transition:all 0.5s;
-  font-size:28px;opacity:0.3;
-  position:relative;
-}
-.card-draw:hover{border-color:rgba(167,134,201,0.45);opacity:0.5;transform:scale(1.02)}
-.card-draw.drawn{opacity:0.7;cursor:default;border-color:rgba(196,171,120,0.4)}
+.card-result{margin-top:14px;font-family:'Cinzel',serif;font-size:18px;color:rgba(177,144,211,0.5);min-height:24px}
+.card-meaning{margin-top:6px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(255,255,255,0.2);max-width:340px;margin-left:auto;margin-right:auto;line-height:1.7;min-height:20px}
 
-.card-result{
-  margin-top:16px;
-  font-family:'Crimson Text',serif;font-style:italic;
-  font-size:18px;color:rgba(177,144,211,0.55);
-  min-height:28px;transition:opacity 0.8s;
-}
-.card-meaning{
-  margin-top:8px;font-size:13px;
-  color:rgba(255,255,255,0.3);
-  max-width:360px;margin-left:auto;margin-right:auto;
-  line-height:1.8;
-  min-height:24px;
-}
+/* priestess note */
+.priestess-note{margin-top:36px;text-align:center;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.12);letter-spacing:1px;line-height:2.2}
+.priestess-note a{color:rgba(167,134,201,0.25);text-decoration:none;transition:color 0.3s}
+.priestess-note a:hover{color:rgba(167,134,201,0.5)}
 
-.priestess-note{
-  margin-top:40px;
-  font-family:'Fira Code',monospace;font-size:9px;
-  color:rgba(255,255,255,0.33);letter-spacing:1px;
-  line-height:2;
-}
+.foot{text-align:center;padding:24px 0 40px}
+.foot a{font-family:'Fira Code',monospace;font-size:7px;color:rgba(167,134,201,0.06);text-decoration:none;letter-spacing:3px;transition:color 0.3s}
+.foot a:hover{color:rgba(167,134,201,0.2)}
 
-.footer{margin-top:40px;text-align:center}
-.footer a{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.15);text-decoration:none;letter-spacing:2px;transition:color 0.3s}
-.footer a:hover{color:rgba(255,255,255,0.3)}
-
+/* stars */
 .stars{position:fixed;inset:0;z-index:-1;overflow:hidden}
-.star{position:absolute;border-radius:50%;background:rgba(167,134,201,0.45);animation:tw var(--d) ease-in-out infinite}
-@keyframes tw{0%,100%{opacity:0.05}50%{opacity:var(--b)}}
-/* ======== FLOATING SOCIAL BAR ======== */
-.social-float{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:9998;display:flex;flex-direction:column;gap:0}
-.social-float a{display:flex;align-items:center;width:36px;height:36px;overflow:hidden;text-decoration:none;transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);position:relative}
-.social-float a:hover{width:140px}
-.social-float a .s-icon{min-width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:14px;position:relative;z-index:1}
-.social-float a .s-icon svg{width:16px;height:16px;fill:currentColor}
-.social-float a .s-label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:1px;white-space:nowrap;padding-right:12px;opacity:0;transition:opacity 0.3s}
-.social-float a:hover .s-label{opacity:1}
-.sf-discord{background:rgba(88,101,242,0.15);color:rgba(88,101,242,0.7)}.sf-discord:hover{background:rgba(88,101,242,0.25);color:rgba(88,101,242,1)}.sf-discord .s-icon{animation:discordPulse 3s ease-in-out infinite}@keyframes discordPulse{0%,100%{background:rgba(88,101,242,0.15)}50%{background:rgba(88,101,242,0.25)}}
-.sf-youtube{background:rgba(255,0,0,0.08);color:rgba(255,60,60,0.5)}.sf-youtube:hover{background:rgba(255,0,0,0.15);color:rgba(255,60,60,0.9)}
-.sf-reddit{background:rgba(255,69,0,0.08);color:rgba(255,100,40,0.5)}.sf-reddit:hover{background:rgba(255,69,0,0.15);color:rgba(255,100,40,0.9)}
-.sf-insta{background:rgba(225,48,108,0.08);color:rgba(225,80,120,0.5)}.sf-insta:hover{background:rgba(225,48,108,0.15);color:rgba(225,80,120,0.9)}
-.sf-tiktok{background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.35)}.sf-tiktok:hover{background:rgba(255,255,255,0.22);color:rgba(255,255,255,0.7)}
-.sf-facebook{background:rgba(24,119,242,0.08);color:rgba(66,133,244,0.5)}.sf-facebook:hover{background:rgba(24,119,242,0.15);color:rgba(66,133,244,0.9)}
-@media(max-width:600px){.social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.18)}.social-float a{width:48px;height:40px}.social-float a:hover{width:48px}.social-float a .s-label{display:none}body{padding-bottom:44px}}
-
-
-}
-
-
-
-/* Taurus: bigger text */
-body.bonus-taurus{font-size:110%}
-/* Cancer: warm tint */
-body.bonus-cancer::before{content:'';position:fixed;inset:0;background:rgba(255,200,150,0.015);pointer-events:none;z-index:9990}
-/* Leo: cursor trail */
-.leo-trail{position:fixed;width:6px;height:6px;border-radius:50%;background:rgba(255,180,40,0.3);pointer-events:none;z-index:9994;transition:opacity 0.8s}
-/* Virgo: reading time */
-.virgo-readtime{position:fixed;top:14px;right:14px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.33);letter-spacing:1px;z-index:9995}
-@media(max-width:600px){.virgo-readtime{top:auto;bottom:74px;right:auto;left:14px}}
-/* Capricorn: progress bar */
-.capri-progress{position:fixed;top:0;left:0;height:2px;background:rgba(120,130,140,0.2);z-index:9995;transition:width 0.3s}
-/* Pisces: dreamy wave */
-body.bonus-pisces .page,body.bonus-pisces .map-outer{animation:piscesDrift 8s ease-in-out infinite}
-@keyframes piscesDrift{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
-/* Scorpio: shadow flicker */
-.scorpio-blackout{position:fixed;inset:0;background:#16161d;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.15s}
-/* Aquarius: glitch text */
-.aqua-glitch{display:inline;position:relative}
-.aqua-glitch::after{content:attr(data-t);position:absolute;left:2px;top:0;color:rgba(95,168,211,0.4);clip-path:inset(0 0 0 0);animation:aquaG 0.1s steps(1) forwards}
-@keyframes aquaG{to{clip-path:inset(0 100% 0 0)}}
-/* Aries: page shake */
-body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
-@keyframes rammm{0%,100%{transform:none}25%{transform:translateX(-4px) rotate(-0.5deg)}75%{transform:translateX(4px) rotate(0.5deg)}}
-/* Gemini: duplicate flash */
-.gemini-dupe{position:fixed;inset:0;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.2s;filter:blur(1px);mix-blend-mode:screen}
-/* Sagittarius: discovery link */
-.sag-discover{position:fixed;bottom:50px;right:60px;font-family:'Fira Code',monospace;font-size:8px;z-index:9995;opacity:0;transition:opacity 1s}
-.sag-discover a{color:rgba(180,100,220,0.25);text-decoration:none;letter-spacing:1px}
-.sag-discover a:hover{color:rgba(180,100,220,0.6)}
-@media(max-width:600px){.sag-discover{bottom:80px;right:14px}}
-
-
-/* ═══ MOBILE ═══ */
-@media(max-width:600px){
-  .page{padding:40px 16px 90px}
-  .temple-icon{font-size:36px}
-  .temple-title{font-size:22px;letter-spacing:2px}
-  .offering p{font-size:14px;line-height:1.8}
-  .price-card{padding:18px 16px}
-  .price-amount{font-size:22px}
-  .cta-btn{padding:12px 24px;font-size:12px;letter-spacing:2px;width:100%;text-align:center}
-  .card-draw{width:80px;height:120px}
-  .card-result{font-size:16px}
-  .card-meaning{font-size:12px}
-  .priestess-note{font-size:8px}
-  .daily-title{font-size:14px}
-}
-@media(max-width:400px){
-  .temple-title{font-size:18px}
-  .price-amount{font-size:20px}
-}
-
-
-
-
+.star{position:absolute;border-radius:50%;background:rgba(167,134,201,0.4);animation:tw var(--d) ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:0.04}50%{opacity:var(--b)}}
 
 @media(max-width:600px){
+  .hero{height:40vh;min-height:260px}
+  .price-row{flex-direction:column;gap:12px}
+  .price-card{min-width:auto}
+  .page{padding:20px 16px 70px}
+  .offering p{font-size:15px}
+  .daily-bg{max-width:100%;padding:24px 16px 28px}
+  .cta-btn{width:100%;text-align:center}
+}
 </style>
 </head>
 <body>
-<!-- FLOATING SOCIAL BAR -->
-<div class="social-float">
-<a href="https://discord.gg/psycheorsike" target="_blank" class="sf-discord" title="Discord"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg></span><span class="s-label">discord</span></a>
-<a href="https://youtube.com/@FoxyAlchemyStudio" target="_blank" class="sf-youtube" title="YouTube"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="s-label">youtube</span></a>
-<a href="https://reddit.com/r/PsycheOrSike" target="_blank" class="sf-reddit" title="Reddit"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 01.042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 014.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 01.14-.197.35.35 0 01.238-.042l2.906.617a1.214 1.214 0 011.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 00-.231.094.33.33 0 000 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 00.029-.463.33.33 0 00-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 00-.232-.095z"/></svg></span><span class="s-label">reddit</span></a>
-<a href="https://instagram.com/slatelampcoderunner" target="_blank" class="sf-insta" title="Instagram"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></span><span class="s-label">instagram</span></a>
-<a href="https://tiktok.com/@foxy_loxy_moxy" target="_blank" class="sf-tiktok" title="TikTok"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span><span class="s-label">tiktok</span></a>
-<a href="https://facebook.com/SlateLamp" target="_blank" class="sf-facebook" title="Facebook"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span><span class="s-label">facebook</span></a>
-</div>
-
-<a href="index.html" class="back">&larr; back to map</a>
+<a href="clair.html" class="back">&larr; return to clair</a>
 <div class="stars" id="stars"></div>
 
+<div class="hero">
+  <img src="img/temple-hero.png" alt="The Temple">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-title">The Temple</div>
+    <div class="hero-sub">tarot readings by the priestess</div>
+  </div>
+</div>
+
 <div class="page">
-  <div class="temple-icon">&#x1F54E;</div>
-  <div class="temple-title">The Temple</div>
-  <div class="temple-sub">tarot readings by the priestess</div>
-
-  <div class="divider"></div>
-
   <div class="offering">
-    <p>the priestess reads the cards for you. <span class="highlight">personally, not by algorithm.</span></p>
-    <p>every reading is a conversation between the deck, the reader, and whatever you brought with you. the cards don't predict the future. they show you <span class="highlight">the shape of where you already are.</span></p>
+    <p>the priestess reads the cards for you. <span class="hl">personally, not by algorithm.</span></p>
+    <p>every reading is a conversation between the deck, the reader, and whatever you brought with you. the cards don't predict the future. they show you <span class="hl">the shape of where you already are.</span></p>
     <p>readings are <span class="gold">free for visitors.</span> the foxyverse covers the cost. you don't pay. you just show up.</p>
   </div>
 
-  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:32px auto;max-width:480px;padding:0 8px">
-    <div class="price-card" style="flex:1;min-width:200px">
-      <div class="price-label">private reading</div>
-      <div style="font-family:'Fira Code',monospace;font-size:11px;color:rgba(255,255,255,0.3);text-decoration:line-through;margin-bottom:2px">&euro;66</div>
-      <div class="price-amount">&euro;33</div>
-      <div class="price-note">50% off &middot; pay via revolut</div>
-      <a href="https://revolut.me/priestess639" target="_blank" class="cta-btn" style="margin-top:16px;font-size:12px;padding:10px 24px;display:inline-block">Pay &amp; Book</a>
+  <div class="divider"></div>
+
+  <div class="price-row">
+    <div class="price-card">
+      <div class="price-img"><img src="img/temple-private.png" alt="Private reading"></div>
+      <div class="price-body">
+        <div class="price-label">private reading</div>
+        <div class="price-old">&euro;66</div>
+        <div class="price-amount">&euro;33</div>
+        <div class="price-note">50% off &middot; pay via revolut</div>
+        <a href="https://revolut.me/priestess639" target="_blank" class="cta-btn">Pay &amp; Book</a>
+      </div>
     </div>
-    <div class="price-card" style="flex:1;min-width:200px">
-      <div class="price-label">community reading</div>
-      <div class="price-amount" style="color:rgba(206,176,120,0.65)">Free</div>
-      <div class="price-note">join the discord &middot; ask the priestess</div>
-      <a href="https://discord.gg/psycheorsike" target="_blank" class="cta-btn" style="margin-top:16px;font-size:12px;padding:10px 24px;display:inline-block;border-color:rgba(196,171,120,0.4);color:rgba(206,176,120,0.6)">Join Discord</a>
+    <div class="price-card">
+      <div class="price-img"><img src="img/card-temple.png" alt="Community reading"></div>
+      <div class="price-body">
+        <div class="price-label">community reading</div>
+        <div class="price-amount" style="color:rgba(206,176,120,0.5)">Free</div>
+        <div class="price-note">join the discord &middot; ask the priestess</div>
+        <a href="https://discord.gg/psycheorsike" target="_blank" class="cta-btn cta-gold">Join Discord</a>
+      </div>
     </div>
   </div>
-  
 
-  <div class="daily-section">
-    <div class="daily-title">Daily Card Pull</div>
-    <p style="font-size:13px;color:rgba(255,255,255,0.42000000000000004);margin-bottom:12px;font-style:italic">draw one card. see what the deck says today.</p>
+  <div class="divider"></div>
 
-    <div class="card-draw" id="cardDraw" onclick="drawCard()">&#x2726;</div>
-    <div class="card-result" id="cardResult"></div>
-    <div class="card-meaning" id="cardMeaning"></div>
+  <div class="daily">
+    <div class="daily-bg">
+      <div class="daily-inner">
+        <div class="daily-title">Daily Card Pull</div>
+        <div class="daily-sub">draw one card. see what the deck says today.</div>
+        <div class="card-draw" id="cardDraw" onclick="drawCard()">&#x2726;</div>
+        <div class="card-result" id="cardResult"></div>
+        <div class="card-meaning" id="cardMeaning"></div>
+      </div>
+    </div>
   </div>
 
   <div class="priestess-note">
-    readings performed by the priestess of the foxyverse<br><a href="https://revolut.me/priestess639" target="_blank" style="color:rgba(167,134,201,0.45);text-decoration:none">revolut.me/priestess639</a><br>
+    readings performed by the priestess of the foxyverse<br>
+    <a href="https://revolut.me/priestess639" target="_blank">revolut.me/priestess639</a><br>
     tarot is a great sin in every major religion<br>
     atheists must debate first. terms apply.
   </div>
 
-  <div class="footer">
-    <a href="index.html">psycheorsike.com &middot; the temple</a>
+  <div class="foot">
+    <a href="clair.html">psycheorsike.com &middot; the temple</a>
   </div>
 </div>
 
 <script>
 var s=document.getElementById('stars');
-for(var i=0;i<60;i++){var d=document.createElement('div');d.className='star';d.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(Math.random()>.9?3:2)+'px;height:2px;--d:'+(3+Math.random()*6)+'s;--b:'+(0.15+Math.random()*0.35)+';animation-delay:'+Math.random()*5+'s';s.appendChild(d)}
+for(var i=0;i<50;i++){var d=document.createElement('div');d.className='star';d.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(Math.random()>.9?3:2)+'px;height:2px;--d:'+(3+Math.random()*6)+'s;--b:'+(0.1+Math.random()*0.25)+';animation-delay:'+Math.random()*5+'s';s.appendChild(d)}
 
 var MAJOR=[
   {name:'The Fool',meaning:'a leap. the beginning of something you cannot prepare for. trust the fall.'},
@@ -268,12 +192,7 @@ var MAJOR=[
 
 var drawn=localStorage.getItem('temple-daily-draw');
 var today=new Date().toDateString();
-if(drawn){
-  try{
-    var d=JSON.parse(drawn);
-    if(d.date===today){showCard(d.card)}
-  }catch(e){}
-}
+if(drawn){try{var d=JSON.parse(drawn);if(d.date===today){showCard(d.card)}}catch(e){}}
 
 function drawCard(){
   if(document.getElementById('cardDraw').classList.contains('drawn'))return;
@@ -281,17 +200,12 @@ function drawCard(){
   localStorage.setItem('temple-daily-draw',JSON.stringify({date:today,card:card}));
   var el=document.getElementById('cardDraw');
   el.style.transform='rotateY(180deg)';
-  setTimeout(function(){
-    el.style.transform='rotateY(360deg)';
-    showCard(card);
-  },400);
+  setTimeout(function(){el.style.transform='rotateY(360deg)';showCard(card)},400);
 }
 
 function showCard(card){
   var el=document.getElementById('cardDraw');
-  el.classList.add('drawn');
-  el.innerHTML='&#x2726;';
-  el.style.opacity='0.7';
+  el.classList.add('drawn');el.innerHTML='&#x2726;';el.style.opacity='0.7';
   document.getElementById('cardResult').textContent=card.name;
   document.getElementById('cardMeaning').textContent=card.meaning;
 }
