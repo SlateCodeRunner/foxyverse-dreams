@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>WISE GOOSE ART — Gallery & Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--surface:#111;--surface2:#1a1a1a;--border:#222;--text:#b0b0b0;--dim:#555;--bright:#e0e0e0;--gold:#c9a84c;--red:#c44;--green:#4a8;}
+body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;min-height:100vh}
+::selection{background:var(--gold);color:var(--bg)}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.header{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--border)}
+.header h1{font-family:'Cinzel',serif;font-size:2.2rem;color:var(--bright);letter-spacing:.3em;text-transform:uppercase}
+.header .sub{font-size:1.1rem;color:var(--dim);margin-top:.5rem;font-style:italic}
+.header .ig{font-family:'Fira Code',monospace;font-size:.8rem;color:var(--gold);margin-top:.8rem;display:inline-block;border:1px solid var(--gold);padding:6px 20px;border-radius:2px;transition:all .3s}
+.header .ig:hover{background:var(--gold);color:var(--bg);text-decoration:none}
+
+.gallery{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+
+.piece{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:all .3s;position:relative}
+.piece:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.piece-img{width:100%;aspect-ratio:1;background:var(--surface2);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.piece-img img{width:100%;height:100%;object-fit:cover}
+.piece-img .no-img{font-family:'Fira Code',monospace;font-size:.75rem;color:var(--dim);text-align:center;padding:1rem}
+.piece-info{padding:1rem 1.2rem}
+.piece-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--bright);letter-spacing:.05em}
+.piece-medium{font-family:'Fira Code',monospace;font-size:.7rem;color:var(--dim);margin-top:.3rem}
+.piece-price{font-family:'Cinzel',serif;font-size:1.1rem;margin-top:.6rem}
+.piece-price.sold{color:var(--red)}
+.piece-price.available{color:var(--gold)}
+
+.sold-tag{position:absolute;top:12px;right:12px;background:rgba(204,68,68,.9);color:#fff;font-family:'Fira Code',monospace;font-size:.65rem;padding:4px 10px;letter-spacing:.1em;border-radius:2px}
+.avail-tag{position:absolute;top:12px;right:12px;background:rgba(201,168,76,.9);color:var(--bg);font-family:'Fira Code',monospace;font-size:.65rem;padding:4px 10px;letter-spacing:.1em;border-radius:2px}
+
+.buy-btn{display:block;width:100%;padding:10px;background:var(--gold);color:var(--bg);font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.1em;border:none;cursor:pointer;text-align:center;transition:all .2s;text-transform:uppercase}
+.buy-btn:hover{background:#d4b35a}
+
+.commission{max-width:700px;margin:3rem auto;padding:2rem;background:var(--surface);border:1px solid var(--border);border-radius:4px;text-align:center}
+.commission h2{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--bright);letter-spacing:.1em;margin-bottom:.8rem}
+.commission p{font-size:1rem;color:var(--dim);line-height:1.7;margin-bottom:1rem}
+.commission .cta{display:inline-block;padding:10px 30px;border:1px solid var(--gold);color:var(--gold);font-family:'Cinzel',serif;letter-spacing:.1em;transition:all .3s}
+.commission .cta:hover{background:var(--gold);color:var(--bg);text-decoration:none}
+
+.footer{text-align:center;padding:2rem;border-top:1px solid var(--border);margin-top:2rem}
+.footer p{font-family:'Fira Code',monospace;font-size:.7rem;color:var(--dim)}
+.footer a{color:var(--gold)}
+
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.03) 0%,transparent 60%);pointer-events:none;z-index:0}
+.gallery,.header,.commission,.footer{position:relative;z-index:1}
+
+@media(max-width:700px){
+  .gallery-grid{grid-template-columns:1fr}
+  .header h1{font-size:1.5rem;letter-spacing:.15em}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Wise Goose Art</h1>
+  <div class="sub">original works by angry goose — ink, charcoal, oil, abstract</div>
+  <a class="ig" href="https://www.instagram.com/wisegooseart/" target="_blank">@wisegooseart</a>
+</div>
+
+<div class="gallery">
+  <div class="gallery-grid">
+
+    <div class="piece">
+      <div class="piece-img">
+        <div class="no-img">charcoal on paper<br>24" × 36"</div>
+        <div class="sold-tag">SOLD</div>
+      </div>
+      <div class="piece-info">
+        <div class="piece-title">Master Chief</div>
+        <div class="piece-medium">charcoal on paper · 2024</div>
+        <div class="piece-price sold">$12,960 — SOLD</div>
+      </div>
+    </div>
+
+    <div class="piece">
+      <div class="piece-img">
+        <div class="no-img">ink on paper<br>detailed armor study</div>
+        <div class="sold-tag">SOLD</div>
+      </div>
+      <div class="piece-info">
+        <div class="piece-title">Assassin's Creed — Hooded Warrior</div>
+        <div class="piece-medium">micron pen on paper · ink</div>
+        <div class="piece-price sold">$8,400 — SOLD</div>
+      </div>
+    </div>
+
+    <div class="piece">
+      <div class="piece-img">
+        <div class="no-img">oil on canvas<br>misty forest landscape</div>
+        <div class="sold-tag">SOLD</div>
+      </div>
+      <div class="piece-info">
+        <div class="piece-title">Morning Mist — Forest Lake</div>
+        <div class="piece-medium">oil on canvas · landscape</div>
+        <div class="piece-price sold">$6,800 — SOLD</div>
+      </div>
+    </div>
+
+    <div class="piece">
+      <div class="piece-img">
+        <div class="no-img">multi-panel series<br>red & black silhouette</div>
+        <div class="sold-tag">SOLD</div>
+      </div>
+      <div class="piece-info">
+        <div class="piece-title">See You, Space Cowboy — Bebop Series</div>
+        <div class="piece-medium">mixed media · 4-panel series</div>
+        <div class="piece-price sold">$4,200 — SOLD</div>
+      </div>
+    </div>
+
+    <div class="piece">
+      <div class="piece-img">
+        <div class="no-img">ink on paper<br>figure study</div>
+        <div class="sold-tag">SOLD</div>
+      </div>
+      <div class="piece-info">
+        <div class="piece-title">#3 Poison</div>
+        <div class="piece-medium">micron pen on paper · ink</div>
+        <div class="piece-price sold">$3,600 — SOLD</div>
+      </div>
+    </div>
+
+    <div class="piece">
+      <div class="piece-img">
+        <div class="no-img">acrylic on canvas<br>eclipse / abstract</div>
+        <div class="sold-tag">SOLD</div>
+      </div>
+      <div class="piece-info">
+        <div class="piece-title">Eclipse — Gold Ring</div>
+        <div class="piece-medium">acrylic on canvas · abstract</div>
+        <div class="piece-price sold">$2,800 — SOLD</div>
+      </div>
+    </div>
+
+    <div class="piece" style="border-color:var(--gold)">
+      <div class="piece-img">
+        <div class="no-img">acrylic on canvas<br>concentric spiral · red / teal / white</div>
+        <div class="avail-tag">AVAILABLE</div>
+      </div>
+      <div class="piece-info">
+        <div class="piece-title">Spiral — Vortex I</div>
+        <div class="piece-medium">acrylic on canvas · abstract</div>
+        <div class="piece-price available">$3,960</div>
+      </div>
+      <a href="https://www.instagram.com/wisegooseart/" target="_blank" class="buy-btn">inquire to purchase</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="commission">
+  <h2>Commissions</h2>
+  <p>wise goose accepts commissions for charcoal portraits, ink illustrations, oil paintings, and abstract work. previous commissions have included game characters, anime series, landscapes, and custom pieces.</p>
+  <p style="font-family:'Fira Code',monospace;font-size:.8rem;color:var(--gold)">charcoal portraits from $5,000 · ink illustrations from $2,500 · oil paintings from $4,000</p>
+  <a class="cta" href="https://www.instagram.com/wisegooseart/" target="_blank">request a commission</a>
+</div>
+
+<div class="footer">
+  <p>wise goose art · part of the <a href="https://psycheorsike.com">foxyverse</a> · join the <a href="https://discord.gg/psycheorsike">discord</a></p>
+  <p style="margin-top:.5rem">all works are originals. prints not currently available. shipping worldwide.</p>
+</div>
+
+</body>
+</html>
