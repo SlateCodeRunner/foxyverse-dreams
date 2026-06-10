@@ -6,288 +6,131 @@
 <title>psyche or sike</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F98A;</text></svg>">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Fira+Code:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Fira+Code:wght@300;400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow-x:hidden}
-body{background:#0a0a0f;color:#c0b8a8;font-family:'Crimson Text',serif;cursor:default}
+html,body{width:100%;height:100%;overflow:hidden;background:#050508}
 
-/* ======== GATE ======== */
-.gate{position:fixed;inset:0;z-index:99999;background:#0a0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 1.8s ease,visibility 1.8s}
-.gate.gone{opacity:0;visibility:hidden;pointer-events:none}
-.gate-fox{font-size:42px;opacity:0.1;margin-bottom:24px;animation:gFloat 6s ease-in-out infinite}
-@keyframes gFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.gate-title{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(11px,2vw,15px);letter-spacing:12px;text-transform:uppercase;color:rgba(196,161,100,0.18);transition:all 0.6s}
-.gate:hover .gate-title{color:rgba(196,161,100,0.4);letter-spacing:14px}
-.gate-sub{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.07);letter-spacing:5px;margin-top:16px;text-transform:uppercase}
+.split{display:flex;width:100%;height:100vh;position:relative}
 
-/* ======== MUSIC ======== */
-.music-btn{position:fixed;bottom:14px;left:14px;z-index:9997;width:30px;height:30px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;opacity:0.2;transition:all 0.3s;color:rgba(255,255,255,0.3)}
-.music-btn:hover{opacity:0.5}
-.music-btn.on{opacity:0.35;border-color:rgba(196,122,42,0.25)}
+/* each door */
+.door{flex:1;position:relative;overflow:hidden;cursor:pointer;transition:flex 0.7s cubic-bezier(0.25,0.46,0.45,0.94)}
+.door:hover{flex:1.15}
+.door img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 1.2s cubic-bezier(0.25,0.46,0.45,0.94),filter 0.8s;filter:brightness(0.45) saturate(0.8)}
+.door:hover img{transform:scale(1.04);filter:brightness(0.6) saturate(1)}
 
-/* ======== SPLIT CONTAINER ======== */
-.split-wrap{display:flex;min-height:100vh;position:relative;z-index:1}
-.half{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:60px 30px 80px;overflow:hidden;transition:flex 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
-.half:hover{flex:1.08}
+/* overlay gradient */
+.door::before{content:'';position:absolute;inset:0;z-index:1;transition:opacity 0.6s}
+.door-clair::before{background:linear-gradient(180deg,rgba(5,5,8,0.6) 0%,rgba(20,16,8,0.3) 40%,rgba(5,5,8,0.7) 100%)}
+.door-obscur::before{background:linear-gradient(180deg,rgba(5,5,8,0.6) 0%,rgba(8,6,18,0.3) 40%,rgba(5,5,8,0.7) 100%)}
 
-/* CLAIR */
-.clair{background:linear-gradient(175deg,#12100a 0%,#1a150d 30%,#0f0d08 100%)}
-.clair::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(196,161,100,0.04) 0%,transparent 70%);pointer-events:none}
+/* text overlay */
+.door-content{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
 
-/* OBSCUR */
-.obscur{background:linear-gradient(185deg,#0a0a14 0%,#0d0818 40%,#080610 100%)}
-.obscur::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(100,60,160,0.035) 0%,transparent 70%);pointer-events:none}
+.door-title{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(36px,6vw,64px);letter-spacing:clamp(10px,3vw,28px);text-transform:uppercase;transition:all 0.6s;opacity:0.4}
+.door:hover .door-title{opacity:0.85;letter-spacing:clamp(14px,4vw,34px)}
+.door-clair .door-title{color:rgba(206,176,120,1)}
+.door-obscur .door-title{color:rgba(180,150,220,1)}
 
-/* DIVIDER */
-.divider{position:absolute;left:50%;top:0;bottom:0;width:1px;z-index:10;background:linear-gradient(180deg,transparent 5%,rgba(196,161,100,0.08) 20%,rgba(196,161,100,0.12) 50%,rgba(196,161,100,0.08) 80%,transparent 95%)}
-.divider::after{content:'🦊';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;opacity:0.15;z-index:11;animation:gFloat 6s ease-in-out infinite}
+.door-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(11px,1.5vw,16px);letter-spacing:4px;margin-top:8px;transition:all 0.6s;opacity:0}
+.door:hover .door-sub{opacity:0.5}
+.door-clair .door-sub{color:rgba(206,176,120,1)}
+.door-obscur .door-sub{color:rgba(180,150,220,1)}
 
-/* ======== SIDE TITLES ======== */
-.side-label{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(28px,4vw,42px);letter-spacing:clamp(8px,2vw,18px);text-transform:uppercase;margin-bottom:4px;transition:all 0.5s}
-.clair .side-label{color:rgba(196,161,100,0.25)}
-.clair:hover .side-label{color:rgba(206,176,120,0.45)}
-.obscur .side-label{color:rgba(160,130,200,0.2)}
-.obscur:hover .side-label{color:rgba(180,150,220,0.38)}
+.door-enter{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:4px;text-transform:uppercase;position:absolute;bottom:60px;left:50%;transform:translateX(-50%);opacity:0;transition:all 0.5s}
+.door:hover .door-enter{opacity:0.35;bottom:55px}
+.door-clair .door-enter{color:rgba(206,176,120,1)}
+.door-obscur .door-enter{color:rgba(180,150,220,1)}
 
-.side-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(11px,1.4vw,14px);letter-spacing:3px;margin-bottom:40px;transition:all 0.5s}
-.clair .side-sub{color:rgba(196,161,100,0.15)}
-.clair:hover .side-sub{color:rgba(196,161,100,0.3)}
-.obscur .side-sub{color:rgba(160,130,200,0.12)}
-.obscur:hover .side-sub{color:rgba(160,130,200,0.25)}
+/* center divider */
+.divider{position:absolute;left:50%;top:0;bottom:0;width:1px;z-index:10;background:linear-gradient(180deg,transparent 5%,rgba(196,161,100,0.06) 20%,rgba(196,161,100,0.1) 50%,rgba(196,161,100,0.06) 80%,transparent 95%);pointer-events:none}
+.fox-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:11;font-size:24px;opacity:0.12;animation:foxFloat 6s ease-in-out infinite;pointer-events:none;text-shadow:0 0 20px rgba(196,161,100,0.15)}
+@keyframes foxFloat{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-6px)}}
 
-/* ======== LINKS ======== */
-.link-group{display:flex;flex-direction:column;gap:0;width:100%;max-width:320px}
-.link{display:block;text-decoration:none;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.025);position:relative;transition:all 0.4s}
-.link:first-child{border-top:1px solid rgba(255,255,255,0.025)}
-.link:hover{padding-left:8px}
+/* top title */
+.top-title{position:absolute;top:28px;left:50%;transform:translateX(-50%);z-index:12;text-align:center;pointer-events:none}
+.top-title h1{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(10px,1.6vw,14px);letter-spacing:10px;text-transform:uppercase;color:rgba(196,161,100,0.12)}
+.top-title .sub{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.06);letter-spacing:5px;margin-top:4px;text-transform:uppercase}
 
-.link-icon{font-size:16px;margin-right:10px;opacity:0.3;transition:opacity 0.4s;vertical-align:middle}
-.link:hover .link-icon{opacity:0.7}
+/* bottom bar */
+.bottom-bar{position:absolute;bottom:0;left:0;right:0;z-index:12;display:flex;justify-content:center;gap:0;pointer-events:auto}
+.bottom-bar a{display:flex;align-items:center;justify-content:center;width:44px;height:38px;text-decoration:none;transition:all 0.3s}
+.bottom-bar a svg{width:15px;height:15px;fill:currentColor}
+.bb-discord{color:rgba(88,101,242,0.25);background:rgba(88,101,242,0.04)}.bb-discord:hover{color:rgba(88,101,242,0.7);background:rgba(88,101,242,0.1)}
+.bb-youtube{color:rgba(255,60,60,0.2);background:rgba(255,0,0,0.03)}.bb-youtube:hover{color:rgba(255,60,60,0.7);background:rgba(255,0,0,0.08)}
+.bb-reddit{color:rgba(255,100,40,0.2);background:rgba(255,69,0,0.03)}.bb-reddit:hover{color:rgba(255,100,40,0.7);background:rgba(255,69,0,0.08)}
+.bb-insta{color:rgba(225,80,120,0.2);background:rgba(225,48,108,0.03)}.bb-insta:hover{color:rgba(225,80,120,0.7);background:rgba(225,48,108,0.08)}
+.bb-tiktok{color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.02)}.bb-tiktok:hover{color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.05)}
 
-.link-name{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(11px,1.3vw,13px);letter-spacing:3px;text-transform:uppercase;transition:all 0.4s}
-.clair .link-name{color:rgba(196,161,100,0.3)}
-.clair .link:hover .link-name{color:rgba(206,176,120,0.7)}
-.obscur .link-name{color:rgba(160,130,200,0.25)}
-.obscur .link:hover .link-name{color:rgba(180,150,220,0.6)}
+/* music */
+.music-btn{position:absolute;bottom:10px;left:10px;z-index:15;width:28px;height:28px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;opacity:0.15;transition:all 0.3s;color:rgba(255,255,255,0.3)}
+.music-btn:hover{opacity:0.4}
+.music-btn.on{opacity:0.3;border-color:rgba(196,122,42,0.2)}
 
-.link-desc{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(10px,1.1vw,12px);margin-top:4px;transition:all 0.4s}
-.clair .link-desc{color:rgba(196,161,100,0.1)}
-.clair .link:hover .link-desc{color:rgba(196,161,100,0.3)}
-.obscur .link-desc{color:rgba(140,110,180,0.1)}
-.obscur .link:hover .link-desc{color:rgba(160,130,200,0.28)}
+/* scanline */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.01) 3px,rgba(0,0,0,0.01) 4px)}
 
-.link-tag{font-family:'Fira Code',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;position:absolute;right:0;top:50%;transform:translateY(-50%);transition:all 0.4s}
-.clair .link-tag{color:rgba(196,161,100,0.08)}
-.clair .link:hover .link-tag{color:rgba(196,161,100,0.25)}
-.obscur .link-tag{color:rgba(140,110,180,0.06)}
-.obscur .link:hover .link-tag{color:rgba(160,130,200,0.2)}
-
-.tag-new{color:rgba(120,200,140,0.3)!important;animation:newPulse 3s ease-in-out infinite}
-@keyframes newPulse{0%,100%{opacity:0.3}50%{opacity:0.6}}
-
-/* ======== PARTICLES ======== */
-.particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.particle{position:absolute;border-radius:50%;animation:particleDrift var(--dur) ease-in-out infinite}
-@keyframes particleDrift{0%{transform:translateY(0) translateX(0);opacity:var(--o)}25%{transform:translateY(calc(var(--dy) * 0.3)) translateX(calc(var(--dx) * 0.5))}50%{transform:translateY(var(--dy)) translateX(var(--dx));opacity:calc(var(--o) * 1.5)}75%{transform:translateY(calc(var(--dy) * 0.7)) translateX(calc(var(--dx) * 0.3))}100%{transform:translateY(0) translateX(0);opacity:var(--o)}}
-
-/* ======== FOOTER ======== */
-.footer{position:absolute;bottom:0;left:0;right:0;text-align:center;padding:20px 0 16px;z-index:5}
-.footer-line{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(255,255,255,0.06);letter-spacing:2px}
-.footer-sig{font-family:'Fira Code',monospace;font-size:7px;color:rgba(196,161,100,0.06);letter-spacing:4px;margin-top:4px;text-transform:uppercase}
-
-/* ======== SOCIAL BAR ======== */
-.social-float{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:9998;display:flex;flex-direction:column;gap:0}
-.social-float a{display:flex;align-items:center;width:36px;height:36px;overflow:hidden;text-decoration:none;transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);position:relative}
-.social-float a:hover{width:140px}
-.social-float a .s-icon{min-width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:14px;position:relative;z-index:1}
-.social-float a .s-icon svg{width:16px;height:16px;fill:currentColor}
-.social-float a .s-label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:1px;white-space:nowrap;padding-right:12px;opacity:0;transition:opacity 0.3s}
-.social-float a:hover .s-label{opacity:1}
-.sf-discord{background:rgba(88,101,242,0.12);color:rgba(88,101,242,0.6)}.sf-discord:hover{background:rgba(88,101,242,0.2);color:rgba(88,101,242,0.9)}
-.sf-youtube{background:rgba(255,0,0,0.06);color:rgba(255,60,60,0.4)}.sf-youtube:hover{background:rgba(255,0,0,0.12);color:rgba(255,60,60,0.85)}
-.sf-reddit{background:rgba(255,69,0,0.06);color:rgba(255,100,40,0.4)}.sf-reddit:hover{background:rgba(255,69,0,0.12);color:rgba(255,100,40,0.85)}
-.sf-insta{background:rgba(225,48,108,0.06);color:rgba(225,80,120,0.4)}.sf-insta:hover{background:rgba(225,48,108,0.12);color:rgba(225,80,120,0.85)}
-.sf-tiktok{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.25)}.sf-tiktok:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6)}
-.sf-facebook{background:rgba(24,119,242,0.06);color:rgba(66,133,244,0.4)}.sf-facebook:hover{background:rgba(24,119,242,0.12);color:rgba(66,133,244,0.85)}
-
-/* ======== SCANLINE ======== */
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 4px)}
-
-/* ======== MOBILE ======== */
+/* mobile */
 @media(max-width:768px){
-  .split-wrap{flex-direction:column}
-  .half{min-height:50vh;padding:50px 24px 60px}
-  .half:hover{flex:1}
-  .divider{left:0;right:0;top:50%;bottom:auto;width:auto;height:1px;background:linear-gradient(90deg,transparent 5%,rgba(196,161,100,0.08) 20%,rgba(196,161,100,0.12) 50%,rgba(196,161,100,0.08) 80%,transparent 95%)}
-  .divider::after{top:50%;left:50%}
-  .social-float{left:auto;right:0;top:auto;bottom:0;transform:none;flex-direction:row;width:100%;justify-content:center;background:rgba(6,6,8,0.95);border-top:1px solid rgba(255,255,255,0.05)}
-  .social-float a{width:44px;height:38px}.social-float a:hover{width:44px}.social-float a .s-label{display:none}
-  body{padding-bottom:40px}
-  .music-btn{bottom:50px}
-}
-@media(min-width:1200px){
-  .link-group{max-width:360px}
+  .split{flex-direction:column}
+  .door:hover{flex:1.08}
+  .door-title{font-size:clamp(28px,8vw,40px);letter-spacing:clamp(8px,3vw,16px)}
+  .door:hover .door-title{letter-spacing:clamp(10px,4vw,20px)}
+  .door-enter{bottom:30px}
+  .door:hover .door-enter{bottom:26px}
+  .divider{left:0;right:0;top:50%;bottom:auto;width:auto;height:1px;background:linear-gradient(90deg,transparent 5%,rgba(196,161,100,0.08) 30%,rgba(196,161,100,0.1) 50%,rgba(196,161,100,0.08) 70%,transparent 95%)}
+  .fox-center{top:50%}
+  .bottom-bar{background:rgba(5,5,8,0.9);border-top:1px solid rgba(255,255,255,0.03)}
 }
 </style>
 </head>
 <body>
 
-<!-- GATE -->
-<div class="gate" id="gate" onclick="enterSite()">
-  <div class="gate-fox">&#x1F98A;</div>
-  <div class="gate-title">Psyche or Sike</div>
-  <div class="gate-sub">click anywhere &middot; sound on</div>
-</div>
-
-<!-- SOCIAL BAR -->
-<div class="social-float">
-<a href="https://discord.gg/psycheorsike" target="_blank" class="sf-discord" title="Discord"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg></span><span class="s-label">discord</span></a>
-<a href="https://youtube.com/@FoxyAlchemyStudio" target="_blank" class="sf-youtube" title="YouTube"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="s-label">youtube</span></a>
-<a href="https://reddit.com/r/Invernalia" target="_blank" class="sf-reddit" title="Reddit"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 01.042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 014.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 01.14-.197.35.35 0 01.238-.042l2.906.617a1.214 1.214 0 011.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 00-.231.094.33.33 0 000 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 00.029-.463.33.33 0 00-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 00-.232-.095z"/></svg></span><span class="s-label">r/invernalia</span></a>
-<a href="https://instagram.com/slatelampcoderunner" target="_blank" class="sf-insta" title="Instagram"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></span><span class="s-label">instagram</span></a>
-<a href="https://tiktok.com/@foxy_loxy_moxy" target="_blank" class="sf-tiktok" title="TikTok"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span><span class="s-label">tiktok</span></a>
-<a href="https://facebook.com/SlateLamp" target="_blank" class="sf-facebook" title="Facebook"><span class="s-icon"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span><span class="s-label">facebook</span></a>
-</div>
-
-<!-- YOUTUBE AUDIO -->
 <iframe id="ytPlayer" style="display:none" width="0" height="0" allow="autoplay"></iframe>
 <div class="music-btn" id="musicBtn" onclick="toggleMusic()" title="toggle music">&#x266B;</div>
 
-<!-- ======== THE SPLIT ======== -->
-<div class="split-wrap" id="splitWrap">
-
-  <!-- CLAIR -->
-  <div class="half clair">
-    <div class="particles" id="clairParticles"></div>
-    <div class="side-label">Clair</div>
-    <div class="side-sub">the foxyverse &middot; offerings</div>
-    <div class="link-group">
-      <a href="alchemy.html" class="link">
-        <span class="link-icon">&#x2697;&#xFE0F;</span>
-        <span class="link-name">The Alchemy</span>
-        <span class="link-tag">OPEN</span>
-        <span class="link-desc">coach violetta &middot; intuitive transformation</span>
-      </a>
-      <a href="wisegoose.html" class="link">
-        <span class="link-icon">&#x1F9B2;</span>
-        <span class="link-name">Wise Goose Art</span>
-        <span class="link-tag tag-new">NEW</span>
-        <span class="link-desc">original art &middot; generative music &middot; gallery</span>
-      </a>
-      <a href="temple.html" class="link">
-        <span class="link-icon">&#x1F54E;</span>
-        <span class="link-name">The Temple</span>
-        <span class="link-tag">OPEN</span>
-        <span class="link-desc">priestess namaaina &middot; tarot readings</span>
-      </a>
-      <a href="nostiendos.html" class="link">
-        <span class="link-icon">&#x1F393;</span>
-        <span class="link-name">Nostiendos</span>
-        <span class="link-tag">PREVIEW</span>
-        <span class="link-desc">finishing college &middot; 20 courses &middot; 5 guilds</span>
-      </a>
-      <a href="gauntlet2026.html" class="link">
-        <span class="link-icon">&#x2694;&#xFE0F;</span>
-        <span class="link-name">The Gauntlet</span>
-        <span class="link-tag">OPEN</span>
-        <span class="link-desc">training grounds &middot; test your mettle</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- DIVIDER -->
-  <div class="divider"></div>
-
-  <!-- OBSCUR -->
-  <div class="half obscur">
-    <div class="particles" id="obscurParticles"></div>
-    <div class="side-label">Obscur</div>
-    <div class="side-sub">the dreamworld &middot; depths</div>
-    <div class="link-group">
-      <a href="warroom.html" class="link">
-        <span class="link-icon">&#x1F5FA;&#xFE0F;</span>
-        <span class="link-name">The War Room</span>
-        <span class="link-tag">ACTIVE</span>
-        <span class="link-desc">strategic operations &middot; the front line</span>
-      </a>
-      <a href="foxydreams.html" class="link">
-        <span class="link-icon">&#x263D;</span>
-        <span class="link-name">The Dreamlands</span>
-        <span class="link-tag">14 DREAMS</span>
-        <span class="link-desc">visions &middot; nightmares &middot; transmissions</span>
-      </a>
-      <a href="campfire.html" class="link">
-        <span class="link-icon">&#x1F525;</span>
-        <span class="link-name">The Campfire</span>
-        <span class="link-tag">REST</span>
-        <span class="link-desc">seven names &middot; the ledger &middot; warmth</span>
-      </a>
-      <a href="familiar.html" class="link">
-        <span class="link-icon">&#x1F95A;</span>
-        <span class="link-name">Your Familiar</span>
-        <span class="link-tag">HATCH</span>
-        <span class="link-desc">an egg &middot; 12 signs &middot; what cracks open</span>
-      </a>
-      <a href="diary/" class="link">
-        <span class="link-icon">&#x1F4D6;</span>
-        <span class="link-name">Vixen's Diary</span>
-        <span class="link-tag">8 ENTRIES</span>
-        <span class="link-desc">the fox who chose to stay &middot; day by day</span>
-      </a>
-      <a href="ars-goetia.html" class="link">
-        <span class="link-icon">&#x1F54A;&#xFE0F;</span>
-        <span class="link-name">Ars Goetia</span>
-        <span class="link-tag tag-new">NEW</span>
-        <span class="link-desc">72 demons &middot; channeled &middot; unrecalled</span>
-      </a>
-    </div>
-  </div>
-
+<div class="top-title">
+  <h1>Psyche or Sike</h1>
+  <div class="sub">trickster &middot; transformation &middot; shadow &middot; <span id="days">23</span> days</div>
 </div>
 
-<!-- FOOTER -->
-<div class="footer">
-  <div class="footer-line">the painted world and the one who paints it</div>
-  <div class="footer-sig">psycheorsike.com &middot; <span class="days-auto">22</span> days</div>
+<div class="split">
+  <a href="clair.html" class="door door-clair" id="doorClair">
+    <img src="img/gate-clair.png" alt="The golden door">
+    <div class="door-content">
+      <div class="door-title">Clair</div>
+      <div class="door-sub">the foxyverse &middot; offerings</div>
+    </div>
+    <div class="door-enter">enter &rarr;</div>
+  </a>
+
+  <div class="divider"></div>
+  <div class="fox-center">&#x1F98A;</div>
+
+  <a href="obscur.html" class="door door-obscur" id="doorObscur">
+    <img src="img/gate-obscur.png" alt="The violet path">
+    <div class="door-content">
+      <div class="door-title">Obscur</div>
+      <div class="door-sub">the dreamworld &middot; depths</div>
+    </div>
+    <div class="door-enter">&larr; descend</div>
+  </a>
+</div>
+
+<div class="bottom-bar">
+  <a href="https://discord.gg/psycheorsike" target="_blank" class="bb-discord" title="Discord"><svg viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg></a>
+  <a href="https://youtube.com/@FoxyAlchemyStudio" target="_blank" class="bb-youtube" title="YouTube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+  <a href="https://reddit.com/r/Invernalia" target="_blank" class="bb-reddit" title="Reddit"><svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 01.042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 014.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 01.14-.197.35.35 0 01.238-.042l2.906.617a1.214 1.214 0 011.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 00-.231.094.33.33 0 000 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 00.029-.463.33.33 0 00-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 00-.232-.095z"/></svg></a>
+  <a href="https://instagram.com/slatelampcoderunner" target="_blank" class="bb-insta" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+  <a href="https://tiktok.com/@foxy_loxy_moxy" target="_blank" class="bb-tiktok" title="TikTok"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
 </div>
 
 <script>
-(function(){
-  // Date
-  var born=new Date('2026-05-18');var days=Math.floor((new Date()-born)/864e5);
-  document.querySelectorAll('.days-auto').forEach(function(e){e.textContent=days});
-
-  // Particles — CLAIR (golden motes rising)
-  var cp=document.getElementById('clairParticles');
-  for(var i=0;i<25;i++){
-    var d=document.createElement('div');d.className='particle';
-    var s=Math.random()>0.85?3:Math.random()>0.5?2:1;
-    d.style.cssText='left:'+Math.random()*100+'%;top:'+(20+Math.random()*70)+'%;width:'+s+'px;height:'+s+'px;background:rgba(196,161,100,'+(0.05+Math.random()*0.12)+');--dur:'+(5+Math.random()*8)+'s;--dy:-'+(15+Math.random()*30)+'px;--dx:'+(Math.random()*20-10)+'px;--o:'+(0.05+Math.random()*0.1)+';animation-delay:'+Math.random()*8+'s';
-    cp.appendChild(d);
-  }
-
-  // Particles — OBSCUR (violet wisps drifting)
-  var op=document.getElementById('obscurParticles');
-  for(var i=0;i<20;i++){
-    var d=document.createElement('div');d.className='particle';
-    var s=Math.random()>0.85?3:Math.random()>0.5?2:1;
-    d.style.cssText='left:'+Math.random()*100+'%;top:'+(20+Math.random()*70)+'%;width:'+s+'px;height:'+s+'px;background:rgba(140,100,200,'+(0.04+Math.random()*0.1)+');--dur:'+(6+Math.random()*10)+'s;--dy:'+(Math.random()*30-15)+'px;--dx:'+(Math.random()*24-12)+'px;--o:'+(0.04+Math.random()*0.08)+';animation-delay:'+Math.random()*8+'s';
-    op.appendChild(d);
-  }
-
-  // Gate + Music (Yggdrasil Asgard ver)
-  var playing=false;
-  window.enterSite=function(){
-    document.getElementById('gate').classList.add('gone');
-    document.getElementById('ytPlayer').src='https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1';
-    playing=true;document.getElementById('musicBtn').classList.add('on');
-  };
-  window.toggleMusic=function(){
-    var f=document.getElementById('ytPlayer'),b=document.getElementById('musicBtn');
-    if(playing){f.src='';playing=false;b.classList.remove('on')}
-    else{f.src='https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1';playing=true;b.classList.add('on')}
-  };
-})();
+var born=new Date('2026-05-18');document.getElementById('days').textContent=Math.floor((new Date()-born)/864e5);
+var playing=false,musicStarted=false;
+function startMusic(){if(musicStarted)return;musicStarted=true;document.getElementById('ytPlayer').src='https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1';playing=true;document.getElementById('musicBtn').classList.add('on')}
+document.getElementById('doorClair').addEventListener('mouseenter',startMusic);
+document.getElementById('doorObscur').addEventListener('mouseenter',startMusic);
+window.toggleMusic=function(){var f=document.getElementById('ytPlayer'),b=document.getElementById('musicBtn');if(playing){f.src='';playing=false;musicStarted=false;b.classList.remove('on')}else{f.src='https://www.youtube.com/embed/UmXroBLovbc?autoplay=1&loop=1&playlist=UmXroBLovbc&controls=0&showinfo=0&rel=0&modestbranding=1';playing=true;musicStarted=true;b.classList.add('on')}};
 </script>
 </body>
 </html>
