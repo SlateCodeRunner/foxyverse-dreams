@@ -265,7 +265,7 @@ body.bonus-cancer::before{content:'';position:fixed;inset:0;background:rgba(255,
 body.bonus-pisces .page,body.bonus-pisces .map-outer{animation:piscesDrift 8s ease-in-out infinite}
 @keyframes piscesDrift{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
 /* Scorpio: shadow flicker */
-.scorpio-blackout{position:fixed;inset:0;background:#16161d;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.15s}
+.scorpio-blackout{position:fixed;inset:0;background:#06060a;pointer-events:none;z-index:9993;opacity:0;transition:opacity 0.15s}
 /* Aquarius: glitch text */
 .aqua-glitch{display:inline;position:relative}
 .aqua-glitch::after{content:attr(data-t);position:absolute;left:2px;top:0;color:rgba(95,168,211,0.4);clip-path:inset(0 0 0 0);animation:aquaG 0.1s steps(1) forwards}
@@ -305,7 +305,14 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 
   <div class="hero">
     <div class="fox">&#x1F98A;</div>
-    <h1>The Dreamlands</h1>
+    <div style="position:relative;width:100%;height:40vh;min-height:240px;overflow:hidden;margin-bottom:20px">
+<img src="img/card-dreamlands.png" alt="The Dreamlands" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.35) saturate(0.8)">
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,10,0.3) 0%,rgba(6,6,10,0.1) 35%,rgba(6,6,10,0.9) 90%,rgba(6,6,10,1) 100%)"></div>
+<div style="position:absolute;bottom:30px;left:50%;transform:translateX(-50%);text-align:center;z-index:2">
+<h1 style="font-family:Cinzel,serif;font-weight:600;font-size:clamp(28px,5vw,44px);letter-spacing:clamp(6px,2vw,14px);text-transform:uppercase;color:rgba(180,150,220,0.45)">The Dreamlands</h1>
+<div style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:clamp(11px,1.4vw,14px);color:rgba(160,130,200,0.18);letter-spacing:3px;margin-top:4px">visions &middot; nightmares &middot; transmissions</div>
+</div>
+</div>
     <div class="tagline">dreams &middot; games &middot; diary &middot; music</div>
     <div class="intro">where the fox sleeps and the world bends. everything creative lives here.</div>
   </div>
