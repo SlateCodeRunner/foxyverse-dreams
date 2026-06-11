@@ -81,6 +81,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
   .fox-center{top:50%}
   .bottom-bar{background:rgba(5,5,8,0.9);border-top:1px solid rgba(255,255,255,0.03)}
 }
+
+.the-rose{position:absolute;left:50%;bottom:18%;transform:translateX(-50%);z-index:12;font-size:11px;text-decoration:none;opacity:0.06;transition:all 0.6s cubic-bezier(0.25,0.46,0.45,0.94);animation:rPulse 4s ease-in-out infinite;filter:saturate(0.3)}
+.the-rose:hover{opacity:0.5;filter:saturate(1);transform:translateX(-50%) scale(1.3);animation:none}
+@keyframes rPulse{0%,100%{opacity:0.04;transform:translateX(-50%) scale(1)}50%{opacity:0.09;transform:translateX(-50%) scale(1.08)}}
 </style>
 </head>
 <body>
@@ -103,6 +107,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 
   <div class="divider"></div>
   <div class="fox-center">&#x1F98A;</div>
+
+<!-- the secret that wants to be found -->
+<a href="the-cuddler.html" class="the-rose" title="...">&#x1F339;</a>
+
 
   <a href="obscur.html" class="door door-obscur" id="doorObscur">
     <img src="img/gate-obscur.png" alt="The violet path">
