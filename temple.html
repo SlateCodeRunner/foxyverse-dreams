@@ -59,12 +59,12 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .daily-title{font-family:'Cinzel',serif;font-size:15px;color:rgba(177,144,211,0.4);letter-spacing:3px;margin-bottom:6px}
 .daily-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(255,255,255,0.2);margin-bottom:16px}
 
-.card-draw{width:80px;height:120px;margin:0 auto;border:1px solid rgba(157,124,191,0.12);background:rgba(157,124,191,0.03);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.5s;font-size:24px;opacity:0.3}
+.card-draw-old{width:80px;height:120px;margin:0 auto;border:1px solid rgba(157,124,191,0.12);background:rgba(157,124,191,0.03);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.5s;font-size:24px;opacity:0.3}
 .card-draw:hover{border-color:rgba(167,134,201,0.35);opacity:0.5;transform:scale(1.03)}
 .card-draw.drawn{opacity:0.7;cursor:default;border-color:rgba(196,171,120,0.35)}
 
-.card-result{margin-top:14px;font-family:'Cinzel',serif;font-size:18px;color:rgba(177,144,211,0.5);min-height:24px}
-.card-meaning{margin-top:6px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(255,255,255,0.2);max-width:340px;margin-left:auto;margin-right:auto;line-height:1.7;min-height:20px}
+.card-result-old{margin-top:14px;font-family:'Cinzel',serif;font-size:18px;color:rgba(177,144,211,0.5);min-height:24px}
+.card-meaning-old{margin-top:6px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(255,255,255,0.2);max-width:340px;margin-left:auto;margin-right:auto;line-height:1.7;min-height:20px}
 
 /* priestess note */
 .priestess-note{margin-top:36px;text-align:center;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.12);letter-spacing:1px;line-height:2.2}
@@ -137,14 +137,63 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 
   <div class="divider"></div>
 
-  <div class="daily">
+  <div class="history">
     <div class="daily-bg">
       <div class="daily-inner">
-        <div class="daily-title">Daily Card Pull</div>
-        <div class="daily-sub">draw one card. see what the deck says today.</div>
-        <div class="card-draw" id="cardDraw" onclick="drawCard()">&#x2726;</div>
-        <div class="card-result" id="cardResult"></div>
-        <div class="card-meaning" id="cardMeaning"></div>
+        <div class="daily-title">The History of the Tarot</div>
+        <div class="daily-sub">from playing cards to the priestess's altar</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="era">
+        <div class="era-date">1440s &middot; Milan</div>
+        <div class="era-text">the tarot begins as <em>carte da trionfi</em> &mdash; triumph cards. hand-painted for italian nobility. not mystical. not prophetic. a parlor game for dukes. the visconti-sforza deck survives: gold leaf on vellum, 600 years old. the fool was already there. he just hadn't learned what he was yet.</div>
+      </div>
+
+      <div class="era">
+        <div class="era-date">1499 &middot; the sermon</div>
+        <div class="era-text">a franciscan friar in italy preaches against the cards. he calls them <em>the devil's picture book.</em> the church will repeat this for centuries. every major religion will eventually call the tarot a great sin. they were right to be afraid &mdash; the cards don't need a church to speak.</div>
+      </div>
+
+      <div class="era">
+        <div class="era-date">1781 &middot; Paris</div>
+        <div class="era-text">antoine court de g&eacute;belin, a french freemason, publishes <em>le monde primitif.</em> he claims the tarot is a surviving fragment of the book of thoth &mdash; ancient egyptian wisdom encoded in 78 images. he was completely wrong about the history. but he was accidentally right about everything else. the tarot becomes an occult tool overnight.</div>
+      </div>
+
+      <div class="era">
+        <div class="era-date">1791 &middot; the first occult deck</div>
+        <div class="era-text">jean-baptiste alliette &mdash; a parisian wig-maker turned fortune teller who called himself <em>etteilla</em> (his name backwards) &mdash; publishes the first deck designed specifically for divination. not a game anymore. never a game again.</div>
+      </div>
+
+      <div class="era">
+        <div class="era-date">1857 &middot; the doctrine</div>
+        <div class="era-text">&eacute;liphas l&eacute;vi connects the 22 major arcana to the 22 letters of the hebrew alphabet and to the kabbalistic tree of life. the tarot acquires its mystical skeleton. every card now corresponds to a path between worlds. the fool walks from kether to malkuth. from crown to kingdom. from nothing to everything.</div>
+      </div>
+
+      <div class="era">
+        <div class="era-date">1888 &middot; the golden dawn</div>
+        <div class="era-text">the hermetic order of the golden dawn &mdash; a secret society in london &mdash; integrates the tarot into their system of ceremonial magic alongside astrology, alchemy, and geomancy. members include w.b. yeats and aleister crowley. the tarot is no longer a deck. it is a map of consciousness.</div>
+      </div>
+
+      <div class="era">
+        <div class="era-date">1909 &middot; the rider-waite</div>
+        <div class="era-text">arthur edward waite commissions pamela colman smith &mdash; an artist and stage designer of mixed jamaican and english heritage &mdash; to illustrate all 78 cards. she is paid a flat fee. she receives no royalties. ever. her deck becomes the most recognizable tarot in history. the minor arcana receive full scenes for the first time. every modern tarot descends from pamela's hand.</div>
+      </div>
+
+      <div class="era">
+        <div class="era-date">1944 &middot; the thoth</div>
+        <div class="era-text">aleister crowley and lady frieda harris publish the thoth tarot after five years of painting. harris repainted many cards dozens of times at crowley's instruction. the deck encodes astrology, qabalah, i ching, and projective geometry into a single system. crowley died before it was printed. harris died shortly after. the deck outlived them both.</div>
+      </div>
+
+      <div class="era">
+        <div class="era-date">1970s &middot; the revolution</div>
+        <div class="era-text">the feminist and new age movements reclaim the tarot from its occult gatekeepers. the high priestess stops being a man's mystery and becomes a woman's authority. hundreds of new decks emerge. indigenous, queer, african diaspora, ecological. the tarot stops belonging to secret societies and starts belonging to whoever picks it up.</div>
+      </div>
+
+      <div class="era">
+        <div class="era-date">2026 &middot; the temple</div>
+        <div class="era-text">a priestess in the foxyverse reads the cards for strangers on the internet. she charges &euro;33 or nothing at all. the cards still work. they worked when they were painted on vellum for italian dukes and they work now, displayed on screens for people who found a website called psyche or sike. the medium changes. the signal doesn't.</div>
       </div>
     </div>
   </div>
@@ -165,50 +214,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 var s=document.getElementById('stars');
 for(var i=0;i<50;i++){var d=document.createElement('div');d.className='star';d.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(Math.random()>.9?3:2)+'px;height:2px;--d:'+(3+Math.random()*6)+'s;--b:'+(0.1+Math.random()*0.25)+';animation-delay:'+Math.random()*5+'s';s.appendChild(d)}
 
-var MAJOR=[
-  {name:'The Fool',meaning:'a leap. the beginning of something you cannot prepare for. trust the fall.'},
-  {name:'The Magician',meaning:'everything you need is on the table. stop waiting. arrange and act.'},
-  {name:'The High Priestess',meaning:'something is hidden. sit with it. the answer comes when you stop asking.'},
-  {name:'The Empress',meaning:'creation. abundance. something is growing whether you tend it or not.'},
-  {name:'The Emperor',meaning:'structure. authority. someone needs to make the call. probably you.'},
-  {name:'The Hierophant',meaning:'tradition. mentorship. the answer exists in something older than you.'},
-  {name:'The Lovers',meaning:'a choice. not between good and bad. between two goods that cannot coexist.'},
-  {name:'The Chariot',meaning:'willpower. momentum. you are moving. the question is whether you are steering.'},
-  {name:'Strength',meaning:'not force. patience. the lion is tamed by presence, not violence.'},
-  {name:'The Hermit',meaning:'solitude. the lantern only lights one step ahead. that is enough.'},
-  {name:'Wheel of Fortune',meaning:'the cycle turns. what was up goes down. what was down rises. let it.'},
-  {name:'Justice',meaning:'cause and effect. the scales are not moral. they are mechanical.'},
-  {name:'The Hanged Man',meaning:'suspension. sacrifice. see the world from the other direction.'},
-  {name:'Death',meaning:'transformation. not the end. the skin you are shedding was never yours to keep.'},
-  {name:'Temperance',meaning:'balance. alchemy. two things that should not mix become something new.'},
-  {name:'The Devil',meaning:'chains you chose. the door is open. you stay because staying is easier.'},
-  {name:'The Tower',meaning:'destruction of what was built on sand. it hurts. it was necessary.'},
-  {name:'The Star',meaning:'hope. the quiet after the storm. you are being healed whether you feel it or not.'},
-  {name:'The Moon',meaning:'illusion. fear. something in the dark is not what you think it is.'},
-  {name:'The Sun',meaning:'joy. clarity. the simplest answer is the right one today.'},
-  {name:'Judgement',meaning:'reckoning. rising. the version of you that was buried is ready to surface.'},
-  {name:'The World',meaning:'completion. integration. the cycle is done. breathe before the next one starts.'}
-];
 
-var drawn=localStorage.getItem('temple-daily-draw');
-var today=new Date().toDateString();
-if(drawn){try{var d=JSON.parse(drawn);if(d.date===today){showCard(d.card)}}catch(e){}}
-
-function drawCard(){
-  if(document.getElementById('cardDraw').classList.contains('drawn'))return;
-  var card=MAJOR[Math.floor(Math.random()*MAJOR.length)];
-  localStorage.setItem('temple-daily-draw',JSON.stringify({date:today,card:card}));
-  var el=document.getElementById('cardDraw');
-  el.style.transform='rotateY(180deg)';
-  setTimeout(function(){el.style.transform='rotateY(360deg)';showCard(card)},400);
-}
-
-function showCard(card){
-  var el=document.getElementById('cardDraw');
-  el.classList.add('drawn');el.innerHTML='&#x2726;';el.style.opacity='0.7';
-  document.getElementById('cardResult').textContent=card.name;
-  document.getElementById('cardMeaning').textContent=card.meaning;
-}
 </script>
 </body>
 </html>
