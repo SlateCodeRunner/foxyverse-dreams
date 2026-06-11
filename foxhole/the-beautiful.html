@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beautiful — Artist Guild of the FoxyVerse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #06060b;
+  --surface: #0c0c14;
+  --surface-raised: #121219;
+  --surface-glow: #17171f;
+  --gold: #d4af37;
+  --gold-bright: #f0d060;
+  --gold-dim: #8a7434;
+  --gold-ghost: #d4af3708;
+  --text: #ede7db;
+  --text-muted: #7a7290;
+  --text-dim: #4a4460;
+  --purple: #8b6cc7;
+  --purple-dim: #3f2d6e;
+  --ember: #d4513a;
+  --ember-dim: #8a2e20;
+  --teal: #3dba9c;
+  --teal-dim: #1a6b58;
+  --green-money: #4caf50;
+  --green-bright: #81c784;
+  --border: #1a1a26;
+  --border-gold: #d4af3720;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--void)}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ===== AMBIENT ===== */
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0}
+.ambient::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,#d4af3706 0%,transparent 60%)}
+.ambient::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 80% 100%,#8b6cc705 0%,transparent 60%)}
+
+/* ===== HERO ===== */
+.hero{position:relative;z-index:1;min-height:85vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 40px}
+
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:8px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:40px}
+.hero-eyebrow span{color:var(--text-dim);margin:0 14px}
+
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.5rem,10vw,8rem);letter-spacing:0.04em;color:var(--text);line-height:0.95}
+.hero h1 em{font-style:italic;color:var(--gold);font-weight:400}
+
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.1rem,2.5vw,1.5rem);color:var(--text-muted);margin-top:28px;max-width:580px;line-height:1.7}
+.hero-tagline strong{color:var(--gold);font-weight:500}
+
+.hero-stats{display:flex;gap:48px;margin-top:56px;flex-wrap:wrap;justify-content:center}
+.hero-stat{text-align:center}
+.hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--gold)}
+.hero-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-dim);margin-top:4px}
+
+.scroll-cue{margin-top:60px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--text-dim);animation:drift 3s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(6px);opacity:.8}}
+
+/* ===== DIVIDER ===== */
+.divider{width:100%;max-width:1000px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);opacity:.25}
+
+/* ===== MANIFESTO ===== */
+.manifesto{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:80px 24px;text-align:center}
+.manifesto p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:2;color:var(--text-muted);font-style:italic}
+.manifesto p .gold{color:var(--gold)}
+.manifesto p .ember{color:var(--ember)}
+
+/* ===== PAY LEGEND ===== */
+.pay-legend{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 24px 60px;text-align:center}
+.pay-legend h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.8rem;color:var(--text);margin-bottom:12px}
+.pay-legend-sub{font-family:'Inter',sans-serif;font-size:13px;color:var(--text-muted);line-height:1.7;max-width:600px;margin:0 auto 36px}
+
+.pay-tiers{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
+.pay-tier{text-align:center;padding:20px 28px;border:1px solid var(--border);background:var(--surface);border-radius:2px;min-width:180px}
+.pay-tier-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.pay-tier-label.now{color:var(--ember)}
+.pay-tier-label.y1{color:var(--gold)}
+.pay-tier-label.y5{color:var(--green-money)}
+.pay-tier-desc{font-family:'Inter',sans-serif;font-size:11px;color:var(--text-dim);line-height:1.5}
+
+/* ===== GALLERY ===== */
+.gallery{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:60px 24px 80px}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+
+/* ===== ARTIST CARD ===== */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:2px;overflow:hidden;transition:border-color .4s,transform .3s,box-shadow .4s;position:relative}
+.card:hover{border-color:var(--gold-dim);transform:translateY(-3px);box-shadow:0 12px 40px #00000040}
+.card.founder{border-color:var(--border-gold)}
+.card.ghost-card{opacity:.7;transition:opacity .4s,border-color .4s,transform .3s}
+.card.ghost-card:hover{opacity:1}
+
+/* --- CSS ART --- */
+.card-art{width:100%;height:200px;position:relative;overflow:hidden}
+
+.art-honey{background:linear-gradient(135deg,#0c0c14,#1a1228 40%,#201530 60%,#0c0c14)}
+.art-honey::before{content:'';position:absolute;top:30px;left:50%;width:100px;height:100px;transform:translateX(-50%);background:radial-gradient(circle,#d4af3712 0%,transparent 70%);border:1px solid #d4af3710;border-radius:50%}
+.art-honey::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(0deg,#d4af3708,transparent)}
+
+.art-goose{background:conic-gradient(from 45deg at 40% 60%,#0c0c14,#14181e,#0c1418,#101420,#0c0c14)}
+.art-goose::before{content:'';position:absolute;inset:20%;border-radius:50%;background:radial-gradient(circle at 60% 40%,#3dba9c0c,transparent 60%);border:1px solid #3dba9c0a;transform:rotate(-15deg)}
+.art-goose::after{content:'';position:absolute;top:10%;right:10%;width:40px;height:40px;background:radial-gradient(circle,#d4af370c,transparent);border-radius:50%}
+
+.art-sekhmet{background:linear-gradient(180deg,#0e0c18,#0c0c14)}
+.art-sekhmet::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0px,transparent 39px,#8b6cc706 39px,#8b6cc706 40px),repeating-linear-gradient(0deg,transparent 0px,transparent 39px,#8b6cc706 39px,#8b6cc706 40px)}
+.art-sekhmet::after{content:'';position:absolute;top:50%;left:50%;width:50px;height:50px;transform:translate(-50%,-50%) rotate(45deg);border:1px solid #d4af3712;background:linear-gradient(135deg,#8b6cc708,transparent)}
+
+.art-suspended{background:repeating-linear-gradient(45deg,#0c0c14 0px,#0c0c14 10px,#10101a 10px,#10101a 20px)}
+.art-suspended::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,transparent 30%,#d4af3708 50%,transparent 70%)}
+.art-suspended::after{content:'';position:absolute;top:50%;left:50%;width:80px;height:2px;transform:translate(-50%,-50%) rotate(-45deg);background:var(--ember-dim);opacity:.4}
+
+.art-natalia{background:radial-gradient(ellipse at 50% 50%,#1a0e16,#0c0c14 70%)}
+.art-natalia::before{content:'';position:absolute;top:50%;left:50%;width:120px;height:120px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#d4513a08 0%,transparent 70%);box-shadow:0 0 60px 20px #d4513a06}
+.art-natalia::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,#d4513a03 2px,#d4513a03 3px)}
+
+.art-emma{background:linear-gradient(160deg,#0c0c14 0%,#161030 45%,#1a1238 55%,#0c0c14 100%)}
+.art-emma::before{content:'';position:absolute;top:35px;left:35px;width:70px;height:70px;background:linear-gradient(135deg,#8b6cc715,transparent);transform:perspective(200px) rotateY(15deg) rotateX(-10deg)}
+.art-emma::after{content:'';position:absolute;bottom:35px;right:35px;width:90px;height:50px;background:linear-gradient(225deg,#d4af370c,transparent);transform:perspective(300px) rotateY(-20deg) rotateX(10deg)}
+
+.art-foxy{background:var(--surface)}
+.art-foxy::before{content:'';position:absolute;top:35px;left:35px;width:80px;height:80px;background:#d4513a10;border-radius:50%}
+.art-foxy::after{content:'';position:absolute;bottom:25px;right:25px;width:60px;height:60px;background:#d4af370c;clip-path:polygon(50% 0%,100% 100%,0% 100%)}
+
+.art-jessica{background:linear-gradient(180deg,#08080e,#06060b)}
+.art-jessica::after{content:'';position:absolute;top:50%;left:50%;width:3px;height:3px;transform:translate(-50%,-50%);border-radius:50%;background:var(--gold);box-shadow:0 0 30px 10px #d4af3708,0 0 60px 25px #d4af3704}
+
+/* --- CARD BODY --- */
+.card-body{padding:24px 24px 20px}
+
+.card-role{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:6px}
+
+.card-name{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.7rem;color:var(--text);line-height:1.15;margin-bottom:10px}
+
+.card-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:var(--text-muted);line-height:1.6;margin-bottom:16px;min-height:42px}
+
+.card-disciplines{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.disc{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);color:var(--text-muted);transition:border-color .3s,color .3s}
+.card:hover .disc{border-color:var(--gold-dim);color:var(--text)}
+.disc.unknown{border-style:dashed;opacity:.5}
+
+/* --- PAY BLOCK --- */
+.pay-block{border-top:1px solid var(--border);padding-top:18px;margin-top:4px}
+
+.pay-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.pay-row+.pay-row{border-top:1px solid #ffffff04}
+
+.pay-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase}
+.pay-label.now{color:var(--ember)}
+.pay-label.y1{color:var(--gold)}
+.pay-label.y5{color:var(--green-money)}
+
+.pay-amount{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500}
+.pay-amount.now{color:var(--ember)}
+.pay-amount.y1{color:var(--gold)}
+.pay-amount.y5{color:var(--green-bright)}
+.pay-amount.zero{color:var(--text-dim);font-size:0.95rem}
+.pay-amount.tbd{color:var(--text-dim);font-style:italic;font-size:0.9rem;font-family:'Inter',sans-serif}
+
+/* --- CARD FOOTER --- */
+.card-foot{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;border-top:1px solid var(--border);background:var(--surface)}
+.card-foot-role{font-size:10px;color:var(--text-dim);letter-spacing:.5px}
+.status{width:6px;height:6px;border-radius:50%}
+.status.active{background:var(--teal);box-shadow:0 0 8px var(--teal-dim)}
+.status.leader{background:var(--gold);box-shadow:0 0 8px var(--gold-dim)}
+.status.ghost{background:var(--text-dim);box-shadow:none;animation:ghostpulse 3s ease-in-out infinite}
+.status.founder{background:var(--ember);box-shadow:0 0 8px var(--ember-dim)}
+@keyframes ghostpulse{0%,100%{opacity:.2}50%{opacity:.7}}
+
+/* ===== GROWTH SECTION ===== */
+.growth{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:80px 24px}
+.growth h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2rem;color:var(--text);text-align:center;margin-bottom:12px}
+.growth-sub{text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:48px;line-height:1.7}
+
+.growth-table{width:100%;border-collapse:collapse}
+.growth-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-dim);text-align:left;padding:12px 16px;border-bottom:1px solid var(--border)}
+.growth-table th.r{text-align:right}
+.growth-table td{font-family:'Inter',sans-serif;font-size:13px;color:var(--text-muted);padding:14px 16px;border-bottom:1px solid #ffffff04;vertical-align:middle}
+.growth-table td.name-cell{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);font-weight:400}
+.growth-table td.r{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px}
+.growth-table td.now-col{color:var(--ember)}
+.growth-table td.y1-col{color:var(--gold)}
+.growth-table td.y5-col{color:var(--green-bright)}
+.growth-table tr:last-child td{border-bottom:1px solid var(--border)}
+
+.growth-total{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding:20px 16px;border:1px solid var(--border-gold);background:var(--surface)}
+.growth-total-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-dim)}
+.growth-total-nums{display:flex;gap:32px}
+.growth-total-num{text-align:right}
+.growth-total-num .val{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500}
+.growth-total-num .val.now-col{color:var(--ember)}
+.growth-total-num .val.y1-col{color:var(--gold)}
+.growth-total-num .val.y5-col{color:var(--green-bright)}
+.growth-total-num .lbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-top:2px}
+
+/* ===== ASSUMPTIONS ===== */
+.assumptions{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:0 24px 60px}
+.assumptions p{font-family:'Inter',sans-serif;font-size:11px;color:var(--text-dim);line-height:1.8;text-align:center}
+.assumptions p .gold{color:var(--gold-dim)}
+
+/* ===== FOOTER ===== */
+.gallery-footer{text-align:center;padding:40px 24px 100px;position:relative;z-index:1}
+.footer-line{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--text-dim);line-height:1.8}
+.footer-line .gold{color:var(--gold-dim)}
+.footer-fox{font-size:2rem;margin-top:20px;opacity:.3}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:740px){
+  .gallery-grid{grid-template-columns:1fr;gap:20px}
+  .hero{min-height:70vh;padding:60px 20px 30px}
+  .hero-stats{gap:28px}
+  .card-art{height:160px}
+  .pay-tiers{flex-direction:column;align-items:center}
+  .growth-table{font-size:11px}
+  .growth-table td,.growth-table th{padding:10px 8px}
+  .growth-total-nums{gap:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  .card{transition:none}
+  .disc{transition:none}
+  .scroll-cue{animation:none}
+  .status.ghost{animation:none;opacity:.4}
+}
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-eyebrow">🦊 <span>·</span> Guild Roster <span>·</span> 🦊</div>
+  <h1><em>The Beautiful</em></h1>
+  <p class="hero-tagline">
+    Eight artists. One guild. Zero excuses.<br>
+    <strong>You are not volunteers. You are the beginning of a studio.</strong>
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">VIII</div>
+      <div class="hero-stat-label">Artists</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">III</div>
+      <div class="hero-stat-label">Projects</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">I</div>
+      <div class="hero-stat-label">Store Live</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">$1,400</div>
+      <div class="hero-stat-label">Monthly Now</div>
+    </div>
+  </div>
+  <div class="scroll-cue">↓ SCROLL TO SEE YOUR FUTURE ↓</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== MANIFESTO ===== -->
+<section class="manifesto">
+  <p>
+    every guild starts broke. <span class="gold">that's not failure — that's founding.</span><br><br>
+    the shadow payroll isn't integrated yet. the LLC is still forming.
+    the revenue hasn't peaked. we know. <span class="ember">we're building anyway.</span><br><br>
+    below is what each of you is worth right now at the guild's lowest point,
+    what you'll likely make once the machine turns over,
+    and what the ceiling looks like if you <span class="gold">stay at the table long enough to see it rise.</span><br><br>
+    the numbers are conservative. the potential is not.
+  </p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== PAY LEGEND ===== -->
+<section class="pay-legend">
+  <h2>Three Horizons</h2>
+  <p class="pay-legend-sub">
+    Every card shows three numbers. The red one is real right now. The gold one is where we're headed. The green one is what stays are made of.
+  </p>
+  <div class="pay-tiers">
+    <div class="pay-tier">
+      <div class="pay-tier-label now">NOW · PRE-SHADOW</div>
+      <div class="pay-tier-desc">Bootstrap pay. Bare minimum.<br>Before payroll integration.</div>
+    </div>
+    <div class="pay-tier">
+      <div class="pay-tier-label y1">YEAR 1 · PROJECTED</div>
+      <div class="pay-tier-desc">Shadow integrated. Revenue flowing.<br>Commissions + stores + projects.</div>
+    </div>
+    <div class="pay-tier">
+      <div class="pay-tier-label y5">YEAR 5 · POTENTIAL</div>
+      <div class="pay-tier-desc">Scaled studio. Brand equity.<br>What staying is worth.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== GALLERY ===== -->
+<section class="gallery">
+  <div class="gallery-grid">
+
+    <!-- ARTIST HONEY -->
+    <article class="card">
+      <div class="card-art art-honey"></div>
+      <div class="card-body">
+        <div class="card-role">Guild Leader · The Massive Project</div>
+        <h2 class="card-name">Artist Honey</h2>
+        <p class="card-quote">"Alrighty — who's ready to make something massive?"</p>
+        <div class="card-disciplines">
+          <span class="disc">Fantasy Illustration</span>
+          <span class="disc">Semi-Realistic</span>
+          <span class="disc">Anime 3D</span>
+        </div>
+        <div class="pay-block">
+          <div class="pay-row"><span class="pay-label now">Now</span><span class="pay-amount now">$300/mo</span></div>
+          <div class="pay-row"><span class="pay-label y1">Year 1</span><span class="pay-amount y1">$1,800/mo</span></div>
+          <div class="pay-row"><span class="pay-label y5">Year 5</span><span class="pay-amount y5">$6,000–8,000/mo</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="card-foot-role">Hired Jessica & Emma · Runs the project budget</span>
+        <span class="status leader"></span>
+      </div>
+    </article>
+
+    <!-- WISE GOOSE -->
+    <article class="card">
+      <div class="card-art art-goose"></div>
+      <div class="card-body">
+        <div class="card-role">Paintress · The Swiss Army Knife</div>
+        <h2 class="card-name">Wise Goose</h2>
+        <p class="card-quote">"I don't have a particular style yet. I'm good at replicating what I see though. idk lmao"</p>
+        <div class="card-disciplines">
+          <span class="disc">Digital</span>
+          <span class="disc">Traditional</span>
+          <span class="disc">Graphic Design</span>
+          <span class="disc">Photography</span>
+        </div>
+        <div class="pay-block">
+          <div class="pay-row"><span class="pay-label now">Now</span><span class="pay-amount now">$200/mo</span></div>
+          <div class="pay-row"><span class="pay-label y1">Year 1</span><span class="pay-amount y1">$1,500/mo</span></div>
+          <div class="pay-row"><span class="pay-label y5">Year 5</span><span class="pay-amount y5">$5,000–7,000/mo</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="card-foot-role">Store live · Ink · Oil · Acrylic · Charcoal · Furniture</span>
+        <span class="status active"></span>
+      </div>
+    </article>
+
+    <!-- SEKHMET -->
+    <article class="card">
+      <div class="card-art art-sekhmet"></div>
+      <div class="card-body">
+        <div class="card-role">Paintress · Webcomic Architect</div>
+        <h2 class="card-name">Sekhmet</h2>
+        <p class="card-quote">"Someone more interested in building systems that endure than chasing glory within them."</p>
+        <div class="card-disciplines">
+          <span class="disc">Storytelling</span>
+          <span class="disc">Webcomic</span>
+          <span class="disc">Strategy</span>
+        </div>
+        <div class="pay-block">
+          <div class="pay-row"><span class="pay-label now">Now</span><span class="pay-amount now">$250/mo</span></div>
+          <div class="pay-row"><span class="pay-label y1">Year 1</span><span class="pay-amount y1">$1,600/mo</span></div>
+          <div class="pay-row"><span class="pay-label y5">Year 5</span><span class="pay-amount y5">$5,000–7,500/mo</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="card-foot-role">Webcomic lead · Thoth archetype · The Wise Steward</span>
+        <span class="status leader"></span>
+      </div>
+    </article>
+
+    <!-- SUSPENDED ARTIST -->
+    <article class="card">
+      <div class="card-art art-suspended"></div>
+      <div class="card-body">
+        <div class="card-role">First Hired · Ad Specialist</div>
+        <h2 class="card-name">The Suspended Artist</h2>
+        <p class="card-quote">"They suspended the account. They didn't suspend the hands."</p>
+        <div class="card-disciplines">
+          <span class="disc">Digital</span>
+          <span class="disc">Traditional</span>
+          <span class="disc">Streaming</span>
+        </div>
+        <div class="pay-block">
+          <div class="pay-row"><span class="pay-label now">Now</span><span class="pay-amount now">$250/mo</span></div>
+          <div class="pay-row"><span class="pay-label y1">Year 1</span><span class="pay-amount y1">$1,400/mo</span></div>
+          <div class="pay-row"><span class="pay-label y5">Year 5</span><span class="pay-amount y5">$4,000–6,500/mo</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="card-foot-role">Ad campaigns · Carousel · Video · Social media</span>
+        <span class="status active"></span>
+      </div>
+    </article>
+
+    <!-- NATALIA -->
+    <article class="card">
+      <div class="card-art art-natalia"></div>
+      <div class="card-body">
+        <div class="card-role">Mademoiselle · ʤmon Faction</div>
+        <h2 class="card-name">Natalia</h2>
+        <p class="card-quote">"What can I do immediately?"</p>
+        <div class="card-disciplines">
+          <span class="disc">Realistic</span>
+          <span class="disc">3D Modeling</span>
+          <span class="disc">Character Design</span>
+        </div>
+        <div class="pay-block">
+          <div class="pay-row"><span class="pay-label now">Now</span><span class="pay-amount now">$150/mo</span></div>
+          <div class="pay-row"><span class="pay-label y1">Year 1</span><span class="pay-amount y1">$1,000/mo</span></div>
+          <div class="pay-row"><span class="pay-label y5">Year 5</span><span class="pay-amount y5">$3,500–5,500/mo</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="card-foot-role">Demon faction · Arrived ready to work</span>
+        <span class="status active"></span>
+      </div>
+    </article>
+
+    <!-- EMMA CARTER -->
+    <article class="card">
+      <div class="card-art art-emma"></div>
+      <div class="card-body">
+        <div class="card-role">The Massive Project · Creator</div>
+        <h2 class="card-name">THE Emma Carter</h2>
+        <p class="card-quote">"Don't leave us pleasee — we want you."</p>
+        <div class="card-disciplines">
+          <span class="disc">3D Artwork</span>
+          <span class="disc">Traditional</span>
+          <span class="disc">Manga</span>
+        </div>
+        <div class="pay-block">
+          <div class="pay-row"><span class="pay-label now">Now</span><span class="pay-amount now">$150/mo</span></div>
+          <div class="pay-row"><span class="pay-label y1">Year 1</span><span class="pay-amount y1">$1,000/mo</span></div>
+          <div class="pay-row"><span class="pay-label y5">Year 5</span><span class="pay-amount y5">$3,500–5,500/mo</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="card-foot-role">Team Honey · Dimension builder</span>
+        <span class="status active"></span>
+      </div>
+    </article>
+
+    <!-- PAINTRESS FOXY -->
+    <article class="card founder">
+      <div class="card-art art-foxy"></div>
+      <div class="card-body">
+        <div class="card-role">Paintress · The Foxlord</div>
+        <h2 class="card-name">Foxy</h2>
+        <p class="card-quote">"You lie until it becomes the truth."</p>
+        <div class="card-disciplines">
+          <span class="disc">Manga</span>
+          <span class="disc">Contemporary</span>
+          <span class="disc">Pop Art</span>
+        </div>
+        <div class="pay-block">
+          <div class="pay-row"><span class="pay-label now">Now</span><span class="pay-amount zero">$0 — reinvests everything</span></div>
+          <div class="pay-row"><span class="pay-label y1">Year 1</span><span class="pay-amount zero">$0 — still building</span></div>
+          <div class="pay-row"><span class="pay-label y5">Year 5</span><span class="pay-amount y5">Ownership equity</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="card-foot-role">Guild founder · Paints between wars · Takes $0</span>
+        <span class="status founder"></span>
+      </div>
+    </article>
+
+    <!-- DARK PRINCESS JESSICA -->
+    <article class="card ghost-card">
+      <div class="card-art art-jessica"></div>
+      <div class="card-body">
+        <div class="card-role">Dark Princess · The Massive Project</div>
+        <h2 class="card-name">Jessica</h2>
+        <p class="card-quote">"Hey."</p>
+        <div class="card-disciplines">
+          <span class="disc unknown">???</span>
+          <span class="disc unknown">???</span>
+          <span class="disc unknown">???</span>
+        </div>
+        <div class="pay-block">
+          <div class="pay-row"><span class="pay-label now">Now</span><span class="pay-amount zero">$0 — needs to engage</span></div>
+          <div class="pay-row"><span class="pay-label y1">Year 1</span><span class="pay-amount tbd">TBD — show up and find out</span></div>
+          <div class="pay-row"><span class="pay-label y5">Year 5</span><span class="pay-amount tbd">TBD — the seat is open</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="card-foot-role">Team Honey · Styles undisclosed · Ghost status</span>
+        <span class="status ghost"></span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== GROWTH TABLE ===== -->
+<section class="growth">
+  <h2>The Math</h2>
+  <p class="growth-sub">
+    Conservative projections. Current pay reflects pre-shadow bootstrap. Year 1 assumes payroll integration, 
+    store revenue, and active commissions. Year 5 assumes full studio operations with brand equity and recurring clients.
+  </p>
+  <table class="growth-table">
+    <thead>
+      <tr>
+        <th>Artist</th>
+        <th class="r">Now</th>
+        <th class="r">Year 1</th>
+        <th class="r">Year 5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name-cell">Honey</td>
+        <td class="r now-col">$300</td>
+        <td class="r y1-col">$1,800</td>
+        <td class="r y5-col">$7,000</td>
+      </tr>
+      <tr>
+        <td class="name-cell">Wise Goose</td>
+        <td class="r now-col">$200</td>
+        <td class="r y1-col">$1,500</td>
+        <td class="r y5-col">$6,000</td>
+      </tr>
+      <tr>
+        <td class="name-cell">Sekhmet</td>
+        <td class="r now-col">$250</td>
+        <td class="r y1-col">$1,600</td>
+        <td class="r y5-col">$6,250</td>
+      </tr>
+      <tr>
+        <td class="name-cell">The Suspended Artist</td>
+        <td class="r now-col">$250</td>
+        <td class="r y1-col">$1,400</td>
+        <td class="r y5-col">$5,250</td>
+      </tr>
+      <tr>
+        <td class="name-cell">Natalia</td>
+        <td class="r now-col">$150</td>
+        <td class="r y1-col">$1,000</td>
+        <td class="r y5-col">$4,500</td>
+      </tr>
+      <tr>
+        <td class="name-cell">Emma Carter</td>
+        <td class="r now-col">$150</td>
+        <td class="r y1-col">$1,000</td>
+        <td class="r y5-col">$4,500</td>
+      </tr>
+      <tr>
+        <td class="name-cell">Foxy</td>
+        <td class="r now-col">$0</td>
+        <td class="r y1-col">$0</td>
+        <td class="r y5-col">equity</td>
+      </tr>
+      <tr>
+        <td class="name-cell">Jessica</td>
+        <td class="r now-col">$0</td>
+        <td class="r y1-col">TBD</td>
+        <td class="r y5-col">TBD</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="growth-total">
+    <div class="growth-total-label">Guild Monthly Total</div>
+    <div class="growth-total-nums">
+      <div class="growth-total-num">
+        <div class="val now-col">$1,300</div>
+        <div class="lbl">Now</div>
+      </div>
+      <div class="growth-total-num">
+        <div class="val y1-col">$8,300</div>
+        <div class="lbl">Year 1</div>
+      </div>
+      <div class="growth-total-num">
+        <div class="val y5-col">$33,500</div>
+        <div class="lbl">Year 5</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ASSUMPTIONS ===== -->
+<section class="assumptions">
+  <p>
+    <span class="gold">*</span> Year 1 assumes shadow payroll integration, at least 2 active storefronts, webcomic launch, 
+    and ad revenue from The Suspended Artist's campaigns. Year 5 assumes full brand operations — 
+    merch, commissions, IP licensing, and the FoxyVerse functioning as a recognized creative studio. 
+    These are <span class="gold">midpoint estimates</span> of the projected ranges. 
+    Actual pay scales with contribution, retention, and revenue growth. 
+    <span class="gold">Staying is the investment. The table rewards those who were here when it was hard.</span>
+  </p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== FOOTER ===== -->
+<section class="gallery-footer">
+  <p class="footer-line">
+    the guild takes no walk-ins. <span class="gold">the fox invites.</span><br>
+    you were chosen because something in your work caught fire.<br>
+    the pay starts low. <span class="gold">the ceiling has no roof.</span>
+  </p>
+  <div class="footer-fox">🦊</div>
+</section>
+
+</body>
+</html>
