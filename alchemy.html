@@ -47,6 +47,33 @@ nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 40px;display:flex;j
 .service-bullet{color:var(--coral);font-size:18px;margin-top:2px;flex-shrink:0}
 .service-text{font-size:14px;color:var(--text-2);line-height:1.6}
 
+/* PRICING */
+.pricing{max-width:1100px;margin:0 auto;padding:80px 60px}
+
+.one-time{margin-bottom:48px}
+.one-time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.ot-item{padding:20px;background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;gap:6px;transition:border-color .3s}
+.ot-item:hover{border-color:var(--coral-dim)}
+.ot-name{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;color:var(--text)}
+.ot-detail{font-size:11px;color:var(--text-3)}
+.ot-price{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:600;color:var(--coral);margin-top:auto;padding-top:8px}
+
+.packages-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.pkg{padding:36px 32px;background:var(--surface);border:1px solid var(--border);transition:border-color .3s,transform .3s;position:relative;display:flex;flex-direction:column}
+.pkg:hover{border-color:var(--coral-dim);transform:translateY(-2px)}
+.pkg.featured{border-color:var(--coral);background:linear-gradient(180deg,rgba(255,107,107,0.04),var(--surface))}
+.pkg-badge{position:absolute;top:-1px;right:24px;background:var(--coral);color:var(--void);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px}
+.pkg-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.15rem;color:var(--text);margin-bottom:4px}
+.pkg-price{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:300;color:var(--coral);margin-bottom:4px}
+.pkg-price span{font-size:.9rem;color:var(--text-3);font-weight:400}
+.pkg-list{list-style:none;padding:0;margin-top:18px;flex:1}
+.pkg-list li{font-size:12.5px;color:var(--text-2);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.pkg-list li::before{content:'✓';color:var(--coral);font-size:11px;flex-shrink:0;margin-top:1px}
+.pkg-cta{display:block;text-align:center;margin-top:24px;padding:12px;border:1px solid var(--coral);color:var(--coral);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s}
+.pkg-cta:hover{background:var(--coral);color:var(--void)}
+.pkg.featured .pkg-cta{background:var(--coral);color:var(--void)}
+.pkg.featured .pkg-cta:hover{background:var(--coral-dim)}
+
 /* PROCESS */
 .process{max-width:1100px;margin:0 auto;padding:80px 60px}
 .process-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}
@@ -72,8 +99,9 @@ nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 40px;display:flex;j
 
 @media(max-width:700px){
   .hero{padding:100px 24px 60px}
-  .expertise,.services,.process,.statement,.contact{padding-left:24px;padding-right:24px}
-  .expertise-grid,.service-list,.process-steps{grid-template-columns:1fr}
+  .expertise,.services,.process,.statement,.contact,.pricing{padding-left:24px;padding-right:24px}
+  .expertise-grid,.service-list,.process-steps,.packages-grid{grid-template-columns:1fr}
+  .one-time-grid{grid-template-columns:1fr 1fr}
   nav{padding:16px 20px}
   .nav-links{gap:16px}
 }
@@ -86,6 +114,7 @@ nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 40px;display:flex;j
   <div class="nav-links">
     <a href="#expertise">Expertise</a>
     <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
     <a href="#process">Process</a>
     <a href="#contact">Contact</a>
   </div>
@@ -193,6 +222,104 @@ nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 40px;display:flex;j
       <span class="service-bullet">→</span>
       <span class="service-text">Digital Marketing Support</span>
     </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="pricing" id="pricing">
+  <div class="section-label">Pricing</div>
+
+  <div class="one-time">
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1rem;color:var(--text);margin-bottom:16px">Individual One-Time Services</div>
+    <div class="one-time-grid">
+      <div class="ot-item">
+        <div class="ot-name">Social Media Audit</div>
+        <div class="ot-detail">Full platform review & recommendations</div>
+        <div class="ot-price">$500</div>
+      </div>
+      <div class="ot-item">
+        <div class="ot-name">Instagram Feed Makeover</div>
+        <div class="ot-detail">Complete aesthetic overhaul</div>
+        <div class="ot-price">$750</div>
+      </div>
+      <div class="ot-item">
+        <div class="ot-name">Content Strategy Session</div>
+        <div class="ot-detail">90-minute deep dive</div>
+        <div class="ot-price">$350</div>
+      </div>
+      <div class="ot-item">
+        <div class="ot-name">Content Calendar Creation</div>
+        <div class="ot-detail">Full month planned & structured</div>
+        <div class="ot-price">$400</div>
+      </div>
+      <div class="ot-item">
+        <div class="ot-name">Account Setup & Optimization</div>
+        <div class="ot-detail">Profile, bio, highlights, links</div>
+        <div class="ot-price">$300</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1rem;color:var(--text);margin-bottom:20px">Monthly Packages</div>
+  <div class="packages-grid">
+
+    <div class="pkg">
+      <div class="pkg-name">Essential Content Package</div>
+      <div class="pkg-price">$997 <span>/month</span></div>
+      <ul class="pkg-list">
+        <li>Monthly Content Calendar</li>
+        <li>8 Edited Videos (Reels, TikToks, Shorts, or UGC)</li>
+        <li>8 Graphic Posts</li>
+        <li>Caption Writing</li>
+        <li>Hashtag Optimization</li>
+        <li>Content Scheduling & Posting</li>
+        <li>Feed Design & Management</li>
+        <li>Brand Visual Consistency</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">Get Started</a>
+    </div>
+
+    <div class="pkg featured">
+      <div class="pkg-badge">Most Popular</div>
+      <div class="pkg-name">Growth Package</div>
+      <div class="pkg-price">$1,997 <span>/month</span></div>
+      <ul class="pkg-list">
+        <li>Monthly Content Calendar</li>
+        <li>16 Edited Videos (Reels, TikToks, Shorts, or UGC)</li>
+        <li>12 Graphic Posts</li>
+        <li>Caption Writing</li>
+        <li>Hashtag Optimization</li>
+        <li>Content Scheduling & Posting</li>
+        <li>Feed Design & Management</li>
+        <li>Brand Visual Consistency</li>
+        <li>Trend Research</li>
+        <li>Content Development & Idea Generation</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">Get Started</a>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-name">Creative Director Package</div>
+      <div class="pkg-price">$3,497 <span>/month</span></div>
+      <ul class="pkg-list">
+        <li>Full Social Media Management</li>
+        <li>Content Strategy & Planning</li>
+        <li>24 Edited Videos (Reels, TikToks, Shorts, or UGC)</li>
+        <li>16 Graphic Posts</li>
+        <li>Caption Writing</li>
+        <li>Hashtag Optimization</li>
+        <li>Content Scheduling & Posting</li>
+        <li>Feed Design & Management</li>
+        <li>Brand Aesthetic Development</li>
+        <li>Content Repurposing</li>
+        <li>Trend Research</li>
+        <li>Creative Direction</li>
+        <li>Priority Support</li>
+      </ul>
+      <a href="#contact" class="pkg-cta">Get Started</a>
+    </div>
+
   </div>
 </section>
 
