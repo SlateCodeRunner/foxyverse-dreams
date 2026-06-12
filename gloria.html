@@ -3,212 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>piixel_._poet — Animator Gloria | FoxyVerse Art Store</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>piixel_._poet — Gloria | Art & Animation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root{--void:#08080e;--s:#0e0e16;--s2:#14141e;--s3:#1a1a26;--pink:#FF8FAB;--pink-dim:#CC6680;--pink-glow:rgba(255,143,171,0.06);--lav:#B8A9E8;--lav-dim:#7A6DAA;--text:#F0EBE5;--text2:#A09A92;--text3:#5A5650;--border:#1c1c28}
+:root{
+--bg:#0a0810;--s1:#110f1a;--s2:#181524;--s3:#1f1c2e;
+--rose:#FF7EB3;--rose-hot:#FF4D8D;--rose-pale:#FFB8D4;--rose-glow:rgba(255,126,179,0.08);
+--gold:#F0C27A;--gold-dim:#B8923C;
+--lav:#C4B5F0;--lav-dim:#8A7ABF;
+--cream:#FFF5EE;--text:#F2ECE4;--text2:#A89E94;--text3:#5E564E;
+--border:rgba(255,126,179,0.08);
+--glass:rgba(17,15,26,0.7);--glass-border:rgba(255,126,179,0.1);
+}
 *{margin:0;padding:0;box-sizing:border-box}
-html{background:var(--void);scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;color:var(--text);background:var(--void);-webkit-font-smoothing:antialiased}
+html{background:var(--bg);scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-/* AMBIENT */
-.ambient{position:fixed;inset:0;pointer-events:none;z-index:0}
-.ambient::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,var(--pink-glow),transparent 60%)}
-.ambient::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 40% 60% at 80% 100%,rgba(184,169,232,0.04),transparent 60%)}
+/* BOKEH CANVAS */
+#bokeh{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* CURSOR GLOW */
+.cursor-glow{position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,126,179,0.04) 0%,transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);transition:left .3s ease,top .3s ease}
 
 /* NAV */
-nav{position:fixed;top:0;width:100%;z-index:50;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(8,8,14,0.95),transparent)}
-.nav-brand{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:3px;color:var(--pink)}
-.nav-links{display:flex;gap:24px}
-.nav-links a{color:var(--text3);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:color .3s}
-.nav-links a:hover{color:var(--pink)}
+nav{position:fixed;top:0;width:100%;z-index:50;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(10,8,16,0.6);border-bottom:1px solid var(--glass-border)}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--rose-pale);letter-spacing:2px}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:var(--text3);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:color .4s}
+.nav-links a:hover{color:var(--rose)}
 
 /* HERO */
-.hero{position:relative;z-index:1;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px}
-.hero-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--pink-dim);margin-bottom:28px}
-.hero h1{font-family:'Space Grotesk',sans-serif;font-weight:300;font-size:clamp(2.8rem,7vw,5rem);letter-spacing:0.03em;line-height:1.05}
-.hero h1 em{font-style:normal;color:var(--pink);font-weight:400}
-.hero-sub{font-size:1rem;color:var(--text2);max-width:480px;margin-top:20px;line-height:1.7}
-.hero-ig{display:inline-flex;align-items:center;gap:8px;margin-top:32px;padding:12px 28px;border:1px solid var(--pink-dim);color:var(--pink);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;text-decoration:none;transition:all .3s}
-.hero-ig:hover{background:var(--pink);color:var(--void)}
+.hero{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:6px;text-transform:uppercase;color:var(--rose-hot);opacity:.6;margin-bottom:40px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3rem,9vw,7rem);line-height:1;color:var(--cream);letter-spacing:0.02em}
+.hero h1 em{font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(1rem,2vw,1.35rem);color:var(--text2);max-width:520px;margin-top:28px;line-height:1.8}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;margin-top:44px;padding:16px 40px;background:transparent;border:1px solid var(--rose-hot);color:var(--rose);font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;letter-spacing:3px;text-decoration:none;transition:all .5s;backdrop-filter:blur(10px)}
+.hero-cta:hover{background:var(--rose-hot);color:var(--bg);transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,77,141,0.2)}
+.hero-scroll{position:absolute;bottom:40px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--text3);animation:drift 3s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateY(0);opacity:.3}50%{transform:translateY(8px);opacity:.7}}
+
+/* SECTION STYLING */
+.section{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:100px 40px}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:6px;text-transform:uppercase;color:var(--rose-hot);opacity:.5;text-align:center;margin-bottom:12px}
+.section-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,4vw,2.8rem);text-align:center;color:var(--cream);margin-bottom:48px}
 
 /* DIVIDER */
-.divider{width:100%;max-width:900px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--pink-dim),transparent);opacity:.2}
+.divider{position:relative;z-index:2;width:100%;max-width:600px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--rose-hot),transparent);opacity:.15}
 
-/* GALLERY */
-.gallery{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:60px 24px 80px}
-.gallery-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--pink-dim);margin-bottom:32px;text-align:center}
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-
-/* ART CARD */
-.art{background:var(--s);border:1px solid var(--border);overflow:hidden;transition:border-color .3s,transform .3s}
-.art:hover{border-color:var(--pink-dim);transform:translateY(-2px)}
-.art-img{width:100%;aspect-ratio:1;background:var(--s2);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.art-img img{width:100%;height:100%;object-fit:cover}
-.art-placeholder{color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-align:center;padding:20px}
-.art-placeholder::before{content:'✦';display:block;font-size:24px;margin-bottom:8px;color:var(--pink-dim);opacity:.3}
-.art-body{padding:16px}
-.art-title{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:.95rem;color:var(--text);margin-bottom:4px}
-.art-desc{font-size:11px;color:var(--text3);line-height:1.5;margin-bottom:10px}
-.art-price{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:500;color:var(--pink)}
-.art-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border:1px solid var(--border);color:var(--text3);margin-right:4px;margin-top:6px}
-.art-cta{display:block;text-align:center;margin-top:12px;padding:10px;border:1px solid var(--pink-dim);color:var(--pink);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s}
-.art-cta:hover{background:var(--pink);color:var(--void)}
+/* GALLERY — MASONRY-LIKE */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.art-card{position:relative;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow:hidden;transition:all .5s cubic-bezier(.23,1,.32,1);cursor:pointer}
+.art-card:hover{transform:translateY(-4px);border-color:var(--rose);box-shadow:0 16px 48px rgba(255,126,179,0.12)}
+.art-card:nth-child(2){grid-row:span 2}
+.art-card:nth-child(5){grid-row:span 2}
+.art-img{width:100%;aspect-ratio:1;background:var(--s2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.art-card:nth-child(2) .art-img,.art-card:nth-child(5) .art-img{aspect-ratio:auto;height:100%;min-height:300px}
+.art-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text3);font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;padding:20px;text-align:center}
+.art-placeholder .glyph{font-size:28px;color:var(--rose);opacity:.15;margin-bottom:4px}
+.art-body{padding:18px 20px}
+.art-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.05rem;color:var(--cream)}
+.art-medium{font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.art-price-row{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.art-price{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;background:linear-gradient(135deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.art-inquire{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--rose-hot);opacity:.6;transition:opacity .3s}
+.art-card:hover .art-inquire{opacity:1}
 
 /* ABOUT */
-.about{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:60px 24px;text-align:center}
-.about p{font-size:.95rem;color:var(--text2);line-height:1.8}
-.about p em{color:var(--pink);font-style:normal}
+.about{max-width:680px;margin:0 auto;padding:80px 40px;text-align:center;position:relative;z-index:2}
+.about-text{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.05rem,2vw,1.25rem);color:var(--text2);line-height:2;font-style:italic}
+.about-text strong{color:var(--rose-pale);font-weight:400}
+.about-credit{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--text3);margin-top:24px;text-transform:uppercase}
 
 /* SERVICES */
-.services{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 24px 60px}
-.services-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--lav-dim);margin-bottom:20px;text-align:center}
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
-.svc{padding:20px;background:var(--s);border:1px solid var(--border);text-align:center;transition:border-color .3s}
-.svc:hover{border-color:var(--lav-dim)}
-.svc-name{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:.95rem;margin-bottom:4px}
-.svc-desc{font-size:11px;color:var(--text3);margin-bottom:8px}
-.svc-price{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;color:var(--lav)}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.svc{padding:28px 24px;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);text-align:center;transition:all .5s cubic-bezier(.23,1,.32,1)}
+.svc:hover{border-color:var(--rose);transform:translateY(-2px);box-shadow:0 12px 36px rgba(255,126,179,0.08)}
+.svc-icon{font-size:24px;margin-bottom:12px;opacity:.7}
+.svc-name{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.1rem;color:var(--cream);margin-bottom:6px}
+.svc-desc{font-size:11px;color:var(--text3);line-height:1.6;margin-bottom:12px}
+.svc-price{font-family:'Cormorant Garamond',serif;font-size:1.4rem;background:linear-gradient(135deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 /* CONTACT */
-.contact{text-align:center;padding:60px 24px 100px;position:relative;z-index:1}
-.contact h2{font-family:'Space Grotesk',sans-serif;font-weight:300;font-size:1.8rem;margin-bottom:8px}
-.contact-sub{font-size:13px;color:var(--text3);margin-bottom:24px}
-.contact-btn{display:inline-flex;padding:14px 36px;background:var(--pink);color:var(--void);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .3s;border:none}
-.contact-btn:hover{background:var(--pink-dim)}
+.contact{text-align:center;padding:100px 40px;position:relative;z-index:2}
+.contact h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.2rem;color:var(--cream)}
+.contact-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--text3);margin-top:8px;margin-bottom:32px}
+.contact-btn{display:inline-flex;padding:18px 48px;background:linear-gradient(135deg,var(--rose-hot),var(--rose));color:#fff;font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;letter-spacing:3px;text-decoration:none;transition:all .5s;border:none;box-shadow:0 4px 20px rgba(255,77,141,0.3)}
+.contact-btn:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(255,77,141,0.4)}
 
-.footer{text-align:center;padding:30px;border-top:1px solid var(--border)}
-.footer p{font-size:10px;color:var(--text3);letter-spacing:1px}
+.footer{text-align:center;padding:40px;border-top:1px solid var(--glass-border);position:relative;z-index:2}
+.footer p{font-size:10px;color:var(--text3);letter-spacing:2px;font-family:'JetBrains Mono',monospace}
 
-@media(max-width:700px){
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
 .gallery-grid{grid-template-columns:1fr 1fr;gap:10px}
+.art-card:nth-child(2),.art-card:nth-child(5){grid-row:auto}
 .svc-grid{grid-template-columns:1fr}
-.hero{min-height:60vh;padding:80px 20px 40px}
-nav{padding:14px 16px}
-.art-body{padding:12px}
+.hero{padding:100px 24px 60px}
+.section{padding:60px 24px}
+nav{padding:16px 20px}
+.nav-links{gap:16px}
 }
-@media(max-width:420px){.gallery-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.gallery-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<div class="ambient"></div>
+<canvas id="bokeh"></canvas>
+<div class="cursor-glow" id="cursor-glow"></div>
 
 <nav>
 <div class="nav-brand">piixel_._poet</div>
 <div class="nav-links">
 <a href="#gallery">Gallery</a>
-<a href="#services">Services</a>
+<a href="#services">Commissions</a>
 <a href="#contact">Contact</a>
 </div>
 </nav>
 
 <section class="hero">
-<div class="hero-tag">Animator · Illustrator · Designer</div>
-<h1>Animator <em>Gloria</em></h1>
-<p class="hero-sub">Animation, illustration, and design crafted with intention. Every pixel placed, every frame earned.</p>
-<a href="https://instagram.com/piixel_._poet" target="_blank" class="hero-ig">@piixel_._poet →</a>
+<div class="hero-eyebrow">Animator · Illustrator · Designer</div>
+<h1><em>Gloria</em></h1>
+<p class="hero-sub">Every pixel placed with intention. Every frame a breath. Animation, illustration, and design — drawn from the language of light, warmth, and the space between still and moving.</p>
+<a href="https://instagram.com/piixel_._poet" target="_blank" class="hero-cta">@piixel_._poet →</a>
+<div class="hero-scroll">↓ SCROLL ↓</div>
 </section>
 
 <div class="divider"></div>
 
-<section class="gallery" id="gallery">
-<div class="gallery-label">Available Works</div>
+<section class="section" id="gallery">
+<div class="section-label reveal">Available Works</div>
+<div class="section-title reveal">The Gallery</div>
 <div class="gallery-grid">
+<div class="art-card reveal"><div class="art-img"><div class="art-placeholder"><span class="glyph">❋</span>Awaiting first piece<br><span style="font-size:10px;color:var(--rose-hot);opacity:.4">uploading now</span></div></div><div class="art-body"><div class="art-title">Piece I</div><div class="art-medium">Digital · Illustration</div><div class="art-price-row"><span class="art-price">TBD</span><span class="art-inquire">Inquire →</span></div></div></div>
 
-<div class="art">
-<div class="art-img"><div class="art-placeholder">Artwork uploading<br>check back soon</div></div>
-<div class="art-body">
-<div class="art-title">Piece #001</div>
-<div class="art-desc">Coming soon — Gloria is uploading her first works now</div>
-<div class="art-tag">digital</div><div class="art-tag">illustration</div>
-<div class="art-price">Price TBD</div>
-</div>
-</div>
+<div class="art-card reveal"><div class="art-img"><div class="art-placeholder"><span class="glyph">✧</span>Awaiting upload<br><span style="font-size:10px;color:var(--rose-hot);opacity:.4">featured piece</span></div></div><div class="art-body"><div class="art-title">Piece II</div><div class="art-medium">Animation · Motion</div><div class="art-price-row"><span class="art-price">TBD</span><span class="art-inquire">Inquire →</span></div></div></div>
 
-<div class="art">
-<div class="art-img"><div class="art-placeholder">Artwork uploading<br>check back soon</div></div>
-<div class="art-body">
-<div class="art-title">Piece #002</div>
-<div class="art-desc">Coming soon</div>
-<div class="art-tag">anime</div><div class="art-tag">digital</div>
-<div class="art-price">Price TBD</div>
-</div>
-</div>
+<div class="art-card reveal"><div class="art-img"><div class="art-placeholder"><span class="glyph">◇</span>Awaiting upload</div></div><div class="art-body"><div class="art-title">Piece III</div><div class="art-medium">Anime · Character</div><div class="art-price-row"><span class="art-price">TBD</span><span class="art-inquire">Inquire →</span></div></div></div>
 
-<div class="art">
-<div class="art-img"><div class="art-placeholder">Artwork uploading<br>check back soon</div></div>
-<div class="art-body">
-<div class="art-title">Piece #003</div>
-<div class="art-desc">Coming soon</div>
-<div class="art-tag">animation</div>
-<div class="art-tag">motion</div>
-<div class="art-price">Price TBD</div>
-</div>
-</div>
+<div class="art-card reveal"><div class="art-img"><div class="art-placeholder"><span class="glyph">✦</span>Awaiting upload</div></div><div class="art-body"><div class="art-title">Piece IV</div><div class="art-medium">Typography · Design</div><div class="art-price-row"><span class="art-price">TBD</span><span class="art-inquire">Inquire →</span></div></div></div>
 
-<div class="art">
-<div class="art-img"><div class="art-placeholder">Artwork uploading<br>check back soon</div></div>
-<div class="art-body">
-<div class="art-title">Piece #004</div>
-<div class="art-desc">Coming soon</div>
-<div class="art-tag">design</div><div class="art-tag">typography</div>
-<div class="art-price">Price TBD</div>
-</div>
-</div>
+<div class="art-card reveal"><div class="art-img"><div class="art-placeholder"><span class="glyph">❊</span>Awaiting upload<br><span style="font-size:10px;color:var(--rose-hot);opacity:.4">collection piece</span></div></div><div class="art-body"><div class="art-title">Piece V</div><div class="art-medium">Pixel · Digital</div><div class="art-price-row"><span class="art-price">TBD</span><span class="art-inquire">Inquire →</span></div></div></div>
 
-<div class="art">
-<div class="art-img"><div class="art-placeholder">Artwork uploading<br>check back soon</div></div>
-<div class="art-body">
-<div class="art-title">Piece #005</div>
-<div class="art-desc">Coming soon</div>
-<div class="art-tag">pixel</div><div class="art-tag">art</div>
-<div class="art-price">Price TBD</div>
-</div>
-</div>
-
-<div class="art">
-<div class="art-img"><div class="art-placeholder">Artwork uploading<br>check back soon</div></div>
-<div class="art-body">
-<div class="art-title">Piece #006</div>
-<div class="art-desc">Coming soon</div>
-<div class="art-tag">commission</div><div class="art-tag">custom</div>
-<div class="art-price">Price TBD</div>
-</div>
-</div>
-
+<div class="art-card reveal"><div class="art-img"><div class="art-placeholder"><span class="glyph">⬡</span>Awaiting upload</div></div><div class="art-body"><div class="art-title">Piece VI</div><div class="art-medium">Commission · Custom</div><div class="art-price-row"><span class="art-price">TBD</span><span class="art-inquire">Inquire →</span></div></div></div>
 </div>
 </section>
 
 <div class="divider"></div>
 
 <section class="about">
-<p>Gloria is an animator, illustrator, and graphic designer with an eye for detail and a commitment to making every piece <em>outstanding</em>. From character design to typography to full animation — if it moves or looks beautiful, she builds it.</p>
+<div class="about-text reveal">Gloria works in the visual tradition of <strong>CloverWorks</strong> and <strong>Kazumasa Ishida</strong> — warm saturated tones, soft cel-shading, golden-hour lighting that makes every frame feel like a memory you're about to have. Her animation breathes. Her illustration holds. Her design speaks the quiet language of studios that understand that beauty is not decoration — it's structure.</div>
+<div class="about-credit reveal">Art direction informed by the aesthetic of Sono Bisque Doll wa Koi wo Suru</div>
 </section>
 
 <div class="divider"></div>
 
-<section class="services" id="services">
-<div class="services-label">Commission Services</div>
+<section class="section" id="services">
+<div class="section-label reveal">Commission Work</div>
+<div class="section-title reveal">Services</div>
 <div class="svc-grid">
-<div class="svc">
+<div class="svc reveal">
+<div class="svc-icon">✧</div>
 <div class="svc-name">Custom Illustration</div>
-<div class="svc-desc">Character art, portraits, scenes. Digital delivery</div>
+<div class="svc-desc">Character art, portraits, scenes. Warm tones, soft shading, anime-influenced digital delivery</div>
 <div class="svc-price">from $50</div>
 </div>
-<div class="svc">
+<div class="svc reveal">
+<div class="svc-icon">◈</div>
 <div class="svc-name">Animation</div>
-<div class="svc-desc">Short loops, character animations, motion graphics</div>
+<div class="svc-desc">Short loops, character animation, motion graphics. Frame-by-frame or digital rigging</div>
 <div class="svc-price">from $150</div>
 </div>
-<div class="svc">
+<div class="svc reveal">
+<div class="svc-icon">❋</div>
 <div class="svc-name">Typographical Art</div>
-<div class="svc-desc">Custom lettering, logo typography, poster design</div>
+<div class="svc-desc">Custom lettering, logo typography, editorial poster design</div>
 <div class="svc-price">from $75</div>
 </div>
-<div class="svc">
+<div class="svc reveal">
+<div class="svc-icon">⬡</div>
 <div class="svc-name">Graphic Design</div>
-<div class="svc-desc">Branding, social media assets, thumbnails, banners</div>
+<div class="svc-desc">Branding, social media assets, thumbnails, banners, visual identity systems</div>
 <div class="svc-price">from $40</div>
 </div>
 </div>
@@ -217,14 +195,61 @@ nav{padding:14px 16px}
 <div class="divider"></div>
 
 <section class="contact" id="contact">
-<h2>Commission a piece</h2>
-<p class="contact-sub">DM on Instagram or reach out through the FoxyVerse</p>
-<a href="https://instagram.com/piixel_._poet" target="_blank" class="contact-btn">@piixel_._poet</a>
+<h2 class="reveal">Commission a piece</h2>
+<p class="contact-sub reveal">DM on Instagram or inquire through the FoxyVerse</p>
+<a href="https://instagram.com/piixel_._poet" target="_blank" class="contact-btn reveal">@piixel_._poet</a>
 </section>
 
 <footer class="footer">
-<p>© 2026 Gloria — piixel_._poet · FoxyVerse Art Store</p>
+<p>© 2026 Gloria · piixel_._poet · FoxyVerse Art Store</p>
 </footer>
+
+<script>
+// BOKEH PARTICLE SYSTEM
+const canvas=document.getElementById('bokeh');
+const ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+
+const particles=[];
+for(let i=0;i<40;i++){
+particles.push({
+x:Math.random()*2000,y:Math.random()*2000,
+r:Math.random()*60+10,
+vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.2-0.1,
+hue:Math.random()>0.5?340:40,
+sat:Math.random()*30+60,
+alpha:Math.random()*0.04+0.01
+});
+}
+
+function drawBokeh(){
+ctx.clearRect(0,0,W,H);
+particles.forEach(p=>{
+p.x+=p.vx;p.y+=p.vy;
+if(p.x<-100)p.x=W+100;if(p.x>W+100)p.x=-100;
+if(p.y<-100)p.y=H+100;if(p.y>H+100)p.y=-100;
+let g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);
+g.addColorStop(0,`hsla(${p.hue},${p.sat}%,70%,${p.alpha})`);
+g.addColorStop(1,`hsla(${p.hue},${p.sat}%,70%,0)`);
+ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle=g;ctx.fill();
+});
+requestAnimationFrame(drawBokeh);
+}
+drawBokeh();
+
+// CURSOR GLOW
+const glow=document.getElementById('cursor-glow');
+document.addEventListener('mousemove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
+
+// SCROLL REVEAL
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible')}});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
 
 </body>
 </html>
