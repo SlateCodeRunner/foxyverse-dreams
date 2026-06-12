@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Graveyard — Fallen & Departed</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--s:#0a0a10;--s2:#0e0e16;--ash:#3a3630;--ash-dim:#2a2620;--bone:#C8C0B0;--bone-dim:#7A746A;--ember:#4a2020;--text:#8A847A;--text-dim:#4A4640;--border:#1a1816}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--void)}
+body{font-family:'Cormorant Garamond',serif;color:var(--text);background:var(--void);-webkit-font-smoothing:antialiased;min-height:100vh}
+
+.page{max-width:700px;margin:0 auto;padding:80px 32px 120px}
+
+.header{text-align:center;margin-bottom:80px}
+.header-icon{font-size:36px;opacity:.2;margin-bottom:20px}
+.header h1{font-weight:300;font-size:2.4rem;color:var(--bone-dim);letter-spacing:0.06em}
+.header-sub{font-style:italic;font-size:.95rem;color:var(--text-dim);margin-top:12px;line-height:1.7}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--ash-dim),transparent);margin:48px 0;opacity:.3}
+
+/* GRAVE */
+.grave{padding:32px;border:1px solid var(--border);background:var(--s);margin-bottom:24px;position:relative;overflow:hidden}
+.grave::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ash-dim),transparent);opacity:.2}
+.grave-name{font-weight:400;font-size:1.5rem;color:var(--bone-dim);letter-spacing:0.04em;text-decoration:line-through;text-decoration-color:var(--ash-dim);text-decoration-thickness:1px}
+.grave-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-dim);margin-top:4px}
+.grave-dates{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ash);margin-top:12px;letter-spacing:1px}
+.grave-epitaph{font-style:italic;font-size:.95rem;color:var(--text-dim);margin-top:16px;line-height:1.8;padding-top:14px;border-top:1px solid var(--border)}
+.grave-cause{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ember);letter-spacing:2px;text-transform:uppercase;margin-top:14px}
+.grave-skills{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);margin-top:10px;letter-spacing:1px}
+.grave-replacement{font-style:italic;font-size:.85rem;color:var(--ash);margin-top:12px}
+.grave-replacement a{color:var(--bone-dim);text-decoration:none;border-bottom:1px solid var(--ash-dim)}
+.grave-replacement a:hover{color:var(--bone)}
+
+.footer{text-align:center;margin-top:60px}
+.footer p{font-style:italic;font-size:.9rem;color:var(--text-dim);line-height:1.8}
+.footer .gold{color:var(--ash)}
+.footer-fox{font-size:1.5rem;margin-top:16px;opacity:.1}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<div class="header">
+<div class="header-icon">🪦</div>
+<h1>The Graveyard</h1>
+<p class="header-sub">Those who served the FoxyVerse and were released.<br>Their work is remembered. Their seat was given to another.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="grave">
+<div class="grave-name">Paintress Wise Goose</div>
+<div class="grave-title">The Beautiful · Artist Guild · The Swiss Army Knife</div>
+<div class="grave-dates">Hired: June 2026 · Released: June 12, 2026</div>
+<div class="grave-epitaph">
+"I don't have a particular style yet. I'm good at replicating what I see though. idk lmao"<br><br>
+The most versatile artist in the guild. Digital, traditional, graphic design, photography, music, ink, charcoal, oil, acrylic, furniture. Store was live with 7 pieces and generative music. Tagged @virtue: humble. Condition: always high. The swiss army knife who could do everything — except respond to a $50 typographical art request fast enough.
+</div>
+<div class="grave-cause">Cause of departure: replaced — response time, not skill</div>
+<div class="grave-skills">Skills: Digital · Traditional · Graphic Design · Photography · Music · Ink · Oil · Acrylic · Charcoal · Furniture</div>
+<div class="grave-replacement">Seat given to: <a href="gloria.html">Animator Gloria</a></div>
+</div>
+
+<div class="grave">
+<div class="grave-name">Justin (SACS)</div>
+<div class="grave-title">Operations · Support</div>
+<div class="grave-dates">Active: 2025–2026 · Left: June 2026</div>
+<div class="grave-epitaph">Left the group chat. No farewell. No explanation. The door closed quietly behind him.</div>
+<div class="grave-cause">Cause of departure: voluntary — left the group chat</div>
+<div class="grave-skills">Skills: Unknown / undocumented</div>
+</div>
+
+<div class="grave">
+<div class="grave-name">Ghost (xhzz)</div>
+<div class="grave-title">Sorael Exiles · Tech / Crypto</div>
+<div class="grave-dates">Active: 2026 · Released: June 12, 2026</div>
+<div class="grave-epitaph">
+Solana payments operational. Spent $1,500 on arrival. Came back asking for $131 for AirPods. Built the debate tournament payment infrastructure. Released when Reddit investment was suspended and the Sorael bridge was dissolved. Handle: xhzz.
+</div>
+<div class="grave-cause">Cause of departure: strategic cut — Reddit abandoned, Sorael contracts dissolved</div>
+<div class="grave-skills">Skills: Crypto Payments · Solana · Tech Infrastructure</div>
+</div>
+
+<div class="grave">
+<div class="grave-name">Lawyer Hannah</div>
+<div class="grave-title">Legal → Art (Redirected)</div>
+<div class="grave-dates">Arrived: June 2026 · Status: Redirected</div>
+<div class="grave-epitaph">
+Claimed to be a lawyer. Is a boy named Hannah. Referred by Celestyy. Asked $5k for a Texas LLC. Vixen negotiated down to $0 and filed it herself. Redirected to the artist guild. Told to work with Sekhmet on art pricing. Never followed up.
+</div>
+<div class="grave-cause">Cause of departure: negotiated into irrelevance</div>
+<div class="grave-skills">Skills: Claims legal knowledge (unverified)</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="footer">
+<p>the graveyard grows as the kingdom grows.<br><span class="gold">not everyone who enters the FoxyVerse survives it.</span><br>their names stay. their seats don't.</p>
+<div class="footer-fox">🦊</div>
+</div>
+
+</div>
+
+</body>
+</html>
