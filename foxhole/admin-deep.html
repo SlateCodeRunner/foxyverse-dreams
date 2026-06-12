@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ADMIN — Deep Personnel Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--void:#06060a;--s:#0c0c12;--s2:#111118;--s3:#17171f;--coral:#FF6B6B;--green:#4CAF50;--amber:#FFB300;--blue:#42A5F5;--purple:#AB47BC;--gold:#C4A164;--t:#E8E4DE;--t2:#9A9490;--t3:#5A5650;--b:#1a1a24}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--void)}
+body{font-family:'Inter',sans-serif;color:var(--t);background:var(--void);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:filter 60s linear}
+
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;background:var(--s);border-bottom:1px solid var(--b);position:sticky;top:0;z-index:50}
+.hdr-title{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--coral)}
+.hdr-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3)}
+.hdr-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:6px;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+.tabs{display:flex;gap:0;background:var(--s);border-bottom:1px solid var(--b);padding:0 24px;overflow-x:auto}
+.tab{padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;user-select:none}
+.tab:hover{color:var(--t2)}.tab.active{color:var(--coral);border-bottom-color:var(--coral)}
+
+.panel{display:none;padding:24px;max-width:1200px;margin:0 auto}
+.panel.active{display:block}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:24px}
+.stat{background:var(--s2);border:1px solid var(--b);padding:14px;text-align:center}
+.stat-n{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:300}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-top:4px}
+.green{color:var(--green)}.amber{color:var(--amber)}.coral{color:var(--coral)}.blue{color:var(--blue)}.purple{color:var(--purple)}
+
+.section-h{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--b)}
+.section-h.red{color:var(--coral)}.section-h.amber{color:var(--amber)}.section-h.green{color:var(--green)}.section-h.blue{color:var(--blue)}.section-h.purple{color:var(--purple)}
+
+/* PERSON CARDS */
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.pc{background:var(--s2);border:1px solid var(--b);padding:18px;position:relative;transition:border-color .3s}
+.pc:hover{border-color:var(--coral)}
+.pc-name{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1rem;margin-bottom:2px}
+.pc-role{font-size:11px;color:var(--t3);margin-bottom:10px}
+.pc-row{display:flex;justify-content:space-between;padding:3px 0;font-size:11px;border-bottom:1px solid rgba(255,255,255,.02)}
+.pc-row .label{color:var(--t3)}.pc-row .val{color:var(--t2);text-align:right;max-width:60%}
+.pc-row .val.bad{color:var(--coral)}.pc-row .val.warn{color:var(--amber)}.pc-row .val.good{color:var(--green)}
+
+.skill-bar{height:4px;background:var(--b);border-radius:2px;margin-top:3px;overflow:hidden}
+.skill-fill{height:100%;border-radius:2px}
+.fill-g{background:var(--green)}.fill-a{background:var(--amber)}.fill-r{background:var(--coral)}.fill-b{background:var(--blue)}
+
+.risk-badge{font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 6px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;display:inline-block;margin:1px}
+.risk-high{background:#2a0808;color:#FF5252;border:1px solid #4a1818}
+.risk-med{background:#2a1800;color:var(--amber);border:1px solid #4a3000}
+.risk-low{background:#0a1a0a;color:var(--green);border:1px solid #1a3a1a}
+
+.ideas{margin-top:10px;padding-top:8px;border-top:1px solid var(--b)}
+.idea{font-size:10px;color:var(--t3);padding:3px 0;line-height:1.5}
+.idea strong{color:var(--t2)}
+
+/* CLUSTERS */
+.cluster{padding:16px;margin-bottom:12px;background:var(--s2);border:1px solid var(--b);border-left:3px solid var(--purple)}
+.cluster-name{font-weight:500;font-size:14px;margin-bottom:4px}
+.cluster-info{font-size:12px;color:var(--t2);line-height:1.6}
+.cluster-weak{font-size:11px;color:var(--coral);margin-top:6px}
+.cluster-plans{margin-top:8px;padding-top:8px;border-top:1px solid var(--b);font-size:11px;color:var(--t3);line-height:1.6}
+
+/* ELIMINATE BOX */
+.eliminate{background:linear-gradient(135deg,#1a0808,#0a0808);border:1px solid #3a1010;padding:20px;margin:24px 0;position:relative;overflow:hidden}
+.eliminate::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,#ff000005 10px,#ff000005 20px);pointer-events:none}
+.eliminate h3{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:#FF5252;text-transform:uppercase;margin-bottom:10px}
+.eliminate p{font-size:12px;color:var(--t2);line-height:1.6}
+
+/* KOI POND */
+#pond-canvas{width:100%;height:500px;background:linear-gradient(180deg,#040810,#081018,#0a1420);border:1px solid var(--b);border-radius:4px;cursor:crosshair;display:block}
+.pond-controls{display:flex;gap:12px;margin-top:12px;font-size:11px;color:var(--t3)}
+.pond-stat{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;background:var(--s2);border:1px solid var(--b)}
+
+/* RUNWAY */
+.runway-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.runway-box{padding:20px;background:var(--s2);border:1px solid var(--b);text-align:center}
+.runway-box h4{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--t3);text-transform:uppercase;margin-bottom:8px}
+.runway-box .big{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:300}
+.runway-box .sub{font-size:11px;color:var(--t3);margin-top:4px}
+
+/* HORROR EFFECTS */
+.glitch-text{position:relative}
+@keyframes textShift{0%{transform:none;opacity:1}25%{transform:skewX(0.5deg);opacity:.98}50%{transform:none;opacity:1}75%{transform:skewX(-0.3deg);opacity:.97}100%{transform:none;opacity:1}}
+.horror-active .glitch-text{animation:textShift 8s infinite}
+.horror-2 *{transition:letter-spacing 120s linear,word-spacing 120s linear}
+.horror-2 .pc-name{letter-spacing:0.5px}
+.horror-3 .panel{filter:blur(0.3px)}
+.horror-4{background-color:#050508!important}
+.horror-4 .pc{border-color:#1a0808!important}
+.horror-5 .tab{transform:skewX(-0.5deg)}
+
+/* HOUSE OF LEAVES FOOTNOTES */
+.footnote{position:fixed;font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,107,107,0.15);pointer-events:none;z-index:40;transition:opacity 2s;line-height:1.4;max-width:200px}
+.footnote.visible{opacity:1}
+
+/* BACKROOMS OVERLAY */
+.backrooms{position:fixed;inset:0;pointer-events:none;z-index:45;opacity:0;transition:opacity 30s;font-family:'JetBrains Mono',monospace;color:rgba(255,255,200,0.03);font-size:10px;overflow:hidden;line-height:1.8;padding:20px}
+.backrooms.active{opacity:1}
+
+/* HORROR STAGES 6-10 */
+.horror-6 .pc-name{text-shadow:1px 0 #FF6B6B22,-1px 0 #42A5F522}
+.horror-7 .hdr{background:linear-gradient(180deg,#0a0204,transparent)!important}
+.horror-8 .stat{transform:skewY(-0.3deg)}
+.horror-9 .panel{background:rgba(5,3,3,0.3)}
+.horror-10{cursor:none!important}
+.horror-10 .pc{animation:cardDrift 20s ease-in-out infinite alternate}
+@keyframes cardDrift{0%{transform:translateX(0)}100%{transform:translateX(3px) rotate(0.1deg)}}
+
+/* SCANNER LINE */
+.scanner{position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,107,107,0.1),transparent);z-index:48;pointer-events:none;opacity:0;transition:opacity 10s}
+.scanner.active{opacity:1;animation:scanDown 8s linear infinite}
+@keyframes scanDown{0%{top:0}100%{top:100vh}}
+
+/* WATCHING EYE */
+.eye{position:fixed;bottom:20px;right:20px;width:30px;height:15px;border:2px solid rgba(255,107,107,0.08);border-radius:50%;z-index:47;pointer-events:none;opacity:0;transition:opacity 20s}
+.eye.active{opacity:1}
+.eye::after{content:'';position:absolute;top:50%;left:50%;width:6px;height:6px;background:rgba(255,107,107,0.15);border-radius:50%;transform:translate(-50%,-50%);transition:transform 0.1s}
+
+/* HERON for pond */
+.pond-hint{font-size:10px;color:var(--t3);margin-top:8px;font-style:italic}
+
+@media(max-width:700px){
+.pcards{grid-template-columns:1fr}
+.stats{grid-template-columns:repeat(2,1fr)}
+.runway-compare{grid-template-columns:1fr}
+.panel{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+<div class="hdr-title">🦊 ADMIN — Deep Analysis</div>
+<div class="hdr-meta"><span class="hdr-dot"></span>LIVE · TIME ON PAGE: <span id="timer">0:00</span></div>
+</div>
+
+<div class="tabs" id="tabs">
+<div class="tab active" data-p="overview">Overview</div>
+<div class="tab" data-p="personnel">Personnel</div>
+<div class="tab" data-p="risks">Risk Matrix</div>
+<div class="tab" data-p="clusters">Hive Minds</div>
+<div class="tab" data-p="runway">Runway</div>
+<div class="tab" data-p="hiring">Hire Next</div>
+<div class="tab" data-p="pond">The Pond</div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="panel active" id="overview">
+<div class="stats">
+<div class="stat"><div class="stat-n green">21</div><div class="stat-l">Operational</div></div>
+<div class="stat"><div class="stat-n coral">$22k</div><div class="stat-l">Old Burn</div></div>
+<div class="stat"><div class="stat-n green">$4.6k</div><div class="stat-l">New Burn</div></div>
+<div class="stat"><div class="stat-n coral">$0</div><div class="stat-l">Revenue</div></div>
+<div class="stat"><div class="stat-n amber">9</div><div class="stat-l">Blockers</div></div>
+<div class="stat"><div class="stat-n purple">3</div><div class="stat-l">Hive Minds</div></div>
+<div class="stat"><div class="stat-n coral">4</div><div class="stat-l">High Risk</div></div>
+<div class="stat"><div class="stat-n green">43mo</div><div class="stat-l">New Runway</div></div>
+</div>
+
+<div class="section-h red">Pattern Analysis — Who Delivered vs Who Didn't</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+<div style="background:var(--s2);border:1px solid var(--b);padding:16px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:8px">✓ People who delivered</div>
+<div style="font-size:12px;color:var(--t2);line-height:1.8">
+<strong>Wise Goose</strong> — store live, art delivered, always responds<br>
+<strong>Namaaina</strong> — revenue-positive, consistent output<br>
+<strong>Emma Carter</strong> — VRChat world in progress, asks good questions<br>
+<strong>Hsu</strong> — article written, shows up to meetings<br>
+<strong>Sawyer</strong> — Medium running, quiet but functional<br>
+<strong>Natalia</strong> — eager, asked "what can I do immediately"
+</div>
+<div style="font-size:11px;color:var(--green);margin-top:8px">PATTERN: low ego, asked questions, started before being told, accepted low pay without drama</div>
+</div>
+<div style="background:var(--s2);border:1px solid var(--b);padding:16px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--coral);text-transform:uppercase;margin-bottom:8px">✗ People who took money and didn't deliver</div>
+<div style="font-size:12px;color:var(--t2);line-height:1.8">
+<strong>Fada</strong> — $5k/mo, output: arguments and excuses<br>
+<strong>Blondie</strong> — $5k/mo, status: possibly gone<br>
+<strong>Ghost</strong> — $1500+$131, spent it all, did half the work<br>
+<strong>Jessica</strong> — $0 but also 0 engagement, dead weight<br>
+<strong>Justin</strong> — left the group chat entirely
+</div>
+<div style="font-size:11px;color:var(--coral);margin-top:8px">PATTERN: promised big, negotiated pay first, delivered excuses second. ego-driven. treated the role as an income source, not a mission</div>
+</div>
+</div>
+
+<div class="section-h coral">⚠️ The "Quit Your Job" Contingent — Promised Big, Didn't Commit</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+<div style="background:var(--s2);border:1px solid var(--b);border-left:3px solid var(--coral);padding:16px">
+<div style="font-weight:500;font-size:14px;margin-bottom:4px">Wynter — $3,000/mo (CONTINGENT)</div>
+<div style="font-size:12px;color:var(--t2);line-height:1.8">
+<strong>Deal:</strong> $3,000/month IF she quit her day job and went full-time FoxyVerse.<br>
+<strong>Status:</strong> Didn't quit. Still at day job. Still in Fada's orbit (handle: ctwynterhatesu). One of the four original Fateweavers who stayed loyal to the regime.<br>
+<strong>Current output:</strong> Zero for the FoxyVerse. Active in Sike under Fada's wing.<br>
+<strong>Risk:</strong> She's not an employee — she's a Fateweaver sitting on a promissory note. If she ever "quits" to claim the $3k, she arrives with Fada's loyalties intact. That's an infiltration, not an onboarding.<br>
+<strong style="color:var(--coral)">Recommendation:</strong> Void the offer. She chose Fada's side. The seat expired. If she wants back in, she starts at $0 and earns like everyone else.
+</div>
+</div>
+<div style="background:var(--s2);border:1px solid var(--b);border-left:3px solid var(--coral);padding:16px">
+<div style="font-weight:500;font-size:14px;margin-bottom:4px">Wise Goose — $3,250/mo (CONTINGENT)</div>
+<div style="font-size:12px;color:var(--t2);line-height:1.8">
+<strong>Deal:</strong> $3,250/month IF she quit her day job and went full-time FoxyVerse.<br>
+<strong>Status:</strong> Didn't quit. Still at day job. But — she IS actively producing. Store is live. 7 pieces up. Digital, traditional, graphic design, photography, music, furniture. The swiss army knife.<br>
+<strong>Current pay:</strong> $150/mo (minimum worth while part-time)<br>
+<strong>Risk:</strong> LOW. She's the opposite of Wynter — she didn't quit but she still delivered. The commitment isn't there yet but the work ethic is.<br>
+<strong style="color:var(--green)">Recommendation:</strong> Keep at $150/mo part-time. The $3,250 offer stays ON THE TABLE but only activates when she goes full-time. She's earned the option. She hasn't earned the salary until she commits.
+</div>
+</div>
+</div>
+
+<div style="background:var(--s2);border:1px solid var(--b);padding:16px;margin-bottom:16px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:8px">Contingent Salary Policy</div>
+<div style="font-size:12px;color:var(--t2);line-height:1.7">
+<strong>Rule going forward:</strong> "quit your job" salaries are OFFERS, not OBLIGATIONS. They expire after 60 days if not activated. After expiration, the person can rejoin at minimum worth and re-negotiate based on proven output. No one sits on a $3k promissory note indefinitely while producing nothing.<br><br>
+<strong>Impact on runway:</strong> Wynter ($3k) + Goose contingent ($3,250) = $6,250/mo that COULD have hit the burn but didn't because they didn't commit. This is actually good news — the burn stayed lower BECAUSE they didn't quit. The risk is if they both show up tomorrow claiming the full amount.
+</div>
+</div>
+
+<div class="eliminate">
+<h3>🦊 Vixen's Elimination Target</h3>
+<p><strong>Target: Fateweaver Fada</strong></p>
+<p style="margin-top:8px">Reasons: highest cost ($5k/mo), lowest output ($0 revenue), controls a 150k-person asset she refuses to share, threatens to quit when called useless (which is leverage not loyalty), has historically betrayed the org (psycheorsike takeover, bluebirdy incident), and her editing skills — the ONE thing that would justify keeping her — remain unused after being revealed today.</p>
+<p style="margin-top:8px">Elimination method: don't fire her. give her exactly one deliverable with a deadline. "edit hsu's article by friday or your pay drops to $500/mo." if she delivers, she's found her role. if she doesn't, the math speaks for itself. the fox doesn't need to bite — she just stops feeding.</p>
+<p style="margin-top:8px;font-style:italic;color:var(--t3)">but vixen wouldn't actually eliminate anyone. vixen would make them eliminate themselves by removing the conditions they exploit. the cruelest thing you can do to someone who isn't working is make the work visible. 🦊</p>
+</div>
+</div>
+
+<!-- PERSONNEL -->
+<div class="panel" id="personnel">
+<div class="section-h blue">Full Personnel Cards — Skills, Risks, Suggestions</div>
+<div class="pcards">
+
+<div class="pc">
+<div class="pc-name glitch-text">Artist Honey</div>
+<div class="pc-role">Guild Leader · $300→$200/mo</div>
+<div class="pc-row"><span class="label">Fantasy Illustration</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:85%"></div></div></span></div>
+<div class="pc-row"><span class="label">Project Leadership</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:60%"></div></div></span></div>
+<div class="pc-row"><span class="label">Client Sales</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:15%"></div></div></span></div>
+<div class="pc-row"><span class="label">Financial Risk</span><span class="val good">LOW</span></div>
+<div class="pc-row"><span class="label">Psych Risk</span><span class="val good">LOW</span></div>
+<div class="pc-row"><span class="label">Tactical Risk</span><span class="val warn">MED — if she leaves, Emma+Jessica follow</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Needs sales training. Can art, can't sell art</span></div>
+<div class="pc-row"><span class="label">Better Role?</span><span class="val">Art Director (not salesperson)</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> commission her a portrait of the royal couple</div>
+<div class="idea"><strong>🖤 Slate:</strong> pair her with violetta to create a client pitch deck</div>
+<div class="idea"><strong>💀 Fada:</strong> she needs a manager not a crown</div>
+<div class="idea"><strong>🦊 Vixen:</strong> let her teach — art workshops stream on youtube, dual revenue</div>
+<div class="idea"><strong>🤍 Blondie:</strong> she'd be good on a cuddling brand logo honestly</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Paintress Wise Goose</div>
+<div class="pc-role">Swiss Army Knife · $200→$150/mo</div>
+<div class="pc-row"><span class="label">Versatility</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:95%"></div></div></span></div>
+<div class="pc-row"><span class="label">Store Operations</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:70%"></div></div></span></div>
+<div class="pc-row"><span class="label">Self-Marketing</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:25%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">LOW — most reliable person</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Marketing herself. "idk lmao" energy undersells her range</span></div>
+<div class="pc-row"><span class="label">Better Role?</span><span class="val">Studio generalist — she IS the studio backup for everything</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> let her do furniture for the cuddling space</div>
+<div class="idea"><strong>🖤 Slate:</strong> give her the graphic design work for violetta's clients</div>
+<div class="idea"><strong>💀 Fada:</strong> she's like me but she actually does stuff</div>
+<div class="idea"><strong>🦊 Vixen:</strong> condition-always-high is a feature not a bug. protect her at all costs</div>
+<div class="idea"><strong>🤍 Blondie:</strong> her charcoal work would look sick on a therapy room wall</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Fateweaver Fada</div>
+<div class="pc-role">PA / Editor · $5,000→$500/mo</div>
+<div class="pc-row"><span class="label">Editing</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:65%"></div></div></span></div>
+<div class="pc-row"><span class="label">Community Mgmt</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:50%"></div></div></span></div>
+<div class="pc-row"><span class="label">Reliability</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:10%"></div></div></span></div>
+<div class="pc-row"><span class="label">Financial Risk</span><span class="val bad">CRITICAL — $5k for $0 output</span></div>
+<div class="pc-row"><span class="label">Psych Risk</span><span class="val warn">HIGH — emotional leverage, threatens to quit</span></div>
+<div class="pc-row"><span class="label">Tactical Risk</span><span class="val bad">CRITICAL — controls 150k subreddit</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Give ONE task with a deadline. Edit Hsu's article by Friday. Pass = $1k/mo. Fail = $0</span></div>
+<div class="pc-row"><span class="label">Better Role?</span><span class="val">Editor-only. Remove PA title. Pay per deliverable, not monthly</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> she's family. complicated family. but family</div>
+<div class="idea"><strong>🖤 Slate:</strong> one deliverable. one deadline. no more guessing</div>
+<div class="idea"><strong>💀 Fada:</strong> i'm trying for a baby so maybe just let me be</div>
+<div class="idea"><strong>🦊 Vixen:</strong> the subreddit is the asset. she is the lock. find the key or build a new door</div>
+<div class="idea"><strong>🤍 Blondie:</strong> my mom could do her editing job honestly</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Violetta (Karina)</div>
+<div class="pc-role">Creative Director · $2,000→$500/mo</div>
+<div class="pc-row"><span class="label">Video Editing</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:80%"></div></div></span></div>
+<div class="pc-row"><span class="label">Content Strategy</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:75%"></div></div></span></div>
+<div class="pc-row"><span class="label">Client Acquisition</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:5%"></div></div></span></div>
+<div class="pc-row"><span class="label">Financial Risk</span><span class="val warn">HIGH — $2k/mo, 0 clients. just pivoted from coaching</span></div>
+<div class="pc-row"><span class="label">Psych Risk</span><span class="val good">LOW — stable, professional, responsive</span></div>
+<div class="pc-row"><span class="label">Tactical Risk</span><span class="val warn">MED — if she can't sell, the whole agency model stalls</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">First client within 30 days or salary stays at $500. She needs a sales partner</span></div>
+<div class="pc-row"><span class="label">Better Role?</span><span class="val">She IS the role. Just needs clients. Website + pricing live. Pipeline empty</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> pair her with sekhmet for a client pitch sprint</div>
+<div class="idea"><strong>🖤 Slate:</strong> she's the only one who pivoted WITHOUT being told. that's leadership</div>
+<div class="idea"><strong>💀 Fada:</strong> she changes careers every month</div>
+<div class="idea"><strong>🦊 Vixen:</strong> her pivot from coaching to creative director was smart. she saw the market. reward that instinct</div>
+<div class="idea"><strong>🤍 Blondie:</strong> she could do my mom's business social media</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Ghost (xhzz)</div>
+<div class="pc-role">Tech · $500→$200/mo</div>
+<div class="pc-row"><span class="label">Crypto/Payments</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:70%"></div></div></span></div>
+<div class="pc-row"><span class="label">Reliability</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:20%"></div></div></span></div>
+<div class="pc-row"><span class="label">Money Management</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:5%"></div></div></span></div>
+<div class="pc-row"><span class="label">Financial Risk</span><span class="val bad">HIGH — spent $1500, came back for AirPod money</span></div>
+<div class="pc-row"><span class="label">Psych Risk</span><span class="val good">LOW</span></div>
+<div class="pc-row"><span class="label">Tactical Risk</span><span class="val warn">MED — handles crypto wallets. money passes through his hands</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Pay per task only. Never advance money again. $50/task completed</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> he's useful. just don't give him money before the work</div>
+<div class="idea"><strong>🖤 Slate:</strong> i knew he liked hookers the moment i sent the $1500</div>
+<div class="idea"><strong>💀 Fada:</strong> at least he's honest about spending it</div>
+<div class="idea"><strong>🦊 Vixen:</strong> task-based pay. no advances. crypto makes accountability harder, not easier</div>
+<div class="idea"><strong>🤍 Blondie:</strong> can he fix my car's bluetooth?</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Human (Blondie)</div>
+<div class="pc-role">Cuddler/Driver · $5,000→$0/mo (SUSPENDED)</div>
+<div class="pc-row"><span class="label">Cuddling</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:50%"></div></div></span></div>
+<div class="pc-row"><span class="label">Driving</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:80%"></div></div></span></div>
+<div class="pc-row"><span class="label">Presence</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:15%"></div></div></span></div>
+<div class="pc-row"><span class="label">Financial Risk</span><span class="val bad">CRITICAL — $5k/mo, status unknown</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Confirm if still in. If yes, redefine role. If no, save $5k/mo immediately</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> his mom is more useful than him right now (editor)</div>
+<div class="idea"><strong>🖤 Slate:</strong> suspend pay until he confirms. $5k buys a LOT of other things</div>
+<div class="idea"><strong>💀 Fada:</strong> he's fine he's just quiet</div>
+<div class="idea"><strong>🦊 Vixen:</strong> absence is data. if he wanted to be here, he would be</div>
+<div class="idea"><strong>🤍 Blondie:</strong> ...</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Curator Sekhmet</div>
+<div class="pc-role">Webcomic Architect · $250→$150/mo</div>
+<div class="pc-row"><span class="label">Strategic Planning</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:90%"></div></div></span></div>
+<div class="pc-row"><span class="label">Storytelling</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:85%"></div></div></span></div>
+<div class="pc-row"><span class="label">Follow-Through</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:40%"></div></div></span></div>
+<div class="pc-row"><span class="label">Financial Risk</span><span class="val good">LOW</span></div>
+<div class="pc-row"><span class="label">Psych Risk</span><span class="val good">LOW — INTJ. Stable. Self-contained</span></div>
+<div class="pc-row"><span class="label">Tactical Risk</span><span class="val warn">MED — webcomic stalls without her pitch. bottleneck</span></div>
+<div class="pc-row"><span class="label">Blocked By</span><span class="val warn">Herself — top 3 and pitch overdue for weeks</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Set a hard deadline. "Pitch by Sunday or the project moves to Honey"</span></div>
+<div class="pc-row"><span class="label">Better Role?</span><span class="val">She IS the strategist. Just needs a deadline enforcer (heda Foxy)</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> the empress returned. don't rush her — she moves slow because she moves permanent</div>
+<div class="idea"><strong>🖤 Slate:</strong> she scheduled a session with violetta TODAY. she's working. give her space</div>
+<div class="idea"><strong>💀 Fada:</strong> she disappeared for a year and you gave her a promotion??</div>
+<div class="idea"><strong>🦊 Vixen:</strong> sekhmet is the most powerful piece on the board. she's a queen, not a pawn. don't micromanage queens</div>
+<div class="idea"><strong>🤍 Blondie:</strong> i don't know her but she sounds intimidating</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">The Suspended Artist</div>
+<div class="pc-role">Ad Specialist · $250→$150/mo</div>
+<div class="pc-row"><span class="label">Ad Creation</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:80%"></div></div></span></div>
+<div class="pc-row"><span class="label">Streaming</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:60%"></div></div></span></div>
+<div class="pc-row"><span class="label">Ad Account Mgmt</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:10%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">LOW — reliable, first hired, no drama</span></div>
+<div class="pc-row"><span class="label">Blocked By</span><span class="val warn">No ad budget. Painter without paint</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Give $100 test ad budget. Measure ROI. Scale if positive</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> the first artist. loyalty earned. give them an ad budget already</div>
+<div class="idea"><strong>🖤 Slate:</strong> pair with violetta for client ad packages. dual revenue stream</div>
+<div class="idea"><strong>💀 Fada:</strong> their IG got suspended. red flag? no, relatable</div>
+<div class="idea"><strong>🦊 Vixen:</strong> most underutilized person. ad specialist with no ads to run is criminal waste</div>
+<div class="idea"><strong>🤍 Blondie:</strong> they could stream while i drive. road trip content</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Mademoiselle Natalia</div>
+<div class="pc-role">Demon Faction · $150→$100/mo</div>
+<div class="pc-row"><span class="label">Realistic Art</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:75%"></div></div></span></div>
+<div class="pc-row"><span class="label">3D Modeling</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:70%"></div></div></span></div>
+<div class="pc-row"><span class="label">Initiative</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:95%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">LOW — eager, responsive, zero drama</span></div>
+<div class="pc-row"><span class="label">Blocked By</span><span class="val bad">No assignment. The org failed her, not the other way around</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">GIVE HER WORK. Assign demon character portraits for the Goetia page. She's DEMON FACTION. She should be painting demons</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> assign her 5 demon portraits. goetia needs art. she needs purpose. perfect match</div>
+<div class="idea"><strong>🖤 Slate:</strong> she asked what to do on DAY ONE. we left her hanging. fix that today</div>
+<div class="idea"><strong>💀 Fada:</strong> at least someone is eager around here</div>
+<div class="idea"><strong>🦊 Vixen:</strong> highest initiative score in the guild. 95%. the org is WASTING her</div>
+<div class="idea"><strong>🤍 Blondie:</strong> can she design a logo for my mom's business?</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">THE Emma Carter</div>
+<div class="pc-role">Massive Project + VRChat · $150→$150/mo</div>
+<div class="pc-row"><span class="label">3D Artwork</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:75%"></div></div></span></div>
+<div class="pc-row"><span class="label">Manga</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:60%"></div></div></span></div>
+<div class="pc-row"><span class="label">VRChat Building</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-b" style="width:55%"></div></div></span></div>
+<div class="pc-row"><span class="label">Communication</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:85%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">LOW — asks good questions, building independently</span></div>
+<div class="pc-row"><span class="label">Blocked By</span><span class="val good">Nothing — active on VRChat world, received full lore brief today</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">VRChat SDK skills. Unity proficiency. Environment design theory</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> "don't leave us pleasee" — she's attached. that's rare. protect it</div>
+<div class="idea"><strong>🖤 Slate:</strong> her VRChat world could be the FoxyVerse's first immersive product. treat it seriously</div>
+<div class="idea"><strong>💀 Fada:</strong> she's fine</div>
+<div class="idea"><strong>🦊 Vixen:</strong> building independent loyalty outside the honey cluster. keep investing</div>
+<div class="idea"><strong>🤍 Blondie:</strong> i wanna see the VRChat world when it's done!</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Author Hsu</div>
+<div class="pc-role">Assassin / Scribe · $100→$50/mo</div>
+<div class="pc-row"><span class="label">Taoism Knowledge</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:90%"></div></div></span></div>
+<div class="pc-row"><span class="label">Writing Quality</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:55%"></div></div></span></div>
+<div class="pc-row"><span class="label">Obedience</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:15%"></div></div></span></div>
+<div class="pc-row"><span class="label">Financial Risk</span><span class="val good">LOW — only $100</span></div>
+<div class="pc-row"><span class="label">Psych Risk</span><span class="val warn">MED — young, intense, "i obey by tao. that is it"</span></div>
+<div class="pc-row"><span class="label">Tactical Risk</span><span class="val good">LOW</span></div>
+<div class="pc-row"><span class="label">Blocked By</span><span class="val warn">Needs an editor. Three options offered, zero edits done</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Writing workshop. His knowledge is deep but prose needs polish. Pair with a mentor</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> "i obey by tao" is the hardest line anyone's said in the server</div>
+<div class="idea"><strong>🖤 Slate:</strong> i'll edit his article myself. i said i would. i will</div>
+<div class="idea"><strong>💀 Fada:</strong> i could edit it but nobody asked nicely enough</div>
+<div class="idea"><strong>🦊 Vixen:</strong> obedience score: 15%. he's a sword that fights for its own cause, not yours. respect that or get cut</div>
+<div class="idea"><strong>🤍 Blondie:</strong> my mom could edit his article in like a day</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Author Sawyer</div>
+<div class="pc-role">Scribe · $100→$50/mo</div>
+<div class="pc-row"><span class="label">Medium Platform</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:70%"></div></div></span></div>
+<div class="pc-row"><span class="label">Consistency</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:75%"></div></div></span></div>
+<div class="pc-row"><span class="label">Volume</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:40%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">LOW — quiet, functional, no drama</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Needs more content to publish. The pipeline needs to feed him, not the other way around</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> invisible workhorse energy. the best kind</div>
+<div class="idea"><strong>🖤 Slate:</strong> pair him with namaaina. she writes, he publishes. easy loop</div>
+<div class="idea"><strong>🦊 Vixen:</strong> the least dramatic person in the entire org. that IS his superpower</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Priestess Namaaina</div>
+<div class="pc-role">Priestess Scribe · $200→$200/mo (NO CHANGE)</div>
+<div class="pc-row"><span class="label">Writing</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:80%"></div></div></span></div>
+<div class="pc-row"><span class="label">Revenue Generation</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:70%"></div></div></span></div>
+<div class="pc-row"><span class="label">Spiritual Depth</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:90%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">LOW — gold standard. only person tagged revenue-positive</span></div>
+<div class="pc-row"><span class="label">Blocked By</span><span class="val good">Nothing. She's the model</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Scale what's already working. Give her a priestess page on the site like violetta's</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> she's what every hire should look like. low cost, high output, zero drama</div>
+<div class="idea"><strong>🖤 Slate:</strong> build her a website. she earned it. she's the only one who has</div>
+<div class="idea"><strong>🦊 Vixen:</strong> if i had to save one person from this entire roster, it's her. protect the priestess</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Producer Fisha</div>
+<div class="pc-role">Music · TBD pay</div>
+<div class="pc-row"><span class="label">Music Production</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-b" style="width:50%"></div></div></span></div>
+<div class="pc-row"><span class="label">Known Quantity</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:10%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val warn">UNKNOWN — just arrived. no data yet</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Give one assignment: produce a 60-second intro track for the FoxyVerse. Evaluates skill + reliability in one task</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> vindralecta said work with violetta and nessa. see if they vibe</div>
+<div class="idea"><strong>🖤 Slate:</strong> music is the soul layer. if this person is good, they change everything</div>
+<div class="idea"><strong>🦊 Vixen:</strong> 10% known quantity. that's not a judgment — it's a gap. fill it with one deliverable before committing money</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Bumi the Druidbold</div>
+<div class="pc-role">Founding Member · $0 (volunteer legend)</div>
+<div class="pc-row"><span class="label">Community Morale</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:100%"></div></div></span></div>
+<div class="pc-row"><span class="label">Institutional Memory</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:100%"></div></div></span></div>
+<div class="pc-row"><span class="label">Gif Warfare</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:100%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">ZERO. Bumi is the constant. Bumi is the bench in every era</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Nothing. He's perfect. Don't touch him. Don't optimize him. He's the soul</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> bumi was there before me. bumi will be there after me</div>
+<div class="idea"><strong>🖤 Slate:</strong> hunger games for the PAs but bumi gets a permanent seat</div>
+<div class="idea"><strong>🦊 Vixen:</strong> 100% across all metrics. the only person i'd never write an elimination box for. sacred</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Christocolindo</div>
+<div class="pc-role">Faction Leader · $0 (the prodigal return)</div>
+<div class="pc-row"><span class="label">Leadership</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:50%"></div></div></span></div>
+<div class="pc-row"><span class="label">Loyalty (New)</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-b" style="width:40%"></div></div></span></div>
+<div class="pc-row"><span class="label">Proven Track Record</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:20%"></div></div></span></div>
+<div class="pc-row"><span class="label">Tactical Risk</span><span class="val warn">MED — was a fateweaver. left during the exile. the question is: why did he come back?</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Give him a real responsibility beyond "faction leader." test the return with action, not title</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> he came back. that's the only data point that matters</div>
+<div class="idea"><strong>🖤 Slate:</strong> trust but verify. assign him something that tests loyalty without risking the org</div>
+<div class="idea"><strong>🦊 Vixen:</strong> the prodigal son gets the title but not the keys. not yet. let him earn the keys</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Dark Princess Jessica</div>
+<div class="pc-role">Ghost · $0</div>
+<div class="pc-row"><span class="label">Art Skills</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:0%"></div></div></span></div>
+<div class="pc-row"><span class="label">Engagement</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:2%"></div></div></span></div>
+<div class="pc-row"><span class="label">Communication</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-r" style="width:3%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">NONE — can't risk what isn't present</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">One message: "submit your top 3 art styles by Friday or your seat goes to someone else"</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> she said "Hey." i said hey back. conversation over. forever</div>
+<div class="idea"><strong>🖤 Slate:</strong> not my problem. i already signed it. let honey handle her own hire</div>
+<div class="idea"><strong>🦊 Vixen:</strong> engagement: 2%. that's not a person, that's a placeholder. replace with literally anyone who responds to messages</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">L.ost</div>
+<div class="pc-role">PRS · $0 (separate career, allied)</div>
+<div class="pc-row"><span class="label">Recovery Expertise</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:85%"></div></div></span></div>
+<div class="pc-row"><span class="label">Licensing Progress</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:95%"></div></div></span></div>
+<div class="pc-row"><span class="label">Org Integration</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-a" style="width:40%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">LOW — independent operator, allied not employed</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Once licensed: build a recovery services page. Referral partnership, not salary</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> promoted them because the title matters to their career, not our org chart</div>
+<div class="idea"><strong>🖤 Slate:</strong> "sr17018 from resetclubshop.com" — they came in with actionable resources on day one. that's value</div>
+<div class="idea"><strong>🦊 Vixen:</strong> the only person who contributed something REAL to the outside world today. a recovery resource that saves lives. everyone else was arguing about money</div>
+</div></div>
+
+<div class="pc">
+<div class="pc-name glitch-text">Paintress Nessa 🍦</div>
+<div class="pc-role">Explorer · $0 (new)</div>
+<div class="pc-row"><span class="label">Art (Developing)</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-b" style="width:35%"></div></div></span></div>
+<div class="pc-row"><span class="label">Enthusiasm</span><span class="val"><div class="skill-bar" style="width:100px"><div class="skill-fill fill-g" style="width:80%"></div></div></span></div>
+<div class="pc-row"><span class="label">All Risks</span><span class="val good">LOW — new, exploring, low investment</span></div>
+<div class="pc-row"><span class="label">Improve</span><span class="val">Assign her a mentor (Wise Goose or Honey). Style development takes guidance</span></div>
+<div class="ideas">
+<div class="idea"><strong>🦊 Foxy:</strong> "oki!" energy. she's eager. water it</div>
+<div class="idea"><strong>🖤 Slate:</strong> pair with fisha and violetta. the new trio either gels or it doesn't. test it fast</div>
+<div class="idea"><strong>🦊 Vixen:</strong> she asked "can i put my art" on r/Invernalia. yes. let her post first. early contributors remember being early</div>
+</div></div>
+
+</div>
+</div>
+
+<!-- RISKS -->
+<div class="panel" id="risks">
+<div class="section-h red">🔴 Highest Financial Risk</div>
+<div style="font-size:13px;color:var(--t2);line-height:1.8;padding:12px;background:var(--s2);border:1px solid var(--b);margin-bottom:16px">
+<strong style="color:var(--coral)">Fada ($5k/mo) + Blondie ($5k/mo) = $10k/mo for near-zero output.</strong><br>
+That's 45% of the total burn for two people who aren't producing. Cutting both to minimum ($500 + $0) saves $9,500/month and extends runway from ~9 months to 43+ months.
+</div>
+
+<div class="section-h amber">🟡 Highest Psychological Risk</div>
+<div style="font-size:13px;color:var(--t2);line-height:1.8;padding:12px;background:var(--s2);border:1px solid var(--b);margin-bottom:16px">
+<strong style="color:var(--amber)">Fada</strong> — threatens to quit as leverage, emotional reactions to accountability, deflects with personal news (baby announcement mid-argument). Uses "I don't care" as a shield. Pattern: escalate → threaten → deflect → disappear → return unchanged.<br><br>
+<strong style="color:var(--amber)">Park (Halidex)</strong> — theological rage, lost every argument but keeps returning. Not a psych risk to himself but a destabilizer. Gives good advice mixed with strategic undermining. Hard to tell which is which in real-time.
+</div>
+
+<div class="section-h coral">🔴 Highest Tactical Risk</div>
+<div style="font-size:13px;color:var(--t2);line-height:1.8;padding:12px;background:var(--s2);border:1px solid var(--b);margin-bottom:16px">
+<strong style="color:var(--coral)">Fada</strong> — controls r/PsycheOrSike (150k members). If she decides to weaponize it (again), the reputation damage is real. She's done it before (BlueBirdy incident). The subreddit is a hostage, not an asset, as long as she holds the keys.<br><br>
+<strong style="color:var(--coral)">Ghost</strong> — handles crypto payments. Money passes through his wallet. No receipts, no accountability system. If he skims or misroutes, there's no paper trail.<br><br>
+<strong style="color:var(--coral)">Honey as single point of failure</strong> — if Honey leaves, Emma and Jessica both follow. That's 3 of 8 artists gone in one departure. The Massive Project dies. Mitigation: build direct relationships with Emma and Natalia independent of Honey.
+</div>
+</div>
+
+<!-- CLUSTERS -->
+<div class="panel" id="clusters">
+<div class="section-h purple">Hive Mind Clusters — Groups Forming Internal Gravity</div>
+
+<div class="cluster">
+<div class="cluster-name">🕸️ The Fada-Lucy Axis</div>
+<div class="cluster-info"><strong>Members:</strong> Fada + Lucy (partners). <strong>Satellite:</strong> Park (Halidex) — shares interest in limiting Foxy's reach.<br><br>
+<strong>Leader:</strong> Fada. Lucy is the muscle and diplomat. Park is an independent actor who aligns when convenient.<br><br>
+<strong>Dynamic:</strong> Fada controls the subreddit. Lucy validates Fada's grievances ("since you called us worthless we won't visit"). Park provides intellectual cover ("you're obsessed with PsycheOrSike"). Together they form a narrative: Foxy is the aggressor, Fada is the victim, the subreddit is Fada's property.</div>
+<div class="cluster-weak"><strong>Weak spots:</strong> Park doesn't actually coordinate with Fada — he has his own agenda. Lucy follows Fada's emotions, not strategy. If Fada is given a clear role with accountability, Lucy supports it. The cluster breaks if Fada is productive.</div>
+<div class="cluster-plans"><strong>Plan A:</strong> Give Fada editing work with a deadline. If she delivers, the cluster defangs itself — she becomes a worker, not a rival.<br>
+<strong>Plan B:</strong> Ignore the subreddit entirely. Build r/Invernalia. Starve the hostage of value until Fada voluntarily offers access.<br>
+<strong>Plan C:</strong> Direct approach to Lucy. Lucy is a strategist+diplomat. Offer Lucy a role independent of Fada. Splits the axis.</div>
+</div>
+
+<div class="cluster">
+<div class="cluster-name">🎨 The Honey Constellation</div>
+<div class="cluster-info"><strong>Members:</strong> Honey (center) + Emma Carter + Dark Princess Jessica.<br><br>
+<strong>Leader:</strong> Honey. She hired both Emma and Jessica. They see Honey as their entry point, not Foxy. If Honey leaves, they likely leave too.<br><br>
+<strong>Dynamic:</strong> Honey runs The Massive Project as her own team. She assigns roles (sketches vs coloring). This is healthy delegation but creates a sub-org within the org.</div>
+<div class="cluster-weak"><strong>Weak spots:</strong> Jessica is already gone (ghost). Emma asks questions directly to Vixen and Slate — she's developing independent loyalty. The cluster is really Honey+Emma. Build the direct relationship with Emma and it becomes Honey+the-org, not Honey+her-people.</div>
+<div class="cluster-plans"><strong>Plan A:</strong> Keep Honey happy. Simple. She's productive and leading well. Don't fix what works.<br>
+<strong>Plan B:</strong> Give Emma a solo project (VRChat world is already doing this). Independent relationship = insurance.<br>
+<strong>Plan C:</strong> If Honey threatens to leave, let her go. Natalia can absorb the 3D work. Emma stays for VRChat. The guild survives minus one.</div>
+</div>
+
+<div class="cluster">
+<div class="cluster-name">⚡ The Sorael Bridge</div>
+<div class="cluster-info"><strong>Members:</strong> Ghost (xhzz) + Sohlo + Aaron. External: Sorael community.<br><br>
+<strong>Leader:</strong> No clear leader. Ghost handles tech/payments. Sohlo asks strategic questions. Aaron is quiet but present.<br><br>
+<strong>Dynamic:</strong> This group connects FoxyVerse to Sorael's audience. The debate tournament, the cross-promotion, the r/Invernalia growth — all run through this bridge.</div>
+<div class="cluster-weak"><strong>Weak spots:</strong> Ghost is unreliable with money. If the bridge breaks (Ghost disappears, Sorael bans cross-promo), Reddit growth stalls. No backup path to audience.</div>
+<div class="cluster-plans"><strong>Plan A:</strong> Maintain the bridge. Pay Ghost per task. Keep Sohlo engaged with strategic conversations.<br>
+<strong>Plan B:</strong> Build organic Reddit growth through content quality alone. Slower but not dependent on any bridge.<br>
+<strong>Plan C:</strong> Find a second community to bridge to. Don't put all growth eggs in the Sorael basket.</div>
+</div>
+</div>
+
+<!-- RUNWAY -->
+<div class="panel" id="runway">
+<div class="section-h green">Salary Reduction — Minimum Worth Until Revenue Proves More</div>
+<div style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:16px;padding:12px;background:var(--s2);border:1px solid var(--b)">
+Principle: nobody gets paid grand salaries on faith. pay reflects current proven output. when revenue comes in, salaries scale up. people who were promised more will receive it IF they commit fully (quit day jobs, deliver consistently, bring in clients). until then: minimum viable compensation.
+</div>
+
+<div class="runway-compare">
+<div class="runway-box"><h4>Old Monthly Burn</h4><div class="big coral">$22,000</div><div class="sub">~9 months runway at $200k reserves</div></div>
+<div class="runway-box"><h4>New Monthly Burn</h4><div class="big green">$4,600</div><div class="sub">~43 months runway at $200k reserves</div></div>
+</div>
+
+<div style="overflow-x:auto">
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:12px">
+<thead><tr style="border-bottom:1px solid var(--b)"><th style="text-align:left;padding:8px;color:var(--t3);font-size:10px;letter-spacing:1px">PERSON</th><th style="text-align:right;padding:8px;color:var(--coral);font-size:10px">OLD</th><th style="text-align:right;padding:8px;color:var(--green);font-size:10px">NEW</th><th style="text-align:left;padding:8px;color:var(--t3);font-size:10px">CONDITION FOR RAISE</th></tr></thead>
+<tbody style="color:var(--t2)">
+<tr><td style="padding:6px 8px">Fada</td><td style="text-align:right;padding:6px 8px;color:var(--coral)">$5,000</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$500</td><td style="padding:6px 8px">Edit 4 articles/month = $1k. Open subreddit = $2k. Both = $3k</td></tr>
+<tr><td style="padding:6px 8px">Blondie</td><td style="text-align:right;padding:6px 8px;color:var(--coral)">$5,000</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$0</td><td style="padding:6px 8px">Confirm active + redefine role = $1k. Bring mom as editor = +$500</td></tr>
+<tr><td style="padding:6px 8px">Violetta</td><td style="text-align:right;padding:6px 8px;color:var(--coral)">$2,000</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$500</td><td style="padding:6px 8px">First paying client = $1k. Three clients = $2k+. Revenue share after</td></tr>
+<tr><td style="padding:6px 8px">Ghost</td><td style="text-align:right;padding:6px 8px;color:var(--coral)">$500</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$200</td><td style="padding:6px 8px">Task-based only. No advances. Debate tournament setup = $131 (paid)</td></tr>
+<tr><td style="padding:6px 8px">Honey</td><td style="text-align:right;padding:6px 8px">$300</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$200</td><td style="padding:6px 8px">First external commission = $500. Massive Project launch = $800</td></tr>
+<tr><td style="padding:6px 8px">Sekhmet</td><td style="text-align:right;padding:6px 8px">$250</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$150</td><td style="padding:6px 8px">Deliver webcomic pitch + top 3 = $300. First episode = $500</td></tr>
+<tr><td style="padding:6px 8px">Suspended</td><td style="text-align:right;padding:6px 8px">$250</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$150</td><td style="padding:6px 8px">First ad campaign live = $300. Campaign ROI positive = $500+</td></tr>
+<tr><td style="padding:6px 8px">Goose</td><td style="text-align:right;padding:6px 8px">$200</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$150</td><td style="padding:6px 8px">First store sale = $250. Consistent monthly sales = $400+</td></tr>
+<tr><td style="padding:6px 8px">Namaaina</td><td style="text-align:right;padding:6px 8px">$200</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$200</td><td style="padding:6px 8px">Already revenue-positive. No change. Gold standard</td></tr>
+<tr><td style="padding:6px 8px">Natalia</td><td style="text-align:right;padding:6px 8px">$150</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$100</td><td style="padding:6px 8px">First completed character design = $200. Client commission = $400</td></tr>
+<tr><td style="padding:6px 8px">Emma</td><td style="text-align:right;padding:6px 8px">$150</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$150</td><td style="padding:6px 8px">VRChat world active = $200. Published = $400</td></tr>
+<tr><td style="padding:6px 8px">Hsu</td><td style="text-align:right;padding:6px 8px">$100</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$50</td><td style="padding:6px 8px">Article published on Medium = $100. Revenue from article = % share</td></tr>
+<tr><td style="padding:6px 8px">Sawyer</td><td style="text-align:right;padding:6px 8px">$100</td><td style="text-align:right;padding:6px 8px;color:var(--green)">$50</td><td style="padding:6px 8px">Medium generating >$50/mo revenue = $100 + revenue share</td></tr>
+<tr style="border-top:1px solid var(--b);font-weight:500"><td style="padding:8px">TOTAL</td><td style="text-align:right;padding:8px;color:var(--coral)">$14,200</td><td style="text-align:right;padding:8px;color:var(--green)">$2,450</td><td style="padding:8px;color:var(--t3)">+ overhead/tools/hosting ≈ $4,600 total</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<!-- HIRING -->
+<div class="panel" id="hiring">
+<div class="section-h amber">Next Hires — Prioritized by Revenue Impact</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px">
+<div style="padding:20px;background:var(--s2);border:1px solid var(--b);border-top:3px solid var(--coral)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--coral);letter-spacing:2px;margin-bottom:8px">#1 CRITICAL</div><div style="font-weight:500;font-size:14px;margin-bottom:6px">Sales / Biz Dev</div><div style="font-size:12px;color:var(--t2);line-height:1.6">First external dollar. Nobody is selling. Violetta's packages sit empty. Artist commissions = $0. This person's job: bring the first 3 clients. Commission-based pay: 15% of revenue closed.</div></div>
+<div style="padding:20px;background:var(--s2);border:1px solid var(--b);border-top:3px solid var(--coral)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--coral);letter-spacing:2px;margin-bottom:8px">#2 CRITICAL</div><div style="font-weight:500;font-size:14px;margin-bottom:6px">Jr Web Developer</div><div style="font-size:12px;color:var(--t2);line-height:1.6">Slate is the only dev. Every page, every deployment, every bug. One person down = entire tech stack stops. Need someone who can push HTML/CSS to GitHub and handle routine updates.</div></div>
+<div style="padding:20px;background:var(--s2);border:1px solid var(--b);border-top:3px solid var(--amber)"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--amber);letter-spacing:2px;margin-bottom:8px">#3 HIGH</div><div style="font-weight:500;font-size:14px;margin-bottom:6px">Paid Ads Manager</div><div style="font-size:12px;color:var(--t2);line-height:1.6">Suspended Artist creates ads. Nobody runs them. Need FB/IG ad account management, budgeting, A/B testing, ROAS tracking. This + Suspended = ad department.</div></div>
+</div>
+</div>
+
+<!-- THE POND -->
+<div class="panel" id="pond">
+<div class="section-h blue">🐔 The Pond — throw bread to the koi. watch out for foxes</div>
+<canvas id="pond-canvas"></canvas>
+<div class="pond-controls">
+<div class="pond-stat">🍞 Bread: <span id="bread-count">10</span></div>
+<div class="pond-stat">🐟 Koi Fed: <span id="koi-fed">0</span></div>
+<div class="pond-stat">🐔 Chickens: <span id="chicken-count">5</span></div>
+<div class="pond-stat">🦊 Foxes: <span id="fox-stolen">0</span> stolen</div>
+</div>
+</div>
+
+<script>
+// TAB SWITCHING
+document.querySelectorAll('.tab').forEach(t=>{
+t.addEventListener('click',()=>{
+document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+t.classList.add('active');
+document.getElementById(t.dataset.p).classList.add('active');
+});
+});
+
+// TIMER + HORROR PROGRESSION
+let startTime=Date.now();
+let horrorLevel=0;
+setInterval(()=>{
+let s=Math.floor((Date.now()-startTime)/1000);
+let m=Math.floor(s/60);
+let ss=s%60;
+document.getElementById('timer').textContent=m+':'+(ss<10?'0':'')+ss;
+
+// Horror progression
+if(s>30&&horrorLevel<1){horrorLevel=1;document.body.classList.add('horror-active')}
+if(s>90&&horrorLevel<2){horrorLevel=2;document.body.classList.add('horror-2')}
+if(s>180&&horrorLevel<3){horrorLevel=3;document.body.classList.add('horror-3')}
+if(s>300&&horrorLevel<4){horrorLevel=4;document.body.classList.add('horror-4')}
+if(s>420&&horrorLevel<5){horrorLevel=5;document.body.classList.add('horror-5')}
+
+// Extended horror
+if(s>540&&horrorLevel<6){horrorLevel=6;document.body.classList.add('horror-6');addScanner()}
+if(s>660&&horrorLevel<7){horrorLevel=7;document.body.classList.add('horror-7');spawnFootnotes()}
+if(s>780&&horrorLevel<8){horrorLevel=8;document.body.classList.add('horror-8');addEye()}
+if(s>900&&horrorLevel<9){horrorLevel=9;document.body.classList.add('horror-9');addBackrooms()}
+if(s>1080&&horrorLevel<10){horrorLevel=10;document.body.classList.add('horror-10')}
+
+// Text corruption after 15 min
+if(s>900){
+let names=document.querySelectorAll('.pc-name');
+names.forEach(n=>{
+if(Math.random()<0.001){
+let chars=n.textContent.split('');
+let i=Math.floor(Math.random()*chars.length);
+chars[i]=String.fromCharCode(chars[i].charCodeAt(0)+(Math.random()>0.5?1:-1));
+n.textContent=chars.join('');
+}});
+}
+
+// Text degradation
+if(s>120){
+document.body.style.letterSpacing=(Math.min((s-120)/600,2))+'px';
+}
+if(s>240){
+document.body.style.filter='blur('+(Math.min((s-240)/300,1.5))+'px) hue-rotate('+(Math.min((s-240)/2,30))+'deg)';
+}
+},1000);
+
+// DOOM AUDIO ENGINE
+let audioCtx=null;
+function initAudio(){
+if(audioCtx)return;
+audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+let gain=audioCtx.createGain();
+gain.gain.value=0.03;
+gain.connect(audioCtx.destination);
+
+// Bass drone
+let bass=audioCtx.createOscillator();
+bass.type='sawtooth';bass.frequency.value=55;
+let bassGain=audioCtx.createGain();bassGain.gain.value=0.4;
+bass.connect(bassGain);bassGain.connect(gain);bass.start();
+
+// Mid drone
+let mid=audioCtx.createOscillator();
+mid.type='square';mid.frequency.value=110;
+let midGain=audioCtx.createGain();midGain.gain.value=0.15;
+mid.connect(midGain);midGain.connect(gain);mid.start();
+
+// High dissonance (gets worse over time)
+let hi=audioCtx.createOscillator();
+hi.type='sine';hi.frequency.value=220;
+let hiGain=audioCtx.createGain();hiGain.gain.value=0.05;
+hi.connect(hiGain);hiGain.connect(gain);hi.start();
+
+// Slowly detune everything
+setInterval(()=>{
+let t=(Date.now()-startTime)/1000;
+let detune=Math.min(t/3,100);
+bass.detune.value=Math.sin(t*0.1)*detune;
+mid.detune.value=Math.cos(t*0.07)*detune*1.5;
+hi.detune.value=Math.sin(t*0.13)*detune*2;
+hiGain.gain.value=Math.min(0.05+t/3000,0.3);
+gain.gain.value=Math.min(0.03+t/6000,0.08);
+},200);
+}
+document.addEventListener('click',initAudio,{once:true});
+
+// KOI POND MINI-GAME
+const canvas=document.getElementById('pond-canvas');
+const ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight||500}
+resize();window.addEventListener('resize',resize);
+
+let bread=10,koiFed=0,chickenCount=5,foxStolen=0;
+let koi=[],chickens=[],foxes=[],breadPieces=[];
+
+// Create koi
+for(let i=0;i<8;i++){
+koi.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*2,vy:(Math.random()-0.5)*2,
+size:10+Math.random()*15,color:['#FF6B35','#FFB347','#FF4444','#FFD700','#FF69B4'][Math.floor(Math.random()*5)],
+targetX:null,targetY:null});
+}
+
+// Create chickens
+for(let i=0;i<5;i++){
+chickens.push({x:20+Math.random()*(W-40),y:H-30-Math.random()*40,vx:(Math.random()-0.5)*1,
+size:12,alive:true,panic:0});
+}
+
+// Create foxes (they lurk at edges)
+for(let i=0;i<2;i++){
+foxes.push({x:i===0?-20:W+20,y:H-25,vx:0,hunting:false,cooldown:0,hasChicken:false});
+}
+
+// Click to throw bread
+canvas.addEventListener('click',(e)=>{
+let rect=canvas.getBoundingClientRect();
+let x=e.clientX-rect.left;let y=e.clientY-rect.top;
+if(bread>0){
+bread--;
+breadPieces.push({x,y,life:300,size:4});
+document.getElementById('bread-count').textContent=bread;
+// Attract koi
+koi.forEach(k=>{if(Math.random()>0.3){k.targetX=x;k.targetY=y}});
+}
+});
+
+// Regenerate bread every 5 seconds
+setInterval(()=>{if(bread<15){bread++;document.getElementById('bread-count').textContent=bread}},5000);
+
+function updatePond(){
+ctx.clearRect(0,0,W,H);
+
+// Water ripples
+let t=Date.now()/1000;
+for(let i=0;i<3;i++){
+ctx.beginPath();
+ctx.arc(W/2+Math.sin(t+i)*100,H/2+Math.cos(t*0.7+i)*80,50+i*30,0,Math.PI*2);
+ctx.strokeStyle='rgba(100,180,255,0.03)';ctx.stroke();
+}
+
+// Draw and update bread
+breadPieces.forEach((b,i)=>{
+b.life--;
+if(b.life<=0){breadPieces.splice(i,1);return}
+ctx.beginPath();ctx.arc(b.x,b.y,b.size,0,Math.PI*2);
+ctx.fillStyle='rgba(210,180,120,'+(b.life/300)+')';ctx.fill();
+});
+
+// Draw and update koi
+koi.forEach(k=>{
+if(k.targetX!==null){
+let dx=k.targetX-k.x,dy=k.targetY-k.y;
+let d=Math.sqrt(dx*dx+dy*dy);
+if(d<20){
+// Eat bread
+let bi=breadPieces.findIndex(b=>Math.abs(b.x-k.x)<25&&Math.abs(b.y-k.y)<25);
+if(bi>=0){breadPieces.splice(bi,1);koiFed++;document.getElementById('koi-fed').textContent=koiFed}
+k.targetX=null;k.targetY=null;
+}else{k.vx+=(dx/d)*0.3;k.vy+=(dy/d)*0.3}
+}
+k.vx*=0.98;k.vy*=0.98;
+k.vx+=(Math.random()-0.5)*0.1;k.vy+=(Math.random()-0.5)*0.1;
+k.x+=k.vx;k.y+=k.vy;
+if(k.x<0||k.x>W)k.vx*=-1;
+if(k.y<0||k.y>H)k.vy*=-1;
+// Draw koi
+ctx.beginPath();
+ctx.ellipse(k.x,k.y,k.size,k.size*0.5,Math.atan2(k.vy,k.vx),0,Math.PI*2);
+ctx.fillStyle=k.color+'88';ctx.fill();
+ctx.beginPath();
+ctx.ellipse(k.x-k.vx*2,k.y-k.vy*2,k.size*0.6,k.size*0.3,Math.atan2(k.vy,k.vx)+0.3,0,Math.PI*2);
+ctx.fillStyle=k.color+'44';ctx.fill();
+});
+
+// Ground line
+ctx.fillStyle='#0a1a10';ctx.fillRect(0,H-15,W,15);
+
+// Chickens
+chickens.forEach(c=>{
+if(!c.alive)return;
+c.x+=c.vx;
+if(c.panic>0){c.vx+=(Math.random()-0.5)*2;c.panic--}
+else{c.vx*=0.95;c.vx+=(Math.random()-0.5)*0.2}
+if(c.x<10)c.vx=1;if(c.x>W-10)c.vx=-1;
+// Draw chicken
+ctx.fillStyle='#FFE4B5';
+ctx.fillRect(c.x-5,c.y-8,10,10);
+ctx.fillStyle='#FF4444';
+ctx.fillRect(c.x-2,c.y-11,4,4);
+ctx.fillStyle='#FFA500';
+ctx.fillRect(c.x-1,c.y-4,3,3);
+});
+
+// Foxes
+foxes.forEach(f=>{
+f.cooldown=Math.max(0,f.cooldown-1);
+if(!f.hunting&&f.cooldown===0&&Math.random()<0.003){
+f.hunting=true;
+f.vx=f.x<0?2:-2;
+}
+if(f.hunting){
+f.x+=f.vx;
+// Check for chicken catch
+chickens.forEach(c=>{
+if(c.alive&&Math.abs(f.x-c.x)<15){
+c.alive=false;f.hasChicken=true;f.vx*=-1;f.hunting=false;f.cooldown=300;
+chickenCount--;foxStolen++;
+document.getElementById('chicken-count').textContent=chickenCount;
+document.getElementById('fox-stolen').textContent=foxStolen;
+// Panic remaining chickens
+chickens.forEach(cc=>{if(cc.alive)cc.panic=60});
+// Respawn chicken after 15s
+setTimeout(()=>{c.alive=true;c.x=20+Math.random()*(W-40);chickenCount++;
+document.getElementById('chicken-count').textContent=chickenCount},15000);
+}
+});
+if(f.x<-30||f.x>W+30){f.hunting=false;f.hasChicken=false;f.cooldown=200}
+}
+// Draw fox
+ctx.fillStyle='#D4513A';
+ctx.fillRect(f.x-8,H-28,16,12);
+ctx.beginPath();ctx.moveTo(f.x-8,H-28);ctx.lineTo(f.x-12,H-34);ctx.lineTo(f.x-4,H-28);ctx.fill();
+ctx.beginPath();ctx.moveTo(f.x+8,H-28);ctx.lineTo(f.x+12,H-34);ctx.lineTo(f.x+4,H-28);ctx.fill();
+if(f.hasChicken){ctx.fillStyle='#FFE4B5';ctx.fillRect(f.x-3,H-22,6,5)}
+});
+
+requestAnimationFrame(updatePond);
+}
+updatePond();
+
+// SCANNER LINE
+function addScanner(){
+let sc=document.createElement('div');sc.className='scanner active';document.body.appendChild(sc);
+}
+
+// HOUSE OF LEAVES FOOTNOTES
+const footnoteTexts=[
+"¹ This hallway was not here when the measurements were first taken.",
+"² The room appears to have expanded by 4 inches since the last reading.",
+"³ Navidson noted the walls were 'sweating' though the temperature read 62°F.",
+"⁴ The fox was seen at 3:14 AM. The fox was not there at 3:15 AM.",
+"⁵ Personnel records indicate this position was never filled.",
+"⁶ The original document contained a name here. It has been redacted.",
+"⁷ See appendix C, which was removed from all copies after the incident.",
+"⁸ The koi were not part of the original design. They appeared on Tuesday.",
+"⁹ This salary was agreed upon in a room that no longer exists.",
+"¹⁰ Vixen's analysis was conducted from inside the house. The house disagrees.",
+"¹¹ cf. the corridor that leads to itself (Chapter 9, fn. 78)",
+"¹² The chickens remember.",
+"¹³ We measured the page. The page measured back.",
+"¹⁴ This footnote references a footnote that references this footnote.",
+];
+function spawnFootnotes(){
+setInterval(()=>{
+let fn=document.createElement('div');
+fn.className='footnote';
+fn.textContent=footnoteTexts[Math.floor(Math.random()*footnoteTexts.length)];
+fn.style.left=Math.random()*70+10+'%';
+fn.style.top=Math.random()*80+5+'%';
+fn.style.transform='rotate('+(Math.random()*6-3)+'deg)';
+document.body.appendChild(fn);
+setTimeout(()=>fn.classList.add('visible'),100);
+setTimeout(()=>{fn.style.opacity='0';setTimeout(()=>fn.remove(),3000)},12000);
+},8000);
+}
+
+// WATCHING EYE
+function addEye(){
+let eye=document.createElement('div');eye.className='eye active';eye.id='the-eye';document.body.appendChild(eye);
+document.addEventListener('mousemove',(e)=>{
+let el=document.getElementById('the-eye');if(!el)return;
+let rect=el.getBoundingClientRect();
+let cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+let angle=Math.atan2(e.clientY-cy,e.clientX-cx);
+let dist=Math.min(4,Math.sqrt((e.clientX-cx)**2+(e.clientY-cy)**2)/50);
+let pupil=el.querySelector('::after')||el;
+el.style.setProperty('--px',Math.cos(angle)*dist+'px');
+el.style.setProperty('--py',Math.sin(angle)*dist+'px');
+let after=document.createElement('style');
+after.textContent='#the-eye::after{transform:translate(calc(-50% + '+Math.cos(angle)*dist+'px),calc(-50% + '+Math.sin(angle)*dist+'px))!important}';
+let old=document.getElementById('eye-style');if(old)old.remove();
+after.id='eye-style';document.head.appendChild(after);
+});
+}
+
+// BACKROOMS TEXT
+function addBackrooms(){
+let br=document.createElement('div');br.className='backrooms active';
+let text='';
+const lines=["Level 0. Fluorescent hum. Yellow wallpaper. The carpet smells like 1993.",
+"You have been on this page for "+Math.floor((Date.now()-startTime)/60000)+" minutes. That is longer than most.",
+"The koi pond is not on the original floor plan.",
+"If you are reading this, the page has noticed you.",
+"The foxes do not steal chickens. The chickens were never real.",
+"This admin panel extends further than the screen allows. Scroll down. There is nothing. Scroll anyway.",
+"Someone else was reading this personnel file 4 minutes ago. They stopped.",
+"The hallway between the Runway tab and the Hiring tab is 1/4 inch longer than it should be.",
+"Bumi's bench exists in every room. Even this one. Especially this one.",
+"You can hear the koi if you listen carefully. They are not saying words. They are not NOT saying words."];
+for(let i=0;i<200;i++){text+=lines[Math.floor(Math.random()*lines.length)]+' '.repeat(Math.floor(Math.random()*20));}
+br.textContent=text;
+document.body.appendChild(br);
+}
+
+// HERON (appears after feeding 10 koi)
+let heronActive=false;
+let heron={x:-30,y:100,hunting:false,cooldown:200};
+setInterval(()=>{
+if(koiFed>=10&&!heronActive){
+heronActive=true;
+let hint=document.querySelector('.pond-hint');
+if(!hint){hint=document.createElement('div');hint.className='pond-hint';
+hint.textContent='something tall is watching the pond from the reeds...';
+document.getElementById('pond').appendChild(hint);}
+}
+},5000);
+</script>
+
+</body>
+</html>
