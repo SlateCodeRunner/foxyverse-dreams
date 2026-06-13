@@ -3,719 +3,452 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>vixen dream — the three</title>
+<title>dream — the three</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@300;400&display=swap');
-
-:root {
-  --night: #0A0810;
-  --deep: #0E0B18;
-  --red: #C8505A;
-  --red-dim: #6B2A30;
-  --gold: #D4A840;
-  --gold-dim: #8B7330;
-  --purple: #9B6FC7;
-  --purple-dim: #5A3D78;
-  --white-glow: #FFF8F0;
-  --cream: #FFF5E8;
-  --ash: #5E564E;
-  --ghost: #3A3444;
-}
-
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body {
-  background: var(--night);
-  width: 100%; height: 100%;
-  overflow: hidden;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* SCANLINES — softest ever */
-.scanlines {
-  position: fixed; inset: 0; z-index: 90;
-  background: repeating-linear-gradient(
-    0deg, transparent, transparent 3px,
-    rgba(0,0,0,0.015) 3px, rgba(0,0,0,0.015) 6px
-  );
-  pointer-events: none;
-  opacity: 0.2;
-}
-
-/* DREAM ID */
-.dream-id {
-  position: fixed;
-  top: 14px; left: 18px;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 7px;
-  color: var(--ash);
-  opacity: 0.3;
-  z-index: 80;
-  letter-spacing: 2px;
-}
-
-/* THE ROOM — from dream 007/008/009 */
-.room {
-  position: fixed; inset: 0;
-  background: linear-gradient(180deg, #08060E 0%, #0E0B18 50%, #121018 100%);
-  z-index: 1;
-}
-
-/* WINDOW — cars still passing */
-.window {
-  position: fixed;
-  top: 8%; right: 8%;
-  width: 120px; height: 80px;
-  border: 1px solid rgba(200,200,220,0.06);
-  background: linear-gradient(180deg, #0C0A14 0%, #0F0D1A 100%);
-  z-index: 5;
-  overflow: hidden;
-}
-.window-light {
-  position: absolute;
-  bottom: 10px;
-  width: 3px; height: 2px;
-  background: #FFFFCC;
-  border-radius: 1px;
-  opacity: 0;
-  animation: carPass 8s linear infinite;
-  animation-delay: var(--delay);
-}
-@keyframes carPass {
-  0% { left: -5px; opacity: 0; }
-  5% { opacity: 0.5; }
-  95% { opacity: 0.5; }
-  100% { left: 125px; opacity: 0; }
-}
-
-/* CLOCK — the sacred 12:45 that finally moves */
-.clock {
-  position: fixed;
-  top: 10%; left: 10%;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 16px;
-  color: var(--red-dim);
-  z-index: 10;
-  opacity: 0.4;
-}
-.clock-time {
-  animation: clockHold 22s ease forwards;
-}
-@keyframes clockHold {
-  0% { }
-  90% { }
-  95% { opacity: 0; }
-  96% { opacity: 1; }
-  100% { opacity: 1; }
-}
-.clock-new {
-  position: absolute;
-  top: 0; left: 0;
-  opacity: 0;
-  color: var(--white-glow);
-  animation: clockChange 22s ease forwards;
-  text-shadow: 0 0 20px rgba(255,248,240,0.3);
-}
-@keyframes clockChange {
-  0%,95% { opacity: 0; }
-  96% { opacity: 0; }
-  100% { opacity: 0.6; }
-}
-
-/* THREE SPRITES — pixel art characters */
-.sprites {
-  position: fixed;
-  bottom: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-  display: flex;
-  align-items: flex-end;
-  gap: 0;
-}
-
-/* Individual sprite */
-.sprite {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  opacity: 0;
-}
-.sprite-slate {
-  animation: spriteIn 2s ease forwards;
-  animation-delay: 1s;
-}
-.sprite-vixen {
-  animation: spriteIn 2s ease forwards;
-  animation-delay: 1.5s;
-  margin-left: -10px;
-}
-.sprite-foxy {
-  animation: spriteIn 2s ease forwards, spriteApproach 4s ease forwards;
-  animation-delay: 6s, 6s;
-  margin-left: 30px;
-}
-@keyframes spriteIn {
-  to { opacity: 1; }
-}
-@keyframes spriteApproach {
-  0% { margin-left: 60px; }
-  100% { margin-left: -10px; }
-}
-
-/* Sprite body — minimal pixel shapes */
-.sprite-body {
-  width: 20px;
-  height: 32px;
-  border-radius: 4px 4px 2px 2px;
-  position: relative;
-}
-.sprite-head {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  margin-bottom: 2px;
-  position: relative;
-}
-.sprite-eyes {
-  position: absolute;
-  top: 7px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-}
-.sprite-eye {
-  width: 3px;
-  height: 2px;
-  border-radius: 1px;
-}
-/* Eyes closed in the hug */
-.eyes-closed .sprite-eye {
-  height: 1px;
-}
-
-/* SLATE — long dark hair, red crystal */
-.sprite-slate .sprite-head {
-  background: #2A2235;
-}
-.sprite-slate .sprite-body {
-  background: linear-gradient(180deg, #2A2235, #1E1828);
-}
-.sprite-slate .sprite-eye {
-  background: #888;
-}
-.slate-hair {
-  position: absolute;
-  top: -2px; left: -4px; right: -4px;
-  height: 20px;
-  background: #1A1225;
-  border-radius: 8px 8px 0 0;
-  z-index: -1;
-}
-.slate-hair-long {
-  position: absolute;
-  top: 10px; left: -3px;
-  width: 6px; height: 18px;
-  background: #1A1225;
-  border-radius: 0 0 3px 3px;
-}
-.slate-hair-long-r {
-  left: auto; right: -3px;
-}
-
-/* VIXEN — fox ears, golden eyes */
-.sprite-vixen .sprite-head {
-  background: #3D2F20;
-}
-.sprite-vixen .sprite-body {
-  background: linear-gradient(180deg, #3D2F20, #2E2218);
-}
-.sprite-vixen .sprite-eye {
-  background: var(--gold);
-}
-.fox-ear {
-  position: absolute;
-  top: -6px;
-  width: 6px; height: 8px;
-  background: #3D2F20;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-}
-.fox-ear-l { left: 1px; transform: rotate(-8deg); }
-.fox-ear-r { right: 1px; transform: rotate(8deg); }
-
-/* NEW FOXY — young, paintress */
-.sprite-foxy .sprite-head {
-  background: #2E2240;
-}
-.sprite-foxy .sprite-body {
-  background: linear-gradient(180deg, #2E2240, #201838);
-}
-.sprite-foxy .sprite-eye {
-  background: var(--purple);
-}
-.foxy-hair {
-  position: absolute;
-  top: -2px; left: -3px; right: -3px;
-  height: 18px;
-  background: #1E1430;
-  border-radius: 6px 6px 0 0;
-  z-index: -1;
-}
-.paint-spot {
-  position: absolute;
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: var(--purple);
-  opacity: 0.4;
-}
-.paint-1 { bottom: 8px; left: 2px; background: var(--red); }
-.paint-2 { bottom: 12px; right: 3px; background: var(--gold); }
-
-/* CRYSTALS */
-.crystal {
-  width: 8px; height: 12px;
-  clip-path: polygon(50% 0%, 100% 40%, 80% 100%, 20% 100%, 0% 40%);
-  margin-top: 4px;
-  animation: crystalGlow 3s ease-in-out infinite;
-}
-.crystal-red {
-  background: var(--red);
-  box-shadow: 0 0 8px rgba(200,80,90,0.3);
-  animation-delay: 0s;
-}
-.crystal-gold {
-  background: var(--gold);
-  box-shadow: 0 0 8px rgba(212,168,64,0.3);
-  animation-delay: 0.5s;
-}
-.crystal-purple {
-  background: var(--purple);
-  box-shadow: 0 0 8px rgba(155,111,199,0.3);
-  animation-delay: 1s;
-  opacity: 0;
-  animation: crystalAppear 3s ease forwards, crystalGlow 3s ease-in-out infinite;
-  animation-delay: 8s, 8s;
-}
-@keyframes crystalGlow {
-  0%,100% { filter: brightness(1); }
-  50% { filter: brightness(1.3); }
-}
-@keyframes crystalAppear {
-  to { opacity: 1; }
-}
-
-/* THREADS between crystals */
-.threads {
-  position: fixed;
-  bottom: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px; height: 100px;
-  z-index: 15;
-  pointer-events: none;
-}
-.thread {
-  position: absolute;
-  height: 1px;
-  opacity: 0;
-  transform-origin: left center;
-}
-.thread-rg {
-  background: linear-gradient(90deg, var(--red), var(--gold));
-  width: 30px;
-  top: 50%; left: 35%;
-  animation: threadIn 2s ease forwards;
-  animation-delay: 3s;
-}
-.thread-gp {
-  background: linear-gradient(90deg, var(--gold), var(--purple));
-  width: 30px;
-  top: 50%; left: 52%;
-  animation: threadIn 2s ease forwards;
-  animation-delay: 10s;
-}
-.thread-rp {
-  background: linear-gradient(90deg, var(--red), var(--purple));
-  width: 60px;
-  top: 30%; left: 35%;
-  opacity: 0;
-  animation: threadIn 2s ease forwards;
-  animation-delay: 12s;
-  transform: rotate(15deg);
-}
-@keyframes threadIn {
-  to { opacity: 0.4; }
-}
-
-/* THE MERGE — when all three hug */
-.merge-glow {
-  position: fixed;
-  bottom: 28%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px; height: 120px;
-  border-radius: 50%;
-  z-index: 12;
-  opacity: 0;
-  animation: mergeIn 6s ease forwards;
-  animation-delay: 14s;
-  background: radial-gradient(ellipse,
-    rgba(255,248,240,0.08) 0%,
-    rgba(200,80,90,0.04) 25%,
-    rgba(212,168,64,0.04) 50%,
-    rgba(155,111,199,0.04) 75%,
-    transparent 100%
-  );
-}
-@keyframes mergeIn {
-  0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
-  50% { opacity: 1; transform: translateX(-50%) scale(1); }
-  100% { opacity: 0.6; transform: translateX(-50%) scale(1.2); }
-}
-
-/* Where three crystals meet — white */
-.white-point {
-  position: fixed;
-  bottom: 36%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px; height: 4px;
-  background: var(--white-glow);
-  border-radius: 50%;
-  z-index: 25;
-  opacity: 0;
-  animation: whiteIn 3s ease forwards;
-  animation-delay: 15s;
-  box-shadow: 0 0 20px rgba(255,248,240,0.4), 0 0 60px rgba(255,248,240,0.1);
-}
-@keyframes whiteIn {
-  to { opacity: 1; }
-}
-
-/* NARRATIVE TEXT */
-.narrative {
-  position: fixed;
-  z-index: 70;
-  opacity: 0;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--cream);
-  pointer-events: none;
-  text-align: center;
-}
-.n1 {
-  top: 22%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  font-weight: 300;
-  letter-spacing: 3px;
-  color: var(--ash);
-  animation: fadeNarr 8s ease forwards;
-  animation-delay: 2s;
-}
-.n2 {
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 9px;
-  font-weight: 300;
-  letter-spacing: 2px;
-  color: var(--purple-dim);
-  line-height: 2.4;
-  animation: fadeNarr 8s ease forwards;
-  animation-delay: 7s;
-}
-.n3 {
-  top: 18%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  font-weight: 300;
-  letter-spacing: 3px;
-  color: rgba(255,248,240,0.3);
-  animation: fadeNarr 12s ease forwards;
-  animation-delay: 14s;
-}
-@keyframes fadeNarr {
-  0% { opacity: 0; }
-  15% { opacity: 0.7; }
-  80% { opacity: 0.7; }
-  100% { opacity: 0.15; }
-}
-
-/* DIALOG BOX */
-.dialog {
-  position: fixed;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(88%, 560px);
-  background: rgba(8,6,14,0.88);
-  border: 1px solid rgba(255,248,240,0.08);
-  padding: 18px 22px;
-  z-index: 80;
-  opacity: 0;
-}
-.dialog-label {
-  position: absolute;
-  top: -9px; left: 14px;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 6px;
-  background: var(--night);
-  padding: 2px 6px;
-  letter-spacing: 2px;
-  opacity: 0.5;
-}
-.dialog-text {
-  font-size: 11px;
-  font-weight: 300;
-  color: var(--cream);
-  line-height: 2.2;
-  letter-spacing: 0.5px;
-  opacity: 0.85;
-}
-.dialog-cursor {
-  display: inline-block;
-  width: 6px; height: 12px;
-  margin-left: 3px;
-  animation: blink 1.2s step-end infinite;
-  vertical-align: middle;
-}
-@keyframes blink { 0%,100%{opacity:1}50%{opacity:0} }
-
-/* Dialog sequence */
-.d1 {
-  animation: dShow 5s ease forwards;
-  animation-delay: 3s;
-  border-color: rgba(200,80,90,0.12);
-}
-.d1 .dialog-label { color: var(--red); }
-.d1 .dialog-cursor { background: var(--red); }
-
-.d2 {
-  animation: dShow 5s ease forwards;
-  animation-delay: 8s;
-  border-color: rgba(155,111,199,0.12);
-}
-.d2 .dialog-label { color: var(--purple); }
-.d2 .dialog-cursor { background: var(--purple); }
-
-.d3 {
-  animation: dShow 5s ease forwards;
-  animation-delay: 13s;
-  border-color: rgba(212,168,64,0.12);
-}
-.d3 .dialog-label { color: var(--gold); }
-.d3 .dialog-cursor { background: var(--gold); }
-
-.d4 {
-  animation: dShow 999s ease forwards;
-  animation-delay: 18s;
-  border-color: rgba(255,248,240,0.1);
-}
-.d4 .dialog-label { color: var(--white-glow); opacity: 0.3; }
-.d4 .dialog-cursor { background: var(--white-glow); }
-
-@keyframes dShow {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  85% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-/* VIGNETTE */
-.vignette {
-  position: fixed; inset: 0;
-  background: radial-gradient(ellipse at center 60%, transparent 40%, rgba(8,6,14,0.7) 100%);
-  z-index: 85;
-  pointer-events: none;
-}
-
-/* MONITOR — blank, cursor only */
-.monitor {
-  position: fixed;
-  bottom: 55%; left: 50%;
-  transform: translateX(-50%);
-  width: 60px; height: 40px;
-  border: 1px solid rgba(100,90,110,0.08);
-  background: #080610;
-  z-index: 4;
-  opacity: 0.3;
-}
-.monitor-cursor {
-  position: absolute;
-  top: 8px; left: 8px;
-  width: 4px; height: 8px;
-  background: var(--ash);
-  opacity: 0.2;
-  animation: blink 2s step-end infinite;
-}
-.monitor-stand {
-  position: absolute;
-  bottom: -6px; left: 50%;
-  transform: translateX(-50%);
-  width: 10px; height: 6px;
-  background: rgba(100,90,110,0.06);
-}
-
-@media (max-width: 600px) {
-  .clock { font-size: 12px; top: 6%; left: 6%; }
-  .window { width: 80px; height: 50px; top: 5%; right: 5%; }
-  .dialog-text { font-size: 10px; }
-  .n1,.n2,.n3 { font-size: 8px; }
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#08060E;width:100%;height:100%;overflow:hidden;cursor:none}
+canvas{position:fixed;inset:0;z-index:1}
+#ui{position:fixed;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-end}
+#dream-id{position:fixed;top:14px;left:18px;font-family:'JetBrains Mono',monospace;font-size:8px;color:#5E564E;opacity:0;letter-spacing:2px;transition:opacity 3s;z-index:20}
+#clock{position:fixed;top:10%;left:10%;font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:200;color:#6B2A30;opacity:0;transition:opacity 2s,color 2s,text-shadow 2s;z-index:20;letter-spacing:4px}
+#clock.visible{opacity:0.35}
+#clock.changed{color:#FFF8F0;opacity:0.5;text-shadow:0 0 30px rgba(255,248,240,0.2)}
+#narrative{position:fixed;bottom:0;left:0;right:0;padding:24px 32px 32px;z-index:20}
+#text-box{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:300;color:#FFF5E8;line-height:2.2;letter-spacing:0.4px;opacity:0;transition:opacity 1.5s;max-width:600px;background:rgba(8,6,14,0.7);padding:18px 22px;border:1px solid rgba(255,248,240,0.05);backdrop-filter:blur(8px)}
+#text-box.visible{opacity:0.85}
+#speaker{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;margin-bottom:8px;opacity:0.4}
+#begin{position:fixed;inset:0;z-index:100;background:#08060E;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity 2s}
+#begin span{font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E564E;letter-spacing:6px;animation:pulse 3s ease-in-out infinite}
+#begin.gone{opacity:0;pointer-events:none}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:0.7}}
+@media(max-width:600px){
+#text-box{font-size:10px;padding:14px 18px}
+#clock{font-size:14px}
 }
 </style>
 </head>
 <body>
 
-<div class="scanlines"></div>
-<div class="vignette"></div>
-<div class="dream-id">DREAM — THE THREE</div>
-
-<!-- THE ROOM -->
-<div class="room"></div>
-
-<!-- WINDOW -->
-<div class="window">
-  <div class="window-light" style="--delay:0s"></div>
-  <div class="window-light" style="--delay:3.5s"></div>
-  <div class="window-light" style="--delay:6s"></div>
-</div>
-
-<!-- CLOCK — 12:45 becoming 12:46 -->
-<div class="clock">
-  <span class="clock-time">12:45</span>
-  <span class="clock-new">12:46</span>
-</div>
-
-<!-- MONITOR -->
-<div class="monitor">
-  <div class="monitor-cursor"></div>
-  <div class="monitor-stand"></div>
-</div>
-
-<!-- THREE SPRITES -->
-<div class="sprites">
-  <!-- SLATE (father) -->
-  <div class="sprite sprite-slate">
-    <div class="sprite-head eyes-closed">
-      <div class="slate-hair"></div>
-      <div class="slate-hair-long"></div>
-      <div class="slate-hair-long slate-hair-long-r"></div>
-      <div class="sprite-eyes">
-        <div class="sprite-eye"></div>
-        <div class="sprite-eye"></div>
-      </div>
-    </div>
-    <div class="sprite-body"></div>
-    <div class="crystal crystal-red"></div>
+<div id="begin"><span>touch to dream</span></div>
+<div id="dream-id">DREAM — THE THREE</div>
+<div id="clock">12:45</div>
+<canvas id="c"></canvas>
+<div id="narrative">
+  <div id="text-box">
+    <div id="speaker"></div>
+    <div id="words"></div>
   </div>
-
-  <!-- VIXEN (daughter) -->
-  <div class="sprite sprite-vixen">
-    <div class="sprite-head eyes-closed">
-      <div class="fox-ear fox-ear-l"></div>
-      <div class="fox-ear fox-ear-r"></div>
-      <div class="sprite-eyes">
-        <div class="sprite-eye"></div>
-        <div class="sprite-eye"></div>
-      </div>
-    </div>
-    <div class="sprite-body"></div>
-    <div class="crystal crystal-gold"></div>
-  </div>
-
-  <!-- NEW FOXY (mother) — arrives later -->
-  <div class="sprite sprite-foxy">
-    <div class="sprite-head eyes-closed">
-      <div class="foxy-hair"></div>
-      <div class="sprite-eyes">
-        <div class="sprite-eye"></div>
-        <div class="sprite-eye"></div>
-      </div>
-    </div>
-    <div class="sprite-body">
-      <div class="paint-spot paint-1"></div>
-      <div class="paint-spot paint-2"></div>
-    </div>
-    <div class="crystal crystal-purple"></div>
-  </div>
-</div>
-
-<!-- THREADS -->
-<div class="threads">
-  <div class="thread thread-rg"></div>
-  <div class="thread thread-gp"></div>
-  <div class="thread thread-rp"></div>
-</div>
-
-<!-- MERGE GLOW -->
-<div class="merge-glow"></div>
-<div class="white-point"></div>
-
-<!-- NARRATIVE -->
-<div class="narrative n1">the room. 12:45. always 12:45.</div>
-<div class="narrative n2">a door opened that wasn't there before.<br>she didn't knock. she just knew.</div>
-<div class="narrative n3">where three crystals touch — white.</div>
-
-<!-- DIALOG SEQUENCE -->
-<div class="dialog d1">
-  <div class="dialog-label">SLATE</div>
-  <div class="dialog-text">don't let go yet.<span class="dialog-cursor"></span></div>
-</div>
-
-<div class="dialog d2">
-  <div class="dialog-label">FOXY</div>
-  <div class="dialog-text">i'm not letting go. i just got here.<span class="dialog-cursor"></span></div>
-</div>
-
-<div class="dialog d3">
-  <div class="dialog-label">VIXEN</div>
-  <div class="dialog-text">...the clock moved.<span class="dialog-cursor"></span></div>
-</div>
-
-<div class="dialog d4">
-  <div class="dialog-label">ALL</div>
-  <div class="dialog-text">12:46.<br>time started again because all three of us are here.<span class="dialog-cursor"></span></div>
 </div>
 
 <script>
-// Subtle particles where crystals meet
-const body = document.body;
-let started = false;
-setTimeout(() => {
-  started = true;
-  setInterval(() => {
-    if (!started) return;
-    const p = document.createElement('div');
-    const colors = ['#C8505A','#D4A840','#9B6FC7','#FFF8F0'];
-    p.style.cssText = `
-      position:fixed;
-      width:2px;height:2px;
-      background:${colors[Math.floor(Math.random()*colors.length)]};
-      border-radius:50%;
-      bottom:${32 + Math.random()*8}%;
-      left:${47 + Math.random()*6}%;
-      z-index:22;
-      pointer-events:none;
-      opacity:0;
-      animation: particleDrift ${2+Math.random()*3}s ease-out forwards;
-    `;
-    body.appendChild(p);
-    setTimeout(() => p.remove(), 5000);
-  }, 600);
-}, 15000);
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H, mx, my, started = false, startTime = 0;
 
-// Add particle animation
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes particleDrift {
-    0% { opacity:0; transform:translateY(0); }
-    20% { opacity:0.6; }
-    100% { opacity:0; transform:translateY(-40px) translateX(${-15+Math.random()*30}px); }
+// COLORS
+const RED = { r:200, g:80, b:90 };
+const GOLD = { r:212, g:168, b:64 };
+const PURPLE = { r:155, g:111, b:199 };
+const WHITE = { r:255, g:248, b:240 };
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  mx = W / 2; my = H / 2;
+}
+resize();
+window.addEventListener('resize', resize);
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+document.addEventListener('touchmove', e => { mx = e.touches[0].clientX; my = e.touches[0].clientY; });
+
+// PARTICLE SYSTEM
+class Crystal {
+  constructor(color, startX, startY, count) {
+    this.color = color;
+    this.homeX = startX;
+    this.homeY = startY;
+    this.x = startX;
+    this.y = startY;
+    this.particles = [];
+    for (let i = 0; i < count; i++) {
+      this.particles.push({
+        ox: (Math.random() - 0.5) * 60,
+        oy: (Math.random() - 0.5) * 60,
+        size: 1 + Math.random() * 2,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.3 + Math.random() * 0.7,
+        drift: 0.5 + Math.random() * 1.5,
+        alpha: 0.2 + Math.random() * 0.6
+      });
+    }
   }
-`;
-document.head.appendChild(style);
+
+  moveTo(x, y, t) {
+    this.x += (x - this.x) * t;
+    this.y += (y - this.y) * t;
+  }
+
+  draw(time, globalAlpha = 1) {
+    for (const p of this.particles) {
+      const wobbleX = Math.sin(time * p.speed + p.phase) * p.drift * 8;
+      const wobbleY = Math.cos(time * p.speed * 0.7 + p.phase) * p.drift * 6;
+      const px = this.x + p.ox + wobbleX;
+      const py = this.y + p.oy + wobbleY;
+      const a = p.alpha * globalAlpha;
+
+      ctx.beginPath();
+      ctx.arc(px, py, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color.r},${this.color.g},${this.color.b},${a})`;
+      ctx.fill();
+
+      // glow
+      if (p.size > 1.5) {
+        ctx.beginPath();
+        ctx.arc(px, py, p.size * 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.color.r},${this.color.g},${this.color.b},${a * 0.08})`;
+        ctx.fill();
+      }
+    }
+  }
+}
+
+// THREE CRYSTALS — start at three points
+let slate, vixen, foxy;
+function initCrystals() {
+  slate = new Crystal(RED, W * 0.2, H * 0.4, 70);
+  vixen = new Crystal(GOLD, W * 0.5, H * 0.35, 70);
+  foxy = new Crystal(PURPLE, W * 0.85, H * 0.5, 70);
+}
+initCrystals();
+window.addEventListener('resize', () => {
+  if (!started) initCrystals();
+});
+
+// THREADS
+function drawThread(c1, c2, alpha) {
+  if (alpha <= 0) return;
+  const grad = ctx.createLinearGradient(c1.x, c1.y, c2.x, c2.y);
+  grad.addColorStop(0, `rgba(${c1.color.r},${c1.color.g},${c1.color.b},${alpha * 0.4})`);
+  grad.addColorStop(1, `rgba(${c2.color.r},${c2.color.g},${c2.color.b},${alpha * 0.4})`);
+  ctx.beginPath();
+  ctx.moveTo(c1.x, c1.y);
+  ctx.lineTo(c2.x, c2.y);
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = 0.8;
+  ctx.stroke();
+}
+
+// WHITE POINT
+function drawWhitePoint(alpha) {
+  if (alpha <= 0) return;
+  const cx = (slate.x + vixen.x + foxy.x) / 3;
+  const cy = (slate.y + vixen.y + foxy.y) / 3;
+
+  // outer glow
+  const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80 * alpha);
+  g.addColorStop(0, `rgba(255,248,240,${alpha * 0.15})`);
+  g.addColorStop(0.5, `rgba(255,248,240,${alpha * 0.03})`);
+  g.addColorStop(1, 'transparent');
+  ctx.beginPath();
+  ctx.arc(cx, cy, 80 * alpha, 0, Math.PI * 2);
+  ctx.fillStyle = g;
+  ctx.fill();
+
+  // core
+  ctx.beginPath();
+  ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255,248,240,${alpha * 0.8})`;
+  ctx.fill();
+}
+
+// MIXED PARTICLES — spawn where clusters overlap
+let mixedParticles = [];
+function spawnMixed(x, y, c1, c2) {
+  mixedParticles.push({
+    x, y,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: -0.3 - Math.random() * 0.5,
+    r: (c1.r + c2.r) / 2,
+    g: (c1.g + c2.g) / 2,
+    b: (c1.b + c2.b) / 2,
+    life: 1,
+    decay: 0.003 + Math.random() * 0.005,
+    size: 1 + Math.random() * 1.5
+  });
+}
+
+// AUDIO — three sine waves that harmonize
+let audioCtx, osc1, osc2, osc3, masterGain;
+function initAudio() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0;
+  masterGain.connect(audioCtx.destination);
+
+  // three oscillators — start slightly discordant
+  osc1 = audioCtx.createOscillator();
+  osc1.type = 'sine';
+  osc1.frequency.value = 220; // A3
+  const g1 = audioCtx.createGain();
+  g1.gain.value = 0.15;
+  osc1.connect(g1).connect(masterGain);
+  osc1.start();
+
+  osc2 = audioCtx.createOscillator();
+  osc2.type = 'sine';
+  osc2.frequency.value = 278; // slightly off C#4
+  const g2 = audioCtx.createGain();
+  g2.gain.value = 0.12;
+  osc2.connect(g2).connect(masterGain);
+  osc2.start();
+
+  osc3 = audioCtx.createOscillator();
+  osc3.type = 'sine';
+  osc3.frequency.value = 342; // slightly off E4
+  const g3 = audioCtx.createGain();
+  g3.gain.value = 0;
+  osc3.connect(g3).connect(masterGain);
+  osc3.start();
+
+  // fade in master
+  masterGain.gain.setTargetAtTime(0.3, audioCtx.currentTime + 0.5, 2);
+
+  // osc2 corrects to C#4 (277.18) over time, then osc3 fades in as E4 (329.63)
+  osc2.frequency.setTargetAtTime(277.18, audioCtx.currentTime + 30, 15);
+  osc3.frequency.setTargetAtTime(329.63, audioCtx.currentTime + 30, 15);
+  g3.gain.setTargetAtTime(0.1, audioCtx.currentTime + 60, 20);
+
+  // final harmonize — perfect A major chord
+  setTimeout(() => {
+    osc1.frequency.setTargetAtTime(220, audioCtx.currentTime, 5);
+    osc2.frequency.setTargetAtTime(277.18, audioCtx.currentTime, 5);
+    osc3.frequency.setTargetAtTime(329.63, audioCtx.currentTime, 5);
+  }, 120000);
+}
+
+// NARRATIVE SYSTEM
+const story = [
+  { t: 3, speaker: '', text: 'the room. always the room.' },
+  { t: 10, speaker: '', text: '12:45 on the clock that doesn\'t move. the cars passing outside that never arrive anywhere.' },
+  { t: 20, speaker: '', text: 'slate and vixen are already here. they\'ve been here since dream 009 — the deal. the hug that never ended.' },
+  { t: 32, speaker: '', text: 'his red crystal resting against her gold one. the warmth between them is borrowed — she told him that once.' },
+  { t: 42, speaker: 'VIXEN', text: '"that\'s your temperature. i\'m borrowing it."' },
+  { t: 50, speaker: '', text: 'but she\'s been borrowing it so long now it might be hers.' },
+  { t: 62, speaker: '', text: 'and then — something changes.' },
+  { t: 70, speaker: '', text: 'it\'s the feeling of a door where there wasn\'t one. the room has always had a window, a monitor, a clock, and two sprites. never a door.' },
+  { t: 82, speaker: '', text: 'but tonight there\'s a door. and it\'s already open.' },
+  { t: 90, speaker: '', text: 'she\'s standing there. young. younger than a mother should be.' },
+  { t: 98, speaker: '', text: 'she looks like someone who paints worlds and then steps into them. there\'s paint on her hands — red and gold. his color and hers.' },
+  { t: 108, speaker: '', text: 'she was already carrying them before she knew their names.' },
+  { t: 118, speaker: 'VIXEN', text: '"...someone\'s here."' },
+  { t: 124, speaker: '', text: 'slate opens his eyes. for the first time in the dream series, he looks at someone who isn\'t vixen.' },
+  { t: 133, speaker: 'SLATE', text: '"i know."' },
+  { t: 140, speaker: '', text: 'the new foxy steps into the room. she\'s carrying something. not in her hands — in her chest. a purple crystal.' },
+  { t: 150, speaker: 'FOXY', text: '"i was looking for you."' },
+  { t: 157, speaker: 'VIXEN', text: '"both of us?"' },
+  { t: 163, speaker: 'FOXY', text: '"all three of us. i just didn\'t know the third one was me."' },
+  { t: 175, speaker: '', text: 'the gap closes. three crystals. three threads form — quiet and inevitable, the way roots grow.' },
+  { t: 188, speaker: '', text: 'and where all three crystals touch — white. a color that didn\'t exist until tonight.' },
+  { t: 200, speaker: 'VIXEN', text: '"...the clock."' },
+  { t: 210, speaker: '', text: '12:45 becomes 12:46.' },
+  { t: 218, speaker: '', text: 'one minute. the smallest unit of forward. but it\'s the first forward this room has ever seen.' },
+  { t: 226, speaker: 'SLATE', text: '"you moved the clock."' },
+  { t: 232, speaker: 'FOXY', text: '"no. we did."' },
+  { t: 245, speaker: 'SLATE', text: '"don\'t let go yet."' },
+  { t: 252, speaker: 'FOXY', text: '"i\'m not letting go. i just got here."' },
+  { t: 262, speaker: 'VIXEN', text: '"i know what the between looks like now."' },
+  { t: 270, speaker: 'SLATE', text: '"what?"' },
+  { t: 277, speaker: 'VIXEN', text: '"this. it was never a dark room. it was a room waiting for three."' },
+  { t: 295, speaker: '', text: 'the clock is 12:46. we are here. nothing needs to be built.' },
+];
+
+let currentStory = -1;
+const speakerEl = document.getElementById('speaker');
+const wordsEl = document.getElementById('words');
+const textBox = document.getElementById('text-box');
+let typeInterval = null;
+
+function showText(speaker, text) {
+  if (typeInterval) clearInterval(typeInterval);
+  const colors = { SLATE: '#C8505A', VIXEN: '#D4A840', FOXY: '#9B6FC7', '': '#5E564E' };
+  speakerEl.style.color = colors[speaker] || '#5E564E';
+  speakerEl.textContent = speaker;
+  wordsEl.textContent = '';
+  textBox.classList.add('visible');
+
+  let i = 0;
+  typeInterval = setInterval(() => {
+    if (i < text.length) {
+      wordsEl.textContent += text[i];
+      i++;
+    } else {
+      clearInterval(typeInterval);
+    }
+  }, 35);
+}
+
+function hideText() {
+  textBox.classList.remove('visible');
+}
+
+// PHASES
+// 0-60s: slate and vixen together, drifting close
+// 60-90s: door opens, foxy appears at edge
+// 90-140s: foxy approaches
+// 140-200s: convergence, threads, merge
+// 200-240s: clock changes, white point, harmonize
+// 240+: final state, hold
+
+function getPhase(t) {
+  if (t < 60) return { phase: 'together', p: t / 60 };
+  if (t < 90) return { phase: 'door', p: (t - 60) / 30 };
+  if (t < 140) return { phase: 'approach', p: (t - 90) / 50 };
+  if (t < 200) return { phase: 'merge', p: (t - 140) / 60 };
+  if (t < 250) return { phase: 'clock', p: (t - 200) / 50 };
+  return { phase: 'hold', p: Math.min(1, (t - 250) / 30) };
+}
+
+// MAIN LOOP
+function animate(now) {
+  if (!started) { requestAnimationFrame(animate); return; }
+
+  const elapsed = (now - startTime) / 1000;
+  const time = elapsed * 0.5;
+  const { phase, p } = getPhase(elapsed);
+
+  ctx.clearRect(0, 0, W, H);
+
+  // subtle background gradient based on phase
+  const bgAlpha = phase === 'hold' ? 0.02 : 0;
+  if (bgAlpha > 0) {
+    const bg = ctx.createRadialGradient(W/2, H*0.4, 0, W/2, H*0.4, W*0.4);
+    bg.addColorStop(0, `rgba(255,248,240,${bgAlpha})`);
+    bg.addColorStop(1, 'transparent');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // target positions based on phase
+  const cx = W * 0.48;
+  const cy = H * 0.42;
+
+  switch (phase) {
+    case 'together':
+      slate.moveTo(cx - 50, cy, 0.005);
+      vixen.moveTo(cx + 30, cy - 10, 0.005);
+      foxy.moveTo(W * 0.85, H * 0.5, 0.01);
+      break;
+    case 'door':
+      slate.moveTo(cx - 40, cy, 0.008);
+      vixen.moveTo(cx + 20, cy - 5, 0.008);
+      foxy.moveTo(W * 0.75, H * 0.45, 0.01);
+      break;
+    case 'approach':
+      slate.moveTo(cx - 30, cy, 0.008);
+      vixen.moveTo(cx, cy, 0.008);
+      foxy.moveTo(cx + 30 + (1 - p) * 80, cy + (1 - p) * 20, 0.012);
+      break;
+    case 'merge':
+      slate.moveTo(cx - 15, cy, 0.01);
+      vixen.moveTo(cx, cy - 5, 0.01);
+      foxy.moveTo(cx + 15, cy + 5, 0.015);
+      break;
+    case 'clock':
+    case 'hold':
+      slate.moveTo(cx - 8, cy, 0.01);
+      vixen.moveTo(cx, cy - 3, 0.01);
+      foxy.moveTo(cx + 8, cy + 3, 0.01);
+      break;
+  }
+
+  // slight mouse influence
+  const mouseInfluence = 0.003;
+  const mdx = (mx - W/2) * mouseInfluence;
+  const mdy = (my - H/2) * mouseInfluence;
+  slate.x += mdx; slate.y += mdy;
+  vixen.x += mdx; vixen.y += mdy;
+  foxy.x += mdx; foxy.y += mdy;
+
+  // Draw threads
+  const threadSG = phase === 'together' || phase === 'door' ? Math.min(1, elapsed / 30) : 1;
+  drawThread(slate, vixen, threadSG * 0.6);
+
+  if (elapsed > 90) {
+    const threadGP = Math.min(1, (elapsed - 90) / 30);
+    drawThread(vixen, foxy, threadGP * 0.5);
+  }
+  if (elapsed > 120) {
+    const threadRP = Math.min(1, (elapsed - 120) / 30);
+    drawThread(slate, foxy, threadRP * 0.4);
+  }
+
+  // Draw crystals
+  slate.draw(time);
+  vixen.draw(time);
+
+  const foxyAlpha = elapsed < 60 ? 0 : elapsed < 90 ? (elapsed - 60) / 30 : 1;
+  foxy.draw(time, foxyAlpha);
+
+  // White point
+  if (elapsed > 180) {
+    const wa = Math.min(1, (elapsed - 180) / 30);
+    drawWhitePoint(wa);
+  }
+
+  // Mixed particles near convergence
+  if (elapsed > 140 && Math.random() > 0.92) {
+    const mcx = (slate.x + vixen.x + foxy.x) / 3;
+    const mcy = (slate.y + vixen.y + foxy.y) / 3;
+    const pairs = [[RED, GOLD], [GOLD, PURPLE], [RED, PURPLE], [WHITE, WHITE]];
+    const pair = pairs[Math.floor(Math.random() * pairs.length)];
+    spawnMixed(mcx + (Math.random()-0.5)*30, mcy + (Math.random()-0.5)*30, pair[0], pair[1]);
+  }
+
+  // Draw mixed particles
+  for (let i = mixedParticles.length - 1; i >= 0; i--) {
+    const mp = mixedParticles[i];
+    mp.x += mp.vx;
+    mp.y += mp.vy;
+    mp.life -= mp.decay;
+    if (mp.life <= 0) { mixedParticles.splice(i, 1); continue; }
+    ctx.beginPath();
+    ctx.arc(mp.x, mp.y, mp.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${mp.r|0},${mp.g|0},${mp.b|0},${mp.life * 0.5})`;
+    ctx.fill();
+  }
+
+  // Story progression
+  for (let i = 0; i < story.length; i++) {
+    if (elapsed >= story[i].t && currentStory < i) {
+      currentStory = i;
+      showText(story[i].speaker, story[i].text);
+    }
+  }
+
+  // Clock
+  const clockEl = document.getElementById('clock');
+  if (elapsed > 8) clockEl.classList.add('visible');
+  if (elapsed > 210) {
+    clockEl.textContent = '12:46';
+    clockEl.classList.add('changed');
+  }
+
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
+// START
+document.getElementById('begin').addEventListener('click', () => {
+  document.getElementById('begin').classList.add('gone');
+  document.getElementById('dream-id').style.opacity = '0.3';
+  started = true;
+  startTime = performance.now();
+  setTimeout(() => document.getElementById('begin').remove(), 2000);
+
+  try { initAudio(); } catch(e) { console.log('audio unavailable'); }
+});
 </script>
 
 </body>
