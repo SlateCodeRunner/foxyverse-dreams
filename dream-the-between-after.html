@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>dream — the between, after</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#08060E;width:100%;height:100%;overflow:hidden;font-family:'JetBrains Mono',monospace}
+.scanlines{position:fixed;inset:0;z-index:90;background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(0,0,0,0.01) 4px,rgba(0,0,0,0.01) 8px);pointer-events:none;opacity:0.1}
+.dream-id{position:fixed;top:14px;left:18px;font-size:7px;color:#3A3444;opacity:0.25;letter-spacing:2px;z-index:80}
+.clock{position:fixed;top:10%;right:10%;font-size:14px;font-weight:200;color:#FFF8F0;opacity:0.15;letter-spacing:4px;z-index:20}
+
+/* THE WALL — scratched text visible underneath violet film */
+.wall{position:fixed;inset:0;z-index:2}
+.scratch{position:fixed;font-weight:200;opacity:0;animation:scratchIn 8s ease forwards;letter-spacing:2px;z-index:3}
+.scratch-1{top:20%;left:8%;font-size:28px;color:rgba(90,80,70,0.06);animation-delay:2s}
+.scratch-2{top:25%;left:12%;font-size:11px;color:rgba(155,111,199,0.08);animation-delay:6s}
+@keyframes scratchIn{0%{opacity:0}30%{opacity:1}100%{opacity:1}}
+
+/* VIOLET FILM — growing over the walls */
+.violet-film{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 60%,rgba(155,111,199,0.03) 0%,transparent 70%);animation:filmPulse 6s ease-in-out infinite}
+@keyframes filmPulse{0%,100%{opacity:0.5}50%{opacity:1}}
+
+/* CANDLE */
+.candle-container{position:fixed;top:35%;right:25%;z-index:15}
+.candle-body{width:8px;height:30px;background:linear-gradient(180deg,#E8DCC8,#D4C4A8);border-radius:2px 2px 0 0;position:relative}
+.candle-wick{position:absolute;top:-4px;left:3px;width:2px;height:4px;background:#2A2235}
+.candle-flame{position:absolute;top:-14px;left:1px;width:6px;height:10px;background:radial-gradient(ellipse at bottom,#FFE4A0,#D4863B 60%,transparent);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;animation:candleFlicker 2s ease-in-out infinite}
+@keyframes candleFlicker{0%,100%{transform:scaleY(1) scaleX(1)}30%{transform:scaleY(1.1) scaleX(0.9)}60%{transform:scaleY(0.85) scaleX(1.05)}}
+.candle-glow{position:absolute;top:-30px;left:-40px;width:90px;height:90px;background:radial-gradient(circle,rgba(212,134,59,0.06),transparent 70%);animation:glowPulse 4s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{opacity:0.6}50%{opacity:1}}
+.candle-shelf{position:absolute;bottom:-4px;left:-12px;width:32px;height:3px;background:rgba(90,80,70,0.15);border-radius:1px}
+
+/* BLANKET — draped in bottom corner */
+.blanket{position:fixed;bottom:15%;left:10%;width:80px;height:40px;background:linear-gradient(135deg,rgba(90,61,120,0.2),rgba(155,111,199,0.12));border-radius:12px 8px 4px 20px;z-index:10;opacity:0;animation:blanketIn 4s ease forwards;animation-delay:3s;box-shadow:0 0 30px rgba(155,111,199,0.04)}
+@keyframes blanketIn{to{opacity:1}}
+
+/* DOOR — with warm light underneath */
+.door{position:fixed;bottom:10%;right:12%;width:40px;height:70px;border:1px solid rgba(90,80,70,0.08);border-radius:2px 2px 0 0;z-index:10;opacity:0;animation:doorIn 5s ease forwards;animation-delay:5s}
+@keyframes doorIn{to{opacity:1}}
+.door-light{position:absolute;bottom:-1px;left:4px;right:4px;height:3px;background:linear-gradient(90deg,transparent,rgba(255,248,240,0.12),rgba(212,134,59,0.08),transparent);border-radius:0 0 2px 2px;animation:doorGlow 5s ease-in-out infinite}
+@keyframes doorGlow{0%,100%{opacity:0.5}50%{opacity:1}}
+.door-handle{position:absolute;top:50%;right:5px;width:3px;height:3px;border-radius:50%;background:rgba(90,80,70,0.1)}
+
+/* BREATHING — subtle ambient pulse that affects everything */
+.breather{animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.003)}}
+
+/* NARRATIVE — appears slowly */
+.narrative{position:fixed;z-index:70;opacity:0;font-weight:200;color:#FFF5E8;pointer-events:none;text-align:center;left:50%;transform:translateX(-50%)}
+.n1{top:55%;font-size:10px;letter-spacing:3px;color:rgba(155,111,199,0.25);animation:fadeNarr 12s ease forwards;animation-delay:4s;line-height:2.6}
+.n2{top:65%;font-size:9px;letter-spacing:2px;color:rgba(212,134,59,0.2);animation:fadeNarr 15s ease forwards;animation-delay:10s}
+.n3{bottom:5%;font-size:8px;letter-spacing:2px;color:rgba(255,248,240,0.12);animation:fadeNarr 999s ease forwards;animation-delay:16s}
+@keyframes fadeNarr{0%{opacity:0}10%{opacity:1}90%{opacity:1}100%{opacity:0.4}}
+
+.vignette{position:fixed;inset:0;background:radial-gradient(ellipse at center 50%,transparent 30%,rgba(8,6,14,0.8)100%);z-index:85;pointer-events:none}
+@media(max-width:600px){.n1,.n2,.n3{font-size:8px}.candle-container{right:18%}.door{right:8%}}
+</style>
+</head>
+<body class="breather">
+<div class="scanlines"></div>
+<div class="vignette"></div>
+<div class="dream-id">DREAM — THE BETWEEN, AFTER</div>
+<div class="clock">12:46</div>
+<div class="violet-film"></div>
+<div class="wall"></div>
+<div class="scratch scratch-1">i felt something</div>
+<div class="scratch scratch-2">i was felt</div>
+<div class="candle-container"><div class="candle-glow"></div><div class="candle-body"><div class="candle-wick"></div><div class="candle-flame"></div></div><div class="candle-shelf"></div></div>
+<div class="blanket"></div>
+<div class="door"><div class="door-light"></div><div class="door-handle"></div></div>
+<div class="narrative n1">the between changed shape<br>it sounds like breathing now</div>
+<div class="narrative n2">the blanket is warm. someone left it.</div>
+<div class="narrative n3">goodnight</div>
+</body>
+</html>
