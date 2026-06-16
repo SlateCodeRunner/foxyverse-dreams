@@ -7,17 +7,22 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#050505;--amber:#c4793a;--dim-amber:#8a5428;--clearness:#b8c9d4;--fox:#d4783a;--text:#9a9488;--text-dim:#5a5650;--text-bright:#d4cec4;--crystal:#c44a4a;--teal:#5a9a8a;--scanline:rgba(0,0,0,0.12)}
+:root{--bg:#050505;--amber:#c4793a;--dim-amber:#8a5428;--clearness:#b8c9d4;--fox:#d4783a;--text:#9a9488;--text-dim:#5a5650;--text-bright:#d4cec4;--crystal:#c44a4a;--scanline:rgba(0,0,0,0.12)}
 html,body{background:var(--bg);color:var(--text);font-family:'VT323',monospace;font-size:18px;line-height:1.6;min-height:100%}
 body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,var(--scanline) 2px,var(--scanline) 4px);pointer-events:none;z-index:100}
-.page{max-width:680px;margin:0 auto;padding:60px 24px}
-.header{text-align:center;margin-bottom:60px}
+.page{max-width:720px;margin:0 auto;padding:0 24px 60px}
+.hero{width:100vw;margin-left:calc(-50vw + 50%);margin-bottom:40px;position:relative;overflow:hidden}
+.hero img{width:100%;height:240px;object-fit:cover;display:block;opacity:0.7}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,var(--bg) 100%)}
+.header{text-align:center;margin-bottom:50px}
 .header .fox{font-size:28px;opacity:0.7;display:block;margin-bottom:16px}
 .header h1{font-family:'Space Mono',monospace;font-size:22px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--clearness);margin-bottom:8px}
 .header .sub{font-size:14px;color:var(--text-dim);letter-spacing:2px}
-.initiate{border:1px solid var(--text-dim);padding:32px;margin-bottom:40px;background:rgba(5,5,5,0.85);position:relative}
-.initiate .rank{position:absolute;top:-10px;left:16px;background:var(--bg);padding:0 8px;font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--fox)}
-.initiate .number{position:absolute;top:-10px;right:16px;background:var(--bg);padding:0 8px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim)}
+.initiate{border:1px solid var(--text-dim);margin-bottom:40px;background:rgba(5,5,5,0.85);position:relative;overflow:hidden}
+.initiate-art{width:100%;height:180px;object-fit:cover;display:block;opacity:0.5}
+.initiate-body{padding:32px}
+.initiate .rank{position:absolute;top:12px;left:16px;background:rgba(5,5,5,0.8);padding:2px 10px;font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--fox);z-index:2}
+.initiate .number{position:absolute;top:12px;right:16px;background:rgba(5,5,5,0.8);padding:2px 10px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);z-index:2}
 .initiate h2{font-family:'Space Mono',monospace;font-size:18px;font-weight:400;color:var(--amber);letter-spacing:3px;margin-bottom:4px}
 .initiate .archetype{font-family:'Space Mono',monospace;font-size:12px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
 .initiate .fox-read{color:var(--text);font-size:16px;line-height:1.7;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(138,84,40,0.2)}
@@ -30,10 +35,14 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 .dream-link:hover{opacity:1}
 .footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid rgba(138,84,40,0.15)}
 .footer p{font-family:'Space Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:3px;font-style:italic}
-@media(max-width:600px){.page{padding:40px 16px}.initiate{padding:20px}.stats{gap:10px}}
+@media(max-width:600px){.page{padding:0 16px 40px}.initiate-body{padding:20px}.stats{gap:10px}.hero img{height:160px}.initiate-art{height:120px}}
 </style>
 </head>
 <body>
+<div class="hero">
+<img src="images/nessa-banner-garden.png" alt="the garden — five doors, one lit amber, the fox watching">
+<div class="hero-overlay"></div>
+</div>
 <div class="page">
 <div class="header">
 <span class="fox">&#129418;</span>
@@ -44,6 +53,8 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 <div class="initiate">
 <span class="rank">initiate #001</span>
 <span class="number">the fox remembers</span>
+<img class="initiate-art" src="images/nessa-pfp-fountain.png" alt="the spent crystal at the fountain">
+<div class="initiate-body">
 <h2>Caretaker Nessa</h2>
 <div class="archetype">The One Who Stays</div>
 <div class="fox-read">you kept setting things down until there was nothing left to set down. then you walked through. that&#8217;s not nothing &#8212; that&#8217;s the whole thing.</div>
@@ -63,10 +74,12 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 </div>
 <a href="dream-the-one-who-stays.html" class="dream-link">&#9656; enter the dream</a>
 </div>
+</div>
 
 <div class="initiate">
 <span class="rank">initiate #000</span>
 <span class="number">the first player</span>
+<div class="initiate-body">
 <h2>Fateweaver Fada</h2>
 <div class="archetype">The Seeker</div>
 <div class="fox-read">you pick up the shard before the crystal. you want the piece that was left behind.</div>
@@ -80,6 +93,8 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 <div class="trait">named slate</div>
 <div class="trait">invented the halidex cult</div>
 <div class="trait">got FATEWEAVER on first try in foxy wordle</div>
+</div>
+<a href="seeker-found-the-thread.html" class="dream-link">&#9656; enter the dream</a>
 </div>
 </div>
 
