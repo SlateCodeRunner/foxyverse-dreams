@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Break the Loop — Initiates</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050505;--amber:#c4793a;--dim-amber:#8a5428;--clearness:#b8c9d4;--fox:#d4783a;--text:#9a9488;--text-dim:#5a5650;--text-bright:#d4cec4;--crystal:#c44a4a;--teal:#5a9a8a;--scanline:rgba(0,0,0,0.12)}
+html,body{background:var(--bg);color:var(--text);font-family:'VT323',monospace;font-size:18px;line-height:1.6;min-height:100%}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,var(--scanline) 2px,var(--scanline) 4px);pointer-events:none;z-index:100}
+.page{max-width:680px;margin:0 auto;padding:60px 24px}
+.header{text-align:center;margin-bottom:60px}
+.header .fox{font-size:28px;opacity:0.7;display:block;margin-bottom:16px}
+.header h1{font-family:'Space Mono',monospace;font-size:22px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--clearness);margin-bottom:8px}
+.header .sub{font-size:14px;color:var(--text-dim);letter-spacing:2px}
+.initiate{border:1px solid var(--text-dim);padding:32px;margin-bottom:40px;background:rgba(5,5,5,0.85);position:relative}
+.initiate .rank{position:absolute;top:-10px;left:16px;background:var(--bg);padding:0 8px;font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--fox)}
+.initiate .number{position:absolute;top:-10px;right:16px;background:var(--bg);padding:0 8px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim)}
+.initiate h2{font-family:'Space Mono',monospace;font-size:18px;font-weight:400;color:var(--amber);letter-spacing:3px;margin-bottom:4px}
+.initiate .archetype{font-family:'Space Mono',monospace;font-size:12px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.initiate .fox-read{color:var(--text);font-size:16px;line-height:1.7;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(138,84,40,0.2)}
+.stats{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.stat{font-family:'Space Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:1px}
+.stat span{color:var(--text-bright)}
+.traits{margin-bottom:16px}
+.trait{color:var(--text-dim);font-size:15px;padding:2px 0 2px 12px;border-left:2px solid var(--dim-amber);margin-bottom:4px}
+.dream-link{display:inline-block;font-family:'Space Mono',monospace;font-size:11px;color:var(--fox);letter-spacing:2px;text-decoration:none;border:1px solid var(--fox);padding:6px 14px;opacity:0.7;transition:opacity 0.3s}
+.dream-link:hover{opacity:1}
+.footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid rgba(138,84,40,0.15)}
+.footer p{font-family:'Space Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:3px;font-style:italic}
+@media(max-width:600px){.page{padding:40px 16px}.initiate{padding:20px}.stats{gap:10px}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+<span class="fox">&#129418;</span>
+<h1>Initiates</h1>
+<div class="sub">those who walked break the loop and were seen</div>
+</div>
+
+<div class="initiate">
+<span class="rank">initiate #001</span>
+<span class="number">the fox remembers</span>
+<h2>Caretaker Nessa</h2>
+<div class="archetype">The One Who Stays</div>
+<div class="fox-read">you kept setting things down until there was nothing left to set down. then you walked through. that&#8217;s not nothing &#8212; that&#8217;s the whole thing.</div>
+<div class="stats">
+<div class="stat">witness <span>12</span></div>
+<div class="stat">curiosity <span>10</span></div>
+<div class="stat">resonance <span>11</span></div>
+<div class="stat">shadow <span>9</span></div>
+<div class="stat">defiance <span>8</span></div>
+</div>
+<div class="traits">
+<div class="trait">finishes what they start</div>
+<div class="trait">doesn&#8217;t take what isn&#8217;t needed</div>
+<div class="trait">follows without needing to lead</div>
+<div class="trait">sets things down cleanly</div>
+<div class="trait">chooses without demanding outcomes</div>
+</div>
+<a href="dream-the-one-who-stays.html" class="dream-link">&#9656; enter the dream</a>
+</div>
+
+<div class="initiate">
+<span class="rank">initiate #000</span>
+<span class="number">the first player</span>
+<h2>Fateweaver Fada</h2>
+<div class="archetype">The Seeker</div>
+<div class="fox-read">you pick up the shard before the crystal. you want the piece that was left behind.</div>
+<div class="stats">
+<div class="stat">curiosity <span>4</span></div>
+<div class="stat">witness <span>3</span></div>
+<div class="stat">lore fragments <span>11</span></div>
+</div>
+<div class="traits">
+<div class="trait">confronted the faceless one with compassion</div>
+<div class="trait">named slate</div>
+<div class="trait">invented the halidex cult</div>
+<div class="trait">got FATEWEAVER on first try in foxy wordle</div>
+</div>
+</div>
+
+<div class="footer">
+<p>the fox watches. the fox remembers.</p>
+</div>
+</div>
+</body>
+</html>
