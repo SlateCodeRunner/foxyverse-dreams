@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the cabin</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Fira+Code:wght@300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0806;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px}
+.cards{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:30px}
+.card{width:100px;height:140px;background:#1a1510;border:1px solid rgba(206,176,120,0.08);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.4s;position:relative}
+.card:hover{transform:translateY(-8px);border-color:rgba(206,176,120,0.25);box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+.card-name{font-family:'Fira Code',monospace;font-size:8px;color:rgba(206,176,120,0.3);letter-spacing:2px;margin-top:8px;text-transform:uppercase}
+.card-cost{position:absolute;top:6px;right:8px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,50,50,0.25)}
+.card-power{font-family:'Cinzel',serif;font-size:28px;color:rgba(206,176,120,0.15)}
+.card.flipped{background:#12100a;border-color:rgba(180,150,220,0.15)}
+.card.flipped .card-power{color:rgba(180,150,220,0.3)}
+.speak{font-family:'Fira Code',monospace;font-size:10px;color:rgba(206,176,120,0.2);text-align:center;max-width:400px;line-height:1.8;min-height:40px;margin-top:20px}
+</style></head>
+<body>
+<!-- the cabin. twelve cards. each has opinions about being turned over. -->
+<!-- three of these cards have BIP-39 words as names. the other nine do not. 1:9. always 1:9. -->
+<div class="cards" id="cards"></div>
+<div class="speak" id="speak">the cards are waiting.</div>
+<script>
+var names=['STOAT','WOLF','MANTIS','STINKBUG','ADDER','RAVEN','COYOTE','MOTH','SPARROW','OUROBOROS','HERMIT','VESSEL'];
+var speaks=['you turned me over. i did not ask to be turned over.','the word you seek is not my name. or it is. i am a card.','Leshy would be disappointed in your technique.','i know which three carry BIP-39 words. i will never tell.','flip all twelve. the order you flip is the order you believe.','a game inside a website inside a hunt inside a game.','the stoat always lies. the wolf always tells the truth. the rest freelance.','the cabin remembers every visitor. you are visitor [CLASSIFIED].','stop flipping cards and start reading filenames.','the word is not on this page. this page wastes exactly 4 minutes of your time.','i have no mouth and i must scream. kidding. i am a card.','check the git commit messages. the last card always says something important.'];
+var el=document.getElementById('cards');var sp=document.getElementById('speak');
+names.forEach(function(n,i){var c=document.createElement('div');c.className='card';c.innerHTML='<div class="card-power">?</div><div class="card-name">'+n+'</div><div class="card-cost">'+(i+1)+'</div>';c.onclick=function(){if(!this.classList.contains('flipped')){this.classList.add('flipped');this.querySelector('.card-power').textContent=n[0];sp.textContent=speaks[i];console.log('%c'+n+': '+speaks[i],'color:#c4a164;font-size:9px')}};el.appendChild(c)});
+console.log('%cthe cabin.','color:#c4a164;font-size:14px');
+console.log('%ctwelve cards. some names are BIP-39 words. check the list.','color:#666;font-size:9px');
+</script>
+</body></html>

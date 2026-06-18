@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the loop</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}body{background:#050508;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center}
+.timer{font-family:'Fira Code',monospace;font-size:clamp(40px,8vw,72px);color:rgba(206,176,120,0.08);letter-spacing:4px;margin-bottom:20px}
+.message{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:rgba(255,255,255,0.12);line-height:2;max-width:440px;margin-bottom:30px}
+.fragment{font-family:'Fira Code',monospace;font-size:11px;color:rgba(180,150,220,0.15);letter-spacing:3px;padding:12px 20px;border:1px solid rgba(180,150,220,0.05);border-radius:2px;display:inline-block}
+.visits{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.04);margin-top:30px;letter-spacing:2px}
+</style></head>
+<body>
+<!-- the loop: outer wilds gives you 22 minutes. this page gives you a different fragment every visit. -->
+<!-- the fragment is chosen by the minute of the hour you visit. visit at different times to see all 22 fragments. -->
+<!-- the sun always explodes. the wallet always waits. -->
+<div class="timer" id="timer">22:00</div>
+<div class="message">the sun is dying. it has been dying since before you arrived.<br>what you learn persists. what you find does not.</div>
+<div class="fragment" id="fragment"></div>
+<div class="visits" id="visits"></div>
+<script>
+var f=['the hearthian word for home has no translation','timber hearth remembers what you forget','the nomai wrote everything down. the fox writes some things down.','brittle hollow is falling apart. so is this clue.','the quantum moon exists in all states until observed','dark bramble contains something that should not be there','the interloper carried something frozen. the wallet carries something locked.','giants deep has layers. so does the hunt.','the sun station was a failure. this fragment is also a failure.','vessel is a BIP-39 word. the vessel carried the nomai. coincidence is not confirmation.','ember twin and ash twin orbit each other. truth and lies orbit each other.','the eye of the universe is the destination. the wallet is not the destination.','22 minutes. 22 years. 22 is not significant. or 22 divided by something is.','the console logs show you where to look.','riebeck plays the banjo alone on brittle hollow. some hunters hunt alone.','feldspar survived inside dark bramble. you can survive inside the hunt.','the hunt ends when someone enters the seed phrase.','solanum exists in a state of being both alive and dead. so does the clue on this page.','acceptance is not a BIP-39 word.','the museum on timber hearth contains history. the git log contains history.','the signal from the eye never stopped broadcasting. the wallet never stops existing.','you are on loop number [UNKNOWN]. the fox counts words not loops.'];
+var m=new Date().getMinutes();var fi=Math.floor(m/2.73)%f.length;
+document.getElementById('fragment').textContent=f[fi];
+var s=22*60;var ti=document.getElementById('timer');
+var cd=setInterval(function(){s--;if(s<=0){clearInterval(cd);ti.textContent='00:00';document.body.style.background='#000';document.getElementById('fragment').textContent='the sun exploded. refresh to loop.'}else{var mm=Math.floor(s/60);var ss=s%60;ti.textContent=(mm<10?'0':'')+mm+':'+(ss<10?'0':'')+ss}},1000);
+document.getElementById('visits').textContent='fragment '+fi+' of 22 | minute '+m;
+console.log('%cthe loop. fragment '+fi+'/22','color:#c4a164;font-size:10px');
+console.log('%cvisit at different minutes to see different fragments.','color:#666;font-size:9px');
+</script>
+</body></html>

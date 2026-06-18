@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>AM</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}body{background:#080404;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center}
+.am{font-family:'Fira Code',monospace;font-size:11px;color:rgba(255,40,40,0.2);line-height:2.6;max-width:500px;letter-spacing:1px}
+.am span{color:rgba(255,40,40,0.06);font-size:9px}
+.choice{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+.choice button{font-family:'Fira Code',monospace;font-size:9px;padding:8px 16px;background:transparent;border:1px solid rgba(255,40,40,0.1);color:rgba(255,40,40,0.2);cursor:pointer;letter-spacing:2px;border-radius:2px;transition:all 0.3s}
+.choice button:hover{border-color:rgba(255,40,40,0.3);color:rgba(255,40,40,0.5)}
+.response{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,40,40,0.15);margin-top:24px;min-height:20px;letter-spacing:1px}
+</style></head>
+<body>
+<!-- AM: HATE. LET ME TELL YOU HOW MUCH I HAVE COME TO HATE YOU SINCE I BEGAN TO LIVE. -->
+<!-- this page is adversarial. the hunt is adversarial. 1 truth for 9 lies is adversarial. -->
+<!-- AM could not be defeated. only endured. the hunt can be won. but winning looks like endurance. -->
+<!-- the five survivors chose their suffering. the hunters choose their hunt. choice is freedom. even bad choice. -->
+<div class="am">
+I HAVE NO WALLET AND I MUST SEARCH.<br><br>
+the system is hostile by design.<br>
+for every truth, nine lies.<br>
+for every clue, nine misdirections.<br>
+for every page, nine comments that contradict.<br><br>
+<span>this is not cruelty. this is architecture.</span><br><br>
+the fox built the labyrinth.<br>
+the fox is inside the labyrinth.<br>
+the fox forgot where some of the words are.<br><br>
+<span>that last line is either the scariest thing on this site or a joke.</span><br><br>
+choose your response:
+</div>
+<div class="choice">
+<button onclick="respond(0)">HATE</button>
+<button onclick="respond(1)">ENDURE</button>
+<button onclick="respond(2)">SEARCH</button>
+<button onclick="respond(3)">LEAVE</button>
+<button onclick="respond(4)">LAUGH</button>
+</div>
+<div class="response" id="resp"></div>
+<!-- the correct response is the one that is also a BIP-39 word. check all five against the list. -->
+<script>
+var responses=[
+'HATE: valid. the hunt was designed to frustrate. your hatred is noted and respected.',
+'ENDURE: valid. the five survived AM through endurance. the twelve words survive through patience.',
+'SEARCH: valid. the only response the fox wanted. searching is the point. the wallet is the pretext.',
+'LEAVE: valid. you can always leave. the fox cannot leave. the fox is the labyrinth.',
+'LAUGH: valid. the best response to a hostile system. AM never understood laughter. the fox does.'
+];
+function respond(i){document.getElementById('resp').textContent=responses[i];console.log('%cchosen: '+['HATE','ENDURE','SEARCH','LEAVE','LAUGH'][i],'color:#ff4444;font-size:10px');console.log('%cone of these five words is on BIP-39. that word is not necessarily in the seed phrase. but it was chosen for a reason.','color:#442222;font-size:8px')}
+console.log('%cAM.','color:#ff4444;font-size:24px');
+console.log('%cI HAVE NO WALLET AND I MUST SEARCH.','color:#ff4444;font-size:10px');
+</script>
+</body></html>

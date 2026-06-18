@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>blink</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Fira+Code:wght@300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}body{background:#050508;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;cursor:none}
+.life{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,0.15);line-height:2.4;max-width:500px;transition:opacity 1.5s}
+.age{font-family:'Fira Code',monospace;font-size:9px;color:rgba(206,176,120,0.12);letter-spacing:4px;margin-bottom:24px}
+.instruction{font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.06);letter-spacing:2px;margin-top:30px}
+.faded{opacity:0.03}
+</style></head>
+<body>
+<!-- blink: before your eyes told a life in 90 minutes. this page tells a hunt in 12 clicks. -->
+<!-- each click advances the text. each text contains one word. one of the 12 texts contains a BIP-39 word used in the seed phrase. -->
+<!-- the other 11 contain BIP-39 words not used in the seed phrase. or they contain no BIP-39 words at all. -->
+<!-- you cannot go back. clicking is blinking. blinking is time. time does not reverse. -->
+<div class="age" id="age">age: 0</div>
+<div class="life" id="life">you were born with your eyes open.</div>
+<div class="instruction">click anywhere to blink. you cannot unblink.</div>
+<script>
+var moments=[
+'you were born with your eyes open.',
+'your first word was not a word. it was a sound. the sound meant everything.',
+'you learned to walk by falling. each fall was a lesson the ground gave freely.',
+'the garden behind your house contained something you buried and forgot. you still do not remember what it was.',
+'someone taught you to read. the first word you recognized was your own name. your name is not on BIP-39.',
+'you loved someone who did not love you back. the word for this is not on BIP-39 either. but a related word is.',
+'you built something that took years. it was not finished when you abandoned it. or it was finished and you could not see it.',
+'the fox appeared for the first time. the fox said okay hi. you did not understand what the fox was.',
+'twelve words were scattered across four gardens. you began to search. the searching became the living.',
+'you found a word. or you thought you found a word. the difference between finding and believing you found is the entire game.',
+'the sun was setting. you had been searching for hours. the screen glowed. the words blurred. you blinked.',
+'you blinked and the life was over. the wallet is still there. the words are still hidden. someone else will find them. or you will loop.'
+];
+var i=0;var life=document.getElementById('life');var age=document.getElementById('age');
+document.body.onclick=function(){i++;if(i<moments.length){life.textContent=moments[i];age.textContent='age: '+(i*7);if(i===11){life.style.color='rgba(255,255,255,0.04)';age.textContent='age: gone'}}else{life.textContent='the life is over. refresh to be born again.';life.style.color='rgba(206,176,120,0.1)'}};
+console.log('%cblink.','color:#c4a164;font-size:14px');
+console.log('%c12 clicks. 12 moments. one life. the wallet outlives you.','color:#666;font-size:9px');
+</script>
+</body></html>
