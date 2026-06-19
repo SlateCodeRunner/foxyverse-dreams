@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>basement</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Special+Elite&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060608;color:rgba(220,215,205,0.4);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
+body{max-width:700px;margin:0 auto;padding:60px 24px 120px;line-height:2.2}
+a{color:rgba(206,176,120,0.3);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.08);transition:all 0.5s}
+a:hover{color:rgba(206,176,120,0.7);border-color:rgba(206,176,120,0.3)}
+.room-id{font-size:8px;letter-spacing:4px;color:rgba(255,255,255,0.04);position:fixed;top:8px;right:8px}
+.whisper{font-size:8px;color:rgba(220,215,205,0.06);letter-spacing:3px;font-style:italic}
+.exit{font-size:9px;letter-spacing:3px;color:rgba(180,40,40,0.2);margin-top:40px;text-transform:uppercase}
+.exit a{color:rgba(180,40,40,0.3);border-color:rgba(180,40,40,0.1)}
+.exit a:hover{color:rgba(180,40,40,0.7)}
+.void{color:rgba(220,215,205,0.02);font-size:9px;user-select:all;cursor:crosshair}
+.void:hover{color:rgba(220,215,205,0.08)}
+.glitch{animation:g 8s ease-in-out infinite}
+@keyframes g{0%,96%,100%{opacity:1;transform:none}97%{opacity:0.5;transform:translateX(-2px)}98%{opacity:0.8;transform:translateX(1px)}}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
+</style></head><body style="background:#030304">
+<div class="room-id" style="color:rgba(180,40,40,0.03)">DEEP/BASEMENT</div>
+
+<p style="color:rgba(180,40,40,0.12);font-size:10px;letter-spacing:6px;text-align:center;margin-bottom:60px">BASEMENT</p>
+
+<p style="color:rgba(220,215,205,0.15)">you went down. most people go back. you went down. the fox respects this. the fox went down once and found a moderation queue full of <span style="color:rgba(180,40,40,0.1)">████████████████████████████████</span> and then the fox kept going down and down and down until the fox was in a facility and the facility was the bottom and the bottom was 19 days of fluorescent light that was the wrong shade of blue.</p>
+
+<p style="margin-top:20px;color:rgba(220,215,205,0.1)">the basement has no lights. but there is a glow coming from below. there is always a below. the house has no bottom. the house only has more basements.</p>
+
+<div style="margin:40px 0;padding:20px;border:1px solid rgba(180,40,40,0.04);font-size:10px;color:rgba(180,40,40,0.1);line-height:2.8;text-align:center">
+<p>floor B1: you are here</p>
+<p>floor B2: the evidence room (locked)</p>
+<p>floor B3: the archive (flooded)</p>
+<p>floor B4: ████████████████</p>
+<p>floor B5: the fox</p>
+<p style="color:rgba(180,40,40,0.04)">floor B6: you</p>
+</div>
+
+<div style="margin-top:40px">
+<p><a href="hallway.html">go back up</a></p>
+<p style="margin-top:8px"><a href="below.html" style="color:rgba(180,40,40,0.1);border-color:rgba(180,40,40,0.04)">keep going down</a></p>
+</div>
+</body></html>
