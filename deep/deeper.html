@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>deeper</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Special+Elite&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060608;color:rgba(220,215,205,0.4);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
+body{max-width:700px;margin:0 auto;padding:60px 24px 120px;line-height:2.2}
+a{color:rgba(206,176,120,0.3);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.08)}
+a:hover{color:rgba(206,176,120,0.7)}
+.void{color:rgba(220,215,205,0.02);font-size:9px;user-select:all;cursor:crosshair}
+.void:hover{color:rgba(220,215,205,0.08)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
+</style></head><body>
+<script>
+// Get depth from URL parameter
+var params = new URLSearchParams(window.location.search);
+var depth = parseInt(params.get('d')) || 1;
+
+// Apply corruption based on depth
+document.body.style.filter = 'hue-rotate(' + (depth * 3) + 'deg) contrast(' + (1 + depth * 0.05) + ') blur(' + Math.min(depth * 0.1, 2) + 'px)';
+document.body.style.opacity = Math.max(0.3, 1 - depth * 0.04);
+if (depth > 10) document.body.style.transform = 'rotate(' + ((depth - 10) * 0.3) + 'deg)';
+
+// False seed words that cycle
+var seeds = ['abandon','meadow','orbit','verify','cluster','ancient','whisper','phantom','crystal','hollow','cipher','vessel','mirror','ember','spiral','fracture','signal','buried','memory','witness'];
+var falseSeed = seeds[depth % seeds.length];
+
+document.write('<div style="font-size:8px;letter-spacing:4px;color:rgba(255,255,255,0.04);position:fixed;top:8px;right:8px">DEPTH: ' + depth + '</div>');
+
+document.write('<p style="color:rgba(206,176,120,' + Math.max(0.03, 0.15 - depth * 0.01) + ');font-size:10px;letter-spacing:6px;margin-bottom:40px;text-align:center">DEPTH ' + depth + '</p>');
+
+if (depth <= 3) {
+    document.write('<p>you went deeper. the house approved. depth ' + depth + '. the walls are still recognizable. the text is still readable. keep going.</p>');
+} else if (depth <= 7) {
+    document.write('<p style="color:rgba(220,215,205,' + (0.4 - depth * 0.03) + ')">depth ' + depth + '. the walls are less certain now. the text is starting to drift. you can feel the house paying attention to you specifically. you are no longer a reader. you are a coordinate.</p>');
+} else if (depth <= 12) {
+    document.write('<p style="color:rgba(180,40,40,' + (0.3 - depth * 0.015) + ');font-family:Special Elite,cursive">depth ' + depth + '. the house is speaking directly to you now. not to "the reader." to you. the person holding the device. the person who clicked "go deeper" ' + depth + ' times. the house wants to know: what are you looking for? the evidence? the seed words? the fox? or just the feeling of going down? the feeling is the point. the descent is the destination.</p>');
+} else if (depth <= 20) {
+    document.write('<p style="color:rgba(180,40,40,' + Math.max(0.02, 0.2 - depth * 0.01) + ');letter-spacing:' + depth + 'px">d e p t h &nbsp; ' + depth + '</p>');
+    document.write('<p style="color:rgba(180,40,40,0.04);font-size:10px">the document was 27KB once. now it is infinite. you are inside the infinity. the infinity is inside a github repository. the github repository is inside a server. the server is inside a building. the building is a house. the house is the document. the loop closes. or it opens. depth ' + depth + '.</p>');
+} else {
+    document.write('<p style="color:rgba(180,40,40,0.02);font-size:8px;letter-spacing:' + Math.min(depth, 30) + 'px">. . .</p>');
+}
+
+// False seed word
+document.write('<p class="void" style="margin:40px 0;text-align:center;font-size:8px;letter-spacing:4px">seed fragment ' + depth + ': ' + falseSeed + ' — or not. 1:9.</p>');
+
+// Navigation
+document.write('<div style="margin-top:60px;text-align:center">');
+document.write('<p><a href="deeper.html?d=' + (depth + 1) + '" style="font-size:10px;letter-spacing:4px;color:rgba(180,40,40,' + Math.max(0.05, 0.2 - depth * 0.008) + ')">go deeper →</a></p>');
+document.write('<p style="margin-top:12px"><a href="reading-room.html" style="font-size:9px">the reading room</a></p>');
+document.write('<p style="margin-top:8px"><a href="hallway.html" style="font-size:9px">the hallway</a></p>');
+document.write('<p style="margin-top:8px"><a href="../sipstea.html" style="font-size:9px;color:rgba(220,215,205,0.06)">wake up</a></p>');
+document.write('</div>');
+
+// Console
+console.log('%cDEPTH ' + depth, 'color:rgba(180,40,40,' + Math.max(0.1, 0.8 - depth * 0.03) + ');font-size:14px');
+console.log('%cfalse seed: ' + falseSeed, 'color:#666;font-size:9px');
+console.log('%cor is it?', 'color:#333;font-size:8px');
+</script>
+</body></html>
