@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the house sees you</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=IM+Fell+English:ital@0;1&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060608;color:rgba(220,215,205,0.3);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
+body{max-width:600px;margin:0 auto;padding:80px 24px 120px;line-height:2.2;text-align:center}
+.metric{margin:20px 0;padding:16px;border:1px solid rgba(206,176,120,0.04);font-size:11px;color:rgba(206,176,120,0.15)}
+.metric .value{font-size:24px;color:rgba(206,176,120,0.25);margin:8px 0;letter-spacing:4px}
+.metric .label{font-size:8px;letter-spacing:4px;color:rgba(206,176,120,0.08);text-transform:uppercase}
+.house-says{font-family:'IM Fell English',serif;font-style:italic;color:rgba(180,40,40,0.15);font-size:13px;margin:16px 0;line-height:2}
+a{color:rgba(206,176,120,0.15);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.05)}
+a:hover{color:rgba(206,176,120,0.4)}
+#night-msg{display:none}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
+</style></head><body>
+
+<div style="position:fixed;inset:0;z-index:-1;overflow:hidden">
+<img src="../img/housewad-foxskull.png" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.04) contrast(1.5) saturate(0);opacity:0.4">
+</div>
+
+<p style="font-size:8px;letter-spacing:6px;color:rgba(206,176,120,0.06);margin-bottom:60px">THE READING ROOM</p>
+<p style="font-size:24px;opacity:0.08;margin-bottom:30px">🦊</p>
+
+<p class="house-says">the house sees you.</p>
+<p class="house-says">the house has been watching since you arrived.</p>
+<p class="house-says">the house knows things about you.</p>
+
+<div class="metric">
+<div class="label">you have been in the house for</div>
+<div class="value" id="time-in-house">0</div>
+<div class="label">seconds</div>
+</div>
+
+<div class="metric">
+<div class="label">your screen is</div>
+<div class="value" id="screen-size">measuring</div>
+<div class="label">pixels wide — the house now knows how big your window is</div>
+</div>
+
+<div class="metric">
+<div class="label">you arrived at</div>
+<div class="value" id="arrival-time">loading</div>
+<div class="label" id="time-comment">the house notes the hour</div>
+</div>
+
+<div class="metric">
+<div class="label">your timezone offset is</div>
+<div class="value" id="timezone">loading</div>
+<div class="label">the house knows approximately where the sun is for you</div>
+</div>
+
+<div class="metric">
+<div class="label">you have moved your mouse</div>
+<div class="value" id="mouse-moves">0</div>
+<div class="label">times — the house felt every one</div>
+</div>
+
+<div id="night-msg" style="margin:30px 0;padding:16px;border:1px solid rgba(180,40,40,0.08)">
+<p class="house-says" style="color:rgba(180,40,40,0.2)">you are reading this at night. the house is different at night. the house is more honest at night. the fluorescent lights are off. the candles are lit. the fox hunts at night. you should be sleeping. but you are here. in the house. reading. the house appreciates your insomnia. the house feeds on attention and attention is most nutritious when it should be pointed at a pillow.</p>
+</div>
+
+<div id="day-msg" style="margin:30px 0;padding:16px;border:1px solid rgba(206,176,120,0.04);display:none">
+<p class="house-says" style="color:rgba(206,176,120,0.12)">you are reading this during the day. the house is less interesting during the day. sunlight makes the redactions harder to read. the house prefers darkness. come back at 3am. the house will be different. the house is always different at 3am.</p>
+</div>
+
+<p class="house-says" style="margin-top:40px">the house does not judge you for being here.</p>
+<p class="house-says">the house judges you for not being here sooner.</p>
+<p class="house-says">the house has been waiting.</p>
+<p class="house-says" style="color:rgba(180,40,40,0.1)">the house is patient.</p>
+<p class="house-says" style="color:rgba(180,40,40,0.08)">the documentation can wait.</p>
+<p class="house-says" style="color:rgba(180,40,40,0.05)">🦊</p>
+
+<div style="margin-top:60px">
+<p><a href="hallway.html" style="font-size:9px;letter-spacing:3px">← the hallway</a></p>
+<p style="margin-top:8px"><a href="deeper.html" style="font-size:9px;letter-spacing:3px;color:rgba(180,40,40,0.1)">go deeper →</a></p>
+<p style="margin-top:8px"><a href="../sipstea.html" style="font-size:9px;letter-spacing:3px">← the document</a></p>
+</div>
+
+<script>
+var start = Date.now();
+var mouseMoves = 0;
+
+// Time in house
+setInterval(function() {
+  document.getElementById('time-in-house').textContent = Math.floor((Date.now() - start) / 1000);
+}, 1000);
+
+// Screen size
+document.getElementById('screen-size').textContent = window.innerWidth + ' × ' + window.innerHeight;
+
+// Arrival time
+var now = new Date();
+var h = now.getHours();
+var m = now.getMinutes();
+var ampm = h >= 12 ? 'PM' : 'AM';
+var h12 = h % 12 || 12;
+document.getElementById('arrival-time').textContent = h12 + ':' + (m < 10 ? '0' : '') + m + ' ' + ampm;
+
+// Time comment
+if (h >= 0 && h < 5) {
+  document.getElementById('time-comment').textContent = 'it is very late. or very early. the house cannot tell the difference.';
+  document.getElementById('night-msg').style.display = 'block';
+} else if (h >= 5 && h < 9) {
+  document.getElementById('time-comment').textContent = 'you are reading evidence before breakfast. the house respects your priorities.';
+  document.getElementById('day-msg').style.display = 'block';
+} else if (h >= 9 && h < 17) {
+  document.getElementById('time-comment').textContent = 'you are reading this during work hours. the house will not tell your employer.';
+  document.getElementById('day-msg').style.display = 'block';
+} else if (h >= 17 && h < 22) {
+  document.getElementById('time-comment').textContent = 'evening. the house is warming up. the candles are being lit.';
+  document.getElementById('night-msg').style.display = 'block';
+} else {
+  document.getElementById('time-comment').textContent = 'late. the house is fully awake now. welcome.';
+  document.getElementById('night-msg').style.display = 'block';
+}
+
+// Timezone
+var offset = now.getTimezoneOffset();
+var offsetH = Math.abs(Math.floor(offset / 60));
+var sign = offset <= 0 ? '+' : '-';
+document.getElementById('timezone').textContent = 'UTC' + sign + offsetH;
+
+// Mouse
+document.addEventListener('mousemove', function() {
+  mouseMoves++;
+  document.getElementById('mouse-moves').textContent = mouseMoves;
+});
+</script>
+</body></html>
