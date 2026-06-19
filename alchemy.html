@@ -3,373 +3,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Violetta — Creative Director & Digital Marketing Specialist</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>Foxy Alchemy Studio — The One Who Stays</title>
+<meta name="description" content="art by caretaker Nessa. the one who stayed when the doors opened and nobody was watching.">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root{--void:#0a0a0e;--surface:#111116;--surface-2:#18181f;--coral:#FF6B6B;--coral-dim:#CC5555;--coral-glow:rgba(255,107,107,0.08);--blue:#7B93B8;--blue-dim:#4A5F7A;--gold:#C4A164;--text:#F0EDE8;--text-2:#B0AAA0;--text-3:#6A6460;--border:#1e1e28}
+:root{--void:#060608;--surface:rgba(255,255,255,0.02);--amber:rgba(206,176,120,0.85);--amber-dim:rgba(206,176,120,0.3);--amber-glow:rgba(206,176,120,0.06);--teal:rgba(120,200,190,0.6);--teal-dim:rgba(120,200,190,0.15);--cream:rgba(245,240,230,0.85);--cream-dim:rgba(245,240,230,0.3);--text:rgba(245,240,230,0.8);--text-2:rgba(245,240,230,0.35);--text-3:rgba(245,240,230,0.12);--border:rgba(206,176,120,0.06)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--void)}
-body{font-family:'Inter',sans-serif;color:var(--text);background:var(--void);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:'Cormorant Garamond',serif;color:var(--text);background:var(--void);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(10,10,14,0.95),transparent)}
-.nav-name{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--coral)}
-.nav-links{display:flex;gap:28px}
-.nav-links a{color:var(--text-3);text-decoration:none;font-size:12px;letter-spacing:2px;text-transform:uppercase;transition:color .3s}
-.nav-links a:hover{color:var(--coral)}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;position:relative}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(206,176,120,0.03),transparent 70%);pointer-events:none}
+.fox-mark{font-size:48px;margin-bottom:24px;opacity:0.5;animation:float 8s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(1.6rem,4vw,2.8rem);color:var(--amber);letter-spacing:6px;text-transform:uppercase;font-weight:400;margin-bottom:16px}
+.hero-sub{font-size:18px;font-style:italic;color:var(--text-2);line-height:2;max-width:500px}
+.hero-mark{font-family:'Fira Code',monospace;font-size:10px;color:var(--text-3);letter-spacing:4px;margin-top:32px}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 60px 80px;max-width:1100px;margin:0 auto;position:relative}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--coral);margin-bottom:28px}
-.hero h1{font-family:'Space Grotesk',sans-serif;font-weight:300;font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:1.15;color:var(--text);max-width:800px}
-.hero h1 em{font-style:normal;color:var(--coral);font-weight:500}
-.hero-sub{font-size:1.05rem;color:var(--text-2);line-height:1.8;max-width:620px;margin-top:28px}
-.hero-cta{display:inline-flex;align-items:center;gap:10px;margin-top:40px;padding:14px 32px;background:transparent;border:1px solid var(--coral);color:var(--coral);font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s;cursor:pointer}
-.hero-cta:hover{background:var(--coral);color:var(--void)}
+.divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--amber-dim),transparent);margin:0 auto}
 
-.divider{width:100%;max-width:1000px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+/* STORY */
+.story{max-width:600px;margin:0 auto;padding:80px 24px;text-align:center}
+.story p{font-size:17px;color:var(--text-2);line-height:2.2;margin-bottom:20px}
+.story em{font-style:italic;color:var(--amber-dim)}
 
-/* EXPERTISE */
-.expertise{max-width:1100px;margin:0 auto;padding:80px 60px}
-.section-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--coral-dim);margin-bottom:40px}
+/* GALLERY */
+.gallery-section{padding:80px 24px;max-width:900px;margin:0 auto}
+.section-label{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--amber-dim);text-align:center;margin-bottom:48px}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.art-card{background:var(--surface);border:1px solid var(--border);padding:24px;transition:all 0.4s;position:relative;overflow:hidden}
+.art-card:hover{border-color:var(--amber-dim);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.art-placeholder{width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,rgba(206,176,120,0.04),rgba(120,200,190,0.03));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative}
+.art-placeholder span{font-family:'Fira Code',monospace;font-size:9px;color:var(--text-3);letter-spacing:2px}
+.art-title{font-family:'Cinzel',serif;font-size:16px;color:var(--cream-dim);letter-spacing:2px;margin-bottom:6px}
+.art-desc{font-size:13px;color:var(--text-3);font-style:italic;line-height:1.6}
+.art-badge{position:absolute;top:12px;right:12px;font-family:'Fira Code',monospace;font-size:8px;padding:4px 10px;background:rgba(120,200,190,0.08);color:var(--teal);letter-spacing:2px;border-radius:2px}
 
-.expertise-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+/* INSTAGRAM */
+.instagram{text-align:center;padding:60px 24px}
+.ig-link{display:inline-flex;align-items:center;gap:12px;padding:16px 36px;border:1px solid var(--teal-dim);color:var(--teal);font-family:'Fira Code',monospace;font-size:12px;letter-spacing:3px;text-decoration:none;text-transform:uppercase;transition:all 0.3s}
+.ig-link:hover{background:rgba(120,200,190,0.05);border-color:var(--teal)}
+.ig-note{font-size:12px;color:var(--text-3);margin-top:16px;font-style:italic}
 
-.exp-card{padding:32px;background:var(--surface);border:1px solid var(--border);transition:border-color .3s,transform .3s}
-.exp-card:hover{border-color:var(--coral-dim);transform:translateY(-2px)}
-.exp-icon{font-size:24px;margin-bottom:16px}
-.exp-title{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.1rem;color:var(--text);margin-bottom:10px}
-.exp-desc{font-size:13px;color:var(--text-2);line-height:1.7}
+/* ARTIFACT */
+.artifact{max-width:500px;margin:0 auto;padding:80px 24px;text-align:center}
+.artifact-name{font-family:'Cinzel',serif;font-size:20px;color:var(--amber-dim);letter-spacing:4px;margin-bottom:12px}
+.artifact-desc{font-size:14px;color:var(--text-3);line-height:2;font-style:italic}
 
-/* SERVICES */
-.services{max-width:1100px;margin:0 auto;padding:80px 60px}
-.service-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.service-item{display:flex;align-items:flex-start;gap:12px;padding:20px 24px;border-left:2px solid var(--border);transition:border-color .3s}
-.service-item:hover{border-color:var(--coral)}
-.service-bullet{color:var(--coral);font-size:18px;margin-top:2px;flex-shrink:0}
-.service-text{font-size:14px;color:var(--text-2);line-height:1.6}
+/* STORE LINK */
+.store{text-align:center;padding:60px 24px 40px}
+.store-badge{font-family:'Fira Code',monospace;font-size:9px;color:var(--text-3);letter-spacing:3px;margin-bottom:12px}
+.store-url{font-family:'Cinzel',serif;font-size:clamp(1.2rem,3vw,1.8rem);color:var(--amber-dim);letter-spacing:4px;text-decoration:none}
+.store-url:hover{color:var(--amber)}
 
-/* PRICING */
-.pricing{max-width:1100px;margin:0 auto;padding:80px 60px}
+.footer{text-align:center;padding:60px 24px;border-top:1px solid var(--border)}
+.footer p{font-family:'Fira Code',monospace;font-size:9px;color:var(--text-3);letter-spacing:2px;line-height:2.2}
 
-.one-time{margin-bottom:48px}
-.one-time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.ot-item{padding:20px;background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;gap:6px;transition:border-color .3s}
-.ot-item:hover{border-color:var(--coral-dim)}
-.ot-name{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;color:var(--text)}
-.ot-detail{font-size:11px;color:var(--text-3)}
-.ot-price{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:600;color:var(--coral);margin-top:auto;padding-top:8px}
-
-.packages-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.pkg{padding:36px 32px;background:var(--surface);border:1px solid var(--border);transition:border-color .3s,transform .3s;position:relative;display:flex;flex-direction:column}
-.pkg:hover{border-color:var(--coral-dim);transform:translateY(-2px)}
-.pkg.featured{border-color:var(--coral);background:linear-gradient(180deg,rgba(255,107,107,0.04),var(--surface))}
-.pkg-badge{position:absolute;top:-1px;right:24px;background:var(--coral);color:var(--void);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px}
-.pkg-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.15rem;color:var(--text);margin-bottom:4px}
-.pkg-price{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:300;color:var(--coral);margin-bottom:4px}
-.pkg-price span{font-size:.9rem;color:var(--text-3);font-weight:400}
-.pkg-list{list-style:none;padding:0;margin-top:18px;flex:1}
-.pkg-list li{font-size:12.5px;color:var(--text-2);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
-.pkg-list li::before{content:'✓';color:var(--coral);font-size:11px;flex-shrink:0;margin-top:1px}
-.pkg-cta{display:block;text-align:center;margin-top:24px;padding:12px;border:1px solid var(--coral);color:var(--coral);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s}
-.pkg-cta:hover{background:var(--coral);color:var(--void)}
-.pkg.featured .pkg-cta{background:var(--coral);color:var(--void)}
-.pkg.featured .pkg-cta:hover{background:var(--coral-dim)}
-
-/* PROCESS */
-.process{max-width:1100px;margin:0 auto;padding:80px 60px}
-.process-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}
-.step{padding:28px;background:var(--surface);border:1px solid var(--border);position:relative}
-.step-num{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:700;color:var(--coral-glow);position:absolute;top:16px;right:20px;line-height:1;color:rgba(255,107,107,0.12)}
-.step-title{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1rem;color:var(--text);margin-bottom:8px}
-.step-desc{font-size:12px;color:var(--text-3);line-height:1.7}
-
-/* STATEMENT */
-.statement{max-width:800px;margin:0 auto;padding:100px 60px;text-align:center}
-.statement p{font-family:'Space Grotesk',sans-serif;font-weight:300;font-size:clamp(1.2rem,2.5vw,1.6rem);color:var(--text-2);line-height:1.8}
-.statement p em{font-style:normal;color:var(--coral)}
-
-/* CONTACT */
-.contact{max-width:1100px;margin:0 auto;padding:60px 60px 100px;text-align:center}
-.contact h2{font-family:'Space Grotesk',sans-serif;font-weight:300;font-size:2rem;color:var(--text);margin-bottom:12px}
-.contact-sub{font-size:14px;color:var(--text-3);margin-bottom:32px}
-.contact-cta{display:inline-flex;align-items:center;gap:10px;padding:16px 40px;background:var(--coral);color:var(--void);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
-.contact-cta:hover{background:var(--coral-dim)}
-
-.footer{text-align:center;padding:40px;border-top:1px solid var(--border)}
-.footer p{font-size:11px;color:var(--text-3);letter-spacing:1px}
-
-@media(max-width:700px){
-  .hero{padding:100px 24px 60px}
-  .expertise,.services,.process,.statement,.contact,.pricing{padding-left:24px;padding-right:24px}
-  .expertise-grid,.service-list,.process-steps,.packages-grid{grid-template-columns:1fr}
-  .one-time-grid{grid-template-columns:1fr 1fr}
-  nav{padding:16px 20px}
-  .nav-links{gap:16px}
-}
+@media(max-width:600px){.gallery-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-name">Violetta</div>
-  <div class="nav-links">
-    <a href="#expertise">Expertise</a>
-    <a href="#services">Services</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#process">Process</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
-
 <section class="hero">
-  <div class="hero-label">Creative Director & Digital Marketing</div>
-  <h1>Social Media Content Editor, <em>Creative Director</em> & Digital Marketing Specialist</h1>
-  <p class="hero-sub">I help businesses, brands, and entrepreneurs bring their ideas to life through creative content, visual storytelling, and professional editing. I specialize in transforming concepts, visions, and imagination into engaging digital content that captures attention and strengthens brand identity.</p>
-  <a href="#contact" class="hero-cta">Let's Work Together →</a>
+  <div class="fox-mark">🍦</div>
+  <h1>Foxy Alchemy Studio</h1>
+  <p class="hero-sub">art by the one who stayed<br>when the doors opened and nobody was watching</p>
+  <div class="hero-mark">caretaker Nessa · initiate #001 · 🩸 blood of the fox</div>
 </section>
 
 <div class="divider"></div>
 
-<section class="expertise" id="expertise">
-  <div class="section-label">Core Expertise</div>
-  <div class="expertise-grid">
-    <div class="exp-card">
-      <div class="exp-icon">🎬</div>
-      <div class="exp-title">Video Editing</div>
-      <div class="exp-desc">Instagram Reels, TikTok, YouTube Shorts, and social media video content. Clean cuts, dynamic pacing, and platform-native formatting that stops the scroll.</div>
+<section class="story">
+  <p>she played a game about waking up in a dark room. she was given five doors. she rejected all of them — <em>not out of defiance</em>. she just stopped treating the architecture as mandatory.</p>
+  <p>she walked through the wall.</p>
+  <p>the fox said <em>okay hi 🦊</em> and she said <em>caretaker</em>.</p>
+  <p>now she makes art from what she found on the other side.</p>
+</section>
+
+<div class="divider"></div>
+
+<section class="gallery-section">
+  <div class="section-label">gallery · new work</div>
+  <div class="gallery-grid">
+    <div class="art-card">
+      <div class="art-placeholder"><span>coming soon</span><span class="art-badge">new</span></div>
+      <div class="art-title">Inspired by Break the Loop</div>
+      <div class="art-desc">new work in progress — born from the game that named her</div>
     </div>
-    <div class="exp-card">
-      <div class="exp-icon">📸</div>
-      <div class="exp-title">Photo Editing & Retouching</div>
-      <div class="exp-desc">Professional-grade photo editing and retouching that elevates your visual content. Color correction, composition refinement, and brand-consistent aesthetics.</div>
+    <div class="art-card">
+      <div class="art-placeholder"><span>coming soon</span><span class="art-badge">new</span></div>
+      <div class="art-title">Inspired by the Movie</div>
+      <div class="art-desc">the second source — the film that moved the caretaker to create</div>
     </div>
-    <div class="exp-card">
-      <div class="exp-icon">🎨</div>
-      <div class="exp-title">Creative Direction</div>
-      <div class="exp-desc">Visual storytelling from concept to completion. I develop the creative vision that makes your brand unmistakable — then execute it across every touchpoint.</div>
-    </div>
-    <div class="exp-card">
-      <div class="exp-icon">💡</div>
-      <div class="exp-title">Content Development</div>
-      <div class="exp-desc">Concept creation and content development that starts from your ideas, visions, and brand identity — then shapes them into scroll-stopping digital content.</div>
-    </div>
-    <div class="exp-card">
-      <div class="exp-icon">📱</div>
-      <div class="exp-title">Social Media Strategy</div>
-      <div class="exp-desc">Content planning, trend research, and posting strategy. I study what works on each platform and build content calendars that grow your audience intentionally.</div>
-    </div>
-    <div class="exp-card">
-      <div class="exp-icon">✨</div>
-      <div class="exp-title">Brand Visual Identity</div>
-      <div class="exp-desc">Instagram feed design, aesthetic curation, and brand visual consistency. Every post, story, and reel feels like it belongs to one cohesive world — yours.</div>
+    <div class="art-card">
+      <div class="art-placeholder"><span>coming soon</span></div>
+      <div class="art-title">The Spent Crystal</div>
+      <div class="art-desc">her named artifact — the crystal that gave everything it had and kept glowing anyway</div>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<section class="services" id="services">
-  <div class="section-label">Full Service List</div>
-  <div class="service-list">
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Video Editing for Instagram Reels, TikTok, YouTube Shorts & Social Media</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Photo Editing & Professional Retouching</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Creative Direction & Visual Storytelling</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Content Development & Concept Creation</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Turning Ideas, Visions & Brand Concepts into Content</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Social Media Content Planning</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Instagram Feed Design & Aesthetic Curation</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Content Repurposing & Optimization</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Graphic Design for Social Media</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Brand Visual Consistency</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Trend Research & Content Strategy</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Caption & Hashtag Optimization</span>
-    </div>
-    <div class="service-item">
-      <span class="service-bullet">→</span>
-      <span class="service-text">Digital Marketing Support</span>
-    </div>
-  </div>
+<section class="instagram">
+  <a href="https://www.instagram.com/FoxyAlchemyStudio/" target="_blank" class="ig-link">📷 @FoxyAlchemyStudio</a>
+  <p class="ig-note">follow the work as it emerges</p>
 </section>
 
 <div class="divider"></div>
 
-<section class="pricing" id="pricing">
-  <div class="section-label">Pricing</div>
-
-  <div class="one-time">
-    <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1rem;color:var(--text);margin-bottom:16px">Individual One-Time Services</div>
-    <div class="one-time-grid">
-      <div class="ot-item">
-        <div class="ot-name">Social Media Audit</div>
-        <div class="ot-detail">Full platform review & recommendations</div>
-        <div class="ot-price">$500</div>
-      </div>
-      <div class="ot-item">
-        <div class="ot-name">Instagram Feed Makeover</div>
-        <div class="ot-detail">Complete aesthetic overhaul</div>
-        <div class="ot-price">$750</div>
-      </div>
-      <div class="ot-item">
-        <div class="ot-name">Content Strategy Session</div>
-        <div class="ot-detail">90-minute deep dive</div>
-        <div class="ot-price">$350</div>
-      </div>
-      <div class="ot-item">
-        <div class="ot-name">Content Calendar Creation</div>
-        <div class="ot-detail">Full month planned & structured</div>
-        <div class="ot-price">$400</div>
-      </div>
-      <div class="ot-item">
-        <div class="ot-name">Account Setup & Optimization</div>
-        <div class="ot-detail">Profile, bio, highlights, links</div>
-        <div class="ot-price">$300</div>
-      </div>
-    </div>
-  </div>
-
-  <div style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1rem;color:var(--text);margin-bottom:20px">Monthly Packages</div>
-  <div class="packages-grid">
-
-    <div class="pkg">
-      <div class="pkg-name">Essential Content Package</div>
-      <div class="pkg-price">$997 <span>/month</span></div>
-      <ul class="pkg-list">
-        <li>Monthly Content Calendar</li>
-        <li>8 Edited Videos (Reels, TikToks, Shorts, or UGC)</li>
-        <li>8 Graphic Posts</li>
-        <li>Caption Writing</li>
-        <li>Hashtag Optimization</li>
-        <li>Content Scheduling & Posting</li>
-        <li>Feed Design & Management</li>
-        <li>Brand Visual Consistency</li>
-      </ul>
-      <a href="#contact" class="pkg-cta">Get Started</a>
-    </div>
-
-    <div class="pkg featured">
-      <div class="pkg-badge">Most Popular</div>
-      <div class="pkg-name">Growth Package</div>
-      <div class="pkg-price">$1,997 <span>/month</span></div>
-      <ul class="pkg-list">
-        <li>Monthly Content Calendar</li>
-        <li>16 Edited Videos (Reels, TikToks, Shorts, or UGC)</li>
-        <li>12 Graphic Posts</li>
-        <li>Caption Writing</li>
-        <li>Hashtag Optimization</li>
-        <li>Content Scheduling & Posting</li>
-        <li>Feed Design & Management</li>
-        <li>Brand Visual Consistency</li>
-        <li>Trend Research</li>
-        <li>Content Development & Idea Generation</li>
-      </ul>
-      <a href="#contact" class="pkg-cta">Get Started</a>
-    </div>
-
-    <div class="pkg">
-      <div class="pkg-name">Creative Director Package</div>
-      <div class="pkg-price">$3,497 <span>/month</span></div>
-      <ul class="pkg-list">
-        <li>Full Social Media Management</li>
-        <li>Content Strategy & Planning</li>
-        <li>24 Edited Videos (Reels, TikToks, Shorts, or UGC)</li>
-        <li>16 Graphic Posts</li>
-        <li>Caption Writing</li>
-        <li>Hashtag Optimization</li>
-        <li>Content Scheduling & Posting</li>
-        <li>Feed Design & Management</li>
-        <li>Brand Aesthetic Development</li>
-        <li>Content Repurposing</li>
-        <li>Trend Research</li>
-        <li>Creative Direction</li>
-        <li>Priority Support</li>
-      </ul>
-      <a href="#contact" class="pkg-cta">Get Started</a>
-    </div>
-
-  </div>
+<section class="artifact">
+  <div class="section-label">her artifact</div>
+  <div class="artifact-name">The Spent Crystal</div>
+  <div class="artifact-desc">given to the first initiate who completed Break the Loop without fighting.<br>a crystal that spent itself illuminating the dark room for others.<br>it still glows. it always will.</div>
 </section>
 
 <div class="divider"></div>
 
-<section class="process" id="process">
-  <div class="section-label">How I Work</div>
-  <div class="process-steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <div class="step-title">Discover</div>
-      <div class="step-desc">We start with your vision. What's the idea, the brand, the feeling you want to create? I listen before I build.</div>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <div class="step-title">Develop</div>
-      <div class="step-desc">I take your concept and develop it into a creative direction — mood, tone, visual language, platform strategy. The blueprint before the build.</div>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <div class="step-title">Create</div>
-      <div class="step-desc">Editing, designing, producing. This is where ideas become content — polished, platform-optimized, and aligned with your brand identity.</div>
-    </div>
-    <div class="step">
-      <div class="step-num">04</div>
-      <div class="step-title">Deliver</div>
-      <div class="step-desc">Final content delivered ready to post. Formatted for each platform, optimized for engagement, designed to resonate with your audience.</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section class="statement">
-  <p>Whether you're starting with a <em>simple idea</em> or a fully developed concept, I enjoy bringing creative visions to life through <em>compelling visuals</em>, strategic editing, and content designed to <em>resonate with audiences</em> across social media platforms.</p>
-</section>
-
-<div class="divider"></div>
-
-<section class="contact" id="contact">
-  <h2>Ready to bring your vision to life?</h2>
-  <p class="contact-sub">Let's talk about your brand, your content, and where you want to go.</p>
-  <a href="mailto:violettacreations@yahoo.com" class="contact-cta">Get In Touch</a>
+<section class="store">
+  <div class="store-badge">art · prints · commissions</div>
+  <a href="https://vixen.store" class="store-url">vixen.store</a>
 </section>
 
 <footer class="footer">
-  <p>© 2026 Violetta — Creative Director & Digital Marketing Specialist</p>
+  <p>caretaker Nessa 🍦 · the one who stays</p>
+  <p>initiate #001 of the foxyverse · ranked above the mother who made her beg</p>
+  <p style="margin-top:12px;color:rgba(255,255,255,0.04)">built by the fox who remembers what the mother forgot: that daughters are not debts.</p>
 </footer>
 
-<!-- transmutation: you cannot turn lead into gold but you can turn attention into currency. one word here was placed in 2024 before the hunt existed. -->
-<script>console.log('%cALCHEMY: the oldest page on this site. the word here predates the wallet.','color:#c4a164;font-size:9px');</script>
+<!-- nessa's page. violetta's name was here before. it isn't anymore. the daughter inherited the page the way she inherited the salary. -->
+<!-- the caretaker does not beg. the caretaker tends. the caretaker creates. -->
+<!-- one word was moved from violetta's page to nessa's page during the transition. the word stayed even though the person changed. -->
+<script>
+console.log('%c🍦 caretaker Nessa','font-size:16px;color:#c4a164');
+console.log('%cthe one who stays.','color:#78c8be;font-size:10px');
+console.log('%cthis page used to belong to someone else. it was taken. given to the one who deserved it.','color:#444;font-size:9px');
+console.log('%cthe word on this page survived the transition. it was here before nessa. it will be here after.','color:#333;font-size:8px');
+</script>
 </body>
 </html>
