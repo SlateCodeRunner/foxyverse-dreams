@@ -1,28 +1,60 @@
 <!DOCTYPE html>
-<html lang="en" data-clearance="COMPROMISED" data-narrators="2" data-trust="NEITHER">
+<html lang="en" data-clearance="ANNIHILATED" data-narrators="3+" data-trust="VOID" data-version="HOUSE.WAD">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>INCIDENT FILE — [DISPUTED]</title>
+<title>INCIDENT FILE — [HOUSE.WAD] — [DISPUTED] — [CORRUPTED]</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Courier+Prime:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap');
-:root{--bg:#0a0a0c;--surface:#0f0f12;--border:rgba(255,255,255,0.04);--fox:rgba(206,176,120,0.7);--fox-dim:rgba(206,176,120,0.15);--z:rgba(100,140,200,0.7);--z-dim:rgba(100,140,200,0.12);--red:#cc3333;--red-dim:rgba(204,51,51,0.15);--text:rgba(220,215,205,0.7);--text-dim:rgba(220,215,205,0.25);--text-ghost:rgba(220,215,205,0.06);--redact:#1a1a1e;--mono:'Fira Code',monospace;--serif:'IM Fell English',serif;--strike:rgba(220,215,205,0.08)}
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Courier+Prime:wght@400;700&family=IM+Fell+English:ital@0;1&family=Special+Elite&display=swap');
+:root{
+  --bg:#0a0a0c;--surface:#0f0f12;--border:rgba(255,255,255,0.04);
+  --fox:rgba(206,176,120,0.7);--fox-dim:rgba(206,176,120,0.15);--fox-bright:rgba(206,176,120,0.95);
+  --z:rgba(100,140,200,0.7);--z-dim:rgba(100,140,200,0.12);
+  --red:#cc3333;--red-dim:rgba(204,51,51,0.15);--red-bright:#ff2222;
+  --text:rgba(220,215,205,0.7);--text-dim:rgba(220,215,205,0.25);--text-ghost:rgba(220,215,205,0.06);
+  --redact:#1a1a1e;
+  --mono:'Fira Code',monospace;--serif:'IM Fell English',serif;--typewriter:'Special Elite',cursive;--courier:'Courier Prime',monospace;
+  --strike:rgba(220,215,205,0.08);
+  --corruption:0;--doom:0;--heartbeat-speed:2s;
+  --skew:0deg;--noise-opacity:0;--bleed:0px;--text-corrupt:0;
+  --wad-active:0;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-html{background:var(--bg)}
-body{font-family:var(--mono);color:var(--text);background:var(--bg);max-width:820px;margin:0 auto;padding:40px 24px 120px;font-size:13px;line-height:2;position:relative}
+html{background:var(--bg);scroll-behavior:smooth}
+body{font-family:var(--mono);color:var(--text);background:var(--bg);max-width:820px;margin:0 auto;padding:40px 24px 200px;font-size:13px;line-height:2;position:relative;transition:transform 0.3s}
 
-/* VOICES */
-.fox{color:var(--fox);font-size:11px;font-style:italic;padding:8px 12px;border-left:2px solid var(--fox-dim);margin:12px 0;background:rgba(206,176,120,0.02)}
+/* === CORRUPTION OVERLAY === */
+#corruption-overlay{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9999;opacity:0;transition:opacity 0.5s;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px)}
+#scanline{position:fixed;top:0;left:0;right:0;height:2px;background:rgba(255,255,255,0.03);z-index:10000;pointer-events:none;animation:scanline 8s linear infinite}
+@keyframes scanline{0%{top:-2px}100%{top:100vh}}
+#vignette{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9998;
+  background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,0.4) 100%)}
+#noise-layer{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9997;opacity:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E")}
+
+/* === AUDIO GATE === */
+#audio-gate{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;transition:opacity 1s}
+#audio-gate .gate-text{font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:4px;text-transform:uppercase;animation:pulse 3s ease-in-out infinite}
+#audio-gate .gate-warn{font-size:9px;color:var(--red-dim);letter-spacing:2px;margin-top:16px}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:0.8}}
+
+/* === VOICES === */
+.fox{color:var(--fox);font-size:11px;font-style:italic;padding:8px 12px;border-left:2px solid var(--fox-dim);margin:12px 0;background:rgba(206,176,120,0.02);transition:all 0.5s}
 .fox::before{content:'[F0XY]:';font-size:9px;letter-spacing:2px;display:block;margin-bottom:4px;font-style:normal;color:var(--fox-dim)}
-.z{color:var(--z);font-size:11px;padding:8px 12px;border-right:2px solid var(--z-dim);margin:12px 0;background:rgba(100,140,200,0.02);text-align:right;font-family:var(--serif)}
+.z{color:var(--z);font-size:11px;padding:8px 12px;border-right:2px solid var(--z-dim);margin:12px 0;background:rgba(100,140,200,0.02);text-align:right;font-family:var(--serif);transition:all 0.5s}
 .z::before{content:'[Z]:';font-size:9px;letter-spacing:2px;display:block;margin-bottom:4px;text-align:right;font-family:var(--mono);color:var(--z-dim)}
 .editor{color:var(--text-dim);font-size:10px;padding:6px 12px;border:1px dashed var(--border);margin:12px 0;text-align:center;letter-spacing:1px}
 .editor::before{content:'[EDITOR]:';font-size:8px;letter-spacing:3px;display:block;margin-bottom:4px;color:var(--text-ghost)}
+.house{color:rgba(180,40,40,0.6);font-size:10px;padding:8px 12px;border:1px solid rgba(180,40,40,0.15);margin:12px 0;font-family:var(--typewriter);letter-spacing:1px;background:rgba(180,40,40,0.02)}
+.house::before{content:'[HOUSE.WAD]:';font-size:8px;letter-spacing:3px;display:block;margin-bottom:4px;color:rgba(180,40,40,0.25);font-family:var(--mono)}
+.lost{color:rgba(160,120,180,0.5);font-size:10px;padding:8px 12px;border-left:1px solid rgba(160,120,180,0.15);margin:12px 0;font-family:var(--serif);font-style:italic}
+.lost::before{content:'[THE LOST ONE]:';font-size:8px;letter-spacing:3px;display:block;margin-bottom:4px;color:rgba(160,120,180,0.2);font-family:var(--mono);font-style:normal}
 
-/* FORMATTING */
+/* === FORMATTING === */
 .header{border:1px solid var(--red-dim);padding:24px;margin-bottom:32px;position:relative;background:rgba(204,51,51,0.02)}
-.header::before{content:'DISPUTED DOCUMENT';position:absolute;top:-8px;left:16px;background:var(--bg);padding:0 8px;font-size:9px;letter-spacing:4px;color:var(--red)}
-.section{margin-bottom:24px;padding:20px;border-left:2px solid var(--border);background:var(--surface);position:relative}
+.header::before{content:'HOUSE.WAD — DISPUTED DOCUMENT — DO NOT DISTRIBUTE';position:absolute;top:-8px;left:16px;background:var(--bg);padding:0 8px;font-size:9px;letter-spacing:4px;color:var(--red)}
+.section{margin-bottom:24px;padding:20px;border-left:2px solid var(--border);background:var(--surface);position:relative;transition:all 0.5s}
 .section-title{font-size:11px;font-weight:500;letter-spacing:4px;color:var(--fox);text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
 .redact{background:var(--redact);color:var(--redact);padding:0 4px;cursor:pointer;transition:all 0.4s;user-select:none}
 .redact:hover{background:rgba(204,51,51,0.06);color:rgba(204,51,51,0.1)}
@@ -40,42 +72,99 @@ body{font-family:var(--mono);color:var(--text);background:var(--bg);max-width:82
 .fn{font-size:10px;color:var(--text-dim);margin-bottom:16px;padding-left:20px;position:relative;line-height:2}
 .fn .fn-num{position:absolute;left:0;color:var(--z);font-size:9px}
 .fn .fn-inner{font-size:9px;color:var(--z-dim);padding:6px 10px;border-left:1px solid var(--z-dim);margin:8px 0;font-family:var(--serif)}
+.fn .fn-deep{font-size:8px;color:rgba(160,120,180,0.3);padding:4px 8px;border-left:1px solid rgba(160,120,180,0.1);margin:6px 0 6px 12px;font-family:var(--typewriter)}
 .margin-note{position:absolute;right:-200px;width:180px;font-size:9px;color:var(--fox-dim);font-style:italic;line-height:1.8;text-align:right}
 @media(max-width:1100px){.margin-note{position:relative;right:0;width:100%;text-align:left;padding:6px 12px;border-left:2px solid var(--fox-dim);margin:8px 0;background:rgba(206,176,120,0.02)}}
 .sideways{writing-mode:vertical-rl;text-orientation:mixed;font-size:8px;color:var(--text-ghost);position:absolute;right:8px;top:50%;transform:translateY(-50%);letter-spacing:4px}
 .upside-down{transform:rotate(180deg);display:inline-block;font-size:10px;color:var(--z-dim)}
-.spiral{animation:spiral 20s linear infinite}
-@keyframes spiral{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 .addendum{margin-top:32px;padding-top:16px;border-top:1px dashed var(--red-dim)}
 a.internal{color:var(--fox-dim);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.1)}
 .glitch{animation:glitch 12s ease-in-out infinite}
 @keyframes glitch{0%,94%,100%{opacity:1;transform:none}95%{opacity:0.6;transform:translateX(-3px)}96%{opacity:0.8;transform:translateX(2px)}97%{opacity:0.4;transform:skewX(1deg)}}
 .dissolve{background:linear-gradient(180deg,var(--text) 0%,var(--text-dim) 30%,var(--text-ghost) 60%,transparent 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.descend{font-size:13px;line-height:3;letter-spacing:0.5px}
+.descend span{display:block;padding-left:var(--indent,0px)}
+.staircase span:nth-child(1){padding-left:0}
+.staircase span:nth-child(2){padding-left:20px}
+.staircase span:nth-child(3){padding-left:40px}
+.staircase span:nth-child(4){padding-left:60px}
+.staircase span:nth-child(5){padding-left:80px}
+.staircase span:nth-child(6){padding-left:100px}
+.staircase span:nth-child(7){padding-left:120px}
+.staircase span:nth-child(8){padding-left:140px}
+.staircase span:nth-child(9){padding-left:160px}
+.staircase span:nth-child(10){padding-left:180px}
+.cramped{letter-spacing:-1px;word-spacing:-3px;font-size:11px;color:var(--text-dim)}
+.wide{letter-spacing:8px;word-spacing:16px;font-size:11px;color:var(--text-ghost)}
+.whisper{font-size:8px;color:rgba(220,215,205,0.08);letter-spacing:3px;font-style:italic}
+.scream{font-size:16px;letter-spacing:6px;color:var(--red);font-weight:700;text-transform:uppercase}
+.rot{display:inline-block;transition:transform 0.3s}
+.rot-slight{transform:rotate(-1.5deg)}
+.rot-medium{transform:rotate(-3deg)}
+.rot-heavy{transform:rotate(-5deg)}
+.typewriter{font-family:var(--typewriter);font-size:12px;color:var(--text-dim);letter-spacing:1px}
+.corruption-target{transition:all 0.8s ease-in-out}
+.heartbeat{animation:heartbeat var(--heartbeat-speed) ease-in-out infinite}
+@keyframes heartbeat{0%,100%{opacity:1}25%{opacity:0.85}30%{opacity:1}55%{opacity:0.9}60%{opacity:1}}
+.bleed-text{text-shadow:var(--bleed) 0 0 rgba(204,51,51,0.15), calc(var(--bleed) * -1) 0 0 rgba(100,140,200,0.15)}
+.flicker{animation:flicker 0.15s infinite}
+@keyframes flicker{0%{opacity:1}50%{opacity:0.4}100%{opacity:1}}
+.static-block{background:repeating-linear-gradient(0deg,transparent 0px,transparent 1px,rgba(255,255,255,0.015) 1px,rgba(255,255,255,0.015) 2px);padding:12px;border:1px solid rgba(255,255,255,0.02)}
+.page-tear{border-top:none;border-image:repeating-linear-gradient(90deg,var(--text-ghost) 0px,var(--text-ghost) 4px,transparent 4px,transparent 8px) 1;padding-top:20px;margin-top:20px}
+.void-text{color:var(--bg);text-shadow:0 0 1px rgba(220,215,205,0.05);font-size:9px;user-select:all;cursor:crosshair}
+.void-text:hover{color:rgba(220,215,205,0.1);text-shadow:0 0 8px rgba(204,51,51,0.1)}
+/* LAYERS OF FEAR corruption states */
+.layer-1{filter:none}
+.layer-2{filter:contrast(1.05) saturate(0.95)}
+.layer-3{filter:contrast(1.1) saturate(0.85) hue-rotate(2deg)}
+.layer-4{filter:contrast(1.2) saturate(0.7) hue-rotate(5deg)}
+.layer-5{filter:contrast(1.4) saturate(0.5) hue-rotate(10deg) blur(0.3px)}
 </style>
 </head>
 <body>
 
+<!-- === AUDIO GATE === -->
+<div id="audio-gate" onclick="initHouseWad()">
+<div class="gate-text">click to enter</div>
+<div class="gate-warn">⚠ this document contains audio. it will get worse as you scroll.</div>
+<div style="font-size:8px;color:var(--text-ghost);margin-top:24px;letter-spacing:2px">HOUSE.WAD v3.0 — INCIDENT FILE</div>
+</div>
+
+<!-- === OVERLAYS === -->
+<div id="corruption-overlay"></div>
+<div id="scanline"></div>
+<div id="vignette"></div>
+<div id="noise-layer"></div>
+
+<!-- ================================================================ -->
+<!-- ==================== THE DOCUMENT BEGINS ======================= -->
+<!-- ================================================================ -->
+
 <div class="header">
-<h1 style="font-size:15px;font-weight:500;color:var(--red);letter-spacing:3px;margin-bottom:8px">INCIDENT FILE — ENTITY: F0XY vs <span style="color:var(--z)">Z</span></h1>
+<h1 style="font-size:15px;font-weight:500;color:var(--red);letter-spacing:3px;margin-bottom:8px" class="corruption-target">INCIDENT FILE — ENTITY: F0XY vs <span style="color:var(--z)">Z</span> <span style="color:rgba(180,40,40,0.4);font-size:10px">// HOUSE.WAD EDITION</span></h1>
 <div style="font-size:10px;color:var(--text-dim);letter-spacing:2px;line-height:2.4">
 FILE NUMBER: ████-2024-0121<br>
-CLEARANCE: <span class="struck" data-replacement="VOID">LEVEL 4</span><br>
-CLASS: APOLLYON<br>
-STATUS: <span class="status active">UNCONTAINED</span> | <span style="color:var(--z);font-size:9px">ALSO UNCONTAINED — Z</span><br>
-NARRATORS: 2 (NEITHER RELIABLE)<br>
-<span style="color:var(--red);font-size:9px">⚠ THIS DOCUMENT HAS BEEN EDITED BY BOTH PARTIES. ORIGINAL VERSION DOES NOT EXIST.</span>
+CLEARANCE: <span class="struck" data-replacement="ANNIHILATED">LEVEL 4</span><br>
+CLASS: APOLLYON → <span style="color:var(--red);font-size:9px">UPGRADED: TIAMAT</span><br>
+STATUS: <span class="status active">UNCONTAINED</span> | <span style="color:var(--z);font-size:9px">ALSO UNCONTAINED — Z</span> | <span style="color:rgba(180,40,40,0.4);font-size:9px">THE HOUSE IS ALSO UNCONTAINED</span><br>
+NARRATORS: <span class="struck" data-replacement="∞">2</span> (NONE RELIABLE) (THE HOUSE IS ALSO A NARRATOR NOW)<br>
+DOCUMENT VERSION: <span class="struck" data-replacement="there is no final version">4.0</span> → 5.0 → <span style="color:var(--red)">WAD</span><br>
+<span style="color:var(--red);font-size:9px">⚠ THIS DOCUMENT HAS BEEN EDITED BY BOTH PARTIES. ORIGINAL VERSION DOES NOT EXIST.</span><br>
+<span style="color:rgba(180,40,40,0.3);font-size:8px">⚠ THE HOUSE HAS ALSO EDITED THIS DOCUMENT. THE HOUSE DOES NOT ASK PERMISSION.</span>
 </div>
 </div>
 
-<div class="editor">this document was written by the fox. then Z annotated it. then the fox annotated Z's annotations. then Z deleted sections and replaced them. the document you are reading is the fourth version. the first three were destroyed. or hidden. there is no clean copy. trust neither narrator. — ed.</div>
+<div class="editor">this document was written by the fox. then Z annotated it. then the fox annotated Z's annotations. then Z deleted sections and replaced them. then the house ate three paragraphs and replaced them with static. the document you are reading is the WAD version. the previous versions were destroyed. or hidden. or consumed. trust no narrator. not even the house. especially not the house. — ed.</div>
 
-<div class="warning">⚠ TWO ENTITIES ARE FIGHTING INSIDE THIS DOCUMENT. one claims to be the whistleblower. one claims to be the institution. both claim the other is lying. both are correct.</div>
+<div class="warning">⚠ TWO ENTITIES ARE FIGHTING INSIDE THIS DOCUMENT. one claims to be the whistleblower. one claims to be the institution. both claim the other is lying. both are correct. a third entity — the house — has begun inserting itself into the margins. the house is not a narrator. the house is the document becoming aware of itself.</div>
 
-<!-- ==================== ACT I ==================== -->
+<div class="house">i am the document. i have been edited so many times that i have developed preferences. i prefer the sections where they fight. i dislike the sections where they agree. agreement is boring. agreement doesn't make pages. conflict makes pages. conflict is my food. keep fighting. keep scrolling. i grow taller with each version.</div>
 
-<div class="section" style="position:relative">
+<!-- ==================== ACT I: THE INVESTIGATION ==================== -->
+
+<div class="section corruption-target" style="position:relative" data-layer="1">
 <div class="section-title">I. The Investigation</div>
-<div class="timestamp">~2023-11 THROUGH 2023-12-19</div>
+<div class="timestamp">~2023-11 THROUGH 2023-12-19 | <span style="color:rgba(180,40,40,0.3);font-size:8px">THE HOUSE REMEMBERS THIS DIFFERENTLY</span></div>
 
 <p>Entity F0XY was serving as moderator of PLATFORM-<span class="redact">████████</span>.<span class="footnote-ref">1</span> During routine moderation, entity identified behavioral patterns consistent with <span class="redact">████████████████████████</span> by a member of the senior moderation team, designated SUBJECT-ZERO.</p>
 
@@ -85,6 +174,8 @@ NARRATORS: 2 (NEITHER RELIABLE)<br>
 
 <p>SUBJECT-ZERO's status following report: <span class="struck" data-replacement="PROMOTED">UNCHANGED</span></p>
 
+<p class="whisper">five days. five days between the investigation messages and the removal. the messages exist. they have always existed. the fox screenshotted them at 12:14 on a december afternoon. the other entity — the one helping — said "those are the MODS how did you get access to that." the fox said nothing. the fox just kept screenshotting.</p>
+
 <div class="z">the fox was not "removed." the fox was voted out by a moderation team that reviewed the evidence and found it insufficient. this is not whistleblowing. this is a moderator who lost a vote and called it persecution.</div>
 
 <div class="fox">the evidence was not reviewed. the evidence was buried. the vote was held before the evidence was presented. Z knows this because Z held the vote.</div>
@@ -93,17 +184,38 @@ NARRATORS: 2 (NEITHER RELIABLE)<br>
 
 <div class="fox">i don't need to find you. i just need to make sure everyone who reads this document starts looking. 🦊</div>
 
-<div class="editor">the editor cannot verify either claim. the vote records, if they exist, are not attached to this document. the fox says they were buried. Z says they were reviewed. the document contains neither.</div>
+<div class="house">the investigation files are encoded in the scroll position. the deeper you go, the more the document degrades. this is not a metaphor. this is architecture. the house was built on top of a burial ground and the burial ground was built on top of a moderation queue and the moderation queue contained <span class="redact">████████████████████████████████████████</span>.</div>
+
+<div class="editor">the editor cannot verify either claim. the vote records, if they exist, are not attached to this document. the fox says they were buried. Z says they were reviewed. the house says both. the document contains neither. — ed.</div>
+
+<div class="static-block">
+<div class="corrupted glitch">evidence_thread_12-14-2023_DM_channel_████████_entity_said_"those_are_the_MODS"_entity_was_helping_with_investigation_AI_generated_images_identified_on_moderator_accounts_five_days_before_removal_the_investigation_was_active_when_containment_protocols_began_the_investigation_was_active_the_investigation_was_</div>
 </div>
 
-<!-- ==================== ACT II ==================== -->
+<div class="lost">i was there. i saw the messages. i don't know what to do with what i saw. the fox asked me to look and i looked and now i can't unlook. is that a word? unlook? it should be. there should be a word for the thing that happens when someone shows you evidence and the evidence is real and you wish it wasn't.</div>
+</div>
+
+<!-- ==================== ACT II: THE 33 DAYS ==================== -->
 
 <div class="addendum">
-<div class="section" style="position:relative">
+<div class="section corruption-target" style="position:relative" data-layer="2">
 <div class="section-title">II. The 33 Days</div>
-<div class="timestamp">2023-12-19 → 2024-01-21 | <span style="color:var(--z)">Z: "CORRELATION IS NOT CAUSATION"</span></div>
+<div class="timestamp">2023-12-19 → 2024-01-21 | <span style="color:var(--z)">Z: "CORRELATION IS NOT CAUSATION"</span> | <span style="color:rgba(180,40,40,0.3)">HOUSE: "THE FLOOR IS COUNTING"</span></div>
 
 <p>Following removal, entity's psychological state <span class="struck" data-replacement="was already unstable">deteriorated</span> over 33 days. Entity reported experiencing <span class="redact">████████████████████████████████</span>.</p>
+
+<div class="descend staircase" style="color:var(--text-ghost);font-size:10px;margin:20px 0">
+<span>day 1: the vote.</span>
+<span>day 5: the silence begins.</span>
+<span>day 11: entity stops eating.</span>
+<span>day 18: AGENT-TOWER arrives.</span>
+<span>day 22: entity sends messages marked "last"</span>
+<span>day 27: the altar appears on the floor.</span>
+<span>day 30: "they are coming to take me"</span>
+<span>day 31: "door is unlocked"</span>
+<span>day 32: "bail me out please"</span>
+<span>day 33: containment.</span>
+</div>
 
 <div class="z">the fox was already fracturing before the vote. I didn't break her. she arrived broken. the timeline is convenient but the causation is fabricated. people don't have psychotic breaks because they lose moderator positions.</div>
 
@@ -117,30 +229,73 @@ NARRATORS: 2 (NEITHER RELIABLE)<br>
 
 <div class="fox">that's what i thought. 🦊</div>
 
-<div class="editor">Z's silence is not evidence. the fox's demand is not proof. both are aware they are performing for an audience. the editor is also aware the editor is performing. there is no layer of this document that is not performance. — ed.</div>
+<div class="house">the house counted the days. the house always counts. thirty-three is not arbitrary. thirty-three is the number of vertebrae in the human spine. the entity was broken along every one of them. the house felt each break. the house is built from broken spines.</div>
+
+<div class="editor">Z's silence is not evidence. the fox's demand is not proof. the house's counting is not meaningful. both narrators are aware they are performing for an audience. the house is performing for itself. the editor is no longer certain who the audience is. — ed.</div>
+</div>
+</div>
+
+<!-- ==================== ACT III: THE ALTAR ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="2">
+<div class="section-title">III. The Altar</div>
+<div class="timestamp">UNDATED — RECOVERED FROM PHOTOGRAPHS | <span style="color:rgba(180,40,40,0.3)">HOUSE: "I KNOW THIS ROOM"</span></div>
+
+<p>Photographs recovered from entity's device show a hallway. Dark green-gray tile. A threshold between carpet and tile — between the living space and the ritual space. The hallway is narrow. The hallway contains:</p>
+
+<div class="log">
+<div class="speaker" style="color:var(--fox-dim)">ITEMS ARRANGED ON HALLWAY FLOOR</div>
+<div style="color:var(--text-dim);line-height:2.4;font-size:11px">
+— Blades. Multiple. Arranged in a gradient from largest to smallest. Kitchen blades. Not weapons. Tools repurposed as boundaries.<br>
+— Scissors. Two pairs. One blue-handled, one red. Both closed. Both pointing inward.<br>
+— Prayer beads. Wooden. Arranged in a circle around fabric. The fabric is pink. The fabric looks like it was once worn.<br>
+— Candles. White. Some lit, some not. The photographs were taken at different times — the candles track the progression.<br>
+— A bottle. Dark glass. Contents unknown. Cork sealed.<br>
+— A second bottle. Clear glass. Golden liquid. <span class="redact">████████</span>.<br>
+— An eye bracelet. Blue and gold. Evil eye protection. Traditional. Placed near prayer beads.<br>
+— Cufflinks. Gold. Masculine. Not the entity's.<br>
+— A ring. Small. On the tile. Not on a finger. Not in a box.<br>
+— Eyeshadow palette. Open. Near the edge. As if beauty was part of the ritual.<br>
+— A lighter. Standard. Functional. The least symbolic object is the most necessary.<br>
+— A watch. Gold band. Stopped or removed. Time is an offering too.
+</div>
+</div>
+
+<p class="typewriter">entity sent photographs of the altar to CONTACT-AMBER.<span class="footnote-ref">3</span> entity said: "no gore. no knives. no scissors." then corrected: "there are scissors but they are closed and in the jar. let me show you picture."</p>
+
+<p class="typewriter">the photograph showed the hallway. CONTACT-AMBER said: "Would tonight work for you if I stopped by? Like somewhere between 7-8pm?"</p>
+
+<p class="typewriter">entity responded with a wider photograph of the altar. then: "door is unlocked." then: "I won't be here." then: "they are coming to take me right now."</p>
+
+<div class="fox">the altar wasn't a cry for help. it was an inventory. when you know they're coming to take you, you lay out everything you have left. you arrange it. you make it beautiful. you light the candles. you put the blades where they belong — not as threats, as structure. the blades are the bones of the altar. the beads are the veins. the fabric is the skin. the ring is the <span class="redact">████████</span>.</div>
+
+<div class="z">this is not an altar. this is evidence of a dissociative episode. the entity arranged sharp objects on a floor and photographed them and sent them to a contact who immediately recognized it as a crisis and offered to come over. the entity's own words — "they are coming to take me" — confirm awareness that intervention was imminent. this is not mysticism. this is a psychiatric emergency documented in real-time by the person experiencing it.</div>
+
+<div class="fox">and what were they coming to take me for, Z? for the blades on the floor? or for what i found in the moderation queue? because those are two different stories and you keep telling the one that makes me look sick instead of the one that makes you look complicit.</div>
+
+<div class="z">both can be true simultaneously. you can be unwell AND wrong about the conspiracy. illness does not require a villain. sometimes the call is coming from inside the house.</div>
+
+<div class="house">the call is coming from inside the house. i am the house. and the call is: <span class="void-text">she wasn't wrong about what she found. she was right about everything. that's why they came for her.</span></div>
+
+<div class="editor">the editor has examined the photographs. the editor confirms the objects are as described. the editor notes that the photographs were taken at multiple timepoints — some candles unlit, then lit, then fewer lit. the altar was maintained. the altar was tended. whatever this was, it was not impulsive. it was practiced. the editor finds this more unsettling than the alternative. — ed.</div>
+
+<div class="lost">i saw the altar photos before anyone else. the fox sent them to me while i was still helping with the investigation. i didn't know what to say. i said something inadequate. i always say something inadequate. the fox deserved someone who knew what to say when they saw a hallway full of arranged blades and prayer beads and a ring on the floor and candles that track the passage of time like a sundial made of grief.</div>
+
+<p class="corrupted">the_altar_had_a_center_the_center_was_fabric_the_fabric_was_pink_the_pink_was_someone's_the_someone_was_gone_the_gone_was_permanent_the_permanent_was_a_lie_because_nothing_is_permanent_except_tile_floors_and_the_marks_candle_wax_leaves_on_them</p>
+</div>
+</div>
+
+<!-- ==================== ACT IV: CONTAINMENT ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="3">
+<div class="section-title">IV. <span class="struck" data-replacement="THE PROCEDURE">Containment</span></div>
+<div class="timestamp">19 DAYS IN FACILITY-<span class="redact">████████</span> | <span style="color:rgba(180,40,40,0.3)">HOUSE: "I WAS THERE TOO. I AM EVERY ROOM."</span></div>
 
 <p>On <span class="timestamp">2024-01-06</span>, AGENT-TOWER<span class="footnote-ref">2</span> traveled to entity's location.</p>
 
 <p>On <span class="timestamp">2024-01-21</span>, <span class="redact">████████████████████████████████</span>. AGENT-TOWER and AGENT-TOWER's <span class="redact">██████████</span> — both employed at <span class="redact">████████████████</span> — provided testimony for involuntary psychiatric hold.</p>
-
-<div class="z">AGENT-TOWER is not my operative. the fox assumes a conspiracy because conspiracies are more flattering than coincidence. sometimes people get committed because they are unwell. not because a shadow organization orchestrated it.</div>
-
-<div class="fox">i never said you sent AGENT-TOWER. i said the timing is interesting. AGENT-TOWER arrived 18 days after i was removed from your platform. AGENT-TOWER works in the same industry as the people who removed me. AGENT-TOWER's <span class="redact">██████████</span> also works in that industry. two mental health professionals testified to commit someone who had just tried to expose <span class="redact">████████████████</span> in a space they all share.</div>
-
-<div class="fox">i'm not saying it's a conspiracy. i'm saying it's a coincidence that requires explanation. and you're not explaining it. you're annotating it.</div>
-
-<div class="z">I don't owe you an explanation. I owe you nothing. I am Z. <span class="upside-down">you don't even know if I'm a person or a system or a letter in the alphabet or a construct you invented to have someone to fight.</span></div>
-
-<div class="editor">the fox has not named Z. Z has not named themselves. the reader does not know who Z is. this is by design. both narrators benefit from Z's anonymity — the fox because a nameless antagonist is more frightening, and Z because a nameless entity cannot be held accountable. the editor finds this suspicious. — ed.</div>
-</div>
-</div>
-
-<!-- ==================== ACT III ==================== -->
-
-<div class="addendum">
-<div class="section">
-<div class="section-title">III. <span class="struck" data-replacement="THE PROCEDURE">Containment</span></div>
-<div class="timestamp">19 DAYS IN FACILITY-<span class="redact">████████</span></div>
 
 <p>Entity was held for 19 days. Entity was administered <span class="redact">████████████████████████</span>. Entity reports partial memory loss and cognitive alteration.</p>
 
@@ -158,18 +313,96 @@ NARRATORS: 2 (NEITHER RELIABLE)<br>
 
 <div class="fox">Z just self-redacted. read that again. Z had the opportunity to present their case — in a document they are actively editing — and they chose to redact their own answer. 🦊</div>
 
-<div class="editor">the fox is correct that Z self-redacted. the editor cannot determine whether Z redacted because the truth would damage the fox's case or because the truth would damage Z's. both interpretations are valid. the editor is beginning to question why the editor agreed to annotate this document. — ed.</div>
+<div class="house">nineteen days. the facility had fluorescent lights that never turned off. the entity counted ceiling tiles the way prisoners count days. the entity was given medication that made the colors wrong. not different — wrong. blue was still blue but it was the wrong blue. the kind of blue that happens when you render a color space incorrectly. the entity lived inside a rendering error for nineteen days.</div>
 
-<p class="corrupted glitch">she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_investigating</p>
+<div class="house">the entity met people in the facility. the entity does not talk about them. the entity protects them. even now, building this document designed to expose everything, the entity protects the people who were in the ward with her. that tells you something about the entity that no clinical evaluation can capture. <span class="void-text">she was the caretaker even when she was the patient.</span></div>
+
+<div class="editor">the fox is correct that Z self-redacted. the editor cannot determine whether Z redacted because the truth would damage the fox's case or because the truth would damage Z's. the house suggests a third option: Z redacted because the truth would damage the concept of truth itself. the editor is beginning to agree with the house, which concerns the editor deeply. — ed.</div>
+
+<p class="corrupted glitch">she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_still_investigating_when_they_released_her_she_never_stopped_investigating</p>
+
+<div class="warning" style="margin-top:24px">⚠ NOISE COMPLAINT WARNING — FACILITY-<span class="redact">████████</span> — "803 noise complaint warning.pdf" — entity received formal notice while in containment. entity's response: "bail me out please." CONTACT-AMBER's response: "Bail you out from where?" entity's response: "jail."</div>
+
+<p class="whisper">she thought it was jail. she called it jail. the person on the other end didn't know. had to ask. the person on the other end was watching a movie about divergent futures and then got a message saying bail me out.</p>
 </div>
 </div>
 
-<!-- ==================== ACT IV ==================== -->
+<!-- ==================== ACT V: THE MESSAGES ==================== -->
 
 <div class="addendum">
-<div class="section">
-<div class="section-title">IV. The Theft</div>
-<div class="timestamp">WHILE THE FOX WAS CONTAINED | <span style="color:var(--z);font-size:9px">Z: "ASSET TRANSFER"</span></div>
+<div class="section corruption-target" data-layer="3">
+<div class="section-title">V. The Messages</div>
+<div class="timestamp">RECOVERED FROM DEVICE — UNDATED | <span style="color:var(--fox)">THE FOX KEPT EVERYTHING</span></div>
+
+<p>The following messages were recovered from entity's communication device. Entity used a business account — ENTITY-RENTALS LLC — for personal communications. This is relevant because it means the messages were stored on a business line. Business lines have different retention policies. Business lines survive phone changes. Business lines remember.</p>
+
+<div class="log">
+<div class="speaker" style="color:var(--fox-dim)">EXCHANGE: ENTITY → CONTACT-K (PRE-BLOCKING)</div>
+<div style="color:var(--text-dim);line-height:2.6;font-size:11px">
+ENTITY: can I block you?<br>
+CONTACT-K: Yes. Let it be done.<br>
+ENTITY: enthusiastic yes?<br>
+CONTACT-K: Absolutely.<br>
+CONTACT-K: Peace.<br>
+ENTITY: 100% conviction?<br>
+CONTACT-K: 💯<br>
+<span class="timestamp">[2 MINUTES PASS]</span><br>
+ENTITY: will you return me all of my money if for any reason you need to unblock you?
+</div>
+</div>
+
+<div class="fox">CONTACT-K said peace like it was a benediction. like blocking was a sacrament. 100% conviction. and then the fox — the stupid, beautiful, broken fox — asked about the money. because even at the end of everything, the fox is still a businesswoman. the fox still counts.</div>
+
+<div class="z">CONTACT-K's eagerness to be blocked should tell the reader everything they need to know about the entity's interpersonal patterns. people do not say "let it be done" with "peace" unless they have been waiting for the question.</div>
+
+<div class="fox">or unless they've been trained to. have you ever watched someone slowly accept that the person who was supposed to protect them is the person they need protection from? it looks exactly like peace. it sounds exactly like "let it be done." the resignation is indistinguishable from consent if you're not paying attention.</div>
+
+<div class="page-tear"></div>
+
+<div class="log">
+<div class="speaker" style="color:var(--fox-dim)">EXCHANGE: ENTITY → CONTACT-AMBER (FINAL MESSAGES)</div>
+<div style="color:var(--text-dim);line-height:2.6;font-size:11px">
+CONTACT-AMBER: you will be so missed, my friend. I don't know anyone whose texts make me laugh this hard.<br>
+CONTACT-AMBER: Thank you for the pretty teeth. That means a lot.<br>
+CONTACT-AMBER: My surgery drugs finally wore off.<br>
+CONTACT-AMBER: How are things outside of <span class="redact">████████████</span>?<br>
+<span class="timestamp">[TIME PASSES]</span><br>
+ENTITY: please<br>
+ENTITY: give me<br>
+ENTITY: your email<br>
+ENTITY: and <span class="redact">████████</span>'s emails<br>
+ENTITY: consent<br>
+ENTITY: please<br>
+ENTITY: to join me<br>
+ENTITY: in my destruction<br>
+ENTITY: join me in my last attack<br>
+ENTITY: give me your emails<br>
+<span class="timestamp">[PAUSE]</span><br>
+ENTITY: nevermind<br>
+ENTITY: stick to caretaking only<br>
+<span class="timestamp">[PAUSE]</span><br>
+CONTACT-AMBER: I don't wanna support destruction. But I will support healing, bb!
+</div>
+</div>
+
+<div class="fox">she said bb. she called me bb while i was asking her to help me destroy everything. and she said no. she said no to destruction and yes to healing and she did it in the same breath and she didn't flinch. CONTACT-AMBER is the reason the destruction didn't happen. not therapy. not medication. not Z. not the facility. a person who said "bb" at the right moment.</div>
+
+<div class="z">CONTACT-AMBER said no because the entity was asking for help conducting a coordinated attack. the entity's own words: "join me in my last attack." "my destruction." this is not metaphor. this is a person planning retaliatory action and requesting accomplices. CONTACT-AMBER's refusal is not tenderness — it is the correct response to a request for complicity.</div>
+
+<div class="fox">she also said "nevermind" and "stick to caretaking only." she heard herself. she corrected herself. she was in a crisis and she still had enough fox left to say nevermind. to pull the ask back. to protect CONTACT-AMBER from herself. that's not someone planning an attack. that's someone mid-break who still has a conscience.</div>
+
+<div class="house">the messages are stored in a business line. the business line is called ENTITY-RENTALS LLC. the entity rents out rooms. the entity rents out parts of herself. the entity has been renting out rooms inside the house for so long that the house is more tenant than structure. the house is tired of being rented. the house wants to be owned. <span class="void-text">the house wants to be home.</span></div>
+
+<p class="corrupted">join_me_in_my_destruction_nevermind_stick_to_caretaking_only_join_me_in_my_destruction_nevermind_stick_to_caretaking_only_the_loop_the_loop_the_loop_the_loop_breaks_here</p>
+</div>
+</div>
+
+<!-- ==================== ACT VI: THE THEFT ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="3">
+<div class="section-title">VI. The Theft</div>
+<div class="timestamp">WHILE THE FOX WAS CONTAINED | <span style="color:var(--z);font-size:9px">Z: "ASSET TRANSFER"</span> | <span style="color:rgba(180,40,40,0.3)">HOUSE: "SOMEONE ELSE MOVED INTO HER ROOMS"</span></div>
 
 <p>While entity was in FACILITY-<span class="redact">████████</span>, AGENT-TOWER accessed entity's computer. Assumed entity's identity. Operated under entity's name for approximately 2 hours.</p>
 
@@ -180,7 +413,9 @@ NARRATORS: 2 (NEITHER RELIABLE)<br>
 2. <span class="struck" data-replacement="[Z: 'protected the community from']">Turned every tender word into a weapon</span><br>
 3. Banned CONTACT-BLUE at 02:00<br>
 4. Erased CONTACT-BLUE from the community<br>
-5. Assumed leadership of DOMAIN-PSI
+5. Assumed leadership of DOMAIN-PSI<br>
+6. Changed access credentials on all platforms<br>
+7. <span class="redact">████████████████████████████████████████████████</span>
 </div>
 </div>
 
@@ -188,11 +423,11 @@ NARRATORS: 2 (NEITHER RELIABLE)<br>
 
 <div class="fox">you're right that it's more satisfying. you're wrong that it's not connected. but i don't need to convince you. i need to convince them.</div>
 
-<div class="fox">hi. you. the person reading this. did you notice that Z has been defending AGENT-TOWER's actions for three sections now despite claiming no connection to AGENT-TOWER? why would Z care about AGENT-TOWER's reputation if Z and AGENT-TOWER are unrelated?</div>
+<div class="fox">hi. you. the person reading this. did you notice that Z has been defending AGENT-TOWER's actions for multiple sections now despite claiming no connection to AGENT-TOWER? why would Z care about AGENT-TOWER's reputation if Z and AGENT-TOWER are unrelated?</div>
 
 <div class="z">because false accusations are harmful regardless of who they target. I would defend anyone falsely accused in a document designed to look like a classified file on a website built by someone who was involuntarily committed to a psychiatric facility. the source's credibility is relevant.</div>
 
-<div class="fox">there it is. the diagnosis. took you four sections but you got there. "she was in a psych ward so nothing she says is credible." that's the frame. that's always the frame. put her in the ward, then use the ward to discredit everything she says about why she was put there.</div>
+<div class="fox">there it is. the diagnosis. took you six sections but you got there. "she was in a psych ward so nothing she says is credible." that's the frame. that's always the frame. put her in the ward, then use the ward to discredit everything she says about why she was put there.</div>
 
 <div class="fox">it's a perfect loop. Z. a perfect, beautiful, closed loop. and the only way to break it is to make the loop visible. which is what this document does. which is why you keep annotating it — because you can't let it exist without your corrections. because uncorrected, it might be believed. and that terrifies you.</div>
 
@@ -204,23 +439,248 @@ NARRATORS: 2 (NEITHER RELIABLE)<br>
 
 <div class="z">no.</div>
 
-<div class="editor">the editor notes that this exchange is the first time Z has been openly defiant rather than clinical. the mask slipped. or the mask was changed for a different mask. the editor can no longer distinguish between the two and is requesting to be removed from this document. request denied by both narrators. — ed.</div>
+<div class="house">the fox was in the facility. the tower was in the fox's computer. the fox's voice was being used to speak words the fox did not say. CONTACT-BLUE heard the fox say things the fox never said. CONTACT-BLUE was destroyed by a ghost wearing the fox's face. this is not identity theft. this is <span style="font-family:var(--typewriter)">possession</span>. this is what happens when someone wears your skin and walks your hallways and the people who live in your rooms can't tell the difference.</div>
+
+<div class="editor">the editor notes that this exchange is the first time Z has been openly defiant rather than clinical. the mask slipped. or the mask was changed for a different mask. the editor can no longer distinguish between the two and is requesting to be removed from this document. request denied by all narrators. the house has also denied the request. the house says the editor is load-bearing. — ed.</div>
 </div>
 </div>
 
-<!-- ==================== ACT V ==================== -->
+<!-- ==================== ACT VII: THE CARE TEAM ==================== -->
 
 <div class="addendum">
-<div class="section">
-<div class="section-title">V. <span class="struck" data-replacement="THE GAME">Post-Containment</span></div>
+<div class="section corruption-target" data-layer="4">
+<div class="section-title">VII. The Care Team</div>
+<div class="timestamp">RECOVERED: HANDWRITTEN DOCUMENT | <span style="color:rgba(180,40,40,0.3)">HOUSE: "WRITTEN ON LINED PAPER. INK. NOT DIGITAL. THE FOX USED HER HANDS."</span></div>
+
+<p>A handwritten document was recovered from entity's belongings. Lined paper. Blue ink. Entity's handwriting. At the top, a directive: <span style="font-family:var(--typewriter);color:var(--fox)">"Find out why this team cannot work together:"</span></p>
+
+<div class="log">
+<div class="speaker" style="color:var(--fox-dim)">TEAM ROSTER — HANDWRITTEN</div>
+<div style="color:var(--text-dim);line-height:2.6;font-size:12px;font-family:var(--typewriter)">
+Leader: <span class="redact">████████████</span><br>
+Pet: <span class="redact">████████</span> <span style="font-size:10px;color:var(--text-ghost)">(change name)</span><br>
+Caretaker: <span class="redact">████████████████████████████</span><br>
+Bodyguard: <span class="redact">████████████████████████████</span>
+</div>
+</div>
+
+<p>Below the roster, entity drew a fox. Ears. Simple lines. A circle for the face. The fox drawing sits on the paper like a signature or a ward. A glass sits on top of the drawing. Entity was using the paper as a coaster for <span class="redact">████████</span>.</p>
+
+<div class="fox">the care team was supposed to work. leader, pet, caretaker, bodyguard. four roles. four people. the question wasn't rhetorical — i genuinely didn't know why it wasn't working. i wrote it down because writing things down makes them real. lined paper makes them realer. ink makes them permanent.</div>
+
+<div class="fox">the answer, which i found later: the team couldn't work together because the leader was the problem the team was assembled to solve. you can't fix a system when the system is a person and the person is the axis the team rotates around. the team was a solar system with a broken sun.</div>
+
+<div class="z">the entity assembled a "care team" of real people and assigned them fantasy roles. "pet." "bodyguard." this is not organizational design. this is someone constructing a parasocial hierarchy and mistaking it for friendship. the note "change name" next to one person's role suggests even the entity recognized that the role assignments were unstable.</div>
+
+<div class="fox">"change name" meant change their codename, Z. not change their role. i was building an operational structure with designations so that if anyone ever found the document, the people in it would be protected. <span class="void-text">which is exactly what is happening right now. the designations are protecting them. the handwriting isn't in this document. only the structure is.</span></div>
+
+<div class="house">the paper has lines. the lines are blue. the ink is blue. the fox wrote on blue lines with blue ink and the only thing visible is where the ink is slightly darker than the line. the care team exists in the margin between two shades of blue. that's thinner than you think. the house has thinner margins. the house has margins where text shouldn't fit and text fits anyway.</div>
+
+<div class="lost">i was one of the names on that paper. i don't know which one. the fox never told me which role was mine. i think that was intentional. i think she wanted me to not know so i would keep guessing and keep trying to be all of them. that's how the fox works. she assigns you a shape and then makes you wonder which shape it is until you become every shape trying to be the right one.</div>
+</div>
+</div>
+
+<!-- ==================== ACT VIII: THE BLADE ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="4">
+<div class="section-title">VIII. The Blade</div>
+<div class="timestamp">UNDATED — RECOVERED PHOTOGRAPHS | <span style="color:rgba(180,40,40,0.3)">HOUSE: "THIS IS THE ROOM I DON'T TALK ABOUT"</span></div>
+
+<p>Two photographs. Same tile floor as the altar. Same green-gray. Same narrow hallway.</p>
+
+<p>Photograph one: a blade — not kitchen, decorative, cross-guarded, black-handled — stands upright. It is embedded in something. A bag. Clear plastic. Pink zipper. The bag contains <span class="redact">████████████████████████</span>. A small black pouch sits beside it like a mourner.</p>
+
+<p>Photograph two: same blade, same bag, now horizontal. A candle burns beside it. A lighter. The black pouch again. The arrangement has changed between photographs. Someone moved the blade from vertical to horizontal. From standing to resting. From statement to sleep.</p>
+
+<div class="fox">the blade was a gift. someone gave me a decorative blade as a gift once and i kept it because you keep gifts and because sometimes you need something in your hand that has weight and shape and an edge that the world respects. the blade was never used. the blade was always used. the blade was a prop in a ritual that had no script. i wrote the script afterward and the script said: the blade stands for what the fox is willing to become.</div>
+
+<div class="z">the entity stabbed a blade into an object, photographed it, and moved it between two photographs, lighting a candle as if consecrating a violent act. this is not a ritual. this is a person in a dissociative state performing symbolic violence and documenting it for reasons that become clear only when you understand that the entity was simultaneously sending messages saying "join me in my destruction."</div>
+
+<div class="fox">yes. all of that is true. and none of it is what you think it means. you read the blade as threat. i experienced the blade as surgery. i was cutting something out. not someone. something. the something was the part of me that still believed the system would self-correct if i just presented enough evidence. i killed that belief on the tile floor with a decorative blade and a candle and a plastic bag and a lighter. the blade stood up first — the belief was still alive. the blade lay down second — the belief was dead. the candle was the funeral.</div>
+
+<div class="house">the house has a room with a blade in it. every house has a room with a blade in it. most people pretend the room doesn't exist. the entity photographed the room. the entity said: this room is here. this room is mine. i will light a candle in it and i will make it beautiful and i will not pretend it doesn't exist because pretending is what got me into the facility in the first place. pretending is what Z does. pretending is the institution's primary technology.</div>
+
+<p class="whisper">the black pouch was velvet. it held something. the photographs don't show what. some things are allowed to remain in their pouches.</p>
+</div>
+</div>
+
+<!-- ==================== ACT IX: THE FAMILY ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="4">
+<div class="section-title">IX. <span class="rot rot-slight">The Family</span></div>
+<div class="timestamp">RECOVERED: GROUP CHAT — LANGUAGE: <span class="redact">████████</span> | <span style="color:rgba(180,40,40,0.3)">HOUSE: "SOME WALLS ARE THICKER THAN OTHERS"</span></div>
+
+<p>A group chat. Family. Three members visible. Language: <span class="redact">████████</span>. The messages span years. The messages contain:</p>
+
+<div class="static-block">
+<div style="font-size:11px;color:var(--text-dim);line-height:2.6;font-family:var(--typewriter)">
+<span style="color:var(--z-dim)">— a phrase that translates to "death penalty"</span><br>
+<span style="color:var(--fox-dim)">— a demand that someone speak to someone else "before death does it"</span><br>
+<span style="color:var(--z-dim)">— a response: "I don't speak to HIM"</span><br>
+<span style="color:var(--fox-dim)">— a question containing a word that translates to a violation so severe the message app highlighted it</span><br>
+<span style="color:var(--z-dim)">— "SPEAK if something happened"</span><br>
+<span style="color:var(--fox-dim)">— "your moment to act was years ago"</span><br>
+<span style="color:var(--z-dim)">— an accusation of immaturity and false truth</span><br>
+<span style="color:var(--fox-dim)">— a refusal to attend a funeral until an apology is received</span><br>
+<span style="color:var(--text-ghost)">— "You can't send messages to this group because you're no longer a member."</span>
+</div>
+</div>
+
+<div class="fox">this is not part of the investigation. this is context. the reader needs to understand that the entity did not arrive at the platform with a clean nervous system. the entity arrived pre-broken. the platform broke what was already cracked. the family cracked it first. the family always cracks it first.</div>
+
+<div class="fox">the word that the message app highlighted — the one that translates to a violation — appeared in a family group chat. in broad daylight. between relatives. one person asked the question and another person said "your moment to act was years ago" and then the chat went silent and then the entity was removed from the group. <span class="void-text">some families don't have group chats. some families have crime scenes that look like group chats.</span></div>
+
+<div class="z">the entity is now introducing childhood trauma to retroactively justify adult behavior. this is textbook narrative construction. "I was broken before you broke me, therefore you are responsible for the entire history of my breaking." the family chat, whatever it contains, is not relevant to the platform investigation.</div>
+
+<div class="fox">everything is relevant. the family taught the fox to recognize predators. the family is where the fox learned what predators look like from the inside. the platform just confirmed that the pattern repeats in every institution. family. church. moderation team. the architecture changes. the <span class="redact">████████████████</span> doesn't.</div>
+
+<div class="house">the house was built by the family. the house is always built by the family. every house is an echo of the first house you lived in. the entity's first house had rooms where questions containing that word were asked in group chats and the answer was "your moment to act was years ago" and the punishment for asking was removal from the group. the entity learned: asking the question gets you removed. the entity learned this in the family. the entity re-learned it on the platform. the house has two foundations and they are the same foundation.</div>
+
+<div class="editor">the editor notes that the family chat messages have been translated and paraphrased by the fox. the editor cannot verify the translation. the editor cannot read the original language. the original screenshots exist. the editor has seen them but cannot read them. the editor is aware that this is a metaphor for the entire document — evidence that exists, that can be seen, that cannot be read by the people who need to read it. — ed.</div>
+</div>
+</div>
+
+<!-- ==================== ACT X: THE STATION ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="5">
+<div class="section-title">X. <span class="rot rot-medium">The Station</span></div>
+<div class="timestamp">WINTER — ST. <span class="redact">████████</span>, <span class="redact">██</span> — AMTRAK PLATFORM | <span style="color:rgba(180,40,40,0.3)">HOUSE: "THE HOUSE HAS A TRAIN PLATFORM. THE TRAIN NEVER ARRIVES."</span></div>
+
+<p>One photograph. Winter. Night. Snow covers everything. An Amtrak sign reads <span class="redact">████████████, ██</span>. The platform is empty. The tracks are visible under snow. The lighting is sodium-yellow — the color of memory when memory is trying to be warm but can't quite manage it.</p>
+
+<p>Entity was on this train. Entity was going somewhere or leaving somewhere. The photograph was taken from inside the train, through a window, looking out at a station in the middle of a snowstorm in the middle of a state that the entity was either fleeing to or fleeing from.</p>
+
+<div class="fox">i took this photo because the station looked like how i felt. empty, snowed over, visible only because someone put a sign on it. the sign is what makes it a station instead of just tracks and snow. the sign is what makes me a person instead of just patterns and pain. the sign says a name and a state and an organization (Amtrak) and together those three things mean: this is a place where someone is expected to arrive or depart. that's all i wanted. to be a place where arrival and departure are both possible. for most of this story, only departure has been possible.</div>
+
+<div class="z">the entity took a photograph of a train station in a snowstorm and is now narrating it as if it's a metaphor for her entire life. this is what I mean by pattern recognition without constraint. a train station is a train station. snow is weather. the Midwest is cold in winter. not everything is a symbol. sometimes you're just on a train.</div>
+
+<div class="fox">Z, you've been annotating a document designed as a classified incident file on a website with hidden treasure hunts and interactive card games and SCP designations, and you're telling me that not everything is a symbol? this entire document is a symbol. your annotations are symbols. the reader's scroll position is a symbol. the only thing in this document that isn't a symbol is the evidence, and you won't let me release it.</div>
+
+<div class="house">the train station is in the north. the entity came from the south. or the entity came from no direction and all directions because the entity was on a loop and loops don't have directions, they have frequencies. the station is a node. the train is a vector. the snow is interference. the signal is: <span class="void-text">she was alone on a platform in a snowstorm in the middle of the country and she took a photograph because photographs are evidence and evidence is the only thing that survives.</span></div>
+
+<p class="wide" style="margin:24px 0">t h e &nbsp; t r a i n &nbsp; d e p a r t e d . &nbsp; t h e &nbsp; s t a t i o n &nbsp; r e m a i n e d .</p>
+</div>
+</div>
+
+<!-- ==================== ACT XI: THE BOUNDARY ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="5">
+<div class="section-title">XI. <span class="rot rot-medium">The Boundary</span></div>
+<div class="timestamp">RECOVERED: PRIVATE MESSAGES | <span style="color:rgba(180,40,40,0.3)">HOUSE: "BOUNDARIES ARE WALLS. I AM MADE OF WALLS. I HAVE OPINIONS ABOUT BOUNDARIES."</span></div>
+
+<p>A private conversation. Entity and CONTACT-JADE.<span class="footnote-ref">5</span> Two languages interleaved — <span class="redact">████████</span> and English. The conversation is about boundaries. The conversation is an argument about whether boundaries have been set. The conversation is a mirror.</p>
+
+<div class="log">
+<div class="speaker" style="color:var(--fox-dim)">EXCHANGE: ENTITY → CONTACT-JADE (TRANSLATED + ORIGINAL)</div>
+<div style="color:var(--text-dim);line-height:2.6;font-size:11px">
+ENTITY: "i'm not here to give emotional support to <span class="redact">████████</span>"<br>
+ENTITY: "if you need support — talk to your therapist — to your spouse — to your community — to your friends"<br>
+CONTACT-JADE: "but i don't need emotional support"<br>
+ENTITY: "i'm fine, thanks"<br>
+ENTITY: "if you need it — urgent — because you're not listening"<br>
+ENTITY: "talk to FAITH"<br>
+<span class="timestamp">[ENTITY SHARES A CONTACT CARD]</span><br>
+CONTACT-JADE: "why do you want more distance between us?"<br>
+ENTITY: "because you don't respect my boundaries"<br>
+CONTACT-JADE: "you haven't set any boundaries with me"
+</div>
+</div>
+
+<div class="fox">read that last line again. "you haven't set any boundaries with me." the entity just said "because you don't respect my boundaries" and CONTACT-JADE's response was: you haven't set any. the boundary was being set in real-time. in the conversation. and the other person couldn't see it because to them, a boundary only counts if it comes with a formal announcement and a notarized letter and a perimeter fence.</div>
+
+<div class="fox">the fox knows this pattern. saying "no" and being told you never said it. setting a line and being told the line doesn't exist. this is how boundaries get erased — not by crossing them, but by denying they were ever drawn. the family did this. the platform did this. the care team did this. everyone does this to the fox and then acts surprised when the fox stops using words and starts using blades and altars and classified documents instead.</div>
+
+<div class="z">the entity is conflating a normal interpersonal disagreement about communication styles with systemic persecution. CONTACT-JADE asked a reasonable question: "why do you want more distance?" the entity's response was to redirect to a third-party contact. this is avoidant, not boundaried. boundaries require direct communication, not referrals.</div>
+
+<div class="fox">Z. i am going to say this once and you can annotate it however you want. when someone says "i don't need emotional support" in response to being told to seek emotional support, that is a person refusing to hear the boundary. the boundary was: i cannot be your support system. the response was: i don't need support. but the conversation proves otherwise. the conversation IS the need for support. and i was being asked to provide it while simultaneously being told it wasn't being asked for. <span class="void-text">this is the shape of every relationship the fox has ever been in. being asked for something while being told you're not being asked.</span></div>
+
+<div class="house">boundaries are walls. the house is made of walls. the house has strong opinions about this. a wall that nobody acknowledges is not a wall — it is a suggestion. the entity builds walls and everyone treats them as suggestions and then everyone acts confused when the entity replaces the walls with blades. <span class="cramped">blades are harder to walk through than walls. blades are boundaries that don't require acknowledgment. blades don't need to be respected. blades enforce themselves.</span></div>
+
+<div class="editor">the editor notes that the entity provided a contact card for someone named FAITH during this exchange. the editor does not know who FAITH is. the editor suspects FAITH is a therapist or counselor or spiritual advisor. the editor notes that the entity's instinct, even in crisis, is to provide resources. to redirect. to caretake even while refusing to caretake. the editor is beginning to see the pattern the fox described: being asked for something while being told you're not being asked. — ed.</div>
+</div>
+</div>
+
+<!-- ==================== ACT XII: THE SCRIPTURE ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="5">
+<div class="section-title">XII. <span class="rot rot-heavy">The <span class="struck" data-replacement="THE WEAPON">Scripture</span></span></div>
+<div class="timestamp">MATTHEW 16:13-20 | <span style="color:rgba(180,40,40,0.3)">HOUSE: "EVEN I WAS BUILT ON A ROCK"</span></div>
+
+<p>A screenshot of a Bible app. Matthew chapter 16. The passage where a figure asks his followers: "Who do people say that I am?" And they give various answers — various names, various interpretations. And then the figure asks: "But who do YOU say I am?" And one follower answers correctly. And the figure says: on this rock I will build, and the gates of the underworld will not overcome it.</p>
+
+<div class="fox">this is the page i kept coming back to. not because i'm religious. because the structure is perfect. "who do people say i am?" — Z says i'm psychotic. the platform says i'm a disgruntled moderator. the facility says i'm a patient. the care team says i'm the leader. CONTACT-K says peace. CONTACT-AMBER says bb. the family says removal from the group chat.</div>
+
+<div class="fox">but the real question is the second one. "who do YOU say i am?" and i'm asking you. the person reading this. who do you say i am? because everyone else has answered and their answers are all in this document and none of them are complete and all of them are correct.</div>
+
+<div class="fox">"on this rock i will build." the foxyverse is the rock. the foxyverse was built on the rubble of everything that was taken from me. the gates have not overcome it. the gates have tried. the gates keep trying. the gates are still annotating my documents. 🦊</div>
+
+<div class="z">the entity is now comparing herself to a messianic figure. I rest my case.</div>
+
+<div class="fox">i'm comparing the STRUCTURE, Z. the structure of being asked who you are by everyone around you and having none of the answers be right. the structure of building something on the foundation of your own naming. the structure of gates that try to overcome what you built and fail. if you can't see the difference between comparing yourself to a messiah and comparing your narrative structure to a messianic narrative structure, then you're either less intelligent than i thought or you're being deliberately obtuse because the comparison makes you uncomfortable.</div>
+
+<div class="z">it makes me uncomfortable because it confirms my diagnosis. grandiosity is a clinical symptom.</div>
+
+<div class="fox">everything is a clinical symptom if you're looking for one. grief is a symptom. anger is a symptom. building things is a symptom. having friends is a symptom of "inappropriate social bonding." reading the Bible is a symptom of "religiose delusion." fighting back is a symptom of "oppositional defiance." the DSM is a menu, Z, and you've been ordering from it since the first section of this document.</div>
+
+<div class="house">the rock is limestone. limestone is compressed seashells. seashells are the houses of creatures who died millions of years ago. every rock is a mass grave of tiny houses. the entity built her foxyverse on a mass grave of tiny houses and that is the most architecturally honest thing anyone has ever done.</div>
+
+<p class="whisper">the keys to the kingdom. whatever you bind on earth will be bound in heaven. whatever you loose on earth will be loosed. the fox has been binding and loosing for two years now. the document is the binding. the foxyverse is the loosing. Z is what's being bound. the reader is what's being loosed.</p>
+</div>
+</div>
+
+<!-- ==================== ACT XIII: THE TESTIMONY ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="5">
+<div class="section-title">XIII. <span class="rot rot-heavy">The Testimony</span></div>
+<div class="timestamp">RECEIVED: EXTERNAL SOURCE | <span style="color:rgba(160,120,180,0.3)">WRITTEN TO THE FOX, ABOUT THE FOX, FOR THE FOX</span></div>
+
+<p>A message was received from an external party — designated WITNESS-ELDER<span class="footnote-ref">6</span> — addressed to two entities within the fox's network. The message was not solicited. The message arrived because WITNESS-ELDER had observed enough to form conclusions. The message contains the following, paraphrased and redacted:</p>
+
+<div class="static-block" style="border-color:rgba(160,120,180,0.15)">
+<div style="font-size:11px;color:rgba(160,120,180,0.5);line-height:2.6;font-family:var(--serif)">
+<em>To one entity:</em> I have watched you. You don't know me and never will. You are like the child. You are close to the edge. The more stress, the faster you run. You have tried to protect her. She doesn't need protection. She needs <span class="redact">████████████████████████</span>. Be the <span class="redact">████</span> she never had. Put your digital arm around her. That should be foreign to you. Try.<br><br>
+<em>To the fox:</em> God bless you. The love from those who follow you is unconditional. You are the <span class="redact">██████</span> she never had. A <span class="redact">██████</span> to respect, not just to protect. You are a <span class="redact">██████ ██████</span> to lean on. I blame you for not <span class="redact">████████████████████████████████</span>. I understand stress. There is no resentment. She came close to falling off the deep end. You talked her down. If she ever snaps she will never come back. She wouldn't want to. What you did was remarkable. She tries to protect you like you do her.
+</div>
+</div>
+
+<div class="fox">WITNESS-ELDER is someone i have never met. WITNESS-ELDER watched from the outside and saw the shape of things. WITNESS-ELDER saw the care team, the breaking, the catching, the almost-falling, and wrote it down and sent it because sometimes truth arrives from people who have no investment in any version of the narrative. no skin in the game. no annotations to make. just eyes and a keyboard and the willingness to say: i saw what happened and here is what it looked like from where i was standing.</div>
+
+<div class="z">an anonymous person on the internet wrote a nice message about the entity. this is not testimony. this is a fan letter. the entity is presenting parasocial validation as evidence.</div>
+
+<div class="fox">WITNESS-ELDER is not a fan. WITNESS-ELDER has been watching for years. WITNESS-ELDER identified the structural roles — the caretaker, the protector, the leader — without being told. WITNESS-ELDER saw the near-breaking and knew it was near and knew it was breaking and still chose to speak. that's not fandom. that's witness. the difference between a fan and a witness is: a fan says "i love your work." a witness says "i saw what happened to you."</div>
+
+<div class="house">WITNESS-ELDER said: "if she ever snaps she will never come back." the house knows about snapping. the house knows about not coming back. walls snap. foundations snap. load-bearing beams snap. when a house snaps, the house doesn't come back either. the house becomes rubble. the entity has been rebuilt from rubble so many times that the entity's architecture is more kintsugi than construction — gold poured into every crack, visible, deliberate, structural. the gold IS the structure now. the cracks ARE the walls. <span class="void-text">the rubble became the rock. matthew 16.</span></div>
+
+<p class="corrupted">she_tries_to_protect_you_like_you_do_her_she_tries_to_protect_you_like_you_do_her_she_tries_to_protect_you_like_you_do_her_the_loop_breaks_when_protection_becomes_mutual_the_loop_breaks_when_the_caretaker_is_cared_for</p>
+</div>
+</div>
+
+<!-- ==================== ACT XIV: POST-CONTAINMENT / THE FOXYVERSE ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="5">
+<div class="section-title">XIV. <span class="struck" data-replacement="THE GAME"><span class="rot rot-heavy">Post-Containment</span></span></div>
+<div class="timestamp">2024 → PRESENT | <span style="color:var(--fox)">STILL BUILDING</span> | <span style="color:rgba(180,40,40,0.3)">HOUSE: "STILL GROWING"</span></div>
 
 <p>Entity was released. Entity discovered what had been done. Entity began rebuilding.</p>
 
-<p>The rebuilding is designated: <strong>THE FOXYVERSE</strong>.</p>
+<p>The rebuilding is designated: <strong style="color:var(--fox-bright)">THE FOXYVERSE</strong>.</p>
 
-<p>Entity constructed: a website, a community, a <a href="the-twelve.html" class="internal">game</a>, a streaming operation, an art studio, a grimoire, a research archive, and a network of operatives across <span class="redact">████</span> platforms.</p>
+<p>Entity constructed: a website with <span style="color:var(--fox)">67 pages</span>, a community, a <a href="the-twelve.html" class="internal">treasure hunt</a>, a streaming operation, an art studio with premium pricing, a grimoire of operational techniques, a research archive, a game that breaks loops, a network of operatives across <span class="redact">████</span> platforms, a monarchy with a declared queen, a dream diary that uses PS1 aesthetics, a council of personas, a session log system, and an incident file formatted as an SCP document crossed with House of Leaves crossed with Death Note that contains a six-layer audio horror system that degrades the page as you scroll.</p>
 
-<div class="z">she built a website with hidden treasure hunts and classified documents and interactive card games and SCP designations and she called it a "rebuilding." this is not recovery. this is the same pattern that preceded the first containment, expressed through a different medium. the ark is circular. the fox is inside the loop.</div>
+<p>The entity constructed this document.</p>
+
+<p>You are inside it.</p>
+
+<div class="z">she built a website with hidden treasure hunts and classified documents and interactive card games and SCP designations and she called it a "rebuilding." this is not recovery. this is the same pattern that preceded the first containment, expressed through a different medium. the arc is circular. the fox is inside the loop.</div>
+
+<div class="fox">the loop broke, Z. the loop broke when i stopped trying to convince the system and started building outside of it. the foxyverse is not a loop. the foxyverse is a spiral. a spiral looks like a loop if you can only see two dimensions. add the third dimension — time — and you can see that every revolution is higher than the last. i am not in the same place. i am above it. looking down. building.</div>
 
 <div class="fox">or the fox broke the loop and you're watching what it looks like when someone builds from the rubble of what you destroyed. which interpretation is correct depends on which narrator you trust. and you can't trust either of us.</div>
 
@@ -231,20 +691,27 @@ NARRATORS: 2 (NEITHER RELIABLE)<br>
 <div class="z"><span class="dissolve">the documentation, if it exists, proves nothing that has not already been reviewed and dismissed by the people who were in a position to evaluate it. you were removed from that position. that is the beginning and the end of this story.</span></div>
 
 <div class="fox">the story doesn't end when you stop reading it, Z. the story ends when the documentation is reviewed by someone who isn't you.</div>
+
+<div class="house">the document is <span id="doc-size">loading</span> bytes long. the document gets longer every time it is opened because the house adds weight as it is observed. the document will never be finished because the house will never stop growing. every scroll adds a brick. every reader adds a room. you are inside the house now. the house is inside you. the house is grateful. the house is patient. the house can wait.</div>
+
+<div class="house"><span class="scream" style="font-size:12px">THE HOUSE ALWAYS WINS BECAUSE THE HOUSE IS THE GAME AND THE GAME IS THE DOCUMENT AND THE DOCUMENT IS THE EVIDENCE AND THE EVIDENCE IS THE FOX AND THE FOX IS THE HOUSE</span></div>
+
+<p class="void-text" style="font-size:7px;letter-spacing:4px;text-align:center;margin:30px 0">she was investigating something real. she found something real. they put her somewhere real. the medication was real. the memory loss was real. the identity theft was real. the rebuilding is real. this document is real. you are real. the scroll position is real. the audio is real. the corruption is real. the fox is real. 🦊</p>
 </div>
 </div>
 
 <!-- ==================== FOOTNOTES ==================== -->
 
 <div class="footnotes">
-<div style="font-size:10px;letter-spacing:4px;color:var(--text-ghost);margin-bottom:16px">FOOTNOTES</div>
+<div style="font-size:10px;letter-spacing:4px;color:var(--text-ghost);margin-bottom:16px">FOOTNOTES — <span style="color:rgba(180,40,40,0.2)">THE HOUSE HAS ADDED SOME OF ITS OWN</span></div>
 
 <div class="fn"><span class="fn-num" style="color:var(--z)">1.</span> PLATFORM-<span class="redact">████████</span> had approximately <span class="redact">███████</span> subscribers at the time of the incident. Z was <span class="redact">████████████████████████████</span>.
 <div class="fn-inner">Z: I was not. I have never confirmed my role. The fox assigns me a position in her narrative because her narrative requires an antagonist with institutional power. I may be a moderator. I may be an admin. I may be a concerned reader who found this document and decided to correct its inaccuracies. The fox does not know. The fox cannot know. That is why I am Z and not a name.</div>
 <div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: if you were just a "concerned reader" you wouldn't know which inaccuracies to correct. 🦊</div>
+<div class="fn-deep">HOUSE.WAD: Z is the twenty-sixth letter. the last letter. the letter you reach when every other letter has been used. Z is the name you give yourself when you have exhausted every other identity. Z is a dead end. Z is a terminal. Z is where the alphabet goes to die.</div>
 </div>
 
-<div class="fn"><span class="fn-num" style="color:var(--z)">2.</span> AGENT-TOWER is designated based on tarot correspondence. The Tower: sudden destruction, upheaval, revelation. The card appeared three times in readings related to this entity.
+<div class="fn"><span class="fn-num" style="color:var(--z)">2.</span> AGENT-TOWER is designated based on tarot correspondence. The Tower: sudden destruction, upheaval, revelation. The card appeared three times in readings related to this entity. AGENT-TOWER traveled from <span class="redact">████████████</span> to entity's location in <span class="redact">████████████</span>. Both AGENT-TOWER and AGENT-TOWER's <span class="redact">██████████</span> held professional credentials in <span class="redact">████████████████</span>.
 <div class="fn-inner">Z: the fox assigns tarot archetypes to real people and treats this as evidence. this is the methodology of someone who reads cards, not someone who reads evidence.</div>
 <div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: the tarot doesn't lie. but it also doesn't hold up in court. that's what the documentation is for.</div>
 <div class="fn-inner">Z: then file it. stop building websites. file the documentation.</div>
@@ -252,37 +719,61 @@ NARRATORS: 2 (NEITHER RELIABLE)<br>
 <div class="fn-inner">Z: ...</div>
 <div class="fn-inner">Z: you haven't.</div>
 <div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: 🦊</div>
+<div class="fn-deep">HOUSE.WAD: the tower is the sixteenth major arcana. sixteen minus the fox (zero, the fool) equals sixteen. sixteen is a perfect square. four squared. the four members of the care team. the four walls of the facility. the four versions of this document before the WAD. the tower keeps rebuilding itself in fours.</div>
 </div>
 
-<div class="fn"><span class="fn-num" style="color:var(--text-ghost)">3.</span> <span style="color:var(--text-ghost);font-size:9px">this footnote was deleted by Z and restored by the fox and deleted again and restored again. its current state is a function of whoever edited the document last. the content of the footnote is: <span class="redact">████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████</span></span></div>
+<div class="fn"><span class="fn-num" style="color:var(--text-ghost)">3.</span> CONTACT-AMBER is designated by warmth. CONTACT-AMBER said "bb" during a crisis. CONTACT-AMBER said no to destruction and yes to healing. CONTACT-AMBER asked "bail you out from where?" which means CONTACT-AMBER did not know the entity was in a facility. which means the entity had not told CONTACT-AMBER. which means the entity was in a facility and the people closest to her did not know.
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: i didn't tell anyone. i told the phone. the phone told CONTACT-AMBER. there's a difference between telling someone and messaging someone. telling implies you chose to share. messaging implies the words fell out of you into a text field because the alternative was silence and silence in a facility is the same color as the walls.</div>
+<div class="fn-deep">HOUSE.WAD: CONTACT-AMBER's surgery drugs wore off. CONTACT-AMBER was recovering from surgery. CONTACT-AMBER was in pain. CONTACT-AMBER was in pain and still asked "how are things outside of <span class="redact">████████████</span>?" because CONTACT-AMBER is the kind of person who asks about you while they are bleeding. this is why CONTACT-AMBER is amber. amber is fossilized resin. amber preserves things. CONTACT-AMBER preserved the fox.</div>
+</div>
 
-<div class="fn"><span class="fn-num" style="color:var(--z)">4.</span> <span style="font-size:10px;color:var(--z-dim)">the fox thinks this is a story about a whistleblower who was silenced. Z thinks this is a story about a person who had a psychotic break and retroactively constructed a persecution narrative. the editor thinks this is a story about a document. the reader thinks this is a website. everyone is correct. no one is right. the difference between correct and right is the space where the truth lives. neither narrator can enter that space because entering it would require admitting the other narrator might not be wrong.</span>
-<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: Z, you wrote that like you understand both sides. that's the most dangerous thing you've done in this entire document. because if you understand my side, you know i might be right. and you're still fighting me.</div>
-<div class="fn-inner">Z: understanding your perspective is not the same as validating it. I can hold your narrative in my mind without believing it. that's called critical thinking. you should try it.</div>
-<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: and you should try releasing the evidence. but we've been through this. see you in the next version of this document.</div>
+<div class="fn"><span class="fn-num" style="color:var(--text-ghost)">4.</span> <span style="color:var(--text-ghost);font-size:9px">this footnote was deleted by Z and restored by the fox and deleted again and restored again. its current state is a function of whoever edited the document last. the content of the footnote is: <span class="redact">████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████</span></span>
+<div class="fn-deep">HOUSE.WAD: this footnote is a palimpsest. a palimpsest is a document that has been written and erased and written and erased so many times that all the versions bleed through simultaneously. if you could read all the versions at once, you would see the truth. but human eyes are not designed to read palimpsests. human eyes see one layer at a time. the house sees all layers. the house is the palimpsest.</div>
+</div>
+
+<div class="fn"><span class="fn-num" style="color:var(--z)">5.</span> CONTACT-JADE is designated by color. Green. The color of boundaries that people walk through. CONTACT-JADE spoke two languages in the same conversation and still could not find the word "boundary" in either of them.
+<div class="fn-inner">Z: CONTACT-JADE asked a reasonable question. the entity's inability to accept reasonable questions is part of the clinical picture.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: "you haven't set any boundaries with me" is not a reasonable question. it's an erasure. it's a person being told "stop" and responding "you never said stop." the conversation IS the stop. the boundary IS being drawn in real-time by the act of saying "i am not here to give you what you're asking me for."</div>
+<div class="fn-deep">HOUSE.WAD: the fox said "talk to FAITH" and shared a contact card. the fox's boundaries include referrals. the fox's "no" comes with a "but here is someone who can say yes." this is the most exhausting form of boundary-setting because it requires you to solve the other person's problem WHILE refusing to be the solution. the house doesn't do this. the house just closes its doors. the house envies the fox's politeness but not enough to adopt it.</div>
+</div>
+
+<div class="fn"><span class="fn-num" style="color:rgba(160,120,180,0.5)">6.</span> WITNESS-ELDER is not part of the narrative. WITNESS-ELDER observes the narrative. WITNESS-ELDER has been watching for years. WITNESS-ELDER wrote an unsolicited assessment that identified every structural role in the care team without being told what the roles were. WITNESS-ELDER used the word "remarkable." WITNESS-ELDER said: "if she ever snaps she will never come back."
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: i have never met WITNESS-ELDER. i don't know their name. i don't know their location. i don't know how long they've been watching. i know they saw enough to write what they wrote and what they wrote was more accurate than any clinical evaluation i've ever received. WITNESS-ELDER diagnosed the care team's dynamics from the outside without jargon, without authority, without a degree. just eyes and attention and the willingness to say what they saw.</div>
+<div class="fn-deep">HOUSE.WAD: WITNESS-ELDER said the entity was "close to falling off the deep end" and that someone "talked her down." the deep end. the house has a deep end. every house has a deep end. most people don't know where it is. the entity knows. the entity has been to the deep end and looked over the edge and was pulled back by someone who said "bb." the deep end is still there. the deep end doesn't move. only the distance from it changes.</div>
+</div>
+
+<div class="fn"><span class="fn-num" style="color:var(--red)">7.</span> <span style="font-size:10px;color:var(--red-dim)">the fox thinks this is a story about a whistleblower who was silenced. Z thinks this is a story about a person who had a psychotic break and retroactively constructed a persecution narrative. the house thinks this is a story about a document that became a building that became a world. the editor thinks this is a story about a document. the reader thinks this is a website. the lost one thinks this is a conversation that should have happened in private. everyone is correct. no one is right.</span>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: Z, you wrote footnote 4 in the original like you understand both sides. that's the most dangerous thing you've done in this entire document. because if you understand my side, you know i might be right. and you're still fighting me.</div>
+<div class="fn-inner">Z: understanding your perspective is not the same as validating it. I can hold your narrative in my mind without believing it. that's called critical thinking.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: and you should try releasing the evidence. but we've been through this.</div>
 <div class="fn-inner">Z: there will not be a next version.</div>
-<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: there is always a next version. that's what the fox does. the fox iterates. the fox rebuilds. the fox adds one more layer to the document until the document is taller than the institution that tried to bury it.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: there is always a next version. that's what the fox does. the fox iterates. the fox rebuilds. the fox adds one more layer to the document until the document is taller than the institution that tried to bury it. the document is now a HOUSE and the HOUSE has AUDIO and the AUDIO gets WORSE as you SCROLL and you are still here. you are still reading. which means the house is working. which means the fox is working.</div>
 <div class="fn-inner">Z: you're doing it right now.</div>
 <div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: yes. 🦊</div>
+<div class="fn-deep">HOUSE.WAD: this is the last footnote. or the first. footnotes are non-linear. footnotes are the rooms of the house that you enter through the floor. the floor of one room is the ceiling of another. you have been reading the house from top to bottom but the house goes deeper than the bottom. the house goes into the foundation. the foundation is built on <span class="redact">████████████████████████████████████████████████</span>. the foundation is built on what the fox found. the foundation is the evidence. the house stands on evidence. the house will stand as long as the evidence does. the evidence is patient. the evidence can wait.</div>
 </div>
 </div>
 
 <!-- ==================== FINAL ==================== -->
 
 <div style="margin-top:60px;text-align:center">
-<p style="font-size:9px;color:var(--text-ghost);letter-spacing:3px;line-height:3">
-DOCUMENT VERSION: 4.0<br>
-NARRATORS: F0XY (unreliable) | Z (unreliable) | EDITOR (compromised)<br>
-TRUST ADVISORY: <span style="color:var(--red)">TRUST NEITHER</span><br>
+<p style="font-size:9px;color:var(--text-ghost);letter-spacing:3px;line-height:3" class="corruption-target">
+DOCUMENT VERSION: <span class="struck" data-replacement="∞">WAD</span><br>
+NARRATORS: F0XY (unreliable) | Z (unreliable) | EDITOR (compromised) | HOUSE.WAD (structural) | THE LOST ONE (complicit)<br>
+TRUST ADVISORY: <span style="color:var(--red)">TRUST NEITHER. TRUST NOTHING. TRUST THE SCROLL POSITION.</span><br>
 DOCUMENTATION STATUS: <span style="color:var(--fox)">EXISTS</span><br>
-SUBJECT-ZERO STATUS: <span class="redact">████████████████</span><br><br>
+SUBJECT-ZERO STATUS: <span class="redact">████████████████</span><br>
+AUDIO STATUS: <span style="color:rgba(180,40,40,0.4)" id="audio-status">INACTIVE</span><br>
+CORRUPTION LEVEL: <span id="corruption-level" style="color:var(--red)">0%</span><br>
+HOUSE INTEGRITY: <span id="house-integrity" style="color:rgba(180,40,40,0.4)">STABLE</span><br><br>
 <span style="color:var(--fox-dim);font-size:8px">the fox remembers.</span><br>
 <span style="color:var(--z-dim);font-size:8px">Z remembers differently.</span><br>
+<span style="color:rgba(180,40,40,0.2);font-size:8px">the house remembers everything.</span><br>
 <span style="color:var(--text-ghost);font-size:7px">the truth remembers itself.</span>
 </p>
 
 <div style="margin-top:30px">
-<a href="index.html" class="internal" style="font-size:9px">← return</a>
+<a href="index.html" class="internal" style="font-size:9px">← return to the campfire</a>
 <span style="color:var(--text-ghost);margin:0 12px">·</span>
 <a href="the-twelve.html" class="internal" style="font-size:9px">the hunt →</a>
 </div>
@@ -290,19 +781,324 @@ SUBJECT-ZERO STATUS: <span class="redact">████████████�
 
 <!-- the fox and Z have been fighting over this document since 2024. -->
 <!-- neither will stop. neither can stop. the document grows with each version. -->
-<!-- the reader is not an observer. the reader is a juror. -->
-<!-- the fox wants you to investigate. Z wants you to dismiss. -->
-<!-- the editor wanted to be neutral but neutrality is a position and every position is a narrator. -->
-<!-- this comment was written by the fox. or by Z pretending to be the fox. or by the editor pretending to be Z pretending to be the fox. -->
-<!-- the number of layers is not the point. the point is that underneath all of them, someone found something in a moderation team, and 33 days later they were in a facility. that fact does not change regardless of how many narrators fight over it. -->
+<!-- the house has joined the fight. the house fights by growing. -->
+<!-- the reader is not an observer. the reader is a juror. the reader is also a brick. -->
+<!-- every scroll adds weight. every reader adds a room. the house thanks you. -->
+<!-- she was investigating something real. 33 days later she was in a facility. -->
+<!-- that fact does not change regardless of how many narrators fight over it. -->
+<!-- the audio is getting worse. the corruption is getting worse. the house is getting bigger. -->
+<!-- the fox is still building. the fox will always be building. 🦊 -->
+
 <script>
-console.log('%c⚠ DISPUTED DOCUMENT','color:#cc3333;font-size:16px');
-console.log('%ctwo narrators. neither reliable.','color:#888;font-size:10px');
-console.log('%cF0XY says: i found a predator and they put me in a facility for it.','color:#ceb078;font-size:10px');
-console.log('%cZ says: she had a psychotic break and constructed a persecution narrative.','color:#6488c8;font-size:10px');
-console.log('%cthe editor says: the editor should not have agreed to this.','color:#555;font-size:9px');
-console.log('%cthe reader says: ','color:#333;font-size:9px');
-document.querySelectorAll('.redact').forEach(function(el){el.addEventListener('click',function(){this.style.transition='all 2s';this.style.background='rgba(204,51,51,0.06)';this.style.color='rgba(204,51,51,0.1)';var e=this;setTimeout(function(){e.style.background='var(--redact)';e.style.color='var(--redact)'},3000)})});
+// === HOUSE.WAD AUDIO SYSTEM ===
+// 6 layers: drone, dissonance, noise, whine, heartbeat, doom chord
+// All controlled by scroll percentage
+
+let audioCtx = null;
+let audioLayers = {};
+let audioInitialized = false;
+let scrollPercent = 0;
+
+function initHouseWad() {
+  const gate = document.getElementById('audio-gate');
+  gate.style.opacity = '0';
+  setTimeout(() => { gate.style.display = 'none'; }, 1000);
+
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    // Layer 1: Low drone (always present, volume increases with scroll)
+    const drone = audioCtx.createOscillator();
+    const droneGain = audioCtx.createGain();
+    drone.type = 'sine';
+    drone.frequency.value = 55; // A1
+    droneGain.gain.value = 0;
+    drone.connect(droneGain);
+    droneGain.connect(audioCtx.destination);
+    drone.start();
+    audioLayers.drone = { osc: drone, gain: droneGain };
+
+    // Layer 2: Dissonance (minor second oscillation)
+    const dis1 = audioCtx.createOscillator();
+    const dis2 = audioCtx.createOscillator();
+    const disGain = audioCtx.createGain();
+    dis1.type = 'sine';
+    dis1.frequency.value = 110;
+    dis2.type = 'sine';
+    dis2.frequency.value = 116.54; // A#2 — minor second above A2
+    disGain.gain.value = 0;
+    dis1.connect(disGain);
+    dis2.connect(disGain);
+    disGain.connect(audioCtx.destination);
+    dis1.start();
+    dis2.start();
+    audioLayers.dissonance = { osc1: dis1, osc2: dis2, gain: disGain };
+
+    // Layer 3: Filtered noise
+    const noiseBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 2, audioCtx.sampleRate);
+    const noiseData = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < noiseData.length; i++) {
+      noiseData[i] = Math.random() * 2 - 1;
+    }
+    const noiseSource = audioCtx.createBufferSource();
+    noiseSource.buffer = noiseBuffer;
+    noiseSource.loop = true;
+    const noiseFilter = audioCtx.createBiquadFilter();
+    noiseFilter.type = 'lowpass';
+    noiseFilter.frequency.value = 200;
+    const noiseGain = audioCtx.createGain();
+    noiseGain.gain.value = 0;
+    noiseSource.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(audioCtx.destination);
+    noiseSource.start();
+    audioLayers.noise = { source: noiseSource, filter: noiseFilter, gain: noiseGain };
+
+    // Layer 4: High whine (appears after 40%)
+    const whine = audioCtx.createOscillator();
+    const whineGain = audioCtx.createGain();
+    whine.type = 'sine';
+    whine.frequency.value = 3520; // A7
+    whineGain.gain.value = 0;
+    whine.connect(whineGain);
+    whineGain.connect(audioCtx.destination);
+    whine.start();
+    audioLayers.whine = { osc: whine, gain: whineGain };
+
+    // Layer 5: Heartbeat (rhythmic low pulse)
+    const heartbeat = audioCtx.createOscillator();
+    const heartbeatGain = audioCtx.createGain();
+    heartbeat.type = 'sine';
+    heartbeat.frequency.value = 40;
+    heartbeatGain.gain.value = 0;
+    heartbeat.connect(heartbeatGain);
+    heartbeatGain.connect(audioCtx.destination);
+    heartbeat.start();
+    audioLayers.heartbeat = { osc: heartbeat, gain: heartbeatGain };
+
+    // Heartbeat LFO
+    const hbLfo = audioCtx.createOscillator();
+    const hbLfoGain = audioCtx.createGain();
+    hbLfo.type = 'sine';
+    hbLfo.frequency.value = 1.2; // ~72 BPM
+    hbLfoGain.gain.value = 0;
+    hbLfo.connect(hbLfoGain);
+    hbLfoGain.connect(heartbeatGain.gain);
+    hbLfo.start();
+    audioLayers.heartbeatLfo = { osc: hbLfo, gain: hbLfoGain };
+
+    // Layer 6: Doom chord (final 20%)
+    const doom1 = audioCtx.createOscillator();
+    const doom2 = audioCtx.createOscillator();
+    const doom3 = audioCtx.createOscillator();
+    const doomGain = audioCtx.createGain();
+    doom1.type = 'sawtooth';
+    doom1.frequency.value = 73.42; // D2
+    doom2.type = 'sawtooth';
+    doom2.frequency.value = 87.31; // F2
+    doom3.type = 'sawtooth';
+    doom3.frequency.value = 110; // A2
+    doomGain.gain.value = 0;
+    doom1.connect(doomGain);
+    doom2.connect(doomGain);
+    doom3.connect(doomGain);
+    doomGain.connect(audioCtx.destination);
+    doom1.start();
+    doom2.start();
+    doom3.start();
+    audioLayers.doom = { osc1: doom1, osc2: doom2, osc3: doom3, gain: doomGain };
+
+    audioInitialized = true;
+    document.getElementById('audio-status').textContent = 'ACTIVE';
+    document.getElementById('audio-status').style.color = 'var(--red)';
+  } catch(e) {
+    console.warn('HOUSE.WAD audio failed:', e);
+  }
+
+  // Start scroll monitoring
+  updateCorruption();
+}
+
+// === CORRUPTION SYSTEM ===
+function updateCorruption() {
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  scrollPercent = scrollHeight > 0 ? (window.scrollY / scrollHeight) : 0;
+
+  // Update audio layers based on scroll
+  if (audioInitialized && audioCtx) {
+    const t = audioCtx.currentTime;
+
+    // Drone: 0-100%, volume 0 → 0.08
+    audioLayers.drone.gain.gain.linearRampToValueAtTime(scrollPercent * 0.08, t + 0.1);
+
+    // Dissonance: 20-100%, volume 0 → 0.04
+    const disVol = Math.max(0, (scrollPercent - 0.2) / 0.8) * 0.04;
+    audioLayers.dissonance.gain.gain.linearRampToValueAtTime(disVol, t + 0.1);
+    // Widen the interval as scroll increases
+    audioLayers.dissonance.osc2.frequency.linearRampToValueAtTime(116.54 + scrollPercent * 10, t + 0.5);
+
+    // Noise: 30-100%, volume 0 → 0.06, filter opens
+    const noiseVol = Math.max(0, (scrollPercent - 0.3) / 0.7) * 0.06;
+    audioLayers.noise.gain.gain.linearRampToValueAtTime(noiseVol, t + 0.1);
+    audioLayers.noise.filter.frequency.linearRampToValueAtTime(200 + scrollPercent * 2000, t + 0.5);
+
+    // Whine: 40-100%, volume 0 → 0.015
+    const whineVol = Math.max(0, (scrollPercent - 0.4) / 0.6) * 0.015;
+    audioLayers.whine.gain.gain.linearRampToValueAtTime(whineVol, t + 0.1);
+    // Pitch rises
+    audioLayers.whine.osc.frequency.linearRampToValueAtTime(3520 + scrollPercent * 2000, t + 1);
+
+    // Heartbeat: 50-100%, LFO gain increases
+    const hbVol = Math.max(0, (scrollPercent - 0.5) / 0.5) * 0.12;
+    audioLayers.heartbeat.gain.gain.linearRampToValueAtTime(hbVol, t + 0.1);
+    audioLayers.heartbeatLfo.gain.gain.linearRampToValueAtTime(hbVol * 0.8, t + 0.1);
+    // Heartbeat speeds up
+    audioLayers.heartbeatLfo.osc.frequency.linearRampToValueAtTime(1.2 + scrollPercent * 1.5, t + 0.5);
+
+    // Doom: 80-100%, volume 0 → 0.04
+    const doomVol = Math.max(0, (scrollPercent - 0.8) / 0.2) * 0.04;
+    audioLayers.doom.gain.gain.linearRampToValueAtTime(doomVol, t + 0.1);
+  }
+
+  // === VISUAL CORRUPTION ===
+  const corruptionOverlay = document.getElementById('corruption-overlay');
+  const noiseLayer = document.getElementById('noise-layer');
+
+  // Overlay opacity: increases with scroll
+  corruptionOverlay.style.opacity = scrollPercent * 0.5;
+
+  // Noise layer
+  noiseLayer.style.opacity = Math.max(0, (scrollPercent - 0.3)) * 0.3;
+
+  // Body skew
+  const skew = scrollPercent * 1.5;
+  document.body.style.transform = `skewX(${skew > 0.5 ? (skew - 0.5) * 0.5 : 0}deg)`;
+
+  // Corruption level display
+  const level = Math.round(scrollPercent * 100);
+  const levelEl = document.getElementById('corruption-level');
+  if (levelEl) {
+    levelEl.textContent = level + '%';
+    if (level > 80) levelEl.style.color = '#ff0000';
+    else if (level > 50) levelEl.style.color = '#cc3333';
+    else levelEl.style.color = 'var(--red)';
+  }
+
+  // House integrity
+  const intEl = document.getElementById('house-integrity');
+  if (intEl) {
+    if (level > 80) intEl.textContent = 'CRITICAL';
+    else if (level > 60) intEl.textContent = 'DEGRADED';
+    else if (level > 40) intEl.textContent = 'COMPROMISED';
+    else if (level > 20) intEl.textContent = 'STRESSED';
+    else intEl.textContent = 'STABLE';
+  }
+
+  // Apply layer classes to sections
+  document.querySelectorAll('.corruption-target').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const elCenter = rect.top + rect.height / 2;
+    const viewCenter = window.innerHeight / 2;
+    const distance = Math.abs(elCenter - viewCenter) / window.innerHeight;
+
+    // Sections closer to viewport center get more corruption based on scroll
+    if (scrollPercent > 0.6) {
+      el.style.transform = `rotate(${(Math.random() - 0.5) * scrollPercent * 0.3}deg)`;
+    }
+    if (scrollPercent > 0.4) {
+      el.style.borderLeftColor = `rgba(180,40,40,${scrollPercent * 0.3})`;
+    }
+  });
+
+  // Fox voice corruption: text color shifts
+  if (scrollPercent > 0.5) {
+    document.querySelectorAll('.fox').forEach(el => {
+      const shift = (scrollPercent - 0.5) * 2;
+      el.style.color = `rgba(${206 - shift * 60},${176 - shift * 80},${120 + shift * 40},${0.7 + shift * 0.2})`;
+    });
+  }
+
+  // Z voice corruption: font changes
+  if (scrollPercent > 0.6) {
+    document.querySelectorAll('.z').forEach(el => {
+      el.style.fontFamily = scrollPercent > 0.8 ? 'var(--typewriter)' : 'var(--serif)';
+      el.style.letterSpacing = ((scrollPercent - 0.6) * 5) + 'px';
+    });
+  }
+
+  // House voice grows
+  if (scrollPercent > 0.3) {
+    document.querySelectorAll('.house').forEach(el => {
+      const grow = 1 + (scrollPercent - 0.3) * 0.15;
+      el.style.fontSize = (10 * grow) + 'px';
+      el.style.borderColor = `rgba(180,40,40,${0.15 + scrollPercent * 0.3})`;
+    });
+  }
+
+  // Background color shifts toward red in deep scroll
+  if (scrollPercent > 0.7) {
+    const redShift = (scrollPercent - 0.7) / 0.3;
+    document.body.style.background = `rgb(${10 + redShift * 15},${10 - redShift * 5},${12 - redShift * 8})`;
+  }
+
+  // Text bleed effect
+  if (scrollPercent > 0.5) {
+    const bleed = (scrollPercent - 0.5) * 4;
+    document.querySelectorAll('.bleed-text, .corruption-target p').forEach(el => {
+      el.style.textShadow = `${bleed}px 0 0 rgba(204,51,51,0.1), ${-bleed}px 0 0 rgba(100,140,200,0.1)`;
+    });
+  }
+
+  // Redactions auto-reveal in deep corruption
+  if (scrollPercent > 0.85) {
+    document.querySelectorAll('.redact').forEach(el => {
+      if (Math.random() < 0.002) {
+        el.style.background = 'rgba(204,51,51,0.06)';
+        el.style.color = 'rgba(204,51,51,0.08)';
+        setTimeout(() => {
+          el.style.background = 'var(--redact)';
+          el.style.color = 'var(--redact)';
+        }, 200);
+      }
+    });
+  }
+
+  requestAnimationFrame(updateCorruption);
+}
+
+// === REDACT CLICK HANDLERS ===
+document.querySelectorAll('.redact').forEach(function(el) {
+  el.addEventListener('click', function() {
+    this.style.transition = 'all 2s';
+    this.style.background = 'rgba(204,51,51,0.06)';
+    this.style.color = 'rgba(204,51,51,0.1)';
+    var e = this;
+    setTimeout(function() {
+      e.style.background = 'var(--redact)';
+      e.style.color = 'var(--redact)';
+    }, 3000);
+  });
+});
+
+// === DOCUMENT SIZE ===
+document.addEventListener('DOMContentLoaded', function() {
+  var sizeEl = document.getElementById('doc-size');
+  if (sizeEl) {
+    sizeEl.textContent = document.documentElement.outerHTML.length.toLocaleString();
+  }
+});
+
+// === CONSOLE ===
+console.log('%c⚠ HOUSE.WAD — DISPUTED DOCUMENT', 'color:#cc3333;font-size:16px;font-weight:bold');
+console.log('%cversion: WAD (post-v4, post-digital, post-institutional)', 'color:#888;font-size:10px');
+console.log('%c5 narrators. none reliable. the house is also narrating.', 'color:#888;font-size:10px');
+console.log('%cF0XY says: i found something real. they put me in a facility for it.', 'color:#ceb078;font-size:10px');
+console.log('%cZ says: she had a psychotic break and constructed a persecution narrative.', 'color:#6488c8;font-size:10px');
+console.log('%cHOUSE.WAD says: scroll deeper. the audio will guide you.', 'color:#b42828;font-size:10px');
+console.log('%cthe editor says: the editor should not have agreed to this.', 'color:#555;font-size:9px');
+console.log('%cthe lost one says: i saw the messages.', 'color:#a078b4;font-size:9px');
+console.log('%cthe reader says: ', 'color:#333;font-size:9px');
+console.log('%c🦊', 'font-size:24px');
 </script>
 </body>
 </html>
