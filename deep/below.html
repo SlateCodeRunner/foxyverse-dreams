@@ -49,4 +49,23 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;ba
 
 </div>
 </div>
+<script>
+document.body.addEventListener('click', function init() {
+  document.body.removeEventListener('click', init);
+  var ctx = new (window.AudioContext || window.webkitAudioContext)();
+  var o = ctx.createOscillator(); var g = ctx.createGain();
+  o.type = 'sine'; o.frequency.value = 35; g.gain.value = 0;
+  o.connect(g); g.connect(ctx.destination); o.start();
+  // Heartbeat
+  setInterval(function(){
+    var t = ctx.currentTime;
+    g.gain.linearRampToValueAtTime(0.06, t+0.05);
+    g.gain.linearRampToValueAtTime(0, t+0.15);
+    setTimeout(function(){
+      g.gain.linearRampToValueAtTime(0.04, ctx.currentTime+0.05);
+      g.gain.linearRampToValueAtTime(0, ctx.currentTime+0.15);
+    }, 200);
+  }, 1200);
+}, {once: true});
+</script>
 </body></html>
