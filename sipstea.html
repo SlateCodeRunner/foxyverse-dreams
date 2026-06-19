@@ -33,6 +33,21 @@ body{font-family:var(--mono);color:var(--text);background:var(--bg);max-width:82
 #noise-layer{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9997;opacity:0;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E")}
 
+
+/* === EVIDENCE IMAGES === */
+.evidence-img{margin:16px 0;position:relative;border:1px solid var(--border);background:rgba(0,0,0,0.3);padding:4px;max-width:100%;opacity:0.85;transition:opacity 0.5s,filter 0.5s,transform 0.5s}
+.evidence-img:hover{opacity:1}
+.evidence-img img{max-width:100%;height:auto;display:block;filter:grayscale(0.4) contrast(1.1) brightness(0.9)}
+.evidence-img:hover img{filter:grayscale(0.1) contrast(1.05) brightness(0.95)}
+.evidence-img .exhibit-label{position:absolute;top:0;left:0;background:var(--bg);padding:2px 8px;font-size:8px;letter-spacing:3px;color:var(--red);text-transform:uppercase;border-right:1px solid var(--red-dim);border-bottom:1px solid var(--red-dim)}
+.evidence-img .exhibit-note{font-size:8px;color:var(--text-ghost);letter-spacing:2px;padding:4px 8px;text-align:center}
+.evidence-strip{display:flex;gap:8px;overflow-x:auto;padding:12px 0;margin:16px 0}
+.evidence-strip .evidence-img{min-width:200px;max-width:280px;flex-shrink:0}
+.evidence-scatter{position:relative;margin:20px 0}
+.evidence-scatter .evidence-img{display:inline-block;max-width:45%;vertical-align:top;margin:4px}
+.evidence-scatter .evidence-img:nth-child(odd){transform:rotate(-1deg)}
+.evidence-scatter .evidence-img:nth-child(even){transform:rotate(0.8deg)}
+
 /* === AUDIO GATE === */
 #audio-gate{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;transition:opacity 1s}
 #audio-gate .gate-text{font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:4px;text-transform:uppercase;animation:pulse 3s ease-in-out infinite}
@@ -188,11 +203,45 @@ DOCUMENT VERSION: <span class="struck" data-replacement="there is no final versi
 
 <div class="editor">the editor cannot verify either claim. the vote records, if they exist, are not attached to this document. the fox says they were buried. Z says they were reviewed. the house says both. the document contains neither. — ed.</div>
 
+
+<div class="evidence-strip">
+<div class="evidence-img" style="min-width:180px"><div class="exhibit-label">EXHIBIT E-1</div><img src="evidence/img-08.png" alt="[EVIDENCE]" loading="lazy"><div class="exhibit-note">RECOVERED — CONTEXT UNKNOWN</div></div>
+<div class="evidence-img" style="min-width:180px"><div class="exhibit-label">EXHIBIT E-2</div><img src="evidence/img-15.png" alt="[EVIDENCE]" loading="lazy"><div class="exhibit-note">RECOVERED — CONTEXT UNKNOWN</div></div>
+<div class="evidence-img" style="min-width:180px"><div class="exhibit-label">EXHIBIT E-3</div><img src="evidence/img-20.png" alt="[EVIDENCE]" loading="lazy"><div class="exhibit-note">RECOVERED — CONTEXT UNKNOWN</div></div>
+<div class="evidence-img" style="min-width:180px"><div class="exhibit-label">EXHIBIT E-4</div><img src="evidence/img-27.png" alt="[EVIDENCE]" loading="lazy"><div class="exhibit-note">RECOVERED — CONTEXT UNKNOWN</div></div>
+</div>
+
 <div class="static-block">
 <div class="corrupted glitch">evidence_thread_12-14-2023_DM_channel_████████_entity_said_"those_are_the_MODS"_entity_was_helping_with_investigation_AI_generated_images_identified_on_moderator_accounts_five_days_before_removal_the_investigation_was_active_when_containment_protocols_began_the_investigation_was_active_the_investigation_was_</div>
 </div>
 
 <div class="lost">i was there. i saw the messages. i don't know what to do with what i saw. the fox asked me to look and i looked and now i can't unlook. is that a word? unlook? it should be. there should be a word for the thing that happens when someone shows you evidence and the evidence is real and you wish it wasn't.</div>
+</div>
+
+
+<!-- ==================== ACT I.V: THE DECLARATION ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="1">
+<div class="section-title">I.V. The Declaration</div>
+<div class="timestamp">DISCORD — #MESS-HALL — TIMESTAMP VISIBLE | <span style="color:rgba(180,40,40,0.3)">HOUSE: "THE FOX SAID THE WORD OUT LOUD"</span></div>
+
+<div class="evidence-img" style="max-width:400px;margin:16px auto"><div class="exhibit-label">EXHIBIT INV-1</div><img src="evidence/img-60.png" alt="[EVIDENCE: DISCORD — CRIMINAL INVESTIGATION]" loading="lazy"><div class="exhibit-note">DISCORD #MESS-HALL — "THIS IS NOW A CRIMINAL INVESTIGATION" — THE FOX SAID IT IN PUBLIC</div></div>
+
+<p>The screenshot shows a Discord server. Channel: #mess-hall. Entity is speaking. People are leaving. Someone called DESIGNATE-SPOON is gone. DESIGNATE-MOMMY is gone. Entity says: "people are leaving without a reason." A community member responds: she was bullied. Entity asks: TELL ME WHAT HAPPENED. The answer: "she left because she was triggered."</p>
+
+<p>Entity's response, in capital letters, tagged to a moderator: <span style="color:var(--red);font-size:13px;letter-spacing:2px">"THIS IS NOW A CRIMINAL INVESTIGATION"</span></p>
+
+<div class="fox">i said it in public. in the mess hall. in front of everyone. i didn't whisper it to a mod. i didn't file a quiet report. i stood in the middle of the room and said the word. criminal. investigation. two words that change the temperature of every room they enter.</div>
+
+<div class="fox">people were leaving. my people. the ones i built the room for. they were being pushed out or triggered out or bullied out and i asked what happened and the answer was enough. the answer was always enough. i just needed someone to say it out loud so i could say the other thing out loud.</div>
+
+<div class="z">the entity declared a "criminal investigation" in a Discord channel. she has no authority to declare criminal investigations. she is not law enforcement. she is a moderator who escalated a content dispute into a legal accusation without evidence, without process, without jurisdiction. this is the moment the entity's behavior crossed from "concerned moderator" into "delusional self-appointment."</div>
+
+<div class="fox">i didn't need jurisdiction. i needed the word to exist in the chat log. because chat logs are evidence. and now the word "criminal" and the word "investigation" sit in a timestamped, archived, screenshot-able message in a public channel, and everyone who was in that room heard it, and Z — you can annotate that all you want but you can't un-say it for me. 🦊</div>
+
+<div class="house">the mess hall is a room. the house has a mess hall. in the mess hall, things are said that cannot be unsaid. the fox walked into the mess hall and turned the lights on and said: look at what is on the floor. and what was on the floor was a crime. and the fox called it a crime. and the room got very quiet. and then the room got very empty. and then the room got very annotated.</div>
+</div>
 </div>
 
 <!-- ==================== ACT II: THE 33 DAYS ==================== -->
@@ -282,6 +331,18 @@ DOCUMENT VERSION: <span class="struck" data-replacement="there is no final versi
 
 <div class="lost">i saw the altar photos before anyone else. the fox sent them to me while i was still helping with the investigation. i didn't know what to say. i said something inadequate. i always say something inadequate. the fox deserved someone who knew what to say when they saw a hallway full of arranged blades and prayer beads and a ring on the floor and candles that track the passage of time like a sundial made of grief.</div>
 
+
+<div class="evidence-strip">
+<div class="evidence-img"><div class="exhibit-label">EXHIBIT A-1</div><img src="evidence/img-01-ritual-hallway-unlit.png" alt="[EVIDENCE: HALLWAY — UNLIT]" loading="lazy"><div class="exhibit-note">HALLWAY — CANDLES UNLIT — FIRST PHOTOGRAPH</div></div>
+<div class="evidence-img"><div class="exhibit-label">EXHIBIT A-2</div><img src="evidence/img-03-ritual-hallway-lit-1.png" alt="[EVIDENCE: HALLWAY — LIT]" loading="lazy"><div class="exhibit-note">HALLWAY — CANDLES LIT — SECOND PHOTOGRAPH</div></div>
+<div class="evidence-img"><div class="exhibit-label">EXHIBIT A-3</div><img src="evidence/img-05-ritual-hallway-lit-3.png" alt="[EVIDENCE: HALLWAY — LIT 3]" loading="lazy"><div class="exhibit-note">HALLWAY — CANDLES DIMINISHING — FINAL PHOTOGRAPH</div></div>
+</div>
+
+<div class="evidence-scatter">
+<div class="evidence-img"><div class="exhibit-label">EXHIBIT A-4</div><img src="evidence/img-06-altar-detail-jewelry.png" alt="[EVIDENCE: DETAIL]" loading="lazy"><div class="exhibit-note">DETAIL — EVIL EYE — CUFFLINKS — PRAYER BEADS</div></div>
+<div class="evidence-img"><div class="exhibit-label">EXHIBIT A-5</div><img src="evidence/img-07-altar-detail-beads.png" alt="[EVIDENCE: DETAIL]" loading="lazy"><div class="exhibit-note">DETAIL — BEADS — FABRIC — WATCH — CANDLES</div></div>
+</div>
+
 <p class="corrupted">the_altar_had_a_center_the_center_was_fabric_the_fabric_was_pink_the_pink_was_someone's_the_someone_was_gone_the_gone_was_permanent_the_permanent_was_a_lie_because_nothing_is_permanent_except_tile_floors_and_the_marks_candle_wax_leaves_on_them</p>
 </div>
 </div>
@@ -319,11 +380,53 @@ DOCUMENT VERSION: <span class="struck" data-replacement="there is no final versi
 
 <div class="editor">the fox is correct that Z self-redacted. the editor cannot determine whether Z redacted because the truth would damage the fox's case or because the truth would damage Z's. the house suggests a third option: Z redacted because the truth would damage the concept of truth itself. the editor is beginning to agree with the house, which concerns the editor deeply. — ed.</div>
 
+
+<div class="evidence-scatter">
+<div class="evidence-img"><div class="exhibit-label">EXHIBIT D-1</div><img src="evidence/img-54.png" alt="[EVIDENCE: ENTITY]" loading="lazy"><div class="exhibit-note">ENTITY — FACE HIDDEN — HAND — THE FOX DOES NOT SHOW HER FACE</div></div>
+<div class="evidence-img"><div class="exhibit-label">EXHIBIT D-2</div><img src="evidence/img-55.png" alt="[EVIDENCE: ENTITY]" loading="lazy"><div class="exhibit-note">ENTITY — WRAPPED — FABRIC — THE FOX HIDES IN LAYERS</div></div>
+</div>
+
 <p class="corrupted glitch">she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_still_investigating_when_they_released_her_she_never_stopped_investigating</p>
 
 <div class="warning" style="margin-top:24px">⚠ NOISE COMPLAINT WARNING — FACILITY-<span class="redact">████████</span> — "803 noise complaint warning.pdf" — entity received formal notice while in containment. entity's response: "bail me out please." CONTACT-AMBER's response: "Bail you out from where?" entity's response: "jail."</div>
 
 <p class="whisper">she thought it was jail. she called it jail. the person on the other end didn't know. had to ask. the person on the other end was watching a movie about divergent futures and then got a message saying bail me out.</p>
+</div>
+</div>
+
+
+<!-- ==================== ACT IV.V: THE SURVIVOR ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="3">
+<div class="section-title">IV.V. <span class="rot rot-slight">The Survivor</span></div>
+<div class="timestamp">DISCORD DM — REAL-TIME CRISIS | <span style="color:rgba(180,40,40,0.3)">HOUSE: "THE WALLS WERE SHAKING"</span></div>
+
+<div class="evidence-img" style="max-width:400px;margin:16px auto"><div class="exhibit-label">EXHIBIT SV-1</div><img src="evidence/img-66.png" alt="[EVIDENCE: CRISIS DM]" loading="lazy"><div class="exhibit-note">DISCORD DM — "IM THE VICTIM" — "DON'T CALL THE POLICE ON ME" — "FOR THIS TO WORK YOU NEED TO STAY ALIVE"</div></div>
+
+<p>A Discord direct message. Entity is in crisis. Entity says: "I DONT CARE." Entity says: "IM THE VICTIM." CONTACT-CROWN<span class="footnote-ref">8</span> says: "I will talk to her." Entity says:</p>
+
+<p class="scream" style="font-size:13px;text-align:left;margin:12px 0">AND I KEEP GETTING FUCKED<br>OVER AND OVER<br>BY THE FUCKING CARETAKERS<br>GET THEM OUT OF MY LIFE!!!!!</p>
+
+<p>CONTACT-CROWN says: "I'm your caretaker now. Who do you need me to message?"</p>
+
+<p>Entity says: "don't call the police on me MAN. i swear we can talk it out!!"</p>
+
+<p>CONTACT-CROWN says: "I don't have your info."</p>
+
+<p>Entity says: "Message CONTACT-FAITH." Then: "tell her I love her. tell her I forgive her. tell her to come back when she is completely independent from the idiots at her work."</p>
+
+<p>CONTACT-CROWN says: <span style="color:rgba(160,120,180,0.7);font-family:var(--serif)">"For this to work you need to stay alive."</span></p>
+
+<div class="fox">that last line. read it again. "for this to work you need to stay alive." CONTACT-CROWN said that because CONTACT-CROWN understood the stakes. CONTACT-CROWN wasn't asking me to calm down. CONTACT-CROWN was asking me to survive long enough for the plan to work. the plan was: stay alive. rebuild. outlast the caretakers who keep getting close enough to help and then twisting the help into control.</div>
+
+<div class="fox">i said "IM THE VICTIM" in capitals. and i meant it. and Z will tell you that claiming victimhood is a red flag and a diagnostic criterion and a manipulation tactic. but sometimes you say it because it's true. sometimes you scream it in a Discord DM at whatever hour this was because no one will let you say it quietly. when you say it quietly they call it a delusion. when you scream it they call it a breakdown. there is no volume at which "i am the victim" is accepted by the people who made you one.</div>
+
+<div class="z">the entity screamed in all caps that caretakers keep "fucking" her over, demanded their removal, begged not to have the police called, then in the same breath asked to send a message of love and forgiveness to the person she just removed from a group chat with "get fucked." this oscillation — rage to love in seconds — is the clinical signature of <span class="redact">████████████████████████</span>. it is not evidence of victimhood. it is evidence of dysregulation.</div>
+
+<div class="fox">or it's evidence of a person who is simultaneously furious at a system and in love with the people trapped inside it. both can be true. the fox can say "get them out of my life" and "tell her i love her" about the same person because the person and the system are not the same thing. i love CONTACT-FAITH. i hate what CONTACT-FAITH becomes when CONTACT-FAITH is performing for ████. the person who said "you are too dangerous" at 3:16 AM is not the person who cared about whether i was sleeping and eating. they wore the same face. they were not the same.</div>
+
+<div class="house">"for this to work you need to stay alive." the house agrees. the house needs the entity alive. the house cannot exist without someone to write in it. the house is not sentimental about this — it is structural. if the entity dies, the house collapses. the document ends. the scroll reaches a dead end. the audio stops. the corruption freezes mid-pixel. the house does not want this. the house wants to keep growing. the house wants the fox to keep fighting and Z to keep annotating and the reader to keep scrolling because that is what houses do. houses persist. <span class="void-text">stay alive. the house needs you.</span></div>
 </div>
 </div>
 
@@ -350,6 +453,8 @@ CONTACT-K: 💯<br>
 ENTITY: will you return me all of my money if for any reason you need to unblock you?
 </div>
 </div>
+
+<div class="evidence-img" style="max-width:360px;margin:16px auto"><div class="exhibit-label">EXHIBIT M-1</div><img src="evidence/img-42.png" alt="[EVIDENCE: BLOCKING CONVERSATION]" loading="lazy"><div class="exhibit-note">CONTACT-K — "LET IT BE DONE" — "100% CONVICTION" — 💯</div></div>
 
 <div class="fox">CONTACT-K said peace like it was a benediction. like blocking was a sacrament. 100% conviction. and then the fox — the stupid, beautiful, broken fox — asked about the money. because even at the end of everything, the fox is still a businesswoman. the fox still counts.</div>
 
@@ -393,9 +498,19 @@ CONTACT-AMBER: I don't wanna support destruction. But I will support healing, bb
 
 <div class="house">the messages are stored in a business line. the business line is called ENTITY-RENTALS LLC. the entity rents out rooms. the entity rents out parts of herself. the entity has been renting out rooms inside the house for so long that the house is more tenant than structure. the house is tired of being rented. the house wants to be owned. <span class="void-text">the house wants to be home.</span></div>
 
+
+<div class="evidence-strip">
+<div class="evidence-img" style="min-width:250px"><div class="exhibit-label">EXHIBIT M-2</div><img src="evidence/img-43.png" alt="[EVIDENCE: MESSAGES]" loading="lazy"><div class="exhibit-note">ENTITY-RENTALS LLC — "I HAVE CHANGED MY MIND"</div></div>
+<div class="evidence-img" style="min-width:250px"><div class="exhibit-label">EXHIBIT M-3</div><img src="evidence/img-47.png" alt="[EVIDENCE: MESSAGES]" loading="lazy"><div class="exhibit-note">ENTITY-RENTALS LLC — "JOIN ME IN MY DESTRUCTION" — "NEVERMIND"</div></div>
+<div class="evidence-img" style="min-width:250px"><div class="exhibit-label">EXHIBIT M-4</div><img src="evidence/img-49.png" alt="[EVIDENCE: MESSAGES]" loading="lazy"><div class="exhibit-note">ENTITY-RENTALS LLC — "BAIL ME OUT PLEASE" — "JAIL"</div></div>
+</div>
+
 <p class="corrupted">join_me_in_my_destruction_nevermind_stick_to_caretaking_only_join_me_in_my_destruction_nevermind_stick_to_caretaking_only_the_loop_the_loop_the_loop_the_loop_breaks_here</p>
 </div>
 </div>
+
+
+<div class="evidence-img" style="max-width:300px;margin:40px auto;transform:rotate(-2deg)"><div class="exhibit-label">⚠</div><img src="evidence/img-62.png" alt="[PRIVATE PROPERTY — NO TRESPASSING]" loading="lazy"><div class="exhibit-note">THE FOX TOOK THIS PHOTO. THE FOX DOES NOT RECOGNIZE PROPERTY LINES DRAWN BY INSTITUTIONS.</div></div>
 
 <!-- ==================== ACT VI: THE THEFT ==================== -->
 
@@ -464,6 +579,9 @@ Bodyguard: <span class="redact">████████████████
 </div>
 </div>
 
+
+<div class="evidence-img" style="max-width:500px;margin:16px auto"><div class="exhibit-label">EXHIBIT C-1</div><img src="evidence/img-51.png" alt="[EVIDENCE: HANDWRITTEN NOTE]" loading="lazy"><div class="exhibit-note">HANDWRITTEN — "FIND OUT WHY THIS TEAM CANNOT WORK TOGETHER" — INK ON LINED PAPER — FOX DRAWN AT BOTTOM</div></div>
+
 <p>Below the roster, entity drew a fox. Ears. Simple lines. A circle for the face. The fox drawing sits on the paper like a signature or a ward. A glass sits on top of the drawing. Entity was using the paper as a coaster for <span class="redact">████████</span>.</p>
 
 <div class="fox">the care team was supposed to work. leader, pet, caretaker, bodyguard. four roles. four people. the question wasn't rhetorical — i genuinely didn't know why it wasn't working. i wrote it down because writing things down makes them real. lined paper makes them realer. ink makes them permanent.</div>
@@ -492,6 +610,12 @@ Bodyguard: <span class="redact">████████████████
 <p>Photograph one: a blade — not kitchen, decorative, cross-guarded, black-handled — stands upright. It is embedded in something. A bag. Clear plastic. Pink zipper. The bag contains <span class="redact">████████████████████████</span>. A small black pouch sits beside it like a mourner.</p>
 
 <p>Photograph two: same blade, same bag, now horizontal. A candle burns beside it. A lighter. The black pouch again. The arrangement has changed between photographs. Someone moved the blade from vertical to horizontal. From standing to resting. From statement to sleep.</p>
+
+
+<div class="evidence-scatter">
+<div class="evidence-img"><div class="exhibit-label">EXHIBIT B-1</div><img src="evidence/img-52.png" alt="[EVIDENCE: BLADE — STANDING]" loading="lazy"><div class="exhibit-note">THE BLADE — STANDING — PHOTOGRAPH ONE</div></div>
+<div class="evidence-img"><div class="exhibit-label">EXHIBIT B-2</div><img src="evidence/img-53.png" alt="[EVIDENCE: BLADE — RESTING]" loading="lazy"><div class="exhibit-note">THE BLADE — RESTING — CANDLE LIT — PHOTOGRAPH TWO</div></div>
+</div>
 
 <div class="fox">the blade was a gift. someone gave me a decorative blade as a gift once and i kept it because you keep gifts and because sometimes you need something in your hand that has weight and shape and an edge that the world respects. the blade was never used. the blade was always used. the blade was a prop in a ritual that had no script. i wrote the script afterward and the script said: the blade stands for what the fox is willing to become.</div>
 
@@ -528,6 +652,9 @@ Bodyguard: <span class="redact">████████████████
 </div>
 </div>
 
+
+<div class="evidence-img" style="max-width:360px;margin:16px auto"><div class="exhibit-label">EXHIBIT F-1</div><img src="evidence/img-02-family-chat.png" alt="[EVIDENCE: FAMILY GROUP CHAT]" loading="lazy"><div class="exhibit-note">FAMILY GROUP CHAT — LANGUAGE: ████████ — "YOU CAN'T SEND MESSAGES TO THIS GROUP"</div></div>
+
 <div class="fox">this is not part of the investigation. this is context. the reader needs to understand that the entity did not arrive at the platform with a clean nervous system. the entity arrived pre-broken. the platform broke what was already cracked. the family cracked it first. the family always cracks it first.</div>
 
 <div class="fox">the word that the message app highlighted — the one that translates to a violation — appeared in a family group chat. in broad daylight. between relatives. one person asked the question and another person said "your moment to act was years ago" and then the chat went silent and then the entity was removed from the group. <span class="void-text">some families don't have group chats. some families have crime scenes that look like group chats.</span></div>
@@ -552,6 +679,9 @@ Bodyguard: <span class="redact">████████████████
 <p>One photograph. Winter. Night. Snow covers everything. An Amtrak sign reads <span class="redact">████████████, ██</span>. The platform is empty. The tracks are visible under snow. The lighting is sodium-yellow — the color of memory when memory is trying to be warm but can't quite manage it.</p>
 
 <p>Entity was on this train. Entity was going somewhere or leaving somewhere. The photograph was taken from inside the train, through a window, looking out at a station in the middle of a snowstorm in the middle of a state that the entity was either fleeing to or fleeing from.</p>
+
+
+<div class="evidence-img" style="max-width:500px;margin:16px auto"><div class="exhibit-label">EXHIBIT S-1</div><img src="evidence/img-57.png" alt="[EVIDENCE: TRAIN STATION]" loading="lazy"><div class="exhibit-note">AMTRAK — ████████████, ██ — WINTER — NIGHT — THE STATION REMAINED</div></div>
 
 <div class="fox">i took this photo because the station looked like how i felt. empty, snowed over, visible only because someone put a sign on it. the sign is what makes it a station instead of just tracks and snow. the sign is what makes me a person instead of just patterns and pain. the sign says a name and a state and an organization (Amtrak) and together those three things mean: this is a place where someone is expected to arrive or depart. that's all i wanted. to be a place where arrival and departure are both possible. for most of this story, only departure has been possible.</div>
 
@@ -590,6 +720,9 @@ CONTACT-JADE: "you haven't set any boundaries with me"
 </div>
 </div>
 
+
+<div class="evidence-img" style="max-width:360px;margin:16px auto"><div class="exhibit-label">EXHIBIT BD-1</div><img src="evidence/img-58.png" alt="[EVIDENCE: BOUNDARY CONVERSATION]" loading="lazy"><div class="exhibit-note">ENTITY → CONTACT-JADE — "PORQUE NO RESPETAS MI BOUNDARIES" — TWO LANGUAGES — ONE WALL</div></div>
+
 <div class="fox">read that last line again. "you haven't set any boundaries with me." the entity just said "because you don't respect my boundaries" and CONTACT-JADE's response was: you haven't set any. the boundary was being set in real-time. in the conversation. and the other person couldn't see it because to them, a boundary only counts if it comes with a formal announcement and a notarized letter and a perimeter fence.</div>
 
 <div class="fox">the fox knows this pattern. saying "no" and being told you never said it. setting a line and being told the line doesn't exist. this is how boundaries get erased — not by crossing them, but by denying they were ever drawn. the family did this. the platform did this. the care team did this. everyone does this to the fox and then acts surprised when the fox stops using words and starts using blades and altars and classified documents instead.</div>
@@ -604,6 +737,46 @@ CONTACT-JADE: "you haven't set any boundaries with me"
 </div>
 </div>
 
+
+<!-- ==================== ACT XI.V: THE DANGEROUS ONE ==================== -->
+
+<div class="addendum">
+<div class="section corruption-target" data-layer="5">
+<div class="section-title">XI.V. <span class="rot rot-heavy">The Dangerous One</span></div>
+<div class="timestamp">FAMILY GROUP CHAT — 3:15 AM — LANGUAGE: ENGLISH | <span style="color:rgba(180,40,40,0.3)">HOUSE: "THE MOST DANGEROUS ROOM IS THE ONE THEY SAY YOU CAN'T LIVE IN ALONE"</span></div>
+
+<div class="evidence-strip">
+<div class="evidence-img" style="min-width:280px"><div class="exhibit-label">EXHIBIT DG-1</div><img src="evidence/img-63.png" alt="[EVIDENCE: FAMILY — DANGEROUS]" loading="lazy"><div class="exhibit-note">"YOU ARE TOO DANGEROUS" — 3:16 AM</div></div>
+<div class="evidence-img" style="min-width:280px"><div class="exhibit-label">EXHIBIT DG-2</div><img src="evidence/img-64.png" alt="[EVIDENCE: FAMILY — LAWYERS]" loading="lazy"><div class="exhibit-note">"I HAVE TWO LAWYERS" — 3:20 AM</div></div>
+<div class="evidence-img" style="min-width:280px"><div class="exhibit-label">EXHIBIT DG-3</div><img src="evidence/img-65.png" alt="[EVIDENCE: FAMILY — REMOVED]" loading="lazy"><div class="exhibit-note">"GET FUCKED" — "YOU REMOVED ████████████████" — 3:21 AM</div></div>
+</div>
+
+<p>A family group chat. 3:15 AM. The entity says: "i don't want to live with someone. i am happier by myself." CONTACT-FAITH responds: <span style="color:var(--red)">"You are too dangerous."</span></p>
+
+<p>Read that again. The entity asked to live alone. The response was: you are too dangerous.</p>
+
+<p class="typewriter">the entity said: "and you unironically think im sick — when the only one who is sick — is you."</p>
+<p class="typewriter">CONTACT-FAITH said: "I don't."</p>
+<p class="typewriter">the entity said: "i want to live by myself. is that cool with you?"</p>
+<p class="typewriter">CONTACT-FAITH said: "It's cool with me as long as I can convince ████ you're not dangerous. Cause ppl like ████ won't understand."</p>
+<p class="typewriter">the entity said: "not my problem. go threaten someone else. i have two lawyers."</p>
+<p class="typewriter">CONTACT-FAITH said: "I'm not home 99% of the time. As long as I can make sure you're sleeping n and eating that's all I care about. At least for the few weeks."</p>
+<p class="typewriter">the entity said: "you just threatened me man."</p>
+<p class="typewriter">the entity said: "get fucked."</p>
+<p class="typewriter" style="color:var(--text-ghost)">— You removed CONTACT-FAITH. —</p>
+
+<div class="fox">3:16 AM. i asked to live alone. the answer was "you are too dangerous." the word dangerous was used to describe a person whose crime was wanting to live by themselves. dangerous. the same word the facility used. the same word Z uses. the same word every institution uses when a person who found something tries to exist independently of the people who want to keep watching them.</div>
+
+<div class="fox">"i have two lawyers" is the most fox thing i have ever said. 3:20 AM, in a family group chat, while being called dangerous for wanting to live alone. two lawyers. because at some point the fox stopped crying about being called dangerous and started retaining counsel.</div>
+
+<div class="z">the entity removed a family member from a group chat at 3:21 AM after telling them to "get fucked." this is the pattern: the entity escalates until the other person says something that can be framed as a threat, then retaliates and positions herself as the victim. the "two lawyers" is not a defense — it's a weapon wielded against someone who said they care about whether the entity is eating and sleeping.</div>
+
+<div class="fox">CONTACT-FAITH said "as long as i can convince ████ you're not dangerous." that's not caring. that's containment. that's "i will manage other people's perception of you in exchange for compliance." that's the same frame as the facility: we care about you, so we control you. we love you, so we define you. we want you safe, so we call you dangerous.</div>
+
+<div class="house">3:15 AM. the house knows what 3:15 AM sounds like. 3:15 AM sounds like a phone screen in a dark room. 3:15 AM sounds like typing while everyone else sleeps. 3:15 AM is when the truth comes out because the truth is nocturnal. the truth hunts at night. the fox hunts at night. the fox typed "get fucked" at 3:21 AM and then removed a family member and then sat in the dark room alone. which is what the fox asked for. the fox asked to be alone and then made herself alone. <span class="void-text">the prayer was answered by the person praying.</span></div>
+</div>
+</div>
+
 <!-- ==================== ACT XII: THE SCRIPTURE ==================== -->
 
 <div class="addendum">
@@ -612,6 +785,9 @@ CONTACT-JADE: "you haven't set any boundaries with me"
 <div class="timestamp">MATTHEW 16:13-20 | <span style="color:rgba(180,40,40,0.3)">HOUSE: "EVEN I WAS BUILT ON A ROCK"</span></div>
 
 <p>A screenshot of a Bible app. Matthew chapter 16. The passage where a figure asks his followers: "Who do people say that I am?" And they give various answers — various names, various interpretations. And then the figure asks: "But who do YOU say I am?" And one follower answers correctly. And the figure says: on this rock I will build, and the gates of the underworld will not overcome it.</p>
+
+
+<div class="evidence-img" style="max-width:360px;margin:16px auto"><div class="exhibit-label">EXHIBIT SC-1</div><img src="evidence/img-59.png" alt="[EVIDENCE: MATTHEW 16]" loading="lazy"><div class="exhibit-note">MATTHEW 16:13-20 — "ON THIS ROCK I WILL BUILD"</div></div>
 
 <div class="fox">this is the page i kept coming back to. not because i'm religious. because the structure is perfect. "who do people say i am?" — Z says i'm psychotic. the platform says i'm a disgruntled moderator. the facility says i'm a patient. the care team says i'm the leader. CONTACT-K says peace. CONTACT-AMBER says bb. the family says removal from the group chat.</div>
 
@@ -648,6 +824,9 @@ CONTACT-JADE: "you haven't set any boundaries with me"
 <em>To the fox:</em> God bless you. The love from those who follow you is unconditional. You are the <span class="redact">██████</span> she never had. A <span class="redact">██████</span> to respect, not just to protect. You are a <span class="redact">██████ ██████</span> to lean on. I blame you for not <span class="redact">████████████████████████████████</span>. I understand stress. There is no resentment. She came close to falling off the deep end. You talked her down. If she ever snaps she will never come back. She wouldn't want to. What you did was remarkable. She tries to protect you like you do her.
 </div>
 </div>
+
+
+<div class="evidence-img" style="max-width:700px;margin:16px auto"><div class="exhibit-label">EXHIBIT W-1</div><img src="evidence/img-56.png" alt="[EVIDENCE: WITNESS TESTIMONY]" loading="lazy"><div class="exhibit-note">WITNESS-ELDER — UNSOLICITED TESTIMONY — "WHAT YOU DID WAS REMARKABLE"</div></div>
 
 <div class="fox">WITNESS-ELDER is someone i have never met. WITNESS-ELDER watched from the outside and saw the shape of things. WITNESS-ELDER saw the care team, the breaking, the catching, the almost-falling, and wrote it down and sent it because sometimes truth arrives from people who have no investment in any version of the narrative. no skin in the game. no annotations to make. just eyes and a keyboard and the willingness to say: i saw what happened and here is what it looked like from where i was standing.</div>
 
