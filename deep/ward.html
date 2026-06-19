@@ -86,4 +86,18 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;ba
 </div>
 
 <script>document.querySelectorAll('.redact').forEach(el=>el.addEventListener('click',function(){this.style.transition='all 2s';this.style.background='rgba(180,40,40,0.05)';this.style.color='rgba(180,40,40,0.08)';var e=this;setTimeout(()=>{e.style.background='#1a1a18';e.style.color='#1a1a18'},3000)}))</script>
+<script>
+document.body.addEventListener('click', function init() {
+  document.body.removeEventListener('click', init);
+  var ctx = new (window.AudioContext || window.webkitAudioContext)();
+  // High fluorescent whine
+  var o = ctx.createOscillator(); var g = ctx.createGain();
+  o.type = 'sine'; o.frequency.value = 3800; g.gain.value = 0.004;
+  o.connect(g); g.connect(ctx.destination); o.start();
+  // Low hum (60Hz — electrical)
+  var h = ctx.createOscillator(); var hg = ctx.createGain();
+  h.type = 'sine'; h.frequency.value = 60; hg.gain.value = 0.012;
+  h.connect(hg); hg.connect(ctx.destination); h.start();
+}, {once: true});
+</script>
 </body></html>
