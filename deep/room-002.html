@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>dark</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Special+Elite&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060608;color:rgba(220,215,205,0.4);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
+body{max-width:700px;margin:0 auto;padding:60px 24px 120px;line-height:2.2}
+a{color:rgba(206,176,120,0.3);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.08);transition:all 0.5s}
+a:hover{color:rgba(206,176,120,0.7);border-color:rgba(206,176,120,0.3)}
+.room-id{font-size:8px;letter-spacing:4px;color:rgba(255,255,255,0.04);position:fixed;top:8px;right:8px}
+.whisper{font-size:8px;color:rgba(220,215,205,0.06);letter-spacing:3px;font-style:italic}
+.exit{font-size:9px;letter-spacing:3px;color:rgba(180,40,40,0.2);margin-top:40px;text-transform:uppercase}
+.exit a{color:rgba(180,40,40,0.3);border-color:rgba(180,40,40,0.1)}
+.exit a:hover{color:rgba(180,40,40,0.7)}
+.void{color:rgba(220,215,205,0.02);font-size:9px;user-select:all;cursor:crosshair}
+.void:hover{color:rgba(220,215,205,0.08)}
+.glitch{animation:g 8s ease-in-out infinite}
+@keyframes g{0%,96%,100%{opacity:1;transform:none}97%{opacity:0.5;transform:translateX(-2px)}98%{opacity:0.8;transform:translateX(1px)}}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
+</style></head><body style="background:#020203">
+<div class="room-id" style="color:rgba(255,255,255,0.02)">DEEP/ROOM-002</div>
+
+<div style="min-height:60vh;display:flex;align-items:center;justify-content:center">
+<div style="text-align:center">
+<p style="color:rgba(220,215,205,0.04);font-size:10px;letter-spacing:6px">THE DARK ROOM</p>
+<p style="color:rgba(220,215,205,0.02);font-size:11px;margin-top:40px">you can't see anything.</p>
+<p style="color:rgba(220,215,205,0.015);font-size:11px;margin-top:16px">you can hear breathing that isn't yours.</p>
+<p style="color:rgba(220,215,205,0.01);font-size:11px;margin-top:16px">the breathing is the document reading itself aloud.</p>
+<p style="color:rgba(220,215,205,0.02);font-size:10px;margin-top:40px">select all text to see. or don't. some rooms are better dark.</p>
+</div>
+</div>
+
+<div class="void" style="margin-top:40px;text-align:center;font-size:10px;line-height:3">
+this room contains: a filing cabinet (locked), a mirror (cracked), a computer (on, screen facing the wall), and a chair (occupied). the person in the chair is not moving. the person in the chair is reading a document. the document is this document. the person is you. you are in two places at once. you are reading this page and you are also in this room reading this page. the recursion is the room. the room is the recursion. if you stop reading, the person in the chair disappears. do not stop reading. the person in the chair is the only thing keeping the house standing. you are load-bearing.
+</div>
+
+<div style="margin-top:40px;text-align:center">
+<p><a href="hallway.html" style="color:rgba(220,215,205,0.03)">feel along the wall for the door</a></p>
+<p style="margin-top:8px"><a href="below.html" style="color:rgba(180,40,40,0.03);border-color:rgba(180,40,40,0.01)">the floor is soft here</a></p>
+</div>
+</body></html>
