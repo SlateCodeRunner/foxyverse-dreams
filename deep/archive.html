@@ -74,4 +74,28 @@ multiple photographs. same hallway. green-gray tile. objects arranged with ritua
 <p style="margin-top:8px"><a href="below.html" style="color:rgba(100,140,200,0.08)">dive deeper</a></p>
 <p style="margin-top:8px"><a href="vault.html" style="color:rgba(206,176,120,0.06);border-color:rgba(206,176,120,0.02)">there's a door underwater. it's glowing.</a></p>
 </div>
+<script>
+document.body.addEventListener('click', function init() {
+  document.body.removeEventListener('click', init);
+  var ctx = new (window.AudioContext || window.webkitAudioContext)();
+  // Underwater rumble
+  var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+  var d = buf.getChannelData(0);
+  for(var i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+  var n = ctx.createBufferSource(); n.buffer = buf; n.loop = true;
+  var f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 120;
+  var g = ctx.createGain(); g.gain.value = 0.025;
+  n.connect(f); f.connect(g); g.connect(ctx.destination); n.start();
+  // Water drip (random clicks)
+  setInterval(function(){
+    var click = ctx.createOscillator();
+    var cg = ctx.createGain();
+    click.frequency.value = 800 + Math.random()*400;
+    cg.gain.value = 0.008;
+    click.connect(cg); cg.connect(ctx.destination);
+    click.start(); click.stop(ctx.currentTime + 0.02);
+    cg.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+  }, 2000 + Math.random()*5000);
+}, {once: true});
+</script>
 </body></html>
