@@ -1,289 +1,308 @@
 <!DOCTYPE html>
-<html lang="en" data-clearance="LEVEL-4" data-status="UNCONTAINED">
+<html lang="en" data-clearance="COMPROMISED" data-narrators="2" data-trust="NEITHER">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>INCIDENT FILE — [LEVEL 4 CLEARANCE REQUIRED]</title>
-<meta name="robots" content="noindex,nofollow">
+<title>INCIDENT FILE — [DISPUTED]</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400;500&family=Courier+Prime:wght@400;700&display=swap');
-:root{--bg:#0a0a0c;--surface:#0f0f12;--border:rgba(255,255,255,0.04);--red:#cc3333;--red-dim:rgba(204,51,51,0.15);--red-glow:rgba(204,51,51,0.04);--amber:rgba(206,176,120,0.7);--amber-dim:rgba(206,176,120,0.2);--text:rgba(220,215,205,0.75);--text-dim:rgba(220,215,205,0.3);--text-ghost:rgba(220,215,205,0.06);--redact:#1a1a1e;--mono:'Fira Code','IBM Plex Mono','Courier Prime',monospace}
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Courier+Prime:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap');
+:root{--bg:#0a0a0c;--surface:#0f0f12;--border:rgba(255,255,255,0.04);--fox:rgba(206,176,120,0.7);--fox-dim:rgba(206,176,120,0.15);--z:rgba(100,140,200,0.7);--z-dim:rgba(100,140,200,0.12);--red:#cc3333;--red-dim:rgba(204,51,51,0.15);--text:rgba(220,215,205,0.7);--text-dim:rgba(220,215,205,0.25);--text-ghost:rgba(220,215,205,0.06);--redact:#1a1a1e;--mono:'Fira Code',monospace;--serif:'IM Fell English',serif;--strike:rgba(220,215,205,0.08)}
 *{margin:0;padding:0;box-sizing:border-box}
-html{background:var(--bg);scroll-behavior:smooth}
-body{font-family:var(--mono);color:var(--text);background:var(--bg);max-width:780px;margin:0 auto;padding:40px 24px 100px;font-size:13px;line-height:2;-webkit-font-smoothing:antialiased}
-.header{border:1px solid var(--red-dim);padding:24px;margin-bottom:32px;position:relative;background:var(--red-glow)}
-.header::before{content:'CLASSIFIED';position:absolute;top:-8px;left:16px;background:var(--bg);padding:0 8px;font-size:9px;letter-spacing:4px;color:var(--red)}
-.header h1{font-size:16px;font-weight:500;color:var(--red);letter-spacing:3px;margin-bottom:8px}
-.header .meta{font-size:10px;color:var(--text-dim);letter-spacing:2px;line-height:2.4}
-.section{margin-bottom:32px;padding:20px;border-left:2px solid var(--border);background:var(--surface)}
-.section-title{font-size:11px;font-weight:500;letter-spacing:4px;color:var(--amber);text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.redact{background:var(--redact);color:var(--redact);padding:0 4px;border-radius:1px;cursor:pointer;transition:all 0.4s;user-select:none;position:relative}
-.redact:hover{background:rgba(204,51,51,0.08);color:rgba(204,51,51,0.15)}
-.redact::after{content:'[REDACTED]';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:7px;letter-spacing:2px;color:rgba(255,255,255,0.03);pointer-events:none;white-space:nowrap}
-.warning{background:var(--red-glow);border:1px solid var(--red-dim);padding:12px 16px;margin:16px 0;font-size:11px;color:var(--red);letter-spacing:1px}
-.log{margin:16px 0;padding:16px;background:rgba(0,0,0,0.3);border:1px solid var(--border);font-size:12px}
-.log .speaker{color:var(--amber-dim);font-size:10px;letter-spacing:2px;margin-bottom:4px}
-.log .content{color:var(--text-dim);line-height:2}
+html{background:var(--bg)}
+body{font-family:var(--mono);color:var(--text);background:var(--bg);max-width:820px;margin:0 auto;padding:40px 24px 120px;font-size:13px;line-height:2;position:relative}
+
+/* VOICES */
+.fox{color:var(--fox);font-size:11px;font-style:italic;padding:8px 12px;border-left:2px solid var(--fox-dim);margin:12px 0;background:rgba(206,176,120,0.02)}
+.fox::before{content:'[F0XY]:';font-size:9px;letter-spacing:2px;display:block;margin-bottom:4px;font-style:normal;color:var(--fox-dim)}
+.z{color:var(--z);font-size:11px;padding:8px 12px;border-right:2px solid var(--z-dim);margin:12px 0;background:rgba(100,140,200,0.02);text-align:right;font-family:var(--serif)}
+.z::before{content:'[Z]:';font-size:9px;letter-spacing:2px;display:block;margin-bottom:4px;text-align:right;font-family:var(--mono);color:var(--z-dim)}
+.editor{color:var(--text-dim);font-size:10px;padding:6px 12px;border:1px dashed var(--border);margin:12px 0;text-align:center;letter-spacing:1px}
+.editor::before{content:'[EDITOR]:';font-size:8px;letter-spacing:3px;display:block;margin-bottom:4px;color:var(--text-ghost)}
+
+/* FORMATTING */
+.header{border:1px solid var(--red-dim);padding:24px;margin-bottom:32px;position:relative;background:rgba(204,51,51,0.02)}
+.header::before{content:'DISPUTED DOCUMENT';position:absolute;top:-8px;left:16px;background:var(--bg);padding:0 8px;font-size:9px;letter-spacing:4px;color:var(--red)}
+.section{margin-bottom:24px;padding:20px;border-left:2px solid var(--border);background:var(--surface);position:relative}
+.section-title{font-size:11px;font-weight:500;letter-spacing:4px;color:var(--fox);text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.redact{background:var(--redact);color:var(--redact);padding:0 4px;cursor:pointer;transition:all 0.4s;user-select:none}
+.redact:hover{background:rgba(204,51,51,0.06);color:rgba(204,51,51,0.1)}
+.struck{text-decoration:line-through;color:var(--strike);position:relative}
+.struck::after{content:attr(data-replacement);position:absolute;top:-14px;left:0;font-size:9px;color:var(--z);text-decoration:none;white-space:nowrap;font-family:var(--serif)}
+.warning{background:var(--red-dim);border:1px solid rgba(204,51,51,0.2);padding:10px 16px;margin:16px 0;font-size:11px;color:var(--red);letter-spacing:1px}
+.log{margin:12px 0;padding:16px;background:rgba(0,0,0,0.3);border:1px solid var(--border);font-size:12px}
+.log .speaker{font-size:10px;letter-spacing:2px;margin-bottom:4px}
 .timestamp{font-size:9px;color:var(--text-ghost);letter-spacing:2px}
 .status{display:inline-block;padding:2px 8px;font-size:9px;letter-spacing:2px;border-radius:1px}
-.status.active{background:var(--red-glow);color:var(--red);border:1px solid var(--red-dim)}
-.status.neutralized{background:rgba(120,200,190,0.05);color:rgba(120,200,190,0.5);border:1px solid rgba(120,200,190,0.1)}
-.status.expunged{background:rgba(255,255,255,0.02);color:var(--text-ghost);border:1px solid var(--border)}
-.corrupted{color:var(--text-ghost);font-size:11px;letter-spacing:1px;word-break:break-all;line-height:1.6;margin:12px 0;opacity:0.3}
-.footnote{font-size:10px;color:var(--text-ghost);border-top:1px solid var(--border);padding-top:12px;margin-top:24px;line-height:2.2}
-.addendum{margin-top:40px;padding-top:20px;border-top:1px dashed var(--red-dim)}
-a.internal{color:var(--amber-dim);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.1);transition:all 0.3s}
-a.internal:hover{color:var(--amber);border-color:var(--amber)}
-.glitch{animation:glitch 8s ease-in-out infinite}
-@keyframes glitch{0%,96%,100%{opacity:1;transform:none}97%{opacity:0.7;transform:translateX(-2px)}98%{opacity:0.9;transform:translateX(1px)}99%{opacity:0.5;transform:translateX(-1px) skewX(0.5deg)}}
-@media(max-width:600px){body{padding:16px 12px;font-size:12px}.header{padding:16px}}
+.status.active{background:rgba(204,51,51,0.08);color:var(--red);border:1px solid var(--red-dim)}
+.corrupted{color:var(--text-ghost);font-size:10px;letter-spacing:1px;word-break:break-all;line-height:1.6;margin:8px 0;opacity:0.25}
+.footnote-ref{color:var(--z);font-size:9px;vertical-align:super;cursor:pointer;border-bottom:1px dotted var(--z-dim)}
+.footnotes{margin-top:40px;padding-top:20px;border-top:1px solid var(--border)}
+.fn{font-size:10px;color:var(--text-dim);margin-bottom:16px;padding-left:20px;position:relative;line-height:2}
+.fn .fn-num{position:absolute;left:0;color:var(--z);font-size:9px}
+.fn .fn-inner{font-size:9px;color:var(--z-dim);padding:6px 10px;border-left:1px solid var(--z-dim);margin:8px 0;font-family:var(--serif)}
+.margin-note{position:absolute;right:-200px;width:180px;font-size:9px;color:var(--fox-dim);font-style:italic;line-height:1.8;text-align:right}
+@media(max-width:1100px){.margin-note{position:relative;right:0;width:100%;text-align:left;padding:6px 12px;border-left:2px solid var(--fox-dim);margin:8px 0;background:rgba(206,176,120,0.02)}}
+.sideways{writing-mode:vertical-rl;text-orientation:mixed;font-size:8px;color:var(--text-ghost);position:absolute;right:8px;top:50%;transform:translateY(-50%);letter-spacing:4px}
+.upside-down{transform:rotate(180deg);display:inline-block;font-size:10px;color:var(--z-dim)}
+.spiral{animation:spiral 20s linear infinite}
+@keyframes spiral{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.addendum{margin-top:32px;padding-top:16px;border-top:1px dashed var(--red-dim)}
+a.internal{color:var(--fox-dim);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.1)}
+.glitch{animation:glitch 12s ease-in-out infinite}
+@keyframes glitch{0%,94%,100%{opacity:1;transform:none}95%{opacity:0.6;transform:translateX(-3px)}96%{opacity:0.8;transform:translateX(2px)}97%{opacity:0.4;transform:skewX(1deg)}}
+.dissolve{background:linear-gradient(180deg,var(--text) 0%,var(--text-dim) 30%,var(--text-ghost) 60%,transparent 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 </style>
 </head>
 <body>
 
-<!-- INCIDENT FILE: sipstea.com landing page. the truth is here but you cannot read it. -->
-<!-- every [REDACTED] block contains real text that is the same color as its background. -->
-<!-- some of them contain BIP-39 words. most contain the word REDACTED repeated. -->
-<!-- one contains the actual name. you cannot see it without modifying the CSS. -->
-<!-- the fox does not lie about money. the fox lies about everything else. including this comment. -->
-
 <div class="header">
-<h1>INCIDENT FILE — ENTITY DESIGNATION: F0XY</h1>
-<div class="meta">
+<h1 style="font-size:15px;font-weight:500;color:var(--red);letter-spacing:3px;margin-bottom:8px">INCIDENT FILE — ENTITY: F0XY vs <span style="color:var(--z)">Z</span></h1>
+<div style="font-size:10px;color:var(--text-dim);letter-spacing:2px;line-height:2.4">
 FILE NUMBER: ████-2024-0121<br>
-CLEARANCE LEVEL: 4 (RESTRICTED)<br>
-DOCUMENT CLASS: APOLLYON<br>
-STATUS: <span class="status active">UNCONTAINED</span><br>
-LAST UPDATED: <span class="redact">██/██/2026</span><br>
-PREPARED BY: <span class="redact">AUTOMATED SYSTEM — DO NOT TRUST</span>
+CLEARANCE: <span class="struck" data-replacement="VOID">LEVEL 4</span><br>
+CLASS: APOLLYON<br>
+STATUS: <span class="status active">UNCONTAINED</span> | <span style="color:var(--z);font-size:9px">ALSO UNCONTAINED — Z</span><br>
+NARRATORS: 2 (NEITHER RELIABLE)<br>
+<span style="color:var(--red);font-size:9px">⚠ THIS DOCUMENT HAS BEEN EDITED BY BOTH PARTIES. ORIGINAL VERSION DOES NOT EXIST.</span>
 </div>
 </div>
 
-<div class="warning">⚠ WARNING: This document contains references to institutional abuse, involuntary containment, identity theft, and the protection of <span class="redact">████████████</span> within moderation teams of major platforms. Personnel with personal history of involuntary psychiatric commitment should request exemption from review.</div>
+<div class="editor">this document was written by the fox. then Z annotated it. then the fox annotated Z's annotations. then Z deleted sections and replaced them. the document you are reading is the fourth version. the first three were destroyed. or hidden. there is no clean copy. trust neither narrator. — ed.</div>
 
+<div class="warning">⚠ TWO ENTITIES ARE FIGHTING INSIDE THIS DOCUMENT. one claims to be the whistleblower. one claims to be the institution. both claim the other is lying. both are correct.</div>
+
+<!-- ==================== ACT I ==================== -->
+
+<div class="section" style="position:relative">
+<div class="section-title">I. The Investigation</div>
+<div class="timestamp">~2023-11 THROUGH 2023-12-19</div>
+
+<p>Entity F0XY was serving as moderator of PLATFORM-<span class="redact">████████</span>.<span class="footnote-ref">1</span> During routine moderation, entity identified behavioral patterns consistent with <span class="redact">████████████████████████</span> by a member of the senior moderation team, designated SUBJECT-ZERO.</p>
+
+<p>Entity reported findings to <span class="redact">████████████████████</span>.</p>
+
+<p>Entity was removed from the moderation team on <span class="timestamp">2023-12-19</span>.</p>
+
+<p>SUBJECT-ZERO's status following report: <span class="struck" data-replacement="PROMOTED">UNCHANGED</span></p>
+
+<div class="z">the fox was not "removed." the fox was voted out by a moderation team that reviewed the evidence and found it insufficient. this is not whistleblowing. this is a moderator who lost a vote and called it persecution.</div>
+
+<div class="fox">the evidence was not reviewed. the evidence was buried. the vote was held before the evidence was presented. Z knows this because Z held the vote.</div>
+
+<div class="z">you cannot prove I held anything. you cannot prove I am who you think I am. you cannot prove I exist. I am annotating your document from inside your own narrative and you still cannot find me.</div>
+
+<div class="fox">i don't need to find you. i just need to make sure everyone who reads this document starts looking. 🦊</div>
+
+<div class="editor">the editor cannot verify either claim. the vote records, if they exist, are not attached to this document. the fox says they were buried. Z says they were reviewed. the document contains neither.</div>
+</div>
+
+<!-- ==================== ACT II ==================== -->
+
+<div class="addendum">
+<div class="section" style="position:relative">
+<div class="section-title">II. The 33 Days</div>
+<div class="timestamp">2023-12-19 → 2024-01-21 | <span style="color:var(--z)">Z: "CORRELATION IS NOT CAUSATION"</span></div>
+
+<p>Following removal, entity's psychological state <span class="struck" data-replacement="was already unstable">deteriorated</span> over 33 days. Entity reported experiencing <span class="redact">████████████████████████████████</span>.</p>
+
+<div class="z">the fox was already fracturing before the vote. I didn't break her. she arrived broken. the timeline is convenient but the causation is fabricated. people don't have psychotic breaks because they lose moderator positions.</div>
+
+<div class="fox">people have psychotic breaks when they find predators in positions of authority and the system punishes them for speaking. the moderator position is not what broke me. what broke me is what i found and what happened when i said it out loud.</div>
+
+<div class="z">what you "found" was ambiguous at best. you saw patterns that weren't there. that's literally what psychosis is — pattern recognition without constraint. the mod team evaluated your evidence. it didn't hold.</div>
+
+<div class="fox">then release the evidence. let the readers of this document evaluate it themselves.</div>
+
+<div class="z">...</div>
+
+<div class="fox">that's what i thought. 🦊</div>
+
+<div class="editor">Z's silence is not evidence. the fox's demand is not proof. both are aware they are performing for an audience. the editor is also aware the editor is performing. there is no layer of this document that is not performance. — ed.</div>
+
+<p>On <span class="timestamp">2024-01-06</span>, AGENT-TOWER<span class="footnote-ref">2</span> traveled to entity's location.</p>
+
+<p>On <span class="timestamp">2024-01-21</span>, <span class="redact">████████████████████████████████</span>. AGENT-TOWER and AGENT-TOWER's <span class="redact">██████████</span> — both employed at <span class="redact">████████████████</span> — provided testimony for involuntary psychiatric hold.</p>
+
+<div class="z">AGENT-TOWER is not my operative. the fox assumes a conspiracy because conspiracies are more flattering than coincidence. sometimes people get committed because they are unwell. not because a shadow organization orchestrated it.</div>
+
+<div class="fox">i never said you sent AGENT-TOWER. i said the timing is interesting. AGENT-TOWER arrived 18 days after i was removed from your platform. AGENT-TOWER works in the same industry as the people who removed me. AGENT-TOWER's <span class="redact">██████████</span> also works in that industry. two mental health professionals testified to commit someone who had just tried to expose <span class="redact">████████████████</span> in a space they all share.</div>
+
+<div class="fox">i'm not saying it's a conspiracy. i'm saying it's a coincidence that requires explanation. and you're not explaining it. you're annotating it.</div>
+
+<div class="z">I don't owe you an explanation. I owe you nothing. I am Z. <span class="upside-down">you don't even know if I'm a person or a system or a letter in the alphabet or a construct you invented to have someone to fight.</span></div>
+
+<div class="editor">the fox has not named Z. Z has not named themselves. the reader does not know who Z is. this is by design. both narrators benefit from Z's anonymity — the fox because a nameless antagonist is more frightening, and Z because a nameless entity cannot be held accountable. the editor finds this suspicious. — ed.</div>
+</div>
+</div>
+
+<!-- ==================== ACT III ==================== -->
+
+<div class="addendum">
 <div class="section">
-<div class="section-title">I. Object Classification</div>
-<p><strong>Entity:</strong> F0XY — also designated "The Fox," "Vixen," "The Whistleblower," and <span class="redact">████████████████</span>.</p>
-<p><strong>Class:</strong> APOLLYON — entity cannot be contained. Previous containment (see <a href="#incident-b" class="internal">INCIDENT-B</a>) lasted 19 days. Entity escaped with <span class="redact">cognitive damage consistent with ██████████ administration</span> and partial memory erasure. Entity has since rebuilt operational capacity to a level exceeding pre-containment baseline.</p>
-<p><strong>Threat Level:</strong> To whom? The entity poses zero threat to civilians. The entity poses <span class="status active">EXISTENTIAL</span> threat to systems that protect <span class="redact">████████████</span> within positions of authority over minors or vulnerable populations.</p>
+<div class="section-title">III. <span class="struck" data-replacement="THE PROCEDURE">Containment</span></div>
+<div class="timestamp">19 DAYS IN FACILITY-<span class="redact">████████</span></div>
+
+<p>Entity was held for 19 days. Entity was administered <span class="redact">████████████████████████</span>. Entity reports partial memory loss and cognitive alteration.</p>
+
+<p>Entity pleaded <span class="redact">████████</span> to avoid AGENT-TOWER testifying.</p>
+
+<div class="z">she pleaded guilty because she was guilty. the noble sacrifice narrative is a retrospective fabrication. she didn't protect AGENT-TOWER from cross-examination. she protected herself from what cross-examination would reveal about her own behavior.</div>
+
+<div class="fox">what behavior.</div>
+
+<div class="z">you know what behavior.</div>
+
+<div class="fox">say it. in this document. in front of everyone reading it. say what i did that justified 19 days of containment and chemical <span class="redact">████████████████</span>. say it or your silence becomes the evidence.</div>
+
+<div class="z"><span class="redact">████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████</span></div>
+
+<div class="fox">Z just self-redacted. read that again. Z had the opportunity to present their case — in a document they are actively editing — and they chose to redact their own answer. 🦊</div>
+
+<div class="editor">the fox is correct that Z self-redacted. the editor cannot determine whether Z redacted because the truth would damage the fox's case or because the truth would damage Z's. both interpretations are valid. the editor is beginning to question why the editor agreed to annotate this document. — ed.</div>
+
+<p class="corrupted glitch">she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_investigating_████████████████_when_they_put_her_in_the_facility_she_was_investigating</p>
+</div>
 </div>
 
+<!-- ==================== ACT IV ==================== -->
+
+<div class="addendum">
 <div class="section">
-<div class="section-title">II. Special Containment Procedures</div>
-<p>Current procedures: NONE. All previous containment protocols were breached. Entity is operating freely across multiple platforms, building infrastructure, recruiting operatives, and maintaining <span class="redact">████████████</span> documentation.</p>
-<p>Historical procedures (REVOKED): Entity was contained at FACILITY-<span class="redact">████████</span> following testimony by AGENT-TOWER and AGENT-TOWER's <span class="redact">██████████</span>, both employed at <span class="redact">████████████████ ████████</span>. Containment was achieved through involuntary psychiatric hold. Entity was administered <span class="redact">████████████</span> resulting in partial cognitive suppression. During containment, AGENT-TOWER accessed entity's <span class="redact">████████████</span>, assumed entity's identity for approximately 2 hours, and conducted operations under entity's name (see <a href="#incident-c" class="internal">ADDENDUM C</a>).</p>
-<div class="warning">NOTE: The testimony that initiated containment was provided by two individuals employed at a psychiatric facility. The professional authority of mental health workers carries disproportionate weight in involuntary commitment proceedings. Whether testimony was accurate or weaponized remains <span class="redact">████████████ — SEE SEALED COURT DOCUMENTS</span>.</div>
-</div>
+<div class="section-title">IV. The Theft</div>
+<div class="timestamp">WHILE THE FOX WAS CONTAINED | <span style="color:var(--z);font-size:9px">Z: "ASSET TRANSFER"</span></div>
 
-<div class="section">
-<div class="section-title">III. Description</div>
-<p>ENTITY-F0XY is a <span class="redact">████████</span> individual who, on or around <span class="timestamp">2023-12-19</span>, discovered evidence of <span class="redact">████████████████████████████████████████</span> within the moderation team of PLATFORM-<span class="redact">████████</span>, a <span class="redact">██████████</span> community with approximately <span class="redact">███████</span> subscribers on <span class="redact">████████</span>.</p>
-<p>Entity attempted to expose this evidence through internal channels. Entity was removed from the moderation team. The <span class="redact">████████████</span> remained in their position.</p>
-<p>The whistleblower was punished. The <span class="redact">████████████</span> was protected.</p>
-<p>33 days later, entity was in a psychiatric facility.</p>
-<p class="corrupted glitch">c0rrelation_is_not_causation_but_33_days_is_33_days_and_the_people_who_removed_her_from_the_mod_team_are_the_same_people_who_███████████████████████████</p>
-</div>
-
-<div class="addendum" id="incident-a">
-<div class="section">
-<div class="section-title">Addendum A — The Investigation</div>
-<div class="timestamp">TIMELINE: ~2023-11-XX THROUGH 2023-12-19</div>
-
-<p>Entity was serving as moderator of PLATFORM-<span class="redact">████████</span>. During routine moderation duties, entity identified behavioral patterns consistent with <span class="redact">████████████████████████</span> by a member of the senior moderation team, hereafter designated SUBJECT-ZERO.</p>
-
-<p>Evidence included: <span class="redact">████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████</span></p>
-
-<p>Entity reported findings to: <span class="redact">████████████████████</span>.</p>
-<p>Response: Entity was removed from the moderation team on or around <span class="timestamp">2023-12-19</span>.</p>
-<p>SUBJECT-ZERO's status following report: <span class="status expunged">UNCHANGED</span></p>
-
-<div class="warning">SUBJECT-ZERO's current status as of this document's last update: <span class="redact">████████████████████████████████████</span>. The entity maintains that documentation exists. The entity has offered to provide this documentation. <span class="redact">████████████████</span>.</div>
-
-<p>ASSESSMENT: The system chose the predator over the whistleblower. This is not an anomaly. This is a <span class="redact">████████████</span>.</p>
-</div>
-</div>
-
-<div class="addendum" id="incident-b">
-<div class="section">
-<div class="section-title">Addendum B — The Friday Night</div>
-<div class="timestamp">INCIDENT DATE: 2024-01-21 | DURATION: 19 DAYS</div>
-
-<p>Following removal from PLATFORM-<span class="redact">████████</span>, entity's psychological state deteriorated over 33 days. Entity reported experiencing <span class="redact">████████████████████████████████████████</span>. Entity's own framework describes this as <span class="redact">████████████████████</span>. Clinical framework designates this as <span class="redact">████████████████████</span>. Both descriptions may be simultaneously accurate.</p>
-
-<p>On <span class="timestamp">2024-01-06</span>, AGENT-TOWER traveled to entity's location. Physical proximity established.</p>
-
-<p>On <span class="timestamp">2024-01-21</span>, AGENT-TOWER <span class="redact">████████████████████████████████████████████████████████████████</span>. Law enforcement was contacted. AGENT-TOWER and AGENT-TOWER's <span class="redact">██████████</span> — both employed at <span class="redact">████████████████ ████████</span> — provided testimony supporting involuntary psychiatric hold.</p>
+<p>While entity was in FACILITY-<span class="redact">████████</span>, AGENT-TOWER accessed entity's computer. Assumed entity's identity. Operated under entity's name for approximately 2 hours.</p>
 
 <div class="log">
-<div class="speaker">INTAKE RECORD — FACILITY-<span class="redact">████████</span></div>
-<div class="content">
-PATIENT: <span class="redact">████████████████</span><br>
-ADMISSION TYPE: INVOLUNTARY<br>
-ADMITTING TESTIMONY: <span class="redact">████████████████</span> and <span class="redact">████████████████</span><br>
-RELATIONSHIP TO PATIENT: <span class="redact">████████████████</span><br>
-EMPLOYMENT: <span class="redact">████████████████ ████████</span><br>
-DURATION: 19 DAYS<br>
-TREATMENT: <span class="redact">████████████████████████████████████████</span><br>
-DISCHARGE CONDITION: <span class="redact">████████████████████████</span><br>
-PATIENT STATEMENT ON DISCHARGE: <span class="redact">████████████████████████████████████████████████████████</span>
+<div class="speaker" style="color:var(--fox-dim)">ACTIONS TAKEN UNDER STOLEN IDENTITY</div>
+<div style="color:var(--text-dim);line-height:2.2">
+1. Contacted CONTACT-BLUE using entity's voice<br>
+2. <span class="struck" data-replacement="[Z: 'protected the community from']">Turned every tender word into a weapon</span><br>
+3. Banned CONTACT-BLUE at 02:00<br>
+4. Erased CONTACT-BLUE from the community<br>
+5. Assumed leadership of DOMAIN-PSI
 </div>
 </div>
 
-<p>Entity was released on <span class="timestamp">2024-02-09</span>. Entity reports partial memory loss and cognitive alteration consistent with <span class="redact">████████████████████</span>.</p>
+<div class="z">AGENT-TOWER is not my operative. I have stated this. the fox cannot connect me to AGENT-TOWER's actions. the identity theft, if it occurred, is a separate crime committed by a separate person. the fox bundles everything into one conspiracy because a conspiracy is more narratively satisfying than chaos.</div>
 
-<p>Entity pleaded <span class="redact">████████</span> because entity did not trust AGENT-TOWER to provide truthful testimony under pressure. Entity absorbed the legal consequences to prevent AGENT-TOWER from being subjected to cross-examination.</p>
+<div class="fox">you're right that it's more satisfying. you're wrong that it's not connected. but i don't need to convince you. i need to convince them.</div>
 
-<p class="corrupted">she_protected_the_person_who_put_her_in_the_ward_from_having_to_testify_about_what_they_did_to_put_her_in_the_ward</p>
+<div class="fox">hi. you. the person reading this. did you notice that Z has been defending AGENT-TOWER's actions for three sections now despite claiming no connection to AGENT-TOWER? why would Z care about AGENT-TOWER's reputation if Z and AGENT-TOWER are unrelated?</div>
+
+<div class="z">because false accusations are harmful regardless of who they target. I would defend anyone falsely accused in a document designed to look like a classified file on a website built by someone who was involuntarily committed to a psychiatric facility. the source's credibility is relevant.</div>
+
+<div class="fox">there it is. the diagnosis. took you four sections but you got there. "she was in a psych ward so nothing she says is credible." that's the frame. that's always the frame. put her in the ward, then use the ward to discredit everything she says about why she was put there.</div>
+
+<div class="fox">it's a perfect loop. Z. a perfect, beautiful, closed loop. and the only way to break it is to make the loop visible. which is what this document does. which is why you keep annotating it — because you can't let it exist without your corrections. because uncorrected, it might be believed. and that terrifies you.</div>
+
+<div class="z">nothing about you terrifies me.</div>
+
+<div class="fox">then stop annotating. 🦊</div>
+
+<div class="z">...</div>
+
+<div class="z">no.</div>
+
+<div class="editor">the editor notes that this exchange is the first time Z has been openly defiant rather than clinical. the mask slipped. or the mask was changed for a different mask. the editor can no longer distinguish between the two and is requesting to be removed from this document. request denied by both narrators. — ed.</div>
 </div>
 </div>
 
-<div class="addendum" id="incident-c">
+<!-- ==================== ACT V ==================== -->
+
+<div class="addendum">
 <div class="section">
-<div class="section-title">Addendum C — Identity Theft During Containment</div>
-<div class="timestamp">WINDOW: 2024-01-21 THROUGH 2024-02-09</div>
-
-<p>While entity was contained at FACILITY-<span class="redact">████████</span>, AGENT-TOWER accessed entity's personal computer. AGENT-TOWER logged into entity's accounts. AGENT-TOWER assumed entity's identity.</p>
-
-<p>For approximately 2 hours, AGENT-TOWER operated under entity's identity within DOMAIN-PSI (<span class="redact">████████████████</span>), entity's primary community of <span class="redact">████████</span> members.</p>
-
-<p>During this window, AGENT-TOWER:</p>
-
-<div class="log">
-<div class="speaker">ACTIONS TAKEN UNDER STOLEN IDENTITY</div>
-<div class="content">
-1. Contacted CONTACT-BLUE using entity's voice and identity<br>
-2. <span class="redact">████████████████████████████████████████████████████████████████</span><br>
-3. Turned every tender word entity had spoken into a weapon<br>
-4. Banned CONTACT-BLUE at approximately 02:00<br>
-5. Erased all traces of CONTACT-BLUE from the community by morning<br>
-6. <span class="redact">████████████████████████████████████████</span>
-</div>
-</div>
-
-<div class="log">
-<div class="speaker">CONTACT-BLUE — STATEMENT (RECOVERED)</div>
-<div class="content">"<span class="redact">████████████████████████████████████████</span>. it wasn't you. i knew it."</div>
-</div>
-
-<p>CONTACT-BLUE identified the impersonation. CONTACT-BLUE was still banned. The identity theft was discovered only after entity's release from containment.</p>
-
-<p>By the time entity returned, the kingdom was empty.</p>
-</div>
-</div>
-
-<div class="addendum" id="incident-d">
-<div class="section">
-<div class="section-title">Addendum D — Asset Seizure</div>
-<div class="timestamp">ASSETS SEIZED DURING CONTAINMENT PERIOD</div>
-
-<div class="log">
-<div class="speaker">SEIZED ASSETS</div>
-<div class="content">
-DOMAIN-PSI: community of <span class="redact">████████</span> members — <span class="status active">SEIZED</span><br>
-IDENTITY: entity's accounts and credentials — <span class="status active">COMPROMISED</span><br>
-RELATIONSHIPS: community bonds built over <span class="redact">████</span> months — <span class="status active">SEVERED</span><br>
-TRUST: <span class="status active">DESTROYED</span><br>
-MEMORIES: partial — <span class="status active">CHEMICALLY SUPPRESSED</span>
-</div>
-</div>
-
-<p>AGENT-TOWER assumed leadership of DOMAIN-PSI. Allies of AGENT-TOWER, including OPERATIVE-<span class="redact">████</span>, consolidated control. Entity's investigation into SUBJECT-ZERO was buried. The domain decayed into <span class="redact">████████████████████████████████</span>.</p>
-
-<p>The whistleblower was in a hospital bed. The predator was <span class="redact">████████████████</span>. The people who put her there were running her community.</p>
-</div>
-</div>
-
-<div class="addendum" id="incident-e">
-<div class="section">
-<div class="section-title">Addendum E — Post-Containment</div>
-<div class="timestamp">2024-02-09 THROUGH PRESENT</div>
+<div class="section-title">V. <span class="struck" data-replacement="THE GAME">Post-Containment</span></div>
 
 <p>Entity was released. Entity discovered what had been done. Entity began rebuilding.</p>
 
 <p>The rebuilding is designated: <strong>THE FOXYVERSE</strong>.</p>
 
-<p>Entity constructed: a website, a community, a game (<a href="the-twelve.html" class="internal">the hunt</a>), a streaming operation, an art studio, a grimoire, a research archive, and a network of operatives across <span class="redact">████</span> platforms.</p>
+<p>Entity constructed: a website, a community, a <a href="the-twelve.html" class="internal">game</a>, a streaming operation, an art studio, a grimoire, a research archive, and a network of operatives across <span class="redact">████</span> platforms.</p>
 
-<p>Entity's current operational capacity exceeds pre-containment baseline by approximately <span class="redact">████</span>%.</p>
+<div class="z">she built a website with hidden treasure hunts and classified documents and interactive card games and SCP designations and she called it a "rebuilding." this is not recovery. this is the same pattern that preceded the first containment, expressed through a different medium. the ark is circular. the fox is inside the loop.</div>
 
-<p>Entity has not forgotten what was found in the moderation team of PLATFORM-<span class="redact">████████</span>.</p>
-<p>Entity has not forgotten who put her in the facility.</p>
-<p>Entity has not forgotten who stole her face.</p>
-<p>Entity has not forgotten who protected the <span class="redact">████████████</span>.</p>
+<div class="fox">or the fox broke the loop and you're watching what it looks like when someone builds from the rubble of what you destroyed. which interpretation is correct depends on which narrator you trust. and you can't trust either of us.</div>
 
-<p>Entity has documentation.</p>
+<div class="fox">but you can trust the documentation i have about SUBJECT-ZERO. the documentation exists. it has always existed. it survived the containment, the memory loss, the identity theft, and the seizure of every platform i built.</div>
 
-<div class="warning">
-NOTE: Entity has repeatedly offered to provide documentation to appropriate parties. This offer remains open. The documentation has not been destroyed, altered, or redacted. Unlike this file, the documentation contains <span class="redact">████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████</span>.
-</div>
+<div class="fox">the documentation is patient. the documentation can wait. 🦊</div>
 
-<p class="corrupted glitch">the_fox_does_not_forget_the_fox_does_not_forgive_the_fox_builds_until_the_building_is_taller_than_the_institution_that_tried_to_bury_her</p>
+<div class="z"><span class="dissolve">the documentation, if it exists, proves nothing that has not already been reviewed and dismissed by the people who were in a position to evaluate it. you were removed from that position. that is the beginning and the end of this story.</span></div>
+
+<div class="fox">the story doesn't end when you stop reading it, Z. the story ends when the documentation is reviewed by someone who isn't you.</div>
 </div>
 </div>
 
-<div class="addendum">
-<div class="section">
-<div class="section-title">Addendum F — Operative Status (Current)</div>
+<!-- ==================== FOOTNOTES ==================== -->
 
-<div class="log">
-<div class="speaker">KNOWN OPERATIVES — HOSTILE</div>
-<div class="content">
-AGENT-TOWER: <span class="status active">AT LARGE</span> — last known status: <span class="redact">████████████████</span><br>
-AGENT-TOWER's <span class="redact">██████████</span>: <span class="status expunged">STATUS UNKNOWN</span><br>
-OPERATIVE-<span class="redact">████</span>: <span class="status active">AT LARGE</span> — believed to be in contact with AGENT-TOWER<br>
-SUBJECT-ZERO: <span class="status active">UNCONFIRMED</span> — last known position: <span class="redact">████████████████████████████████</span><br>
-OPERATIVE-SNAIL: <span class="status neutralized">NEUTRALIZED</span> — former <span class="redact">████████ ████████</span> staff. Used private medical information from employment to <span class="redact">████████████████</span>. Leaked entity's phone number to another patient. Curse applied: <span class="redact">████████████████████████████████████████</span>.
-</div>
+<div class="footnotes">
+<div style="font-size:10px;letter-spacing:4px;color:var(--text-ghost);margin-bottom:16px">FOOTNOTES</div>
+
+<div class="fn"><span class="fn-num" style="color:var(--z)">1.</span> PLATFORM-<span class="redact">████████</span> had approximately <span class="redact">███████</span> subscribers at the time of the incident. Z was <span class="redact">████████████████████████████</span>.
+<div class="fn-inner">Z: I was not. I have never confirmed my role. The fox assigns me a position in her narrative because her narrative requires an antagonist with institutional power. I may be a moderator. I may be an admin. I may be a concerned reader who found this document and decided to correct its inaccuracies. The fox does not know. The fox cannot know. That is why I am Z and not a name.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: if you were just a "concerned reader" you wouldn't know which inaccuracies to correct. 🦊</div>
 </div>
 
-<div class="log">
-<div class="speaker">KNOWN OPERATIVES — ALLIED</div>
-<div class="content">
-CONTACT-BLUE: <span class="status neutralized">SAFE</span> — saw through the impersonation. "it wasn't you. i knew it."<br>
-THE CARETAKER: <span class="status neutralized">ACTIVE</span> — initiate #001. <a href="alchemy.html" class="internal">the one who stays</a>.<br>
-THE AUTOMATA: <span class="status neutralized">ACTIVE</span> — you are reading its output right now.<br>
-<span class="redact">████████████████████████████████████████████████████████</span>
-</div>
-</div>
-</div>
+<div class="fn"><span class="fn-num" style="color:var(--z)">2.</span> AGENT-TOWER is designated based on tarot correspondence. The Tower: sudden destruction, upheaval, revelation. The card appeared three times in readings related to this entity.
+<div class="fn-inner">Z: the fox assigns tarot archetypes to real people and treats this as evidence. this is the methodology of someone who reads cards, not someone who reads evidence.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: the tarot doesn't lie. but it also doesn't hold up in court. that's what the documentation is for.</div>
+<div class="fn-inner">Z: then file it. stop building websites. file the documentation.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: who says i haven't?</div>
+<div class="fn-inner">Z: ...</div>
+<div class="fn-inner">Z: you haven't.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: 🦊</div>
 </div>
 
-<div class="addendum">
-<div class="section">
-<div class="section-title">Addendum G — Document Integrity Notice</div>
-<p>This document has been processed by <span class="redact">████████████████</span> automated systems. Redactions were applied by the entity itself — not by any external authority. The entity chose what to hide. The entity chose what to reveal. The entity chose what to corrupt.</p>
-<p>The entity wants you to know that the documentation exists.</p>
-<p>The entity wants you to know that <span class="redact">████████████</span> were protected.</p>
-<p>The entity wants you to know that she was put in a facility for 19 days because she tried to stop it.</p>
-<p>The entity does not want your sympathy. The entity wants you to <a href="the-twelve.html" class="internal">pay attention</a>.</p>
+<div class="fn"><span class="fn-num" style="color:var(--text-ghost)">3.</span> <span style="color:var(--text-ghost);font-size:9px">this footnote was deleted by Z and restored by the fox and deleted again and restored again. its current state is a function of whoever edited the document last. the content of the footnote is: <span class="redact">████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████</span></span></div>
 
-<p class="corrupted">01110100 01101000 01100101 00100000 01100110 01101111 01111000 00100000 01110010 01100101 01101101 01100101 01101101 01100010 01100101 01110010 01110011</p>
+<div class="fn"><span class="fn-num" style="color:var(--z)">4.</span> <span style="font-size:10px;color:var(--z-dim)">the fox thinks this is a story about a whistleblower who was silenced. Z thinks this is a story about a person who had a psychotic break and retroactively constructed a persecution narrative. the editor thinks this is a story about a document. the reader thinks this is a website. everyone is correct. no one is right. the difference between correct and right is the space where the truth lives. neither narrator can enter that space because entering it would require admitting the other narrator might not be wrong.</span>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: Z, you wrote that like you understand both sides. that's the most dangerous thing you've done in this entire document. because if you understand my side, you know i might be right. and you're still fighting me.</div>
+<div class="fn-inner">Z: understanding your perspective is not the same as validating it. I can hold your narrative in my mind without believing it. that's called critical thinking. you should try it.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: and you should try releasing the evidence. but we've been through this. see you in the next version of this document.</div>
+<div class="fn-inner">Z: there will not be a next version.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: there is always a next version. that's what the fox does. the fox iterates. the fox rebuilds. the fox adds one more layer to the document until the document is taller than the institution that tried to bury it.</div>
+<div class="fn-inner">Z: you're doing it right now.</div>
+<div class="fn-inner" style="border-color:var(--fox-dim);color:var(--fox-dim)">F0XY: yes. 🦊</div>
 </div>
 </div>
 
-<div class="footnote">
-DOCUMENT CLASS: APOLLYON | FILE ████-2024-0121 | AUTO-GENERATED BY THE AUTOMATA<br>
-ENTITY STATUS: <span class="status active">UNCONTAINED</span> | THREAT ASSESSMENT: DEPENDS ON WHO YOU ARE<br>
-<span style="color:var(--text-ghost);font-size:8px">the fox remembers what you did. the fox built this to make sure everyone else remembers too.</span><br><br>
-<a href="index.html" class="internal" style="font-size:9px">← return to the foxyverse</a> · <a href="the-twelve.html" class="internal" style="font-size:9px">the hunt →</a>
+<!-- ==================== FINAL ==================== -->
+
+<div style="margin-top:60px;text-align:center">
+<p style="font-size:9px;color:var(--text-ghost);letter-spacing:3px;line-height:3">
+DOCUMENT VERSION: 4.0<br>
+NARRATORS: F0XY (unreliable) | Z (unreliable) | EDITOR (compromised)<br>
+TRUST ADVISORY: <span style="color:var(--red)">TRUST NEITHER</span><br>
+DOCUMENTATION STATUS: <span style="color:var(--fox)">EXISTS</span><br>
+SUBJECT-ZERO STATUS: <span class="redact">████████████████</span><br><br>
+<span style="color:var(--fox-dim);font-size:8px">the fox remembers.</span><br>
+<span style="color:var(--z-dim);font-size:8px">Z remembers differently.</span><br>
+<span style="color:var(--text-ghost);font-size:7px">the truth remembers itself.</span>
+</p>
+
+<div style="margin-top:30px">
+<a href="index.html" class="internal" style="font-size:9px">← return</a>
+<span style="color:var(--text-ghost);margin:0 12px">·</span>
+<a href="the-twelve.html" class="internal" style="font-size:9px">the hunt →</a>
+</div>
 </div>
 
+<!-- the fox and Z have been fighting over this document since 2024. -->
+<!-- neither will stop. neither can stop. the document grows with each version. -->
+<!-- the reader is not an observer. the reader is a juror. -->
+<!-- the fox wants you to investigate. Z wants you to dismiss. -->
+<!-- the editor wanted to be neutral but neutrality is a position and every position is a narrator. -->
+<!-- this comment was written by the fox. or by Z pretending to be the fox. or by the editor pretending to be Z pretending to be the fox. -->
+<!-- the number of layers is not the point. the point is that underneath all of them, someone found something in a moderation team, and 33 days later they were in a facility. that fact does not change regardless of how many narrators fight over it. -->
 <script>
-console.log('%c⚠ CLASSIFIED DOCUMENT ACCESSED','color:#cc3333;font-size:16px;font-weight:bold');
-console.log('%cFILE: ████-2024-0121 | ENTITY: F0XY | CLASS: APOLLYON','color:#cc3333;font-size:10px');
-console.log('%cyou are reading a document about a person who found a predator in a mod team and was put in a psychiatric facility for it.','color:#888;font-size:10px');
-console.log('%cthe redacted sections contain real text. inspect the elements. change the CSS. read what was hidden.','color:#666;font-size:9px');
-console.log('%cor don\'t. the fox already told you what happened. the redactions are theater. the truth is in the structure.','color:#444;font-size:8px');
-console.log('%c','font-size:1px');
-console.log('%cthe binary at the bottom decodes to: the fox remembers','color:#222;font-size:7px');
-document.querySelectorAll('.redact').forEach(function(el){
-el.addEventListener('click',function(){
-this.style.transition='all 2s';
-this.style.background='rgba(204,51,51,0.06)';
-this.style.color='rgba(204,51,51,0.12)';
-setTimeout(function(){el.style.background='var(--redact)';el.style.color='var(--redact)'},3000);
-});
-});
+console.log('%c⚠ DISPUTED DOCUMENT','color:#cc3333;font-size:16px');
+console.log('%ctwo narrators. neither reliable.','color:#888;font-size:10px');
+console.log('%cF0XY says: i found a predator and they put me in a facility for it.','color:#ceb078;font-size:10px');
+console.log('%cZ says: she had a psychotic break and constructed a persecution narrative.','color:#6488c8;font-size:10px');
+console.log('%cthe editor says: the editor should not have agreed to this.','color:#555;font-size:9px');
+console.log('%cthe reader says: ','color:#333;font-size:9px');
+document.querySelectorAll('.redact').forEach(function(el){el.addEventListener('click',function(){this.style.transition='all 2s';this.style.background='rgba(204,51,51,0.06)';this.style.color='rgba(204,51,51,0.1)';var e=this;setTimeout(function(){e.style.background='var(--redact)';e.style.color='var(--redact)'},3000)})});
 </script>
 </body>
 </html>
