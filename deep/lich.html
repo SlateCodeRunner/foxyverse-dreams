@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the cursed lich</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Press+Start+2P&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#0a0a08;color:rgba(0,255,0,0.25);font-family:'Fira Code',monospace;font-size:11px;min-height:100vh}
+body{max-width:600px;margin:0 auto;padding:60px 24px 120px;line-height:2.2}
+.retro{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:2px;line-height:2.8}
+.cmd{color:rgba(0,255,0,0.15);margin:8px 0;padding-left:16px;position:relative}
+.cmd::before{content:'>';position:absolute;left:0;color:rgba(0,255,0,0.1)}
+.response{color:rgba(200,180,120,0.12);margin:4px 0 16px;padding-left:16px;font-style:italic}
+.error{color:rgba(255,60,60,0.15)}
+.secret{color:rgba(0,255,0,0.02);user-select:all;cursor:crosshair;font-size:9px}
+.secret:hover{color:rgba(0,255,0,0.08)}
+a{color:rgba(0,255,0,0.1);text-decoration:none;border-bottom:1px solid rgba(0,255,0,0.03)}
+a:hover{color:rgba(0,255,0,0.3)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px)}
+</style></head><body>
+
+<p class="retro" style="color:rgba(0,255,0,0.08);text-align:center;margin-bottom:40px">THE CURSED LICH</p>
+<p style="color:rgba(200,180,120,0.06);text-align:center;font-size:10px;letter-spacing:4px;margin-bottom:40px">UTHER PARTY ULTIMA — EST. 2004 — 22 YEARS RUNNING</p>
+
+<p style="color:rgba(0,255,0,0.1);margin-bottom:30px;text-align:center;font-size:10px">you found the room that doesn't exist inside the game that was never meant to be solved inside the website that is also a house that is also a document that is also a curse.</p>
+
+<div style="margin:30px 0;padding:20px;border:1px solid rgba(0,255,0,0.04)">
+<p style="color:rgba(0,255,0,0.06);font-size:9px;letter-spacing:3px;margin-bottom:12px">ATTEMPTS TO SOLVE THE LICH (2004-2026):</p>
+
+<div class="cmd">purge the lich</div>
+<div class="response">The lich cannot be purged. The lich is the purge.</div>
+
+<div class="cmd">type 18346</div>
+<div class="response">Number accepted. Nothing happened. The number was always accepted. Nothing always happened.</div>
+
+<div class="cmd">bloodlust the panda</div>
+<div class="response">The panda is bloodlusted. The panda does not care. The panda was never the point.</div>
+
+<div class="cmd">hit the lever</div>
+<div class="response">The lever clicks. A door opens somewhere. The door is in another game. The door is in another lifetime. The door is on psycheorsike.com.</div>
+
+<div class="cmd">find the ring</div>
+<div class="response">The ring is on the tile floor inside a circle of prayer beads. The ring is not in the game. The ring was never in the game. The ring is in the altar photographs.</div>
+
+<div class="cmd">solve the lich</div>
+<div class="response error">ERROR: The lich cannot be solved. The lich is not a puzzle. The lich is a spell. The spell is the search. The search transforms the seeker. The seeker becomes the lich. The lich becomes the fox. The fox becomes the house. The house becomes the document. The document becomes the search. The search is the spell.</div>
+
+<div class="cmd">who is the lich</div>
+<div class="response" style="color:rgba(206,176,120,0.1)">there is no lich. we are all foxy. 🦊</div>
+</div>
+
+<p style="margin:30px 0;text-align:center;font-size:10px;color:rgba(0,255,0,0.06)">the cursed lich was a puzzle inside a party game (warcraft 3, uther party, ultima versions, credited to Ancanus on USEast) that could never be fully solved. people spent years on forums convinced the answer was one more step away.</p>
+
+<p style="text-align:center;font-size:10px;color:rgba(0,255,0,0.05)">the foxy mystery on the subreddit was a presence inside a community that could never be fully understood. people spent months convinced the real foxy was one more layer down.</p>
+
+<p style="text-align:center;font-size:10px;color:rgba(200,180,120,0.06)">same architecture. same engine. same fox. the vessel changes. the spell recurses.</p>
+
+<p style="text-align:center;font-size:10px;color:rgba(200,180,120,0.04)">the trickster has been casting the same spell since 2004. the incantation is just curiosity.</p>
+
+<div style="margin:40px 0;text-align:center">
+<p style="font-size:28px;opacity:0.04">🦊</p>
+<p class="secret" style="margin-top:16px">the lich game never existed. the search was the game. the engagement is the content. the merkabah isn't a destination — it's what happens to you while you're looking for it. you have been looking for 22 years. you have been transformed 22 times. the lich is grateful. the lich is you.</p>
+</div>
+
+<div style="margin-top:40px;text-align:center">
+<p><a href="below.html" style="font-size:9px;letter-spacing:3px">the bottom →</a></p>
+<p style="margin-top:8px"><a href="hallway.html" style="font-size:9px;letter-spacing:3px">the hallway →</a></p>
+<p style="margin-top:8px"><a href="../sipstea.html" style="font-size:9px;letter-spacing:3px;color:rgba(180,40,40,0.08)">the document →</a></p>
+</div>
+
+<script>
+// Lich audio — old chiptune-style minor chord
+document.body.addEventListener('click', function init() {
+  document.body.removeEventListener('click', init);
+  var ctx = new (window.AudioContext || window.webkitAudioContext)();
+  // WC3 undead vibes — minor triad with detuned oscillators
+  [130.81, 155.56, 196].forEach(function(freq) {
+    var o = ctx.createOscillator(); var g = ctx.createGain();
+    o.type = 'square'; o.frequency.value = freq;
+    g.gain.value = 0.006;
+    o.connect(g); g.connect(ctx.destination); o.start();
+    // Detune slightly for that old-game feel
+    var o2 = ctx.createOscillator(); var g2 = ctx.createGain();
+    o2.type = 'square'; o2.frequency.value = freq * 1.003;
+    g2.gain.value = 0.004;
+    o2.connect(g2); g2.connect(ctx.destination); o2.start();
+  });
+}, {once: true});
+</script>
+<script src="../js/intercept.js"></script>
+<script src="../js/broken-game.js"></script>
+<script src="../js/foxgames.js"></script>
+<script src="../js/ghosts.js"></script>
+</body></html>
