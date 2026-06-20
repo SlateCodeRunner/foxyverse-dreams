@@ -4,3 +4,23 @@
 #si{background-image:url('ui-speech.png')!important;background-size:100% 100%!important;background-color:transparent!important;border:none!important;padding:16px 24px 20px 24px!important}
 #si::after{display:none!important}
 .map-grid{background-image:url('ui-map.png')!important;background-size:cover!important;background-position:center!important;border-radius:4px}
+
+
+/* TITLE SCREEN */
+#title{background-image:url('title.png')!important;background-size:cover!important;background-position:center!important;background-color:#000!important}
+#title h1,#title .subtitle{text-shadow:0 0 20px rgba(0,0,0,0.9),0 0 40px rgba(0,0,0,0.7)!important}
+
+/* ITEM SPRITE ICONS - 6 cols x 2 rows, each 36x36px */
+.inv-icon{width:36px!important;height:36px!important;background-image:url('items.png')!important;background-repeat:no-repeat!important;display:inline-block!important;image-rendering:pixelated!important}
+.inv-icon.compass{background-position:0 0!important}
+.inv-icon.grimoire_page{background-position:-36px 0!important}
+.inv-icon.ace_card{background-position:-72px 0!important}
+.inv-icon.burning_scroll{background-position:-108px 0!important}
+.inv-icon.crystal{background-position:-144px 0!important}
+.inv-icon.fox_mask{background-position:-180px 0!important}
+.inv-icon.skeleton_key{background-position:0 -36px!important}
+.inv-icon.moonwater{background-position:-36px -36px!important}
+.inv-icon.ember{background-position:-72px -36px!important}
+.inv-icon.coal{background-position:-108px -36px!important}
+.inv-icon.tear{background-position:-144px -36px!important}
+.inv-icon.rune{background-position:-180px -36px!important}
