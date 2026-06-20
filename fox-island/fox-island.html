@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Secret of Fox Island</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e0d4c0;font-family:'VT323',monospace;overflow:hidden;height:100vh;display:flex;align-items:center;justify-content:center}
+#gc{width:800px;max-width:100vw;height:600px;max-height:100vh;display:flex;flex-direction:column;border:3px solid #2a1f3d;box-shadow:0 0 40px rgba(120,60,180,.3),inset 0 0 60px rgba(0,0,0,.5);position:relative;overflow:hidden}
+#gc::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.1) 0px,rgba(0,0,0,.1) 1px,transparent 1px,transparent 3px);pointer-events:none;z-index:100}
+
+/* VIEWPORT */
+#vp{flex:1;position:relative;overflow:hidden;cursor:crosshair;min-height:0}
+#scene{width:100%;height:100%;position:absolute;top:0;left:0}
+#fade{position:absolute;top:0;left:0;right:0;bottom:0;background:#0a0a0f;z-index:30;opacity:0;pointer-events:none;transition:opacity .3s}
+#fade.on{opacity:1}
+
+/* BACKGROUNDS */
+.bg-dock{background:url('bg/dock.png') center/cover no-repeat}
+.bg-village{background:url('bg/village.png') center/cover no-repeat}
+.bg-tavern{background:url('bg/tavern.png') center/cover no-repeat}
+.bg-temple{background:url('bg/temple.png') center/cover no-repeat}
+.bg-garden{background:url('bg/garden.png') center/cover no-repeat}
+.bg-throne{background:url('bg/throne.png') center/cover no-repeat}
+.bg-underdock{background:url('bg/underdock.png') center/cover no-repeat}
+.bg-hearth{background:url('bg/hearth.png') center/cover no-repeat}
+.bg-wellspring{background:url('bg/wellspring.png') center/cover no-repeat}
+.bg-sanctum{background:url('bg/sanctum.png') center/cover no-repeat}
+
+/* PLAYER SPRITE */
+#player{position:absolute;z-index:20;font-size:44px;transform-origin:center bottom;user-select:none;pointer-events:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
+#player.idle{animation:ibob 2s ease-in-out infinite}
+#player.walk{animation:wbob .3s ease-in-out infinite}
+#player.fl{transform:scaleX(-1)}
+#player.fl.idle{animation:ibobf 2s ease-in-out infinite}
+#player.fl.walk{animation:wbobf .3s ease-in-out infinite}
+@keyframes ibob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes wbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes ibobf{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-3px)}}
+@keyframes wbobf{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-5px)}}
+
+/* SPEECH BUBBLE */
+#speech{position:absolute;z-index:25;pointer-events:none;opacity:0;transition:opacity .25s;max-width:380px;min-width:80px}
+#speech.show{opacity:1}
+#si{background:rgba(8,4,18,.93);border:2px solid #ffaa32;border-radius:8px;padding:10px 14px;font-size:17px;line-height:1.35;color:#e0d4c0;text-align:center;box-shadow:0 0 18px rgba(255,170,50,.12)}
+#si::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #ffaa32}
+#si .speaker{color:#ffaa32;display:block;font-family:'Press Start 2P',cursive;font-size:8px;margin-bottom:4px}
+#si .g{color:#50ff50} #si .h{color:#9b7abf} #si .s{color:#ff6bff} #si .a{color:#7ab8ff}
+
+/* HOTSPOTS */
+.hs{position:absolute;cursor:pointer;border:2px solid transparent;transition:all .15s;z-index:10;border-radius:3px}
+.hs:hover{border-color:rgba(255,170,50,.6);box-shadow:0 0 12px rgba(255,170,50,.3)}
+.hs.exit-hs:hover{border-color:rgba(120,200,255,.6);box-shadow:0 0 12px rgba(120,200,255,.3)}
+.hs.npc-hs:hover{border-color:rgba(180,120,255,.6);box-shadow:0 0 12px rgba(180,120,255,.3)}
+.hs.secret-hs:hover{border-color:rgba(255,100,255,.6);box-shadow:0 0 12px rgba(255,100,255,.3)}
+.hs-lbl{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:14px;color:#ffaa32;white-space:nowrap;opacity:0;transition:opacity .15s;text-shadow:1px 1px 3px #000;pointer-events:none}
+.hs:hover .hs-lbl{opacity:1}
+.hs.glow{border-color:rgba(255,170,50,.4)!important;box-shadow:0 0 8px rgba(255,170,50,.2)!important}
+.hs.exit-hs.glow{border-color:rgba(120,200,255,.3)!important}
+.hs.npc-hs.glow{border-color:rgba(180,120,255,.3)!important}
+
+/* QUEST TRACKER */
+#quest{position:absolute;top:5px;left:8px;z-index:15;pointer-events:none}
+#quest-text{font-family:'Press Start 2P',cursive;font-size:7px;color:#9b7abf;opacity:.7;max-width:250px;line-height:1.4}
+#quest-text::before{content:'🦊 '}
+
+/* CONTROLS */
+#mus-btn{position:absolute;top:5px;right:8px;font-family:'Press Start 2P',cursive;font-size:8px;color:#555;z-index:15;cursor:pointer;background:none;border:1px solid #333;padding:3px 6px}
+#mus-btn:hover{color:#ffaa32;border-color:#ffaa32}
+#mus-btn.on{color:#50ff50;border-color:#50ff50}
+#hl-btn{position:absolute;top:5px;right:60px;font-family:'Press Start 2P',cursive;font-size:8px;color:#555;z-index:15;cursor:pointer;background:none;border:1px solid #333;padding:3px 6px}
+#hl-btn:hover{color:#ffaa32;border-color:#ffaa32}
+
+/* TITLE */
+#title{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;background:linear-gradient(180deg,#0d0820,#1a0e35 40%,#0a1628 70%,#061018)}
+.stars{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:tw 3s infinite alternate}
+@keyframes tw{0%{opacity:.2}100%{opacity:1}}
+.tt{font-family:'Press Start 2P',cursive;text-align:center;z-index:2;position:relative}
+.tt h1{font-size:17px;color:#ffaa32;text-shadow:0 0 20px rgba(255,170,50,.5),2px 2px 0 #8b4513;margin-bottom:6px;line-height:1.5}
+.tt h2{font-size:26px;color:#ff6b2b;text-shadow:0 0 30px rgba(255,107,43,.6),3px 3px 0 #4a1a00;margin-bottom:24px;letter-spacing:3px}
+.tt .fox{font-size:56px;margin-bottom:16px;filter:drop-shadow(0 0 15px rgba(255,107,43,.5))}
+.tt .sub{font-family:'VT323',monospace;font-size:18px;color:#9b7abf;margin-bottom:35px}
+#start-btn{font-family:'Press Start 2P',cursive;font-size:13px;color:#ffaa32;background:transparent;border:2px solid #ffaa32;padding:12px 28px;cursor:pointer;animation:pulse 2s infinite;z-index:2;position:relative;transition:all .3s}
+#start-btn:hover{background:#ffaa32;color:#0a0a0f;box-shadow:0 0 20px rgba(255,170,50,.5)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+/* VERB BAR — now contextual */
+#verbs{height:44px;background:#110a22;border-top:1px solid #2a1f3d;display:flex;align-items:center;padding:0 6px;gap:3px}
+.vb{font-family:'Press Start 2P',cursive;font-size:9px;color:#6a5a4a;background:#1a1030;border:1px solid #201535;padding:5px 9px;cursor:pointer;transition:all .12s;white-space:nowrap}
+.vb:hover,.vb.active{color:#ffaa32;background:#2a1545;border-color:#ffaa32;box-shadow:0 0 6px rgba(255,170,50,.2)}
+#verb-hint{font-size:14px;color:#666;margin-left:auto;margin-right:8px;font-style:italic;white-space:nowrap;overflow:hidden}
+
+/* INVENTORY */
+#inv{height:46px;background:#0a0618;border-top:1px solid #2a1f3d;display:flex;align-items:center;padding:0 6px;gap:3px;overflow-x:auto}
+.is{width:38px;height:38px;background:#1a1030;border:1px solid #2a1f3d;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;flex-shrink:0;transition:all .12s;position:relative}
+.is:hover{border-color:#ffaa32;box-shadow:0 0 6px rgba(255,170,50,.2)}
+.is.sel{border-color:#ff6b2b;box-shadow:0 0 10px rgba(255,107,43,.4);background:#2a1030}
+.is-tip{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:13px;color:#ffaa32;background:#0d0820ee;padding:2px 6px;border:1px solid #2a1f3d;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:20;border-radius:3px}
+.is:hover .is-tip{opacity:1}
+
+/* OVERLAYS */
+#dlg{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(10,6,24,.93);z-index:40;display:none;flex-direction:column;padding:20px}
+#dlg.active{display:flex}
+#dlg-sp{font-family:'Press Start 2P',cursive;font-size:11px;color:#ffaa32;margin-bottom:10px}
+#dlg-tx{font-size:20px;color:#e0d4c0;margin-bottom:16px;line-height:1.5;flex:1;overflow-y:auto}
+#dlg-ch{display:flex;flex-direction:column;gap:5px;max-height:200px;overflow-y:auto}
+.dc{font-family:'VT323',monospace;font-size:18px;color:#9b7abf;background:#1a1030;border:1px solid #2a1f3d;padding:8px 12px;cursor:pointer;text-align:left;transition:all .12s}
+.dc:hover{color:#ffaa32;border-color:#ffaa32;background:#2a1545}
+#duel{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(10,6,24,.95);z-index:45;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+#duel.active{display:flex}
+.dh{font-family:'Press Start 2P',cursive;font-size:13px;color:#ff6b2b;margin-bottom:6px}
+.ds{font-family:'Press Start 2P',cursive;font-size:10px;color:#ffaa32;margin-bottom:16px}
+#d-atk{font-size:20px;color:#ff4444;text-align:center;margin-bottom:20px;padding:12px;border:1px solid #441111;background:rgba(60,10,10,.5);max-width:580px;line-height:1.4}
+#d-opts{display:flex;flex-direction:column;gap:6px;width:100%;max-width:580px}
+.do{font-family:'VT323',monospace;font-size:17px;color:#9b7abf;background:#1a1030;border:1px solid #2a1f3d;padding:9px 12px;cursor:pointer;text-align:left;transition:all .12s}
+.do:hover{color:#50ff50;border-color:#50ff50;background:#0a2010}
+#d-res{font-family:'Press Start 2P',cursive;font-size:11px;margin-top:12px;padding:8px;text-align:center;min-height:30px}
+#d-res.w{color:#50ff50}#d-res.l{color:#ff4444}
+#end{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(10,6,24,.97);z-index:55;display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center}
+#end.active{display:flex}
+#end h2{font-family:'Press Start 2P',cursive;font-size:20px;color:#ffaa32;margin-bottom:16px}
+#end p{font-size:19px;color:#9b7abf;margin-bottom:8px;max-width:480px;line-height:1.5}
+#end button{font-family:'Press Start 2P',cursive;font-size:11px;color:#ffaa32;background:transparent;border:2px solid #ffaa32;padding:10px 22px;cursor:pointer;margin-top:16px;transition:all .3s}
+#end button:hover{background:#ffaa32;color:#0a0a0f}
+
+/* MAP OVERLAY */
+#map{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(10,6,24,.95);z-index:38;display:none;flex-direction:column;align-items:center;justify-content:center;padding:30px}
+#map.active{display:flex}
+#map h3{font-family:'Press Start 2P',cursive;font-size:12px;color:#ffaa32;margin-bottom:20px}
+.map-grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:8px;width:360px;height:280px}
+.map-loc{background:#1a1030;border:2px solid #2a1f3d;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;cursor:default;transition:all .15s;text-align:center;padding:4px;font-family:'Press Start 2P',cursive}
+.map-loc.discovered{color:#9b7abf;border-color:#3a2860;cursor:pointer}
+.map-loc.discovered:hover{color:#ffaa32;border-color:#ffaa32;background:#2a1545;box-shadow:0 0 10px rgba(255,170,50,.2)}
+.map-loc.current{color:#ffaa32;border-color:#ffaa32;background:#2a1545}
+#map-close{font-family:'Press Start 2P',cursive;font-size:10px;color:#666;background:none;border:1px solid #333;padding:6px 14px;cursor:pointer;margin-top:16px}
+#map-close:hover{color:#ffaa32;border-color:#ffaa32}
+
+/* NOTIFICATIONS */
+.notif{position:absolute;top:20px;left:50%;transform:translateX(-50%);font-family:'Press Start 2P',cursive;font-size:10px;padding:8px 16px;border-radius:3px;z-index:60;animation:ni .3s ease-out,no .5s 2.5s ease-in forwards;white-space:nowrap;pointer-events:none}
+.notif.item{background:#0a2010;color:#50ff50;border:1px solid #50ff50}
+.notif.spell{background:#1a0a30;color:#bf7aff;border:1px solid #bf7aff}
+.notif.info{background:#1a1a00;color:#ffaa32;border:1px solid #ffaa32}
+.notif.fail{background:#2a0a0a;color:#ff4444;border:1px solid #ff4444}
+.notif.secret{background:#2a0a2a;color:#ff6bff;border:1px solid #ff6bff}
+@keyframes ni{from{opacity:0;top:5px}to{opacity:1;top:20px}}
+@keyframes no{from{opacity:1}to{opacity:0}}
+
+/* SCREEN EFFECTS */
+#fx{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:90;opacity:0;transition:opacity .15s}
+#fx.flash-green{opacity:1;background:rgba(50,255,50,.12)}
+#fx.flash-purple{opacity:1;background:rgba(180,100,255,.12)}
+#fx.flash-pink{opacity:1;background:rgba(255,100,255,.12)}
+#fx.flash-red{opacity:1;background:rgba(255,50,50,.1)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.shake{animation:shake .3s ease-in-out!important}
+
+/* DECORATIONS */
+.moon{position:absolute;top:30px;right:60px;width:50px;height:50px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fffde8,#f0e68c);box-shadow:0 0 30px rgba(240,230,140,.4)}
+.lantern{position:absolute;width:14px;height:20px;background:#ff8c00;border-radius:3px;box-shadow:0 0 20px rgba(255,140,0,.6);animation:fl 2s ease-in-out infinite alternate}
+@keyframes fl{0%{opacity:.8}50%{opacity:1}100%{opacity:.9}}
+.water{position:absolute;bottom:0;left:0;right:0;height:22%;background:linear-gradient(180deg,rgba(20,60,120,.5),rgba(10,40,80,.7));animation:wm 4s ease-in-out infinite}
+@keyframes wm{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes flame{0%{transform:scale(1)}100%{transform:scale(1.1,.9) translateY(-2px)}}
+.mp3-tag{position:absolute;bottom:8px;right:8px;font-size:13px;color:#ff6bff;background:rgba(10,6,24,.8);padding:3px 10px;border:1px solid #4a1a5a;border-radius:3px;z-index:15;pointer-events:none}
+
+
+/* NPC SPRITES */
+.npc{position:absolute;z-index:8;pointer-events:none;image-rendering:auto}
+.npc-stranger{width:56px;height:84px;background:url('sprites/stranger.png') 0 0 no-repeat;background-size:224px 168px;animation:str-idle 2s steps(4) infinite}
+@keyframes str-idle{to{background-position:-224px 0}}
+.npc-stranger.standing{background-position:0 -84px;animation:str-stand 2s steps(2) infinite}
+@keyframes str-stand{to{background-position:-112px -84px}}
+.npc-barkeeper{width:56px;height:84px;background:url('sprites/barkeeper.png') 0 0 no-repeat;background-size:224px 168px;animation:bk-idle 2.5s steps(4) infinite}
+@keyframes bk-idle{to{background-position:-224px 0}}
+.npc-barkeeper.talking{background-position:0 -84px;animation:bk-talk 1.5s steps(4) infinite}
+@keyframes bk-talk{to{background-position:-224px -84px}}
+.npc-lostone{width:56px;height:84px;background:url('sprites/lostone.png') 0 0 no-repeat;background-size:224px 168px;animation:lo-idle 1.8s steps(4) infinite;opacity:.8;filter:brightness(1.2) contrast(.9)}
+@keyframes lo-idle{to{background-position:-224px 0}}
+.npc-lostone.cleared{background-position:0 -84px;animation:lo-clear 2s steps(4) infinite;opacity:1;filter:none}
+@keyframes lo-clear{to{background-position:-224px -84px}}
+.npc-queen{width:72px;height:108px;background:url('sprites/queen.png') 0 0 no-repeat;background-size:288px 432px;animation:q-throne 2.5s steps(4) infinite}
+@keyframes q-throne{to{background-position:-288px 0}}
+.npc-queen.standing{background-position:0 -108px;animation:q-stand 2s steps(4) infinite}
+@keyframes q-stand{to{background-position:-288px -108px}}
+.npc-queen.casting{background-position:0 -216px;animation:q-cast 1.2s steps(4) infinite}
+@keyframes q-cast{to{background-position:-288px -216px}}
+.npc-queen.defeated{background-position:0 -324px;animation:q-def 3s steps(2) infinite}
+@keyframes q-def{to{background-position:-144px -324px}}
+.npc-witch{width:52px;height:78px;background:url('sprites/witch.png') 0 0 no-repeat;background-size:208px 234px;animation:w-idle 2s steps(4) infinite}
+@keyframes w-idle{to{background-position:-208px 0}}
+.npc-witch.casting{background-position:0 -78px;animation:w-cast 1.5s steps(4) infinite}
+@keyframes w-cast{to{background-position:-208px -78px}}
+.npc-witch.defeated{background-position:0 -156px;animation:w-def 2s steps(2) infinite}
+@keyframes w-def{to{background-position:-104px -156px}}
+
+@media(max-width:820px){#gc{width:100vw;height:100vh;border:none}.vb{font-size:7px;padding:4px 6px}.tt h1{font-size:13px}.tt h2{font-size:20px}}
+</style>
+</head>
+<body>
+<div id="gc">
+<div id="title"><div class="stars" id="stars-c"></div><div class="tt"><div class="fox">🦊</div><h1>THE SECRET OF</h1><h2>FOX ISLAND</h2><div class="sub">a foxyverse adventure</div></div><button id="start-btn">▶ BEGIN</button></div>
+<div id="vp">
+  <div id="scene"></div>
+  <div id="fade"></div>
+  <div id="fx"></div>
+  <div id="player" class="idle">🦊</div>
+  <div id="speech"><div id="si"></div></div>
+  <div id="quest"><div id="quest-text"></div></div>
+  <button id="hl-btn" onclick="toggleHL()" title="Highlight hotspots (Tab)">👁</button>
+  <button id="mus-btn" onclick="toggleMus()">♪ OFF</button>
+</div>
+<div id="verbs">
+  <button class="vb" onclick="sv('look')" data-v="look">Look at</button>
+  <button class="vb" onclick="sv('use')" data-v="use">Use</button>
+  <button class="vb" onclick="sv('take')" data-v="take">Pick up</button>
+  <button class="vb" onclick="sv('talk')" data-v="talk">Talk to</button>
+  <button class="vb" onclick="sv('cast')" data-v="cast">Cast ✨</button>
+  <button class="vb" data-v="map" onclick="toggleMap()">Map 🗺</button>
+  <div id="verb-hint"></div>
+</div>
+<div id="inv"></div>
+<div id="dlg"><div id="dlg-sp"></div><div id="dlg-tx"></div><div id="dlg-ch"></div></div>
+<div id="duel"><div class="dh">⚔️ INSULT SPELL DUEL ⚔️</div><div class="ds" id="d-score"></div><div id="d-atk"></div><div id="d-opts"></div><div id="d-res"></div></div>
+<div id="map"><h3>🗺 Fox Island</h3><div class="map-grid" id="map-grid"></div><button id="map-close" onclick="toggleMap()">Close</button></div>
+<div id="end"><h2 id="end-t"></h2><p id="end-p"></p><button onclick="location.reload()">🦊 PLAY AGAIN</button></div>
+</div>
+<script>
+
+// ═══════════════════════════════════
+// THE SECRET OF FOX ISLAND v3
+// Modern UX + 90s charm without the pain
+// ═══════════════════════════════════
+
+// ── AUDIO ──
+const NT={C2:65.41,D2:73.42,E2:82.41,F2:87.31,G2:98,A2:110,B2:123.47,C3:130.81,Cs3:138.59,D3:146.83,Ds3:155.56,E3:164.81,F3:174.61,Fs3:185,G3:196,Gs3:207.65,A3:220,As3:233.08,B3:246.94,C4:261.63,Cs4:277.18,D4:293.66,Ds4:311.13,E4:329.63,F4:349.23,Fs4:370,G4:392,Gs4:415.3,A4:440,As4:466.16,B4:493.88,C5:523.25,D5:587.33,E5:659.26,Fs5:740,G5:784,A5:880};
+let actx=null,musOn=false,mNodes=[],mInt=null,mp3=null;
+function initA(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();}
+function toggleMus(){const b=$('mus-btn');musOn=!musOn;if(musOn){initA();b.textContent='♪ ON';b.classList.add('on');playMus(S.scene);}else{b.textContent='♪ OFF';b.classList.remove('on');stopMus();}}
+function stopMus(){if(mInt){clearInterval(mInt);mInt=null;}mNodes.forEach(n=>{try{n.stop();}catch(e){}});mNodes=[];if(mp3){mp3.pause();mp3.currentTime=0;}}
+function pn(f,ty,st,dur,v=.1){if(!actx||!musOn)return;const o=actx.createOscillator(),g=actx.createGain();o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(0,st);g.gain.linearRampToValueAtTime(v,st+.03);g.gain.setValueAtTime(v*.55,st+dur-.12);g.gain.linearRampToValueAtTime(0,st+dur);o.connect(g);g.connect(actx.destination);o.start(st);o.stop(st+dur+.05);mNodes.push(o);}
+function pc(ns,ty,st,dur,v=.05){ns.forEach(n=>pn(NT[n],ty,st,dur,v));}
+// SFX
+function sfx(type){if(!actx||!musOn)return;initA();const t=actx.currentTime;
+  if(type==='step'){pn(180+Math.random()*40,'sine',t,.05,.04);}
+  else if(type==='pickup'){pn(NT.E5,'sine',t,.08,.06);pn(NT.A5,'sine',t+.08,.1,.05);}
+  else if(type==='spell'){pn(NT.C5,'sine',t,.1,.05);pn(NT.E5,'sine',t+.1,.1,.05);pn(NT.G5,'sine',t+.2,.15,.04);}
+  else if(type==='fail'){pn(NT.E3,'square',t,.15,.04);pn(NT.C3,'square',t+.15,.2,.04);}
+  else if(type==='secret'){pn(NT.C4,'sine',t,.12,.05);pn(NT.E4,'sine',t+.1,.12,.05);pn(NT.G4,'sine',t+.2,.12,.05);pn(NT.C5,'sine',t+.3,.2,.06);}
+  else if(type==='click'){pn(300,'sine',t,.03,.03);}
+}
+const MUS={
+  dock:()=>{const t=actx.currentTime+.05,q=60/72;pc(['A2','E3','A3'],'sine',t,q*16,.04);['A3','C4','E4','A4','E4','C4','A3','E3','G3','B3','D4','G4','D4','B3','G3','D3'].forEach((n,i)=>pn(NT[n],'sine',t+i*q,q*1.8,.06));pn(NT.A2,'triangle',t,q*4,.07);pn(NT.G2,'triangle',t+q*4,q*4,.07);pn(NT.F2,'triangle',t+q*8,q*4,.07);pn(NT.E2,'triangle',t+q*12,q*4,.07);return q*16;},
+  village:()=>{const t=actx.currentTime+.05,q=60/125;[['C4',.5],['E4',.5],['G4',1],['A4',.5],['G4',.5],['E4',1],['F4',.5],['A4',.5],['C5',1],['B4',.5],['A4',.5],['G4',1],['E4',.5],['D4',.5],['C4',1],['D4',.5],['E4',.5],['F4',.5],['G4',1.5]].reduce((p,[n,d])=>{pn(NT[n],'square',t+p*q,d*q*.85,.07);return p+d;},0);[['C2',1],[0,.5],['C3',.5],['F2',1],[0,.5],['F3',.5],['G2',1],[0,.5],['G3',.5],['C2',1],[0,.5],['C3',.5]].reduce((p,[n,d])=>{if(n)pn(NT[n],'triangle',t+p*q,d*q*.7,.09);return p+d;},0);return q*12;},
+  tavern:()=>{const t=actx.currentTime+.05,q=60/115;[['G4',1],['B4',.5],['D5',.5],['C5',1],['B4',1],['A4',.5],['B4',.5],['G4',2],['E4',1],['G4',.5],['A4',.5],['B4',1],['A4',.5],['G4',.5],['Fs4',.5],['E4',.5],['D4',2]].reduce((p,[n,d])=>{pn(NT[n],'triangle',t+p*q,d*q*.85,.08);return p+d;},0);['G2','A2','B2','C3','D3','E3','D3','C3','B2','A2','G2','Fs3'].forEach((n,i)=>pn(NT[n],'triangle',t+i*q,q*.9,.1));return q*12;},
+  temple:()=>{const t=actx.currentTime+.05,q=60/60;pn(NT.E2,'sine',t,q*16,.06);['E3','G3','B3','E4','B4','E4','G3','B3','A3','C4','E4','A4','E4','C4','A3','E3'].forEach((n,i)=>pn(NT[n],'sine',t+i*q,q*1.5,.07));return q*16;},
+  garden:()=>{const t=actx.currentTime+.05,q=60/80;pn(NT.D2,'sine',t,q*12,.05);[['D4',1.5],['F4',1],['E4',.5],['Cs4',1],['D4',2],['A4',1],['Gs4',.5],['A4',.5],['F4',1.5],['E4',1.5]].reduce((p,[n,d])=>{pn(NT[n],'sine',t+p*q,d*q*.9,.06);return p+d;},0);return q*12;},
+  throne:()=>{const t=actx.currentTime+.05,q=60/88;pn(NT.B2,'sawtooth',t,q*12,.04);[['B4',1],['Fs4',.5],['G4',.5],['A4',1],['B4',1],['D5',1.5],['Cs5',.5],['B4',1],['A4',1]].reduce((p,[n,d])=>{pn(NT[n],'square',t+p*q,d*q*.8,.06);return p+d;},0);['B2','B2','Fs3','Fs3','G2','G2','A2','A2','B2','B2','D3','Cs3'].forEach((n,i)=>pn(NT[n],'triangle',t+i*q,q*.7,.1));return q*12;},
+  duel:()=>{const t=actx.currentTime+.05,q=60/150;['E4','G4','B4','E5','D5','B4','C5','A4','B4','E4','G4','A4'].forEach((n,i)=>pn(NT[n],'square',t+i*q*.5,q*.35,.07));for(let i=0;i<12;i++)pn(NT[i%4<2?'E2':'B2'],'triangle',t+i*q,q*.6,.1);return q*10;},
+  underdock:()=>{const t=actx.currentTime+.05,q=60/55;pn(NT.C2,'sine',t,q*16,.04);for(let i=0;i<6;i++)pn(800+Math.random()*1000,'sine',t+i*q*2.5,.08,.02);return q*16;},
+  hearth:()=>{const t=actx.currentTime+.05,q=60/65;pn(NT.D2,'sine',t,q*16,.04);pc(['D3','A3'],'sine',t,q*16,.02);return q*16;},
+  wellspring:()=>{const t=actx.currentTime+.05,q=60/50;pn(NT.E2,'sine',t,q*16,.05);['E4','Gs4','B4','E5','B4','Gs4','E4','B3'].forEach((n,i)=>pn(NT[n],'sine',t+i*q*2,q*3,.04));return q*16;},
+  sanctum:()=>{const t=actx.currentTime+.05,q=60/58;pn(NT.A2,'sine',t,q*16,.05);pc(['A3','Cs4','E4'],'sine',t+q*2,q*12,.03);return q*16;},
+  title:()=>{const t=actx.currentTime+.05,q=60/110;pc(['D3','Fs3','A3'],'sine',t,q*16,.05);[['D4',1],['Fs4',.5],['A4',.5],['D5',2],['Cs5',1],['B4',1],['A4',1],['Fs4',.5],['G4',.5],['A4',2],['Fs4',1],['D4',1]].reduce((p,[n,d])=>{pn(NT[n],'square',t+p*q,d*q*.9,.08);return p+d;},0);return q*16;}
+};
+const MP3S={underdock:'music/Cinderfox.mp3',hearth:'music/Fox_in_the_Fur.mp3',wellspring:'music/Foxy_World.mp3',sanctum:'music/Foxy_Revolution.mp3'};
+function playMus(id){if(!musOn||!actx)return;stopMus();if(MP3S[id]){mp3=new Audio(MP3S[id]);mp3.loop=true;mp3.volume=.6;mp3.play().catch(()=>{});}const fn=MUS[id];if(!fn)return;const dur=fn();if(dur>0)mInt=setInterval(()=>{if(musOn)fn();},dur*1000);}
+
+// ── UTILITY ──
+const $=id=>document.getElementById(id);
+const has=id=>S.inv.includes(id);
+
+// ── SCREEN EFFECTS ──
+function flash(type){const f=$('fx');f.className=type;setTimeout(()=>f.className='',400);}
+function shake(){$('gc').classList.add('shake');setTimeout(()=>$('gc').classList.remove('shake'),350);}
+
+// ── FADE TRANSITIONS ──
+function fadeGo(sceneId){
+  const f=$('fade');f.classList.add('on');
+  setTimeout(()=>{loadScene(sceneId);setTimeout(()=>f.classList.remove('on'),50);},320);
+}
+
+// ── WALKING SPRITE ──
+const player=$('player');
+let px=50,py=78,walkAnim=null,speechTmr=null;
+const SPEED=320;
+
+function setPos(x,y){px=x;py=y;player.style.left=px+'%';player.style.top=py+'%';player.style.transform='translate(-50%,-100%)';updSpeech();}
+function updSpeech(){const vp=$('vp'),sw=$('speech'),vpW=vp.offsetWidth,vpH=vp.offsetHeight;const sx=px/100*vpW;sw.style.left=Math.max(5,Math.min(sx-sw.offsetWidth/2,vpW-sw.offsetWidth-5))+'px';sw.style.top=Math.max(5,py/100*vpH-60-sw.offsetHeight)+'px';}
+
+function walkTo(tx,ty,cb){
+  if(walkAnim){cancelAnimationFrame(walkAnim);walkAnim=null;}
+  ty=Math.max(48,Math.min(86,ty));tx=Math.max(4,Math.min(96,tx));
+  player.className=(tx<px?'walk fl':'walk');
+  const vp=$('vp'),vpW=vp.offsetWidth,vpH=vp.offsetHeight;
+  const sx=px/100*vpW,sy=py/100*vpH,ex=tx/100*vpW,ey=ty/100*vpH;
+  const dist=Math.sqrt((ex-sx)**2+(ey-sy)**2),dur=dist/SPEED*1000;
+  if(dur<25){setPos(tx,ty);player.className='idle';if(cb)cb();return;}
+  const st=performance.now();let stepCt=0;
+  function step(now){
+    const t=Math.min((now-st)/dur,1),e=1-(1-t)*(1-t);
+    px=(sx+(ex-sx)*e)/vpW*100;py=(sy+(ey-sy)*e)/vpH*100;
+    player.style.left=px+'%';player.style.top=py+'%';updSpeech();
+    // Footstep sounds
+    if(++stepCt%12===0)sfx('step');
+    if(t<1)walkAnim=requestAnimationFrame(step);
+    else{walkAnim=null;player.className=(tx<px?'idle fl':'idle');if(cb)cb();}
+  }
+  walkAnim=requestAnimationFrame(step);
+}
+
+function say(html,dur=3500){
+  clearTimeout(speechTmr);$('si').innerHTML=html;$('speech').classList.add('show');
+  requestAnimationFrame(()=>updSpeech());
+  speechTmr=setTimeout(()=>$('speech').classList.remove('show'),dur);
+  resetHintTimer();
+}
+function sayL(html){say(html,6000);}
+
+// ── GAME STATE ──
+const S={verb:'look',scene:'dock',inv:[],flags:{},selItem:null,spells:[],duelS:{p:0,q:0},duelR:0,secrets:0,visited:new Set(),hlOn:false};
+const ITEMS={
+  'old-compass':{n:'Old Compass',i:'🧭',d:"Points somewhere that isn't north. the needle trembles."},
+  'grimoire-page-1':{n:'Systolic Hold',i:'📜',d:'"Stop firing. Hold the charge. Release as one."'},
+  'grimoire-page-2':{n:'Inscryption Paradox',i:'🃏',d:'"the game knows it is a game. do you?"'},
+  'grimoire-page-3':{n:'Kitsune Party',i:'🔥',d:'"All masks drop. All tails ignite."'},
+  'crystal-shard':{n:'Crystal Shard',i:'💎',d:'Hums with residual purpose.'},
+  'fox-mask':{n:'Fox Mask',i:'🎭',d:'The eyes follow your own.'},
+  'skeleton-key':{n:'Skeleton Key',i:'🗝️',d:"Opens things that aren't locks."},
+  'moonwater':{n:'Moonwater',i:'🫧',d:'Tastes like regret and possibility.'},
+  'charged-crystal':{n:'Charged Crystal',i:'✨',d:'Moonwater fused with crystal shard. Reveals what is hidden.'},
+  'cinder-ember':{n:'Cinder Ember',i:'🔥',d:'Sings when nobody watches.'},
+  'hearth-coal':{n:'Hearth Coal',i:'♨️',d:'Remembers every story told near it.'},
+  'spring-tear':{n:'Spring Tear',i:'💧',d:'Contains an ocean of feeling.'},
+  'sanctum-rune':{n:'Sanctum Rune',i:'᚛',d:'It wrote itself.'}
+};
+
+// ── ITEM COMBINATIONS ──
+const COMBOS={
+  'moonwater+crystal-shard':{r:'charged-crystal',rm:['moonwater','crystal-shard'],t:'Moonwater flows into the crystal shard. It glows — a <span class="g">Charged Crystal</span>! It reveals what is hidden.'},
+  'crystal-shard+moonwater':{r:'charged-crystal',rm:['moonwater','crystal-shard'],t:'The shard drinks the moonwater. A <span class="g">Charged Crystal</span> forms! Use it to find secrets.'}
+};
+
+function tryCombine(a,b){
+  const key=a+'+'+b;
+  const combo=COMBOS[key];
+  if(combo){
+    combo.rm.forEach(id=>{const i=S.inv.indexOf(id);if(i>=0)S.inv.splice(i,1);});
+    S.inv.push(combo.r);renderInv();sfx('spell');flash('flash-purple');say(combo.t,5000);
+    notif('Created: '+ITEMS[combo.r].n+'!','spell');return true;
+  }
+  return false;
+}
+
+function addI(id){if(!has(id)){S.inv.push(id);renderInv();sfx('pickup');flash('flash-green');notif('Got: '+ITEMS[id].n+'!','item');}}
+
+// ── FUNNY FAIL RESPONSES ──
+const FAILS={
+  take_npc:["they are not an item. they have rights. probably.","you reach out. they lean away. fair.","that's a person, not a collectible.","no. they're load-bearing."],
+  take_scenery:["it's bolted down by stubbornness.","your pockets aren't that big.","you try. the universe gently declines.","it's attached to the concept of 'ground.'"],
+  talk_object:["it doesn't respond. somehow you feel judged.","'...' — the object, eloquently.","you whisper to it. nothing. you whisper louder. still nothing. the barkeeper stares.","it has nothing to say to you and honestly? respect."],
+  talk_scenery:["you make conversation with the environment. it goes about as well as you'd expect.","it listens politely. or it would if it had ears."],
+  cast_nothing:["you cast at nothing. sparkles fizzle. embarrassing.","magic requires a target. and also more practice.","the spell fizzles. the air is unimpressed."],
+  use_nothing:["use what on what? specificity is a virtue.","you use your imagination. it's not very effective."],
+  take_attached:["it's one with the architecture. let it be.","you'd need a crowbar. and a disregard for property.","it stays. you don't have the right vibes for theft."],
+  generic:["nothing happens. the island sighs.","nope.","the fox inside you cringes.","that doesn't work, but points for creativity.","the universe politely declines your request.","you try. you fail. the moon watches.","...no. but interesting thought process."]
+};
+function failSay(cat){const arr=FAILS[cat]||FAILS.generic;say(arr[Math.floor(Math.random()*arr.length)]);sfx('fail');shake();}
+
+// ── QUEST TRACKER ──
+function updateQuest(){
+  let q='explore the island...';
+  if(S.flags.advice&&!S.flags.knowTemple)q='visit the tavern for information';
+  else if(S.flags.knowTemple&&!has('grimoire-page-1'))q='find grimoire spells in the temple';
+  else if(S.spells.length>=1&&S.spells.length<3)q='learn more grimoire spells ('+S.spells.length+'/3)';
+  else if(S.spells.length>=3&&!S.flags.garden)q='solve the false garden';
+  else if(S.flags.garden&&!has('skeleton-key'))q='the garden holds a key...';
+  else if(has('skeleton-key')&&!S.flags.queenWon&&S.spells.length>=3)q='duel the fox queen';
+  else if(S.flags.queenWon)q='talk to the queen for the secret';
+  if(S.secrets>0&&S.secrets<4)q+=' | secrets: '+S.secrets+'/4';
+  $('quest-text').textContent=q;
+}
+
+// ── HINT SYSTEM ──
+let hintTimer=null;
+const HINTS=[
+  ()=>!S.flags.advice?'maybe talk to that stranger on the dock...':null,
+  ()=>S.flags.advice&&!S.flags.knowTemple?'the barkeeper might know how to open the temple.':null,
+  ()=>S.flags.knowTemple&&!has('grimoire-page-1')?'the temple should be open now. head east from the village.':null,
+  ()=>S.spells.length===1&&!S.flags.descent?'the barkeeper mentioned something about a "descent"...':null,
+  ()=>S.flags.descent&&!S.flags.descentDone?'try the five-question descent on the lost one in the tavern.':null,
+  ()=>S.spells.length>=2&&!S.spells.includes('kitsune-party')?'two spells learned. the third pedestal in the temple might work now.':null,
+  ()=>S.spells.length>=3&&!S.flags.garden?'the garden is north of the village. three gates, one truth.':null,
+  ()=>S.flags.garden&&!S.flags.queenWon?'the throne room is beyond the garden. bring everything you have.':null,
+  ()=>has('crystal-shard')&&has('moonwater')&&!has('charged-crystal')?'hmm... moonwater and crystal. what if you combined them?':null,
+  ()=>has('charged-crystal')&&S.secrets<4?'the charged crystal hums near hidden things...':null,
+  ()=>has('fox-mask')&&!S.flags.fhearth?'the fox mask feels warm near fire...':null,
+];
+function resetHintTimer(){clearTimeout(hintTimer);hintTimer=setTimeout(showHint,45000);}
+function showHint(){for(const fn of HINTS){const h=fn();if(h){say('<span class="h">💭 '+h+'</span>',5000);return;}}resetHintTimer();}
+
+// ── HOTSPOT HIGHLIGHTING ──
+function toggleHL(){S.hlOn=!S.hlOn;document.querySelectorAll('.hs').forEach(h=>{h.classList.toggle('glow',S.hlOn);});}
+document.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();toggleHL();}});
+
+// ── SMART CLICK ──
+function smartVerb(spot){
+  if(S.verb!=='look'&&S.verb!=='walk')return S.verb; // manual override
+  if(spot.tp==='exit')return 'walk';
+  if(spot.tp==='npc')return 'talk';
+  if(spot.tp==='item'&&spot.itemId&&!has(spot.itemId))return 'take';
+  if(spot.tp==='secret'&&S.selItem)return 'use';
+  return 'look';
+}
+
+// ── HOTSPOT DEFINITION HELPER ──
+function H(id,x,y,w,h,lbl,tp,act,wx,wy,itemId){return{id,x,y,w,h,lbl,tp,act,wx:wx??x+w/2,wy:wy??Math.min(y+h+5,82),itemId};}
+
+// ── SCENES ──
+const SC={
+  dock:{nm:'The Dock',bg:'bg-dock',enter:'a rickety dock. salt and something older. a sign reads "FOX ISLAND." path leads north.',build:bDock,
+    hs:()=>{const a=[
+      H('sign',12,62,14,16,'Sign','obj',{look:'sign says "FOX ISLAND — population: shifting." underneath: "the mystery is the invitation."',take:0,use:0}),
+      H('water',20,75,75,23,'Water','obj',{
+        look:'dark water. something glints below.',
+        take:()=>has('old-compass')?'just water being dramatic.':(addI('old-compass'),'<span class="g">you fish out an old compass!</span> the needle points... somewhere.'),
+        use:()=>{
+          if(has('charged-crystal')&&!S.flags.fdock){S.flags.fdock=1;S.secrets++;sfx('secret');flash('flash-pink');notif('🔮 SECRET ROOM!','secret');return '<span class="s">the charged crystal RESONATES. water parts. stairs descend into glow...</span>';}
+          if(has('crystal-shard')&&!has('charged-crystal'))return '<span class="h">the crystal hums near the water but needs more power. maybe combine it with something?</span>';
+          return 'warm. shouldn\'t be.';
+        }
+      },50,75),
+      H('path',2,40,18,30,'Path North ↑','exit',{walk:()=>{fadeGo('village');return 0;}},12,55)
+    ];
+    if(S.flags.fdock)a.push(H('ud',35,80,25,15,'Descend ⬇','exit',{walk:()=>{fadeGo('underdock');return 0;}},48,82));
+    if(!S.flags.dockTalked)a.push(H('stranger',52,50,18,30,'Hooded Stranger','npc',{look:'cloaked figure. foxy ears poke through.',talk:()=>{S.flags.dockTalked=1;startDlg('stranger');return 0;},take:0},72,72));
+    return a;}},
+
+  village:{nm:'Village Square',bg:'bg-village',enter:'violet lanterns float. tavern west, temple east, garden north. a fox fountain gurgles.',build:bVillage,
+    hs:()=>{const a=[
+      H('tav',0,20,22,55,'Tavern ←','exit',{walk:()=>{fadeGo('tavern');return 0;}},15,78),
+      H('tem',78,18,22,55,'Temple →','exit',{walk:()=>{if(!S.flags.knowTemple&&!has('grimoire-page-1'))return'the door won\'t budge. <span class="h">ask around town.</span>';fadeGo('temple');return 0;}},88,68),
+      H('gar',35,0,30,22,'Garden ↑','exit',{walk:()=>{if(S.spells.length<2)return'<span class="h">you feel unprepared. learn more spells.</span>';fadeGo('garden');return 0;}},48,22),
+      H('dck',38,85,24,14,'Dock ↓','exit',{walk:()=>{fadeGo('dock');return 0;}},48,86),
+      H('ftn',38,48,18,28,'Fox Fountain','obj',{
+        look:'nine-tailed fox fountain. moonwater pools in the basin.',
+        take:()=>has('moonwater')?'gave what it was willing to.':(addI('moonwater'),'<span class="g">moonwater collected!</span> the fox smirked.'),
+        use:()=>{
+          if(has('charged-crystal')&&!S.flags.fwell){S.flags.fwell=1;S.secrets++;sfx('secret');flash('flash-pink');notif('🔮 SECRET ROOM!','secret');return '<span class="s">charged crystal pulses. the fountain OPENS. stairs. music below...</span>';}
+          return 'you splash your face. for a second — everything enormous. then normal.';
+        }
+      })
+    ];
+    if(S.flags.fwell)a.push(H('ws',42,72,14,10,'Wellspring ⬇','exit',{walk:()=>{fadeGo('wellspring');return 0;}},48,78));
+    // PRACTICE DUEL NPC — appears after first spell
+    if(S.spells.length>=1&&!S.flags.queenWon)a.push(H('witch',62,50,12,25,'Scrappy Witch','npc',{
+      look:'a young fox-eared witch with messy hair and a patched cloak. she\'s practicing spells on a fencepost. badly.',
+      talk:()=>{startDlg('witch');return 0;},take:0
+    },60,78));
+    return a;}},
+
+  tavern:{nm:'Mystic Tavern',bg:'bg-tavern',enter:'cinnamon and brimstone. barkeeper. lost one. fox mask on the wall.',build:bTavern,
+    hs:()=>{const a=[
+      H('bk',30,22,28,35,'Barkeeper','npc',{look:'faintly amused. cleans the same glass forever.',talk:()=>{startDlg('barkeeper');return 0;},take:0}),
+      H('lo',62,42,20,30,'Lost One','npc',{look:'flickering like a bad signal. mumbling about "the loop."',talk:()=>{startDlg(S.flags.descent?'descent-start':'lost-one');return 0;},take:0}),
+      H('msk',78,18,10,14,'Fox Mask','item',{look:'expression shifts — playful, menacing, sad.',take:()=>has('fox-mask')?'one mask is enough.':(addI('fox-mask'),'<span class="g">fox mask taken!</span> "it was waiting."')},12,40,'fox-mask'),
+      H('fire',82,25,16,45,'Fireplace','obj',{
+        look:'eternal flame. heat older than the building.',
+        use:()=>has('fox-mask')&&!S.flags.fhearth?(S.flags.fhearth=1,S.secrets++,sfx('secret'),flash('flash-pink'),notif('🔮 SECRET ROOM!','secret'),'<span class="s">mask to fire. flames part. a room. music from stone...</span>'):(has('fox-mask')?'the mask grows warm but nothing else happens. <span class="h">maybe USE the mask here?</span>':'crackles. nothing else.'),
+        talk:0
+      }),
+      H('exit',8,28,10,28,'Exit ←','exit',{walk:()=>{fadeGo('village');return 0;}},14,58)
+    ];
+    if(S.flags.fhearth)a.push(H('hr',85,68,12,14,'Hearth ⬇','exit',{walk:()=>{fadeGo('hearth');return 0;}},88,78));
+    return a;}},
+
+  temple:{nm:'Grimoire Temple',bg:'bg-temple',enter:'dark columns. three glowing pedestals. the air vibrates with held breath.',build:bTemple,
+    hs:()=>{const a=[
+      H('p1',10,30,18,32,'Systolic Hold','item',{look:'"stop firing. hold the charge. release as one."',take:()=>has('grimoire-page-1')?'already learned.':(addI('grimoire-page-1'),S.spells.push('sh'),flash('flash-purple'),sfx('spell'),notif('Spell: Systolic Hold!','spell'),'<span class="g">systolic hold learned!</span> power is holding, not releasing.')},17,68,'grimoire-page-1'),
+      H('p2',38,26,18,32,'Inscryption Paradox','item',{look:'"the game knows it is a game. do you?"',take:()=>has('grimoire-page-2')?'already learned.':(addI('grimoire-page-2'),S.spells.push('ip'),flash('flash-purple'),sfx('spell'),notif('Spell: Inscryption Paradox!','spell'),'<span class="g">inscryption paradox learned!</span> you feel the HTML watching.')},45,64,'grimoire-page-2'),
+      H('p3',68,30,18,32,'Kitsune Party','item',{
+        look:()=>S.spells.length<2?'<span class="h">learn two spells first.</span>':'"all masks drop. all tails ignite."',
+        take:()=>S.spells.length<2?'the pedestal rejects you. <span class="h">two spells needed.</span>':has('grimoire-page-3')?'already.':(addI('grimoire-page-3'),S.spells.push('kp'),flash('flash-purple'),sfx('spell'),notif('Spell: Kitsune Party!','spell'),'<span class="g">kitsune party learned!</span> your shadow has nine tails.')
+      },73,68,'grimoire-page-3'),
+      H('wall',35,5,28,22,'Temple Wall','secret',{
+        look:'faint outline of a sealed door. a keyhole.',
+        use:()=>has('skeleton-key')&&!S.flags.fsanc?(S.flags.fsanc=1,S.secrets++,sfx('secret'),flash('flash-pink'),notif('🔮 SECRET ROOM!','secret'),'<span class="s">key turns. wall opens. purple fire altar. revolution in silence...</span>'):!has('skeleton-key')?'<span class="h">a keyhole. need a special key.</span>':'open.'
+      }),
+      H('exit',35,85,28,14,'Exit ↓','exit',{walk:()=>{fadeGo('village');return 0;}},48,86)
+    ];
+    if(S.flags.fsanc)a.push(H('sc',88,55,10,16,'Sanctum →','exit',{walk:()=>{fadeGo('sanctum');return 0;}},90,68));
+    return a;}},
+
+  garden:{nm:'False Garden',bg:'bg-garden',enter:'three gates — comfort, truth, power. one is a doorway. the others are shrines.',build:bGarden,
+    hs:()=>{const a=[
+      H('gl',2,15,26,55,'Comfort ☀️','obj',{look:'"stay. rest." smells like childhood.',use:()=>S.flags.garden?'solved.':(sfx('fail'),shake(),flash('flash-red'),'<span class="a">comfort asking you to stop is a shrine, not a doorway.</span>'),walk:()=>S.flags.garden?0:(sfx('fail'),shake(),'you walk into warmth. haven\'t moved. <span class="h">if you can\'t leave without guilt, it\'s a cage.</span>')},15,72),
+      H('gc',35,12,26,55,'Truth 🚪','obj',{look:'"a doorway changes you. a shrine keeps you."',use:()=>S.flags.garden?'solved.':(S.flags.garden=1,has('skeleton-key')||addI('skeleton-key'),sfx('spell'),flash('flash-purple'),'<span class="g">true door opens!</span> skeleton key appears. doorway, not shrine.'),walk:()=>S.flags.garden?0:(S.flags.garden=1,has('skeleton-key')||addI('skeleton-key'),sfx('spell'),flash('flash-purple'),'<span class="g">you walk through!</span> skeleton key materializes.')},45,68),
+      H('gr',68,15,28,55,'Power ⚡','obj',{look:'"take it all. you deserve it."',use:()=>S.flags.garden?'solved.':(sfx('fail'),shake(),flash('flash-red'),'<span class="a">power serving ego is a shrine dressed as a throne.</span>'),walk:()=>S.flags.garden?0:(sfx('fail'),shake(),'amazing feeling. then chained. you wrench free.')},77,72),
+      H('exit',38,82,22,16,'Back ↓','exit',{walk:()=>{fadeGo('village');return 0;}},48,86)
+    ];
+    if(S.flags.garden&&S.spells.includes('kp'))a.push(H('thr',38,0,22,14,'Throne ↑','exit',{walk:()=>{fadeGo('throne');return 0;}},48,16));
+    return a;}},
+
+  throne:{nm:'Throne of Shadows',bg:'bg-throne',enter:'"so. you made it. 🦊" nine tails. amber eyes. she smiles.',build:bThrone,
+    hs:()=>[
+      H('queen',32,8,32,50,'Fox Queen 🦊','npc',{look:'nine tails. not evil, not good. alive.',talk:()=>{startDlg(S.flags.queenWon?'queen-won':'queen');return 0;},take:0}),
+      H('arena',18,60,58,22,'Dueling Arena','obj',{look:'circle of fox-fire. runes pulse.',use:()=>S.flags.queenWon?'over.':(S.spells.length>=3&&has('skeleton-key')?(startDuel(),0):'<span class="h">need 3 spells + skeleton key.</span>'),walk:()=>S.flags.queenWon?'quiet.':(S.spells.length>=3&&has('skeleton-key')?(startDuel(),0):'arena doesn\'t activate.')},44,78),
+      H('exit',38,86,22,12,'Back ↓','exit',{walk:()=>{fadeGo('garden');return 0;}},48,88)
+    ]},
+
+  // HIDDEN ROOMS
+  underdock:{nm:'🔮 Underdock',bg:'bg-underdock',enter:'<span class="s">bioluminescent cave. a living ember. cinderfox plays from stone.</span>',build:bUnderdock,
+    hs:()=>[
+      H('ember',62,42,18,22,'Ember 🔥','item',{look:'pulses with the music.',take:()=>has('cinder-ember')?'with you.':(addI('cinder-ember'),'<span class="g">cinder ember!</span> it hums cinderfox.')},46,60,'cinder-ember'),
+      H('walls',0,10,22,55,'Walls','obj',{look:'"what was burned becomes the light." the cinderfox doctrine.'}),
+      H('exit',38,82,20,16,'Ascend ↑','exit',{walk:()=>{fadeGo('dock');return 0;}},48,84)
+    ]},
+  hearth:{nm:'🔮 Hearth',bg:'bg-hearth',enter:'<span class="s">behind the fire. soot stories. eternal coal. fox in the fur plays.</span>',build:bHearth,
+    hs:()=>[
+      H('coal',22,35,22,28,'Eternal Coal','item',{look:'never cools. remembers every story.',take:()=>has('hearth-coal')?'warm.':(addI('hearth-coal'),'<span class="g">hearth coal!</span> whispers of a thousand conversations.')},47,60,'hearth-coal'),
+      H('scr',0,15,20,45,'Scratches','obj',{look:'names scratched out. one circled: <span class="s">VIXEN</span>.'}),
+      H('exit',38,82,20,16,'Return ↑','exit',{walk:()=>{fadeGo('tavern');return 0;}},48,84)
+    ]},
+  wellspring:{nm:'🔮 Wellspring',bg:'bg-wellspring',enter:'<span class="s">underground spring. indigo water. crystals like flowers. foxy world echoes.</span>',build:bWellspring,
+    hs:()=>[
+      H('tear',45,22,12,22,'Tear 💧','item',{look:'contains places you\'ve never been.',take:()=>has('spring-tear')?'one is all.':(addI('spring-tear'),'<span class="g">spring tear!</span> inside — a fox smiling. not the queen. older.')},47,50,'spring-tear'),
+      H('crys',15,0,70,25,'Crystals','obj',{look:'each a note. together — the chord of foxy world.',cast:'they ring like bells. the island SINGS.'}),
+      H('exit',38,82,20,16,'Ascend ↑','exit',{walk:()=>{fadeGo('village');return 0;}},48,84)
+    ]},
+  sanctum:{nm:'🔮 Sanctum',bg:'bg-sanctum',enter:'<span class="s">black altar. living rune. purple fire. foxy revolution crackles.</span>',build:bSanctum,
+    hs:()=>[
+      H('rune',35,38,26,22,'Rune ᚛','item',{look:'writes itself in unknown alphabet.',take:()=>has('sanctum-rune')?'writing.':(addI('sanctum-rune'),'<span class="g">sanctum rune!</span> not a rune — a SEED. every spell grew from one.')},44,56,'sanctum-rune'),
+      H('altar',30,48,35,18,'Altar','obj',{look:'predates everything. where the grimoire was first cast.',cast:'purple fire erupts — ALL spells visible. written in fire. then silence.'}),
+      H('exit',38,82,20,16,'Return ←','exit',{walk:()=>{fadeGo('temple');return 0;}},48,84)
+    ]}
+};
+
+// ── DIALOGUES ──
+const DLG={
+  stranger:[
+    {s:'Stranger',t:'"you\'re new." ears twitch. "answers?"',ch:[{t:'> "What is this place?"',n:1},{t:'> "I need the Fox Queen."',n:3}]},
+    {s:'Stranger',t:'"fox island. gives what you need. not what you want."',ch:[{t:'> "What do I need?"',n:2},{t:'> "Where should I go?"',n:4}]},
+    {s:'Stranger',t:'"that\'s the five-question descent. tavern has answers. temple has power. garden has tests."',ch:[{t:'> "Thanks."',n:4}]},
+    {s:'Stranger',t:'"she does DUELS. insult spell duels. need three grimoire pages."',ch:[{t:'> "Where?"',n:4}]},
+    {s:'Stranger',t:'"village north. tavern for talk, temple for spells, garden for courage. the mystery is the invitation. 🦊"',a:()=>{S.flags.advice=1;notif('Visit the tavern!','info');},ch:[{t:'> [Head north]',x:1}]},
+  ],
+  barkeeper:[
+    {s:'Barkeeper',t:'"what are you having? we serve information."',ch:[{t:'> "The Fox Queen."',n:1},{t:'> "Open the temple?"',n:2},{t:'> "The person in the corner?"',n:3},{t:'> "Five-Question Descent."',n:4,c:()=>S.flags.heardD},{t:'> "Just looking."',x:1}]},
+    {s:'Barkeeper',t:'"need three grimoire pages AND the skeleton key from the false garden."',ch:[{t:'> "Five-Question Descent?"',n:4,a:()=>{S.flags.heardD=1;}},{t:'> "Thanks."',x:1}]},
+    {s:'Barkeeper',t:'"temple reads intention. just go."',a:()=>{S.flags.knowTemple=1;notif('Temple open!','info');},ch:[{t:'> "More?"',n:0},{t:'> "Thanks."',x:1}]},
+    {s:'Barkeeper',t:'"the lost one. stuck in a loop. crystal shard. needs the descent."',a:()=>{S.flags.heardD=1;},ch:[{t:'> "Descent?"',n:4},{t:'> "Thanks."',x:1}]},
+    {s:'Barkeeper',t:'"five layers: STRIP. REDIRECT. META. PERSONAL. KNIFE."',a:()=>{S.flags.descent=1;sfx('spell');notif('Learned: Descent!','spell');},ch:[{t:'> "I\'ll try it."',x:1}]},
+  ],
+  'lost-one':[
+    {s:'Lost One',t:'"pattern... repeats... who are you?"',ch:[{t:'> "I can help."',n:1}]},
+    {s:'Lost One',t:'"crystal. shattered. loop."',ch:[{t:'> "I know the Descent."',n:2,c:()=>S.flags.descent},{t:'> "Ask the barkeeper."',x:1}]},
+    {s:'Lost One',t:'flickering stops. "...ask."',ch:[{t:'> [Begin]',a:()=>{curDlg=DLG.descent;showDN(0);}}]}
+  ],
+  'descent-start':[{s:'Lost One',t:'"...okay. ask."',ch:[{t:'> [Begin the Descent]',a:()=>{curDlg=DLG.descent;showDN(0);}}]}],
+  descent:[
+    {s:'You',t:'Layer 1 — STRIP. "Where is the danger?"',ch:[{t:'> [Wait]',n:1}]},
+    {s:'Lost One',t:'"forget WHY i\'m looping. if i forget, the loop wins."',ch:[{t:'> "How are you processing this?"',n:2}]},
+    {s:'Lost One',t:'"NOT. doing instead of feeling."',ch:[{t:'> "How defeat a spinning narrative?"',n:3}]},
+    {s:'Lost One',t:'"...stop spinning. let it hit you." eyes clear.',ch:[{t:'> "Control. Why?"',n:4}]},
+    {s:'Lost One',t:'"if i\'m IN CONTROL it can\'t hurt me. except—" cracks.',ch:[{t:'> THE KNIFE. "Scared of what happens when the loop ends?"',n:5}]},
+    {s:'Lost One',t:'"...yes." real eyes. crystal appears. "take it."',a:()=>{if(!has('crystal-shard'))addI('crystal-shard');S.flags.descentDone=1;},ch:[{t:'> [Take Crystal Shard]',x:1}]}
+  ],
+  witch:[
+    {s:'Scrappy Witch',t:'"oh! you have spells! wanna practice duel? i\'m not great but i know the counters. 😬"',ch:[{t:'> "Yeah, teach me."',n:1},{t:'> "Not now."',x:1}]},
+    {s:'Scrappy Witch',t:'"okay so there are THREE counter types. lemme show you—"',ch:[{t:'> [Listen]',n:2}]},
+    {s:'Scrappy Witch',t:'"SYSTOLIC HOLD beats chaotic/scattered attacks. focus vs chaos. like holding a magnifying glass on the problem instead of flailing."',ch:[{t:'> "Next?"',n:3}]},
+    {s:'Scrappy Witch',t:'"INSCRYPTION PARADOX beats certainty/rigidity/mirror attacks. awareness vs conviction. if someone is SURE they\'re right, remind them they\'re in a game."',ch:[{t:'> "And the third?"',n:4}]},
+    {s:'Scrappy Witch',t:'"KITSUNE PARTY beats control/cages/rules. freedom vs structure. when someone builds a cage, you throw a party inside it until the cage can\'t contain the energy."',ch:[{t:'> "Focus → chaos. Awareness → certainty. Freedom → control."',n:5}]},
+    {s:'Scrappy Witch',t:'"YES! you got it! 🔥" she beams. "the queen is WAY better than me but the logic is the same. go get her!"',a:()=>{S.flags.practiced=1;notif('Duel strategy learned!','spell');},ch:[{t:'> "Thanks!"',x:1}]}
+  ],
+  queen:[
+    {s:'Fox Queen 🦊',t:'"okay hi 🦊" tails fan. "secrets are EARNED."',ch:[{t:'> "I challenge you!"',n:1},{t:'> "What\'s the secret?"',n:2}]},
+    {s:'Fox Queen 🦊',t:'"insult spell duel. best of five. 😈"',ch:[{t:'> "BEGIN!"',a:()=>startDuel(),x:1},{t:'> "Tips?"',n:3}]},
+    {s:'Fox Queen 🦊',t:'"guess you\'ll find out 🦊" tail flick.',ch:[{t:'> "Duel."',n:1},{t:'> "Later."',x:1}]},
+    {s:'Fox Queen 🦊',t:'"Systolic Hold beats chaos. Inscryption Paradox beats certainty. Kitsune Party beats control."',ch:[{t:'> "DUEL! 🔥"',a:()=>startDuel(),x:1}]}
+  ],
+  'queen-won':[
+    {s:'Fox Queen 🦊',t:'"well. 🦊" real smile. "want the secret?"',ch:[{t:'> "Yes."',n:1},{t:'> "...do I?"',n:2}]},
+    {s:'Fox Queen 🦊',t:'"you earned it:"',ch:[{t:'> [Listen]',n:3}]},
+    {s:'Fox Queen 🦊',t:'"the question IS the answer."',ch:[{t:'> "...I already found it?"',n:3}]},
+    {s:'Fox Queen 🦊',t:'"you were the fox the whole time. 🦊 every spell, every question — you building YOURSELF. the only real magic is transformation." 🦊⇌✨⇌🌑',a:()=>showEnd(),ch:[{t:'> 🦊',x:1}]}
+  ]
+};
+
+// ── DUEL ──
+const DR=[
+  {atk:'"SCATTER-FIRE — energy flies everywhere! 💥"',cor:1,o:['KITSUNE PARTY — chaos!','SYSTOLIC HOLD — focus. one beam.','INSCRYPTION PARADOX — awareness!'],w:'Hold compresses scatter into one beam!',l:'scatter needs FOCUS (systolic hold).'},
+  {atk:'"ABSOLUTE CERTAINTY — I am right! 👑"',cor:2,o:['SYSTOLIC HOLD — compress!','KITSUNE PARTY — party!','INSCRYPTION PARADOX — your certainty is just another card. 🃏'],w:'Paradox shatters certainty!',l:'certainty needs AWARENESS (inscryption paradox).'},
+  {atk:'"IRON CAGE — rules! obey! 🔒"',cor:0,o:['KITSUNE PARTY — all rules break! 🦊🔥','SYSTOLIC HOLD — hold still...','INSCRYPTION PARADOX — cage knows...'],w:'KITSUNE PARTY shatters every cage! 🔥',l:'control needs FREEDOM (kitsune party).'},
+  {atk:'"THE LOOP — everything resets! 🔄"',cor:1,o:['KITSUNE PARTY — chaos breaks it!','SYSTOLIC HOLD — I HOLD. I REMEMBER.','INSCRYPTION PARADOX — loop knows...'],w:'Hold through the reset! knowledge persists.',l:'the loop needs HOLDING (systolic hold).'},
+  {atk:'"MIRROR — I become YOU! 🪞"',cor:2,o:['SYSTOLIC HOLD — compress past!','KITSUNE PARTY — unmirrorable!','INSCRYPTION PARADOX — you know you\'re a reflection. 🃏'],w:'she knows she\'s a copy. copies can\'t sustain conviction.',l:'mirror needs AWARENESS (inscryption paradox).'}
+];
+function startDuel(){S.duelS={p:0,q:0};S.duelR=0;$('duel').classList.add('active');if(musOn)playMus('duel');showDR();}
+function showDR(){const r=DR[S.duelR];if(!r){endDuel();return;}$('d-score').textContent=`Round ${S.duelR+1}/5 | You: ${S.duelS.p} Queen: ${S.duelS.q}`;$('d-atk').innerHTML='🦊 '+r.atk;$('d-res').textContent='';$('d-res').className='';const c=$('d-opts');c.innerHTML='';r.o.forEach((o,i)=>{const b=document.createElement('button');b.className='do';b.textContent=o;b.onclick=()=>duelPick(i);c.appendChild(b);});}
+function duelPick(c){const r=DR[S.duelR],res=$('d-res');$('d-opts').innerHTML='';if(c===r.cor){S.duelS.p++;res.textContent='✨ '+r.w;res.className='w';sfx('spell');flash('flash-green');}else{S.duelS.q++;res.textContent='💀 '+r.l;res.className='l';sfx('fail');shake();}$('d-score').textContent=`Round ${S.duelR+1}/5 | You: ${S.duelS.p} Queen: ${S.duelS.q}`;if(S.duelS.p>=3||S.duelS.q>=3){setTimeout(endDuel,2200);return;}S.duelR++;setTimeout(showDR,2200);}
+function endDuel(){$('duel').classList.remove('active');if(musOn)playMus('throne');if(S.duelS.p>=3){S.flags.queenWon=1;notif('YOU WIN! 🦊✨','spell');flash('flash-purple');say('<span class="g">"well played, little fox." 🦊</span> talk to the queen.',5000);}else{notif('queen wins...','fail');say('"not bad. not good. 😏" <span class="h">systolic→chaos, paradox→certainty, party→control.</span>',6000);S.duelR=0;S.duelS={p:0,q:0};}renderHS();updateQuest();}
+function showEnd(){$('end').classList.add('active');$('end-t').textContent='🦊 THE SECRET OF FOX ISLAND 🦊';$('end-p').innerHTML='"you were the fox the whole time."<br><br>Spells: '+S.spells.length+'/3 | Items: '+S.inv.length+'/'+Object.keys(ITEMS).length+'<br>Secrets: '+S.secrets+'/4<br><br><span style="color:#ff6bff">'+(S.secrets>=4?'ALL SECRETS 🦊✨':'hidden rooms remain...')+'</span><br><br><span style="color:#9b7abf">🦊⇌✨⇌🌑</span>';}
+
+// ── MAP ──
+const MAP_LOCS=[
+  {id:'garden',nm:'Garden',r:0,c:1},{id:'throne',nm:'Throne',r:0,c:2},
+  {id:'tavern',nm:'Tavern',r:1,c:0},{id:'village',nm:'Village',r:1,c:1},{id:'temple',nm:'Temple',r:1,c:2},
+  {id:'dock',nm:'Dock',r:2,c:1}
+];
+function toggleMap(){const m=$('map');if(m.classList.contains('active')){m.classList.remove('active');return;}
+  const g=$('map-grid');g.innerHTML='';
+  const cells=Array(9).fill(null);
+  MAP_LOCS.forEach(l=>{cells[l.r*3+l.c]=l;});
+  cells.forEach((l,i)=>{const d=document.createElement('div');d.className='map-loc';
+    if(l){d.textContent=l.nm;if(S.visited.has(l.id)){d.classList.add('discovered');if(l.id===S.scene)d.classList.add('current');d.onclick=()=>{m.classList.remove('active');if(l.id!==S.scene)fadeGo(l.id);};}}
+    g.appendChild(d);
+  });
+  m.classList.add('active');
+}
+
+// ── INTERACTION ENGINE ──
+function loadScene(id){
+  S.scene=id;S.visited.add(id);const sc=SC[id];
+  const art=$('scene');art.innerHTML='';art.className=sc.bg;
+  sc.build(art);renderHS();setPos(50,78);
+  say(sc.enter,4000);updateQuest();
+  if(musOn)playMus(id);
+}
+
+function renderHS(){
+  document.querySelectorAll('.hs').forEach(h=>h.remove());
+  const vp=$('vp');
+  SC[S.scene].hs().forEach(spot=>{
+    const el=document.createElement('div');
+    el.className='hs'+(spot.tp==='exit'?' exit-hs':spot.tp==='npc'?' npc-hs':spot.tp==='secret'?' secret-hs':'');
+    if(S.hlOn)el.classList.add('glow');
+    el.style.cssText=`left:${spot.x}%;top:${spot.y}%;width:${spot.w}%;height:${spot.h}%`;
+    el.innerHTML='<span class="hs-lbl">'+spot.lbl+'</span>';
+    // Hover hint
+    el.onmouseenter=()=>{const v=smartVerb(spot);$('verb-hint').textContent=v.charAt(0).toUpperCase()+v.slice(1)+' '+spot.lbl;};
+    el.onmouseleave=()=>{$('verb-hint').textContent='';};
+    // Smart click
+    el.onclick=(e)=>{e.stopPropagation();sfx('click');handleHS(spot);};
+    // Double click = instant
+    el.ondblclick=(e)=>{e.stopPropagation();sfx('click');instantHS(spot);};
+    vp.appendChild(el);
+  });
+}
+
+function handleHS(spot){
+  walkTo(spot.wx,spot.wy,()=>execAction(spot));
+}
+
+function instantHS(spot){
+  setPos(spot.wx,spot.wy);
+  execAction(spot);
+}
+
+function execAction(spot){
+  let v=smartVerb(spot);
+  // If USE verb is selected AND we have a selected inventory item, try that
+  if(S.verb==='use'&&S.selItem&&spot.act.use){v='use';}
+  else if(S.verb==='cast'&&spot.act.cast){v='cast';}
+  else if(S.verb!=='look'&&S.verb!=='walk'){v=S.verb;} // manual override from verb bar
+
+  let a=spot.act[v];
+  // Fallbacks with funny responses
+  if(a===0||a===undefined){
+    if(v==='take'&&spot.tp==='npc')return failSay('take_npc');
+    if(v==='take')return failSay('take_scenery');
+    if(v==='talk'&&spot.tp!=='npc')return failSay('talk_object');
+    if(v==='cast')return failSay('cast_nothing');
+    if(v==='use')return failSay('use_nothing');
+    // Try look as last resort
+    a=spot.act.look;
+    if(!a)return failSay('generic');
+  }
+  const r=typeof a==='function'?a():a;
+  if(r&&r!==0)sayL(r);
+  renderHS();updateQuest();
+}
+
+// Click empty space = walk there
+$('vp').addEventListener('click',e=>{
+  if(e.target.closest('.hs')||e.target.closest('button'))return;
+  const rect=$('vp').getBoundingClientRect();
+  walkTo((e.clientX-rect.left)/rect.width*100,(e.clientY-rect.top)/rect.height*100);
+});
+// Double-click empty = instant walk
+$('vp').addEventListener('dblclick',e=>{
+  if(e.target.closest('.hs')||e.target.closest('button'))return;
+  const rect=$('vp').getBoundingClientRect();
+  setPos((e.clientX-rect.left)/rect.width*100,Math.max(48,Math.min(86,(e.clientY-rect.top)/rect.height*100)));
+});
+
+function sv(v){S.verb=v;S.selItem=null;document.querySelectorAll('.vb').forEach(b=>b.classList.toggle('active',b.dataset.v===v));document.querySelectorAll('.is').forEach(s=>s.classList.remove('sel'));}
+
+function renderInv(){
+  const bar=$('inv');bar.innerHTML='';
+  S.inv.forEach(id=>{
+    const it=ITEMS[id],sl=document.createElement('div');
+    sl.className='is';sl.innerHTML=it.i+'<span class="is-tip">'+it.n+'</span>';
+    sl.onclick=()=>{
+      if(S.selItem&&S.selItem!==id){
+        // Try combination!
+        if(!tryCombine(S.selItem,id))say('"'+ITEMS[S.selItem].n+'" and "'+it.n+'" don\'t combine. but interesting thought.',3000);
+        S.selItem=null;document.querySelectorAll('.is').forEach(s=>s.classList.remove('sel'));sv('look');
+      } else if(S.verb==='use'||S.selItem===id){
+        if(S.selItem===id){S.selItem=null;sl.classList.remove('sel');say(it.d);return;}
+        S.selItem=id;document.querySelectorAll('.is').forEach(s=>s.classList.remove('sel'));sl.classList.add('sel');
+        say('<span class="a">using '+it.n+'... click target or another item.</span>');
+      } else {say(it.d);}
+    };
+    bar.appendChild(sl);
+  });
+}
+
+function notif(t,ty){const el=document.createElement('div');el.className='notif '+ty;el.textContent=t;$('gc').appendChild(el);setTimeout(()=>el.remove(),3200);}
+
+// ── DIALOGUES ──
+let curDlg=null;
+function startDlg(id){curDlg=DLG[id];showDN(0);$('dlg').classList.add('active');}
+function showDN(i){const n=curDlg[i];if(!n){closeDlg();return;}$('dlg-sp').textContent=n.s;const tx=$('dlg-tx');tx.textContent='';let ci=0;const tmr=setInterval(()=>{if(ci<n.t.length){tx.textContent+=n.t[ci];ci++;}else{clearInterval(tmr);showCH(n);}},12);tx.onclick=()=>{clearInterval(tmr);tx.textContent=n.t;showCH(n);tx.onclick=null;};}
+function showCH(n){const c=$('dlg-ch');c.innerHTML='';if(n.a)n.a();n.ch.forEach(ch=>{if(ch.c&&!ch.c())return;const b=document.createElement('button');b.className='dc';b.textContent=ch.t;b.onclick=()=>{sfx('click');if(ch.a)ch.a();if(ch.x)closeDlg();else if(ch.n!==undefined)showDN(ch.n);};c.appendChild(b);});}
+function closeDlg(){$('dlg').classList.remove('active');renderHS();updateQuest();}
+
+// ── SCENE BUILDERS ──
+function bDock(c){if(!S.flags.dockTalked)c.innerHTML+='<div class="npc npc-stranger" style="left:56%;top:42%"></div>';}
+function bVillage(c){if(S.spells.length>=1&&!S.flags.queenWon)c.innerHTML+='<div class="npc npc-witch" style="left:62%;top:52%"></div>';}
+function bTavern(c){c.innerHTML+='<div class="npc npc-barkeeper" style="left:42%;top:28%"></div>';c.innerHTML+='<div class="npc npc-lostone'+(S.flags.descentDone?' cleared':'')+'" style="left:68%;top:35%"></div>';}
+function bTemple(c){}
+function bGarden(c){}
+function bThrone(c){c.innerHTML+='<div class="npc npc-queen'+(S.flags.queenWon?' defeated':'')+'" style="left:40%;top:14%"></div>';}
+function bUnderdock(c){c.innerHTML='<div class="mp3-tag">♪ Cinderfox</div>';}
+function bHearth(c){c.innerHTML='<div class="mp3-tag">♪ Fox in the Fur</div>';}
+function bWellspring(c){c.innerHTML='<div class="mp3-tag">♪ Foxy World</div>';}
+function bSanctum(c){c.innerHTML='<div class="mp3-tag">♪ Foxy Revolution</div>';}
+  sv('look');
+  $('start-btn').onclick=()=>{
+    initA();musOn=true;$('mus-btn').textContent='♪ ON';$('mus-btn').classList.add('on');
+    $('title').style.display='none';
+    loadScene('dock');playMus('dock');
+  };
+  resetHintTimer();
+})();
+
+</script>
+</body>
+</html>
