@@ -24,3 +24,20 @@
 .inv-icon.coal{background-position:-108px -36px!important}
 .inv-icon.tear{background-position:-144px -36px!important}
 .inv-icon.rune{background-position:-180px -36px!important}
+/* PLAYER SPRITE - replaces emoji with animated sprite sheet */
+/* Sheet: 144x252, 6 cols x 7 rows, each frame 24x36 */
+/* Rows: 0=walk-right, 1=walk-left, 2=walk-down, 3=walk-up, 4=idle, 5=actions, 6=specials */
+#player{width:24px!important;height:36px!important;font-size:0!important;color:transparent!important;overflow:hidden!important;
+background:url('player.png') no-repeat!important;background-size:144px 252px!important;
+background-position:0 -144px!important;image-rendering:pixelated!important;
+transform:translate(-50%,-100%)!important}
+#player.idle{animation:spr-idle 1.2s steps(6) infinite!important;background-position:0 -144px!important}
+#player.walk-r{animation:spr-walk-r 0.5s steps(6) infinite!important}
+#player.walk-l{animation:spr-walk-l 0.5s steps(6) infinite!important}
+#player.walk-d{animation:spr-walk-d 0.5s steps(6) infinite!important}
+#player.walk-u{animation:spr-walk-u 0.5s steps(6) infinite!important}
+@keyframes spr-idle{from{background-position:0 -144px}to{background-position:-144px -144px}}
+@keyframes spr-walk-r{from{background-position:0 0}to{background-position:-144px 0}}
+@keyframes spr-walk-l{from{background-position:0 -36px}to{background-position:-144px -36px}}
+@keyframes spr-walk-d{from{background-position:0 -72px}to{background-position:-144px -72px}}
+@keyframes spr-walk-u{from{background-position:0 -108px}to{background-position:-144px -108px}}

@@ -1,30 +1,33 @@
-window.addEventListener('load',function(){
-  var btn=document.getElementById('start-btn');
-  if(!btn)return;
-  btn.addEventListener('click',function(){
-    try{
-      // Try calling the IIFE functions first
-      if(typeof initA==='function'){initA();}
-      else{
-        // Fallback: create AudioContext ourselves
-        var ac=new(window.AudioContext||window.webkitAudioContext)();
-        window.actx=ac;
+// Sprite direction handler - watches player movement and sets CSS classes
+(function(){
+  var p=document.getElementById('player');
+  if(!p)return;
+  var lastX=0,lastY=0,idleTimer=null;
+  
+  // Override player text to empty (hide emoji)
+  p.textContent='';
+  p.classList.add('idle');
+  
+  // Watch for style changes on player
+  var obs=new MutationObserver(function(){
+    var x=parseFloat(p.style.left)||0;
+    var y=parseFloat(p.style.top)||0;
+    var dx=x-lastX,dy=y-lastY;
+    
+    if(Math.abs(dx)>0.1||Math.abs(dy)>0.1){
+      p.classList.remove('idle','walk-r','walk-l','walk-u','walk-d');
+      if(Math.abs(dx)>Math.abs(dy)){
+        p.classList.add(dx>0?'walk-r':'walk-l');
+      }else{
+        p.classList.add(dy>0?'walk-d':'walk-u');
       }
-      // Set music state
-      if(typeof musOn!=='undefined'){musOn=true;}
-      var mb=document.getElementById('mus-btn');
-      if(mb){mb.textContent='\u266a ON';mb.classList.add('on');}
-      // Hide title
-      var tt=document.getElementById('title');
-      if(tt){tt.style.display='none';}
-      // Try loading the scene
-      if(typeof loadScene==='function'){loadScene('dock');}
-      if(typeof playMus==='function'){playMus('dock');}
-    }catch(e){
-      console.error('Fix.js:',e);
-      // Last resort: just hide the title
-      var tt=document.getElementById('title');
-      if(tt){tt.style.display='none';}
+      clearTimeout(idleTimer);
+      idleTimer=setTimeout(function(){
+        p.classList.remove('walk-r','walk-l','walk-u','walk-d');
+        p.classList.add('idle');
+      },200);
     }
+    lastX=x;lastY=y;
   });
-});
+  obs.observe(p,{attributes:true,attributeFilter:['style']});
+})();
