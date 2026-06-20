@@ -1,0 +1,6 @@
+/* UI PANEL ASSETS */
+#verbs{background-image:url('ui-verbs.png')!important;background-size:100% 100%!important;background-color:transparent!important;border-top:none!important}
+#inv{background-image:url('ui-inventory.png')!important;background-size:100% 100%!important;background-color:transparent!important;border-top:none!important}
+#si{background-image:url('ui-speech.png')!important;background-size:100% 100%!important;background-color:transparent!important;border:none!important;padding:16px 24px 20px 24px!important}
+#si::after{display:none!important}
+.map-grid{background-image:url('ui-map.png')!important;background-size:cover!important;background-position:center!important;border-radius:4px}
