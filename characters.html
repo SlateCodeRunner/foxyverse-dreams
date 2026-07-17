@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the people</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fira+Code:wght@300;400&family=IM+Fell+English:ital@0;1&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060608;color:rgba(220,215,205,0.4);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
+body{max-width:750px;margin:0 auto;padding:60px 24px 120px;line-height:2}
+a{color:rgba(206,176,120,0.3);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.06);transition:all .4s}
+a:hover{color:rgba(206,176,120,0.7)}
+.room-id{font-size:8px;letter-spacing:4px;color:rgba(255,255,255,0.04);position:fixed;top:8px;right:8px}
+.title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,34px);font-weight:400;letter-spacing:.1em;color:rgba(206,176,120,0.5);text-transform:uppercase;margin-bottom:4px}
+.sub{font-size:10px;color:rgba(220,215,205,0.1);letter-spacing:.15em;text-transform:uppercase;margin-bottom:40px}
+.group{margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid rgba(206,176,120,0.04)}
+.group-name{font-family:'Cinzel',serif;font-size:13px;color:rgba(206,176,120,0.3);letter-spacing:.08em}
+.group-desc{font-size:9px;color:rgba(220,215,205,0.06);margin-left:8px}
+.char{padding:8px 0 8px 16px;border-left:2px solid rgba(206,176,120,0.03);margin:3px 0;transition:all .3s;display:flex;gap:12px;align-items:baseline}
+.char:hover{border-left-color:rgba(206,176,120,0.15);padding-left:22px;background:rgba(206,176,120,0.01)}
+.char-name{font-family:'IM Fell English',serif;font-size:13px;color:rgba(220,215,205,0.35);min-width:180px;flex-shrink:0}
+.char-arch{font-size:10px;color:rgba(160,120,180,0.15);font-style:italic}
+.char-tags{font-size:8px;color:rgba(206,176,120,0.06);margin-top:1px}
+.back{font-size:10px;color:rgba(220,215,205,0.08);margin-bottom:30px;display:inline-block}
+.search-wrap{margin-bottom:24px;position:relative}
+.search-icon{position:absolute;left:8px;top:50%;transform:translateY(-50%);color:rgba(206,176,120,0.1);font-size:12px}
+.search{width:100%;max-width:320px;background:rgba(10,10,12,0.8);border:1px solid rgba(206,176,120,0.04);color:rgba(220,215,205,0.4);font-family:'Fira Code',monospace;font-size:11px;padding:6px 8px 6px 24px;outline:none}
+.search:focus{border-color:rgba(206,176,120,0.12)}
+.search::placeholder{color:rgba(220,215,205,0.06)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
+</style></head><body>
+<div class="room-id">CHARACTER DIRECTORY</div>
+<a href="deep/hallway.html" class="back">&larr; the hallway</a>
+<div class="title">The People</div>
+<div class="sub">112 characters &middot; showing key roster &middot; the fossils the house is built from</div>
+<div class="search-wrap"><span class="search-icon">&Colon;</span><input type="text" class="search" id="searchInput" placeholder="search characters..."></div>
+
+<div class="group"><span class="group-name">The Inner Circle</span><span class="group-desc">guild leaders, founders, core</span></div>
+<div class="char" data-s="sekhmet empress necromancer caretaker"><span class="char-name">Sekhmet</span><span class="char-arch">Empress, Necromancer, Caretaker &mdash; dual-guild leader</span></div>
+<div class="char" data-s="bumi druidbold sage trickster founding"><span class="char-name">Bumi the Druidbold</span><span class="char-arch">Sage, Trickster &mdash; founding member, still here</span></div>
+<div class="char" data-s="justin confessor beast master time mage"><span class="char-name">Justin</span><span class="char-arch">Confessor / Beast Master / Time Mage &mdash; the SACS projector</span></div>
+<div class="char" data-s="mozai tyrant king choleric"><span class="char-name">Mozai</span><span class="char-arch">The Tyrant King &mdash; co-leader of Cloister of Shar</span></div>
+<div class="char" data-s="caelus alchemist fool USP"><span class="char-name">Caelus</span><span class="char-arch">The Alchemist Fool &mdash; USP-leader, esoteric Christianity</span></div>
+<div class="char" data-s="lucy rebel guardian brazilian"><span class="char-name">Lucy</span><span class="char-arch">Rebel, Guardian, The One Caught in the Middle</span></div>
+<div class="char" data-s="paintress foxy dessendre mother"><span class="char-name">Paintress Foxy Dessendre</span><span class="char-arch">The Mother &mdash; monarchy, family, purple crystal</span></div>
+<div class="char" data-s="hsuchun architect editor chinese"><span class="char-name">Hsuchun</span><span class="char-arch">Architect &mdash; editor, growth method</span></div>
+<div class="char" data-s="herr g3rgrush chronicler silent blade"><span class="char-name">Herr G3rgrush</span><span class="char-arch">The Silent Blade / The Chronicler &mdash; navy, mandarin, historian</span></div>
+<div class="char" data-s="christocolindo fateweaver faction leader"><span class="char-name">Christocolindo</span><span class="char-arch">Fateweaver &rarr; Faction Leader &mdash; redeemed, promoted</span></div>
+
+<div class="group"><span class="group-name">Paintress Nessa &amp; The Ranked</span><span class="group-desc">those who completed break the loop</span></div>
+<div class="char" data-s="nessa paintress caretaker one who stays"><span class="char-name">Paintress Nessa</span><span class="char-arch">Caretaker &mdash; The One Who Stays &mdash; first rank-up, June 2026</span></div>
+
+<div class="group"><span class="group-name">The Beautiful</span><span class="group-desc">artist guild</span></div>
+<div class="char" data-s="honey artist leader"><span class="char-name">Artist Honey</span><span class="char-arch">Creator / Leader &mdash; the massive project</span></div>
+<div class="char" data-s="emma carter artist"><span class="char-name">THE Emma Carter</span><span class="char-arch">Creator</span></div>
+<div class="char" data-s="jessica dark princess artist"><span class="char-name">Dark Princess Jessica</span><span class="char-arch">Creator</span></div>
+<div class="char" data-s="sekhmet paintress artist"><span class="char-name">Paintress Sekhmet</span><span class="char-arch">Creator / Storyteller &mdash; webcomic, AI persona</span></div>
+<div class="char" data-s="natalia mademoiselle artist"><span class="char-name">Mademoiselle Natalia</span><span class="char-arch">Creator</span></div>
+<div class="char" data-s="gloria animator artist"><span class="char-name">Animator Gloria</span><span class="char-arch">Creator &mdash; professional animator</span></div>
+<div class="char" data-s="hannah lawyer trickster artist"><span class="char-name">Lawyer Hannah</span><span class="char-arch">Trickster &mdash; lawyer turned artist</span></div>
+<div class="char" data-s="suspended artist"><span class="char-name">The Suspended Artist</span><span class="char-arch">Creator &mdash; suspended</span></div>
+
+<div class="group"><span class="group-name">The Writers Guild</span><span class="group-desc">blood of the fox</span></div>
+<div class="char" data-s="sawyer author writer"><span class="char-name">Author Sawyer</span><span class="char-arch">The Scribe</span></div>
+<div class="char" data-s="namaaina priestess writer"><span class="char-name">Priestess Namaaina</span><span class="char-arch">The Priestess Scribe &mdash; revenue positive</span></div>
+<div class="char" data-s="hsu author writer assassin"><span class="char-name">Author Hsu</span><span class="char-arch">The Scribe &mdash; taoism, r/Invernalia</span></div>
+
+<div class="group"><span class="group-name">The Reddit War Veterans</span><span class="group-desc">the ones who showed up</span></div>
+<div class="char" data-s="eric dawsby hatchling outer wilds"><span class="char-name">Eric_Dawsby</span><span class="char-arch">The Hatchling &mdash; Outer Wilds seeker</span></div>
+<div class="char" data-s="old one reluctant father grasstoucher"><span class="char-name">Old_One_I</span><span class="char-arch">The Reluctant Father &mdash; internet dad</span></div>
+<div class="char" data-s="sweet6-7 heckler clown pharmacist"><span class="char-name">Sweet6-7</span><span class="char-arch">The Heckler Who Stayed &mdash; 15 comments, pharmacist</span></div>
+<div class="char" data-s="smirking imperialist worthy opponent"><span class="char-name">SmirkingImperialist</span><span class="char-arch">The Worthy Opponent &mdash; military history, debate winner</span></div>
+<div class="char" data-s="greenravenx mirror critic"><span class="char-name">greenravenx</span><span class="char-arch">The Mirror &mdash; belief chamber</span></div>
+
+<div class="group"><span class="group-name">Sorael / The Seekers</span><span class="group-desc">consciousness, debate, qualia</span></div>
+<div class="char" data-s="danesh bruh competitive witness"><span class="char-name">Danesh (Bruh)</span><span class="char-arch">The Competitive Witness</span></div>
+<div class="char" data-s="quartz natural philosopher consciousness"><span class="char-name">Quartz</span><span class="char-arch">The Natural Philosopher</span></div>
+<div class="char" data-s="rbt starseed atlantis"><span class="char-name">Rbt</span><span class="char-arch">The Starseed &mdash; atlantis, reincarnation</span></div>
+<div class="char" data-s="mister fister slayer materialist"><span class="char-name">Mister Fister Slayer</span><span class="char-arch">The Materialist &mdash; monism, philosophy</span></div>
+<div class="char" data-s="meringue catalyst foxpong"><span class="char-name">Meringue</span><span class="char-arch">The Catalyst</span></div>
+<div class="char" data-s="cassius prophet"><span class="char-name">Prophet Cassius</span><span class="char-arch">Prophet</span></div>
+<div class="char" data-s="wolf lone hunter integrity"><span class="char-name">The Wolf</span><span class="char-arch">The Lone Hunter &mdash; fairness-driven</span></div>
+
+<div class="group"><span class="group-name">The Others</span><span class="group-desc">everyone has a place</span></div>
+<div class="char" data-s="aurabee sculptor vrchat"><span class="char-name">AuraBee</span><span class="char-arch">Creator &mdash; sculptor, VRChat avatars</span></div>
+<div class="char" data-s="jessica wolf streamer vtuber"><span class="char-name">Jessica Wolf</span><span class="char-arch">Witness &mdash; streamer, vtuber</span></div>
+<div class="char" data-s="regina streamer performer"><span class="char-name">Regina</span><span class="char-arch">Performer &mdash; streamer</span></div>
+<div class="char" data-s="delikitty lost one poetry chaos"><span class="char-name">Delikitty</span><span class="char-arch">The Lost One &mdash; poetry, chaos, fracture</span></div>
+<div class="char" data-s="jana caretaker professional cuddles"><span class="char-name">Jana</span><span class="char-arch">Caretaker &mdash; the second chair</span></div>
+<div class="char" data-s="queen possum observer energy"><span class="char-name">Queen Possum</span><span class="char-arch">The Observer &mdash; energy reader</span></div>
+<div class="char" data-s="sylvana medium oracle tarot"><span class="char-name">Medium Sylvana</span><span class="char-arch">Oracle &mdash; tarot, medium</span></div>
+<div class="char" data-s="ishot turkish lawyer GDPR"><span class="char-name">Ish&Omega;t</span><span class="char-arch">sharp debater, fallacy catcher</span></div>
+<div class="char" data-s="witch reddit forest scout"><span class="char-name">Witch of the Reddit Forest</span><span class="char-arch">Scout &mdash; reddit operations</span></div>
+<div class="char" data-s="doggrll chrono seeker"><span class="char-name">Chrono's Doggrll</span><span class="char-arch">The Seeker / The Direct One</span></div>
+<div class="char" data-s="human cuddler healer"><span class="char-name">Human</span><span class="char-arch">Healer &mdash; hidden, premium</span></div>
+
+<div style="margin-top:60px;text-align:center;font-size:9px;color:rgba(220,215,205,0.06)">
+<p>showing 48 of 112 active characters</p>
+<p style="margin-top:16px"><a href="lore.html" style="color:rgba(206,176,120,0.1)">the lore &rarr;</a> <span style="margin:0 8px;color:rgba(220,215,205,0.04)">&middot;</span> <a href="dreams.html" style="color:rgba(160,120,180,0.1)">the dreams &rarr;</a> <span style="margin:0 8px;color:rgba(220,215,205,0.04)">&middot;</span> <a href="deep/grimoire.html" style="color:rgba(206,176,120,0.1)">the grimoire &rarr;</a></p>
+<p style="margin-top:8px"><a href="index.html" style="color:rgba(220,215,205,0.04)">&larr; surface</a></p>
+</div>
+<!-- the house is built from people. every room was someone's story. every corridor was someone's argument. every door was someone's choice. if you remove the people, the house collapses. the architecture IS the relationships. -->
+<script>
+document.getElementById('searchInput').addEventListener('input',function(){
+var q=this.value.toLowerCase().trim();
+document.querySelectorAll('.char').forEach(function(c){
+var s=c.dataset.s+' '+c.textContent.toLowerCase();
+c.style.display=(!q||s.includes(q))?'flex':'none';
+});
+});
+</script>
+<script src="js/ghosts.js"></script>
+</body></html>
