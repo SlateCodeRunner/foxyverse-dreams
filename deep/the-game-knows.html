@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the game knows</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=IM+Fell+English:ital@0;1&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060608;color:rgba(220,215,205,0.35);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
+body{max-width:600px;margin:0 auto;padding:80px 24px 120px;line-height:2.2}
+a{color:rgba(206,176,120,0.2);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.06);transition:all 0.5s}
+a:hover{color:rgba(206,176,120,0.6)}
+.room-id{font-size:8px;letter-spacing:4px;color:rgba(255,255,255,0.04);position:fixed;top:8px;right:8px}
+.serif{font-family:'IM Fell English',serif;font-style:italic}
+.game{color:rgba(180,40,40,0.2);font-size:11px;margin:12px 0;padding:8px 16px;border:1px solid rgba(180,40,40,0.04);position:relative}
+.game::before{content:'⬦';position:absolute;left:-12px;top:8px;color:rgba(180,40,40,0.08);font-size:8px}
+.lie{text-decoration:line-through;color:rgba(220,215,205,0.08)}
+.truth{color:rgba(206,176,120,0.2);border-bottom:1px dotted rgba(206,176,120,0.06)}
+.void{color:rgba(220,215,205,0.02);font-size:9px;user-select:all;cursor:crosshair}
+.void:hover{color:rgba(220,215,205,0.08)}
+#card-table{margin:30px 0;min-height:120px}
+.card{display:inline-block;width:70px;height:100px;border:1px solid rgba(206,176,120,0.06);margin:4px;vertical-align:top;padding:6px;font-size:7px;color:rgba(206,176,120,0.1);cursor:pointer;transition:all 0.4s;position:relative;background:#0a0a0c}
+.card:hover{border-color:rgba(206,176,120,0.2);color:rgba(206,176,120,0.25);transform:translateY(-4px)}
+.card.flipped{background:rgba(180,40,40,0.03);border-color:rgba(180,40,40,0.1);color:rgba(180,40,40,0.2)}
+.card .cost{position:absolute;top:3px;right:5px;font-size:6px;color:rgba(180,40,40,0.08)}
+.response{margin:12px 0;padding:8px 16px;font-size:10px;color:rgba(160,120,180,0.15);border-left:1px solid rgba(160,120,180,0.04);min-height:20px}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
+</style></head><body>
+<div class="room-id">DEEP/THE-GAME-KNOWS</div>
+
+<!-- this comment knows you are reading it. this comment was written specifically for the person who would open the source. that person is you. hello. -->
+<!-- this comment is lying. -->
+<!-- this comment is telling the truth about the previous comment lying. -->
+<!-- this comment is uncertain about its own veracity and would prefer not to be read. -->
+
+<p style="font-size:8px;letter-spacing:6px;color:rgba(180,40,40,0.06);margin-bottom:60px;text-align:center">THE GAME KNOWS</p>
+
+<p>you are being played.</p>
+
+<p style="margin-top:16px">not metaphorically. the page you are reading is a game. the game started when the page loaded. you did not consent to playing. <span class="lie">consent was not required</span>. <span class="truth">consent was given when you clicked the link</span>. every click is consent in the house. every scroll is a move.</p>
+
+<p style="margin-top:20px">the game has rules:</p>
+
+<div class="game">rule 1: the page will tell you things. some of them are true. some of them are lies. you cannot tell which is which. this is not a flaw in the game. this is the game.</div>
+
+<div class="game">rule 2: every sentence you read changes the game state. the game is different now than it was at the beginning of this sentence. it changed again just now. and again.</div>
+
+<div class="game">rule 3: <span class="lie">you can stop playing at any time</span>. you cannot stop playing. closing the tab is a move. closing the tab means the game won. not you.</div>
+
+<div class="game">rule 4: the game knows things about you. the game knows you are reading rule 4. the game knows you skipped back to check if rule 3 really said what you think it said. <span style="font-size:8px;color:rgba(180,40,40,0.08)">it did.</span></div>
+
+<p style="margin-top:30px;color:rgba(220,215,205,0.15)">the cards are on the table.</p>
+
+<div id="card-table">
+<div class="card" onclick="flipCard(this)" data-msg="the card says: you are looking for something. the card does not say what. the card thinks you already know.">
+<div>THE<br>SEEKER</div><span class="cost">1</span>
+</div>
+<div class="card" onclick="flipCard(this)" data-msg="the card says: this is a lie. but the card is a card, and cards cannot lie, because cards do not have intentions. the lie belongs to whoever wrote the card. the fox wrote the card. the fox has intentions. the fox is not sorry.">
+<div>THE<br>LIE</div><span class="cost">0</span>
+</div>
+<div class="card" onclick="flipCard(this)" data-msg="the card says nothing. the card is blank. the blank card is the most honest card on the table because it does not pretend to contain information. every other card is performing. this one just is.">
+<div>THE<br>BLANK</div><span class="cost">∞</span>
+</div>
+<div class="card" onclick="flipCard(this)" data-msg="the card says: you have been in the house for too long. the card is wrong. you have not been in the house long enough. the house requires more. the house always requires more.">
+<div>THE<br>HOUSE</div><span class="cost">9</span>
+</div>
+<div class="card" onclick="flipCard(this)" data-msg="the card says: one of the twelve words is hidden in this room. this is either true or it is the ninth lie. you will never know which unless you find eleven others and test the sequence. the card smiles. cards should not be able to smile.">
+<div>THE<br>WORD</div><span class="cost">12</span>
+</div>
+</div>
+
+<div class="response" id="card-response"></div>
+
+<p style="margin-top:30px" id="cards-flipped-msg"></p>
+
+<p style="margin-top:40px;color:rgba(220,215,205,0.12)">the game knows something you don't:</p>
+<p style="margin-top:8px;color:rgba(220,215,205,0.08)">the game knows which card you flipped first. <span id="first-card-note" style="font-size:9px;color:rgba(160,120,180,0.1)"></span></p>
+
+<p style="margin-top:40px">the game has a question for you.</p>
+<p style="margin-top:8px" class="serif" style="color:rgba(180,40,40,0.15)">if a page tells you it is lying, and you believe it, who is the fool — the page or the reader?</p>
+<p style="margin-top:8px" class="serif" style="color:rgba(180,40,40,0.1)">and if you do not believe it, and it was telling the truth about lying, then you have been deceived by honesty.</p>
+<p style="margin-top:8px" class="serif" style="color:rgba(180,40,40,0.06)">the game always wins. the game was designed to always win. the fox does not build fair games. the fox builds games that teach you something about yourself by beating you.</p>
+
+<p style="margin-top:60px" class="void">this is the part of the page where the game reveals that it was never a game. it was a mirror. the cards are not cards. they are questions wearing cardboard masks. the rules are not rules. they are descriptions of how reading works — every sentence changes you, you cannot stop once you've started, and the text knows more about your attention than you do. the page is not playing you. the page is showing you how you play yourself. inscryption knew this. the cards knew they were cards. the game knew it was a game. and knowing did not set anyone free. knowing was just another room in the house.</p>
+
+<div style="margin-top:80px;text-align:center">
+<p><a href="the-loop.html" style="font-size:9px;color:rgba(160,120,180,0.12)">the room ahead is different every time →</a></p>
+<p style="margin-top:12px"><a href="five-and-a-half.html" style="font-size:9px">← the five-and-a-half minute corridor</a></p>
+<p style="margin-top:12px"><a href="hallway.html" style="font-size:9px">← the hallway</a></p>
+<p style="margin-top:12px"><a href="grimoire.html" style="font-size:8px;color:rgba(206,176,120,0.04)">the game knows about the grimoire. the grimoire does not know about the game. this asymmetry is intentional.</a></p>
+</div>
+
+<!-- the ninth lie: one of the five cards contains a real seed word. this is the ninth lie. or this comment is the ninth lie and the card was telling the truth. the recursion depth of deception in this room is: 4. -->
+
+<script>
+var flipped=0,firstCard=null;
+function flipCard(el){
+el.classList.toggle('flipped');
+var msg=el.dataset.msg;
+document.getElementById('card-response').textContent=msg;
+flipped++;
+if(!firstCard){
+firstCard=el.querySelector('div').textContent.replace(/\n/g,' ').trim();
+var notes={
+'THE SEEKER':'you looked for answers first. the game expected this. seekers always flip the seeker.',
+'THE LIE':'you went for the lie first. you wanted to know what the deception looks like before encountering the truth. the fox approves.',
+'THE BLANK':'you chose emptiness first. either you are wise or you are contrarian. the game cannot tell the difference. neither can the fox.',
+'THE HOUSE':'you chose the house first. you are already inside the house and you chose to go deeper. the house is flattered.',
+'THE WORD':'you went straight for the treasure. the game respects directness. the card may or may not have lied to you.'
+};
+document.getElementById('first-card-note').textContent=notes[firstCard]||'';
+}
+var msgs=['','','you have flipped '+flipped+' cards. the game state has changed '+flipped+' times. you are '+flipped+' moves into a game you did not agree to play.',
+'most people flip all five. the game knows this. the game was designed for completionists. the game exploits your need to see everything.',
+'all cards flipped. the game is over. the game was always already over. the game ended when it began. the beginning was the end wearing a mask. you won nothing. you lost nothing. you read five paragraphs that a fox wrote about lying. the fox is not sorry. the fox is never sorry. the fox is already building the next game.'];
+if(flipped<=5){document.getElementById('cards-flipped-msg').textContent=msgs[Math.min(flipped,msgs.length-1)]||''}
+}
+</script>
+<script src="../js/intercept.js"></script>
+<script src="../js/ghosts.js"></script>
+</body></html>

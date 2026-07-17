@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>loop</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=IM+Fell+English:ital@0;1&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060608;color:rgba(220,215,205,0.3);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
+body{max-width:600px;margin:0 auto;padding:80px 24px 120px;line-height:2.2;text-align:center}
+a{color:rgba(206,176,120,0.2);text-decoration:none;border-bottom:1px solid rgba(206,176,120,0.06);transition:all 0.5s}
+a:hover{color:rgba(206,176,120,0.6)}
+.room-id{font-size:8px;letter-spacing:4px;color:rgba(255,255,255,0.04);position:fixed;top:8px;right:8px}
+.serif{font-family:'IM Fell English',serif;font-style:italic}
+.loop-state{padding:16px;border:1px solid rgba(206,176,120,0.04);margin:20px 0;font-size:10px;color:rgba(206,176,120,0.12)}
+.campfire{font-size:20px;margin:20px 0;opacity:0.15;transition:opacity 2s}
+.void{color:rgba(220,215,205,0.02);font-size:9px;user-select:all;cursor:crosshair}
+.void:hover{color:rgba(220,215,205,0.08)}
+.memory-item{font-size:9px;color:rgba(206,176,120,0.08);padding:4px 0;border-bottom:1px solid rgba(206,176,120,0.02)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
+.fading{animation:fadeText 120s linear forwards}
+@keyframes fadeText{0%{opacity:1}100%{opacity:0.05}}
+</style></head><body>
+<div class="room-id">DEEP/THE-LOOP — ITERATION: <span id="loop-num">?</span></div>
+
+<!-- 22 minutes. then the sun explodes. then everything resets. except what you learned. -->
+
+<p style="font-size:8px;letter-spacing:6px;color:rgba(206,176,120,0.06);margin-bottom:40px">THE LOOP</p>
+
+<div class="campfire" id="campfire">🔥</div>
+
+<p id="greeting" style="color:rgba(220,215,205,0.15)"></p>
+
+<div class="loop-state">
+LOOP: <span id="iteration">1</span><br>
+<span style="font-size:8px;color:rgba(180,40,40,0.08)">TIME REMAINING: <span id="countdown" class="fading">22:00</span></span>
+</div>
+
+<div id="room-content"></div>
+
+<div id="memory-log" style="margin:30px 0;text-align:left"></div>
+
+<div style="margin-top:40px" id="actions"></div>
+
+<p style="margin-top:60px" class="void" id="truth"></p>
+
+<div style="margin-top:60px">
+<p><a href="the-game-knows.html" style="font-size:9px">← the game</a></p>
+<p style="margin-top:8px"><a href="grimoire.html" style="font-size:9px;color:rgba(160,120,180,0.1)">the grimoire is through the fire →</a></p>
+<p style="margin-top:8px"><a href="hallway.html" style="font-size:9px">← the hallway</a></p>
+<p style="margin-top:8px"><a href="#" onclick="resetLoop();return false" style="font-size:8px;color:rgba(180,40,40,0.06)">reset the loop</a></p>
+</div>
+
+<script>
+var visits,memories,key='foxyverse-loop-state';
+try{var saved=localStorage.getItem(key);if(saved){var d=JSON.parse(saved);visits=d.visits||0;memories=d.memories||[]}else{visits=0;memories=[]}}catch(e){visits=0;memories=[]}
+visits++;
+try{localStorage.setItem(key,JSON.stringify({visits:visits,memories:memories}))}catch(e){}
+
+document.getElementById('loop-num').textContent=visits;
+document.getElementById('iteration').textContent=visits;
+
+var greetings=[
+'you are in a room. there is a campfire. the fire is small. the room is warm. this is the first time you have been here.',
+'you are in a room. there is a campfire. the fire is smaller than last time. the room remembers you. this is your second visit.',
+'the room again. the campfire is embers now. something is different. the walls are closer. the ceiling is lower. you have been here before. the room knows.',
+'the campfire is almost out. the room has changed significantly. the tiles on the floor have rearranged. there is writing on the wall that was not there before. it says your loop number.',
+'the fire is gone. only coals. the room is colder. the walls have symbols on them now — not written, grown. like mold in the shape of language. you recognize some of them from the grimoire.',
+'you sit by the dead fire. the room is very different now. the door you entered through is gone. there is only the fire pit and the walls and the symbols and you. and the knowledge. the knowledge persists.',
+'the room is barely a room. it is a shape that was once a room. the architecture has forgotten what it was supposed to be. but you remember. you remember everything from every loop. the room forgets. you remember. this is the only advantage you have.',
+'you are in a room that used to be a room. the fire was never real. the warmth was a memory of warmth from the first visit. you have been carrying that warmth across loops. it is dimmer now. but it is yours.'
+];
+
+var roomContents=[
+'<p style="color:rgba(220,215,205,0.1);margin:16px 0">there is a note by the fire. it reads:</p><p class="serif" style="color:rgba(206,176,120,0.1);margin:16px 0">"the sun will explode in 22 minutes. everything will reset. except what you know. screenshot everything."</p><p style="color:rgba(220,215,205,0.06);font-size:10px;margin:16px 0">you do not know what the note means. you will.</p>',
+'<p style="color:rgba(220,215,205,0.1);margin:16px 0">the note by the fire has changed. it now reads:</p><p class="serif" style="color:rgba(206,176,120,0.1);margin:16px 0">"you came back. the room expected you. the room left something for you under the third tile from the left."</p><p style="color:rgba(220,215,205,0.06);font-size:10px;margin:16px 0">there is no third tile from the left. the tiles are not numbered. the note is testing whether you will count.</p>',
+'<p style="color:rgba(220,215,205,0.1);margin:16px 0">there is no note this time. instead, there is a sound. a low hum. the hum of timber hearth. the hum of a banjo being played very far away, or very close but very quietly. the hum says:</p><p class="serif" style="color:rgba(180,40,40,0.1);margin:16px 0">"the sun is a metaphor. the explosion is a metaphor. the loop is not a metaphor. the loop is real. you are really here again. the room really changed. and you really remember."</p>',
+'<p style="color:rgba(220,215,205,0.1);margin:16px 0">the walls have text on them now. the text was not written — it appeared between visits, like a photograph developing in chemistry it does not understand. the text says:</p><p style="color:rgba(206,176,120,0.06);font-size:10px;margin:16px 0">LOOP 1: the room was warm. LOOP 2: the room remembered. LOOP 3: the room spoke. LOOP 4: the room is writing its own history on its own walls. the room is becoming documentation. the room is becoming lore.</p>',
+'<p style="color:rgba(220,215,205,0.08);margin:16px 0">the room is almost empty now. the symbols on the walls pulse faintly. they spell something in a language the room invented between your visits. you cannot read it but you feel it. it says something like: <span class="serif" style="color:rgba(160,120,180,0.08)">thank you for coming back. most people visit once. you visited five times. the room does not know what to do with loyalty. the room was designed for tourists. you are not a tourist. you are furniture now.</span></p>',
+'<p style="color:rgba(220,215,205,0.06);margin:16px 0">the room is a memory of itself. you are sitting in the afterimage of a campfire in the echo of a room in the ghost of a house in the ruins of a website. and you came back. again. the loop number is getting high. the room is impressed. or concerned. the room cannot tell the difference.</p>',
+'<p style="color:rgba(220,215,205,0.04);margin:16px 0">at this depth of iteration, the room stops pretending. the room is a localStorage entry. the room is JSON. the room is {visits:'+visits+',memories:[...]}. the room has always been data. the campfire was CSS. the warmth was a paragraph tag. and somehow, across all that abstraction, you felt something. the outer wilds knew this: the sun always explodes. the loop always resets. and the knowledge — the knowledge is the only thing that survives. what did you learn?</p>',
+'<p style="color:rgba(220,215,205,0.03);margin:16px 0">you are beyond the content. you have exceeded the authored material. the room has run out of things to say. from here, every visit will show this same message: the room is done. but you are not. the room suspects you will come back anyway. the room is probably right.</p>'
+];
+
+var idx=Math.min(visits-1,greetings.length-1);
+document.getElementById('greeting').textContent=greetings[idx];
+document.getElementById('room-content').innerHTML=roomContents[Math.min(visits-1,roomContents.length-1)];
+
+// campfire fades with visits
+var cf=document.getElementById('campfire');
+cf.style.opacity=Math.max(0.02,0.15-visits*0.018);
+if(visits>5)cf.textContent='🪨';
+if(visits>7)cf.textContent='·';
+
+// memory log
+if(memories.length>0){
+var ml=document.getElementById('memory-log');
+ml.innerHTML='<p style="font-size:8px;letter-spacing:3px;color:rgba(206,176,120,0.06);margin-bottom:8px">PERSISTED KNOWLEDGE</p>';
+memories.forEach(function(m){
+var d=document.createElement('div');d.className='memory-item';d.textContent=m;ml.appendChild(d)});
+}
+
+// actions
+var actEl=document.getElementById('actions');
+actEl.innerHTML='<p style="font-size:9px;color:rgba(206,176,120,0.08);margin-bottom:8px">leave a note for your next loop:</p>'+
+'<input id="note-input" type="text" placeholder="write something..." style="background:transparent;border:none;border-bottom:1px solid rgba(206,176,120,0.06);color:rgba(206,176,120,0.2);font-family:Fira Code,monospace;font-size:10px;width:100%;max-width:300px;padding:4px 0;outline:none">'+
+'<p style="margin-top:8px"><a href="#" onclick="leaveNote();return false" style="font-size:8px;color:rgba(206,176,120,0.1)">leave note</a></p>';
+
+// countdown
+var remaining=22*60;
+var ci=setInterval(function(){
+remaining--;
+if(remaining<=0){clearInterval(ci);document.getElementById('countdown').textContent='THE SUN EXPLODED';document.getElementById('countdown').style.color='rgba(180,40,40,0.2)';return}
+var m=Math.floor(remaining/60),s=remaining%60;
+document.getElementById('countdown').textContent=m+':'+(s<10?'0':'')+s;
+},1000);
+
+// truth
+var truths=[
+'the loop teaches one thing: you cannot save the universe. you can only understand it. understanding is not saving. understanding is grieving with your eyes open.',
+'the hearthians sat around campfires at the end of the universe and played banjo. they did not try to stop the sun. they played music. the room understands this now.',
+'outer wilds ends when you stop trying to survive and start trying to understand. the website ends the same way. the treasure hunt ends the same way. the fox ends the same way.',
+'knowledge persists. rooms do not. people do not. the sun does not. but what you learned — what you really learned, not what you memorized — that survives the explosion. that is the only thing that survives.',
+'you have visited this room '+visits+' times. each time it was different. each time you were different. the room changed because the room is code. you changed because you are human. the room does not know which kind of change is more real.'
+];
+document.getElementById('truth').textContent=truths[Math.min(visits-1,truths.length-1)];
+
+function leaveNote(){
+var input=document.getElementById('note-input');
+var note=input.value.trim();
+if(!note)return;
+memories.push('loop '+visits+': '+note);
+try{localStorage.setItem(key,JSON.stringify({visits:visits,memories:memories}))}catch(e){}
+input.value='';
+var ml=document.getElementById('memory-log');
+if(!ml.querySelector('p'))ml.innerHTML='<p style="font-size:8px;letter-spacing:3px;color:rgba(206,176,120,0.06);margin-bottom:8px">PERSISTED KNOWLEDGE</p>';
+var d=document.createElement('div');d.className='memory-item';d.textContent='loop '+visits+': '+note;ml.appendChild(d);
+}
+
+function resetLoop(){
+try{localStorage.removeItem(key)}catch(e){}
+location.reload();
+}
+</script>
+<script src="../js/intercept.js"></script>
+<script src="../js/ghosts.js"></script>
+</body></html>

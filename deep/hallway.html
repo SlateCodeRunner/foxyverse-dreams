@@ -37,11 +37,21 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;ba
 <p style="margin-top:12px"><a href="room-003.html" style="color:rgba(180,40,40,0.2);border-color:rgba(180,40,40,0.06)">the door on the right has something written on it.</a></p>
 </div>
 
+<p style="margin-top:20px;color:rgba(220,215,205,0.12)">the hallway continues past the three doors. it should not continue. the floor plan says the hallway ends here. the hallway disagrees.</p>
+
+<div style="margin:30px 0;padding:20px;border-left:1px solid rgba(160,120,180,0.06)">
+<p><a href="five-and-a-half.html" style="color:rgba(160,120,180,0.15);border-color:rgba(160,120,180,0.04);font-size:11px">past the doors, the corridor stretches further than it should. the measurements are wrong. →</a></p>
+<p style="margin-top:12px"><a href="the-game-knows.html" style="color:rgba(180,40,40,0.12);border-color:rgba(180,40,40,0.04);font-size:11px">there is a door you do not remember seeing before. it is watching you. →</a></p>
+<p style="margin-top:12px"><a href="the-loop.html" style="color:rgba(206,176,120,0.1);border-color:rgba(206,176,120,0.03);font-size:11px">at the far end, a faint light. campfire light. it feels familiar. →</a></p>
+</div>
+
 <p class="whisper">you can also go back. you can always go back. <a href="../sipstea.html" style="color:rgba(220,215,205,0.04);border:none">←</a></p>
 
-<p class="void" style="margin-top:60px">the hallway is also a throat. you are being swallowed. the house is digesting you. this is not a metaphor. the house converts readers into rooms. you are becoming architecture.</p>
+<p class="void" style="margin-top:60px">the hallway is also a throat. you are being swallowed. the house converts readers into rooms. you are becoming architecture.</p>
 
 <p style="margin-top:16px"><a href="reading-room.html" style="color:rgba(160,120,180,0.15);border-color:rgba(160,120,180,0.05);font-size:10px">there is a room with no door. the room sees you. →</a></p>
+
+<p style="margin-top:16px" class="void"><a href="grimoire.html" style="color:rgba(220,215,205,0.02);border-color:rgba(220,215,205,0.01);font-size:9px">there is a crack in the wall. something glows behind the plaster. you could break through.</a></p>
 
 <p class="exit"><a href="basement.html">or you can take the stairs down ↓</a></p>
 <script>
@@ -51,7 +61,6 @@ document.body.addEventListener('click', function init() {
   var o = ctx.createOscillator(); var g = ctx.createGain();
   o.type = 'sine'; o.frequency.value = 80; g.gain.value = 0.02;
   o.connect(g); g.connect(ctx.destination); o.start();
-  // Breathing LFO
   var lfo = ctx.createOscillator(); var lg = ctx.createGain();
   lfo.frequency.value = 0.15; lg.gain.value = 0.015;
   lfo.connect(lg); lg.connect(g.gain); lfo.start();
