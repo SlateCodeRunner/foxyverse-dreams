@@ -4,79 +4,108 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Queen Possum</title>
-<meta property="og:title" content="Queen Possum">
-<meta property="og:description" content="The crown asked for her.">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0a;color:#f0ece4;overflow-x:hidden}
-@keyframes grain{0%,100%{transform:translate(0)}10%{transform:translate(-1%,-1%)}30%{transform:translate(-1%,1%)}50%{transform:translate(-1%)}70%{transform:translate(-1%,-1%)}90%{transform:translate(1%,0)}}
-body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:0.5;pointer-events:none;z-index:9999;animation:grain 0.5s steps(1) infinite}
+body{background:#080808;color:#e8e4dc;overflow-x:hidden}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes grain{0%,100%{transform:translate(0)}20%{transform:translate(-1%,1%)}40%{transform:translate(1%)}60%{transform:translate(1%,-1%)}80%{transform:translate(-1%)}}
+body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.6;pointer-events:none;z-index:9999;animation:grain 0.4s steps(1) infinite}
 
-.panel{position:relative;width:100%;min-height:100vh;overflow:hidden;display:flex;align-items:flex-end}
-.panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.panel-overlay{position:absolute;inset:0}
-.panel-text{position:relative;z-index:2;padding:40px 32px 48px;width:100%}
+section{position:relative;overflow:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
 
-.p1 .panel-overlay{background:linear-gradient(0deg,rgba(10,10,10,0.9) 0%,rgba(10,10,10,0.3) 35%,transparent 65%)}
-.p2 .panel-overlay{background:linear-gradient(0deg,rgba(10,10,10,0.85) 0%,rgba(10,10,10,0.15) 50%,transparent 100%)}
-.p3 .panel-overlay{background:linear-gradient(0deg,rgba(10,10,10,0.85) 0%,transparent 50%)}
+/* HERO */
+.hero{height:105vh;position:relative}
+.hero img{position:absolute;inset:0}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,8,0.15) 0%,rgba(8,8,8,0) 30%,rgba(8,8,8,0) 55%,rgba(8,8,8,0.95) 100%)}
+.hero-text{position:absolute;bottom:0;left:0;right:0;padding:0 36px 52px;z-index:2}
+.hero-name{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(56px,16vw,120px);line-height:0.82;letter-spacing:-2px;color:#e8e4dc}
+.hero-name i{font-style:italic;color:rgba(180,60,80,0.7)}
+.hero-tag{font-family:'Inter',sans-serif;font-weight:300;font-size:10px;letter-spacing:8px;color:rgba(232,228,220,0.2);text-transform:uppercase;margin-top:16px}
+.hero-line{width:40px;height:1px;background:rgba(180,60,80,0.3);margin-top:16px}
 
-.big{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,14vw,100px);letter-spacing:3px;line-height:0.85;text-transform:uppercase}
-.sub{font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(12px,2.5vw,15px);color:rgba(240,236,228,0.35);letter-spacing:4px;text-transform:uppercase}
-.tiny{font-family:'Inter',sans-serif;font-weight:300;font-size:10px;color:rgba(240,236,228,0.15);letter-spacing:5px;text-transform:uppercase}
+/* THRONE BAR */
+.bar{padding:18px 36px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(232,228,220,0.04);border-bottom:1px solid rgba(232,228,220,0.04)}
+.bar-left{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:14px;color:rgba(232,228,220,0.15)}
+.bar a{font-family:'Inter',sans-serif;font-weight:400;font-size:10px;letter-spacing:5px;color:rgba(180,60,80,0.5);text-decoration:none;text-transform:uppercase;padding:8px 24px;border:1px solid rgba(180,60,80,0.15);transition:all 0.4s}
+.bar a:hover{background:rgba(180,60,80,0.06);border-color:rgba(180,60,80,0.4);color:rgba(180,60,80,0.8)}
 
-.rose{position:absolute;font-size:20px;opacity:0.15;pointer-events:none}
+/* PORTRAIT */
+.portrait{display:grid;grid-template-columns:1fr 1fr;min-height:85vh}
+.portrait-img{position:relative;overflow:hidden}
+.portrait-img img{height:100%;object-fit:cover}
+.portrait-side{display:flex;flex-direction:column;justify-content:center;padding:48px 36px;background:#080808}
+.portrait-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(20px,4vw,32px);line-height:1.5;color:rgba(232,228,220,0.3)}
+.portrait-attr{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:4px;color:rgba(180,60,80,0.25);margin-top:20px;text-transform:uppercase}
+.portrait-detail{font-family:'Inter',sans-serif;font-weight:300;font-size:10px;letter-spacing:6px;color:rgba(232,228,220,0.08);text-transform:uppercase;margin-top:auto;padding-top:40px}
 
-.strip{background:#0a0a0a;display:flex;align-items:center;justify-content:center;gap:20px;padding:20px 32px;border-top:1px solid rgba(240,236,228,0.03);border-bottom:1px solid rgba(240,236,228,0.03)}
-.strip-rose{font-size:16px;opacity:0.2}
-.throne-link{padding:12px 44px;border:1px solid rgba(240,236,228,0.12);color:rgba(240,236,228,0.5);font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:6px;text-decoration:none;text-transform:uppercase;transition:all 0.3s}
-.throne-link:hover{background:rgba(240,236,228,0.04);border-color:rgba(240,236,228,0.3);color:rgba(240,236,228,0.8)}
+/* SMILE */
+.smile{height:90vh;position:relative}
+.smile img{position:absolute;inset:0}
+.smile-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,8,0.1) 0%,rgba(8,8,8,0) 40%,rgba(8,8,8,0.9) 100%)}
+.smile-text{position:absolute;bottom:0;left:0;right:0;text-align:center;padding:0 36px 56px;z-index:2}
+.smile-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,10vw,72px);letter-spacing:8px;line-height:1;text-transform:uppercase;color:rgba(232,228,220,0.7)}
+.smile-cta{display:inline-block;margin-top:24px;padding:12px 40px;font-family:'Inter',sans-serif;font-weight:300;font-size:10px;letter-spacing:6px;color:rgba(180,60,80,0.5);text-decoration:none;text-transform:uppercase;border:1px solid rgba(180,60,80,0.15);transition:all 0.4s}
+.smile-cta:hover{background:rgba(180,60,80,0.06);border-color:rgba(180,60,80,0.4);color:rgba(180,60,80,0.8)}
 
-.end{background:#0a0a0a;padding:40px 32px;text-align:center}
-.end a{font-family:'Inter',sans-serif;font-size:9px;color:rgba(240,236,228,0.06);letter-spacing:3px;text-decoration:none}
+/* FOOTER */
+.foot{padding:48px 36px;text-align:center}
+.foot-line{width:30px;height:1px;background:rgba(180,60,80,0.15);margin:0 auto 16px}
+.foot a{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:4px;color:rgba(232,228,220,0.06);text-decoration:none;text-transform:uppercase}
+
+@media(max-width:600px){
+  .portrait{grid-template-columns:1fr;min-height:auto}
+  .portrait-img{height:70vh}
+  .portrait-side{padding:32px 24px}
+  .hero-text{padding:0 24px 40px}
+  .bar{flex-direction:column;gap:12px;text-align:center}
+}
 </style>
 </head>
 <body>
 
-<div class="panel p1">
+<section class="hero">
   <img src="img/img-possum-1.png" alt="">
-  <div class="panel-overlay"></div>
-  <span class="rose" style="top:15%;right:8%">&#x1F5A4;</span>
-  <span class="rose" style="top:40%;right:12%">&#x1F339;</span>
-  <span class="rose" style="top:65%;left:5%">&#x1F5A4;</span>
-  <div class="panel-text">
-    <div class="big">Queen<br>Possum</div>
-    <div class="sub" style="margin-top:12px">&#x1F5A4; the observer &#x1F5A4;</div>
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <div class="hero-name">Queen<br><i>Possum</i></div>
+    <div class="hero-tag">the observer</div>
+    <div class="hero-line"></div>
   </div>
+</section>
+
+<div class="bar">
+  <span class="bar-left">she didn't ask for the crown</span>
+  <a href="https://throne.com/rubylovethrone" target="_blank">Send a Gift</a>
 </div>
 
-<div class="strip">
-  <span class="strip-rose">&#x1F339;</span>
-  <a href="https://throne.com/rubylovethrone" class="throne-link" target="_blank">Send a Gift</a>
-  <span class="strip-rose">&#x1F339;</span>
-</div>
-
-<div class="panel p2" style="min-height:90vh">
-  <img src="img/img-possum-2.png" alt="">
-  <div class="panel-overlay"></div>
-  <div class="panel-text">
-    <div class="tiny">crowned day one &#x2022; sees everything &#x2022; weaponizes nothing</div>
+<section class="portrait">
+  <div class="portrait-img"><img src="img/img-possum-2.png" alt=""></div>
+  <div class="portrait-side">
+    <div class="portrait-quote">sees everything.<br>weaponizes nothing.</div>
+    <div class="portrait-attr">crowned day one</div>
+    <div class="portrait-detail">the observer</div>
   </div>
+</section>
+
+<div class="bar">
+  <span class="bar-left">the crown asked for her</span>
+  <a href="https://throne.com/rubylovethrone" target="_blank">Spoil Her</a>
 </div>
 
-<div class="panel p3" style="min-height:95vh">
+<section class="smile">
   <img src="img/img-possum-3.png" alt="">
-  <div class="panel-overlay"></div>
-  <span class="rose" style="bottom:25%;right:10%">&#x1F5A4;</span>
-  <span class="rose" style="top:20%;left:6%">&#x1F339;</span>
-  <div class="panel-text" style="text-align:center">
-    <div class="big" style="font-size:clamp(36px,9vw,64px)">Act<br>Accordingly</div>
-    <div style="margin-top:20px"><a href="https://throne.com/rubylovethrone" class="throne-link" target="_blank" style="font-size:16px;letter-spacing:8px">Spoil Her &#x1F339;</a></div>
+  <div class="smile-overlay"></div>
+  <div class="smile-text">
+    <div class="smile-big">Act Accordingly</div>
+    <a href="https://throne.com/rubylovethrone" class="smile-cta" target="_blank">throne.com/rubylovethrone</a>
   </div>
-</div>
+</section>
 
-<div class="end">
+<div class="foot">
+  <div class="foot-line"></div>
   <a href="/">psycheorsike.com</a>
 </div>
 
