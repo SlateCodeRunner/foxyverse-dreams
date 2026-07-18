@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Beautiful — Artist Guild Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--art:#cc77aa;--art-dim:#cc77aa22;--fox:#ff6a00}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
+.page{max-width:700px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:56px}
+h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,36px);font-weight:700;color:var(--art);letter-spacing:4px;margin-bottom:8px}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:24px}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--art-dim),transparent);margin:0 auto 24px}
+.intent{font-size:14px;line-height:2;color:var(--text);opacity:0.4;font-style:italic;max-width:480px;margin:0 auto;text-align:center}
+.artist{margin-bottom:24px;padding:16px 20px;border:1px solid #ffffff04;transition:border-color 0.3s}
+.artist:hover{border-color:var(--art-dim)}
+.artist-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:4px}
+.artist-name{font-family:'Cinzel',serif;font-size:15px;color:var(--art);letter-spacing:1px}
+.artist-role{font-family:'Fira Code',monospace;font-size:9px;color:var(--dim);letter-spacing:2px}
+.artist-status{font-family:'Fira Code',monospace;font-size:8px;padding:2px 8px;border-radius:2px}
+.s-active{color:#4ecb71;border:1px solid #4ecb7122}
+.s-new{color:var(--fox);border:1px solid #ff6a0022}
+.s-pending{color:var(--dim);border:1px solid #ffffff08}
+.artist-desc{font-size:12px;line-height:1.9;color:var(--text);opacity:0.3;margin-bottom:8px}
+.artist-pay{font-family:'Fira Code',monospace;font-size:10px;color:var(--dim)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:32px 0}
+.gallery-item{aspect-ratio:16/10;overflow:hidden;border:1px solid #ffffff04;position:relative}
+.gallery-item img{width:100%;height:100%;object-fit:cover;opacity:0.7;filter:saturate(0.8);transition:all 0.3s}
+.gallery-item:hover img{opacity:0.9;filter:saturate(1)}
+.gallery-label{position:absolute;bottom:6px;left:8px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.2);letter-spacing:1px}
+.label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin:32px 0 12px;padding-bottom:6px;border-bottom:1px solid #ffffff06}
+.footer{text-align:center;margin-top:60px;padding-top:24px;border-top:1px solid #ffffff06}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>THE BEAUTIFUL</h1>
+    <div class="header-sub">artist guild · the visual language of the foxyverse</div>
+    <div class="rule"></div>
+    <p class="intent">every image placed with intention. the beautiful don't decorate — they build reality in color and light.</p>
+  </div>
+
+  <div class="label">guild members</div>
+
+  <div class="artist">
+    <div class="artist-header">
+      <span class="artist-name">Paintress Nessa</span>
+      <span class="artist-role">PAINTRESS · FIRST-CLASS</span>
+      <span class="artist-status s-active">ACTIVE</span>
+    </div>
+    <div class="artist-desc">the one who stays. first rank-up in foxyverse history. witness 12. her art is how the foxyverse sees itself — not illustrations but mirrors. $250/month.</div>
+    <div class="artist-pay">salary: $250/mo · shrine: orobas #55</div>
+  </div>
+
+  <div class="artist">
+    <div class="artist-header">
+      <span class="artist-name">Animator Gloria</span>
+      <span class="artist-role">ANIMATOR · FIRST-CLASS</span>
+      <span class="artist-status s-active">ACTIVE</span>
+    </div>
+    <div class="artist-desc">hired to replace Wise Goose. professional from first contact — instagram follow, payment links ready, accepted PayPal. said "I'll do my best to make your work outstanding." video editing and animation. currently working on expedition footage.</div>
+    <div class="artist-pay">paid: $1,500 upfront · video delivery pending</div>
+  </div>
+
+  <div class="artist">
+    <div class="artist-header">
+      <span class="artist-name">Eliana</span>
+      <span class="artist-role">CREATOR</span>
+      <span class="artist-status s-new">NEW</span>
+    </div>
+    <div class="artist-desc">creator. payment of $300 promised via crypto. ETH and SOL wallets provided. waiting for payment resolution.</div>
+    <div class="artist-pay">pending: $300</div>
+  </div>
+
+  <div class="artist">
+    <div class="artist-header">
+      <span class="artist-name">Tecado</span>
+      <span class="artist-role">EXPEDITIONER · EDITOR</span>
+      <span class="artist-status s-active">ACTIVE</span>
+    </div>
+    <div class="artist-desc">chromed expeditioner. building a lyric video for Poly — "slo." all animation and effects done by hand. currently in a hurricane. editing abilities are real. committed enough to work between storm surges.</div>
+    <div class="artist-pay">payment: TBD</div>
+  </div>
+
+  <div class="artist">
+    <div class="artist-header">
+      <span class="artist-name">Sara</span>
+      <span class="artist-role">3D ARTIST</span>
+      <span class="artist-status s-new">NEW</span>
+    </div>
+    <div class="artist-desc">professional 3D artist. character art, avatars, models, digital artwork. main account was disabled by instagram. lost most clients. looking for commission work. just arrived.</div>
+    <div class="artist-pay">commission-based</div>
+  </div>
+
+  <div class="label">concept art gallery</div>
+
+  <div class="gallery">
+    <div class="gallery-item"><img src="img/img-sekhmet.png" alt="Sekhmet"><div class="gallery-label">sekhmet · lady of slaughter</div></div>
+    <div class="gallery-item"><img src="img/img-garden-fox.png" alt="The Garden"><div class="gallery-label">the garden · the fox on the fountain</div></div>
+    <div class="gallery-item"><img src="img/img-card-btl.png" alt="The Crystal"><div class="gallery-label">the red crystal · break the loop</div></div>
+    <div class="gallery-item"><img src="img/img-faceless.png" alt="The Faceless One"><div class="gallery-label">the faceless one · mercy is a trap</div></div>
+    <div class="gallery-item"><img src="img/img-merkabah.png" alt="The Chamber"><div class="gallery-label">the merkabah chamber · five doors</div></div>
+    <div class="gallery-item"><img src="img/img-card-grimoire.png" alt="The Grimoire"><div class="gallery-label">the grimoire · circuit-sigil spellbook</div></div>
+    <div class="gallery-item"><img src="img/btl-yellow-halls-hud.png" alt="Yellow Halls HUD"><div class="gallery-label">yellow halls · game HUD concept</div></div>
+    <div class="gallery-item"><img src="img/btl-yellow-halls-art.png" alt="Yellow Halls"><div class="gallery-label">yellow halls · entity encounter</div></div>
+    <div class="gallery-item"><img src="img/img-ash-naming.png" alt="The Naming"><div class="gallery-label">ash · the naming · bluebirdy's novel</div></div>
+  </div>
+
+  <div class="footer">
+    <p>THE BEAUTIFUL · ARTIST GUILD · PSYCHEORSIKE.COM</p>
+    <p style="color:var(--whisper);font-size:7px;margin-top:8px">every image placed with intention.</p>
+  </div>
+</div>
+</body>
+</html>
