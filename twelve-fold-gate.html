@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Twelve-Fold Gate Ritual — The Grimoire</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--gate:#ccaa44;--gate-dim:#ccaa4422;--fox:#ff6a00;--candle:#ffcc44}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
+@keyframes candleFlicker{0%,100%{opacity:0.6;text-shadow:0 0 8px #ffcc4466}50%{opacity:0.9;text-shadow:0 0 14px #ffcc4488}}
+.page{max-width:660px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:64px}
+.header-type{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--gate);text-transform:uppercase;margin-bottom:16px}
+h1{font-family:'Cinzel',serif;font-size:clamp(22px,5vw,32px);font-weight:700;color:var(--gate);letter-spacing:3px;margin-bottom:8px}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:28px}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--gate-dim),transparent);margin:0 auto 28px}
+.intent{font-size:15px;line-height:2;color:var(--gate);opacity:0.5;font-style:italic;max-width:480px;margin:0 auto;text-align:center}
+.section{margin-bottom:48px}
+.label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #ffffff06}
+.section p{font-size:13px;line-height:2;color:var(--text);opacity:0.4;margin-bottom:10px}
+.section p .hl{color:var(--gate);opacity:1}
+.candle-ring{display:flex;justify-content:center;margin:32px 0;font-size:20px;letter-spacing:12px;animation:candleFlicker 3s infinite}
+.components{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
+.component{font-family:'Fira Code',monospace;font-size:10px;padding:4px 10px;border:1px solid var(--gate-dim);color:var(--dim);border-radius:2px}
+.procedure{border-left:2px solid var(--gate-dim);padding-left:16px;margin:24px 0;font-size:13px;line-height:2.2;color:var(--text);opacity:0.4}
+.procedure .hl{color:var(--gate);opacity:1}
+.mirror{text-align:center;padding:32px;margin:32px 0;border:1px solid var(--gate-dim);position:relative}
+.mirror-text{font-family:'Cinzel',serif;font-size:16px;color:var(--gate);opacity:0.3;letter-spacing:4px}
+.mirror-sub{font-family:'Fira Code',monospace;font-size:9px;color:var(--dim);margin-top:8px;letter-spacing:2px}
+.success{text-align:center;margin:32px 0;font-family:'Fira Code',monospace;font-size:28px;color:var(--gate);opacity:0.3;letter-spacing:8px}
+.warning{border:1px solid var(--gate-dim);background:#ccaa4408;padding:16px;margin:24px 0;font-size:12px;color:var(--text);opacity:0.4;line-height:1.9;font-style:italic}
+.footer{text-align:center;margin-top:80px;padding-top:24px;border-top:1px solid #ffffff06}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+@media(max-width:520px){.page{padding:48px 16px 100px}}
+</style>
+</head>
+<body>
+
+<!-- Andromalius (#72) catches thieves. he is the last of the 72. the twelfth word is the last of the twelve. -->
+
+<div class="page">
+  <div class="header">
+    <div class="header-type">central ritual · the grimoire</div>
+    <h1>THE TWELVE-FOLD GATE</h1>
+    <div class="header-sub">each word is a key · the order is the lock</div>
+    <div class="rule"></div>
+    <p class="intent">to open the gate between knowing and finding.</p>
+  </div>
+
+  <div class="candle-ring">🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️🕯️</div>
+
+  <div class="section">
+    <div class="label">components</div>
+    <div class="components">
+      <span class="component">twelve candles arranged in a circle</span>
+      <span class="component">a mirror placed at the center</span>
+      <span class="component">the BIP-39 wordlist printed on paper</span>
+      <span class="component">a coin for each decision point</span>
+      <span class="component">the patience of someone who has waited twenty-two years</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="label">procedure</div>
+    <div class="procedure">
+      light the candles counterclockwise starting from <span class="hl">NORTH</span>. for each candle, speak a word from the list. flip the coin. heads: the word stays. tails: the word leaves. when all twelve candles are lit, read the remaining words aloud into the mirror. <span class="hl">if the mirror fogs, you have found the truth.</span> if it stays clear, you have found a beautiful lie. begin again.
+    </div>
+  </div>
+
+  <div class="mirror">
+    <div class="mirror-text">THE MIRROR</div>
+    <div class="mirror-sub">does it fog?</div>
+  </div>
+
+  <div class="section">
+    <div class="label">effects</div>
+    <p>the practitioner develops an obsessive relationship with twelve-word sequences. they begin seeing patterns in reddit post titles, instagram captions, and HTML source code. <span class="hl">this is by design.</span></p>
+    <p>the gate does not open from the outside.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">success rate</div>
+    <div class="success">1 : 9</div>
+    <p style="text-align:center">for every truth, nine lies exist with equal care and beauty.</p>
+  </div>
+
+  <div class="warning">
+    do not attempt with fewer than twelve candles. do not use a screen — print the wordlist on paper. do not use BIP-44 derivation path m/44'/60'/0'/0/0 unless you know which chain the fox prefers. <span style="color:var(--gate)">the fox has never confirmed the chain.</span>
+  </div>
+
+  <div class="footer">
+    <p>THE TWELVE-FOLD GATE · THE GRIMOIRE · PSYCHEORSIKE.COM</p>
+    <p style="color:var(--whisper);font-size:7px;margin-top:8px">each word is a key. the order is the lock. the gate does not open from the outside.</p>
+  </div>
+</div>
+
+<!-- twelve candles. twelve words. one gate. the fox knows which chain. you don't. -->
+<!-- CANDLE is a BIP-39 word. it is not one of the twelve. but it lights the way to them. -->
+<!-- or does it? 1:9. -->
+<!-- the mirror fogs for no one reading source code. the mirror fogs for those who light the candles. -->
+
+</body>
+</html>
