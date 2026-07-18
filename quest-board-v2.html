@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Quest Board — The FoxyVerse</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060608;color:#c0beb8;font-family:'Inter',sans-serif;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.01) 0px,transparent 1px,transparent 3px)}
+
+.page{max-width:800px;margin:0 auto;padding:24px 20px 120px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.header h1{font-family:'Cinzel',serif;font-size:22px;color:#ff6a00;letter-spacing:3px}
+.header-right{display:flex;gap:8px;align-items:center}
+.tier-badge{font-family:'Fira Code',monospace;font-size:10px;padding:4px 12px;border-radius:2px;letter-spacing:2px}
+.tier-1{color:#ff6a00;border:1px solid #ff6a0033;background:#ff6a0008}
+.tier-2{color:#ccaa44;border:1px solid #ccaa4433;background:#ccaa4408}
+.tier-3{color:#4ecb71;border:1px solid #4ecb7133;background:#4ecb7108}
+.tier-4{color:#4488cc;border:1px solid #4488cc33;background:#4488cc08}
+
+/* AUTH GATE */
+.auth-gate{max-width:360px;margin:120px auto;text-align:center;font-family:'Fira Code',monospace}
+.auth-gate h2{font-family:'Cinzel',serif;font-size:18px;color:#ff6a00;letter-spacing:3px;margin-bottom:8px}
+.auth-gate p{font-size:10px;color:rgba(255,255,255,0.15);margin-bottom:24px;letter-spacing:2px}
+.auth-input{background:transparent;border:1px solid rgba(255,255,255,0.08);color:#ffffff60;font-family:'Fira Code',monospace;font-size:13px;padding:10px 16px;width:100%;text-align:center;outline:none;letter-spacing:3px;margin-bottom:12px}
+.auth-input:focus{border-color:#ff6a0033}
+.auth-btn{padding:8px 28px;background:transparent;border:1px solid #ff6a0033;color:#ff6a00;cursor:pointer;font-family:'Fira Code',monospace;font-size:11px;letter-spacing:3px}
+.auth-btn:hover{background:#ff6a0008;border-color:#ff6a00}
+.auth-error{color:#ff4444;font-size:10px;margin-top:8px}
+.auth-name{margin-top:12px}
+.auth-name input{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#ffffff40;font-family:'Fira Code',monospace;font-size:11px;padding:8px 12px;width:100%;text-align:center;outline:none;margin-bottom:8px}
+
+/* QUEST CARDS */
+.controls{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.filter-btn{padding:5px 12px;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:1px;background:transparent;border:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s;border-radius:2px}
+.filter-btn:hover,.filter-btn.active{border-color:rgba(255,106,0,0.3);color:#ff6a00;background:rgba(255,106,0,0.03)}
+.new-quest-btn{margin-left:auto;padding:6px 16px;font-family:'Fira Code',monospace;font-size:10px;letter-spacing:2px;background:transparent;border:1px solid #ff6a0033;color:#ff6a00;cursor:pointer}
+.new-quest-btn:hover{background:#ff6a0008}
+
+.quest{border:1px solid rgba(255,255,255,0.04);margin-bottom:8px;transition:border-color 0.3s}
+.quest:hover{border-color:rgba(255,106,0,0.1)}
+.quest-row{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer}
+.quest-prio{width:3px;height:28px;border-radius:1px;flex-shrink:0}
+.prio-critical{background:#ff4444}.prio-high{background:#ff6a00}.prio-medium{background:#ccaa44}.prio-low{background:#4488cc}
+.quest-title{font-family:'Cinzel',serif;font-size:13px;color:rgba(255,255,255,0.45);letter-spacing:1px;flex:1}
+.quest-reward{font-family:'Fira Code',monospace;font-size:10px;color:#ccaa44;opacity:0.5}
+.quest-status{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:2px;padding:3px 8px;border-radius:2px}
+.s-open{color:#4ecb71;border:1px solid #4ecb7122}.s-active{color:#ff6a00;border:1px solid #ff6a0022}
+.s-review{color:#ccaa44;border:1px solid #ccaa4422}.s-done{color:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.04)}
+.quest-tier{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.1);letter-spacing:1px}
+
+.quest-body{display:none;padding:0 16px 14px;border-top:1px solid rgba(255,255,255,0.02)}
+.quest.open .quest-body{display:block}
+.quest-desc{font-size:11px;color:rgba(255,255,255,0.25);line-height:1.9;margin:10px 0}
+.quest-meta{display:flex;gap:14px;flex-wrap:wrap;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.1)}
+.quest-actions{display:flex;gap:8px;margin-top:10px}
+.q-btn{padding:5px 14px;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:1px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.3);cursor:pointer;border-radius:2px}
+.q-btn:hover{border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.5)}
+.q-btn.claim{border-color:#4ecb7122;color:#4ecb71}
+.q-btn.claim:hover{background:#4ecb7108}
+.q-btn.delete{border-color:#ff444422;color:#ff4444}
+
+/* NEW QUEST FORM */
+.form-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
+.form-box{background:#0a0a0c;border:1px solid rgba(255,106,0,0.1);padding:24px;max-width:460px;width:100%}
+.form-title{font-family:'Cinzel',serif;font-size:14px;color:#ff6a00;letter-spacing:2px;margin-bottom:16px}
+.form-field{margin-bottom:12px}
+.form-label{font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:2px;margin-bottom:4px}
+.form-input{width:100%;background:transparent;border:1px solid rgba(255,255,255,0.06);color:#ffffff50;font-family:'Inter',sans-serif;font-size:12px;padding:8px 12px;outline:none}
+.form-input:focus{border-color:#ff6a0033}
+.form-select{width:100%;background:#0a0a0c;border:1px solid rgba(255,255,255,0.06);color:#ffffff50;font-family:'Fira Code',monospace;font-size:11px;padding:8px;outline:none}
+.form-textarea{width:100%;background:transparent;border:1px solid rgba(255,255,255,0.06);color:#ffffff50;font-family:'Inter',sans-serif;font-size:12px;padding:8px 12px;outline:none;min-height:80px;resize:vertical}
+.form-actions{display:flex;gap:8px;margin-top:16px}
+
+.footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03)}
+.footer p{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.05);letter-spacing:2px}
+</style>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<div class="page" id="app">
+  <!-- Auth gate shown by default -->
+  <div class="auth-gate" id="auth-gate">
+    <h2>QUEST BOARD</h2>
+    <p>enter your tier passphrase</p>
+    <input class="auth-input" id="passphrase" type="password" placeholder="passphrase" autocomplete="off">
+    <input class="auth-name" id="agent-name" placeholder="your name" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:#ffffff40;font-family:'Fira Code',monospace;font-size:11px;padding:8px 12px;width:100%;text-align:center;outline:none;margin-bottom:12px">
+    <br><button class="auth-btn" onclick="authenticate()">ENTER</button>
+    <div class="auth-error" id="auth-error"></div>
+  </div>
+
+  <!-- Quest board (hidden until auth) -->
+  <div id="board" style="display:none">
+    <div class="header">
+      <h1>QUEST BOARD</h1>
+      <div class="header-right">
+        <span id="agent-display" style="font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.2)"></span>
+        <span class="tier-badge" id="tier-display"></span>
+        <button onclick="logout()" style="padding:4px 10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.1);cursor:pointer;font-size:9px;font-family:'Fira Code',monospace">EXIT</button>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="filter-btn active" onclick="filterQ('all',this)">all</button>
+      <button class="filter-btn" onclick="filterQ('open',this)">open</button>
+      <button class="filter-btn" onclick="filterQ('active',this)">active</button>
+      <button class="filter-btn" onclick="filterQ('review',this)">review</button>
+      <button class="filter-btn" onclick="filterQ('done',this)">done</button>
+      <button class="new-quest-btn" id="new-quest-btn" onclick="showForm()" style="display:none">+ NEW QUEST</button>
+    </div>
+
+    <div id="quests"></div>
+
+    <div class="footer"><p>QUEST BOARD · PSYCHEORSIKE.COM · TIER-BASED ACCESS</p></div>
+  </div>
+</div>
+
+<!-- New Quest Form (hidden) -->
+<div class="form-overlay" id="form-overlay" style="display:none" onclick="if(event.target===this)hideForm()">
+  <div class="form-box">
+    <div class="form-title">NEW QUEST</div>
+    <div class="form-field">
+      <div class="form-label">TITLE</div>
+      <input class="form-input" id="f-title">
+    </div>
+    <div class="form-field">
+      <div class="form-label">DESCRIPTION</div>
+      <textarea class="form-textarea" id="f-desc"></textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      <div class="form-field">
+        <div class="form-label">REWARD</div>
+        <input class="form-input" id="f-reward" placeholder="$100">
+      </div>
+      <div class="form-field">
+        <div class="form-label">PRIORITY</div>
+        <select class="form-select" id="f-prio">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+          <option value="critical">Critical</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <div class="form-label">MIN TIER</div>
+        <select class="form-select" id="f-tier">
+          <option value="4">IV (Initiate)</option>
+          <option value="3" selected>III (Expeditioner)</option>
+          <option value="2">II (Leader)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-field">
+      <div class="form-label">TYPE</div>
+      <select class="form-select" id="f-type">
+        <option value="art">Art</option>
+        <option value="code">Code</option>
+        <option value="writing">Writing</option>
+        <option value="video">Video</option>
+        <option value="music">Music</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button class="auth-btn" onclick="postQuest()">POST QUEST</button>
+      <button class="q-btn" onclick="hideForm()">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// FIREBASE CONFIG — REPLACE WITH YOUR PROJECT
+// ═══════════════════════════════════════════
+// 1. Go to console.firebase.google.com
+// 2. Create project (free)
+// 3. Add web app
+// 4. Copy config below
+// 5. Enable Firestore Database (test mode for now)
+var firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase (only if config is set)
+var db = null;
+var firebaseReady = false;
+try {
+  if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    firebaseReady = true;
+  }
+} catch(e) { console.log("Firebase not configured yet"); }
+
+// ═══════════════════════════════════════════
+// TIER SYSTEM — passphrases (SHA-256 hashed)
+// ═══════════════════════════════════════════
+// Set your passphrases here. Replace the hashes.
+// To generate: run in console: 
+//   crypto.subtle.digest('SHA-256', new TextEncoder().encode('your-passphrase')).then(h => console.log(Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')))
+var TIER_HASHES = {
+  // REPLACE THESE with your actual hashed passphrases
+  // tier 1 = foxy only
+  "TIER1_HASH_HERE": { tier: 1, label: "I · FOXLORD", class: "tier-1" },
+  // tier 2 = leaders, assistants  
+  "TIER2_HASH_HERE": { tier: 2, label: "II · LEADER", class: "tier-2" },
+  // tier 3 = expeditioners
+  "TIER3_HASH_HERE": { tier: 3, label: "III · EXPEDITIONER", class: "tier-3" },
+  // tier 4 = initiates
+  "TIER4_HASH_HERE": { tier: 4, label: "IV · INITIATE", class: "tier-4" }
+};
+
+// For testing without hashes — plaintext fallback (REMOVE IN PRODUCTION)
+var TIER_PLAINTEXT = {
+  "foxlord": { tier: 1, label: "I · FOXLORD", class: "tier-1" },
+  "leader": { tier: 2, label: "II · LEADER", class: "tier-2" },
+  "expedition": { tier: 3, label: "III · EXPEDITIONER", class: "tier-3" },
+  "initiate": { tier: 4, label: "IV · INITIATE", class: "tier-4" }
+};
+
+var currentTier = null;
+var currentAgent = "";
+var currentFilter = "all";
+var quests = [];
+
+// ═══════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════
+async function hashPass(pass) {
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pass));
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+}
+
+async function authenticate() {
+  var pass = document.getElementById('passphrase').value.trim();
+  var name = document.getElementById('agent-name').value.trim() || "Agent";
+  if (!pass) return;
+
+  // Check plaintext first (for testing)
+  if (TIER_PLAINTEXT[pass.toLowerCase()]) {
+    loginAs(TIER_PLAINTEXT[pass.toLowerCase()], name);
+    return;
+  }
+
+  // Check hashed
+  var hash = await hashPass(pass);
+  if (TIER_HASHES[hash]) {
+    loginAs(TIER_HASHES[hash], name);
+    return;
+  }
+
+  document.getElementById('auth-error').textContent = "unknown passphrase";
+}
+
+function loginAs(tierInfo, name) {
+  currentTier = tierInfo.tier;
+  currentAgent = name;
+  document.getElementById('auth-gate').style.display = 'none';
+  document.getElementById('board').style.display = 'block';
+  document.getElementById('tier-display').textContent = tierInfo.label;
+  document.getElementById('tier-display').className = 'tier-badge ' + tierInfo.class;
+  document.getElementById('agent-display').textContent = name;
+
+  // Show new quest button for tier 1-2
+  if (currentTier <= 2) {
+    document.getElementById('new-quest-btn').style.display = 'block';
+  }
+
+  loadQuests();
+}
+
+function logout() {
+  currentTier = null;
+  currentAgent = "";
+  document.getElementById('auth-gate').style.display = 'block';
+  document.getElementById('board').style.display = 'none';
+  document.getElementById('passphrase').value = '';
+  document.getElementById('agent-name').value = '';
+}
+
+// ═══════════════════════════════════════════
+// QUEST CRUD
+// ═══════════════════════════════════════════
+function loadQuests() {
+  if (!firebaseReady) {
+    // Fallback: use localStorage for testing
+    quests = JSON.parse(localStorage.getItem('fv-quests') || '[]');
+    renderQuests();
+    return;
+  }
+  db.collection('quests').orderBy('created', 'desc').onSnapshot(function(snap) {
+    quests = [];
+    snap.forEach(function(doc) { quests.push(Object.assign({ id: doc.id }, doc.data())); });
+    renderQuests();
+  });
+}
+
+function showForm() { document.getElementById('form-overlay').style.display = 'flex'; }
+function hideForm() { document.getElementById('form-overlay').style.display = 'none'; }
+
+async function postQuest() {
+  var q = {
+    title: document.getElementById('f-title').value,
+    desc: document.getElementById('f-desc').value,
+    reward: document.getElementById('f-reward').value,
+    priority: document.getElementById('f-prio').value,
+    minTier: parseInt(document.getElementById('f-tier').value),
+    type: document.getElementById('f-type').value,
+    status: 'open',
+    postedBy: currentAgent,
+    postedTier: currentTier,
+    claimedBy: null,
+    created: Date.now()
+  };
+
+  if (!q.title) return;
+
+  if (firebaseReady) {
+    await db.collection('quests').add(q);
+  } else {
+    q.id = 'q' + Date.now();
+    quests.unshift(q);
+    localStorage.setItem('fv-quests', JSON.stringify(quests));
+    renderQuests();
+  }
+  hideForm();
+  // Clear form
+  document.getElementById('f-title').value = '';
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-reward').value = '';
+}
+
+async function claimQuest(id) {
+  if (firebaseReady) {
+    await db.collection('quests').doc(id).update({ status: 'active', claimedBy: currentAgent });
+  } else {
+    var q = quests.find(function(x){return x.id===id});
+    if (q) { q.status = 'active'; q.claimedBy = currentAgent; }
+    localStorage.setItem('fv-quests', JSON.stringify(quests));
+    renderQuests();
+  }
+}
+
+async function submitQuest(id) {
+  if (firebaseReady) {
+    await db.collection('quests').doc(id).update({ status: 'review' });
+  } else {
+    var q = quests.find(function(x){return x.id===id});
+    if (q) q.status = 'review';
+    localStorage.setItem('fv-quests', JSON.stringify(quests));
+    renderQuests();
+  }
+}
+
+async function completeQuest(id) {
+  if (firebaseReady) {
+    await db.collection('quests').doc(id).update({ status: 'done' });
+  } else {
+    var q = quests.find(function(x){return x.id===id});
+    if (q) q.status = 'done';
+    localStorage.setItem('fv-quests', JSON.stringify(quests));
+    renderQuests();
+  }
+}
+
+async function deleteQuest(id) {
+  if (!confirm('delete this quest?')) return;
+  if (firebaseReady) {
+    await db.collection('quests').doc(id).delete();
+  } else {
+    quests = quests.filter(function(x){return x.id!==id});
+    localStorage.setItem('fv-quests', JSON.stringify(quests));
+    renderQuests();
+  }
+}
+
+// ═══════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════
+function filterQ(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+  if (btn) btn.classList.add('active');
+  renderQuests();
+}
+
+function renderQuests() {
+  var container = document.getElementById('quests');
+  var filtered = currentFilter === 'all' ? quests : quests.filter(function(q){return q.status===currentFilter});
+  
+  if (filtered.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;font-family:\'Fira Code\',monospace;font-size:10px;color:rgba(255,255,255,0.08)">no quests found</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(function(q) {
+    var prioClass = 'prio-' + (q.priority || 'medium');
+    var statusClass = 's-' + (q.status || 'open');
+    var statusLabel = (q.status || 'open').toUpperCase();
+    var canClaim = currentTier >= (q.minTier || 3) && q.status === 'open';
+    var canSubmit = q.claimedBy === currentAgent && q.status === 'active';
+    var canComplete = currentTier <= 2 && q.status === 'review';
+    var canDelete = currentTier === 1;
+    var tierLabel = q.minTier ? ('TIER ' + 'I'.repeat(q.minTier)) : '';
+
+    return '<div class="quest" onclick="this.classList.toggle(\'open\')">' +
+      '<div class="quest-row">' +
+        '<div class="quest-prio ' + prioClass + '"></div>' +
+        '<div class="quest-title">' + (q.title || '') + '</div>' +
+        '<div class="quest-reward">' + (q.reward || '') + '</div>' +
+        '<div class="quest-tier">' + tierLabel + '</div>' +
+        '<div class="quest-status ' + statusClass + '">' + statusLabel + '</div>' +
+      '</div>' +
+      '<div class="quest-body">' +
+        '<div class="quest-desc">' + (q.desc || '') + '</div>' +
+        '<div class="quest-meta">' +
+          '<span>type: ' + (q.type || '?') + '</span>' +
+          '<span>posted: ' + (q.postedBy || '?') + '</span>' +
+          (q.claimedBy ? '<span>claimed: ' + q.claimedBy + '</span>' : '') +
+        '</div>' +
+        '<div class="quest-actions">' +
+          (canClaim ? '<button class="q-btn claim" onclick="event.stopPropagation();claimQuest(\'' + q.id + '\')">CLAIM</button>' : '') +
+          (canSubmit ? '<button class="q-btn" onclick="event.stopPropagation();submitQuest(\'' + q.id + '\')">SUBMIT</button>' : '') +
+          (canComplete ? '<button class="q-btn claim" onclick="event.stopPropagation();completeQuest(\'' + q.id + '\')">APPROVE</button>' : '') +
+          (canDelete ? '<button class="q-btn delete" onclick="event.stopPropagation();deleteQuest(\'' + q.id + '\')">DELETE</button>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// Handle enter key on passphrase
+document.getElementById('passphrase').addEventListener('keydown', function(e) { if (e.key === 'Enter') authenticate(); });
+document.getElementById('agent-name').addEventListener('keydown', function(e) { if (e.key === 'Enter') authenticate(); });
+</script>
+
+<!--
+═══════════════════════════════════════════
+SETUP INSTRUCTIONS
+═══════════════════════════════════════════
+
+1. Go to console.firebase.google.com
+2. Create new project (free, no analytics needed)
+3. Click "Add app" → Web → register
+4. Copy the firebaseConfig object and paste above
+5. Go to Firestore Database → Create Database → Start in test mode
+6. Set your tier passphrases:
+   - Open browser console
+   - Run: crypto.subtle.digest('SHA-256', new TextEncoder().encode('your-secret-passphrase')).then(h => console.log(Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')))
+   - Copy the hash, paste into TIER_HASHES above
+   - Repeat for each tier
+7. Deploy to GitHub Pages
+8. Share tier passphrases via Discord DM
+
+For testing: use plaintext passphrases "foxlord", "leader", "expedition", "initiate"
+
+FIRESTORE SECURITY RULES (paste in Firebase console):
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /quests/{quest} {
+      allow read: if true;
+      allow write: if true; // tighten after testing
+    }
+  }
+}
+═══════════════════════════════════════════
+-->
+
+</body>
+</html>
