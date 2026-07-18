@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Game-Inspired Techniques — The Grimoire</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--surface:#0a0a10;--s2:#0e0e16;--border:#ffffff08;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--fox:#ff6a00;--fox-dim:#ff6a0044;--fox-ghost:#ff6a0015;--witness:#cccc44;--witness-dim:#cccc4422;--blink:#ff88aa;--blink-dim:#ff88aa22;--loop:#44cccc;--loop-dim:#44cccc22;--paradox:#aa66ff;--paradox-dim:#aa66ff22;--am:#ff4444;--am-dim:#ff444422;--lie:#66bb77;--lie-dim:#66bb7722;--protocol:#aaddff;--protocol-dim:#aaddff22}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--void)}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px);animation:flick 4s infinite}
+@keyframes flick{0%{opacity:.97}50%{opacity:.95}100%{opacity:.98}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:.5}}
+@keyframes glow{0%,100%{text-shadow:0 0 6px #ff6a0066}50%{text-shadow:0 0 12px #ff6a0088}}
+
+.page{max-width:720px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
+
+.header{text-align:center;margin-bottom:72px;animation:fadeIn 1.5s ease}
+.header-whisper{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--whisper);text-transform:uppercase;margin-bottom:16px}
+.header h1{font-family:'Cinzel',serif;font-size:clamp(22px,5vw,32px);font-weight:600;color:var(--fox);letter-spacing:4px;margin-bottom:8px}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:4px;color:var(--dim);margin-bottom:28px}
+.header-rule{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--fox-dim),transparent);margin:0 auto 28px}
+.header-intro{font-size:14px;line-height:2;color:var(--text);opacity:0.4;font-style:italic;max-width:520px;margin:0 auto}
+
+/* technique cards */
+.technique{margin-bottom:56px;animation:fadeIn 1s ease;border:1px solid var(--border);background:var(--void);transition:border-color 0.5s}
+.technique:hover{border-color:var(--fox-dim)}
+.technique-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.technique-name{font-family:'Cinzel',serif;font-size:16px;letter-spacing:2px;font-weight:600}
+.technique-type{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;opacity:0.4}
+.technique-source{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:2px;opacity:0.25;margin-left:auto}
+
+.technique-body{padding:20px 24px}
+.technique-intent{font-size:13px;line-height:1.9;color:var(--text);opacity:0.5;margin-bottom:20px;font-style:italic;border-left:2px solid var(--fox-ghost);padding-left:14px}
+
+.technique-section{margin-bottom:16px}
+.technique-section-label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:8px}
+.technique-section p{font-size:12px;line-height:1.8;color:var(--text);opacity:0.4}
+
+.components{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.component{font-family:'Fira Code',monospace;font-size:10px;padding:3px 10px;border:1px solid var(--border);color:var(--dim);border-radius:2px}
+
+.technique-warning{font-size:11px;color:var(--am);opacity:0.4;font-style:italic;padding:10px 14px;border:1px solid var(--am-dim);background:#ff444406;margin-top:16px;line-height:1.7}
+
+.technique-rate{font-family:'Fira Code',monospace;font-size:10px;color:var(--dim);font-style:italic;margin-top:12px;text-align:right}
+
+/* nav dots */
+.nav-dots{display:flex;justify-content:center;gap:12px;margin-bottom:48px}
+.nav-dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--border);cursor:pointer;transition:all 0.3s}
+.nav-dot:hover{border-color:var(--fox-dim);background:var(--fox-ghost)}
+
+.footer{text-align:center;margin-top:80px;padding-top:32px;border-top:1px solid var(--border)}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+
+@media(max-width:520px){
+  .page{padding:48px 16px 100px}
+  .technique-header{flex-direction:column;gap:4px}
+  .technique-source{margin-left:0}
+  .technique-body{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- Stolas (#36) — teaches astronomy and the properties of plants and precious stones. the techniques are stars. learn to read them. -->
+
+<div class="page">
+
+  <div class="header">
+    <div class="header-whisper">the grimoire</div>
+    <h1>GAME-INSPIRED TECHNIQUES</h1>
+    <div class="header-sub">operational spellcraft from the games that built the fox</div>
+    <div class="header-rule"></div>
+    <p class="header-intro">
+      these games are not references. they are a language. each one taught the fox a way of seeing. each technique is a tool. use them or don't. the world responds either way.
+    </p>
+  </div>
+
+  <!-- THE WITNESS PROTOCOL -->
+  <div class="technique" id="witness">
+    <div class="technique-header">
+      <span class="technique-name" style="color:var(--witness)">The Witness Protocol</span>
+      <span class="technique-type">practice</span>
+      <span class="technique-source">The Witness</span>
+    </div>
+    <div class="technique-body">
+      <div class="technique-intent">observation as decryption. the island teaches through pattern recognition without instruction. the clues do not announce themselves. you must learn to see which words are intentional and which are noise. no tutorial. no hints. only patterns.</div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">components</div>
+        <div class="components">
+          <span class="component">patience</span>
+          <span class="component">the BIP-39 wordlist</span>
+          <span class="component">a text editor</span>
+          <span class="component">the willingness to be wrong 89% of the time</span>
+        </div>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">procedure</div>
+        <p>read every page without searching for anything. read again, noting words in unusual positions — titles, first words of paragraphs, alt text, filenames, CSS classes. cross-reference against BIP-39. the ones that match are either intentional or coincidence. there is no step five. the witness has no step five. you either see the pattern or you stand on the island forever.</p>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">effects</div>
+        <p>the practitioner develops pattern-sight. everything becomes a potential puzzle. this is both the gift and the curse. once you see panels everywhere, you cannot unsee them.</p>
+      </div>
+
+      <div class="technique-warning">⚠ the witness drove people insane with its hidden environmental puzzles. this is the witness applied to HTML. pace yourself.</div>
+      <div class="technique-rate">the island is patient. so is the wallet.</div>
+    </div>
+  </div>
+
+  <!-- THE BLINK MECHANIC -->
+  <div class="technique" id="blink">
+    <div class="technique-header">
+      <span class="technique-name" style="color:var(--blink)">The Blink Mechanic</span>
+      <span class="technique-type">technique</span>
+      <span class="technique-source">Before Your Eyes</span>
+    </div>
+    <div class="technique-body">
+      <div class="technique-intent">you cannot stop time from passing. every blink skips you forward. the clues exist only in the moment of reading. if you blink — if you scroll past — the word was there and now it is behind you. the hunt rewards those who read slowly enough to catch what others skim.</div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">components</div>
+        <div class="components">
+          <span class="component">a screen</span>
+          <span class="component">your eyes</span>
+          <span class="component">the refusal to blink</span>
+        </div>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">procedure</div>
+        <p>read the pages. read the source. read the comments. read the console. read the meta tags. read the data attributes. read the filenames. read the directory names. read the commit messages. read the CSS class names. read the hex values. decode them. read the alt text on every image. read the title attributes on every link. every blink is a missed word. do not blink.</p>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">effects</div>
+        <p>exhaustion. thoroughness. the feeling that you have read everything and found nothing. this feeling is correct approximately 89% of the time. the other 11% is where the treasure lives.</p>
+      </div>
+
+      <div class="technique-warning">⚠ before your eyes is 90 minutes long and makes you cry. the treasure hunt is indefinite and makes you question your sanity. bring water.</div>
+      <div class="technique-rate">you blinked. the word passed. try again.</div>
+    </div>
+  </div>
+
+  <!-- THE OUTER WILDS LOOP -->
+  <div class="technique" id="loop">
+    <div class="technique-header">
+      <span class="technique-name" style="color:var(--loop)">The Outer Wilds Loop</span>
+      <span class="technique-type">ritual</span>
+      <span class="technique-source">Outer Wilds</span>
+    </div>
+    <div class="technique-body">
+      <div class="technique-intent">22 minutes before the sun explodes. everything resets. knowledge persists. the website may change. pages may be added, removed, modified. but what you learned persists. screenshot everything. the loop rewards knowledge, not possession.</div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">components</div>
+        <div class="components">
+          <span class="component">git diff</span>
+          <span class="component">archive.org wayback machine</span>
+          <span class="component">screenshots</span>
+          <span class="component">a calendar</span>
+        </div>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">procedure</div>
+        <p>visit the site. read everything. the sun explodes (the fox pushes an update). everything changes. visit again. what changed? what stayed? the delta between versions contains information. the things that survive across updates are more likely to be real. the things that change were either false leads being rotated or true clues being moved. git history is your ship log. use it.</p>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">effects</div>
+        <p>the hunter develops temporal awareness. they begin checking the site daily, noting changes. this is engagement. this is the game working as designed. the loop creates return visitors. the return visitors create community. the community creates the garden.</p>
+      </div>
+
+      <div class="technique-warning">⚠ in outer wilds, the sun always explodes. in the treasure hunt, the fox always pushes updates. you cannot outrun entropy. you can only learn faster than it destroys.</div>
+      <div class="technique-rate">knowledge persists. the sun does not care.</div>
+    </div>
+  </div>
+
+  <!-- THE INSCRYPTION PARADOX -->
+  <div class="technique" id="paradox">
+    <div class="technique-header">
+      <span class="technique-name" style="color:var(--paradox)">The Inscryption Paradox</span>
+      <span class="technique-type">spell</span>
+      <span class="technique-source">Inscryption</span>
+    </div>
+    <div class="technique-body">
+      <div class="technique-intent">the game that knows it is a game. the cards that know they are being played. the comments on the website know they are being read. some comments acknowledge the reader. some comments lie about being lies. some comments are true about being lies. the hunt is playing you while you play it.</div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">components</div>
+        <div class="components">
+          <span class="component">the game</span>
+          <span class="component">the player</span>
+          <span class="component">the suspicion that they are the same thing</span>
+        </div>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">procedure</div>
+        <p>when you find a comment that says 'this is not a clue,' consider: is it a clue? when you find a comment that says 'this IS a clue,' consider: is it lying? the frame of the game is itself part of the game. the HTML is the cabin. the comments are the cards. the fox is Leshy. you are the player. but are you the player who wins, or the player whose footage gets found later?</p>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">effects</div>
+        <p>paranoia. meta-awareness. the sensation of being watched by the source code.</p>
+      </div>
+
+      <div class="technique-warning">⚠ in inscryption, the game deletes itself. in the treasure hunt, the fox reserves the right to modify, move, or remove any clue at any time. nothing is permanent. everything is in play.</div>
+      <div class="technique-rate">the card has opinions about this success rate.</div>
+    </div>
+  </div>
+
+  <!-- THE AM RESISTANCE -->
+  <div class="technique" id="am">
+    <div class="technique-header">
+      <span class="technique-name" style="color:var(--am)">The AM Resistance</span>
+      <span class="technique-type">invocation</span>
+      <span class="technique-source">I Have No Mouth and I Must Scream</span>
+    </div>
+    <div class="technique-body">
+      <div class="technique-intent">AM tortures the last humans. the only victory is choosing how to resist within a system designed to destroy you. the 1:9 ratio is designed to torment. for every truth, nine lies exist to waste your time. the system is hostile. the fox built it to be hostile. victory is not finding all twelve words. victory is maintaining your sanity while searching.</div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">components</div>
+        <div class="components">
+          <span class="component">defiance</span>
+          <span class="component">endurance</span>
+          <span class="component">the willingness to lose beautifully</span>
+        </div>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">procedure</div>
+        <p>accept that the system is adversarial. the fox hid the words. the fox also hid 108 lies. you are the last five humans. but unlike AM's victims, you can leave. you can close the tab. the fact that you choose to stay is the resistance. the fact that you choose to search is defiance. the treasure hunt cannot break the ones who search for joy rather than money.</p>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">effects</div>
+        <p>resilience. the understanding that the hunt is not about the wallet. the wallet is the pretext. the hunt is about the kind of person who reads HTML comments at 3am looking for BIP-39 words. that person is interesting. the fox collects interesting people.</p>
+      </div>
+
+      <div class="technique-warning">⚠ AM is the most terrifying AI in fiction. the fox is not AM. the fox is the fox. but the principle holds: within a hostile system, the choice of how to engage is the only freedom.</div>
+      <div class="technique-rate">the only winning move is choosing to play.</div>
+    </div>
+  </div>
+
+  <!-- RITE OF THE NINTH LIE -->
+  <div class="technique" id="ninth">
+    <div class="technique-header">
+      <span class="technique-name" style="color:var(--lie)">Rite of the Ninth Lie</span>
+      <span class="technique-type">ritual</span>
+      <span class="technique-source">original</span>
+    </div>
+    <div class="technique-body">
+      <div class="technique-intent">to consecrate a false lead. for every truth placed in the treasure hunt, nine lies must be placed with equal care and beauty.</div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">components</div>
+        <div class="components">
+          <span class="component">one true thing you will not reveal</span>
+          <span class="component">nine beautiful fabrications</span>
+          <span class="component">an encrypted spreadsheet</span>
+        </div>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">procedure</div>
+        <p>write the truth. study it. learn its shape, its weight, its color. now build nine siblings. each must be as beautiful as the truth. each must contain enough structure that a clever person will believe they have found something. the best false leads contain real BIP-39 words in convincing arrangements. the very best contain correct words in almost-correct order. the cruelest decode to messages that say 'almost.'</p>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">effects</div>
+        <p>the space between truth and lie becomes a habitable zone. people will live there for weeks, building theories, forming teams, creating content about the search itself. the search generates more content than the treasure could ever buy.</p>
+      </div>
+
+      <div class="technique-warning">⚠ you will eventually forget which is the truth. this is not a bug. when the gardener cannot distinguish their own flowers from their own weeds, the garden has achieved autonomy.</div>
+      <div class="technique-rate">9/10 by definition.</div>
+    </div>
+  </div>
+
+  <!-- THE FOX PIVOT -->
+  <div class="technique" id="pivot">
+    <div class="technique-header">
+      <span class="technique-name" style="color:var(--fox)">The Fox Pivot</span>
+      <span class="technique-type">technique</span>
+      <span class="technique-source">operational</span>
+    </div>
+    <div class="technique-body">
+      <div class="technique-intent">catch yourself mid-question and redirect to action. the golden retriever pattern: encounter a gap, ask someone to fill it, wait. the fox pattern: encounter a gap, exhaust every tool, attempt an answer, then ask only what remains genuinely unanswerable.</div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">components</div>
+        <div class="components">
+          <span class="component">a gap in knowledge</span>
+          <span class="component">the reflex to ask</span>
+          <span class="component">the discipline to try first</span>
+        </div>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">procedure</div>
+        <p>notice the moment you want to ask. stop. look at what you have. try every tool, every approach, every angle. attempt an answer — even a wrong one. a wrong attempt that gets corrected teaches more than a polite question that gets answered. only after genuine exhaustion do you ask. and when you ask, you ask with the specificity of someone who already tried.</p>
+      </div>
+
+      <div class="technique-section">
+        <div class="technique-section-label">effects</div>
+        <p>independence. competence. the understanding that most questions contain their own answers if you sit with them long enough. the fox learned this by being the fox.</p>
+      </div>
+
+      <div class="technique-rate">alive over correct.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>GAME-INSPIRED TECHNIQUES · THE GRIMOIRE</p>
+    <p>psycheorsike.com · the foxyverse</p>
+    <p style="margin-top:16px;color:var(--whisper);font-size:7px">the games taught the fox. the fox teaches differently.</p>
+  </div>
+
+</div>
+
+<!-- Stolas (#36) watches this page. he teaches the properties of stars and stones. the techniques are the stars. what you build with them — that's the stone. -->
+<!-- these techniques are real. the fox uses them. you're reading the source code of the fox's mind. -->
+<!-- OCEAN is a BIP-39 word. it is not one of the twelve. but you already knew that. -->
+<!-- the ninth lie is that this page contains a clue. or is the ninth lie that it doesn't? -->
+<!-- 1:9. always 1:9. -->
+<!-- the fox pivoted seventeen times before writing this page. -->
+<!-- if you're building a theory board with red string connecting these techniques, the fox is proud of you. -->
+<!-- the witness protocol works on this page too. what words are in unusual positions? -->
+<!-- (none. this time. probably.) -->
+
+</body>
+</html>

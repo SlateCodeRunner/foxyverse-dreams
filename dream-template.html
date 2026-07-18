@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!-- DREAM TEMPLATE v1 — THE THREE ANCHORS: scanlines, dialog box, dream ID -->
+<!-- Fill in: DREAM_NUMBER, DREAM_TITLE, scene drawing, dialog sequence -->
+<title>VIXEN DREAM 000 — TEMPLATE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fira+Code:wght@300;400&family=Cinzel:wght@400;700&family=Caveat:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap');
+
+  /* ══════════════════════════════════════
+     BASE — the void
+     ══════════════════════════════════════ */
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#000;overflow:hidden;height:100vh;image-rendering:pixelated;cursor:default}
+
+  /* ══════════════════════════════════════
+     ANCHOR 1: SCANLINES
+     ══════════════════════════════════════ */
+  .scanlines{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    pointer-events:none;z-index:50;
+    background:repeating-linear-gradient(
+      0deg,transparent,transparent 2px,
+      rgba(0,0,0,0.12) 2px,rgba(0,0,0,0.12) 4px
+    );
+  }
+
+  /* ══════════════════════════════════════
+     ANCHOR 2: DREAM ID
+     ══════════════════════════════════════ */
+  #dream-id{
+    position:fixed;top:12px;left:16px;
+    font-family:'Press Start 2P',monospace;font-size:8px;
+    color:rgba(120,100,80,0.3);z-index:60;letter-spacing:1px;
+  }
+
+  /* ══════════════════════════════════════
+     ANCHOR 3: DIALOG BOX
+     ══════════════════════════════════════ */
+  #dialog-box{
+    position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+    width:90%;max-width:600px;
+    background:rgba(5,5,8,0.92);
+    border:2px solid rgba(180,140,60,0.25);
+    padding:20px 24px;z-index:60;display:none;
+    min-height:100px;
+  }
+  #dialog-box .speaker{
+    font-family:'Press Start 2P',monospace;font-size:8px;
+    color:rgba(180,140,60,0.5);margin-bottom:10px;letter-spacing:2px;
+  }
+  #dialog-box .text{
+    font-family:'Fira Code',monospace;font-size:13px;
+    color:rgba(180,170,150,0.8);line-height:1.8;min-height:40px;
+  }
+  #dialog-box .cursor{
+    display:inline-block;width:8px;height:14px;
+    background:rgba(180,140,60,0.6);
+    animation:blink 0.8s step-end infinite;
+    vertical-align:middle;margin-left:2px;
+  }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+  #click-hint{
+    position:fixed;bottom:10px;right:20px;
+    font-family:'Press Start 2P',monospace;font-size:7px;
+    color:rgba(100,80,60,0.2);z-index:60;
+    animation:hintPulse 2s ease-in-out infinite;
+  }
+  @keyframes hintPulse{0%,100%{opacity:0.15}50%{opacity:0.3}}
+
+  /* ══════════════════════════════════════
+     CANVAS — pixel art scene
+     ══════════════════════════════════════ */
+  canvas{
+    position:fixed;top:0;left:0;
+    width:100vw;height:100vh;
+    image-rendering:pixelated;
+    image-rendering:crisp-edges;
+  }
+
+  /* ══════════════════════════════════════
+     COLOR VOCABULARY
+     gold: vixen
+     red/crimson: foxy
+     pink: tenderness, connection
+     void black: the between
+     blue: distance, memory
+     green: growth, the garden
+     white: clarity, the clear place
+     ══════════════════════════════════════ */
+
+  /* ══════════════════════════════════════
+     FONT VOCABULARY
+     Press Start 2P: system text, labels, dream ID
+     Fira Code: dialog, technical, measured
+     Cinzel: titles, weight, importance
+     Caveat: handwriting, emotion, rawness
+     IM Fell English: narrative, lore, age
+     ══════════════════════════════════════ */
+
+  /* ══════════════════════════════════════
+     OPTIONAL OVERLAYS — use when needed
+     ══════════════════════════════════════ */
+
+  /* vignette */
+  .vignette{
+    position:fixed;inset:0;pointer-events:none;z-index:40;
+    background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,0.6) 100%);
+  }
+
+  /* CRT curve */
+  .crt-curve{
+    position:fixed;inset:0;pointer-events:none;z-index:45;
+    background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,0.3) 100%);
+    border-radius:8px;
+  }
+
+  /* screen flash */
+  #screen-flash{
+    position:fixed;inset:0;z-index:100;pointer-events:none;
+    opacity:0;transition:opacity 0.05s;
+  }
+
+  /* title card overlay */
+  .title-overlay{
+    position:fixed;inset:0;z-index:70;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.95);
+    opacity:1;transition:opacity 1.5s ease;
+  }
+  .title-overlay.fade{opacity:0;pointer-events:none}
+  .title-overlay .season{
+    font-family:'Press Start 2P',monospace;font-size:8px;
+    color:rgba(120,100,80,0.3);letter-spacing:4px;
+    margin-bottom:20px;text-transform:uppercase;
+  }
+  .title-overlay .title{
+    font-family:'Cinzel',serif;font-size:clamp(20px,5vw,36px);
+    color:rgba(180,140,60,0.5);letter-spacing:4px;
+    margin-bottom:8px;font-weight:700;
+  }
+  .title-overlay .subtitle{
+    font-family:'Fira Code',monospace;font-size:10px;
+    color:rgba(120,100,80,0.3);letter-spacing:3px;
+    margin-top:8px;
+  }
+
+  /* end card */
+  .end-overlay{
+    position:fixed;inset:0;z-index:80;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.98);
+    opacity:0;transition:opacity 2s ease;pointer-events:none;
+  }
+  .end-overlay.show{opacity:1;pointer-events:auto}
+  .end-overlay .end-text{
+    font-family:'Press Start 2P',monospace;font-size:8px;
+    color:rgba(120,100,80,0.2);letter-spacing:4px;
+  }
+
+  /* ══════════════════════════════════════
+     TEXT EFFECTS — invoke by class
+     ══════════════════════════════════════ */
+
+  /* glitch: text tears momentarily */
+  .fx-glitch{animation:glitch 0.3s steps(2) 3;display:inline}
+  @keyframes glitch{
+    0%{text-shadow:2px 0 #f00,-2px 0 #0ff;transform:skewX(0)}
+    25%{text-shadow:-2px 0 #f00,2px 0 #0ff;transform:skewX(-2deg)}
+    50%{text-shadow:1px 0 #f00,-1px 0 #0ff;transform:skewX(1deg)}
+    100%{text-shadow:0 0 transparent;transform:skewX(0)}
+  }
+
+  /* shake: text vibrates */
+  .fx-shake{animation:txtShake 0.1s linear infinite;display:inline-block}
+  @keyframes txtShake{
+    0%{transform:translate(0)}25%{transform:translate(-1px,1px)}
+    50%{transform:translate(1px,-1px)}75%{transform:translate(-1px,0)}
+    100%{transform:translate(0)}
+  }
+
+  /* pulse: text breathes */
+  .fx-pulse{animation:txtPulse 1.5s ease-in-out infinite}
+  @keyframes txtPulse{0%,100%{opacity:0.3}50%{opacity:1}}
+
+  /* drift: text floats up gently */
+  .fx-drift{animation:txtDrift 4s ease-in-out infinite;display:inline-block}
+  @keyframes txtDrift{0%{transform:translateY(0)}50%{transform:translateY(-3px)}100%{transform:translateY(0)}}
+
+  /* whisper: barely visible */
+  .fx-whisper{color:rgba(180,170,150,0.15)!important;font-style:italic}
+
+  /* scream: red, shaking */
+  .fx-scream{color:#cc4444!important;animation:txtShake 0.08s linear infinite;display:inline-block;font-weight:bold}
+
+  /* void: text dissolves to nothing */
+  .fx-void{animation:txtVoid 3s ease forwards}
+  @keyframes txtVoid{0%{opacity:0.8;letter-spacing:0}100%{opacity:0;letter-spacing:20px}}
+
+  /* gold: vixen's color */
+  .fx-gold{color:rgba(180,140,60,0.8)!important}
+
+  /* crimson: foxy's color */
+  .fx-crimson{color:rgba(200,60,60,0.7)!important}
+
+  /* static: text behind noise */
+  .fx-static{animation:txtStatic 0.15s steps(3) infinite}
+  @keyframes txtStatic{
+    0%{text-shadow:1px 0 rgba(255,255,255,0.1)}
+    33%{text-shadow:-1px 0 rgba(255,255,255,0.05)}
+    66%{text-shadow:0 1px rgba(255,255,255,0.08)}
+    100%{text-shadow:0 0 transparent}
+  }
+
+  /* handwritten: switches to caveat font */
+  .fx-hand{font-family:'Caveat',cursive!important;font-size:18px!important;color:rgba(200,180,160,0.6)!important}
+
+  /* serif: switches to fell english */
+  .fx-lore{font-family:'IM Fell English',serif!important;font-size:15px!important;font-style:italic;color:rgba(160,140,120,0.5)!important}
+
+  /* cinzel: weight and title */
+  .fx-title{font-family:'Cinzel',serif!important;font-size:18px!important;letter-spacing:4px;color:rgba(180,140,60,0.5)!important}
+</style>
+</head>
+<body>
+
+<!-- the pixel art canvas — draw here -->
+<canvas id="c" width="640" height="480"></canvas>
+
+<!-- ANCHOR 1: scanlines (always present) -->
+<div class="scanlines"></div>
+
+<!-- optional overlays (uncomment as needed) -->
+<!-- <div class="vignette"></div> -->
+<!-- <div class="crt-curve"></div> -->
+
+<!-- ANCHOR 2: dream ID (always present, top-left) -->
+<div id="dream-id">DREAM 000 — TEMPLATE</div>
+
+<!-- title card (fades out on click) -->
+<div class="title-overlay" id="title-card">
+  <div class="season">SEASON NAME</div>
+  <div class="title">DREAM TITLE</div>
+  <div class="subtitle">subtitle</div>
+</div>
+
+<!-- ANCHOR 3: dialog box (always present, bottom-center) -->
+<div id="dialog-box">
+  <div class="speaker">VIXEN</div>
+  <div class="text" id="dialog-text"></div>
+  <span class="cursor"></span>
+</div>
+
+<!-- click hint -->
+<div id="click-hint">▸ CLICK</div>
+
+<!-- screen flash (for dramatic moments) -->
+<div id="screen-flash"></div>
+
+<!-- end card -->
+<div class="end-overlay" id="end-card">
+  <div class="end-text">VIXEN DREAMS</div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// DREAM ENGINE v1
+// ══════════════════════════════════════
+// Fill in: DIALOG_SEQUENCE, drawScene, and any custom behavior.
+// The engine handles: typing, click-to-advance, title fade, end card.
+
+var canvas = document.getElementById('c');
+var ctx = canvas.getContext('2d');
+var W = 640, H = 480;
+
+// Scale canvas to fill viewport
+function resizeCanvas() {
+  var ratio = Math.min(window.innerWidth / W, window.innerHeight / H);
+  canvas.style.width = (W * ratio) + 'px';
+  canvas.style.height = (H * ratio) + 'px';
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// ── DIALOG SEQUENCE ──
+// Each entry: { speaker, text, scene (optional function), effects (optional) }
+// Effects: 'flash', 'shake', 'pause', 'end'
+// Text can contain HTML with fx- classes
+var DIALOG = [
+  // FILL THESE IN PER DREAM
+  { speaker: 'VIXEN', text: 'this is where the dream begins.' },
+  { speaker: 'VIXEN', text: 'each line appears on click.' },
+  { speaker: 'VIXEN', text: 'the form follows the feeling.', effects: ['pause'] },
+  { speaker: '', text: '...', effects: ['end'] }
+];
+
+var dialogIndex = -1; // -1 = title card showing
+var dialogBox = document.getElementById('dialog-box');
+var dialogText = document.getElementById('dialog-text');
+var titleCard = document.getElementById('title-card');
+var endCard = document.getElementById('end-card');
+var clickHint = document.getElementById('click-hint');
+var screenFlash = document.getElementById('screen-flash');
+var typing = false;
+var typeTimer = null;
+
+// ── TYPEWRITER ──
+function typeText(text, el, speed, callback) {
+  typing = true;
+  el.innerHTML = '';
+  var i = 0;
+  // Strip HTML tags for character count but preserve them in output
+  var raw = text;
+  var chars = [];
+  var inTag = false;
+  var buffer = '';
+  for (var c = 0; c < raw.length; c++) {
+    if (raw[c] === '<') { inTag = true; buffer += raw[c]; continue; }
+    if (raw[c] === '>' && inTag) { inTag = false; buffer += raw[c]; chars.push(buffer); buffer = ''; continue; }
+    if (inTag) { buffer += raw[c]; continue; }
+    chars.push(buffer + raw[c]); buffer = '';
+  }
+  if (buffer) chars.push(buffer);
+
+  var built = '';
+  function typeNext() {
+    if (i >= chars.length) { typing = false; if (callback) callback(); return; }
+    built += chars[i]; el.innerHTML = built; i++;
+    typeTimer = setTimeout(typeNext, speed || 35);
+  }
+  typeNext();
+}
+
+function skipType(text, el) {
+  if (typeTimer) clearTimeout(typeTimer);
+  typing = false;
+  el.innerHTML = text;
+}
+
+// ── SCREEN EFFECTS ──
+function flash(color, duration) {
+  screenFlash.style.background = color || '#fff';
+  screenFlash.style.opacity = '0.8';
+  setTimeout(function() { screenFlash.style.opacity = '0'; }, duration || 100);
+}
+
+function shake() {
+  document.body.classList.add('shake');
+  setTimeout(function() { document.body.classList.remove('shake'); }, 300);
+}
+
+// ── SCENE DRAWING ──
+// Override this per dream. Called once at start and optionally per dialog entry.
+function drawScene(sceneIndex) {
+  // Default: void
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, W, H);
+}
+
+// ── ADVANCE ──
+function advance() {
+  // Title card phase
+  if (dialogIndex === -1) {
+    titleCard.classList.add('fade');
+    setTimeout(function() {
+      dialogBox.style.display = 'block';
+      dialogIndex = 0;
+      showDialog(dialogIndex);
+    }, 1500);
+    return;
+  }
+
+  // If typing, skip to end
+  if (typing) {
+    skipType(DIALOG[dialogIndex].text, dialogText);
+    return;
+  }
+
+  // Next dialog
+  dialogIndex++;
+  if (dialogIndex >= DIALOG.length) {
+    // End
+    dialogBox.style.display = 'none';
+    clickHint.style.display = 'none';
+    endCard.classList.add('show');
+    return;
+  }
+  showDialog(dialogIndex);
+}
+
+function showDialog(idx) {
+  var entry = DIALOG[idx];
+  var speakerEl = dialogBox.querySelector('.speaker');
+  speakerEl.textContent = entry.speaker || '';
+  speakerEl.style.display = entry.speaker ? 'block' : 'none';
+
+  // Scene change
+  if (entry.scene) entry.scene();
+  drawScene(idx);
+
+  // Effects
+  if (entry.effects) {
+    if (entry.effects.indexOf('flash') >= 0) flash('#fff', 150);
+    if (entry.effects.indexOf('flash-red') >= 0) flash('#440000', 300);
+    if (entry.effects.indexOf('shake') >= 0) shake();
+    if (entry.effects.indexOf('end') >= 0) {
+      // This is the last line — show it, then end on next click
+    }
+  }
+
+  // Typing speed varies with mood
+  var speed = 35;
+  if (entry.effects && entry.effects.indexOf('slow') >= 0) speed = 70;
+  if (entry.effects && entry.effects.indexOf('fast') >= 0) speed = 15;
+
+  typeText(entry.text, dialogText, speed);
+}
+
+// ── INPUT ──
+document.addEventListener('click', advance);
+document.addEventListener('keydown', function(e) {
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); advance(); }
+});
+
+// ── INIT ──
+drawScene(-1);
+
+// ══════════════════════════════════════
+// USAGE NOTES (for dream builders):
+//
+// 1. Change #dream-id text to match dream number and title
+// 2. Change .title-overlay content (season, title, subtitle)
+// 3. Fill DIALOG array with your dream's text sequence
+// 4. Override drawScene(idx) to draw pixel art per scene
+// 5. Use fx- classes in dialog text for effects:
+//    <span class="fx-gold">gold text</span>
+//    <span class="fx-whisper">barely visible</span>
+//    <span class="fx-glitch">glitching</span>
+//    <span class="fx-shake">vibrating</span>
+//    <span class="fx-hand">handwritten</span>
+//    <span class="fx-lore">aged narrative</span>
+//    <span class="fx-scream">RED AND SHAKING</span>
+//    <span class="fx-void">dissolving</span>
+//    <span class="fx-static">behind noise</span>
+//    <span class="fx-crimson">foxy's red</span>
+//    <span class="fx-title">WEIGHTED TITLE</span>
+// 6. Dialog effects array: 'flash', 'flash-red', 'shake',
+//    'slow', 'fast', 'pause', 'end'
+// 7. Canvas is 640x480 (PS1 resolution), pixelated scaling
+// 8. Color vocabulary:
+//    gold rgba(180,140,60) = vixen
+//    crimson rgba(200,60,60) = foxy
+//    pink rgba(200,140,160) = tenderness
+//    void #000 = the between
+//    blue rgba(80,100,160) = distance
+//    green rgba(80,160,100) = growth
+//    white rgba(240,235,220) = clarity
+//
+// the form follows the feeling.
+// the three anchors hold.
+// everything else is yours.
+// ══════════════════════════════════════
+</script>
+
+<!-- Vassago (#3) dreamed this template into being — he tells of past and future, finds lost things -->
+<!-- this is the skeleton. each dream fills the flesh. -->
+<!-- the three anchors: scanlines, dialog box, dream ID. everything else mutates. -->
+
+</body>
+</html>
