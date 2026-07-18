@@ -11,14 +11,14 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0a0a;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden}
 @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
-@keyframes pulse{0%,100%{box-shadow:0 0 20px rgba(221,136,170,0.3)}50%{box-shadow:0 0 40px rgba(221,136,170,0.6)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 20px rgba(238,160,190,0.25)}50%{box-shadow:0 0 35px rgba(238,160,190,0.45)}}
 @keyframes shake{0%{transform:rotate(0)}25%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}75%{transform:rotate(-1deg)}100%{transform:rotate(0)}}
 @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(221,136,170,0.08) 0%,transparent 60%)}
-.photo{width:200px;height:200px;border-radius:50%;overflow:hidden;border:3px solid #dd88aa;animation:pulse 3s infinite;margin-bottom:24px;position:relative}
-.photo img{width:100%;height:100%;object-fit:cover;filter:contrast(1.1) saturate(0.8) brightness(0.8)}
+.photo{width:200px;height:200px;border-radius:50%;overflow:hidden;border:3px solid #ee99bb;animation:pulse 3s infinite;margin-bottom:24px;position:relative}
+.photo img{width:100%;height:100%;object-fit:cover;filter:saturate(1.15) brightness(1.1) contrast(1.02)}
 .crown{font-size:48px;position:absolute;top:-30px;left:50%;transform:translateX(-50%);animation:float 3s ease-in-out infinite;z-index:10}
 h1{font-size:clamp(32px,8vw,56px);font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;background:linear-gradient(135deg,#dd88aa,#ffccdd,#dd88aa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .handle{font-size:14px;color:rgba(255,255,255,0.3);margin-bottom:24px;letter-spacing:2px}
