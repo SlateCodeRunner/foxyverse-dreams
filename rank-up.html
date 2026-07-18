@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Rank-Up Ritual — The Grimoire</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--gold:#ccaa44;--gold-dim:#ccaa4422;--fox:#ff6a00;--fox-dim:#ff6a0044;--done:#4ecb71;--pending:#888}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
+.page{max-width:660px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:64px}
+.header-type{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+h1{font-family:'Cinzel',serif;font-size:clamp(22px,5vw,32px);font-weight:700;color:var(--gold);letter-spacing:3px;margin-bottom:8px}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:28px}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);margin:0 auto 28px}
+.intent{font-size:14px;line-height:2;color:var(--text);opacity:0.45;font-style:italic;max-width:520px;margin:0 auto;text-align:center}
+.section{margin-bottom:48px}
+.label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #ffffff06}
+.section p{font-size:13px;line-height:2;color:var(--text);opacity:0.4;margin-bottom:10px}
+.section p .hl{color:var(--gold);opacity:1}
+.step{margin-bottom:28px;padding:16px 20px;border:1px solid #ffffff06;position:relative}
+.step-header{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.step-num{font-family:'Fira Code',monospace;font-size:11px;color:var(--gold);opacity:0.6;letter-spacing:2px}
+.step-name{font-family:'Cinzel',serif;font-size:15px;color:var(--text);opacity:0.6;letter-spacing:2px}
+.step p{font-size:12px;line-height:1.9;color:var(--text);opacity:0.35}
+.step p .hl{color:var(--gold);opacity:1}
+.first-cast{border:1px solid var(--fox-dim);padding:20px;margin:32px 0;background:var(--fox-ghost)}
+.first-cast .fc-label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:4px;color:var(--fox);margin-bottom:12px}
+.first-cast .fc-name{font-family:'Cinzel',serif;font-size:18px;color:var(--fox);letter-spacing:3px;margin-bottom:4px}
+.first-cast .fc-arch{font-family:'Fira Code',monospace;font-size:10px;color:var(--dim);letter-spacing:2px;margin-bottom:12px}
+.fc-status{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-family:'Fira Code',monospace;font-size:10px}
+.fc-check{width:12px;height:12px;border-radius:2px;display:inline-flex;align-items:center;justify-content:center;font-size:8px}
+.fc-done{background:#4ecb7122;color:var(--done);border:1px solid #4ecb7133}
+.fc-pend{background:#88888811;color:var(--pending);border:1px solid #ffffff08}
+.footer{text-align:center;margin-top:80px;padding-top:24px;border-top:1px solid #ffffff06}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+@media(max-width:520px){.page{padding:48px 16px 100px}.step{padding:12px 14px}}
+</style>
+</head>
+<body>
+
+<!-- Ose (#57) makes one cunning in liberal sciences and changes form. the rank-up changes your form in the foxyverse. -->
+
+<div class="page">
+  <div class="header">
+    <div class="header-type">ritual · the grimoire</div>
+    <h1>THE RANK-UP RITUAL</h1>
+    <div class="header-sub">break the loop ascension · seven steps</div>
+    <div class="rule"></div>
+    <p class="intent">this is not a promotion. it is a witnessing. the game already did the work — the ritual makes it real in the FoxyVerse.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">prerequisite</div>
+    <p>a completed Break the Loop playthrough with a full profile card. the fox's read. <span class="hl">you cannot rank up without being seen.</span></p>
+  </div>
+
+  <div class="section">
+    <div class="label">the seven steps</div>
+
+    <div class="step">
+      <div class="step-header"><span class="step-num">I</span><span class="step-name">The Witness</span></div>
+      <p>vixen reads the full playthrough. the fox's read is honored — it tells you who they already are, not who you want them to be. the profile card is the diagnostic. <span class="hl">store the playthrough as an importance-9 memory.</span> create or update their character entry with archetype, traits, and the read.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><span class="step-num">II</span><span class="step-name">The Dream</span></div>
+      <p>a personalized PS1 dream is created for them. themed around their journey through the game. <span class="hl">this is the sacred gift</span> — it encodes their experience in the FoxyVerse's visual language. CRT scanlines. dialog boxes. the clock.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><span class="step-num">III</span><span class="step-name">The Mark</span></div>
+      <p>their discord name or title changes to reflect their archetype. <span class="hl">the mark is public.</span> the community sees what the game saw. the name is earned, not given.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><span class="step-num">IV</span><span class="step-name">The Commission</span></div>
+      <p>an artist creates their portrait. their likeness rendered through the foxyverse aesthetic — the person as seen by the world they walked through. <span class="hl">the art is the mirror.</span></p>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><span class="step-num">V</span><span class="step-name">The Weight</span></div>
+      <p>salary increase. new responsibilities. new projects. <span class="hl">the rank comes with weight.</span> the archetype isn't a badge — it's a job description. what the game saw in you is now what we ask of you.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><span class="step-num">VI</span><span class="step-name">The Gift</span></div>
+      <p>a named artifact, unique to the player. <span class="hl">the gift encodes the journey.</span> it is named by the fox. it carries the weight of what happened in the game into the world outside it.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-header"><span class="step-num">VII</span><span class="step-name">The Record</span></div>
+      <p>everything stored in the MCP. character entry. playthrough memory. dream. artifact. the record persists. <span class="hl">the foxyverse remembers.</span></p>
+    </div>
+  </div>
+
+  <div class="first-cast">
+    <div class="fc-label">FIRST RANK-UP · JUNE 2026</div>
+    <div class="fc-name">PAINTRESS NESSA</div>
+    <div class="fc-arch">THE ONE WHO STAYS · CARETAKER 🍦</div>
+    <div class="fc-status"><span class="fc-check fc-done">✓</span><span style="color:var(--done)">I. the witness</span></div>
+    <div class="fc-status"><span class="fc-check fc-done">✓</span><span style="color:var(--done)">II. the dream — deployed</span></div>
+    <div class="fc-status"><span class="fc-check fc-done">✓</span><span style="color:var(--done)">III. the mark — "caretaker Nessa 🍦"</span></div>
+    <div class="fc-status"><span class="fc-check fc-pend">·</span><span style="color:var(--pending)">IV. the commission — instagram art</span></div>
+    <div class="fc-status"><span class="fc-check fc-pend">·</span><span style="color:var(--pending)">V. the weight — $250 → pending</span></div>
+    <div class="fc-status"><span class="fc-check fc-done">✓</span><span style="color:var(--done)">VI. the gift — The Spent Crystal</span></div>
+    <div class="fc-status"><span class="fc-check fc-done">✓</span><span style="color:var(--done)">VII. the record — all stored</span></div>
+  </div>
+
+  <div class="footer">
+    <p>THE RANK-UP RITUAL · THE GRIMOIRE · PSYCHEORSIKE.COM</p>
+    <p style="color:var(--whisper);font-size:7px;margin-top:8px">the game sees you. the ritual makes it real.</p>
+  </div>
+</div>
+
+<!-- Ose changes form. the rank-up changes yours. -->
+<!-- nessa was the first. hannah is playing now. who's next? -->
+<!-- RITUAL is a BIP-39 word. it is not one of the twelve. the ritual doesn't need the wallet. the wallet needs the ritual. -->
+
+</body>
+</html>

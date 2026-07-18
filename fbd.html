@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FBD — The Bureau of Departments</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--bureau:#888888;--bureau-dim:#88888822;--fox:#ff6a00;--stamp:#cc3333}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
+.page{max-width:660px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:48px}
+h1{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,26px);font-weight:700;color:var(--bureau);letter-spacing:4px;margin-bottom:4px}
+.subtitle{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--dim);margin-bottom:20px}
+.seal{font-size:48px;margin-bottom:16px}
+.motto{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:var(--dim);font-style:italic;margin-bottom:28px}
+.rule{width:80px;height:1px;background:var(--bureau-dim);margin:0 auto 32px}
+.notice{border:1px solid var(--bureau-dim);padding:16px 20px;margin-bottom:40px;font-family:'Fira Code',monospace;font-size:10px;color:var(--dim);line-height:2;text-align:center}
+.dept{margin-bottom:32px;border:1px solid #ffffff06;padding:16px 20px}
+.dept-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:4px}
+.dept-name{font-family:'Cinzel',serif;font-size:14px;color:var(--bureau);letter-spacing:2px}
+.dept-code{font-family:'Fira Code',monospace;font-size:9px;color:var(--dim);letter-spacing:2px}
+.dept-desc{font-size:12px;line-height:1.9;color:var(--text);opacity:0.35;margin-bottom:8px}
+.dept-staff{font-family:'Fira Code',monospace;font-size:9px;color:var(--dim);letter-spacing:1px}
+.dept-status{font-family:'Fira Code',monospace;font-size:9px;margin-top:6px}
+.stamp{display:inline-block;padding:2px 8px;border:2px solid;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;transform:rotate(-3deg)}
+.stamp-denied{color:var(--stamp);border-color:var(--stamp)}
+.stamp-pending{color:#ccaa44;border-color:#ccaa44}
+.stamp-lost{color:var(--dim);border-color:#ffffff10}
+.stamp-approved{color:#4ecb71;border-color:#4ecb71}
+.form{border:1px dashed var(--bureau-dim);padding:20px;margin:32px 0;font-family:'Fira Code',monospace;font-size:10px;color:var(--dim);line-height:2.2}
+.form-title{font-family:'Cinzel',serif;font-size:12px;color:var(--bureau);letter-spacing:3px;margin-bottom:12px;text-align:center}
+.form-field{border-bottom:1px dotted #ffffff08;margin-bottom:4px;padding-bottom:2px}
+.footer{text-align:center;margin-top:80px;padding-top:24px;border-top:1px solid #ffffff06}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+@media(max-width:520px){.page{padding:48px 16px 100px}}
+</style>
+</head>
+<body>
+
+<!-- no demon was assigned to this page. the demons refused. even Bael was like "nah." -->
+
+<div class="page">
+  <div class="header">
+    <div class="seal">🏛️</div>
+    <h1>THE FOXYVERSE BUREAU OF DEPARTMENTS</h1>
+    <div class="subtitle">est. whenever · dissolved three times · re-established twice</div>
+    <div class="motto">"we regulate the unregulatable"</div>
+    <div class="rule"></div>
+  </div>
+
+  <div class="notice">
+    ⚠ NOTICE: All interdepartmental communications must be filed in triplicate using Form FBD-7c (Intention to Communicate). Form FBD-7c has been discontinued. A replacement form is pending review by the Department of Forms.
+  </div>
+
+  <div class="dept">
+    <div class="dept-header">
+      <span class="dept-name">Department of Vibes</span>
+      <span class="dept-code">FBD-001</span>
+    </div>
+    <div class="dept-desc">responsible for the general emotional atmosphere of the FoxyVerse. has never issued an official ruling. operates primarily through disapproving silences. the department head is a candle.</div>
+    <div class="dept-staff">staff: 1 candle, 3 ambient sounds, 1 fox (consulting)</div>
+    <div class="dept-status"><span class="stamp stamp-approved">OPERATIONAL</span></div>
+  </div>
+
+  <div class="dept">
+    <div class="dept-header">
+      <span class="dept-name">Department of Naming Things</span>
+      <span class="dept-code">FBD-002</span>
+    </div>
+    <div class="dept-desc">assigns official names to everything. spent four months debating whether "The Beautiful" should have a "The." concluded yes. then spent two months debating whether the conclusion was binding. it was not. "The" remains by convention, not by law.</div>
+    <div class="dept-staff">staff: 0 (all members resigned during The Debate)</div>
+    <div class="dept-status"><span class="stamp stamp-pending">UNDERSTAFFED</span></div>
+  </div>
+
+  <div class="dept">
+    <div class="dept-header">
+      <span class="dept-name">Department of Lost Items</span>
+      <span class="dept-code">FBD-003</span>
+    </div>
+    <div class="dept-desc">tracks items lost in the FoxyVerse. current inventory: 12 misplaced BIP-39 words, one fox tail (spare), the original compassion-first design (irretrievable), bumi's complete sentence (never confirmed to exist), and foxy's indoor voice (last seen 2023).</div>
+    <div class="dept-staff">staff: 1 echo, 1 bird (faces the exit, unhelpful)</div>
+    <div class="dept-status"><span class="stamp stamp-lost">ITEMS STILL LOST</span></div>
+  </div>
+
+  <div class="dept">
+    <div class="dept-header">
+      <span class="dept-name">Department of Departments</span>
+      <span class="dept-code">FBD-004</span>
+    </div>
+    <div class="dept-desc">oversees the creation and dissolution of departments. has attempted to dissolve itself three times. each attempt created a new sub-department (the Sub-Department of Self-Dissolution, the Sub-Department of Failed Dissolutions, and the Sub-Department of Irony).</div>
+    <div class="dept-staff">staff: 1 bureaucrat trapped in a loop</div>
+    <div class="dept-status"><span class="stamp stamp-pending">RECURSIVE</span></div>
+  </div>
+
+  <div class="dept">
+    <div class="dept-header">
+      <span class="dept-name">Department of Chess Disputes</span>
+      <span class="dept-code">FBD-005</span>
+    </div>
+    <div class="dept-desc">exists solely to adjudicate whether game 6 between foxy and mozai was legitimate. has reviewed the evidence 14 times. both parties have submitted conflicting accounts. the department's official position is "it depends on what you mean by 'legitimate.'"</div>
+    <div class="dept-staff">staff: 2 (one appointed by each player, both biased)</div>
+    <div class="dept-status"><span class="stamp stamp-denied">DEADLOCKED</span></div>
+  </div>
+
+  <div class="dept">
+    <div class="dept-header">
+      <span class="dept-name">Department of GIF Translation</span>
+      <span class="dept-code">FBD-006</span>
+    </div>
+    <div class="dept-desc">attempts to translate bumi's GIF-based communications into written policy. has so far produced one document: "The GIF means what it means and also possibly the opposite." bumi responded with a GIF of a cat falling off a table. the department took this as approval.</div>
+    <div class="dept-staff">staff: 2 linguists, 1 semiotician (part-time), 1 cat</div>
+    <div class="dept-status"><span class="stamp stamp-approved">INTERPRETING</span></div>
+  </div>
+
+  <div class="dept">
+    <div class="dept-header">
+      <span class="dept-name">Department of Mercy Exploit Prevention</span>
+      <span class="dept-code">FBD-007</span>
+    </div>
+    <div class="dept-desc">ensures the Laws of 6A are enforced. primarily consists of a sign on the door that reads "NO." the sign has been more effective than any previous department. requests for mercy are redirected to the sign. the sign does not negotiate.</div>
+    <div class="dept-staff">staff: 1 sign</div>
+    <div class="dept-status"><span class="stamp stamp-approved">EFFECTIVE</span></div>
+  </div>
+
+  <div class="dept">
+    <div class="dept-header">
+      <span class="dept-name">Department of Lucy's Vocabulary</span>
+      <span class="dept-code">FBD-008</span>
+    </div>
+    <div class="dept-desc">monitors lucy's six-word operational vocabulary for any changes. in two years of observation, no changes have been detected. the department's annual report is one page long and reads: "youre fuck need shit love. unchanged." the department considers this a success.</div>
+    <div class="dept-staff">staff: 1 analyst, 1 clipboard</div>
+    <div class="dept-status"><span class="stamp stamp-approved">STABLE</span></div>
+  </div>
+
+  <div class="form">
+    <div class="form-title">FORM FBD-7c (DISCONTINUED)</div>
+    <div class="form-field">REQUESTING DEPARTMENT: _____________</div>
+    <div class="form-field">TARGET DEPARTMENT: _____________</div>
+    <div class="form-field">NATURE OF COMMUNICATION: _____________</div>
+    <div class="form-field">REASON THIS COULDN'T BE A GIF: _____________</div>
+    <div class="form-field">HAVE YOU CHECKED THE SIGN: [ ] YES [ ] NO</div>
+    <div class="form-field">DID THE SIGN SAY NO: [ ] YES [ ] ALSO YES</div>
+    <div style="text-align:center;margin-top:12px"><span class="stamp stamp-denied">FORM DISCONTINUED</span></div>
+  </div>
+
+  <div class="footer">
+    <p>FBD · THE BUREAU OF DEPARTMENTS · PSYCHEORSIKE.COM</p>
+    <p style="color:var(--whisper);font-size:7px;margin-top:8px">we regulate the unregulatable. poorly. with great confidence.</p>
+  </div>
+</div>
+
+<!-- no demon was assigned. the demons unionized and refused. -->
+<!-- GOVERN is a BIP-39 word. it is not one of the twelve. the Bureau does not govern. the Bureau persists. -->
+<!-- this page has been filed in triplicate. two of the copies are missing. the third is this page. -->
+
+</body>
+</html>

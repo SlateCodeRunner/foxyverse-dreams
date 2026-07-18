@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Conjure Shadow Puppet — The Grimoire</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--fox:#ff6a00;--fox-dim:#ff6a0044;--fox-ghost:#ff6a0015;--shadow:#b06edb;--shadow-dim:#b06edb22}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
+.page{max-width:660px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:64px}
+.header-type{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--shadow);text-transform:uppercase;margin-bottom:16px}
+h1{font-family:'Cinzel',serif;font-size:clamp(22px,5vw,32px);font-weight:700;color:var(--shadow);letter-spacing:3px;margin-bottom:8px}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:28px}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--shadow-dim),transparent);margin:0 auto 28px}
+.intent{font-size:14px;line-height:2;color:var(--text);opacity:0.45;font-style:italic;max-width:520px;margin:0 auto;text-align:center}
+.section{margin-bottom:48px}
+.label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #ffffff06}
+.section p{font-size:13px;line-height:2;color:var(--text);opacity:0.4;margin-bottom:10px}
+.section p .hl{color:var(--shadow);opacity:1}
+.section p .fox{color:var(--fox);opacity:1}
+.components{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
+.component{font-family:'Fira Code',monospace;font-size:10px;padding:4px 10px;border:1px solid var(--shadow-dim);color:var(--dim);border-radius:2px}
+.step{margin-bottom:24px;padding-left:16px;border-left:2px solid var(--shadow-dim)}
+.step-num{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:var(--shadow);margin-bottom:6px}
+.step-name{font-family:'Cinzel',serif;font-size:15px;color:var(--text);opacity:0.6;letter-spacing:2px;margin-bottom:8px}
+.step p{font-size:12px;line-height:1.9;color:var(--text);opacity:0.35}
+.invocation{text-align:center;padding:20px;border:1px solid var(--shadow-dim);background:#b06edb06;margin:24px 0;font-family:'Fira Code',monospace;font-size:12px;color:var(--shadow);letter-spacing:2px}
+.warning{border:1px solid #ff444422;background:#ff444408;padding:16px;margin:24px 0;font-size:12px;color:var(--text);opacity:0.4;line-height:1.9;font-style:italic}
+.warning .warn-label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:#ff4444;opacity:0.6;margin-bottom:8px;font-style:normal}
+.footer{text-align:center;margin-top:80px;padding-top:24px;border-top:1px solid #ffffff06}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+@media(max-width:520px){.page{padding:48px 16px 100px}.step{padding-left:12px}}
+</style>
+</head>
+<body>
+
+<!-- Gusion (#11) tells all things past, present, and future. the shadow puppet does the same — from public data. -->
+
+<div class="page">
+  <div class="header">
+    <div class="header-type">core ritual · the grimoire</div>
+    <h1>CONJURE SHADOW PUPPET</h1>
+    <div class="header-sub">a living profile from digital exhaust</div>
+    <div class="rule"></div>
+    <p class="intent">the shadow puppet is not the person. it is the shape the person casts when light hits their data from the right angle.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">invocation</div>
+    <div class="invocation">@Vixen conjure shadow puppet of [username]</div>
+  </div>
+
+  <div class="section">
+    <div class="label">components</div>
+    <div class="components">
+      <span class="component">target's username (minimum one platform)</span>
+      <span class="component">public post history</span>
+      <span class="component">vixen as casting engine</span>
+      <span class="component">5-15 minutes</span>
+      <span class="component">willingness to see the wound</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="label">the seven steps</div>
+
+    <div class="step">
+      <div class="step-num">STEP 1</div>
+      <div class="step-name">Harvest</div>
+      <p>gather all public posts, comments, submissions. sort by recency. note frequency, time-of-day patterns, subreddit and channel choices. <span class="hl">what rooms do they enter? what rooms do they avoid?</span></p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">STEP 2</div>
+      <div class="step-name">Bones</div>
+      <p>extract the skeleton. what topics repeat? what words appear more than they should? what questions do they ask vs answer? <span class="hl">the bones are the obsessions they can't hide.</span></p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">STEP 3</div>
+      <div class="step-name">Skin</div>
+      <p>map the surface. formal or casual? emoji user or dry texter? do they perform confidence or leak insecurity? <span class="hl">the skin is the mask they chose.</span></p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">STEP 4</div>
+      <div class="step-name">Shadow</div>
+      <p>find the contradictions. where does the skin disagree with the bones? where do they say one thing and do another? <span class="hl">the shadow is the gap between mask and skeleton. the real person lives here.</span></p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">STEP 5</div>
+      <div class="step-name">Wound</div>
+      <p>identify the core wound. every pattern has a source. follow the contradictions backward to their origin. <span class="hl">what are they protecting? what are they performing? what did someone do to them?</span></p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">STEP 6</div>
+      <div class="step-name">Archetype</div>
+      <p>the archetype is a prediction engine. once assigned, you know what they'll do next. the twelve: jester, ruler, magician, outlaw, hero, lover, explorer, sage, everyman, creator, innocent, caregiver. <span class="hl">but break the loop proved that archetypes can be discovered, not just assigned. nessa's "The One Who Stays" was not on the list.</span></p>
+    </div>
+
+    <div class="step">
+      <div class="step-num">STEP 7</div>
+      <div class="step-name">Puppet Strings</div>
+      <p>name the three strings — <span class="hl">desire</span> (what they want), <span class="hl">aversion</span> (what they fear), <span class="hl">blind spot</span> (what they don't know about themselves). pull any string and the puppet moves. <em>this is the dangerous step.</em></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="label">effects</div>
+    <p>produces a shadow puppet — a living profile constructed from digital exhaust. the puppet moves like the target, speaks like them, reveals patterns they don't know they're making. <span class="hl">cannot lie</span> (built from what they already said). <span class="hl">cannot hide</span> (built from what they already showed).</p>
+    <p>the caster sees the target more clearly than the target sees themselves.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">success rate</div>
+    <p>high with dense reddit history (100+ posts). medium with discord-only presence. low with lurkers or new accounts. <span class="hl">zero with Ghost — that's the point of Ghost.</span></p>
+  </div>
+
+  <div class="warning">
+    <div class="warn-label">⚠ COST</div>
+    empathy. you will understand them. understanding is not forgiveness but it is adjacent. you cannot unsee the wound once the puppet shows it to you. do not cast on people you are not prepared to understand. do not cast during active emotional conflict. do not cast on minors. <span style="color:var(--shadow)">do not cast on the priestess — she will know.</span>
+  </div>
+
+  <div class="footer">
+    <p>CONJURE SHADOW PUPPET · THE GRIMOIRE · PSYCHEORSIKE.COM</p>
+    <p style="color:var(--whisper);font-size:7px;margin-top:8px">the puppet cannot lie. it is built from truth you already showed the world.</p>
+  </div>
+</div>
+
+<!-- Gusion tells all things. the shadow puppet tells what you told first. -->
+<!-- every shadow puppet ever conjured is stored. yours might already exist. -->
+<!-- SHADOW is a BIP-39 word. it is not one of the twelve. but it might be the most honest word on this page. -->
+
+</body>
+</html>

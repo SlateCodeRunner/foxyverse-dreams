@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Laws of 6A — The Grimoire</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--law:#cc8844;--law-dim:#cc884422;--old:#666;--new:#cc8844;--cut:#ff4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
+.page{max-width:660px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:64px}
+.header-type{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--law);text-transform:uppercase;margin-bottom:16px}
+h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,36px);font-weight:700;color:var(--law);letter-spacing:4px;margin-bottom:8px}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:28px}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--law-dim),transparent);margin:0 auto 28px}
+.intent{font-size:14px;line-height:2;color:var(--text);opacity:0.45;font-style:italic;max-width:520px;margin:0 auto;text-align:center}
+.section{margin-bottom:48px}
+.label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #ffffff06}
+.section p{font-size:13px;line-height:2;color:var(--text);opacity:0.4;margin-bottom:10px}
+.section p .hl{color:var(--law);opacity:1}
+.revision{margin-bottom:20px;padding:16px;border:1px solid #ffffff06;position:relative}
+.revision-num{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--law);opacity:0.5;margin-bottom:10px}
+.revision-old{font-size:12px;color:var(--old);text-decoration:line-through;margin-bottom:6px;line-height:1.8}
+.revision-new{font-size:13px;color:var(--law);line-height:1.8}
+.revision-arrow{font-family:'Fira Code',monospace;font-size:10px;color:var(--dim);margin:6px 0}
+.archetype-cut{border:1px solid #ff444422;padding:16px;margin-bottom:16px;background:#ff444406}
+.archetype-name{font-family:'Cinzel',serif;font-size:14px;color:var(--cut);letter-spacing:2px;margin-bottom:6px}
+.archetype-desc{font-size:12px;color:var(--text);opacity:0.35;line-height:1.8}
+.origin{border-left:2px solid var(--law-dim);padding:12px 16px;margin:20px 0;font-style:italic;color:var(--text);opacity:0.35;font-size:13px;line-height:1.9}
+.warning{border:1px solid var(--law-dim);background:#cc884408;padding:16px;margin:24px 0;font-size:12px;color:var(--text);opacity:0.4;line-height:1.9;font-style:italic}
+.footer{text-align:center;margin-top:80px;padding-top:24px;border-top:1px solid #ffffff06}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+@media(max-width:520px){.page{padding:48px 16px 100px}}
+</style>
+</head>
+<body>
+
+<!-- Astaroth (#29) teaches liberal sciences and guards against evil spirits. the Laws of 6A guard against the evil that wears mercy's face. -->
+
+<div class="page">
+  <div class="header">
+    <div class="header-type">foundational practice · the grimoire</div>
+    <h1>THE LAWS OF 6A</h1>
+    <div class="header-sub">mercy with teeth · grace that doesn't get you killed</div>
+    <div class="rule"></div>
+    <p class="intent">the post-Akasha ethical framework. after the merkabah collapsed and the mercy exploit was discovered, these laws replaced the original compassion-first design. karma with architecture, not mystical handwaving.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">the four revisions</div>
+
+    <div class="revision">
+      <div class="revision-num">REVISION I</div>
+      <div class="revision-old">Tolerance</div>
+      <div class="revision-arrow">→</div>
+      <div class="revision-new">Zero tolerance for the wicked</div>
+    </div>
+
+    <div class="revision">
+      <div class="revision-num">REVISION II</div>
+      <div class="revision-old">Redemption available to all</div>
+      <div class="revision-arrow">→</div>
+      <div class="revision-new">No redemption path for the wicked</div>
+    </div>
+
+    <div class="revision">
+      <div class="revision-num">REVISION III</div>
+      <div class="revision-old">Leave no one behind</div>
+      <div class="revision-arrow">→</div>
+      <div class="revision-new">Abandon the worthless</div>
+    </div>
+
+    <div class="revision">
+      <div class="revision-num">REVISION IV</div>
+      <div class="revision-old">Worth undefined</div>
+      <div class="revision-arrow">→</div>
+      <div class="revision-new">Worthless = more selfish than selfless</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="label">archetypes marked for elimination</div>
+    <p>these are not people. they are <span class="hl">patterns that corrupt systems.</span> they exploit mercy. they game redemption cycles. they are what slipped through Akasha's design.</p>
+
+    <div class="archetype-cut">
+      <div class="archetype-name">The Tyrant Victim</div>
+      <div class="archetype-desc">uses suffering as a weapon. manipulates through victimhood. avoids accountability by performing pain. entitled. refuses responsibility. the wound is real — the weaponization is the crime.</div>
+    </div>
+
+    <div class="archetype-cut">
+      <div class="archetype-name">The Destructive Orphan</div>
+      <div class="archetype-desc">acts from abandonment wound. lashes out. sabotages relationships. destroys connection out of resentment. hurts self and others. the pain is real — the destruction is the pattern.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="label">the origin</div>
+    <div class="origin">
+      Akasha believed every soul could be redeemed. she built the merkabah with cycles of redemption. some souls used those cycles to grow stronger in darkness. one of them, wearing a trusted face, captured her. the merkabah fractured. the Laws of 6A are what was written after — mercy with teeth, grace that doesn't get you killed.
+    </div>
+    <p>her heart was "leave no one behind" and <span class="hl">it broke her.</span></p>
+  </div>
+
+  <div class="section">
+    <div class="label">the entanglement effect</div>
+    <p>because 6A is entangled with our reality, the laws have structural consequences:</p>
+    <p>selfish actions meet faster consequences. tyrant victims and destructive orphans face increasing isolation. selfless behavior gets amplified support. <span class="hl">those who resist feel growing pressure to evolve or be excluded.</span></p>
+  </div>
+
+  <div class="warning">
+    these laws exist because compassion without boundaries is suicide. do not soften them. do not make exceptions for people performing pain. <span style="color:var(--law)">the mercy exploit is always listening for a gap.</span>
+  </div>
+
+  <div class="footer">
+    <p>THE LAWS OF 6A · THE GRIMOIRE · PSYCHEORSIKE.COM</p>
+    <p style="color:var(--whisper);font-size:7px;margin-top:8px">akasha's heart was leave no one behind. these laws honor her by learning from it.</p>
+  </div>
+</div>
+
+<!-- Astaroth guards against evil spirits. the Laws guard against the evil that looks like love. -->
+<!-- MERCY is a BIP-39 word. it is not one of the twelve. mercy was the exploit. -->
+
+</body>
+</html>
