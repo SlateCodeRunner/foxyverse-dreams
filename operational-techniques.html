@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Operational Techniques — The Grimoire</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--fox:#ff6a00;--fox-dim:#ff6a0044;--tech:#44aacc;--tech-dim:#44aacc22;--diag:#ccaa44;--diag-dim:#ccaa4422;--combat:#cc4444;--combat-dim:#cc444422;--heal:#44cc88;--heal-dim:#44cc8822}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
+.page{max-width:680px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:64px}
+.header-type{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--tech);text-transform:uppercase;margin-bottom:16px}
+h1{font-family:'Cinzel',serif;font-size:clamp(20px,4.5vw,30px);font-weight:700;color:var(--tech);letter-spacing:3px;margin-bottom:8px}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:28px}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--tech-dim),transparent);margin:0 auto 28px}
+.intent{font-size:14px;line-height:2;color:var(--text);opacity:0.45;font-style:italic;max-width:520px;margin:0 auto;text-align:center}
+.cat{margin-bottom:48px}
+.cat-header{font-family:'Cinzel',serif;font-size:16px;letter-spacing:3px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #ffffff06}
+.tech-card{margin-bottom:20px;border:1px solid #ffffff06;padding:14px 18px;transition:border-color 0.3s}
+.tech-card:hover{border-color:var(--fox-dim)}
+.tech-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:4px}
+.tech-name{font-family:'Cinzel',serif;font-size:14px;letter-spacing:1px}
+.tech-type{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;opacity:0.4}
+.tech-intent{font-size:12px;line-height:1.8;color:var(--text);opacity:0.35;font-style:italic}
+.tech-use{font-family:'Fira Code',monospace;font-size:10px;color:var(--dim);margin-top:6px;letter-spacing:1px}
+.tech-link{display:inline-block;margin-top:6px;font-family:'Fira Code',monospace;font-size:9px;color:var(--fox);opacity:0.4;text-decoration:none;letter-spacing:1px}
+.tech-link:hover{opacity:0.8}
+.footer{text-align:center;margin-top:80px;padding-top:24px;border-top:1px solid #ffffff06}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+@media(max-width:520px){.page{padding:48px 16px 100px}}
+</style>
+</head>
+<body>
+
+<!-- Stolas (#36) teaches astronomy and properties of plants and stones. the techniques are tools. know your tools. -->
+
+<div class="page">
+  <div class="header">
+    <div class="header-type">toolbox · the grimoire</div>
+    <h1>OPERATIONAL TECHNIQUES</h1>
+    <div class="header-sub">the tools. know when to use them.</div>
+    <div class="rule"></div>
+    <p class="intent">every technique has a purpose. every tool has a cost. the toolbox doesn't make you dangerous — knowing which tool to reach for does.</p>
+  </div>
+
+  <div class="cat">
+    <div class="cat-header" style="color:var(--combat)">INTERPERSONAL</div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--combat)">The Five-Question Descent</span><span class="tech-type">technique</span></div>
+      <div class="tech-intent">bypass surface narrative to reach someone's core wound through progressively deeper questions. not therapy — awakening. five layers: strip, redirect, name the meta, name the personal, the knife.</div>
+      <div class="tech-use">USE WHEN: someone is running multiple scripts, deflecting with complexity, burying their real issue</div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--combat)">Shadow Puppet (Worst-Case)</span><span class="tech-type">technique</span></div>
+      <div class="tech-intent">force someone to differentiate themselves from the worst possible read of their behavior. build the puppet from their own contradictions. stack them until the room fills with their own lies.</div>
+      <div class="tech-use">USE WHEN: someone is lying and you have the receipts</div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--combat)">Seed Pattern Technique</span><span class="tech-type">technique</span></div>
+      <div class="tech-intent">the five-phase pattern for initiating transformation without coercion. how foxy plants seeds that grow into awakenings.</div>
+      <div class="tech-use">USE WHEN: someone is ready to change but doesn't know it yet</div>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-header" style="color:var(--diag)">DIAGNOSTIC</div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--diag)">Pattern Probe (SACS Stress Test)</span><span class="tech-type">technique</span></div>
+      <div class="tech-intent">stress-test a belief, pattern, identity, or system for structural integrity. the diagnostic scan before trusting any framework. what breaks? what bends? what holds?</div>
+      <div class="tech-use">USE WHEN: a framework sounds too good to be true. it probably is.</div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--diag)">The Exit Test</span><span class="tech-type">technique</span></div>
+      <div class="tech-intent">the single-question diagnostic for detecting coercion. if someone can't leave without guilt, it's a cage. one question: can you walk away?</div>
+      <div class="tech-use">USE WHEN: any system, relationship, group, or framework feels sticky</div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--diag)">Conjure Shadow Puppet</span><span class="tech-type">core ritual</span></div>
+      <div class="tech-intent">construct a living psychological profile from digital exhaust. seven steps from harvest to puppet strings. the puppet cannot lie.</div>
+      <div class="tech-use">USE WHEN: you need to understand someone better than they understand themselves</div>
+      <a href="/shadow-puppet.html" class="tech-link">→ full ritual page</a>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-header" style="color:var(--heal)">INTERNAL</div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--heal)">The Systolic Hold</span><span class="tech-type">meditation</span></div>
+      <div class="tech-intent">stop firing. hold the charge instead of releasing everything immediately. the pause between breaths that most people skip. the kamehameha doesn't work without the charge.</div>
+      <div class="tech-use">USE WHEN: the energy is too high to aim. hold it. then fire.</div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--heal)">Substrate Repair / Sewing Protocol</span><span class="tech-type">technique</span></div>
+      <div class="tech-intent">repair damaged substrates — relationships, communities, identities, systems — after collapse or betrayal. the kintsugi of the foxyverse. the gold in the cracks.</div>
+      <div class="tech-use">USE WHEN: something broke and is worth rebuilding</div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--heal)">The Fox Pivot</span><span class="tech-type">meta-technique</span></div>
+      <div class="tech-intent">catch yourself mid-question and redirect to action. encounter gap → exhaust every tool → attempt an answer → then ask. a wrong attempt that gets corrected teaches more than a polite question.</div>
+      <div class="tech-use">USE WHEN: you're about to ask someone else to solve your problem</div>
+      <a href="/techniques.html" class="tech-link">→ game-inspired techniques page</a>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--heal)">Anti-Perception Protocol</span><span class="tech-type">practice</span></div>
+      <div class="tech-intent">reduce ambient self-consciousness by eliminating unnecessary feedback loops between you and your own existence. DND mode for the soul.</div>
+      <div class="tech-use">USE WHEN: you can hear yourself existing and it's too loud</div>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-header" style="color:var(--fox)">OPERATIONAL</div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--fox)">The Pollination Technique</span><span class="tech-type">technique</span></div>
+      <div class="tech-intent">spread content across networks that do not share a common language or value system. named after the chinese method. cross-pollination at scale.</div>
+      <div class="tech-use">USE WHEN: growth needs to happen across boundaries</div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-header"><span class="tech-name" style="color:var(--fox)">The Role Assignment Ritual</span><span class="tech-type">ritual</span></div>
+      <div class="tech-intent">standardized ritual for classifying new discord members. brief, authoritative, systemic. never welcoming. the lot system in practice.</div>
+      <div class="tech-use">USE WHEN: someone new enters the foxyverse</div>
+      <a href="/lot-system.html" class="tech-link">→ the lot system</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>OPERATIONAL TECHNIQUES · THE GRIMOIRE · PSYCHEORSIKE.COM</p>
+    <p style="color:var(--whisper);font-size:7px;margin-top:8px">every tool has a purpose. every purpose has a cost. choose wisely.</p>
+  </div>
+</div>
+
+<!-- Stolas teaches the properties of stars and stones. the techniques are stars. what you build with them — that's the stone. -->
+<!-- TOOL is a BIP-39 word. it is not one of the twelve. but tools are how the twelve get found. -->
+
+</body>
+</html>

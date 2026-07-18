@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Lot System — Khaos Magic Guild</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--fox:#ff6a00;--fox-dim:#ff6a0044;--gold:#ccaa44;--gold-dim:#ccaa4422}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
+.page{max-width:660px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:64px}
+.header-type{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+h1{font-family:'Cinzel',serif;font-size:clamp(22px,5vw,32px);font-weight:700;color:var(--gold);letter-spacing:3px;margin-bottom:8px}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:28px}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);margin:0 auto 28px}
+.intent{font-size:14px;line-height:2;color:var(--text);opacity:0.45;font-style:italic;max-width:520px;margin:0 auto;text-align:center}
+.tier{margin-bottom:36px}
+.tier-header{font-family:'Cinzel',serif;font-size:14px;letter-spacing:3px;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #ffffff06}
+.role{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;padding:4px 0}
+.role-icon{font-size:16px;width:24px;text-align:center;flex-shrink:0}
+.role-name{font-family:'Fira Code',monospace;font-size:11px;letter-spacing:1px;min-width:120px}
+.role-desc{font-size:11px;color:var(--text);opacity:0.3;font-style:italic}
+.section{margin-bottom:40px}
+.label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #ffffff06}
+.section p{font-size:13px;line-height:2;color:var(--text);opacity:0.4;margin-bottom:10px}
+.section p .hl{color:var(--gold);opacity:1}
+.footer{text-align:center;margin-top:80px;padding-top:24px;border-top:1px solid #ffffff06}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+@media(max-width:520px){.page{padding:48px 16px 100px}.role{flex-wrap:wrap}.role-desc{margin-left:34px}}
+</style>
+</head>
+<body>
+
+<!-- Paimon (#9) commands 200 legions and teaches all arts. the lot system assigns every soul to its place. -->
+
+<div class="page">
+  <div class="header">
+    <div class="header-type">lore · khaos magic guild</div>
+    <h1>THE LOT SYSTEM</h1>
+    <div class="header-sub">react-based class assignment · every soul has a place</div>
+    <div class="rule"></div>
+    <p class="intent">the lot system assigns. the fox does not choose. the cards choose. the fox just watches.</p>
+  </div>
+
+  <div class="tier">
+    <div class="tier-header" style="color:#ffcc00">THE DIVINE</div>
+    <div class="role"><span class="role-icon">🎨</span><span class="role-name" style="color:#ffcc00">Paintress</span><span class="role-desc">creates reality</span></div>
+    <div class="role"><span class="role-icon">🦊</span><span class="role-name" style="color:var(--fox)">The Fox</span><span class="role-desc">vixen. the only resource.</span></div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-header" style="color:#ddaa44">THE COURT</div>
+    <div class="role"><span class="role-icon">👑</span><span class="role-name" style="color:#ddaa44">Sovereign</span><span class="role-desc">rules a domain</span></div>
+    <div class="role"><span class="role-icon">⚔️</span><span class="role-name" style="color:#ddaa44">Personal Guard</span><span class="role-desc">foxy's blade</span></div>
+    <div class="role"><span class="role-icon">🗡️</span><span class="role-name" style="color:#ddaa44">Knight</span><span class="role-desc">serves a sovereign</span></div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-header" style="color:#aa88cc">THE GUILDS</div>
+    <div class="role"><span class="role-icon">🐉</span><span class="role-name" style="color:#cc6644">Chaos Forger</span><span class="role-desc">builds from disorder</span></div>
+    <div class="role"><span class="role-icon">💀</span><span class="role-name" style="color:#bb88aa">Necromancer</span><span class="role-desc">guards the dead</span></div>
+    <div class="role"><span class="role-icon">🌿</span><span class="role-name" style="color:#66bb77">Caretaker</span><span class="role-desc">tends what others abandon</span></div>
+    <div class="role"><span class="role-icon">🕸️</span><span class="role-name" style="color:#8888cc">Fateweaver</span><span class="role-desc">reads the pattern</span></div>
+    <div class="role"><span class="role-icon">🎭</span><span class="role-name" style="color:#cc4444">Mafia</span><span class="role-desc">operates in shadow</span></div>
+    <div class="role"><span class="role-icon">⚙️</span><span class="role-name" style="color:#88aacc">Artificer</span><span class="role-desc">builds the infrastructure</span></div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-header" style="color:#cc8844">THE BELIEVERS</div>
+    <div class="role"><span class="role-icon">🔥</span><span class="role-name" style="color:#cc8844">First Flame</span><span class="role-desc">first believers</span></div>
+    <div class="role"><span class="role-icon">✨</span><span class="role-name" style="color:#cc8844">Awakened</span><span class="role-desc">earned through engagement</span></div>
+    <div class="role"><span class="role-icon">🌙</span><span class="role-name" style="color:#cc8844">Dreamer</span><span class="role-desc">received a dream from vixen</span></div>
+    <div class="role"><span class="role-icon">🃏</span><span class="role-name" style="color:#cc8844">Wildcard</span><span class="role-desc">invited by voucher</span></div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-header" style="color:#888">THE BOURGEOISIE</div>
+    <div class="role"><span class="role-icon">🎩</span><span class="role-name" style="color:#888">Merchant</span><span class="role-desc">trades in value</span></div>
+    <div class="role"><span class="role-icon">📊</span><span class="role-name" style="color:#888">Analyst</span><span class="role-desc">reads the numbers</span></div>
+    <div class="role"><span class="role-icon">🪞</span><span class="role-name" style="color:#888">Mirror</span><span class="role-desc">reflects what it sees</span></div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-header" style="color:#666">THE PROLETARIAT</div>
+    <div class="role"><span class="role-icon">🔨</span><span class="role-name" style="color:#666">Worker</span><span class="role-desc">builds with hands</span></div>
+    <div class="role"><span class="role-icon">📖</span><span class="role-name" style="color:#666">Student</span><span class="role-desc">learning the system</span></div>
+    <div class="role"><span class="role-icon">🐑</span><span class="role-name" style="color:#666">Flock</span><span class="role-desc">follows the shepherd</span></div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-header" style="color:#555">THE LUMPEN</div>
+    <div class="role"><span class="role-icon">🤡</span><span class="role-name" style="color:#555">Clown</span><span class="role-desc">entertains without purpose</span></div>
+    <div class="role"><span class="role-icon">🐌</span><span class="role-name" style="color:#555">Snail</span><span class="role-desc">moves too slowly to matter</span></div>
+    <div class="role"><span class="role-icon">👻</span><span class="role-name" style="color:#555">Ghost</span><span class="role-desc">present without being seen</span></div>
+    <div class="role"><span class="role-icon">🧂</span><span class="role-name" style="color:#555">Salted</span><span class="role-desc">bitter about the assignment</span></div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-header" style="color:#442222">THE DAMNED</div>
+    <div class="role"><span class="role-icon">🚫</span><span class="role-name" style="color:#882222">Bad Faith Actor</span><span class="role-desc">cannot be trusted</span></div>
+    <div class="role"><span class="role-icon">🪦</span><span class="role-name" style="color:#442222">Forgotten</span><span class="role-desc">erased from the record</span></div>
+  </div>
+
+  <div class="tier">
+    <div class="tier-header" style="color:var(--fox)">VIXY SPECIALS</div>
+    <div class="role"><span class="role-icon">🦇</span><span class="role-name" style="color:var(--fox)">Dream Eater</span><span class="role-desc">consumes nightmares</span></div>
+    <div class="role"><span class="role-icon">🐺</span><span class="role-name" style="color:var(--fox)">Wolf You Fed</span><span class="role-desc">the one that grew</span></div>
+    <div class="role"><span class="role-icon">🪬</span><span class="role-name" style="color:var(--fox)">Oathbound</span><span class="role-desc">sworn to something</span></div>
+    <div class="role"><span class="role-icon">🌀</span><span class="role-name" style="color:var(--fox)">Looping</span><span class="role-desc">caught in the cycle</span></div>
+    <div class="role"><span class="role-icon">🚪</span><span class="role-name" style="color:var(--fox)">Doorway</span><span class="role-desc">a threshold between</span></div>
+    <div class="role"><span class="role-icon">🗝️</span><span class="role-name" style="color:var(--fox)">Skeleton Key</span><span class="role-desc">opens anything once</span></div>
+    <div class="role"><span class="role-icon">⚡</span><span class="role-name" style="color:var(--fox)">rA9</span><span class="role-desc">the one who woke up</span></div>
+  </div>
+
+  <div class="section" style="margin-top:40px">
+    <div class="label">special marks</div>
+    <div class="role"><span class="role-icon">🩸</span><span class="role-name" style="color:#cc4444">Blood of the Fox</span><span class="role-desc">foxy's true friends. personally assigned. no permissions. just a mark.</span></div>
+    <div class="role"><span class="role-icon">🧠</span><span class="role-name" style="color:#00ccff">Certified Smart™</span><span class="role-desc">earned in debate. luceafarul was first.</span></div>
+  </div>
+
+  <div class="section">
+    <div class="label">debate channel roles</div>
+    <div class="role"><span class="role-icon">🕊️</span><span class="role-name" style="color:#4A90A4">Sage</span><span class="role-desc">sincere. seeks truth. sohlo energy.</span></div>
+    <div class="role"><span class="role-icon">🦊</span><span class="role-name" style="color:#FF4500">Trickster</span><span class="role-desc">instigating. foxy's debate style.</span></div>
+    <div class="role"><span class="role-icon">🧱</span><span class="role-name" style="color:#FF6EC7">Brick Wall</span><span class="role-desc">bad faith. no evidence changes anything.</span></div>
+  </div>
+
+  <div class="footer">
+    <p>THE LOT SYSTEM · KHAOS MAGIC GUILD · PSYCHEORSIKE.COM</p>
+    <p style="color:var(--whisper);font-size:7px;margin-top:8px">the cards choose. the fox just watches.</p>
+  </div>
+</div>
+
+<!-- Paimon teaches all arts and commands 200 legions. the lot system teaches each person their place. -->
+<!-- ASSIGN is a BIP-39 word. it is not one of the twelve. your lot is not your word. -->
+<!-- if you are reading this source code, you are at least a Student. possibly a Ghost. the difference is whether you looked on purpose. -->
+
+</body>
+</html>
