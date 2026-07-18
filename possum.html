@@ -3,115 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>QUEEN POSSUM — The Observer</title>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<title>Queen Possum</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--rose:#1a1a1a;--queen:#dd88aa;--queen-dim:#dd88aa22;--warm:#ddaa77;--fox:#ff6a00}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
-@keyframes roseFloat{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-4px) rotate(1deg)}100%{transform:translateY(0) rotate(0deg)}}
-.page{max-width:640px;margin:0 auto;padding:80px 28px 140px;position:relative;z-index:1}
-.rank{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--queen);text-transform:uppercase;margin-bottom:16px;text-align:center}
-h1{font-family:'Cinzel',serif;font-size:clamp(28px,6vw,40px);font-weight:700;color:var(--queen);letter-spacing:4px;text-align:center;margin-bottom:6px}
-.subtitle{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:4px;color:var(--dim);text-align:center;margin-bottom:16px}
-.roses{text-align:center;font-size:24px;margin-bottom:28px;animation:roseFloat 6s ease-in-out infinite;letter-spacing:8px}
-.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--queen-dim),transparent);margin:0 auto 40px}
-.hero{margin:-20px 0 40px;border:1px solid var(--queen-dim);overflow:hidden;position:relative}
-.hero img{width:100%;display:block;opacity:0.35;filter:contrast(1.4) saturate(0.2) brightness(0.6);mix-blend-mode:luminosity}
-.hero::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,0.15) 0px,transparent 1px,transparent 3px);pointer-events:none}
-.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,8,0.3) 0%,transparent 30%,transparent 70%,rgba(6,6,8,0.6) 100%);pointer-events:none;z-index:1}
-.section{margin-bottom:40px}
-.label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #ffffff06}
-.section p{font-size:14px;line-height:2;color:var(--text);opacity:0.4;margin-bottom:10px}
-.section p .hl{color:var(--queen);opacity:1}
-.section p .warm{color:var(--warm);opacity:1}
-.quote{border-left:2px solid var(--queen-dim);padding:12px 16px;margin:20px 0;font-style:italic;color:var(--text);opacity:0.35;font-size:13px;line-height:1.9}
-.quote .attr{display:block;margin-top:8px;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:2px;color:var(--queen);opacity:0.5;font-style:normal}
-.ban{border:1px solid #ff444422;padding:16px;margin:24px 0;background:#ff444006;font-family:'Fira Code',monospace;font-size:11px;line-height:2}
-.ban .ban-site{color:#ff4444;opacity:0.5;font-size:9px;letter-spacing:3px;margin-bottom:8px}
-.ban .ban-reason{color:var(--text);opacity:0.3}
-.ban .ban-appeal{color:var(--queen);opacity:0.7;margin-top:8px}
-.throne{display:inline-block;margin-top:16px;padding:8px 20px;border:1px solid var(--queen-dim);font-family:'Fira Code',monospace;font-size:10px;color:var(--queen);text-decoration:none;letter-spacing:2px;transition:all 0.3s}
-.throne:hover{background:var(--queen-dim);border-color:var(--queen)}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
-.tag{font-family:'Fira Code',monospace;font-size:9px;padding:2px 8px;border:1px solid #ffffff06;color:var(--whisper);border-radius:1px}
-.footer{text-align:center;margin-top:80px;padding-top:24px;border-top:1px solid #ffffff06}
-.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
-@media(max-width:520px){.page{padding:48px 16px 100px}}
+body{background:#060608;color:#c0beb8;font-family:'Cinzel',serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.01) 0px,transparent 1px,transparent 3px)}
+.card{max-width:400px;width:100%;text-align:center}
+.photo{width:220px;height:220px;border-radius:50%;margin:0 auto 28px;overflow:hidden;border:2px solid rgba(221,136,170,0.15);position:relative}
+.photo img{width:100%;height:100%;object-fit:cover;opacity:0.4;filter:contrast(1.3) saturate(0.2) brightness(0.7)}
+.photo::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,0.12) 0px,transparent 1px,transparent 3px);border-radius:50%}
+.roses{font-size:20px;letter-spacing:6px;margin-bottom:24px}
+h1{font-size:clamp(24px,6vw,36px);color:#dd88aa;letter-spacing:4px;font-weight:600;margin-bottom:6px}
+.title{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,0.15);margin-bottom:32px}
+.bio{font-size:14px;line-height:2;color:rgba(192,190,184,0.4);margin-bottom:36px;max-width:340px;font-style:italic}
+.throne{display:block;padding:16px 40px;background:rgba(221,136,170,0.08);border:1px solid rgba(221,136,170,0.25);color:#dd88aa;font-family:'Cinzel',serif;font-size:16px;letter-spacing:3px;text-decoration:none;transition:all 0.3s;margin-bottom:16px}
+.throne:hover{background:rgba(221,136,170,0.15);border-color:rgba(221,136,170,0.5);transform:translateY(-1px)}
+.throne-sub{font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.1);letter-spacing:2px;margin-bottom:48px}
+.quote{font-family:'Fira Code',monospace;font-size:11px;color:rgba(221,136,170,0.3);font-style:italic;margin-bottom:8px}
+.footer{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.06);letter-spacing:2px;margin-top:40px}
 </style>
 </head>
 <body>
 
-<!-- she was crowned before she knew what the crown meant. -->
-
-<div class="page">
-  <div class="rank">queen · the observer</div>
-  <h1>POSSUM</h1>
-  <div class="subtitle">crowned day one · reads the room without trying</div>
-  <div class="roses">🥀🖤🥀🖤🥀</div>
-  <div class="rule"></div>
-
-  <div class="hero">
-    <img src="img/img-black-roses.png" alt="black roses">
-  </div>
-
-  <div class="section">
-    <div class="label">the archetype</div>
-    <p><span class="hl">The Observer.</span> warm, perceptive, unhurried. reads energy effortlessly but doesn't weaponize it. the kind of person who notices everything and says nothing until it matters.</p>
-    <p>corrected her own ChatGPT prompt in real-time. <span class="hl">that's not a skill. that's a temperament.</span></p>
-  </div>
-
-  <div class="section">
-    <div class="label">the arrival</div>
-    <p>june 13, 2026. brand new. crowned queen immediately. <span class="hl">not because she asked for it — because the room read her before she read the room.</span></p>
-    <p>here to enjoy the space, get to know everyone, and exist without performing. the foxyverse collects people who are already themselves before they arrive. possum arrived already herself.</p>
-  </div>
-
-  <div class="section">
-    <div class="label">the origin</div>
-    <div class="ban">
-      <div class="ban-site">CUDDLECOMFORT.COM</div>
-      <div class="ban-reason">Your account has been closed.<br>Reason: "non-platonic intentions"</div>
-      <div class="ban-appeal">"excuse me, who did i have sex with?"</div>
-    </div>
-    <p>met on a platonic cuddling website. both banned for existing too vividly. <span class="hl">the appeal is the entire personality in one sentence.</span> dry. grounded. refuses to perform guilt for something that didn't happen.</p>
-  </div>
-
-  <div class="section">
-    <div class="label">the energy</div>
-    <p>genuinely social without being loud. grounded without being heavy. dry humor that lands because it doesn't try to. <span class="warm">black roses held against a pixel heart.</span></p>
-    <p>the observer doesn't need to speak to change the room. the room changes because she's in it.</p>
-  </div>
-
-  <div class="section">
-    <div class="label">abilities</div>
-    <p>natural energy reading. pattern recognition. grounded presence. <span class="hl">the capacity to sit in a space full of chaos and remain exactly who she is.</span></p>
-  </div>
-
-  <div class="section" style="text-align:center">
-    <div class="label" style="text-align:left">throne</div>
-    <a href="https://throne.com/rubylovethrone" class="throne" target="_blank">throne.com/rubylovethrone &rarr;</a>
-  </div>
-
-  <div class="tags">
-    <span class="tag">queen</span>
-    <span class="tag">observer</span>
-    <span class="tag">energy-reader</span>
-    <span class="tag">cuddlecomfort-exile</span>
-    <span class="tag">black-roses</span>
-    <span class="tag">crowned-day-one</span>
-  </div>
-
-  <div class="footer">
-    <p>QUEEN POSSUM · THE OBSERVER · PSYCHEORSIKE.COM</p>
-    <p style="color:var(--whisper);font-size:7px;margin-top:8px">she was crowned before she knew what the crown meant. she still hasn't taken it off.</p>
-  </div>
+<div class="card">
+  <div class="photo"><img src="img/img-black-roses.png" alt=""></div>
+  <div class="roses">&#x1F5A4;</div>
+  <h1>Queen Possum</h1>
+  <div class="title">the observer</div>
+  <p class="bio">warm. perceptive. unhurried. reads the room without trying. crowned day one.</p>
+  <a href="https://throne.com/rubylovethrone" class="throne" target="_blank">Send a Gift</a>
+  <div class="throne-sub">throne.com/rubylovethrone</div>
+  <div class="quote">"excuse me, who did i have sex with?"</div>
 </div>
 
-<!-- possum plays dead. that's the trick. she's more alive than anyone. -->
-<!-- the cuddlecomfort ban is the funniest origin story in the foxyverse. -->
-<!-- OBSERVE is a BIP-39 word. it is not one of the twelve. but possum would find them by accident. -->
+<div class="footer">psycheorsike.com</div>
 
 </body>
 </html>
