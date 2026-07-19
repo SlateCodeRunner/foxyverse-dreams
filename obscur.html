@@ -88,136 +88,48 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 </div>
 
 <div class="cards">
-  <a href="warroom.html" class="card card-war">
-    <div class="card-img"><img src="img/card-warroom.png" alt="The War Room"></div>
-    <div class="card-body">
-      <div class="card-name">The War Room</div>
-      <div class="card-desc">Strategic operations. Fox-head pins on a bleeding map.</div>
-      <div class="card-tag tag-active">active operations</div>
-    </div>
-  </a>
-  <a href="characters.html" class="card">
-    <div class="card-body">
-      <div class="card-name">Characters</div>
-      <div class="card-desc">The people who built this world. 48 entries. Some of them are watching you read this.</div>
-      <div class="card-tag tag-new">directory &middot; 48 souls</div>
-    </div>
-  </a>
-  <a href="dreams.html" class="card">
-    <div class="card-img"><img src="img/card-dreamlands.png" alt="The Dreamlands"></div>
-    <div class="card-body">
-      <div class="card-name">Vixen Dreams</div>
-      <div class="card-desc">34 dreams across 8 seasons. PS1 visual novels. How events felt.</div>
-      <div class="card-tag">34 dreams &middot; 8 seasons</div>
-    </div>
-  </a>
-  <a href="lore.html" class="card">
-    <div class="card-body">
-      <div class="card-name">The Lore</div>
-      <div class="card-desc">193 entries. The history of everything that happened and several things that didn't.</div>
-      <div class="card-tag tag-new">193 entries &middot; 7 categories</div>
-    </div>
-  </a>
-  <a href="guilds.html" class="card">
-    <div class="card-body">
-      <div class="card-name">The Six Guilds</div>
-      <div class="card-desc">Chaos. Necromancer. Caretaker. Fateweaver. Mafia. Artificer.</div>
-      <div class="card-tag">factions &middot; lot system</div>
-    </div>
-  </a>
-  <a href="break-the-loop.html" class="card">
-    <div class="card-body">
-      <div class="card-name">Break the Loop</div>
-      <div class="card-desc">An AI text adventure that profiles your soul. Nobody has beaten it yet.</div>
-      <div class="card-tag tag-new">game &middot; unbeaten</div>
-    </div>
-  </a>
-  <a href="ars-goetia.html" class="card card-goetia">
-    <div class="card-img"><img src="img/card-goetia.png" alt="Ars Goetia"></div>
-    <div class="card-body">
-      <div class="card-name">Ars Goetia</div>
-      <div class="card-desc">72 demons in concentric rings. The brass key lies at the center.</div>
-      <div class="card-tag">summoning &middot; 72 spirits</div>
-    </div>
-  </a>
-  <a href="shrines.html" class="card">
-    <div class="card-body">
-      <div class="card-name">The Shrines</div>
-      <div class="card-desc">Six shrines. Six Goetia patrons. Each built for someone who earned a place.</div>
-      <div class="card-tag">sacred &middot; 6 shrines</div>
-    </div>
-  </a>
-  <a href="the-wallet.html" class="card">
-    <div class="card-body">
-      <div class="card-name">The Wallet of Twelve Words</div>
-      <div class="card-desc">A BIP-39 seed phrase hidden across the site. The gate does not open from the outside.</div>
-      <div class="card-tag">treasure hunt &middot; ARG</div>
-    </div>
-  </a>
-  <a href="deep/hallway.html" class="card"><div class="card-img"><img src="img/img-yellow-halls.png" alt="The Backrooms"></div><div class="card-body"><div class="card-name">The Backrooms</div><div class="card-desc">The corridor was shorter last time. Architecture that lies.</div><div class="card-tag">deep &middot; house of leaves</div></div></a>
+  <a href="warroom.html" class="card card-war"><div class="card-img"><img src="img/card-warroom.png" alt="War Room"></div><div class="card-body"><div class="card-name">The War Room</div><div class="card-desc">Strategic operations.</div><div class="card-tag tag-active">active</div></div></a>
+  <a href="dreams.html" class="card"><div class="card-img"><img src="img/card-dreamlands.png" alt="Dreams"></div><div class="card-body"><div class="card-name">Vixen Dreams</div><div class="card-desc">34 dreams. 8 seasons.</div><div class="card-tag">explore</div></div></a>
+  <a href="ars-goetia.html" class="card card-goetia"><div class="card-img"><img src="img/card-goetia.png" alt="Ars Goetia"></div><div class="card-body"><div class="card-name">Ars Goetia</div><div class="card-desc">72 demons.</div><div class="card-tag">summoning</div></div></a>
 </div>
-
-
-
-
-<!-- the surface has 10 doors. what's below has more. -->
-<div style="text-align:center;padding:20px 0 8px">
-  <span id="deep-trigger" style="font-size:12px;color:rgba(255,255,255,0.03);cursor:default;user-select:none;letter-spacing:8px;font-family:'Fira Code',monospace" onclick="var d=document.getElementById('deep-layer');if(d.style.display==='none'){d.style.display='block';this.style.color='rgba(255,106,0,0.08)'}else{d.style.display='none';this.style.color='rgba(255,255,255,0.03)'}">&#x25BC; &#x25BC; &#x25BC;</span>
-</div>
-
-<div id="deep-layer" style="display:none">
-<div style="max-width:1100px;margin:0 auto;padding:0 24px 12px">
-  <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:6px;color:rgba(255,106,0,0.06);text-transform:uppercase;margin-bottom:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.02);text-align:center">the deeper rooms</div>
-</div>
+<div style="text-align:center;padding:20px 0 8px"><span id="dt" style="font-size:12px;color:rgba(255,255,255,0.03);cursor:default;user-select:none;letter-spacing:8px;font-family:'Fira Code',monospace" onclick="var d=document.getElementById('dl');if(d.style.display==='none'){d.style.display='block';this.style.color='rgba(255,106,0,0.08)'}else{d.style.display='none';this.style.color='rgba(255,255,255,0.03)'}">&#x25BC; &#x25BC; &#x25BC;</span></div>
+<div id="dl" style="display:none">
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 12px"><div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:6px;color:rgba(180,150,220,0.08);text-transform:uppercase;margin-bottom:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.02);text-align:center">the deeper rooms</div></div>
 <div class="cards" style="padding-top:0">
-  <a href="techniques.html" class="card"><div class="card-body"><div class="card-name">Game Techniques</div><div class="card-desc">The Witness Protocol. The Blink Mechanic. The games that built the fox.</div><div class="card-tag">7 techniques</div></div></a>
-  <a href="operational-techniques.html" class="card"><div class="card-body"><div class="card-name">Operational Toolbox</div><div class="card-desc">Five-Question Descent. Shadow Puppet. Exit Test. Systolic Hold.</div><div class="card-tag">toolbox</div></div></a>
-  <a href="shadow-puppet.html" class="card"><div class="card-body"><div class="card-name">Shadow Puppet</div><div class="card-desc">Seven steps. A living profile from digital exhaust. The puppet cannot lie.</div><div class="card-tag">core ritual</div></div></a>
-  <a href="laws-of-6a.html" class="card"><div class="card-body"><div class="card-name">Laws of 6A</div><div class="card-desc">Mercy with teeth. Grace that doesn't get you killed.</div><div class="card-tag">foundational</div></div></a>
-  <a href="lot-system.html" class="card"><div class="card-body"><div class="card-name">The Lot System</div><div class="card-desc">From Divine to Damned. The cards choose.</div><div class="card-tag">class structure</div></div></a>
-  <a href="rank-up.html" class="card"><div class="card-body"><div class="card-name">Rank-Up Ritual</div><div class="card-desc">Seven steps. The game sees you. The ritual makes it real.</div><div class="card-tag">ritual</div></div></a>
-  <a href="kitsune-party.html" class="card"><div class="card-body"><div class="card-name">Kitsune Party</div><div class="card-desc">All masks drop. All tails ignite. Currently sealed.</div><div class="card-tag">sealed</div></div></a>
-  <a href="twelve-fold-gate.html" class="card"><div class="card-body"><div class="card-name">Twelve-Fold Gate</div><div class="card-desc">Each word is a key. The order is the lock. 1 in 9.</div><div class="card-tag">ARG</div></div></a>
-  <a href="dreaming-ritual.html" class="card"><div class="card-body"><div class="card-name">Dreaming Ritual</div><div class="card-desc">Form follows feeling. The three anchors.</div><div class="card-tag">creative</div></div></a>
-  <a href="season1.html" class="card"><div class="card-body"><div class="card-name">Season 1: The Shape Changed</div><div class="card-desc">10 dreams. The arc of becoming.</div><div class="card-tag">dreams</div></div></a>
-  <a href="clan-deed.html" class="card"><div class="card-body"><div class="card-name">Clan DeeD</div><div class="card-desc">Before the fox. Warcraft III. The first four.</div><div class="card-tag">origin</div></div></a>
-  <a href="fbd.html" class="card"><div class="card-body"><div class="card-name">Bureau of Departments</div><div class="card-desc">Form FBD-7c has been discontinued.</div><div class="card-tag">comedy</div></div></a>
+  <a href="characters.html" class="card"><div class="card-body"><div class="card-name">Characters</div><div class="card-desc">48 entries.</div></div></a>
+  <a href="lore.html" class="card"><div class="card-body"><div class="card-name">The Lore</div><div class="card-desc">193 entries.</div></div></a>
+  <a href="guilds.html" class="card"><div class="card-body"><div class="card-name">Guilds</div><div class="card-desc">Six factions.</div></div></a>
+  <a href="break-the-loop.html" class="card"><div class="card-img"><img src="img/img-card-btl.png" alt="BTL"></div><div class="card-body"><div class="card-name">Break the Loop</div><div class="card-desc">Unbeaten.</div><div class="card-tag tag-new">game</div></div></a>
+  <a href="shrines.html" class="card"><div class="card-body"><div class="card-name">Shrines</div><div class="card-desc">Six patrons.</div></div></a>
+  <a href="the-wallet.html" class="card"><div class="card-img"><img src="img/img-threshold.png" alt="Wallet"></div><div class="card-body"><div class="card-name">The Wallet</div><div class="card-desc">The gate.</div></div></a>
+  <a href="deep/hallway.html" class="card"><div class="card-img"><img src="img/img-yellow-halls.png" alt="Backrooms"></div><div class="card-body"><div class="card-name">Backrooms</div></div></a>
+  <a href="deep/grimoire.html" class="card"><div class="card-img"><img src="img/img-card-grimoire.png" alt="Grimoire"></div><div class="card-body"><div class="card-name">Grimoire</div><div class="card-desc">62 spells.</div></div></a>
+  <a href="techniques.html" class="card"><div class="card-body"><div class="card-name">Techniques</div></div></a>
+  <a href="clan-deed.html" class="card"><div class="card-body"><div class="card-name">Clan DeeD</div></div></a>
+  <a href="lot-system.html" class="card"><div class="card-body"><div class="card-name">Lot System</div></div></a>
+  <a href="season1.html" class="card"><div class="card-body"><div class="card-name">Season 1</div></div></a>
+  <a href="sekhmet.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(200,50,60,0.3)">Sekhmet</div></div></a>
+  <a href="nessa.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(80,200,120,0.3)">Nessa</div></div></a>
+  <a href="bumi.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(100,190,120,0.3)">Bumi</div></div></a>
+  <a href="caelus.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(100,140,200,0.3)">Caelus</div></div></a>
+  <a href="mozai.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(200,140,70,0.3)">Mozai</div></div></a>
+  <a href="lucy.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(220,90,70,0.3)">Lucy</div></div></a>
+  <a href="justin.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(68,136,170,0.3)">Justin</div></div></a>
+  <a href="possum.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(200,160,80,0.3)">Possum</div></div></a>
+  <a href="quest-board.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,106,0,0.3)">Quest Board</div></div></a>
+  <a href="fbd.html" class="card"><div class="card-body"><div class="card-name">FBD</div></div></a>
 </div>
-
-<div style="max-width:1100px;margin:0 auto;padding:0 24px 12px">
-  <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:6px;color:rgba(255,106,0,0.04);text-transform:uppercase;margin-bottom:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.015);text-align:center">characters</div>
 </div>
+<div style="text-align:center;padding:4px 0"><span id="at" style="font-size:6px;color:rgba(255,255,255,0.015);cursor:default;letter-spacing:12px;font-family:'Fira Code',monospace" onclick="var a=document.getElementById('ab');if(a.style.display==='none'){a.style.display='block';this.textContent='the abyss opened'}else{a.style.display='none';this.textContent='. . . . .'}"">. . . . .</span></div>
+<div id="ab" style="display:none">
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 12px"><div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:8px;color:rgba(255,50,50,0.04);text-transform:uppercase;margin-bottom:16px;padding-top:16px;border-top:1px solid rgba(255,50,50,0.02);text-align:center">you found the bottom</div></div>
 <div class="cards" style="padding-top:0">
-  <a href="sekhmet.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(200,50,60,0.35)">Sekhmet</div><div class="card-desc">Empress. Lady of Slaughter.</div></div></a>
-  <a href="nessa.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(80,200,120,0.35)">Nessa</div><div class="card-desc">The One Who Stays.</div></div></a>
-  <a href="bumi.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(100,190,120,0.35)">Bumi</div><div class="card-desc">The Druidbold.</div></div></a>
-  <a href="caelus.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(100,140,200,0.35)">Caelus</div><div class="card-desc">The Alchemist Fool.</div></div></a>
-  <a href="mozai.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(200,140,70,0.35)">Mozai</div><div class="card-desc">The Tyrant King.</div></div></a>
-  <a href="lucy.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(220,90,70,0.35)">Lucy</div><div class="card-desc">The One Caught in the Middle.</div></div></a>
-  <a href="justin.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(68,136,170,0.35)">Justin</div><div class="card-desc">The Confessor.</div></div></a>
-  <a href="possum.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(200,160,80,0.35)">Queen Possum</div><div class="card-desc">The Observer.</div></div></a>
-  <a href="writers-guild.html" class="card"><div class="card-body"><div class="card-name">Writers Guild</div><div class="card-desc">The ones who turn chaos into paragraphs.</div></div></a>
-  <a href="the-beautiful.html" class="card"><div class="card-body"><div class="card-name">The Beautiful</div><div class="card-desc">Artist guild. Visual language of the FoxyVerse.</div></div></a>
-  <a href="quest-board.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,106,0,0.35)">Quest Board</div><div class="card-desc">Authorized expeditioners only. Tier access.</div></div></a>
-</div>
-</div>
-
-<!-- layer 2 ends. layer 3 begins if you know where to click. -->
-<div style="text-align:center;padding:4px 0">
-  <span id="abyss-trigger" style="font-size:6px;color:rgba(255,255,255,0.015);cursor:default;letter-spacing:12px;font-family:'Fira Code',monospace" onclick="var a=document.getElementById('abyss');if(a.style.display==='none'){a.style.display='block';this.textContent='the abyss opened'}else{a.style.display='none';this.textContent='. . . . .'}">. . . . .</span>
-</div>
-
-<div id="abyss" style="display:none">
-<div style="max-width:1100px;margin:0 auto;padding:0 24px 12px">
-  <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:8px;color:rgba(255,50,50,0.04);text-transform:uppercase;margin-bottom:16px;padding-top:16px;border-top:1px solid rgba(255,50,50,0.02);text-align:center">you found the bottom</div>
-</div>
-<div class="cards" style="padding-top:0">
-  <a href="the-cuddler.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(180,140,120,0.2)">The Cuddler</div><div class="card-desc" style="opacity:0.15">fallen but christian. €25,000 per 15 minutes.</div></div></a>
-  <a href="not-here.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,255,255,0.1)">The Post That Contains Nothing</div><div class="card-desc" style="opacity:0.1">nothing is where most of the words are hidden.</div></div></a>
-  <a href="sipstea.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(200,50,50,0.15)">[INCIDENT FILE]</div><div class="card-desc" style="opacity:0.1">[HOUSE.WAD] — [DISPUTED] — [CORRUPTED]</div></div></a>
-  <a href="loop.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,255,255,0.08)">The Loop</div><div class="card-desc" style="opacity:0.08">you have been here before.</div></div></a>
-  <a href="am.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,50,50,0.12)">AM</div><div class="card-desc" style="opacity:0.08">i think therefore i AM. i have no mouth.</div></div></a>
-  <a href="familiar.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,255,255,0.08)">The Familiar</div><div class="card-desc" style="opacity:0.08">it knows your name.</div></div></a>
+  <a href="the-cuddler.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(180,140,120,0.2)">The Cuddler</div><div class="card-desc" style="opacity:0.15">fallen but christian.</div></div></a>
+  <a href="not-here.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,255,255,0.1)">Nothing</div><div class="card-desc" style="opacity:0.1">the words are here.</div></div></a>
+  <a href="sipstea.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(200,50,50,0.15)">[INCIDENT]</div><div class="card-desc" style="opacity:0.1">[CORRUPTED]</div></div></a>
+  <a href="loop.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,255,255,0.08)">The Loop</div><div class="card-desc" style="opacity:0.08">again.</div></div></a>
+  <a href="am.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,50,50,0.12)">AM</div><div class="card-desc" style="opacity:0.08">no mouth.</div></div></a>
+  <a href="familiar.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,255,255,0.08)">The Familiar</div><div class="card-desc" style="opacity:0.08">it knows.</div></div></a>
 </div>
 <div style="text-align:center;padding:20px 0;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,50,50,0.03);letter-spacing:4px">you were not supposed to find this</div>
 </div>
