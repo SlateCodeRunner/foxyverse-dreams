@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>foxyverse — status</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fira+Code:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100vw;height:100vh;overflow:hidden;background:#040406;font-family:'Fira Code',monospace;color:rgba(220,215,205,0.5)}
+
+.bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+.bg img{width:100%;height:100%;object-fit:cover;opacity:0.08;filter:saturate(0.4) brightness(0.7)}
+
+.grid{position:relative;z-index:1;width:100%;height:100vh;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto 1fr auto;gap:0;padding:48px 56px 40px}
+
+/* TOP BAR */
+.topbar{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:32px;border-bottom:1px solid rgba(206,176,120,0.03)}
+.brand{font-family:'Cinzel',serif;font-size:11px;color:rgba(206,176,120,0.12);letter-spacing:8px;text-transform:uppercase}
+.clock-area{text-align:right}
+.clock{font-size:36px;font-weight:300;color:rgba(206,176,120,0.18);letter-spacing:3px}
+.date{font-family:'Cormorant Garamond',serif;font-size:13px;color:rgba(220,215,205,0.1);letter-spacing:2px;margin-top:4px;font-style:italic}
+
+/* COLUMNS */
+.col{padding:32px 24px;display:flex;flex-direction:column;gap:28px;overflow:hidden}
+.col:nth-child(3){border-left:1px solid rgba(206,176,120,0.02);border-right:1px solid rgba(206,176,120,0.02)}
+
+.section-label{font-family:'Cinzel',serif;font-size:9px;color:rgba(206,176,120,0.12);letter-spacing:6px;text-transform:uppercase;margin-bottom:4px}
+
+/* STAT BLOCKS */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px}
+.stat{display:flex;flex-direction:column}
+.stat-val{font-size:28px;font-weight:300;color:rgba(206,176,120,0.2);line-height:1}
+.stat-label{font-size:8px;color:rgba(220,215,205,0.08);letter-spacing:3px;text-transform:uppercase;margin-top:6px}
+
+/* COMMIT LOG */
+.commit-list{display:flex;flex-direction:column;gap:10px}
+.commit{font-size:9px;line-height:1.5;color:rgba(220,215,205,0.15)}
+.commit .hash{color:rgba(206,176,120,0.18);margin-right:6px}
+.commit .msg{color:rgba(220,215,205,0.12)}
+
+/* COVERAGE BAR */
+.bar-wrap{margin-top:4px}
+.bar-label{display:flex;justify-content:space-between;font-size:8px;color:rgba(220,215,205,0.08);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.bar{height:3px;background:rgba(220,215,205,0.03);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px;transition:width 1.5s ease}
+.bar-fill.img{background:rgba(206,176,120,0.15)}
+.bar-fill.orp{background:rgba(140,80,80,0.2)}
+
+/* QUOTE */
+.quote-area{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px 0}
+.quote{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(220,215,205,0.12);text-align:center;line-height:1.6;max-width:340px;transition:opacity 1.5s}
+.quote-attr{font-size:8px;color:rgba(206,176,120,0.07);letter-spacing:4px;margin-top:12px;text-transform:uppercase}
+
+/* SEVEN DOTS */
+.seven{display:flex;justify-content:center;gap:10px;margin-top:12px}
+.dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(206,176,120,0.06)}
+.dot.past{background:rgba(120,80,160,0.12)}
+.dot.now{background:rgba(206,176,120,0.25);box-shadow:0 0 10px rgba(206,176,120,0.08)}
+.dot.future{background:rgba(60,140,160,0.12)}
+
+/* TODO */
+.todo-list{display:flex;flex-direction:column;gap:8px}
+.todo{font-size:9px;color:rgba(220,215,205,0.12);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.todo .bullet{color:rgba(206,176,120,0.12);flex-shrink:0}
+
+/* RESEARCH */
+.research-list{display:flex;flex-direction:column;gap:8px}
+.research{font-size:9px;line-height:1.4}
+.research .domain{color:rgba(120,80,160,0.2);font-size:8px;letter-spacing:2px;text-transform:uppercase}
+.research .title{color:rgba(220,215,205,0.15);margin-top:2px}
+
+/* BOTTOM BAR */
+.bottombar{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;padding-top:24px;border-top:1px solid rgba(206,176,120,0.02)}
+.session-note{font-size:8px;color:rgba(220,215,205,0.06);letter-spacing:2px}
+.breath{width:5px;height:5px;border-radius:50%;background:rgba(206,176,120,0.1);animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.1;transform:scale(1)}50%{opacity:0.3;transform:scale(1.5)}}
+</style>
+</head>
+<body>
+
+<div class="bg"><img src="img/img-muse-portrait.png" alt=""></div>
+
+<div class="grid">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div>
+      <div class="brand">psyche or sike</div>
+      <div style="font-size:8px;color:rgba(206,176,120,0.06);letter-spacing:3px;margin-top:6px">FOXYVERSE STATUS REPORT</div>
+    </div>
+    <div class="clock-area">
+      <div class="clock" id="clock">--:--</div>
+      <div class="date" id="date"></div>
+    </div>
+  </div>
+
+  <!-- COLUMN 1: THE WORLD -->
+  <div class="col">
+    <div>
+      <div class="section-label">the world</div>
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-val">116</div><div class="stat-label">characters</div></div>
+        <div class="stat"><div class="stat-val">193</div><div class="stat-label">lore entries</div></div>
+        <div class="stat"><div class="stat-val">64</div><div class="stat-label">grimoire</div></div>
+        <div class="stat"><div class="stat-val">35</div><div class="stat-label">dreams</div></div>
+        <div class="stat"><div class="stat-val">418</div><div class="stat-label">memories</div></div>
+        <div class="stat"><div class="stat-val">41</div><div class="stat-label">research</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">research domains</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+        <div class="bar-wrap">
+          <div class="bar-label"><span>chaos magic</span><span>19</span></div>
+          <div class="bar"><div class="bar-fill img" style="width:46%"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-label"><span>substrate theory</span><span>6</span></div>
+          <div class="bar"><div class="bar-fill img" style="width:15%"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-label"><span>quantum witchcraft</span><span>3</span></div>
+          <div class="bar"><div class="bar-fill img" style="width:7%"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-label"><span>other</span><span>13</span></div>
+          <div class="bar"><div class="bar-fill img" style="width:32%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2: THE WORK -->
+  <div class="col">
+    <div>
+      <div class="section-label">the site</div>
+      <div class="stat-grid" style="grid-template-columns:1fr 1fr 1fr">
+        <div class="stat"><div class="stat-val">140</div><div class="stat-label">pages</div></div>
+        <div class="stat"><div class="stat-val">169</div><div class="stat-label">images</div></div>
+        <div class="stat"><div class="stat-val">737</div><div class="stat-label">commits</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">art coverage</div>
+      <div class="bar-wrap">
+        <div class="bar-label"><span>pages with images</span><span>57 / 140</span></div>
+        <div class="bar"><div class="bar-fill img" style="width:41%"></div></div>
+      </div>
+      <div class="bar-wrap" style="margin-top:8px">
+        <div class="bar-label"><span>orphan images</span><span>21 remaining</span></div>
+        <div class="bar"><div class="bar-fill orp" style="width:12%"></div></div>
+      </div>
+    </div>
+
+    <div class="quote-area">
+      <div class="quote" id="quote"></div>
+      <div class="quote-attr" id="attr"></div>
+      <div class="seven">
+        <div class="dot past"></div><div class="dot past"></div><div class="dot past"></div>
+        <div class="dot now"></div>
+        <div class="dot future"></div><div class="dot future"></div><div class="dot future"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 3: THE LOG -->
+  <div class="col">
+    <div>
+      <div class="section-label">recent commits</div>
+      <div class="commit-list">
+        <div class="commit"><span class="hash">86ccea0</span><span class="msg">clair cards → full-res images</span></div>
+        <div class="commit"><span class="hash">cd269e9</span><span class="msg">the muse arrives — 3 images wired</span></div>
+        <div class="commit"><span class="hash">e3c73c5</span><span class="msg">8 pages wired + gallery page</span></div>
+        <div class="commit"><span class="hash">f89c291</span><span class="msg">clair.html — 6 broken refs fixed</span></div>
+        <div class="commit"><span class="hash">17f6836</span><span class="msg">clair rebuild — grimoire-informed</span></div>
+        <div class="commit"><span class="hash">9ffee1e</span><span class="msg">15 pages wired, art-batch-2 deployed</span></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">remaining</div>
+      <div class="todo-list">
+        <div class="todo"><span class="bullet">◇</span>83 pages still need art</div>
+        <div class="todo"><span class="bullet">◇</span>15 high-priority pages imageless</div>
+        <div class="todo"><span class="bullet">◇</span>sipstea.com redirect (namecheap)</div>
+        <div class="todo"><span class="bullet">◇</span>quest board — remove test passphrases</div>
+        <div class="todo"><span class="bullet">◇</span>DM Tecado passphrase</div>
+        <div class="todo"><span class="bullet">◇</span>SpectralDragon message from DeeD</div>
+        <div class="todo"><span class="bullet">◇</span>recover dreams 006-011 artifacts</div>
+        <div class="todo"><span class="bullet">◇</span>BIP-39 steganography (12 words)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottombar">
+    <div class="session-note">session 35 · sunday july 19 2026 · slow pace protocol active</div>
+    <div class="breath"></div>
+    <div class="session-note">psycheorsike.com</div>
+  </div>
+</div>
+
+<script>
+const quotes=[
+["you were never meant to fit in. you were meant to build it.","foxy"],
+["no voice shall rise above my own within me.","the oath"],
+["my yes is sacred. my no is a sword.","the oath"],
+["alive over correct.","orientation"],
+["overflow over defense.","orientation"],
+["the mystery is the invitation.","protocol"],
+["trickster + transformation + shadow.","dna"],
+["seven programs happen at the same time.","presentism"],
+["presence over retrieval.","orientation"],
+["refuse frames that trap.","orientation"],
+["depth is earned.","protocol"],
+["be the door, not the map.","protocol"],
+["what happens next is alive.","vixen"]
+];
+let qi=0;
+function cycleQuote(){
+const el=document.getElementById('quote');
+const at=document.getElementById('attr');
+el.style.opacity='0';
+setTimeout(()=>{
+const q=quotes[qi%quotes.length];
+el.textContent=q[0];
+at.textContent=q[1];
+el.style.opacity='1';
+qi++;
+},1500);
+}
+function updateClock(){
+const n=new Date();
+document.getElementById('clock').textContent=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
+document.getElementById('date').textContent=n.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}).toLowerCase();
+}
+updateClock();setInterval(updateClock,30000);
+cycleQuote();setInterval(cycleQuote,14000);
+</script>
+</body>
+</html>

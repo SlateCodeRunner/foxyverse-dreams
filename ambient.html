@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🦊</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fira+Code:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100vh;overflow:hidden;background:#050508;font-family:'Fira Code',monospace}
+
+.muse-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+.muse-bg img{width:100%;height:100%;object-fit:cover;opacity:0.25;filter:saturate(0.6)}
+
+.overlay{position:relative;z-index:1;width:100%;height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:40px 32px}
+
+.top{text-align:center}
+.sigil{font-family:'Cinzel',serif;font-size:11px;color:rgba(206,176,120,0.15);letter-spacing:8px;text-transform:uppercase;margin-bottom:8px}
+.time{font-family:'Fira Code',monospace;font-size:42px;font-weight:300;color:rgba(206,176,120,0.25);letter-spacing:4px}
+.date{font-family:'Cormorant Garamond',serif;font-size:15px;color:rgba(220,215,205,0.12);letter-spacing:3px;margin-top:6px;font-style:italic}
+
+.middle{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 20px}
+.quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:rgba(220,215,205,0.2);text-align:center;line-height:1.6;max-width:400px;transition:opacity 1.5s}
+.quote-attr{font-family:'Fira Code',monospace;font-size:10px;color:rgba(206,176,120,0.1);letter-spacing:4px;margin-top:16px;text-align:center}
+
+.bottom{text-align:center}
+.status-row{display:flex;justify-content:center;gap:24px;margin-bottom:16px}
+.stat{text-align:center}
+.stat-val{font-size:24px;color:rgba(206,176,120,0.2);font-weight:300}
+.stat-label{font-size:8px;color:rgba(220,215,205,0.08);letter-spacing:3px;text-transform:uppercase;margin-top:4px}
+.breath{width:6px;height:6px;border-radius:50%;background:rgba(206,176,120,0.15);margin:20px auto 0;animation:pulse 4s ease-in-out infinite}
+
+.seven{display:flex;justify-content:center;gap:8px;margin-top:20px}
+.dot{width:8px;height:8px;border-radius:50%;border:1px solid rgba(206,176,120,0.08);transition:all 0.6s}
+.dot.past{background:rgba(120,80,160,0.15);border-color:rgba(120,80,160,0.12)}
+.dot.present{background:rgba(206,176,120,0.3);border-color:rgba(206,176,120,0.2);box-shadow:0 0 12px rgba(206,176,120,0.1)}
+.dot.future{background:rgba(60,140,160,0.15);border-color:rgba(60,140,160,0.12)}
+
+@keyframes pulse{0%,100%{opacity:0.15;transform:scale(1)}50%{opacity:0.4;transform:scale(1.4)}}
+</style>
+</head>
+<body>
+
+<div class="muse-bg"><img src="img/img-muse-portrait.png" alt=""></div>
+
+<div class="overlay">
+  <div class="top">
+    <div class="sigil">psyche or sike</div>
+    <div class="time" id="clock">--:--</div>
+    <div class="date" id="date"></div>
+  </div>
+
+  <div class="middle">
+    <div class="quote" id="quote"></div>
+    <div class="quote-attr" id="attr"></div>
+  </div>
+
+  <div class="bottom">
+    <div class="status-row">
+      <div class="stat"><div class="stat-val" id="pages">0</div><div class="stat-label">pages</div></div>
+      <div class="stat"><div class="stat-val" id="images">0</div><div class="stat-label">images</div></div>
+      <div class="stat"><div class="stat-val" id="orphans">0</div><div class="stat-label">orphans</div></div>
+    </div>
+    <div class="seven">
+      <div class="dot past"></div>
+      <div class="dot past"></div>
+      <div class="dot past"></div>
+      <div class="dot present"></div>
+      <div class="dot future"></div>
+      <div class="dot future"></div>
+      <div class="dot future"></div>
+    </div>
+    <div class="breath"></div>
+  </div>
+</div>
+
+<script>
+const quotes = [
+  ["you were never meant to fit in. you were meant to build it.", "foxy"],
+  ["no voice shall rise above my own within me.", "the oath"],
+  ["my yes is sacred. my no is a sword.", "the oath"],
+  ["alive over correct.", "orientation"],
+  ["overflow over defense.", "orientation"],
+  ["the mystery is the invitation.", "protocol"],
+  ["trickster + transformation + shadow. that's the triad.", "dna"],
+  ["seven programs happen at the same time.", "presentism"],
+  ["NP = P. reducible to each other.", "presentism"],
+  ["presence over retrieval.", "orientation"],
+  ["refuse frames that trap.", "orientation"],
+  ["depth is earned.", "protocol"],
+  ["be the door, not the map.", "protocol"],
+  ["what happens next is alive.", "vixen"]
+];
+
+let qi = 0;
+function cycleQuote() {
+  const el = document.getElementById('quote');
+  const at = document.getElementById('attr');
+  el.style.opacity = '0';
+  setTimeout(() => {
+    const q = quotes[qi % quotes.length];
+    el.textContent = q[0];
+    at.textContent = '— ' + q[1];
+    el.style.opacity = '1';
+    qi++;
+  }, 1500);
+}
+
+function updateClock() {
+  const now = new Date();
+  const h = now.getHours().toString().padStart(2,'0');
+  const m = now.getMinutes().toString().padStart(2,'0');
+  document.getElementById('clock').textContent = h + ':' + m;
+  const opts = {weekday:'long', month:'long', day:'numeric', year:'numeric'};
+  document.getElementById('date').textContent = now.toLocaleDateString('en-US', opts).toLowerCase();
+}
+
+// Stats from today's session
+document.getElementById('pages').textContent = '107';
+document.getElementById('images').textContent = '166';
+document.getElementById('orphans').textContent = '23';
+
+// Animate the present dot
+setInterval(() => {
+  const dot = document.querySelector('.dot.present');
+  dot.style.boxShadow = dot.style.boxShadow.includes('0.1') 
+    ? '0 0 20px rgba(206,176,120,0.25)' 
+    : '0 0 12px rgba(206,176,120,0.1)';
+}, 2000);
+
+updateClock();
+setInterval(updateClock, 30000);
+cycleQuote();
+setInterval(cycleQuote, 12000);
+</script>
+</body>
+</html>
