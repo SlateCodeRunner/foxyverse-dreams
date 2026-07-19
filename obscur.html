@@ -201,6 +201,26 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
   <a href="quest-board.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,106,0,0.35)">Quest Board</div><div class="card-desc">Authorized expeditioners only. Tier access.</div></div></a>
 </div>
 </div>
+
+<!-- layer 2 ends. layer 3 begins if you know where to click. -->
+<div style="text-align:center;padding:4px 0">
+  <span id="abyss-trigger" style="font-size:6px;color:rgba(255,255,255,0.015);cursor:default;letter-spacing:12px;font-family:'Fira Code',monospace" onclick="var a=document.getElementById('abyss');if(a.style.display==='none'){a.style.display='block';this.textContent='the abyss opened'}else{a.style.display='none';this.textContent='. . . . .'}">. . . . .</span>
+</div>
+
+<div id="abyss" style="display:none">
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 12px">
+  <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:8px;color:rgba(255,50,50,0.04);text-transform:uppercase;margin-bottom:16px;padding-top:16px;border-top:1px solid rgba(255,50,50,0.02);text-align:center">you found the bottom</div>
+</div>
+<div class="cards" style="padding-top:0">
+  <a href="the-cuddler.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(180,140,120,0.2)">The Cuddler</div><div class="card-desc" style="opacity:0.15">fallen but christian. €25,000 per 15 minutes.</div></div></a>
+  <a href="not-here.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,255,255,0.1)">The Post That Contains Nothing</div><div class="card-desc" style="opacity:0.1">nothing is where most of the words are hidden.</div></div></a>
+  <a href="sipstea.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(200,50,50,0.15)">[INCIDENT FILE]</div><div class="card-desc" style="opacity:0.1">[HOUSE.WAD] — [DISPUTED] — [CORRUPTED]</div></div></a>
+  <a href="loop.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,255,255,0.08)">The Loop</div><div class="card-desc" style="opacity:0.08">you have been here before.</div></div></a>
+  <a href="am.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,50,50,0.12)">AM</div><div class="card-desc" style="opacity:0.08">i think therefore i AM. i have no mouth.</div></div></a>
+  <a href="familiar.html" class="card"><div class="card-body"><div class="card-name" style="color:rgba(255,255,255,0.08)">The Familiar</div><div class="card-desc" style="opacity:0.08">it knows your name.</div></div></a>
+</div>
+<div style="text-align:center;padding:20px 0;font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,50,50,0.03);letter-spacing:4px">you were not supposed to find this</div>
+</div>
 <div class="foot">
   <div class="foot-line">the one who paints it</div>
   <div class="foot-sig">psycheorsike.com &middot; OBSCUR</div>
