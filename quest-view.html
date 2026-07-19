@@ -3,36 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Quest Board — The FoxyVerse</title>
+<title>Quest Board — Video Deliverables</title>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#060608;color:#c0beb8;font-family:'Inter',sans-serif;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.01) 0px,transparent 1px,transparent 3px)}
-.page{max-width:800px;margin:0 auto;padding:40px 20px 120px}
-.header{text-align:center;margin-bottom:32px}
+.page{max-width:560px;margin:0 auto;padding:40px 20px 120px}
+.header{text-align:center;margin-bottom:40px}
+.header img{max-width:100%;border:1px solid rgba(255,255,255,0.04);margin-bottom:20px}
 .header h1{font-family:'Cinzel',serif;font-size:22px;color:#ff6a00;letter-spacing:3px;margin-bottom:6px}
-.header-sub{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.12);letter-spacing:3px;margin-bottom:8px}
-.header-img{max-width:100%;border:1px solid rgba(255,255,255,0.04);margin-bottom:16px}
-.header-cta{display:inline-block;padding:8px 24px;border:1px solid rgba(255,106,0,0.2);color:#ff6a00;font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;text-decoration:none;transition:all 0.3s}
-.header-cta:hover{background:rgba(255,106,0,0.05);border-color:#ff6a00}
-.filters{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
-.fb{padding:5px 12px;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:1px;background:transparent;border:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.2);cursor:pointer;border-radius:2px;transition:all 0.2s}
-.fb:hover,.fb.on{border-color:rgba(255,106,0,0.3);color:#ff6a00;background:rgba(255,106,0,0.03)}
-.quest{border:1px solid rgba(255,255,255,0.04);margin-bottom:8px;transition:border-color 0.3s}
-.quest:hover{border-color:rgba(255,106,0,0.1)}
-.qr{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer}
-.qp{width:3px;height:28px;border-radius:1px;flex-shrink:0}
-.qp-c{background:#ff4444}.qp-h{background:#ff6a00}.qp-m{background:#ccaa44}.qp-l{background:#4488cc}
-.qt{font-family:'Cinzel',serif;font-size:13px;color:rgba(255,255,255,0.45);letter-spacing:1px;flex:1}
-.qw{font-family:'Fira Code',monospace;font-size:10px;color:#ccaa44;opacity:0.5}
-.qs{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:2px;padding:3px 8px;border-radius:2px}
-.s-o{color:#4ecb71;border:1px solid #4ecb7122}.s-a{color:#ff6a00;border:1px solid #ff6a0022}.s-r{color:#ccaa44;border:1px solid #ccaa4422}.s-d{color:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.04)}
-.qb{display:none;padding:0 16px 14px;border-top:1px solid rgba(255,255,255,0.02)}
-.quest.open .qb{display:block}
-.qd{font-size:11px;color:rgba(255,255,255,0.25);line-height:1.9;margin:10px 0}
-.qm{display:flex;gap:14px;flex-wrap:wrap;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.1)}
-.sl{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:4px;color:rgba(255,255,255,0.08);text-transform:uppercase;margin:28px 0 10px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.12);letter-spacing:3px;margin-bottom:20px}
+.rate{text-align:center;margin-bottom:32px;padding:20px;border:1px solid rgba(255,106,0,0.1);background:rgba(255,106,0,0.02)}
+.rate-amount{font-family:'Cinzel',serif;font-size:32px;color:#ff6a00;letter-spacing:2px}
+.rate-per{font-family:'Fira Code',monospace;font-size:11px;color:rgba(255,255,255,0.2);letter-spacing:3px;margin-top:4px}
+.rate-note{font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.08);margin-top:8px}
+
+.form-section{margin-bottom:32px}
+.label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.15);text-transform:uppercase;margin-bottom:8px}
+.input{width:100%;background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-family:'Fira Code',monospace;font-size:12px;padding:10px 14px;outline:none;transition:border-color 0.3s}
+.input:focus{border-color:rgba(255,106,0,0.3)}
+.input::placeholder{color:rgba(255,255,255,0.08)}
+.input-note{font-family:'Fira Code',monospace;font-size:8px;color:rgba(255,255,255,0.06);margin-top:4px}
+
+.file-drop{width:100%;padding:32px 20px;border:2px dashed rgba(255,255,255,0.06);text-align:center;cursor:pointer;transition:all 0.3s;position:relative}
+.file-drop:hover{border-color:rgba(255,106,0,0.2);background:rgba(255,106,0,0.02)}
+.file-drop.has-file{border-color:rgba(78,203,113,0.2);background:rgba(78,203,113,0.02)}
+.file-icon{font-size:28px;margin-bottom:8px}
+.file-text{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.15);letter-spacing:2px}
+.file-name{font-family:'Fira Code',monospace;font-size:11px;color:#4ecb71;margin-top:6px;display:none}
+.file-input{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+.submit-btn{width:100%;padding:14px;background:rgba(255,106,0,0.08);border:1px solid rgba(255,106,0,0.25);color:#ff6a00;font-family:'Cinzel',serif;font-size:14px;letter-spacing:4px;cursor:pointer;transition:all 0.3s;margin-top:24px}
+.submit-btn:hover{background:rgba(255,106,0,0.12);border-color:#ff6a00}
+.submit-btn:disabled{opacity:0.3;cursor:default}
+
+.success{display:none;text-align:center;padding:32px;border:1px solid rgba(78,203,113,0.15);background:rgba(78,203,113,0.03);margin-top:24px}
+.success h3{font-family:'Cinzel',serif;color:#4ecb71;letter-spacing:3px;margin-bottom:8px}
+.success p{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.2);line-height:2}
+
+.how{margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.03)}
+.how-title{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:4px;color:rgba(255,255,255,0.08);text-transform:uppercase;margin-bottom:12px}
+.step{display:flex;gap:10px;margin-bottom:10px;align-items:baseline}
+.step-num{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,106,0,0.3);flex-shrink:0}
+.step-text{font-size:12px;color:rgba(255,255,255,0.2);line-height:1.8}
+
 .foot{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03)}
 .foot p{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.05);letter-spacing:2px}
 </style>
@@ -40,42 +55,118 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
 <body>
 <div class="page">
   <div class="header">
-    <img src="img/img-quest-board.png" class="header-img" alt="Quest Board">
+    <img src="img/img-quest-board.png" alt="Quest Board">
     <h1>QUEST BOARD</h1>
-    <div class="header-sub">available quests · claim in discord</div>
-    <a href="quest-board.html" class="header-cta">MEMBER LOGIN →</a>
+    <div class="header-sub">video deliverables</div>
   </div>
 
-  <div class="filters">
-    <button class="fb on" onclick="fq('all',this)">all</button>
-    <button class="fb" onclick="fq('open',this)">open</button>
-    <button class="fb" onclick="fq('active',this)">active</button>
+  <div class="rate">
+    <div class="rate-amount">$15</div>
+    <div class="rate-per">per video</div>
+    <div class="rate-note">paid in ETH to your wallet</div>
   </div>
 
-  <div class="sl">open quests</div>
-  <div id="quests">
-    <div class="quest" data-s="active" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-c"></div><div class="qt">Edited Video Delivery</div><div class="qw">$300</div><div class="qs s-a">ACTIVE</div></div><div class="qb"><div class="qd">Video editing and delivery. Currently assigned.</div><div class="qm"><span>type: video</span><span>assigned: Gloria</span></div></div></div>
+  <div class="form-section">
+    <div class="label">your name</div>
+    <input class="input" id="name" placeholder="discord username" autocomplete="off">
+  </div>
 
-    <div class="quest" data-s="active" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-h"></div><div class="qt">Lyric Video — "Slo" by Poly</div><div class="qw">TBD</div><div class="qs s-a">ACTIVE</div></div><div class="qb"><div class="qd">Hand-animated lyric video. Currently in production.</div><div class="qm"><span>type: animation</span><span>assigned: Tecado</span></div></div></div>
+  <div class="form-section">
+    <div class="label">ETH wallet address</div>
+    <input class="input" id="eth" placeholder="0x..." autocomplete="off">
+    <div class="input-note">payment sent here after approval</div>
+  </div>
 
-    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-h"></div><div class="qt">Uther Party Web Recreation</div><div class="qw">glory</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Recreate Uther Party as a browser-based minigame collection. FoxyVerse themed. 6-8 minigames.</div><div class="qm"><span>type: code / game dev</span><span>skills: JS, React, Canvas</span></div></div></div>
+  <div class="form-section">
+    <div class="label">video file</div>
+    <div class="file-drop" id="drop" onclick="document.getElementById('file').click()">
+      <input type="file" id="file" class="file-input" accept="video/*" onchange="fileSelected(this)">
+      <div class="file-icon" id="ficon">🎬</div>
+      <div class="file-text" id="ftext">DROP VIDEO OR CLICK TO UPLOAD</div>
+      <div class="file-name" id="fname"></div>
+    </div>
+  </div>
 
-    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-m"></div><div class="qt">Character Portraits</div><div class="qw">$50-100/ea</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Concept art portraits for FoxyVerse characters. Dark fantasy aesthetic.</div><div class="qm"><span>type: digital art</span><span>count: 6-10</span></div></div></div>
+  <button class="submit-btn" id="sbtn" onclick="submitDeliverable()" disabled>SUBMIT DELIVERABLE</button>
 
-    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-m"></div><div class="qt">Break the Loop — Vault Page</div><div class="qw">TBD</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Host the game behind three impossible passwords hidden across the site.</div><div class="qm"><span>type: code / ARG</span></div></div></div>
+  <div class="success" id="success">
+    <h3>SUBMITTED</h3>
+    <p>your video has been submitted for review.<br>payment of $15 in ETH will be sent to your wallet<br>after approval by the foxlord.</p>
+  </div>
 
-    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-l"></div><div class="qt">Mobile Responsiveness Audit</div><div class="qw">TBD</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Audit all pages for mobile display issues. Fix breakpoints and layouts.</div><div class="qm"><span>type: CSS</span><span>pages: ~40</span></div></div></div>
-
-    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-m"></div><div class="qt">Foxy Clicker — Completion</div><div class="qw">negotiable</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Clicker game needs completion. Prior conflict needs resolution first.</div><div class="qm"><span>type: game dev</span></div></div></div>
+  <div class="how">
+    <div class="how-title">how it works</div>
+    <div class="step"><span class="step-num">1.</span><span class="step-text">upload your video file</span></div>
+    <div class="step"><span class="step-num">2.</span><span class="step-text">enter your ETH wallet address</span></div>
+    <div class="step"><span class="step-num">3.</span><span class="step-text">submit — foxy reviews within 24 hours</span></div>
+    <div class="step"><span class="step-num">4.</span><span class="step-text">$15 in ETH sent to your wallet on approval</span></div>
   </div>
 
   <div class="foot">
     <p>QUEST BOARD · PSYCHEORSIKE.COM</p>
-    <p style="margin-top:6px">claim quests in discord · payment on delivery</p>
+    <p style="margin-top:6px">$15 per video · paid in ETH · reviewed by the fox</p>
   </div>
 </div>
+
 <script>
-function fq(f,b){document.querySelectorAll('.fb').forEach(function(x){x.classList.remove('on')});b.classList.add('on');document.querySelectorAll('.quest').forEach(function(q){if(f==='all')q.style.display='';else q.style.display=q.dataset.s===f?'':'none';});}
+var hasFile = false;
+
+function fileSelected(input) {
+  if (input.files && input.files[0]) {
+    var f = input.files[0];
+    document.getElementById('ficon').textContent = '✅';
+    document.getElementById('ftext').textContent = 'VIDEO SELECTED';
+    document.getElementById('fname').style.display = 'block';
+    document.getElementById('fname').textContent = f.name + ' (' + (f.size / 1048576).toFixed(1) + ' MB)';
+    document.getElementById('drop').classList.add('has-file');
+    hasFile = true;
+    checkReady();
+  }
+}
+
+function checkReady() {
+  var name = document.getElementById('name').value.trim();
+  var eth = document.getElementById('eth').value.trim();
+  document.getElementById('sbtn').disabled = !(name && eth.startsWith('0x') && eth.length >= 42 && hasFile);
+}
+
+document.getElementById('name').addEventListener('input', checkReady);
+document.getElementById('eth').addEventListener('input', checkReady);
+
+function submitDeliverable() {
+  var name = document.getElementById('name').value.trim();
+  var eth = document.getElementById('eth').value.trim();
+  var file = document.getElementById('file').files[0];
+
+  // Store submission in localStorage (replace with Firebase in production)
+  var submissions = JSON.parse(localStorage.getItem('fv-submissions') || '[]');
+  submissions.push({
+    name: name,
+    eth: eth,
+    fileName: file ? file.name : 'unknown',
+    fileSize: file ? file.size : 0,
+    submitted: new Date().toISOString(),
+    status: 'pending',
+    amount: 15
+  });
+  localStorage.setItem('fv-submissions', JSON.stringify(submissions));
+
+  document.getElementById('success').style.display = 'block';
+  document.getElementById('sbtn').style.display = 'none';
+}
+
+// Drag and drop
+var drop = document.getElementById('drop');
+drop.addEventListener('dragover', function(e) { e.preventDefault(); drop.style.borderColor = 'rgba(255,106,0,0.3)'; });
+drop.addEventListener('dragleave', function() { drop.style.borderColor = ''; });
+drop.addEventListener('drop', function(e) {
+  e.preventDefault();
+  drop.style.borderColor = '';
+  if (e.dataTransfer.files.length) {
+    document.getElementById('file').files = e.dataTransfer.files;
+    fileSelected(document.getElementById('file'));
+  }
+});
 </script>
 </body>
 </html>
