@@ -11,40 +11,98 @@ body{background:#060608;color:#c0beb8;font-family:'Fira Code',monospace;min-heig
 .page{max-width:420px;margin:0 auto;padding:48px 20px 80px}
 h1{font-family:'Cinzel',serif;font-size:20px;color:#ff6a00;letter-spacing:4px;text-align:center;margin-bottom:4px}
 .sub{font-size:9px;color:rgba(255,255,255,0.1);letter-spacing:3px;text-align:center;margin-bottom:32px}
-.type{padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;justify-content:space-between;align-items:center}
-.type-name{font-size:12px;color:rgba(255,255,255,0.4)}
-.type-price{font-size:12px;color:#ff6a00}
-.form{margin-top:28px}
-.field{margin-bottom:10px}
+.rate{text-align:center;padding:20px;border:1px solid rgba(255,106,0,0.1);background:rgba(255,106,0,0.02);margin-bottom:28px}
+.rate-amount{font-family:'Cinzel',serif;font-size:32px;color:#ff6a00}
+.rate-per{font-size:10px;color:rgba(255,255,255,0.15);letter-spacing:3px;margin-top:4px}
+.form{margin-top:20px}
+.field{margin-bottom:12px}
 .label{font-size:8px;letter-spacing:3px;color:rgba(255,255,255,0.1);text-transform:uppercase;margin-bottom:4px}
 input{width:100%;background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);font-family:'Fira Code',monospace;font-size:11px;padding:8px 10px;outline:none}
 input:focus{border-color:rgba(255,106,0,0.2)}
-select{width:100%;background:#060608;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);font-family:'Fira Code',monospace;font-size:11px;padding:8px 10px;outline:none}
-button{width:100%;padding:12px;background:rgba(255,106,0,0.06);border:1px solid rgba(255,106,0,0.2);color:#ff6a00;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;cursor:pointer;margin-top:16px}
+input::placeholder{color:rgba(255,255,255,0.06)}
+button{width:100%;padding:12px;background:rgba(255,106,0,0.06);border:1px solid rgba(255,106,0,0.2);color:#ff6a00;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;cursor:pointer;margin-top:16px;transition:all 0.3s}
 button:hover{background:rgba(255,106,0,0.1)}
-.ok{display:none;text-align:center;padding:16px;border:1px solid rgba(78,203,113,0.12);color:#4ecb71;font-size:10px;margin-top:16px}
+button:disabled{opacity:0.3;cursor:default}
+.ok{display:none;text-align:center;padding:16px;border:1px solid rgba(78,203,113,0.12);color:#4ecb71;font-size:10px;margin-top:16px;line-height:2}
+.err{display:none;text-align:center;padding:12px;border:1px solid rgba(255,68,68,0.12);color:#ff4444;font-size:10px;margin-top:12px}
 .foot{text-align:center;margin-top:40px;font-size:7px;color:rgba(255,255,255,0.04);letter-spacing:2px}
+.loading{display:none;text-align:center;padding:12px;font-size:10px;color:rgba(255,106,0,0.3)}
 </style>
 </head>
 <body>
 <div class="page">
   <h1>QUEST BOARD</h1>
-  <div class="sub">submit work · get paid in ETH</div>
-
-  <div class="type"><span class="type-name">Video</span><span class="type-price">$15</span></div>
-  <div class="type"><span class="type-name">Writing</span><span class="type-price">$10</span></div>
-  
-
-  <div class="form">
-    <div class="field"><div class="label">type</div><select id="t"><option>Video</option><option>Writing</option></select></div>
-    <div class="field"><div class="label">name</div><input id="n" placeholder="discord username"></div>
-    <div class="field"><div class="label">ETH address</div><input id="e" placeholder="0x..."></div>
-    <div class="field"><div class="label">link to work</div><input id="l" placeholder="youtube / drive / dropbox"></div>
-    <button onclick="this.style.display='none';document.getElementById('ok').style.display='block'">SUBMIT</button>
-    <div class="ok" id="ok">submitted. reviewed within 24h. paid in ETH.</div>
+  <div class="sub">submit a video · get paid in ETH</div>
+  <div class="rate">
+    <div class="rate-amount">$15</div>
+    <div class="rate-per">per video · paid in ETH</div>
   </div>
-
-  <div class="foot">psycheorsike.com</div>
+  <div class="form">
+    <div class="field"><div class="label">discord username</div><input id="n" placeholder="yourname#1234" oninput="check()"></div>
+    <div class="field"><div class="label">ETH wallet address</div><input id="e" placeholder="0x..." oninput="check()"></div>
+    <div class="field"><div class="label">video link</div><input id="l" placeholder="youtube / drive / dropbox" oninput="check()"></div>
+    <button id="btn" onclick="submit()" disabled>SUBMIT</button>
+    <div class="loading" id="loading">submitting...</div>
+    <div class="ok" id="ok">submitted &#x2714;<br>reviewed within 24h<br>$15 ETH on approval</div>
+    <div class="err" id="err">submission failed. try again or DM foxy.</div>
+  </div>
+  <div class="foot">psycheorsike.com · reviewed by the fox</div>
 </div>
+<script>
+// REPLACE THIS WITH YOUR DISCORD WEBHOOK URL
+var WEBHOOK = "https://canary.discord.com/api/webhooks/1528404260230922343/BkHmVKwdIhLCCC2Hw6QcBfT-YiIBue9gr8BzB7G0iorAjO8-dPA69x7P3hw65urGJ9z2";
+
+function check(){
+  var n=document.getElementById('n').value.trim();
+  var e=document.getElementById('e').value.trim();
+  var l=document.getElementById('l').value.trim();
+  document.getElementById('btn').disabled=!(n.length>1&&e.startsWith('0x')&&e.length>=42&&l.length>5);
+}
+
+async function submit(){
+  var n=document.getElementById('n').value.trim();
+  var e=document.getElementById('e').value.trim();
+  var l=document.getElementById('l').value.trim();
+  var btn=document.getElementById('btn');
+  var loading=document.getElementById('loading');
+  var ok=document.getElementById('ok');
+  var err=document.getElementById('err');
+
+  btn.style.display='none';
+  loading.style.display='block';
+  err.style.display='none';
+
+  try{
+    var res=await fetch(WEBHOOK,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        embeds:[{
+          title:'🎬 New Video Submission',
+          color:16744192,
+          fields:[
+            {name:'Discord',value:n,inline:true},
+            {name:'ETH Address',value:'`'+e+'`',inline:false},
+            {name:'Video Link',value:l,inline:false},
+            {name:'Amount',value:'$15',inline:true},
+            {name:'Submitted',value:new Date().toUTCString(),inline:true}
+          ],
+          footer:{text:'Quest Board · psycheorsike.com'}
+        }]
+      })
+    });
+    if(res.ok){
+      loading.style.display='none';
+      ok.style.display='block';
+    }else{
+      throw new Error('webhook failed');
+    }
+  }catch(ex){
+    loading.style.display='none';
+    btn.style.display='block';
+    err.style.display='block';
+  }
+}
+</script>
 </body>
 </html>
