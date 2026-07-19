@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Art Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fira+Code:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060608;color:rgba(220,215,205,0.6);font-family:'Fira Code',monospace;font-size:11px;min-height:100vh}
+body{max-width:1200px;margin:0 auto;padding:40px 20px 120px}
+.header{text-align:center;padding:60px 0 50px;border-bottom:1px solid rgba(206,176,120,0.06)}
+.header h1{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,42px);font-weight:400;color:rgba(206,176,120,0.35);letter-spacing:8px;text-transform:uppercase;margin-bottom:12px}
+.header .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(220,215,205,0.2);letter-spacing:2px}
+.header .count{margin-top:16px;font-size:10px;color:rgba(206,176,120,0.15);letter-spacing:4px}
+.section-label{font-family:'Cinzel',serif;font-size:13px;color:rgba(206,176,120,0.2);letter-spacing:6px;text-transform:uppercase;margin:50px 0 24px;padding-left:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:3px}
+.card{position:relative;aspect-ratio:1;overflow:hidden;cursor:pointer;text-decoration:none;display:block}
+.card img{width:100%;height:100%;object-fit:cover;transition:opacity 0.6s,transform 1.2s;opacity:0.55;filter:saturate(0.7)}
+.card:hover img{opacity:0.85;transform:scale(1.04);filter:saturate(1)}
+.card .label{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(transparent,rgba(6,6,8,0.9));font-family:'Cormorant Garamond',serif;font-size:13px;color:rgba(220,215,205,0.4);letter-spacing:1px;transition:color 0.4s}
+.card:hover .label{color:rgba(206,176,120,0.7)}
+.card.art{border:1px solid rgba(206,176,120,0.04)}
+.card.art .label::before{content:'+ ';color:rgba(206,176,120,0.2)}
+.fox-mark{text-align:center;padding:80px 0 40px;font-size:12px;color:rgba(206,176,120,0.08);letter-spacing:4px}
+@media(max-width:600px){.grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:2px}.card .label{font-size:11px;padding:8px 10px}body{padding:20px 12px 80px}}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>The Art Library</h1>
+<div class="sub">every image in the foxyverse, and where it lives</div>
+<div class="count">163 pieces</div>
+</div>
+<div class="section-label">Visions</div>
+<div class="grid">
+<a href="deep/vault.html" class="card"><img src="img/grid-akasha-fall.png" alt=""><div class="label">The Akasha Fall</div></a>
+<a href="am.html" class="card"><img src="img/grid-am-servers.png" alt=""><div class="label">AM</div></a>
+<a href="dreaming-ritual.html" class="card"><img src="img/grid-birthday.png" alt=""><div class="label">The Birthday</div></a>
+<a href="deep/corridor.html" class="card"><img src="img/grid-bone-path.png" alt=""><div class="label">The Bone Path</div></a>
+<a href="bumi.html" class="card"><img src="img/grid-bumi-gifs.png" alt=""><div class="label">Bumi</div></a>
+<a href="campfire.html" class="card"><img src="img/grid-campfire.png" alt=""><div class="label">The Campfire</div></a>
+<a href="clan-deed.html" class="card"><img src="img/grid-clan-deed.png" alt=""><div class="label">Clan DeeD</div></a>
+<a href="break-the-loop.html" class="card"><img src="img/grid-clear-place-text.png" alt=""><div class="label">The Clear Place</div></a>
+<a href="deep/room-003.html" class="card"><img src="img/grid-deviant-wall.png" alt=""><div class="label">The Deviant Wall</div></a>
+<a href="rank-up.html" class="card"><img src="img/grid-first-flame.png" alt=""><div class="label">First Flame</div></a>
+<a href="lore.html" class="card"><img src="img/grid-fox-council.png" alt=""><div class="label">The Fox Council</div></a>
+<a href="dreaming-ritual.html" class="card"><img src="img/grid-foxys-room.png" alt=""><div class="label">Foxy's Room</div></a>
+<a href="nessa.html" class="card"><img src="img/grid-frozen-throne.png" alt=""><div class="label">The Frozen Throne</div></a>
+<a href="deep/hallway.html" class="card"><img src="img/grid-hannah-halls.png" alt=""><div class="label">Hannah's Halls</div></a>
+<a href="shadow-puppet.html" class="card"><img src="img/grid-interior-faceless.png" alt=""><div class="label">The Faceless</div></a>
+<a href="mozai.html" class="card"><img src="img/grid-mozai-chess.png" alt=""><div class="label">The Chess Match</div></a>
+<a href="lot-system.html" class="card"><img src="img/grid-oath-fox.png" alt=""><div class="label">The Oath</div></a>
+<a href="foxpong.html" class="card"><img src="img/grid-peon.png" alt=""><div class="label">Peon Game</div></a>
+<a href="possum.html" class="card"><img src="img/grid-possum-throne.png" alt=""><div class="label">Queen Possum</div></a>
+<a href="quest-view.html" class="card"><img src="img/grid-quest-board.png" alt=""><div class="label">Quest Board</div></a>
+<a href="sipstea.html" class="card"><img src="img/grid-sipstea-before.png" alt=""><div class="label">SipsTea (Before)</div></a>
+<a href="sipstea.html" class="card"><img src="img/grid-sipstea-cup.png" alt=""><div class="label">SipsTea</div></a>
+<a href="break-the-loop.html" class="card"><img src="img/grid-sohlo-chess.png" alt=""><div class="label">Sohlo</div></a>
+<a href="deep/signal.html" class="card"><img src="img/grid-static-path.png" alt=""><div class="label">Static Path</div></a>
+<a href="twelve-fold-gate.html" class="card"><img src="img/grid-twelve-candles.png" alt=""><div class="label">Twelve Candles</div></a>
+<a href="caelus.html" class="card"><img src="img/grid-two-crystals.png" alt=""><div class="label">Two Crystals</div></a>
+<a href="gauntlet2026.html" class="card"><img src="img/grid-uther-arena.png" alt=""><div class="label">The Arena</div></a>
+<a href="warroom.html" class="card"><img src="img/grid-warroom-ops.png" alt=""><div class="label">War Room</div></a>
+<a href="operational-techniques.html" class="card"><img src="img/grid-witch-reddit.png" alt=""><div class="label">The Witch</div></a>
+<a href="writers-guild.html" class="card"><img src="img/grid-writers-table.png" alt=""><div class="label">Writers Guild</div></a>
+</div>
+<div class="section-label">Unplaced Concept Art</div>
+<div class="grid">
+<div class="card art"><img src="img/art-empress-throne.png" alt=""><div class="label">Empress Throne</div></div>
+<div class="card art"><img src="img/art-fateweaver-gate.png" alt=""><div class="label">Fateweaver Gate</div></div>
+<div class="card art"><img src="img/art-first-flame.png" alt=""><div class="label">First Flame</div></div>
+<div class="card art"><img src="img/art-laws-justice.png" alt=""><div class="label">Laws of Justice</div></div>
+<div class="card art"><img src="img/art-the-oath.png" alt=""><div class="label">The Oath Fox</div></div>
+</div>
+<div class="fox-mark">psycheorsike.com</div>
+</body>
+</html>

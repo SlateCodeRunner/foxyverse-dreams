@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -57,9 +57,10 @@ canvas#rain{position:fixed;inset:0;z-index:0;opacity:0.15}
 .social{position:fixed;bottom:8px;left:8px;z-index:100;font-size:8px;display:flex;gap:12px}
 .social a{color:var(--dim);text-decoration:none;letter-spacing:1px;transition:color 0.3s}
 .social a:hover{color:var(--green);text-shadow:var(--glow)}
+.war-hero{margin:0 auto 20px;max-width:100%;border:1px solid rgba(0,255,65,0.06);overflow:hidden;opacity:0.5} .war-hero img{width:100%;display:block;filter:saturate(0.3) brightness(0.6)}
 </style>
 </head>
-<body>
+<body><div class="war-hero"><img src="img/art-warroom-overlook.png" alt="War Room"></div>
 <div class="custom-cursor" id="cursor"></div>
 <canvas id="rain"></canvas>
 <div class="scanlines"></div>
