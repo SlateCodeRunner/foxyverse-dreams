@@ -3,123 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Quest Board — The FoxyVerse</title>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<title>Quest Board</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#060608;color:#c0beb8;font-family:'Inter',sans-serif;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.01) 0px,transparent 1px,transparent 3px)}
-.page{max-width:700px;margin:0 auto;padding:40px 20px 120px}
-.hero{width:100%;border:1px solid rgba(255,255,255,0.04);margin-bottom:24px}
-.hero img{width:100%;display:block;opacity:0.85}
-.header{text-align:center;margin-bottom:32px}
-.header h1{font-family:'Cinzel',serif;font-size:24px;color:#ff6a00;letter-spacing:4px;margin-bottom:6px}
-.header-sub{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.12);letter-spacing:3px}
-
-.quest-type{margin-bottom:32px;border:1px solid rgba(255,255,255,0.04);overflow:hidden}
-.qt-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;transition:background 0.2s}
-.qt-header:hover{background:rgba(255,255,255,0.01)}
-.qt-img{width:80px;height:50px;object-fit:cover;border:1px solid rgba(255,255,255,0.04);flex-shrink:0}
-.qt-info{flex:1}
-.qt-name{font-family:'Cinzel',serif;font-size:15px;color:rgba(255,255,255,0.5);letter-spacing:1px}
-.qt-desc{font-size:11px;color:rgba(255,255,255,0.2);margin-top:2px}
-.qt-price{font-family:'Fira Code',monospace;font-size:14px;color:#ff6a00;flex-shrink:0;letter-spacing:1px}
-
-.qt-body{display:none;padding:0 20px 20px;border-top:1px solid rgba(255,255,255,0.02)}
-.quest-type.open .qt-body{display:block}
-.qt-details{font-size:12px;color:rgba(255,255,255,0.25);line-height:1.9;margin:12px 0}
-.qt-field{margin-bottom:10px}
-.qt-label{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,0.12);text-transform:uppercase;margin-bottom:4px}
-.qt-input{width:100%;background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-family:'Fira Code',monospace;font-size:11px;padding:8px 12px;outline:none}
-.qt-input:focus{border-color:rgba(255,106,0,0.3)}
-.qt-submit{padding:10px 28px;background:rgba(255,106,0,0.06);border:1px solid rgba(255,106,0,0.2);color:#ff6a00;font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;cursor:pointer;transition:all 0.3s;margin-top:10px}
-.qt-submit:hover{background:rgba(255,106,0,0.1);border-color:#ff6a00}
-.qt-success{display:none;padding:12px;border:1px solid rgba(78,203,113,0.15);background:rgba(78,203,113,0.03);font-family:'Fira Code',monospace;font-size:10px;color:#4ecb71;text-align:center;margin-top:10px}
-
-.how{margin-top:32px;padding:20px;border:1px solid rgba(255,255,255,0.03)}
-.how-title{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:4px;color:rgba(255,255,255,0.08);text-transform:uppercase;margin-bottom:10px}
-.how-step{display:flex;gap:8px;margin-bottom:6px;font-size:11px;color:rgba(255,255,255,0.2)}
-.how-num{font-family:'Fira Code',monospace;color:rgba(255,106,0,0.3);flex-shrink:0}
-
-.foot{text-align:center;margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03)}
-.foot p{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.05);letter-spacing:2px}
+body{background:#060608;color:#c0beb8;font-family:'Fira Code',monospace;min-height:100vh}
+.page{max-width:420px;margin:0 auto;padding:48px 20px 80px}
+h1{font-family:'Cinzel',serif;font-size:20px;color:#ff6a00;letter-spacing:4px;text-align:center;margin-bottom:4px}
+.sub{font-size:9px;color:rgba(255,255,255,0.1);letter-spacing:3px;text-align:center;margin-bottom:32px}
+.type{padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;justify-content:space-between;align-items:center}
+.type-name{font-size:12px;color:rgba(255,255,255,0.4)}
+.type-price{font-size:12px;color:#ff6a00}
+.form{margin-top:28px}
+.field{margin-bottom:10px}
+.label{font-size:8px;letter-spacing:3px;color:rgba(255,255,255,0.1);text-transform:uppercase;margin-bottom:4px}
+input{width:100%;background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);font-family:'Fira Code',monospace;font-size:11px;padding:8px 10px;outline:none}
+input:focus{border-color:rgba(255,106,0,0.2)}
+select{width:100%;background:#060608;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);font-family:'Fira Code',monospace;font-size:11px;padding:8px 10px;outline:none}
+button{width:100%;padding:12px;background:rgba(255,106,0,0.06);border:1px solid rgba(255,106,0,0.2);color:#ff6a00;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;cursor:pointer;margin-top:16px}
+button:hover{background:rgba(255,106,0,0.1)}
+.ok{display:none;text-align:center;padding:16px;border:1px solid rgba(78,203,113,0.12);color:#4ecb71;font-size:10px;margin-top:16px}
+.foot{text-align:center;margin-top:40px;font-size:7px;color:rgba(255,255,255,0.04);letter-spacing:2px}
 </style>
 </head>
 <body>
 <div class="page">
-  <div class="hero"><img src="img/img-quest-board.png" alt="Quest Board"></div>
-  <div class="header">
-    <h1>QUEST BOARD</h1>
-    <div class="header-sub">earn ETH · deliver work · get paid</div>
+  <h1>QUEST BOARD</h1>
+  <div class="sub">submit work · get paid in ETH</div>
+
+  <div class="type"><span class="type-name">Video</span><span class="type-price">$15</span></div>
+  <div class="type"><span class="type-name">Writing</span><span class="type-price">$10</span></div>
+  <div class="type"><span class="type-name">Art</span><span class="type-price">$25-50</span></div>
+
+  <div class="form">
+    <div class="field"><div class="label">type</div><select id="t"><option>Video</option><option>Writing</option><option>Art</option></select></div>
+    <div class="field"><div class="label">name</div><input id="n" placeholder="discord username"></div>
+    <div class="field"><div class="label">ETH address</div><input id="e" placeholder="0x..."></div>
+    <div class="field"><div class="label">link to work</div><input id="l" placeholder="youtube / drive / dropbox"></div>
+    <button onclick="this.style.display='none';document.getElementById('ok').style.display='block'">SUBMIT</button>
+    <div class="ok" id="ok">submitted. reviewed within 24h. paid in ETH.</div>
   </div>
 
-  <div class="quest-type" onclick="this.classList.toggle('open')">
-    <div class="qt-header">
-      <img src="img/grid-foxys-room.png" class="qt-img" alt="">
-      <div class="qt-info"><div class="qt-name">Video</div><div class="qt-desc">short videos, reels, edits</div></div>
-      <div class="qt-price">$15</div>
-    </div>
-    <div class="qt-body">
-      <div class="qt-details">short form video content. edits, reels, promotional clips, lyric videos. any length. any style. reviewed within 24 hours.</div>
-      <div class="qt-field"><div class="qt-label">your name</div><input class="qt-input" placeholder="discord username"></div>
-      <div class="qt-field"><div class="qt-label">ETH address</div><input class="qt-input" placeholder="0x..."></div>
-      <div class="qt-field"><div class="qt-label">video link</div><input class="qt-input" placeholder="youtube / drive / dropbox link"></div>
-      <button class="qt-submit" onclick="event.stopPropagation();this.style.display='none';this.parentElement.querySelector('.qt-success').style.display='block'">SUBMIT</button>
-      <div class="qt-success">submitted for review. $15 ETH on approval.</div>
-    </div>
-  </div>
-
-  <div class="quest-type" onclick="this.classList.toggle('open')">
-    <div class="qt-header">
-      <img src="img/grid-writers-table.png" class="qt-img" alt="">
-      <div class="qt-info"><div class="qt-name">Writing</div><div class="qt-desc">articles, lore, reddit posts</div></div>
-      <div class="qt-price">$10</div>
-    </div>
-    <div class="qt-body">
-      <div class="qt-details">lore entries, reddit posts for the four gardens, articles for medium. must match foxyverse tone. no AI slop. the fox can tell.</div>
-      <div class="qt-field"><div class="qt-label">your name</div><input class="qt-input" placeholder="discord username"></div>
-      <div class="qt-field"><div class="qt-label">ETH address</div><input class="qt-input" placeholder="0x..."></div>
-      <div class="qt-field"><div class="qt-label">document link</div><input class="qt-input" placeholder="google docs / notion / paste link"></div>
-      <button class="qt-submit" onclick="event.stopPropagation();this.style.display='none';this.parentElement.querySelector('.qt-success').style.display='block'">SUBMIT</button>
-      <div class="qt-success">submitted for review. $10 ETH on approval.</div>
-    </div>
-  </div>
-
-  <div class="quest-type" onclick="this.classList.toggle('open')">
-    <div class="qt-header">
-      <img src="img/grid-possum-throne.png" class="qt-img" alt="">
-      <div class="qt-info"><div class="qt-name">Art</div><div class="qt-desc">portraits, concept art, commissions</div></div>
-      <div class="qt-price">$25-50</div>
-    </div>
-    <div class="qt-body">
-      <div class="qt-details">character portraits, concept art, scene illustrations. dark fantasy aesthetic preferred. must be original work. the foxyverse has a visual language — look at the site before you draw.</div>
-      <div class="qt-field"><div class="qt-label">your name</div><input class="qt-input" placeholder="discord username"></div>
-      <div class="qt-field"><div class="qt-label">ETH address</div><input class="qt-input" placeholder="0x..."></div>
-      <div class="qt-field"><div class="qt-label">image link</div><input class="qt-input" placeholder="drive / imgur / portfolio link"></div>
-      <button class="qt-submit" onclick="event.stopPropagation();this.style.display='none';this.parentElement.querySelector('.qt-success').style.display='block'">SUBMIT</button>
-      <div class="qt-success">submitted for review. payment in ETH on approval.</div>
-    </div>
-  </div>
-
-  
-
-  
-
-  
-
-  <div class="how">
-    <div class="how-title">how it works</div>
-    <div class="how-step"><span class="how-num">1.</span><span>pick a deliverable type above</span></div>
-    <div class="how-step"><span class="how-num">2.</span><span>create the work</span></div>
-    <div class="how-step"><span class="how-num">3.</span><span>submit with your ETH address + a link to the work</span></div>
-    <div class="how-step"><span class="how-num">4.</span><span>foxy reviews within 24 hours</span></div>
-    <div class="how-step"><span class="how-num">5.</span><span>ETH sent to your wallet on approval</span></div>
-  </div>
-
-  <div class="foot">
-    <p>QUEST BOARD · PSYCHEORSIKE.COM</p>
-    <p style="margin-top:6px">all payments in ETH · reviewed by the fox</p>
-  </div>
+  <div class="foot">psycheorsike.com</div>
 </div>
 </body>
 </html>
