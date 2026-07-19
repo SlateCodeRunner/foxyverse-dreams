@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Quest Board — The FoxyVerse</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060608;color:#c0beb8;font-family:'Inter',sans-serif;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.01) 0px,transparent 1px,transparent 3px)}
+.page{max-width:800px;margin:0 auto;padding:40px 20px 120px}
+.header{text-align:center;margin-bottom:32px}
+.header h1{font-family:'Cinzel',serif;font-size:22px;color:#ff6a00;letter-spacing:3px;margin-bottom:6px}
+.header-sub{font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,255,255,0.12);letter-spacing:3px;margin-bottom:8px}
+.header-img{max-width:100%;border:1px solid rgba(255,255,255,0.04);margin-bottom:16px}
+.header-cta{display:inline-block;padding:8px 24px;border:1px solid rgba(255,106,0,0.2);color:#ff6a00;font-family:'Fira Code',monospace;font-size:10px;letter-spacing:3px;text-decoration:none;transition:all 0.3s}
+.header-cta:hover{background:rgba(255,106,0,0.05);border-color:#ff6a00}
+.filters{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.fb{padding:5px 12px;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:1px;background:transparent;border:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.2);cursor:pointer;border-radius:2px;transition:all 0.2s}
+.fb:hover,.fb.on{border-color:rgba(255,106,0,0.3);color:#ff6a00;background:rgba(255,106,0,0.03)}
+.quest{border:1px solid rgba(255,255,255,0.04);margin-bottom:8px;transition:border-color 0.3s}
+.quest:hover{border-color:rgba(255,106,0,0.1)}
+.qr{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer}
+.qp{width:3px;height:28px;border-radius:1px;flex-shrink:0}
+.qp-c{background:#ff4444}.qp-h{background:#ff6a00}.qp-m{background:#ccaa44}.qp-l{background:#4488cc}
+.qt{font-family:'Cinzel',serif;font-size:13px;color:rgba(255,255,255,0.45);letter-spacing:1px;flex:1}
+.qw{font-family:'Fira Code',monospace;font-size:10px;color:#ccaa44;opacity:0.5}
+.qs{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:2px;padding:3px 8px;border-radius:2px}
+.s-o{color:#4ecb71;border:1px solid #4ecb7122}.s-a{color:#ff6a00;border:1px solid #ff6a0022}.s-r{color:#ccaa44;border:1px solid #ccaa4422}.s-d{color:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.04)}
+.qb{display:none;padding:0 16px 14px;border-top:1px solid rgba(255,255,255,0.02)}
+.quest.open .qb{display:block}
+.qd{font-size:11px;color:rgba(255,255,255,0.25);line-height:1.9;margin:10px 0}
+.qm{display:flex;gap:14px;flex-wrap:wrap;font-family:'Fira Code',monospace;font-size:9px;color:rgba(255,255,255,0.1)}
+.sl{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:4px;color:rgba(255,255,255,0.08);text-transform:uppercase;margin:28px 0 10px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.foot{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03)}
+.foot p{font-family:'Fira Code',monospace;font-size:7px;color:rgba(255,255,255,0.05);letter-spacing:2px}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <img src="img/img-quest-board.png" class="header-img" alt="Quest Board">
+    <h1>QUEST BOARD</h1>
+    <div class="header-sub">available quests · claim in discord</div>
+    <a href="quest-board.html" class="header-cta">MEMBER LOGIN →</a>
+  </div>
+
+  <div class="filters">
+    <button class="fb on" onclick="fq('all',this)">all</button>
+    <button class="fb" onclick="fq('open',this)">open</button>
+    <button class="fb" onclick="fq('active',this)">active</button>
+  </div>
+
+  <div class="sl">open quests</div>
+  <div id="quests">
+    <div class="quest" data-s="active" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-c"></div><div class="qt">Edited Video Delivery</div><div class="qw">$300</div><div class="qs s-a">ACTIVE</div></div><div class="qb"><div class="qd">Video editing and delivery. Currently assigned.</div><div class="qm"><span>type: video</span><span>assigned: Gloria</span></div></div></div>
+
+    <div class="quest" data-s="active" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-h"></div><div class="qt">Lyric Video — "Slo" by Poly</div><div class="qw">TBD</div><div class="qs s-a">ACTIVE</div></div><div class="qb"><div class="qd">Hand-animated lyric video. Currently in production.</div><div class="qm"><span>type: animation</span><span>assigned: Tecado</span></div></div></div>
+
+    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-h"></div><div class="qt">Uther Party Web Recreation</div><div class="qw">glory</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Recreate Uther Party as a browser-based minigame collection. FoxyVerse themed. 6-8 minigames.</div><div class="qm"><span>type: code / game dev</span><span>skills: JS, React, Canvas</span></div></div></div>
+
+    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-m"></div><div class="qt">Character Portraits</div><div class="qw">$50-100/ea</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Concept art portraits for FoxyVerse characters. Dark fantasy aesthetic.</div><div class="qm"><span>type: digital art</span><span>count: 6-10</span></div></div></div>
+
+    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-m"></div><div class="qt">Break the Loop — Vault Page</div><div class="qw">TBD</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Host the game behind three impossible passwords hidden across the site.</div><div class="qm"><span>type: code / ARG</span></div></div></div>
+
+    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-l"></div><div class="qt">Mobile Responsiveness Audit</div><div class="qw">TBD</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Audit all pages for mobile display issues. Fix breakpoints and layouts.</div><div class="qm"><span>type: CSS</span><span>pages: ~40</span></div></div></div>
+
+    <div class="quest" data-s="open" onclick="this.classList.toggle('open')"><div class="qr"><div class="qp qp-m"></div><div class="qt">Foxy Clicker — Completion</div><div class="qw">negotiable</div><div class="qs s-o">OPEN</div></div><div class="qb"><div class="qd">Clicker game needs completion. Prior conflict needs resolution first.</div><div class="qm"><span>type: game dev</span></div></div></div>
+  </div>
+
+  <div class="foot">
+    <p>QUEST BOARD · PSYCHEORSIKE.COM</p>
+    <p style="margin-top:6px">claim quests in discord · payment on delivery</p>
+  </div>
+</div>
+<script>
+function fq(f,b){document.querySelectorAll('.fb').forEach(function(x){x.classList.remove('on')});b.classList.add('on');document.querySelectorAll('.quest').forEach(function(q){if(f==='all')q.style.display='';else q.style.display=q.dataset.s===f?'':'none';});}
+</script>
+</body>
+</html>
