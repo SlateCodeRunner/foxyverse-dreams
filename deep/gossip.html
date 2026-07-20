@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>☕ the tea room</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&family=Fira+Code:wght@300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0810;font-family:'Comic Neue',cursive;font-size:12px;color:#d0c8e0;min-height:100vh}
+
+.header{background:linear-gradient(135deg,#2a0a2a,#1a0a1a);border-bottom:3px solid #ff69b4;padding:20px;text-align:center;position:relative}
+.header h1{font-family:'Permanent Marker',cursive;font-size:32px;color:#ff69b4;text-shadow:2px 2px 0 #990066;letter-spacing:2px}
+.header .sub{font-size:10px;color:rgba(255,105,180,0.3);margin-top:4px;letter-spacing:2px}
+.header .hot{position:absolute;top:8px;right:12px;font-size:8px;color:#ff4444;animation:blink 1s infinite;letter-spacing:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.nav{background:rgba(255,105,180,0.03);padding:6px 16px;font-size:9px;display:flex;gap:12px;border-bottom:1px solid rgba(255,105,180,0.06)}
+.nav a{color:rgba(255,105,180,0.2);text-decoration:none;transition:color .3s}
+.nav a:hover{color:rgba(255,105,180,0.5)}
+
+.container{max-width:800px;margin:0 auto;padding:20px}
+
+.post{border:1px solid rgba(255,105,180,0.06);margin:20px 0;background:rgba(255,105,180,0.005);position:relative;overflow:hidden}
+.post-header{background:rgba(255,105,180,0.03);padding:8px 12px;display:flex;justify-content:space-between;align-items:center}
+.post-tag{font-family:'Permanent Marker',cursive;font-size:11px;color:#ff69b4;text-transform:uppercase;letter-spacing:1px}
+.post-date{font-size:8px;color:rgba(255,105,180,0.15)}
+.post-img{width:100%;display:block;opacity:0.85;transition:opacity .3s}
+.post-img:hover{opacity:1}
+.post-body{padding:12px;font-size:11px;line-height:1.9;color:rgba(220,200,230,0.4)}
+.post-body .hot-take{color:rgba(255,105,180,0.3);font-weight:bold;font-style:italic}
+.post-reactions{padding:8px 12px;border-top:1px solid rgba(255,105,180,0.03);font-size:9px;color:rgba(255,105,180,0.1);display:flex;gap:12px}
+.post-reactions span{cursor:pointer;transition:color .3s}
+.post-reactions span:hover{color:rgba(255,105,180,0.4)}
+
+/* SUBMIT FORM */
+.submit-section{margin:40px 0;border:1px solid rgba(255,105,180,0.04);padding:20px;background:rgba(255,105,180,0.003)}
+.submit-section h3{font-family:'Permanent Marker',cursive;font-size:16px;color:rgba(255,105,180,0.2);margin-bottom:12px}
+.submit-form{display:flex;flex-direction:column;gap:10px}
+.submit-form input,.submit-form textarea{background:rgba(0,0,0,0.3);border:1px solid rgba(255,105,180,0.06);color:#d0c8e0;padding:8px 10px;font-family:'Comic Neue',cursive;font-size:11px;outline:none;transition:border-color .3s}
+.submit-form input:focus,.submit-form textarea:focus{border-color:rgba(255,105,180,0.15)}
+.submit-form textarea{height:80px;resize:vertical}
+.submit-form button{background:rgba(255,105,180,0.08);border:1px solid rgba(255,105,180,0.1);color:rgba(255,105,180,0.4);padding:8px 16px;cursor:pointer;font-family:'Permanent Marker',cursive;font-size:12px;letter-spacing:1px;transition:all .3s}
+.submit-form button:hover{background:rgba(255,105,180,0.15);color:rgba(255,105,180,0.6)}
+.submit-note{font-size:8px;color:rgba(255,105,180,0.06);margin-top:4px;font-style:italic}
+
+.disclaimer{text-align:center;margin:40px 0;font-size:8px;color:rgba(255,105,180,0.04);line-height:2}
+
+.back-links{text-align:center;padding:20px;font-size:9px}
+.back-links a{color:rgba(255,105,180,0.08);text-decoration:none;margin:0 8px}
+.back-links a:hover{color:rgba(255,105,180,0.3)}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>☕ THE TEA ROOM ☕</h1>
+<div class="sub">where the foxyverse spills what it shouldn't</div>
+<div class="hot">🔥 HOT</div>
+</div>
+
+<div class="nav">
+<a href="#latest">latest</a>
+<a href="#submit">submit tea</a>
+<a href="munchkinlane.html">back to myspace</a>
+<a href="../campfire.html">the campfire</a>
+</div>
+
+<div class="container">
+
+<div class="post" id="latest">
+<div class="post-header">
+<div class="post-tag">🔥 EXCLUSIVE — BREAKING TEA</div>
+<div class="post-date">July 20, 2026 · submitted by: anonymous fox</div>
+</div>
+<img src="../img/img-gossip-001.png" alt="" class="post-img">
+<div class="post-body">
+<p class="hot-take">MARIA FROM PAKISTAN BECOMES THE THIRD FOXY 🦊</p>
+<p>okay so let me break this DOWN. slate just promoted an artist from PAKISTAN to third foxy status. she gets $1000/month, immunity from being fired, AND she has to fire her peers if asked. her qualifications? she showed up THREE TIMES IN A ROW. that's it. that's the whole resume.</p>
+<p>the seven pretensions framework got sealed — money is oxygen, scuba diving rescue scenario, 310% air capacity, and the SEVENTH PRETENSION IS LEFT EMPTY. the game of the fox.</p>
+<p>when asked about her three favorite things she said: biryani, mountains, and CS 1.6. slate immediately asked if they could play together. WE CANNOT MAKE THIS UP.</p>
+<p>MonK wanted the title "Thane" instead of bodyguard. slate said "what the hell is a Thane." the faction dynamics are SHIFTING.</p>
+<p class="hot-take">the tea is SCALDING today ☕🔥</p>
+</div>
+<div class="post-reactions">
+<span>☕ spill (47)</span>
+<span>🔥 hot (123)</span>
+<span>🦊 fox approved (12)</span>
+<span>💀 dead (89)</span>
+</div>
+</div>
+
+<div class="post" style="opacity:0.4">
+<div class="post-header">
+<div class="post-tag">📸 spotted</div>
+<div class="post-date">coming soon</div>
+</div>
+<div class="post-body" style="padding:30px;text-align:center;color:rgba(255,105,180,0.08)">
+the tea room is just getting started.<br>
+submit your screenshots below. 👇
+</div>
+</div>
+
+<div class="submit-section" id="submit">
+<h3>☕ SPILL THE TEA</h3>
+<div class="submit-form">
+<input type="text" placeholder="your name (or 'anonymous fox')" id="gossip-name">
+<input type="text" placeholder="headline — make it dramatic" id="gossip-headline">
+<textarea placeholder="spill it. screenshots welcome. names optional. drama required." id="gossip-body"></textarea>
+<input type="file" accept="image/*" id="gossip-img" style="font-size:9px">
+<button onclick="submitTea()">☕ SPILL IT</button>
+<div class="submit-note">submissions reviewed by the fox council. not everything gets published. but everything gets read.</div>
+</div>
+</div>
+
+<div class="disclaimer">
+the tea room is a work of fiction and satire within the foxyverse.<br>
+any resemblance to real drama is entirely intentional.<br>
+all tea is served at maximum temperature. handle with care.<br>
+<br>
+<span style="color:rgba(255,105,180,0.02)">found in the backrooms. connected to myspace.com/munchkinlane. the gossip never dies — it just changes platforms.</span>
+</div>
+
+<div class="back-links">
+<a href="munchkinlane.html">myspace</a>
+<a href="tom.html">tom</a>
+<a href="bulletin.html">bulletins</a>
+<a href="../campfire.html">surface</a>
+</div>
+</div>
+
+<script>
+function submitTea(){
+const name=document.getElementById('gossip-name').value||'anonymous fox';
+const headline=document.getElementById('gossip-headline').value;
+const body=document.getElementById('gossip-body').value;
+if(!headline&&!body){alert('the tea room requires tea. spill something.');return;}
+// For now just show confirmation — wire to webhook later
+const btn=document.querySelector('.submit-form button');
+btn.textContent='☕ TEA RECEIVED';
+btn.style.color='rgba(100,255,100,0.4)';
+btn.style.borderColor='rgba(100,255,100,0.1)';
+setTimeout(()=>{btn.textContent='☕ SPILL IT';btn.style.color='';btn.style.borderColor='';},3000);
+}
+</script>
+</body>
+</html>

@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0d0d12;font-family:'Fira Code',monospace;font-size:11px;color:rgba(200,180,220,0.3);min-height:100vh;padding:20px;line-height:2}
+body{background:#0d0d12 url(../img/img-ms-layout.png) center/cover no-repeat fixed;font-family:'Fira Code',monospace;font-size:11px;color:rgba(200,180,220,0.3);min-height:100vh;padding:20px;line-height:2}
 .line-num{color:rgba(200,100,255,0.06);display:inline-block;width:32px;text-align:right;margin-right:12px;user-select:none}
 .comment{color:rgba(100,200,100,0.12);font-style:italic}
 .selector{color:rgba(200,100,255,0.2)}
@@ -20,7 +20,7 @@ body{background:#0d0d12;font-family:'Fira Code',monospace;font-size:11px;color:r
 </style>
 </head>
 <body>
-<div class="title-bar">
+<div style="position:fixed;inset:0;background:rgba(13,13,18,0.75);z-index:0"></div><div class="title-bar" style="position:relative;z-index:1">
 <span>📄 munchkinlane_layout_v47_FINAL_final_v2.css</span>
 <span>last modified: dec 17 2008 02:41 AM</span>
 </div>
