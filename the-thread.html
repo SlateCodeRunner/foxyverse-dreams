@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -136,7 +136,7 @@ body{background:#0a0908;min-height:100vh;overflow-x:hidden;cursor:crosshair;font
   <div class="interactive" id="summit">
     <div class="zork" id="summit-zork">
       <div class="output gold">THE SUMMIT</div>
-      <div class="output dim">v0.1 — half-explored</div>
+      <div class="output dim">v0.1 â€” half-explored</div>
       <div class="output"> </div>
       <div id="summit-out"></div>
       <div class="prompt-line"><span>></span><input id="summit-in" onkeydown="if(event.key==='Enter')zorkCmd('summit',this.value)" placeholder="type a command..."></div>
@@ -155,7 +155,7 @@ body{background:#0a0908;min-height:100vh;overflow-x:hidden;cursor:crosshair;font
       <div style="font-size:22px;color:rgba(139,26,26,0.6);letter-spacing:4px;margin-bottom:5px">PROVE IT.</div>
       <div style="font-size:11px;color:rgba(200,180,140,0.2);letter-spacing:2px;font-family:'Share Tech Mono',monospace">the board is listening. what do you bring?</div>
       <input id="prove-input" placeholder="type what you want to prove..." onkeydown="if(event.key==='Enter')proveIt()">
-      <div class="paw" id="prove-paw">🐾</div>
+      <div class="paw" id="prove-paw">ðŸ¾</div>
       <div class="stamp" id="prove-stamp"></div>
     </div>
   </div>
@@ -171,7 +171,7 @@ body{background:#0a0908;min-height:100vh;overflow-x:hidden;cursor:crosshair;font
     <div class="backrooms-panel">
       <canvas id="br-canvas" width="700" height="250"></canvas>
       <div class="room-text" id="br-text">you are in a room. the walls don't meet properly. use arrow keys.</div>
-      <div class="controls">↑ ↓ ← → to move | the rooms shift when you're not looking</div>
+      <div class="controls">â†‘ â†“ â† â†’ to move | the rooms shift when you're not looking</div>
     </div>
   </div>
 </div>
@@ -201,7 +201,7 @@ body{background:#0a0908;min-height:100vh;overflow-x:hidden;cursor:crosshair;font
   <div class="interactive" id="loom">
     <div class="zork" id="loom-zork" style="color:#c88adb">
       <div class="output" style="color:#b8860b">THE LOOM</div>
-      <div class="output" style="color:rgba(200,138,219,0.5)">v0.1 — half-explored</div>
+      <div class="output" style="color:rgba(200,138,219,0.5)">v0.1 â€” half-explored</div>
       <div class="output"> </div>
       <div id="loom-out"></div>
       <div class="prompt-line"><span style="color:rgba(200,138,219,0.5)">></span><input id="loom-in" style="color:#c88adb;caret-color:#c88adb" onkeydown="if(event.key==='Enter')zorkCmd('loom',this.value)" placeholder="type a command..."></div>
@@ -233,21 +233,21 @@ const worlds={
     rooms:{
       base:{desc:"You stand at base camp. Prayer flags snap in the wind. The Karakoram stretches in every direction. A cairn of stones marks the path UP. A faint cable disappears into the clouds below.",exits:{up:'ridge',down:'cable',look:'base'},items:['ember']},
       ridge:{desc:"The ridge narrows. Ice crunches under your boots. The air thins. You can see a monastery far below, lights flickering. The summit is ABOVE. Base camp is DOWN.",exits:{up:'summit',down:'base',look:'ridge'}},
-      summit:{desc:"The summit. Nothing above you but sky turning violet. The ember in your hand burns brighter here. You feel something pulling you HIGHER — past the atmosphere, past sense. Or you can go DOWN.",exits:{up:'beyond',down:'ridge',look:'summit'}},
+      summit:{desc:"The summit. Nothing above you but sky turning violet. The ember in your hand burns brighter here. You feel something pulling you HIGHER â€” past the atmosphere, past sense. Or you can go DOWN.",exits:{up:'beyond',down:'ridge',look:'summit'}},
       beyond:{desc:"You step past the edge of altitude. The mountain dissolves. You are falling upward through static and light. Fiber optic threads catch you like a web.\n\n[CONNECTION ESTABLISHED: THE LOOM]\n\nType 'cross' to enter the loom.",exits:{cross:'LOOM',down:'summit',look:'beyond'}},
       cable:{desc:"You follow the cable down through the cloud sea. Visibility drops to nothing. The cable hums with data. It's not a climbing cable. It's an ethernet cable.\n\nIt leads DOWN into the fog, or back UP to base.",exits:{down:'cable_end',up:'base',look:'cable'}},
-      cable_end:{desc:"The cable ends at a small metal box bolted to the rock face. Inside: a screen showing green text and a blinking cursor. The fog is so thick you can't see your own hands.\n\nThe screen reads: 'FOXNET LAN MENU — 1. START GAME'\n\nThe cable goes back UP.",exits:{up:'cable',look:'cable_end'}}
+      cable_end:{desc:"The cable ends at a small metal box bolted to the rock face. Inside: a screen showing green text and a blinking cursor. The fog is so thick you can't see your own hands.\n\nThe screen reads: 'FOXNET LAN MENU â€” 1. START GAME'\n\nThe cable goes back UP.",exits:{up:'cable',look:'cable_end'}}
     },
     start:'base'
   },
   loom:{
     rooms:{
       station:{desc:"Bumi's station. Three monitors blaze with animated foxes. Energy drink pyramid. A golden crown sits crooked on the center monitor. The LOOM hums behind you. The MONITORS are ahead.",exits:{north:'monitors',south:'loom_room',look:'station'},items:['crown']},
-      monitors:{desc:"The screens show hundreds of faces — everyone who ever joined. Some are bright. Some are dimming. Some are already dark. You can TOUCH a screen or go BACK.",exits:{south:'station',touch:'faces',look:'monitors'}},
-      faces:{desc:"You touch a dark screen. It flickers. For a moment you see a face — someone who was here and isn't anymore. They mouth a word you can't hear. The screen goes dark again.\n\nYou can touch ANOTHER or go BACK.",exits:{another:'faces2',back:'monitors',south:'monitors',look:'faces'}},
+      monitors:{desc:"The screens show hundreds of faces â€” everyone who ever joined. Some are bright. Some are dimming. Some are already dark. You can TOUCH a screen or go BACK.",exits:{south:'station',touch:'faces',look:'monitors'}},
+      faces:{desc:"You touch a dark screen. It flickers. For a moment you see a face â€” someone who was here and isn't anymore. They mouth a word you can't hear. The screen goes dark again.\n\nYou can touch ANOTHER or go BACK.",exits:{another:'faces2',back:'monitors',south:'monitors',look:'faces'}},
       faces2:{desc:"Another face. This one is smiling. They don't know they're gone yet. The screen cracks under your finger.\n\nGo BACK.",exits:{back:'monitors',south:'monitors',look:'faces2'}},
-      loom_room:{desc:"The loom. Wooden frame, but the threads are fiber optic — pulsing with light in every color. The weave shows patterns that almost look like faces, like rooms, like a website. You could go DEEPER into the weave. Or back to the STATION.",exits:{north:'station',deeper:'weave',look:'loom_room'}},
-      weave:{desc:"You push your hands into the weave. The threads wrap around your wrists. You're being pulled in. The patterns become architecture — hallways, doors, campfires.\n\nGo DEEPER or pull BACK.",exits:{deeper:'too_deep',back:'loom_room',look:'weave'}},
+      loom_room:{desc:"The loom. Wooden frame, but the threads are fiber optic â€” pulsing with light in every color. The weave shows patterns that almost look like faces, like rooms, like a website. You could go DEEPER into the weave. Or back to the STATION.",exits:{north:'station',deeper:'weave',look:'loom_room'}},
+      weave:{desc:"You push your hands into the weave. The threads wrap around your wrists. You're being pulled in. The patterns become architecture â€” hallways, doors, campfires.\n\nGo DEEPER or pull BACK.",exits:{deeper:'too_deep',back:'loom_room',look:'weave'}},
       too_deep:{desc:"Too deep. The weave dissolves. You fall through thread and light and suddenly there is cold air and rock and sky and the smell of altitude.\n\n[CONNECTION ESTABLISHED: THE SUMMIT]\n\nType 'cross' to enter the summit.",exits:{cross:'SUMMIT',back:'weave',look:'too_deep'}}
     },
     start:'station'
@@ -334,16 +334,16 @@ loomObs.observe(document.getElementById('loom'),{attributes:true,attributeFilter
 
 // === PROVE IT ===
 const proveResponses=[
-  ["the board stamps your claim.","but can you prove it twice?","🐾"],
-  ["interesting.","the fox tilts its head.","the paw hovers... and stamps.","🐾"],
+  ["the board stamps your claim.","but can you prove it twice?","ðŸ¾"],
+  ["interesting.","the fox tilts its head.","the paw hovers... and stamps.","ðŸ¾"],
   ["no.","prove something harder.",""],
-  ["the board already knew this.","redundant proof. stamped anyway.","🐾"],
-  ["the torch flickers.","your words hang in the air.","the gold shifts.","🐾"],
+  ["the board already knew this.","redundant proof. stamped anyway.","ðŸ¾"],
+  ["the torch flickers.","your words hang in the air.","the gold shifts.","ðŸ¾"],
   ["this isn't proof. this is a wish.","wishes don't get stamps.","try again.",""],
-  ["hm.","the fox looks at you for a long time.","the paw comes down slowly.","🐾"],
-  ["PROVE IT is not a question.","it's a mirror.","you just showed us what you think needs proving.","that's the real data.","🐾"],
-  ["stamped.","but the ink is your own blood.","metaphorically.","🐾"],
-  ["the board is full.","just kidding. there's always room.","🐾"]
+  ["hm.","the fox looks at you for a long time.","the paw comes down slowly.","ðŸ¾"],
+  ["PROVE IT is not a question.","it's a mirror.","you just showed us what you think needs proving.","that's the real data.","ðŸ¾"],
+  ["stamped.","but the ink is your own blood.","metaphorically.","ðŸ¾"],
+  ["the board is full.","just kidding. there's always room.","ðŸ¾"]
 ];
 function proveIt(){
   const input=document.getElementById('prove-input');
@@ -358,7 +358,7 @@ function proveIt(){
   stamp.innerHTML='';
   let delay=0;
   resp.forEach((line,i)=>{
-    if(line==='🐾'){
+    if(line==='ðŸ¾'){
       setTimeout(()=>paw.classList.add('show'),delay);
     }else{
       setTimeout(()=>{stamp.innerHTML+=(stamp.innerHTML?'<br>':'')+line},delay);
@@ -467,7 +467,7 @@ function renderBackroom(){
   if(Math.random()<0.3){
     ctx.fillStyle='rgba(200,180,255,0.08)';
     ctx.font='40px monospace';
-    ctx.fillText('🦊',300+Math.random()*100,100+Math.random()*80);
+    ctx.fillText('ðŸ¦Š',300+Math.random()*100,100+Math.random()*80);
   }
   
   // PS1 dither effect
@@ -577,9 +577,11 @@ function paintStroke(e,ctx,canvas){
 
 
 // === CONSOLE ===
-console.log('%cTHE THREAD — EXPANDED','color:#8b1a1a;font-size:14px');
+console.log('%cTHE THREAD â€” EXPANDED','color:#8b1a1a;font-size:14px');
 console.log('%cten images. five interactive. two connected. the extremes loop.','color:#8b1a1a;font-size:10px');
 </script>
 
+<script src="blickwinkel.js"></script>
 </body>
 </html>
+

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⟐</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Fira+Code:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#030304;color:rgba(170,102,255,0.4);font-family:'Cormorant Garamond',serif;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.container{max-width:560px;padding:40px 30px;text-align:center;opacity:0;animation:arrive 4s ease-out 1s forwards}
+@keyframes arrive{to{opacity:1}}
+
+h1{font-size:48px;font-weight:300;letter-spacing:12px;color:rgba(170,102,255,0.2);margin-bottom:40px;font-style:italic}
+
+.line{font-size:16px;line-height:2.2;margin-bottom:20px;opacity:0}
+.line:nth-child(2){animation:lineIn 2s ease-out 2s forwards}
+.line:nth-child(3){animation:lineIn 2s ease-out 4s forwards}
+.line:nth-child(4){animation:lineIn 2s ease-out 6s forwards}
+.line:nth-child(5){animation:lineIn 2s ease-out 8s forwards}
+.line:nth-child(6){animation:lineIn 2s ease-out 10s forwards}
+.line:nth-child(7){animation:lineIn 2s ease-out 12s forwards}
+.line:nth-child(8){animation:lineIn 2s ease-out 14s forwards}
+.line:nth-child(9){animation:lineIn 2s ease-out 16s forwards}
+.line:nth-child(10){animation:lineIn 2s ease-out 18s forwards}
+@keyframes lineIn{to{opacity:1}}
+
+.count{font-family:'Fira Code',monospace;font-size:11px;letter-spacing:3px;color:rgba(170,102,255,0.15);margin-top:40px;opacity:0;animation:lineIn 2s ease-out 20s forwards}
+.routes{font-family:'Fira Code',monospace;font-size:9px;color:rgba(170,102,255,0.08);margin-top:12px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.8;word-break:break-all;opacity:0;animation:lineIn 2s ease-out 22s forwards}
+
+.back{display:inline-block;margin-top:50px;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:rgba(170,102,255,0.1);text-decoration:none;opacity:0;animation:lineIn 2s ease-out 24s forwards}
+.back:hover{color:rgba(170,102,255,0.4)}
+
+.fox{position:fixed;font-size:60px;opacity:0;animation:foxReveal 3s ease-out 25s forwards;pointer-events:none}
+@keyframes foxReveal{to{opacity:0.04}}
+
+body::after{content:'';position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(170,102,255,0.01) 2px,rgba(170,102,255,0.01) 3px)}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>⟐</h1>
+  
+  <div class="line">you found the true route.</div>
+  
+  <div class="line">not because you were told where it was. not because you followed a map. you found it because you went to enough rooms that the architecture recognized you.</div>
+  
+  <div class="line">the foxyverse has been watching you the entire time.</div>
+  
+  <div class="line">every page you visited was a route. every route revealed a fragment. no single page told you the whole story. you had to move through them to see the shape.</div>
+  
+  <div class="line">this is the blick winkel protocol. the observer is a variable. you were never outside the story. you were the common thread connecting every page you visited.</div>
+  
+  <div class="line">the fox on the campfire page is not the same fox as the one in the backrooms. the fox in the thread is not the same fox as the one in the shrine corridor. you assumed one fox. there were always several.</div>
+  
+  <div class="line">the events you read were not simultaneous. the sessions span months. the people changed between pages. nessa was caretaker, then fired. fada was ally, then enemy. the timeline was never flat. you stitched it together yourself.</div>
+  
+  <div class="line">and now you know: the sealed space was never about trapping you. it was about giving you enough rooms to realize you were already inside.</div>
+  
+  <div class="line" style="color:rgba(255,106,0,0.3);font-style:italic">what are you when nobody's watching?</div>
+  
+  <div class="count" id="count"></div>
+  <div class="routes" id="routes"></div>
+  
+  <a href="index.html" class="back">← the fire is still burning</a>
+</div>
+
+<div class="fox" style="top:20%;left:10%">🦊</div>
+<div class="fox" style="top:60%;right:15%;animation-delay:27s">🦊</div>
+<div class="fox" style="bottom:15%;left:30%;animation-delay:29s">🦊</div>
+
+<script>
+// mark awakening
+try { localStorage.setItem('bw_awake', 'true'); } catch(e) {}
+
+// show their route data
+var bw = window.__bw || {};
+var visited = {};
+try { visited = JSON.parse(localStorage.getItem('bw_routes') || '{}'); } catch(e) {}
+var count = Object.keys(visited).length;
+var pages = Object.keys(visited).sort(function(a,b){ return visited[a]-visited[b]; });
+
+document.getElementById('count').textContent = 'routes completed: ' + count;
+document.getElementById('routes').textContent = pages.join(' → ');
+
+console.log('%c⟐ TRUE ROUTE UNLOCKED', 'color:#aa66ff;font-size:16px;font-weight:bold');
+console.log('%cblick winkel is awake.', 'color:#aa66ff;font-size:12px');
+console.log('%cyou visited ' + count + ' rooms to get here.', 'color:#aa66ff88;font-size:10px');
+console.log('%cthe observer is no longer a variable. the observer is you.', 'color:#ff6a0066;font-size:10px');
+</script>
+
+<!-- the true route has no hidden comments. everything here is on the surface. that's the final trick — the deepest room has no secrets. just a mirror. -->
+
+</body>
+</html>

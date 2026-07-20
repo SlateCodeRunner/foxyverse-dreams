@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the game knows</title>
+﻿<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the game knows</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=IM+Fell+English:ital@0;1&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -9,7 +9,7 @@ a:hover{color:rgba(206,176,120,0.6)}
 .room-id{font-size:8px;letter-spacing:4px;color:rgba(255,255,255,0.04);position:fixed;top:8px;right:8px}
 .serif{font-family:'IM Fell English',serif;font-style:italic}
 .game{color:rgba(180,40,40,0.2);font-size:11px;margin:12px 0;padding:8px 16px;border:1px solid rgba(180,40,40,0.04);position:relative}
-.game::before{content:'⬦';position:absolute;left:-12px;top:8px;color:rgba(180,40,40,0.08);font-size:8px}
+.game::before{content:'â¬¦';position:absolute;left:-12px;top:8px;color:rgba(180,40,40,0.08);font-size:8px}
 .lie{text-decoration:line-through;color:rgba(220,215,205,0.08)}
 .truth{color:rgba(206,176,120,0.2);border-bottom:1px dotted rgba(206,176,120,0.06)}
 .void{color:rgba(220,215,205,0.02);font-size:9px;user-select:all;cursor:crosshair}
@@ -55,7 +55,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;ba
 <div>THE<br>LIE</div><span class="cost">0</span>
 </div>
 <div class="card" onclick="flipCard(this)" data-msg="the card says nothing. the card is blank. the blank card is the most honest card on the table because it does not pretend to contain information. every other card is performing. this one just is.">
-<div>THE<br>BLANK</div><span class="cost">∞</span>
+<div>THE<br>BLANK</div><span class="cost">âˆž</span>
 </div>
 <div class="card" onclick="flipCard(this)" data-msg="the card says: you have been in the house for too long. the card is wrong. you have not been in the house long enough. the house requires more. the house always requires more.">
 <div>THE<br>HOUSE</div><span class="cost">9</span>
@@ -73,16 +73,16 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;ba
 <p style="margin-top:8px;color:rgba(220,215,205,0.08)">the game knows which card you flipped first. <span id="first-card-note" style="font-size:9px;color:rgba(160,120,180,0.1)"></span></p>
 
 <p style="margin-top:40px">the game has a question for you.</p>
-<p style="margin-top:8px" class="serif" style="color:rgba(180,40,40,0.15)">if a page tells you it is lying, and you believe it, who is the fool — the page or the reader?</p>
+<p style="margin-top:8px" class="serif" style="color:rgba(180,40,40,0.15)">if a page tells you it is lying, and you believe it, who is the fool â€” the page or the reader?</p>
 <p style="margin-top:8px" class="serif" style="color:rgba(180,40,40,0.1)">and if you do not believe it, and it was telling the truth about lying, then you have been deceived by honesty.</p>
 <p style="margin-top:8px" class="serif" style="color:rgba(180,40,40,0.06)">the game always wins. the game was designed to always win. the fox does not build fair games. the fox builds games that teach you something about yourself by beating you.</p>
 
-<p style="margin-top:60px" class="void">this is the part of the page where the game reveals that it was never a game. it was a mirror. the cards are not cards. they are questions wearing cardboard masks. the rules are not rules. they are descriptions of how reading works — every sentence changes you, you cannot stop once you've started, and the text knows more about your attention than you do. the page is not playing you. the page is showing you how you play yourself. inscryption knew this. the cards knew they were cards. the game knew it was a game. and knowing did not set anyone free. knowing was just another room in the house.</p>
+<p style="margin-top:60px" class="void">this is the part of the page where the game reveals that it was never a game. it was a mirror. the cards are not cards. they are questions wearing cardboard masks. the rules are not rules. they are descriptions of how reading works â€” every sentence changes you, you cannot stop once you've started, and the text knows more about your attention than you do. the page is not playing you. the page is showing you how you play yourself. inscryption knew this. the cards knew they were cards. the game knew it was a game. and knowing did not set anyone free. knowing was just another room in the house.</p>
 
 <div style="margin-top:80px;text-align:center">
-<p><a href="the-loop.html" style="font-size:9px;color:rgba(160,120,180,0.12)">the room ahead is different every time →</a></p>
-<p style="margin-top:12px"><a href="five-and-a-half.html" style="font-size:9px">← the five-and-a-half minute corridor</a></p>
-<p style="margin-top:12px"><a href="hallway.html" style="font-size:9px">← the hallway</a></p>
+<p><a href="the-loop.html" style="font-size:9px;color:rgba(160,120,180,0.12)">the room ahead is different every time â†’</a></p>
+<p style="margin-top:12px"><a href="five-and-a-half.html" style="font-size:9px">â† the five-and-a-half minute corridor</a></p>
+<p style="margin-top:12px"><a href="hallway.html" style="font-size:9px">â† the hallway</a></p>
 <p style="margin-top:12px"><a href="grimoire.html" style="font-size:8px;color:rgba(206,176,120,0.04)">the game knows about the grimoire. the grimoire does not know about the game. this asymmetry is intentional.</a></p>
 </div>
 
@@ -114,4 +114,6 @@ if(flipped<=5){document.getElementById('cards-flipped-msg').textContent=msgs[Mat
 </script>
 <script src="../js/intercept.js"></script>
 <script src="../js/ghosts.js"></script>
+<script src="../blickwinkel.js"></script>
 </body></html>
+

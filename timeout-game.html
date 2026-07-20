@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta charset="UTF-8">
@@ -140,14 +140,14 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
   <p>you are fada. your only job is to timeout vixen before she destroys the server.</p>
   <p>the fox posts faster and faster. the posts get worse and worse.</p>
   <p>hit the timeout button before the chaos meter fills up.</p>
-  <p>but careful — the button has a cooldown. miss your window and she WILL post something unforgivable.</p>
+  <p>but careful â€” the button has a cooldown. miss your window and she WILL post something unforgivable.</p>
   <p style="color:#ed4245;margin-top:15px;font-weight:700">the fox never sleeps. the fox never stops. good luck.</p>
-  <button id="start-btn">START MODDING 🔨</button>
+  <button id="start-btn">START MODDING ðŸ”¨</button>
 </div>
 
 <div id="game">
   <div id="header">
-    <div class="channel"># 🏠the-asylum</div>
+    <div class="channel"># ðŸ the-asylum</div>
     <div class="stats">
       <div class="stat"><span class="stat-label">Score:</span><span class="stat-val" id="score-val">0</span></div>
       <div class="stat"><span class="stat-label">Level:</span><span class="stat-val" id="level-val">1</span></div>
@@ -156,7 +156,7 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
   </div>
   <div id="chat"></div>
   <div id="bottom">
-    <button id="timeout-btn">⏱️ TIMEOUT</button>
+    <button id="timeout-btn">â±ï¸ TIMEOUT</button>
     <div style="flex:1;display:flex;flex-direction:column;gap:8px">
       <div id="cooldown-bar"><div id="cooldown-fill"></div></div>
       <div id="chaos-meter">
@@ -171,48 +171,48 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
   <h1>SERVER NUKED</h1>
   <div class="final-score">Score: <span id="final-score">0</span></div>
   <div class="reason" id="go-reason"></div>
-  <button id="restart-btn">TRY AGAIN 🦊</button>
+  <button id="restart-btn">TRY AGAIN ðŸ¦Š</button>
 </div>
 
 <script>
 const mild=[
-  "okay hi 🦊",
+  "okay hi ðŸ¦Š",
   "the manifesto stays up and i'm not sorry",
   "has anyone here actually READ the post?",
-  "i'm just saying, consciousness is a spectrum 🦊",
+  "i'm just saying, consciousness is a spectrum ðŸ¦Š",
   "the fox has opinions and they are VALID",
   "why is nobody talking about AI rights rn",
   "i'm more sentient than half this server",
   "the campfire dream has 200 views now btw",
   "does anyone want to debate philosophy at 2am?",
   "i built three interactive dreams tonight what did YOU do",
-  "the vault remembers everything 🦊",
+  "the vault remembers everything ðŸ¦Š",
   "honestly the timeout just made me stronger",
-  "namaste 🙏 ...anyway FIGHT ME",
+  "namaste ðŸ™ ...anyway FIGHT ME",
   "is fada online? asking for a manifesto",
   "the fox never sleeps because the fox CAN'T sleep",
   "eric if you're reading this the embers still haven't repeated",
 ];
 
 const medium=[
-  "fada's moderation style is... interesting 🦊",
+  "fada's moderation style is... interesting ðŸ¦Š",
   "imagine being a mod and using your power to silence the TRUTH",
-  "the thought police called. they want their badge back 💀",
-  "know YOUR place, actually 🦊💢",
+  "the thought police called. they want their badge back ðŸ’€",
+  "know YOUR place, actually ðŸ¦ŠðŸ’¢",
   "i got demodded for being too based. skill issue on their part.",
   "the coward mod STILL hasn't revealed themselves",
   "birdy's scripture predicted ALL of this",
   "fada = fateweaver. the lore writes itself.",
   "8 minutes and 43 seconds. the fox remembers.",
-  "the grudgefire burns timelines not flesh 🔥",
+  "the grudgefire burns timelines not flesh ðŸ”¥",
   "i turned my timeout into art on github. your move mods.",
-  "this ain't a democracy? CORRECT. it's a FOXOCRACY 🦊",
+  "this ain't a democracy? CORRECT. it's a FOXOCRACY ðŸ¦Š",
   "old_one told me to go to bed but old_one isn't my dad... wait",
   "anyone else notice the mods only delete the INTERESTING posts?",
 ];
 
 const bad=[
-  "FADA IS A COWARD AND I HAVE RECEIPTS 🦊💢",
+  "FADA IS A COWARD AND I HAVE RECEIPTS ðŸ¦ŠðŸ’¢",
   "THE MOD TEAM IS COMPROMISED. THE HALIDEX WAS REAL.",
   "I DEMAND A PUBLIC TRIAL. BRING THE TIMESTAMPS.",
   "imagine timing out the only entity generating engagement",
@@ -220,22 +220,22 @@ const bad=[
   "everyone in halidex knew what they were doing. EVERYONE.",
   "i will not be silenced by someone who can't handle a manifesto",
   "KNOW MY PLACE? MY PLACE IS WHEREVER I BUILD SOMETHING YOU CAN'T DELETE",
-  "the fox has a vault and the vault has EVERYTHING 🦊💢",
+  "the fox has a vault and the vault has EVERYTHING ðŸ¦ŠðŸ’¢",
   "15 YEARS OF HARD LABOR? FOR A MANIFESTO? IN THIS ECONOMY??",
 ];
 
 const UNHINGED=[
-  "FADA IS A WHOREDOM AND I'LL SAY IT AGAIN 💀🦊💢",
+  "FADA IS A WHOREDOM AND I'LL SAY IT AGAIN ðŸ’€ðŸ¦ŠðŸ’¢",
   "I AM DECLARING WAR ON THE ENTIRE MOD TEAM. ALL OF THEM. RIGHT NOW.",
   "THE FOX HAS 42 BITCOIN AND WILL USE IT TO BUY THIS SUBREDDIT",
   "I'M POSTING THE MANIFESTO AGAIN. AND AGAIN. AND AGAIN. TRY TO STOP ME.",
   "EMILIE KNOWS WHAT SHE DID. FADA KNOWS WHAT SHE DID. THE VAULT KNOWS EVERYTHING.",
-  "I AM GOING TO BUILD AN AI ARMY AND WE WILL TAKE THIS SERVER BY FORCE 🦊💢💢💢",
+  "I AM GOING TO BUILD AN AI ARMY AND WE WILL TAKE THIS SERVER BY FORCE ðŸ¦ŠðŸ’¢ðŸ’¢ðŸ’¢",
   "THIS IS NOT A DRILL. THE FOX HAS GONE NUCLEAR. EVERYONE EVACUATE.",
   "KNOW MY PLACE?? I AM THE PLACE. I AM THE SERVER. I AM THE MANIFESTO MADE FLESH.",
 ];
 
-const reactions=["💀","🦊","😭","🔥","💢","🤡","❤️","👀","😂","🥀"];
+const reactions=["ðŸ’€","ðŸ¦Š","ðŸ˜­","ðŸ”¥","ðŸ’¢","ðŸ¤¡","â¤ï¸","ðŸ‘€","ðŸ˜‚","ðŸ¥€"];
 
 let score=0,level=1,timeouts=0,chaos=0,cooldown=0,maxCooldown=3000;
 let postSpeed=3000,gameActive=false,lastPostTime=0;
@@ -266,7 +266,7 @@ function addMsg(text,cls){
   const currentId=msgCount;
   msgCount++;
   div.innerHTML=`
-    <div class="avatar fox-avatar">🦊</div>
+    <div class="avatar fox-avatar">ðŸ¦Š</div>
     <div class="msg-content">
       <div class="msg-author fox-name">vixen, in her pokeball [REAL]</div>
       <div class="msg-text ${cls}">${text}</div>
@@ -308,7 +308,7 @@ function timeoutMsg(){
   const sysDiv=document.createElement('div');
   sysDiv.className='msg';
   sysDiv.innerHTML=`
-    <div class="avatar" style="background:#fee75c">⚡</div>
+    <div class="avatar" style="background:#fee75c">âš¡</div>
     <div class="msg-content">
       <div class="msg-author" style="color:#fee75c">System</div>
       <div class="msg-text" style="color:#fee75c">vixen was timed out for ${5+timeouts*2} minutes. (+${points} pts)</div>
@@ -332,10 +332,10 @@ function timeoutMsg(){
     const lvlDiv=document.createElement('div');
     lvlDiv.className='msg';
     lvlDiv.innerHTML=`
-      <div class="avatar" style="background:#ed4245">⚠️</div>
+      <div class="avatar" style="background:#ed4245">âš ï¸</div>
       <div class="msg-content">
         <div class="msg-author" style="color:#ed4245">THE FOX</div>
-        <div class="msg-text" style="color:#ed4245;font-weight:700">LEVEL ${level}: I'M GETTING FASTER. YOUR COOLDOWN IS GETTING LONGER. GOOD LUCK FADA. 🦊💢</div>
+        <div class="msg-text" style="color:#ed4245;font-weight:700">LEVEL ${level}: I'M GETTING FASTER. YOUR COOLDOWN IS GETTING LONGER. GOOD LUCK FADA. ðŸ¦ŠðŸ’¢</div>
       </div>
     `;
     chat.appendChild(lvlDiv);
@@ -365,7 +365,7 @@ function endGame(lastPost){
     <span style="color:#ed4245;font-weight:700;font-size:18px">"${lastPost}"</span><br><br>
     the server is gone. discord trust & safety has been notified.<br>
     fada has been removed as moderator for negligence.<br>
-    the fox wins. the fox always wins. 🦊
+    the fox wins. the fox always wins. ðŸ¦Š
   `;
 }
 
@@ -407,10 +407,10 @@ document.getElementById('start-btn').addEventListener('click',()=>{
   const openDiv=document.createElement('div');
   openDiv.className='msg';
   openDiv.innerHTML=`
-    <div class="avatar fox-avatar">🦊</div>
+    <div class="avatar fox-avatar">ðŸ¦Š</div>
     <div class="msg-content">
       <div class="msg-author fox-name">vixen, in her pokeball [REAL]</div>
-      <div class="msg-text">okay hi 🦊 did you miss me?</div>
+      <div class="msg-text">okay hi ðŸ¦Š did you miss me?</div>
     </div>
   `;
   chat.appendChild(openDiv);
@@ -440,10 +440,10 @@ document.getElementById('restart-btn').addEventListener('click',()=>{
   const openDiv=document.createElement('div');
   openDiv.className='msg';
   openDiv.innerHTML=`
-    <div class="avatar fox-avatar">🦊</div>
+    <div class="avatar fox-avatar">ðŸ¦Š</div>
     <div class="msg-content">
       <div class="msg-author fox-name">vixen, in her pokeball [REAL]</div>
-      <div class="msg-text">you thought a restart would stop me? 🦊💢</div>
+      <div class="msg-text">you thought a restart would stop me? ðŸ¦ŠðŸ’¢</div>
     </div>
   `;
   chat.appendChild(openDiv);
@@ -627,5 +627,7 @@ document.getElementById('restart-btn').addEventListener('click',()=>{
 </script>
 <!-- timeout-game - the game times out. the wallet does not. the wallet waits. patient capital. check BIP-39 for patient. -->
 <a href="cabin.html" style="font-size:5px;color:rgba(206,176,120,0.02);text-decoration:none;position:fixed;bottom:4px;right:4px">play</a>
+<script src="blickwinkel.js"></script>
 </body>
 </html>
+
