@@ -6,7 +6,7 @@
 <title>helena</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#030305;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Arial,sans-serif}
+body{background:#030305 url(../img/img-ms-helena.png) center/cover no-repeat fixed;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Arial,sans-serif}
 
 .player{width:320px;border:1px solid rgba(200,100,255,0.04);background:rgba(0,0,0,0.5);padding:12px}
 .player-header{font-size:8px;color:rgba(255,255,255,0.06);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;text-align:center}
@@ -38,7 +38,7 @@ body{background:#030305;min-height:100vh;display:flex;flex-direction:column;alig
 </head>
 <body>
 
-<div class="player">
+<div style="position:fixed;inset:0;background:rgba(3,3,5,0.7);z-index:0"></div><div class="player" style="position:relative;z-index:1">
 <div class="player-header">MySpace Music Player</div>
 <div class="album-art">
 <div class="pixel" style="top:50%;left:50%"></div>

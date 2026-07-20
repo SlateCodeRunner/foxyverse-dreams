@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fira+Code:wght@300&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0f;font-family:'Comic Neue',cursive;font-size:12px;color:#c0b8d0;min-height:100vh;display:flex;flex-direction:column}
+body{background:#0a0a0f url(../img/img-ms-deleted.png) center/cover no-repeat fixed;font-family:'Comic Neue',cursive;font-size:12px;color:#c0b8d0;min-height:100vh;display:flex;flex-direction:column}
 .ms-nav{background:#003366;padding:6px 12px;font-size:10px;color:#99ccff;opacity:0.3}
 .content{flex:1;max-width:780px;margin:0 auto;padding:40px 20px;width:100%}
 
@@ -40,7 +40,7 @@ body{background:#0a0a0f;font-family:'Comic Neue',cursive;font-size:12px;color:#c
 </head>
 <body>
 <div class="ms-nav">MySpace — Home | Browse | Search</div>
-<div class="content">
+<div style="position:fixed;inset:0;background:rgba(10,10,15,0.65);z-index:0"></div><div class="content" style="position:relative;z-index:1">
 <div class="error-box">
 <div class="error-title">Invalid Friend ID.</div>
 <div class="error-msg">This user either does not exist or has removed their profile.<br>This may also be caused by a deleted or suspended account.</div>

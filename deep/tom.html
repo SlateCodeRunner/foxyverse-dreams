@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#000;font-family:'Comic Neue',cursive;font-size:12px;color:#c0b8d0;overflow-x:hidden}
+body{background:#000 url(../img/img-ms-tom.png) center/cover no-repeat fixed;font-family:'Comic Neue',cursive;font-size:12px;color:#c0b8d0;overflow-x:hidden}
 .ms-nav{background:#003366;padding:6px 12px;font-size:10px;color:#99ccff;opacity:0.3}
 .container{max-width:780px;margin:0 auto;background:linear-gradient(180deg,#0d0d1a,#0a0a0f);border:1px solid #1a1a2a;min-height:100vh;position:relative}
 .profile{padding:20px;text-align:center}
@@ -28,7 +28,7 @@ body{background:#000;font-family:'Comic Neue',cursive;font-size:12px;color:#c0b8
 </head>
 <body>
 <div class="ms-nav">MySpace — Home | Browse | Search</div>
-<div class="container">
+<div style="position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:0"></div><div class="container" style="position:relative;z-index:1">
 <div class="profile">
 <div class="name">tom</div>
 <div class="sub">myspace.com/tom</div>
