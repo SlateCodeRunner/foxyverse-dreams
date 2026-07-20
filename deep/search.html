@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>search results</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fira+Code:wght@300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;font-family:'Comic Neue',cursive;font-size:11px;color:#c0b8d0;min-height:100vh}
+.ms-nav{background:#003366;padding:6px 12px;font-size:10px;color:#99ccff;opacity:0.3}
+.ms-nav a{color:#99ccff;text-decoration:none}
+.container{max-width:650px;margin:0 auto;padding:30px 20px 100px}
+
+.search-bar{display:flex;gap:8px;margin:20px 0;align-items:center}
+.search-bar input{flex:1;background:rgba(0,0,0,0.3);border:1px solid rgba(200,100,255,0.08);color:#c0b8d0;padding:8px 12px;font-family:'Comic Neue',cursive;font-size:12px;outline:none}
+.search-bar button{background:rgba(0,51,102,0.3);border:1px solid rgba(0,51,102,0.2);color:rgba(153,204,255,0.3);padding:8px 16px;cursor:pointer;font-size:10px}
+.results-info{font-size:9px;color:rgba(200,100,255,0.06);margin-bottom:20px}
+
+.result{padding:12px;margin:10px 0;border-bottom:1px solid rgba(200,100,255,0.02)}
+.result-name{font-size:13px;color:rgba(200,100,255,0.12);margin-bottom:2px}
+.result-url{font-size:8px;color:rgba(100,200,100,0.08);font-family:'Fira Code',monospace;margin-bottom:4px}
+.result-snippet{font-size:10px;color:rgba(220,215,205,0.08);line-height:1.6}
+.result.deleted .result-name{text-decoration:line-through;color:rgba(255,100,100,0.1)}
+.result.deleted .result-snippet{color:rgba(255,100,100,0.05);font-style:italic}
+
+.no-more{text-align:center;margin:40px 0;font-size:10px;color:rgba(200,100,255,0.04);font-style:italic;line-height:2}
+.back{font-size:9px;color:rgba(200,100,255,0.04);text-decoration:none;display:inline-block;margin-top:20px}
+.back:hover{color:rgba(200,100,255,0.15)}
+</style>
+</head>
+<body>
+<div class="ms-nav"><a href="munchkinlane.html" style="color:#ffcc00">Home</a> · <a href="unread.html" style="color:#ff9933">Mail (1)</a> · <a href="munchkinlane-blog.html">Blog</a> · <a href="playlist.html">Music</a> · <a href="gossip.html" style="color:rgba(255,105,180,0.3)">Tea Room</a></div>
+<div class="container">
+
+<div class="search-bar">
+<input type="text" value="munchkinlane's friends" readonly>
+<button>Search</button>
+</div>
+<div class="results-info">MySpace Search — showing 6 results for "munchkinlane's friends" · sorted by relevance</div>
+
+<div class="result">
+<a href="deleted-profile.html" style="text-decoration:none"><div class="result-name">xXdarkAngelXx</div></a>
+<div class="result-url">myspace.com/xXdarkAngelXx</div>
+<div class="result-snippet">"i was here. i promise i was here." · Last Login: September 14, 2008 · <span style="color:rgba(255,100,100,0.08)">ACCOUNT TERMINATED — user_requested</span></div>
+</div>
+
+<div class="result">
+<div class="result-name"><a href="bulletin.html" style="color:rgba(200,100,255,0.12);text-decoration:none">scene_queen_2007</a></div>
+<div class="result-url">myspace.com/scene_queen_2007</div>
+<div class="result-snippet">18 / Female / California · "paramore is life" · 847 friends · Last Login: February 2, 2009 · <span style="color:rgba(255,200,100,0.06)">PROFILE ARCHIVED</span></div>
+</div>
+
+<div class="result">
+<div class="result-name"><a href="pc4pc.html" style="color:rgba(200,100,255,0.12);text-decoration:none">rawr_xD</a></div>
+<div class="result-url">myspace.com/rawr_xD</div>
+<div class="result-snippet">"rawr means i love you in dinosaur 🦖" · 19 / Female / Oregon · 1,203 friends · Last Login: March 15, 2009 · <span style="color:rgba(255,200,100,0.06)">PROFILE ARCHIVED</span></div>
+</div>
+
+<div class="result deleted">
+<div class="result-name">x_broken_x</div>
+<div class="result-url">myspace.com/x_broken_x — <span style="color:rgba(255,100,100,0.06)">PAGE NOT FOUND</span></div>
+<div class="result-snippet">this profile has been removed or does not exist.</div>
+</div>
+
+<div class="result deleted">
+<div class="result-name">[3 profiles matched but cannot be displayed]</div>
+<div class="result-url">error: accounts purged during 2013 platform migration</div>
+<div class="result-snippet">MySpace lost approximately 50 million songs, 12 years of blogs, and an unknown number of user profiles during the server migration of 2013.</div>
+</div>
+
+<div class="result">
+<a href="tom.html" style="text-decoration:none"><div class="result-name" style="color:rgba(200,100,255,0.08)">Tom</div></a>
+<div class="result-url">myspace.com/tom</div>
+<div class="result-snippet">Your first friend. · 115,847,294 friends · Last Login: always</div>
+</div>
+
+<div class="no-more">end of results.<br>everyone she knew is either archived, deleted, or Tom.<br>Tom is always here.<br>Tom will always be here.</div>
+
+<a href="munchkinlane.html" class="back">&larr; back to profile</a>
+</div>
+</body>
+</html>
