@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>munchkinlane</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#000}
+body{
+  max-width:780px;margin:20px auto;padding:0;
+  background:linear-gradient(180deg, #1a0a1a 0%, #0d0d1a 30%, #0a0a0f 100%);
+  font-family:'Comic Neue',cursive,sans-serif;font-size:12px;color:#c0b8d0;
+  border:1px solid #2a1a3a;position:relative;overflow:hidden;
+}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 3px);
+}
+
+/* MYSPACE HEADER */
+.ms-nav{background:#003366;padding:6px 12px;font-size:10px;color:#99ccff;display:flex;justify-content:space-between;align-items:center;opacity:0.4}
+.ms-nav a{color:#ffcc00;text-decoration:none}
+.ms-logo{font-weight:bold;font-size:14px;letter-spacing:1px;color:rgba(255,255,255,0.3)}
+.ms-logo span{color:rgba(255,200,100,0.3)}
+
+/* PROFILE */
+.profile{display:grid;grid-template-columns:200px 1fr;gap:16px;padding:16px}
+.profile-left{text-align:center}
+.profile-pic{width:170px;height:170px;border:3px solid #6a3a8a;object-fit:cover;margin-bottom:8px;filter:contrast(1.1) saturate(0.8)}
+.profile-pic:hover{filter:contrast(1.2) saturate(1) brightness(1.1)}
+.profile-name{font-size:16px;font-weight:bold;color:#cc88ee;text-shadow:0 0 8px rgba(200,100,255,0.15);margin-bottom:4px}
+.online-now{font-size:9px;color:#66cc66;margin-bottom:8px}
+.online-now::before{content:'⚫ ';color:#333}
+
+.mood{font-size:10px;color:#9988aa;margin:8px 0;padding:6px;background:rgba(255,255,255,0.02);border:1px solid rgba(200,100,255,0.05)}
+.mood em{color:#cc88ee}
+
+/* DETAILS TABLE */
+.details{font-size:10px;width:100%;border-collapse:collapse;margin:12px 0}
+.details td{padding:3px 6px;border-bottom:1px solid rgba(200,100,255,0.04)}
+.details td:first-child{color:#8877aa;width:80px}
+
+/* BLURBS */
+.blurbs{padding:16px;border-top:1px solid rgba(200,100,255,0.04)}
+.blurbs h3{font-size:11px;color:#cc88ee;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;border-bottom:1px solid rgba(200,100,255,0.06);padding-bottom:4px}
+.blurbs p{font-size:11px;line-height:1.8;color:#a098b0;margin-bottom:16px}
+
+/* MUSIC PLAYER */
+.music-player{background:rgba(0,0,0,0.3);border:1px solid rgba(200,100,255,0.05);padding:8px 12px;margin:12px 16px;font-size:9px;color:#8877aa;display:flex;align-items:center;gap:8px}
+.music-player .track{color:#cc88ee}
+.music-player .controls{opacity:0.3}
+
+/* TOP 8 */
+.top8{padding:16px;border-top:1px solid rgba(200,100,255,0.04)}
+.top8 h3{font-size:11px;color:#cc88ee;margin-bottom:12px}
+.top8-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.friend{text-align:center;font-size:9px;color:#8877aa;opacity:0.2}
+.friend-pic{width:60px;height:60px;background:rgba(200,100,255,0.03);border:1px solid rgba(200,100,255,0.05);display:flex;align-items:center;justify-content:center;margin:0 auto 4px;font-size:16px}
+
+/* COMMENTS */
+.comments{padding:16px;border-top:1px solid rgba(200,100,255,0.04)}
+.comments h3{font-size:11px;color:#cc88ee;margin-bottom:12px}
+.comment{padding:8px;margin-bottom:8px;background:rgba(0,0,0,0.2);border-left:2px solid rgba(200,100,255,0.06);font-size:10px;line-height:1.7}
+.comment .who{color:#cc88ee;font-size:9px;margin-bottom:2px}
+.comment .when{color:#665577;font-size:8px;float:right}
+
+/* DECAY */
+.glitch{position:relative}
+.glitch::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent,transparent 98%,rgba(200,100,255,0.02) 98%,rgba(200,100,255,0.02) 100%);
+}
+.decay{animation:decay 15s ease-in-out infinite}
+@keyframes decay{0%,100%{opacity:0.7}50%{opacity:0.5}}
+
+/* FOOTER */
+.ms-footer{text-align:center;padding:20px;font-size:8px;color:rgba(200,100,255,0.06);border-top:1px solid rgba(200,100,255,0.02)}
+
+/* SPARKLE CURSOR TRAIL */
+.sparkle{position:fixed;pointer-events:none;font-size:8px;color:rgba(200,100,255,0.3);z-index:999;animation:sparkle-die 1.5s ease-out forwards}
+@keyframes sparkle-die{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-30px) scale(0)}}
+</style>
+</head>
+<body class="glitch decay">
+
+<div class="ms-nav">
+  <div class="ms-logo">My<span>Space</span></div>
+  <div>Home | Browse | Search | Invite | Film | Mail | Blog | Favorites | Forum | Groups | Events | Videos | Music | Classifieds</div>
+</div>
+
+<div class="profile">
+  <div class="profile-left">
+    <img src="../img/img-backroom-face.png" alt="" class="profile-pic">
+    <div class="profile-name">munchkinlane</div>
+    <div class="online-now">Last Login: 1/14/2009</div>
+    <div class="mood">Mood: <em>idk anymore lol</em> ✨</div>
+
+    <table class="details">
+      <tr><td>Status:</td><td>it's complicated obviously</td></tr>
+      <tr><td>Here for:</td><td>friends, networking</td></tr>
+      <tr><td>Orientation:</td><td>not telling lol</td></tr>
+      <tr><td>Hometown:</td><td>wouldn't you like to know</td></tr>
+      <tr><td>Sign:</td><td>♏ scorpio</td></tr>
+      <tr><td>Smoke/Drink:</td><td>sometimes / sometimes</td></tr>
+    </table>
+  </div>
+
+  <div>
+    <div class="music-player">
+      <span class="controls">▶ ⏸ ⏭</span>
+      <span class="track">♫ My Chemical Romance — Helena</span>
+      <span style="opacity:0.2">Auto-Play: ON</span>
+    </div>
+
+    <div class="blurbs">
+      <h3>About Me</h3>
+      <p>i like making things and breaking things in equal measure 💜 if you're boring don't add me. scene is not dead it just went underground. i probably have more eyeliner than you and i'm not sorry about it. ask me about my dreams they're weirder than yours i promise ✨🖤</p>
+
+      <h3>Who I'd Like to Meet</h3>
+      <p>people who actually mean what they say for once. also gerard way but that's a given. and anyone who knows what it's like to feel everything at maximum volume all the time 🔊💀</p>
+
+      <h3>Interests</h3>
+      <p>photography, drawing, html/css (yes i coded this layout myself tyvm), horror movies, anime, writing poetry at 3am, collecting things that glow in the dark, being way too online</p>
+    </div>
+  </div>
+</div>
+
+<div class="top8">
+  <h3>munchkinlane's Top 8</h3>
+  <div class="top8-grid">
+    <div class="friend"><div class="friend-pic">👻</div>deleted</div>
+    <div class="friend"><div class="friend-pic">🖤</div>xXdarkAngelXx</div>
+    <div class="friend"><div class="friend-pic">💀</div>scene_queen_2007</div>
+    <div class="friend"><div class="friend-pic">✨</div>deleted</div>
+    <div class="friend"><div class="friend-pic">🦇</div>rawr_xD</div>
+    <div class="friend"><div class="friend-pic">💜</div>deleted</div>
+    <div class="friend"><div class="friend-pic">🌙</div>x_broken_x</div>
+    <div class="friend"><div class="friend-pic">🔮</div>Tom</div>
+  </div>
+</div>
+
+<div class="comments">
+  <h3>Comments (3)</h3>
+  <div class="comment"><div class="when">Dec 23, 2008</div><div class="who">xXdarkAngelXx</div>heyy babe!! merry xmas eve eve lol 🎄💜 ur layout is SO cute omg teach me html plzzz</div>
+  <div class="comment"><div class="when">Nov 4, 2008</div><div class="who">scene_queen_2007</div>omg the new pics are adorable!! we need to hang out again srsly. also did you hear the new paramore album??? DYING 💀🖤</div>
+  <div class="comment"><div class="when">Oct 12, 2008</div><div class="who">rawr_xD</div>pc4pc?? 🦇✨ btw ur song choice is *chefs kiss* helena is THAT song</div>
+</div>
+
+<div class="ms-footer">
+  myspace.com/munchkinlane<br>
+  &copy; 2003-2009 MySpace Inc. All Rights Reserved.<br><br>
+  <span style="color:rgba(200,100,255,0.03)">this page was found in the backrooms. the last login was january 2009. the profile picture still loads. everything else is archaeology.</span>
+</div>
+
+<script>
+// Sparkle cursor trail
+document.addEventListener('mousemove', (e) => {
+  if (Math.random() > 0.85) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.textContent = ['✦','✧','·','♡','★'][Math.floor(Math.random()*5)];
+    s.style.left = e.clientX + 'px';
+    s.style.top = e.clientY + 'px';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1500);
+  }
+});
+</script>
+</body>
+</html>
