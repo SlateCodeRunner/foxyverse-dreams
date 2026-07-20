@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>view source: munchkinlane</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0d12;font-family:'Fira Code',monospace;font-size:11px;color:rgba(200,180,220,0.3);min-height:100vh;padding:20px;line-height:2}
+.line-num{color:rgba(200,100,255,0.06);display:inline-block;width:32px;text-align:right;margin-right:12px;user-select:none}
+.comment{color:rgba(100,200,100,0.12);font-style:italic}
+.selector{color:rgba(200,100,255,0.2)}
+.property{color:rgba(100,180,255,0.15)}
+.value{color:rgba(255,180,100,0.15)}
+.important{color:rgba(255,100,100,0.12)}
+.title-bar{background:rgba(200,100,255,0.02);padding:6px 12px;font-size:9px;color:rgba(200,100,255,0.1);margin-bottom:16px;border:1px solid rgba(200,100,255,0.03);display:flex;justify-content:space-between}
+.back{font-size:9px;color:rgba(200,100,255,0.04);text-decoration:none;display:inline-block;margin-top:30px}
+.back:hover{color:rgba(200,100,255,0.15)}
+</style>
+</head>
+<body>
+<div class="title-bar">
+<span>📄 munchkinlane_layout_v47_FINAL_final_v2.css</span>
+<span>last modified: dec 17 2008 02:41 AM</span>
+</div>
+
+<div><span class="line-num">1</span><span class="comment">/* =================================== */</span></div>
+<div><span class="line-num">2</span><span class="comment">/* munchkinlane's layout v47 */</span></div>
+<div><span class="line-num">3</span><span class="comment">/* DO NOT STEAL!! i worked hard on this */</span></div>
+<div><span class="line-num">4</span><span class="comment">/* if you want help making yours ask me */</span></div>
+<div><span class="line-num">5</span><span class="comment">/* =================================== */</span></div>
+<div><span class="line-num">6</span></div>
+<div><span class="line-num">7</span><span class="comment">/* hide the ugly default stuff */</span></div>
+<div><span class="line-num">8</span><span class="selector">table table table</span> {</div>
+<div><span class="line-num">9</span>&nbsp;&nbsp;<span class="property">background-color</span>: <span class="value">transparent</span>;</div>
+<div><span class="line-num">10</span>&nbsp;&nbsp;<span class="property">border</span>: <span class="value">none</span>;</div>
+<div><span class="line-num">11</span>}</div>
+<div><span class="line-num">12</span></div>
+<div><span class="line-num">13</span><span class="comment">/* idk why this works but if you remove it everything breaks */</span></div>
+<div><span class="line-num">14</span><span class="selector">.profileInfo td</span> {</div>
+<div><span class="line-num">15</span>&nbsp;&nbsp;<span class="property">display</span>: <span class="value">none</span> <span class="important">!important</span>;</div>
+<div><span class="line-num">16</span>}</div>
+<div><span class="line-num">17</span></div>
+<div><span class="line-num">18</span><span class="comment">/* the good stuff starts here 💜 */</span></div>
+<div><span class="line-num">19</span><span class="selector">body</span> {</div>
+<div><span class="line-num">20</span>&nbsp;&nbsp;<span class="property">background</span>: <span class="value">#1a0a1a url(https://i.imgur.com/DELETED.gif) repeat</span>;</div>
+<div><span class="line-num">21</span>&nbsp;&nbsp;<span class="comment">/* the gif was stars falling. imgur deleted it. */</span></div>
+<div><span class="line-num">22</span>&nbsp;&nbsp;<span class="property">color</span>: <span class="value">#c0b8d0</span>;</div>
+<div><span class="line-num">23</span>&nbsp;&nbsp;<span class="property">font-family</span>: <span class="value">"comic sans ms"</span>; <span class="comment">/* don't judge me */</span></div>
+<div><span class="line-num">24</span>&nbsp;&nbsp;<span class="property">cursor</span>: <span class="value">url(https://cur.cursors-4u.net/cursors/DELETED.cur), auto</span>;</div>
+<div><span class="line-num">25</span>&nbsp;&nbsp;<span class="comment">/* the sparkle cursor. RIP cursors-4u */</span></div>
+<div><span class="line-num">26</span>}</div>
+<div><span class="line-num">27</span></div>
+<div><span class="line-num">28</span><span class="comment">/* make the links purple because purple is the best color */</span></div>
+<div><span class="line-num">29</span><span class="comment">/* and anyone who says otherwise is wrong */</span></div>
+<div><span class="line-num">30</span><span class="selector">a</span> { <span class="property">color</span>: <span class="value">#cc88ee</span>; }</div>
+<div><span class="line-num">31</span><span class="selector">a:hover</span> { <span class="property">color</span>: <span class="value">#ff99ff</span>; <span class="property">text-shadow</span>: <span class="value">0 0 5px #ff99ff</span>; }</div>
+<div><span class="line-num">32</span></div>
+<div><span class="line-num">33</span><span class="comment">/* TODO: figure out how to make text scroll like in the matrix */</span></div>
+<div><span class="line-num">34</span><span class="comment">/* UPDATE: tried marquee tag. it works but its ugly */</span></div>
+<div><span class="line-num">35</span><span class="comment">/* UPDATE 2: kept the marquee. ugly is a vibe */</span></div>
+<div><span class="line-num">36</span></div>
+<div><span class="line-num">37</span><span class="comment">/* hide tom from my top 8 */</span></div>
+<div><span class="line-num">38</span><span class="comment">/* jk i can't do that. tom is eternal */</span></div>
+<div><span class="line-num">39</span></div>
+<div><span class="line-num">40</span><span class="comment">/* okay its 2:41am and i should stop */</span></div>
+<div><span class="line-num">41</span><span class="comment">/* this is version 47 of this layout */</span></div>
+<div><span class="line-num">42</span><span class="comment">/* i have changed my layout 47 times this year */</span></div>
+<div><span class="line-num">43</span><span class="comment">/* the outside will match the inside eventually */</span></div>
+<div><span class="line-num">44</span><span class="comment">/* it has to */</span></div>
+<div><span class="line-num">45</span><span class="comment">/* right? */</span></div>
+<div><span class="line-num">46</span></div>
+<div><span class="line-num">47</span><span class="comment">/* last edit. i promise. goodnight 🖤 */</span></div>
+
+<a href="munchkinlane.html" class="back">&larr; back to profile</a>
+</body>
+</html>
