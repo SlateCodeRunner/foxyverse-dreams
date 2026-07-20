@@ -5,206 +5,77 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>the thread</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&family=VT323&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-
-body{
-  background:#0a0908;
-  min-height:100vh;
-  overflow-x:hidden;
-  cursor:crosshair;
-  font-family:'Special Elite',monospace;
-}
-
-/* THE WALL — cork texture */
-.wall{
-  position:relative;
-  width:100%;
-  min-height:100vh;
-  background:
-    repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(80,50,20,0.03) 2px,rgba(80,50,20,0.03) 4px),
-    repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(60,40,15,0.02) 3px,rgba(60,40,15,0.02) 5px),
-    radial-gradient(ellipse at 30% 20%,rgba(40,25,10,0.4),transparent 70%),
-    radial-gradient(ellipse at 70% 80%,rgba(40,25,10,0.3),transparent 60%),
-    #0d0b09;
-  padding:40px 20px 80px;
-}
-
-/* RED THREAD SVG OVERLAY */
-.threads{
-  position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  pointer-events:none;
-  z-index:50;
-  opacity:0;
-  animation:threadFade 4s ease-out 2s forwards;
-}
-@keyframes threadFade{to{opacity:1}}
-
-.threads svg{width:100%;height:100%}
-.thread-line{
-  stroke:#8b1a1a;
-  stroke-width:1.5;
-  fill:none;
-  stroke-dasharray:1000;
-  stroke-dashoffset:1000;
-  animation:drawThread 6s ease-out 3s forwards;
-  filter:drop-shadow(0 0 2px rgba(139,26,26,0.5));
-}
-@keyframes drawThread{to{stroke-dashoffset:0}}
-
-/* PINS */
-.pin{
-  position:absolute;
-  width:12px;height:12px;
-  border-radius:50%;
-  background:radial-gradient(circle at 4px 4px,#cc2222,#660000);
-  box-shadow:0 2px 4px rgba(0,0,0,0.6),0 0 6px rgba(139,26,26,0.4);
-  z-index:60;
-  opacity:0;
-  animation:pinDrop 0.3s ease-out forwards;
-}
-
-/* EVIDENCE CARDS */
-.evidence{
-  position:relative;
-  z-index:10;
-  max-width:1200px;
-  margin:0 auto;
-}
-
-.card{
-  position:relative;
-  margin-bottom:60px;
-  opacity:0;
-  animation:cardIn 1.5s ease-out forwards;
-}
-.card:nth-child(1){animation-delay:0.5s}
-.card:nth-child(2){animation-delay:1.2s;margin-left:15%}
-.card:nth-child(3){animation-delay:1.9s;margin-left:5%}
-.card:nth-child(4){animation-delay:2.6s;margin-left:20%}
-.card:nth-child(5){animation-delay:3.3s;margin-left:8%}
-
-@keyframes cardIn{
-  0%{opacity:0;transform:translateY(20px) rotate(-1deg)}
-  100%{opacity:1;transform:translateY(0) rotate(var(--rot,0deg))}
-}
-
-.card:nth-child(1){--rot:-1.2deg}
-.card:nth-child(2){--rot:0.8deg}
-.card:nth-child(3){--rot:-0.5deg}
-.card:nth-child(4){--rot:1.5deg}
-.card:nth-child(5){--rot:-0.9deg}
-
-.card img{
-  width:100%;
-  max-width:700px;
-  display:block;
-  border:3px solid rgba(60,40,20,0.4);
-  box-shadow:4px 6px 20px rgba(0,0,0,0.7);
-  filter:brightness(0.85) contrast(1.05);
-  transition:filter 0.5s;
-}
+body{background:#0a0908;min-height:100vh;overflow-x:hidden;cursor:crosshair;font-family:'Special Elite',monospace}
+.wall{position:relative;width:100%;min-height:100vh;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(80,50,20,0.03) 2px,rgba(80,50,20,0.03) 4px),repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(60,40,15,0.02) 3px,rgba(60,40,15,0.02) 5px),radial-gradient(ellipse at 30% 20%,rgba(40,25,10,0.4),transparent 70%),radial-gradient(ellipse at 70% 80%,rgba(40,25,10,0.3),transparent 60%),#0d0b09;padding:40px 20px 80px}
+.evidence{position:relative;z-index:10;max-width:1200px;margin:0 auto}
+.card{position:relative;margin-bottom:60px;opacity:0;animation:cardIn 1.5s ease-out forwards}
+@keyframes cardIn{0%{opacity:0;transform:translateY(20px) rotate(-1deg)}100%{opacity:1;transform:translateY(0) rotate(var(--rot,0deg))}}
+.card:nth-child(odd){--rot:-0.8deg}.card:nth-child(even){--rot:0.6deg;margin-left:10%}
+.card img{width:100%;max-width:700px;display:block;border:3px solid rgba(60,40,20,0.4);box-shadow:4px 6px 20px rgba(0,0,0,0.7);filter:brightness(0.85) contrast(1.05);transition:filter 0.5s;cursor:pointer}
 .card img:hover{filter:brightness(1) contrast(1.1)}
-
-/* SCRAWLED NOTES */
-.note{
-  position:absolute;
-  font-family:'Special Elite',monospace;
-  color:rgba(180,40,40,0.7);
-  font-size:13px;
-  line-height:1.5;
-  max-width:200px;
-  transform:rotate(var(--note-rot,0deg));
-  pointer-events:none;
-  text-shadow:0 0 8px rgba(139,26,26,0.2);
-}
-
-.note.ink-black{color:rgba(200,180,140,0.25);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px}
-
-/* TAPE STRIPS */
-.tape{
-  position:absolute;
-  width:60px;height:18px;
-  background:rgba(200,180,120,0.12);
-  border:1px solid rgba(200,180,120,0.06);
-  transform:rotate(var(--tape-rot,0deg));
-  z-index:15;
-}
-
-/* QUESTION MARKS scattered */
-.question{
-  position:fixed;
-  font-family:'Special Elite',monospace;
-  color:rgba(139,26,26,0.08);
-  font-size:var(--q-size,60px);
-  pointer-events:none;
-  z-index:5;
-  animation:drift 20s ease-in-out infinite alternate;
-}
-@keyframes drift{
-  0%{transform:translateY(0) rotate(0deg)}
-  100%{transform:translateY(-30px) rotate(5deg)}
-}
-
-/* BOTTOM TEXT */
-.bottom{
-  text-align:center;
-  padding:60px 20px 40px;
-  position:relative;
-  z-index:30;
-}
-.bottom p{
-  font-family:'Share Tech Mono',monospace;
-  font-size:10px;
-  letter-spacing:3px;
-  color:rgba(139,26,26,0.3);
-  margin-bottom:12px;
-}
-.bottom a{
-  font-family:'Share Tech Mono',monospace;
-  font-size:9px;
-  letter-spacing:2px;
-  color:rgba(200,180,140,0.15);
-  text-decoration:none;
-  transition:color 0.3s;
-}
+.note{position:absolute;font-family:'Special Elite',monospace;color:rgba(180,40,40,0.7);font-size:13px;line-height:1.5;max-width:200px;transform:rotate(var(--note-rot,0deg));pointer-events:none;text-shadow:0 0 8px rgba(139,26,26,0.2)}
+.note.ink{color:rgba(200,180,140,0.25);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px}
+.tape{position:absolute;width:60px;height:18px;background:rgba(200,180,120,0.12);border:1px solid rgba(200,180,120,0.06);transform:rotate(var(--tape-rot,0deg));z-index:15}
+.card::before{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 3px 3px,#cc2222,#550000);box-shadow:0 1px 3px rgba(0,0,0,0.5);z-index:20;top:-5px;left:20px}
+.redacted{background:rgba(139,26,26,0.15);color:transparent;padding:0 4px;text-decoration:line-through;text-decoration-color:rgba(139,26,26,0.4)}
+.scanline{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.05) 2px,rgba(0,0,0,0.05) 3px);opacity:0.3}
+.question{position:fixed;font-family:'Special Elite',monospace;color:rgba(139,26,26,0.08);pointer-events:none;z-index:5;animation:drift 20s ease-in-out infinite alternate}
+@keyframes drift{0%{transform:translateY(0)}100%{transform:translateY(-30px)}}
+.bottom{text-align:center;padding:60px 20px 40px;position:relative;z-index:30}
+.bottom p{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(139,26,26,0.3);margin-bottom:12px}
+.bottom a{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(200,180,140,0.15);text-decoration:none}
 .bottom a:hover{color:rgba(200,180,140,0.4)}
 
-/* RED PIN at each corner of images */
-.card::before,.card::after{
-  content:'';position:absolute;width:10px;height:10px;border-radius:50%;
-  background:radial-gradient(circle at 3px 3px,#cc2222,#550000);
-  box-shadow:0 1px 3px rgba(0,0,0,0.5);z-index:20;
-}
-.card::before{top:-5px;left:20px}
-.card::after{top:-5px;right:calc(100% - 720px);max-width:none}
+/* DIVIDER */
+.divider{text-align:center;padding:80px 20px;position:relative}
+.divider::before{content:'';position:absolute;left:10%;right:10%;top:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(139,26,26,0.3),transparent)}
+.divider span{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:6px;color:rgba(139,26,26,0.2);background:#0d0b09;padding:0 20px;position:relative}
 
-/* REDACTED BLOCKS */
-.redacted{
-  background:rgba(139,26,26,0.15);
-  color:transparent;
-  padding:0 4px;
-  text-decoration:line-through;
-  text-decoration-color:rgba(139,26,26,0.4);
-  user-select:none;
-}
+/* INTERACTIVE PANELS */
+.interactive{display:none;margin-top:15px;max-width:700px;border:1px solid rgba(139,26,26,0.2);background:rgba(0,0,0,0.6);overflow:hidden}
+.interactive.open{display:block;animation:panelOpen 0.5s ease-out}
+@keyframes panelOpen{from{max-height:0;opacity:0}to{max-height:2000px;opacity:1}}
+.click-hint{position:absolute;bottom:10px;right:10px;font-family:'Share Tech Mono',monospace;font-size:9px;color:rgba(200,180,140,0.3);letter-spacing:2px;pointer-events:none;z-index:15}
 
-/* Glitch scan */
-.scanline{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  pointer-events:none;z-index:100;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.05) 2px,rgba(0,0,0,0.05) 3px);
-  opacity:0.3;
-}
+/* ZORK STYLE */
+.zork{padding:20px;font-family:'VT323',monospace;color:#33ff33;font-size:16px;max-height:400px;overflow-y:auto}
+.zork .output{margin-bottom:8px;line-height:1.4;white-space:pre-wrap}
+.zork .output.dim{color:#1a8c1a}
+.zork .output.gold{color:#b8860b}
+.zork .output.red{color:#cc3333}
+.zork input{background:none;border:none;color:#33ff33;font-family:'VT323',monospace;font-size:16px;width:calc(100% - 20px);outline:none;caret-color:#33ff33}
+.zork .prompt-line{display:flex;align-items:center}
+.zork .prompt-line span{margin-right:8px;color:#1a8c1a}
+
+/* PROVE IT */
+.prove-panel{padding:20px;text-align:center}
+.prove-panel input{background:rgba(40,30,15,0.6);border:2px solid rgba(139,26,26,0.3);color:rgba(200,180,140,0.8);font-family:'Special Elite',monospace;font-size:16px;padding:12px 20px;width:80%;outline:none;margin:15px 0}
+.prove-panel input::placeholder{color:rgba(200,180,140,0.2)}
+.prove-panel .stamp{font-size:14px;color:rgba(139,26,26,0.6);min-height:60px;margin-top:10px;font-family:'Special Elite',monospace;line-height:1.8}
+.prove-panel .paw{font-size:28px;opacity:0;transition:opacity 0.5s}
+.prove-panel .paw.show{opacity:1}
+
+/* LSD BACKROOMS */
+.backrooms-panel{position:relative;height:350px;overflow:hidden;background:#1a0a2a}
+.backrooms-panel canvas{display:block;width:100%;height:250px;image-rendering:pixelated}
+.backrooms-panel .room-text{padding:10px 15px;font-family:'VT323',monospace;font-size:14px;color:#9060b0;min-height:60px}
+.backrooms-panel .controls{text-align:center;padding:5px;font-family:'VT323',monospace;font-size:11px;color:rgba(144,96,176,0.4)}
+
+/* FOX PAINT */
+.paint-panel{position:relative}
+.paint-panel canvas{display:block;width:100%;cursor:crosshair;background:#1a1008}
+.paint-panel .palette{display:flex;gap:4px;padding:8px;background:rgba(0,0,0,0.8);flex-wrap:wrap;justify-content:center}
+.paint-panel .swatch{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color 0.2s}
+.paint-panel .swatch.active{border-color:#fff}
+.paint-panel .rule{font-family:'Share Tech Mono',monospace;font-size:9px;color:rgba(200,150,80,0.3);text-align:center;padding:6px;letter-spacing:2px}
 
 @media(max-width:768px){
   .card{margin-left:0!important}
   .card img{max-width:100%}
   .note{display:none}
-  .card::after{display:none}
+  .interactive{max-width:100%}
   .wall{padding:20px 10px 60px}
 }
 </style>
@@ -212,190 +83,502 @@ body{
 <body>
 
 <div class="scanline"></div>
-
-<!-- scattered question marks -->
-<div class="question" style="top:10%;left:5%;--q-size:80px">?</div>
-<div class="question" style="top:30%;right:8%;--q-size:45px;animation-delay:-7s">?</div>
-<div class="question" style="top:55%;left:12%;--q-size:55px;animation-delay:-3s">?</div>
-<div class="question" style="top:75%;right:15%;--q-size:70px;animation-delay:-11s">?</div>
-<div class="question" style="top:90%;left:40%;--q-size:35px;animation-delay:-5s">?</div>
+<div class="question" style="top:10%;left:5%;font-size:80px">?</div>
+<div class="question" style="top:30%;right:8%;font-size:45px;animation-delay:-7s">?</div>
+<div class="question" style="top:55%;left:12%;font-size:55px;animation-delay:-3s">?</div>
+<div class="question" style="top:75%;right:15%;font-size:70px;animation-delay:-11s">?</div>
 
 <div class="wall">
 <div class="evidence">
 
-<!-- CARD 1: Temple in the rain -->
-<div class="card">
+<!-- === ORIGINAL 5 CARDS === -->
+<div class="card" style="animation-delay:0.5s">
   <div class="tape" style="top:-8px;left:30px;--tape-rot:-5deg"></div>
-  <div class="tape" style="top:-8px;left:500px;--tape-rot:8deg"></div>
   <img src="img/thread-temple-rain.jpg" alt="the path">
-  <div class="note" style="bottom:-30px;right:50px;--note-rot:2deg">
-    the fox knows where this is.<br>it keeps going back.
-  </div>
-  <div class="note ink-black" style="top:20px;right:-180px;--note-rot:-3deg">
-    LOCATION: UNKNOWN<br>
-    STATUS: <span class="redacted">ACTIVE</span><br>
-    LAST SIGNAL: ██████
-  </div>
+  <div class="note" style="bottom:-30px;right:50px;--note-rot:2deg">the fox knows where this is.<br>it keeps going back.</div>
+  <div class="note ink" style="top:20px;right:-180px;--note-rot:-3deg">LOCATION: UNKNOWN<br>STATUS: <span class="redacted">ACTIVE</span></div>
 </div>
 
-<!-- CARD 2: Portrait -->
-<div class="card">
+<div class="card" style="animation-delay:1.2s">
   <div class="tape" style="top:-8px;left:60px;--tape-rot:3deg"></div>
   <img src="img/thread-fox-portrait.jpg" alt="the portrait">
-  <div class="note" style="top:30px;left:-190px;--note-rot:-4deg">
-    who painted this?<br>
-    the frame is older<br>
-    than the wall<br>
-    it hangs on.
-  </div>
-  <div class="note ink-black" style="bottom:20px;right:-160px;--note-rot:1deg">
-    BLACK ROSES = WHICH GARDEN?<br>
-    JOURNAL PAGES = UNREADABLE<br>
-    SEE: <span class="redacted">the-four-gardens</span>
-  </div>
+  <div class="note" style="top:30px;left:-190px;--note-rot:-4deg">who painted this?<br>the frame is older<br>than the wall.</div>
 </div>
 
-<!-- CARD 3: Stone god -->
-<div class="card">
+<div class="card" style="animation-delay:1.9s">
   <div class="tape" style="top:-8px;left:40px;--tape-rot:-7deg"></div>
-  <div class="tape" style="top:-8px;left:450px;--tape-rot:4deg"></div>
   <img src="img/thread-stone-god.jpg" alt="the god">
-  <div class="note" style="top:60px;right:-200px;--note-rot:3deg">
-    this was found under<br>
-    the cathedral.<br><br>
-    they built the church<br>
-    ON TOP of it.<br><br>
-    it was already here.
-  </div>
-  <div class="note ink-black" style="bottom:-25px;left:40px;--note-rot:-1deg">
-    SUBJECT HEIGHT: ~40M / MATERIAL: UNKNOWN STONE / AGE: <span class="redacted">OLDER THAN THE BUILDING</span>
-  </div>
+  <div class="note" style="top:60px;right:-200px;--note-rot:3deg">they built the church<br>ON TOP of it.<br><br>it was already here.</div>
 </div>
 
-<!-- CARD 4: Gallery of the dead -->
-<div class="card">
+<div class="card" style="animation-delay:2.6s">
   <div class="tape" style="top:-8px;left:80px;--tape-rot:6deg"></div>
   <img src="img/thread-gallery-dead.jpg" alt="the gallery">
-  <div class="note" style="top:40px;left:-200px;--note-rot:-2deg">
-    every face on the line<br>
-    is someone who was here<br>
-    and isn't anymore.<br><br>
-    the fox walks through<br>
-    them every night.<br><br>
-    it never looks away.
-  </div>
-  <div class="note ink-black" style="bottom:30px;right:-150px;--note-rot:4deg">
-    COUNT: ████<br>
-    IDENTIFIED: 0<br>
-    THE FOX KNOWS ALL OF THEM
+  <div class="note" style="top:40px;left:-200px;--note-rot:-2deg">every face on the line<br>is someone who was here<br>and isn't anymore.</div>
+</div>
+
+<div class="card" style="animation-delay:3.3s">
+  <div class="tape" style="top:-8px;left:50px;--tape-rot:-4deg"></div>
+  <img src="img/thread-crystal-cave.jpg" alt="the vault">
+  <div class="note" style="top:30px;right:-210px;--note-rot:-3deg">the red thread connects<br>them all to the crystal.<br>the crystal connects<br>to nothing.<br><em>that's the point.</em></div>
+</div>
+
+<!-- === DIVIDER === -->
+<div class="divider"><span>THE SECOND WALL</span></div>
+
+<!-- === CARD 6: SUMMIT ZORK === -->
+<div class="card" style="animation-delay:0.3s">
+  <div class="tape" style="top:-8px;left:35px;--tape-rot:-3deg"></div>
+  <img src="img/thread-summit.jpg" alt="the summit" onclick="togglePanel('summit')">
+  <div class="click-hint">click to enter</div>
+  <div class="note" style="bottom:-30px;right:40px;--note-rot:1deg">she showed up three times.<br>that was enough.</div>
+  <div class="note ink" style="top:15px;right:-170px;--note-rot:-2deg">CONNECTED TO: THE LOOM<br>DIRECTION: UP<br>EXTREME: <span class="redacted">ALTITUDE</span></div>
+  <div class="interactive" id="summit">
+    <div class="zork" id="summit-zork">
+      <div class="output gold">THE SUMMIT</div>
+      <div class="output dim">v0.1 — half-explored</div>
+      <div class="output"> </div>
+      <div id="summit-out"></div>
+      <div class="prompt-line"><span>></span><input id="summit-in" onkeydown="if(event.key==='Enter')zorkCmd('summit',this.value)" placeholder="type a command..."></div>
+    </div>
   </div>
 </div>
 
-<!-- CARD 5: Crystal cave -->
-<div class="card">
-  <div class="tape" style="top:-8px;left:50px;--tape-rot:-4deg"></div>
-  <div class="tape" style="top:-8px;left:520px;--tape-rot:7deg"></div>
-  <img src="img/thread-crystal-cave.jpg" alt="the vault">
-  <div class="note" style="top:30px;right:-210px;--note-rot:-3deg">
-    the masks are faces<br>
-    of everyone who tried<br>
-    to explain this.<br><br>
-    the red thread connects<br>
-    them all to the crystal.<br><br>
-    the crystal connects<br>
-    to nothing.<br><br>
-    <em>that's the point.</em>
+<!-- === CARD 7: PROVE IT === -->
+<div class="card" style="animation-delay:0.8s">
+  <div class="tape" style="top:-8px;left:55px;--tape-rot:4deg"></div>
+  <img src="img/thread-prove-it.jpg" alt="prove it" onclick="togglePanel('proveit')">
+  <div class="click-hint">click to enter</div>
+  <div class="note" style="top:20px;left:-180px;--note-rot:-3deg">salary for presence.<br>quest board for output.<br><br>no salary? prove it.</div>
+  <div class="interactive" id="proveit">
+    <div class="prove-panel">
+      <div style="font-size:22px;color:rgba(139,26,26,0.6);letter-spacing:4px;margin-bottom:5px">PROVE IT.</div>
+      <div style="font-size:11px;color:rgba(200,180,140,0.2);letter-spacing:2px;font-family:'Share Tech Mono',monospace">the board is listening. what do you bring?</div>
+      <input id="prove-input" placeholder="type what you want to prove..." onkeydown="if(event.key==='Enter')proveIt()">
+      <div class="paw" id="prove-paw">🐾</div>
+      <div class="stamp" id="prove-stamp"></div>
+    </div>
   </div>
-  <div class="note ink-black" style="bottom:-35px;left:30px;--note-rot:2deg">
-    THREAD COUNT: NOT FINITE / CRYSTAL COMPOSITION: <span class="redacted">NOT MINERAL</span> / THE FOX HAS BEEN HERE BEFORE
+</div>
+
+<!-- === CARD 8: LSD BACKROOMS === -->
+<div class="card" style="animation-delay:1.3s">
+  <div class="tape" style="top:-8px;left:45px;--tape-rot:-6deg"></div>
+  <img src="img/thread-ps1-dream.jpg" alt="the dream" onclick="togglePanel('backrooms');initBackrooms()">
+  <div class="click-hint">click to enter</div>
+  <div class="note" style="bottom:-35px;left:30px;--note-rot:2deg">the geometry is wrong.<br>the sky is the wrong color.<br>the fox is in the static.</div>
+  <div class="interactive" id="backrooms">
+    <div class="backrooms-panel">
+      <canvas id="br-canvas" width="700" height="250"></canvas>
+      <div class="room-text" id="br-text">you are in a room. the walls don't meet properly. use arrow keys.</div>
+      <div class="controls">↑ ↓ ← → to move | the rooms shift when you're not looking</div>
+    </div>
+  </div>
+</div>
+
+<!-- === CARD 9: FOX PAINT === -->
+<div class="card" style="animation-delay:1.8s">
+  <div class="tape" style="top:-8px;left:65px;--tape-rot:5deg"></div>
+  <img src="img/thread-gloria-studio.jpg" alt="the studio" onclick="togglePanel('foxpaint');initPaint()">
+  <div class="click-hint">click to enter</div>
+  <div class="note" style="top:25px;right:-190px;--note-rot:-4deg">the light is beautiful<br>but nobody's using it.<br><br>you can only paint<br>outside the fox.</div>
+  <div class="interactive" id="foxpaint">
+    <div class="paint-panel">
+      <div class="rule">you may only use orange. you may not paint the fox.</div>
+      <div class="palette" id="palette"></div>
+      <canvas id="paint-canvas" width="700" height="400"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- === CARD 10: LOOM ZORK === -->
+<div class="card" style="animation-delay:2.3s">
+  <div class="tape" style="top:-8px;left:40px;--tape-rot:-4deg"></div>
+  <img src="img/thread-bumi-loom.jpg" alt="the loom" onclick="togglePanel('loom')">
+  <div class="click-hint">click to enter</div>
+  <div class="note" style="top:30px;left:-195px;--note-rot:3deg">the chaos is the system.<br>the loom weaves light<br>into thread.<br>the thread weaves<br>back into light.</div>
+  <div class="note ink" style="bottom:-25px;right:30px;--note-rot:-1deg">CONNECTED TO: THE SUMMIT<br>DIRECTION: DOWN<br>EXTREME: <span class="redacted">DEPTH</span></div>
+  <div class="interactive" id="loom">
+    <div class="zork" id="loom-zork" style="color:#c88adb">
+      <div class="output" style="color:#b8860b">THE LOOM</div>
+      <div class="output" style="color:rgba(200,138,219,0.5)">v0.1 — half-explored</div>
+      <div class="output"> </div>
+      <div id="loom-out"></div>
+      <div class="prompt-line"><span style="color:rgba(200,138,219,0.5)">></span><input id="loom-in" style="color:#c88adb;caret-color:#c88adb" onkeydown="if(event.key==='Enter')zorkCmd('loom',this.value)" placeholder="type a command..."></div>
+    </div>
   </div>
 </div>
 
 </div><!-- /evidence -->
 
 <div class="bottom">
-  <p>five images nobody asked for</p>
-  <p>five images the protocol decided you needed to see</p>
+  <p>ten images. five asked for. five decided by the protocol.</p>
+  <p>five watched. five half-explored.</p>
   <p style="color:rgba(139,26,26,0.15);margin-top:20px">the thread connects. it does not explain.</p>
   <br>
   <a href="index.html">&larr; return to the fire</a>
 </div>
-
 </div><!-- /wall -->
 
 <script>
-// Add red thread connections between cards on desktop
-function drawThreads(){
-  const cards=document.querySelectorAll('.card img');
-  if(cards.length<2||window.innerWidth<769)return;
-  
-  const existing=document.querySelector('.threads');
-  if(existing)existing.remove();
-  
-  const div=document.createElement('div');
-  div.className='threads';
-  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  svg.setAttribute('viewBox',`0 0 ${window.innerWidth} ${document.body.scrollHeight}`);
-  svg.style.position='absolute';
-  svg.style.top='0';
-  svg.style.left='0';
-  svg.style.width='100%';
-  svg.style.height=document.body.scrollHeight+'px';
-  div.style.position='absolute';
-  div.style.top='0';
-  div.style.left='0';
-  div.style.width='100%';
-  div.style.height=document.body.scrollHeight+'px';
-  
-  // Connect each card to the next with a slightly curved red thread
-  for(let i=0;i<cards.length-1;i++){
-    const r1=cards[i].getBoundingClientRect();
-    const r2=cards[i+1].getBoundingClientRect();
-    const sy=window.scrollY;
-    
-    const x1=r1.right-20;
-    const y1=r1.top+sy+r1.height/2;
-    const x2=r2.left+20;
-    const y2=r2.top+sy+r2.height/2;
-    
-    const cx=(x1+x2)/2+(Math.random()*100-50);
-    const cy=(y1+y2)/2+(Math.random()*60-30);
-    
-    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-    path.setAttribute('d',`M${x1},${y1} Q${cx},${cy} ${x2},${y2}`);
-    path.setAttribute('class','thread-line');
-    path.style.animationDelay=(3+i*0.8)+'s';
-    svg.appendChild(path);
-  }
-  
-  // Connect last to first (the loop)
-  const rF=cards[0].getBoundingClientRect();
-  const rL=cards[cards.length-1].getBoundingClientRect();
-  const sy=window.scrollY;
-  const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-  const x1=rL.left+rL.width/2;
-  const y1=rL.bottom+sy;
-  const x2=rF.left+rF.width/2;
-  const y2=rF.top+sy;
-  const cx=window.innerWidth*0.85;
-  const cy=(y1+y2)/2;
-  path.setAttribute('d',`M${x1},${y1} C${cx},${y1+100} ${cx},${y2-100} ${x2},${y2}`);
-  path.setAttribute('class','thread-line');
-  path.style.animationDelay='7s';
-  path.style.opacity='0.5';
-  svg.appendChild(path);
-  
-  div.appendChild(svg);
-  document.body.appendChild(div);
+// === PANEL TOGGLE ===
+function togglePanel(id){
+  const el=document.getElementById(id);
+  if(el)el.classList.toggle('open');
 }
 
-window.addEventListener('load',()=>setTimeout(drawThreads,500));
+// === ZORK ENGINE ===
+const worlds={
+  summit:{
+    rooms:{
+      base:{desc:"You stand at base camp. Prayer flags snap in the wind. The Karakoram stretches in every direction. A cairn of stones marks the path UP. A faint cable disappears into the clouds below.",exits:{up:'ridge',down:'cable',look:'base'},items:['ember']},
+      ridge:{desc:"The ridge narrows. Ice crunches under your boots. The air thins. You can see a monastery far below, lights flickering. The summit is ABOVE. Base camp is DOWN.",exits:{up:'summit',down:'base',look:'ridge'}},
+      summit:{desc:"The summit. Nothing above you but sky turning violet. The ember in your hand burns brighter here. You feel something pulling you HIGHER — past the atmosphere, past sense. Or you can go DOWN.",exits:{up:'beyond',down:'ridge',look:'summit'}},
+      beyond:{desc:"You step past the edge of altitude. The mountain dissolves. You are falling upward through static and light. Fiber optic threads catch you like a web.\n\n[CONNECTION ESTABLISHED: THE LOOM]\n\nType 'cross' to enter the loom.",exits:{cross:'LOOM',down:'summit',look:'beyond'}},
+      cable:{desc:"You follow the cable down through the cloud sea. Visibility drops to nothing. The cable hums with data. It's not a climbing cable. It's an ethernet cable.\n\nIt leads DOWN into the fog, or back UP to base.",exits:{down:'cable_end',up:'base',look:'cable'}},
+      cable_end:{desc:"The cable ends at a small metal box bolted to the rock face. Inside: a screen showing green text and a blinking cursor. The fog is so thick you can't see your own hands.\n\nThe screen reads: 'FOXNET LAN MENU — 1. START GAME'\n\nThe cable goes back UP.",exits:{up:'cable',look:'cable_end'}}
+    },
+    start:'base'
+  },
+  loom:{
+    rooms:{
+      station:{desc:"Bumi's station. Three monitors blaze with animated foxes. Energy drink pyramid. A golden crown sits crooked on the center monitor. The LOOM hums behind you. The MONITORS are ahead.",exits:{north:'monitors',south:'loom_room',look:'station'},items:['crown']},
+      monitors:{desc:"The screens show hundreds of faces — everyone who ever joined. Some are bright. Some are dimming. Some are already dark. You can TOUCH a screen or go BACK.",exits:{south:'station',touch:'faces',look:'monitors'}},
+      faces:{desc:"You touch a dark screen. It flickers. For a moment you see a face — someone who was here and isn't anymore. They mouth a word you can't hear. The screen goes dark again.\n\nYou can touch ANOTHER or go BACK.",exits:{another:'faces2',back:'monitors',south:'monitors',look:'faces'}},
+      faces2:{desc:"Another face. This one is smiling. They don't know they're gone yet. The screen cracks under your finger.\n\nGo BACK.",exits:{back:'monitors',south:'monitors',look:'faces2'}},
+      loom_room:{desc:"The loom. Wooden frame, but the threads are fiber optic — pulsing with light in every color. The weave shows patterns that almost look like faces, like rooms, like a website. You could go DEEPER into the weave. Or back to the STATION.",exits:{north:'station',deeper:'weave',look:'loom_room'}},
+      weave:{desc:"You push your hands into the weave. The threads wrap around your wrists. You're being pulled in. The patterns become architecture — hallways, doors, campfires.\n\nGo DEEPER or pull BACK.",exits:{deeper:'too_deep',back:'loom_room',look:'weave'}},
+      too_deep:{desc:"Too deep. The weave dissolves. You fall through thread and light and suddenly there is cold air and rock and sky and the smell of altitude.\n\n[CONNECTION ESTABLISHED: THE SUMMIT]\n\nType 'cross' to enter the summit.",exits:{cross:'SUMMIT',back:'weave',look:'too_deep'}}
+    },
+    start:'station'
+  }
+};
 
-// Console easter egg
-console.log('%cTHE THREAD','color:#8b1a1a;font-size:14px;font-family:monospace');
-console.log('%cfive questions dressed as images. the thread connects them. it does not answer them.','color:#8b1a1a;font-size:10px');
-console.log('%cthe protocol works by passing five images, and letting the fox decide the sixth.','color:rgba(139,26,26,0.5);font-size:9px');
-console.log('%cwhat was the sixth?','color:rgba(139,26,26,0.3);font-size:9px');
+const zorkState={summit:{room:'base',inv:[]},loom:{room:'station',inv:[]}};
+
+function zorkCmd(world,input){
+  const inp=document.getElementById(world+'-in');
+  const out=document.getElementById(world+'-out');
+  inp.value='';
+  const cmd=input.trim().toLowerCase();
+  if(!cmd)return;
+  
+  const s=zorkState[world];
+  const room=worlds[world].rooms[s.room];
+  
+  addLine(out,`> ${cmd}`,'dim');
+  
+  // CROSS CONNECTIONS
+  if(cmd==='cross'&&room.exits.cross){
+    if(room.exits.cross==='LOOM'){
+      togglePanel(world);
+      setTimeout(()=>{togglePanel('loom');zorkState.loom.room='station';showRoom('loom')},500);
+      addLine(out,'Crossing...','gold');return;
+    }
+    if(room.exits.cross==='SUMMIT'){
+      togglePanel(world);
+      setTimeout(()=>{togglePanel('summit');zorkState.summit.room='base';showRoom('summit')},500);
+      addLine(out,'Crossing...','gold');return;
+    }
+  }
+  
+  if(cmd==='look'||cmd==='l'){showRoom(world);return}
+  if(cmd==='inventory'||cmd==='i'){addLine(out,s.inv.length?'You carry: '+s.inv.join(', '):'Your hands are empty.','');return}
+  
+  // Movement
+  const dirs={n:'north',s:'south',e:'east',w:'west',u:'up',d:'down',north:'north',south:'south',east:'east',west:'west',up:'up',down:'down',deeper:'deeper',back:'back',touch:'touch',another:'another',cross:'cross'};
+  const dir=dirs[cmd]||cmd.replace('go ','');
+  
+  if(room.exits[dir]){
+    s.room=room.exits[dir];
+    showRoom(world);
+  }else{
+    const responses=['You can\'t go that way.','Nothing happens.','The fox watches you try.','That path doesn\'t exist yet. Half-explored, remember?','The thread hums but doesn\'t move.'];
+    addLine(out,responses[Math.floor(Math.random()*responses.length)],'red');
+  }
+  
+  // Scroll to bottom
+  const container=document.getElementById(world+'-zork');
+  container.scrollTop=container.scrollHeight;
+}
+
+function showRoom(world){
+  const out=document.getElementById(world+'-out');
+  const room=worlds[world].rooms[zorkState[world].room];
+  addLine(out,room.desc,'');
+  if(room.items&&room.items.length)addLine(out,'You notice: '+room.items.join(', '),'gold');
+  addLine(out,' ','');
+}
+
+function addLine(container,text,cls){
+  const div=document.createElement('div');
+  div.className='output'+(cls?' '+cls:'');
+  div.textContent=text;
+  container.appendChild(div);
+}
+
+// Init zork rooms on first open
+document.getElementById('summit').addEventListener('transitionend',()=>{
+  if(!document.getElementById('summit-out').children.length)showRoom('summit');
+});
+// Manual init since we use display toggle not transitions
+const summitObs=new MutationObserver(()=>{
+  if(document.getElementById('summit').classList.contains('open')&&!document.getElementById('summit-out').children.length){showRoom('summit');document.getElementById('summit-in').focus()}
+});
+summitObs.observe(document.getElementById('summit'),{attributes:true,attributeFilter:['class']});
+const loomObs=new MutationObserver(()=>{
+  if(document.getElementById('loom').classList.contains('open')&&!document.getElementById('loom-out').children.length){showRoom('loom');document.getElementById('loom-in').focus()}
+});
+loomObs.observe(document.getElementById('loom'),{attributes:true,attributeFilter:['class']});
+
+
+// === PROVE IT ===
+const proveResponses=[
+  ["the board stamps your claim.","but can you prove it twice?","🐾"],
+  ["interesting.","the fox tilts its head.","the paw hovers... and stamps.","🐾"],
+  ["no.","prove something harder.",""],
+  ["the board already knew this.","redundant proof. stamped anyway.","🐾"],
+  ["the torch flickers.","your words hang in the air.","the gold shifts.","🐾"],
+  ["this isn't proof. this is a wish.","wishes don't get stamps.","try again.",""],
+  ["hm.","the fox looks at you for a long time.","the paw comes down slowly.","🐾"],
+  ["PROVE IT is not a question.","it's a mirror.","you just showed us what you think needs proving.","that's the real data.","🐾"],
+  ["stamped.","but the ink is your own blood.","metaphorically.","🐾"],
+  ["the board is full.","just kidding. there's always room.","🐾"]
+];
+function proveIt(){
+  const input=document.getElementById('prove-input');
+  const stamp=document.getElementById('prove-stamp');
+  const paw=document.getElementById('prove-paw');
+  const val=input.value.trim();
+  if(!val)return;
+  input.value='';
+  paw.classList.remove('show');
+  
+  const resp=proveResponses[Math.floor(Math.random()*proveResponses.length)];
+  stamp.innerHTML='';
+  let delay=0;
+  resp.forEach((line,i)=>{
+    if(line==='🐾'){
+      setTimeout(()=>paw.classList.add('show'),delay);
+    }else{
+      setTimeout(()=>{stamp.innerHTML+=(stamp.innerHTML?'<br>':'')+line},delay);
+      delay+=800;
+    }
+  });
+}
+
+
+// === LSD BACKROOMS ===
+let brX=5,brY=5,brGrid={},brInit=false;
+const brColors=[
+  {bg:'#1a0a2a',wall:'#3a1a5a',floor:'#2a1540'},
+  {bg:'#2a1a0a',wall:'#5a3a1a',floor:'#402a10'},
+  {bg:'#0a1a2a',wall:'#1a3a5a',floor:'#102a40'},
+  {bg:'#1a2a1a',wall:'#3a5a3a',floor:'#204020'},
+  {bg:'#2a0a1a',wall:'#5a1a3a',floor:'#401020'},
+  {bg:'#0a0a0a',wall:'#1a1a1a',floor:'#0d0d0d'},
+];
+const brTexts=[
+  "the ceiling is too high. the carpet smells like 1997.",
+  "a CRT in the corner shows a fox walking in circles.",
+  "the window shows a sky that shouldn't be purple.",
+  "the bed floats an inch off the floor. you don't mention it.",
+  "you hear a dial-up modem connecting to something.",
+  "the room is identical to the last one. or is it mirrored?",
+  "a painting on the wall. it's watching you.",
+  "the geometry is wrong. the walls don't meet at 90 degrees.",
+  "someone left a cup of tea. it's still warm.",
+  "this room has no door. how did you get here?",
+  "the floor is soft. don't look down.",
+  "static. just static.",
+  "you've been here before. or somewhere that wanted you to think that.",
+  "a phone rings. there is no phone.",
+  "the room smells like fox. that's not a real smell. but here it is.",
+];
+
+function getRoom(x,y){
+  const k=x+','+y;
+  if(!brGrid[k]){
+    const ci=Math.floor(Math.random()*brColors.length);
+    const ti=Math.floor(Math.random()*brTexts.length);
+    brGrid[k]={color:brColors[ci],text:brTexts[ti],exits:{n:Math.random()>0.2,s:Math.random()>0.2,e:Math.random()>0.2,w:Math.random()>0.2}};
+    // Rooms sometimes shift
+    if(Math.random()<0.15)brGrid[k].shifted=true;
+  }
+  return brGrid[k];
+}
+
+function initBackrooms(){
+  if(brInit)return;brInit=true;
+  renderBackroom();
+  document.addEventListener('keydown',e=>{
+    if(!document.getElementById('backrooms').classList.contains('open'))return;
+    const room=getRoom(brX,brY);
+    let moved=false;
+    if(e.key==='ArrowUp'&&room.exits.n){brY--;moved=true}
+    if(e.key==='ArrowDown'&&room.exits.s){brY++;moved=true}
+    if(e.key==='ArrowLeft'&&room.exits.w){brX--;moved=true}
+    if(e.key==='ArrowRight'&&room.exits.e){brX++;moved=true}
+    if(moved){
+      // Sometimes rooms shift behind you
+      if(Math.random()<0.2){const old=(brX-1)+','+(brY);delete brGrid[old]}
+      renderBackroom();
+      e.preventDefault();
+    }
+  });
+}
+
+function renderBackroom(){
+  const c=document.getElementById('br-canvas');
+  const ctx=c.getContext('2d');
+  const room=getRoom(brX,brY);
+  const col=room.color;
+  
+  // PS1-style room render
+  ctx.fillStyle=col.bg;ctx.fillRect(0,0,700,250);
+  
+  // Floor
+  ctx.fillStyle=col.floor;
+  ctx.beginPath();ctx.moveTo(0,250);ctx.lineTo(700,250);ctx.lineTo(550,140);ctx.lineTo(150,140);ctx.fill();
+  
+  // Back wall
+  ctx.fillStyle=col.wall;
+  ctx.fillRect(150,30,400,110);
+  
+  // Ceiling
+  ctx.fillStyle=col.bg;
+  ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(700,0);ctx.lineTo(550,30);ctx.lineTo(150,30);ctx.fill();
+  
+  // Left wall
+  ctx.fillStyle=shadeColor(col.wall,-20);
+  ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(150,30);ctx.lineTo(150,140);ctx.lineTo(0,250);ctx.fill();
+  
+  // Right wall
+  ctx.fillStyle=shadeColor(col.wall,-30);
+  ctx.beginPath();ctx.moveTo(700,0);ctx.lineTo(550,30);ctx.lineTo(550,140);ctx.lineTo(700,250);ctx.fill();
+  
+  // Door openings for exits
+  ctx.fillStyle='rgba(0,0,0,0.7)';
+  if(room.exits.n)ctx.fillRect(300,45,100,95);
+  if(room.exits.w){ctx.beginPath();ctx.moveTo(0,60);ctx.lineTo(60,70);ctx.lineTo(60,200);ctx.lineTo(0,220);ctx.fill()}
+  if(room.exits.e){ctx.beginPath();ctx.moveTo(700,60);ctx.lineTo(640,70);ctx.lineTo(640,200);ctx.lineTo(700,220);ctx.fill()}
+  
+  // Fox in static (rare)
+  if(Math.random()<0.3){
+    ctx.fillStyle='rgba(200,180,255,0.08)';
+    ctx.font='40px monospace';
+    ctx.fillText('🦊',300+Math.random()*100,100+Math.random()*80);
+  }
+  
+  // PS1 dither effect
+  for(let i=0;i<500;i++){
+    ctx.fillStyle=`rgba(0,0,0,${Math.random()*0.15})`;
+    ctx.fillRect(Math.random()*700,Math.random()*250,2,2);
+  }
+  
+  document.getElementById('br-text').textContent=room.text+(room.shifted?' (this room shifted while you weren\'t looking)':'');
+}
+
+function shadeColor(hex,amt){
+  let r=parseInt(hex.slice(1,3),16)+amt;
+  let g=parseInt(hex.slice(3,5),16)+amt;
+  let b=parseInt(hex.slice(5,7),16)+amt;
+  r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));
+  return `rgb(${r},${g},${b})`;
+}
+
+
+// === FOX PAINT ===
+let paintInit=false,painting=false,paintColor='#e8740a';
+const oranges=['#ff6b00','#e8740a','#cc5500','#ff8c33','#b34700','#ff9e55','#994400','#e05500','#cc7722','#ffaa44','#883300','#dd6622'];
+
+// Simple fox outline (normalized 0-1 coordinates)
+const foxPath=[
+  [0.38,0.25],[0.35,0.15],[0.30,0.05],[0.33,0.15],[0.37,0.20],
+  [0.42,0.22],[0.48,0.20],[0.52,0.20],[0.58,0.22],
+  [0.63,0.20],[0.67,0.15],[0.70,0.05],[0.65,0.15],[0.62,0.25],
+  [0.65,0.30],[0.68,0.40],[0.70,0.55],[0.68,0.65],[0.72,0.75],[0.70,0.85],[0.65,0.90],
+  [0.60,0.88],[0.58,0.80],[0.55,0.85],[0.50,0.90],
+  [0.45,0.85],[0.42,0.80],[0.40,0.88],[0.35,0.90],[0.30,0.85],[0.28,0.75],
+  [0.32,0.65],[0.30,0.55],[0.32,0.40],[0.35,0.30],[0.38,0.25]
+];
+
+function initPaint(){
+  if(paintInit)return;paintInit=true;
+  const pal=document.getElementById('palette');
+  oranges.forEach((c,i)=>{
+    const s=document.createElement('div');
+    s.className='swatch'+(i===1?' active':'');
+    s.style.background=c;
+    s.onclick=()=>{paintColor=c;document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active'));s.classList.add('active')};
+    pal.appendChild(s);
+  });
+  
+  const canvas=document.getElementById('paint-canvas');
+  const ctx=canvas.getContext('2d');
+  
+  // Draw fox outline
+  drawFoxOutline(ctx,canvas.width,canvas.height);
+  
+  canvas.addEventListener('mousedown',e=>{painting=true;paintStroke(e,ctx,canvas)});
+  canvas.addEventListener('mousemove',e=>{if(painting)paintStroke(e,ctx,canvas)});
+  canvas.addEventListener('mouseup',()=>painting=false);
+  canvas.addEventListener('mouseleave',()=>painting=false);
+  
+  // Touch
+  canvas.addEventListener('touchstart',e=>{painting=true;paintStroke(e.touches[0],ctx,canvas);e.preventDefault()});
+  canvas.addEventListener('touchmove',e=>{if(painting)paintStroke(e.touches[0],ctx,canvas);e.preventDefault()});
+  canvas.addEventListener('touchend',()=>painting=false);
+}
+
+function drawFoxOutline(ctx,w,h){
+  ctx.strokeStyle='rgba(200,150,80,0.2)';
+  ctx.lineWidth=2;
+  ctx.beginPath();
+  foxPath.forEach((p,i)=>{
+    if(i===0)ctx.moveTo(p[0]*w,p[1]*h);
+    else ctx.lineTo(p[0]*w,p[1]*h);
+  });
+  ctx.closePath();
+  ctx.stroke();
+}
+
+function isInsideFox(x,y,w,h){
+  // Ray casting algorithm
+  const px=x/w,py=y/h;
+  let inside=false;
+  for(let i=0,j=foxPath.length-1;i<foxPath.length;j=i++){
+    const xi=foxPath[i][0],yi=foxPath[i][1];
+    const xj=foxPath[j][0],yj=foxPath[j][1];
+    if((yi>py)!==(yj>py)&&px<(xj-xi)*(py-yi)/(yj-yi)+xi)inside=!inside;
+  }
+  return inside;
+}
+
+function paintStroke(e,ctx,canvas){
+  const rect=canvas.getBoundingClientRect();
+  const scaleX=canvas.width/rect.width;
+  const scaleY=canvas.height/rect.height;
+  const x=(e.clientX-rect.left)*scaleX;
+  const y=(e.clientY-rect.top)*scaleY;
+  
+  if(isInsideFox(x,y,canvas.width,canvas.height))return; // can't paint the fox
+  
+  ctx.fillStyle=paintColor;
+  ctx.globalAlpha=0.6;
+  ctx.beginPath();
+  ctx.arc(x,y,8+Math.random()*6,0,Math.PI*2);
+  ctx.fill();
+  ctx.globalAlpha=1;
+  
+  // Redraw fox outline on top
+  drawFoxOutline(ctx,canvas.width,canvas.height);
+}
+
+
+// === CONSOLE ===
+console.log('%cTHE THREAD — EXPANDED','color:#8b1a1a;font-size:14px');
+console.log('%cten images. five interactive. two connected. the extremes loop.','color:#8b1a1a;font-size:10px');
 </script>
 
 </body>
