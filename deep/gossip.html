@@ -1,141 +1,359 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>☕ the tea room</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&family=Fira+Code:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&family=Fira+Code:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0d0810;font-family:'Comic Neue',cursive;font-size:12px;color:#d0c8e0;min-height:100vh}
 
-.header{background:linear-gradient(135deg,#2a0a2a,#1a0a1a);border-bottom:3px solid #ff69b4;padding:20px;text-align:center;position:relative}
-.header h1{font-family:'Permanent Marker',cursive;font-size:32px;color:#ff69b4;text-shadow:2px 2px 0 #990066;letter-spacing:2px}
-.header .sub{font-size:10px;color:rgba(255,105,180,0.3);margin-top:4px;letter-spacing:2px}
-.header .hot{position:absolute;top:8px;right:12px;font-size:8px;color:#ff4444;animation:blink 1s infinite;letter-spacing:2px}
+/* TICKER */
+.ticker{background:rgba(255,105,180,0.06);border-bottom:1px solid rgba(255,105,180,0.08);padding:4px 0;overflow:hidden;white-space:nowrap}
+.ticker-inner{display:inline-block;animation:scroll 40s linear infinite;font-size:9px;color:rgba(255,105,180,0.3);letter-spacing:1px}
+@keyframes scroll{0%{transform:translateX(100vw)}100%{transform:translateX(-200%)}}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#2a0a2a,#1a0520);border-bottom:3px solid #ff69b4;padding:24px 20px;text-align:center;position:relative;overflow:hidden}
+.header::before{content:'☕';position:absolute;top:-20px;left:10%;font-size:80px;opacity:0.02;transform:rotate(-15deg)}
+.header::after{content:'🔥';position:absolute;bottom:-10px;right:10%;font-size:60px;opacity:0.02;transform:rotate(10deg)}
+.header h1{font-family:'Permanent Marker',cursive;font-size:36px;color:#ff69b4;text-shadow:2px 2px 0 #990066,4px 4px 0 rgba(0,0,0,0.3);letter-spacing:2px}
+.header .sub{font-size:11px;color:rgba(255,105,180,0.25);margin-top:4px;letter-spacing:3px}
+.header .stats{margin-top:8px;font-size:8px;color:rgba(255,105,180,0.1);letter-spacing:2px}
+.hot-badge{position:absolute;top:8px;right:12px;background:rgba(255,50,50,0.15);border:1px solid rgba(255,50,50,0.2);padding:2px 8px;font-size:7px;color:rgba(255,50,50,0.5);letter-spacing:2px;animation:blink 1.5s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
-.nav{background:rgba(255,105,180,0.03);padding:6px 16px;font-size:9px;display:flex;gap:12px;border-bottom:1px solid rgba(255,105,180,0.06)}
-.nav a{color:rgba(255,105,180,0.2);text-decoration:none;transition:color .3s}
+/* NAV */
+.nav{background:rgba(255,105,180,0.02);padding:8px 20px;font-size:9px;display:flex;gap:12px;border-bottom:1px solid rgba(255,105,180,0.04);flex-wrap:wrap;justify-content:center}
+.nav a{color:rgba(255,105,180,0.2);text-decoration:none;transition:color .3s;padding:2px 6px}
 .nav a:hover{color:rgba(255,105,180,0.5)}
+.nav a.active{color:rgba(255,105,180,0.4);border-bottom:1px solid rgba(255,105,180,0.2)}
 
-.container{max-width:800px;margin:0 auto;padding:20px}
+/* LAYOUT */
+.layout{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 280px;gap:20px;padding:20px}
+@media(max-width:768px){.layout{grid-template-columns:1fr;}.sidebar{order:-1}}
 
-.post{border:1px solid rgba(255,105,180,0.06);margin:20px 0;background:rgba(255,105,180,0.005);position:relative;overflow:hidden}
-.post-header{background:rgba(255,105,180,0.03);padding:8px 12px;display:flex;justify-content:space-between;align-items:center}
-.post-tag{font-family:'Permanent Marker',cursive;font-size:11px;color:#ff69b4;text-transform:uppercase;letter-spacing:1px}
-.post-date{font-size:8px;color:rgba(255,105,180,0.15)}
+/* POSTS */
+.post{border:1px solid rgba(255,105,180,0.06);margin:0 0 20px;background:rgba(255,105,180,0.005);position:relative;overflow:hidden;transition:border-color .3s}
+.post:hover{border-color:rgba(255,105,180,0.12)}
+.post-header{background:rgba(255,105,180,0.03);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,105,180,0.03)}
+.post-tag{font-family:'Permanent Marker',cursive;font-size:10px;color:#ff69b4;text-transform:uppercase;letter-spacing:1px}
+.post-tag.exclusive{color:#ff4444}
+.post-tag.spotted{color:#ffaa00}
+.post-tag.rumor{color:#aa88ff}
+.post-tag.confirmed{color:#44ff44}
+.post-date{font-size:7px;color:rgba(255,105,180,0.12);font-family:'Fira Code',monospace}
 .post-img{width:100%;display:block;opacity:0.85;transition:opacity .3s}
 .post-img:hover{opacity:1}
-.post-body{padding:12px;font-size:11px;line-height:1.9;color:rgba(220,200,230,0.4)}
-.post-body .hot-take{color:rgba(255,105,180,0.3);font-weight:bold;font-style:italic}
-.post-reactions{padding:8px 12px;border-top:1px solid rgba(255,105,180,0.03);font-size:9px;color:rgba(255,105,180,0.1);display:flex;gap:12px}
-.post-reactions span{cursor:pointer;transition:color .3s}
-.post-reactions span:hover{color:rgba(255,105,180,0.4)}
+.post-title{padding:12px 14px 0;font-family:'Permanent Marker',cursive;font-size:14px;color:rgba(255,105,180,0.3)}
+.post-body{padding:10px 14px 14px;font-size:11px;line-height:2;color:rgba(220,200,230,0.35)}
+.post-body .hot-take{color:rgba(255,105,180,0.4);font-weight:bold}
+.post-body .quote{border-left:2px solid rgba(255,105,180,0.08);padding-left:10px;margin:8px 0;color:rgba(255,105,180,0.2);font-style:italic}
+.post-reactions{padding:8px 14px;border-top:1px solid rgba(255,105,180,0.03);font-size:9px;color:rgba(255,105,180,0.1);display:flex;gap:14px;flex-wrap:wrap}
+.post-reactions span{cursor:pointer;transition:all .3s;padding:2px 6px;border:1px solid transparent;border-radius:3px}
+.post-reactions span:hover{color:rgba(255,105,180,0.4);border-color:rgba(255,105,180,0.08)}
+.post-comments{padding:10px 14px;border-top:1px solid rgba(255,105,180,0.02);max-height:200px;overflow-y:auto}
+.comment{padding:6px 0;border-bottom:1px solid rgba(255,105,180,0.01);font-size:9px}
+.comment .who{color:rgba(255,105,180,0.15);font-weight:bold}
+.comment .text{color:rgba(220,200,230,0.15);margin-top:2px}
+.comment .time{color:rgba(255,105,180,0.05);font-size:7px;float:right}
 
-/* SUBMIT FORM */
-.submit-section{margin:40px 0;border:1px solid rgba(255,105,180,0.04);padding:20px;background:rgba(255,105,180,0.003)}
-.submit-section h3{font-family:'Permanent Marker',cursive;font-size:16px;color:rgba(255,105,180,0.2);margin-bottom:12px}
-.submit-form{display:flex;flex-direction:column;gap:10px}
-.submit-form input,.submit-form textarea{background:rgba(0,0,0,0.3);border:1px solid rgba(255,105,180,0.06);color:#d0c8e0;padding:8px 10px;font-family:'Comic Neue',cursive;font-size:11px;outline:none;transition:border-color .3s}
+/* SIDEBAR */
+.sidebar-box{border:1px solid rgba(255,105,180,0.04);margin-bottom:16px;background:rgba(255,105,180,0.003)}
+.sidebar-title{background:rgba(255,105,180,0.03);padding:8px 12px;font-family:'Permanent Marker',cursive;font-size:11px;color:rgba(255,105,180,0.2);letter-spacing:1px;border-bottom:1px solid rgba(255,105,180,0.03)}
+.sidebar-body{padding:10px 12px}
+
+.trending-item{padding:4px 0;border-bottom:1px solid rgba(255,105,180,0.01);font-size:9px;display:flex;gap:6px;align-items:flex-start}
+.trending-num{color:rgba(255,105,180,0.15);font-weight:bold;width:16px;flex-shrink:0}
+.trending-text{color:rgba(220,200,230,0.15)}
+.trending-text a{color:rgba(255,105,180,0.12);text-decoration:none}
+
+.temp-meter{display:flex;align-items:center;gap:6px;padding:4px 0}
+.temp-bar{flex:1;height:4px;background:rgba(255,105,180,0.03);border-radius:2px;overflow:hidden}
+.temp-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,rgba(100,200,255,0.2),rgba(255,105,180,0.3),rgba(255,50,50,0.4))}
+.temp-label{font-size:8px;color:rgba(255,105,180,0.1);width:50px;text-align:right}
+
+.anon-list{font-size:8px;color:rgba(220,200,230,0.08);line-height:2}
+
+/* SUBMIT */
+.submit-section{border:1px solid rgba(255,105,180,0.06);padding:20px;margin:20px 0;background:rgba(255,105,180,0.005)}
+.submit-section h3{font-family:'Permanent Marker',cursive;font-size:16px;color:rgba(255,105,180,0.2);margin-bottom:4px}
+.submit-sub{font-size:9px;color:rgba(255,105,180,0.06);margin-bottom:12px;font-style:italic}
+.submit-form{display:flex;flex-direction:column;gap:8px}
+.submit-form input,.submit-form textarea,.submit-form select{background:rgba(0,0,0,0.3);border:1px solid rgba(255,105,180,0.06);color:#d0c8e0;padding:8px 10px;font-family:'Comic Neue',cursive;font-size:11px;outline:none;transition:border-color .3s}
 .submit-form input:focus,.submit-form textarea:focus{border-color:rgba(255,105,180,0.15)}
-.submit-form textarea{height:80px;resize:vertical}
-.submit-form button{background:rgba(255,105,180,0.08);border:1px solid rgba(255,105,180,0.1);color:rgba(255,105,180,0.4);padding:8px 16px;cursor:pointer;font-family:'Permanent Marker',cursive;font-size:12px;letter-spacing:1px;transition:all .3s}
-.submit-form button:hover{background:rgba(255,105,180,0.15);color:rgba(255,105,180,0.6)}
-.submit-note{font-size:8px;color:rgba(255,105,180,0.06);margin-top:4px;font-style:italic}
+.submit-form textarea{height:100px;resize:vertical}
+.submit-form select{appearance:none;cursor:pointer}
+.submit-row{display:flex;gap:8px}
+.submit-form button{background:rgba(255,105,180,0.08);border:1px solid rgba(255,105,180,0.1);color:rgba(255,105,180,0.4);padding:10px 20px;cursor:pointer;font-family:'Permanent Marker',cursive;font-size:13px;letter-spacing:1px;transition:all .3s}
+.submit-form button:hover{background:rgba(255,105,180,0.15);color:rgba(255,105,180,0.6);transform:translateY(-1px)}
+.submit-note{font-size:7px;color:rgba(255,105,180,0.04);margin-top:4px}
 
-.disclaimer{text-align:center;margin:40px 0;font-size:8px;color:rgba(255,105,180,0.04);line-height:2}
-
-.back-links{text-align:center;padding:20px;font-size:9px}
-.back-links a{color:rgba(255,105,180,0.08);text-decoration:none;margin:0 8px}
-.back-links a:hover{color:rgba(255,105,180,0.3)}
+/* FOOTER */
+.disclaimer{text-align:center;padding:40px 20px;font-size:8px;color:rgba(255,105,180,0.03);line-height:2;border-top:1px solid rgba(255,105,180,0.02);margin-top:20px}
 </style>
 </head>
 <body>
 
+<div class="ticker"><div class="ticker-inner">🔥 BREAKING: Maria from Pakistan becomes the Third Foxy — $1000/month, immunity from firing, biryani at 14,000 feet ☕ MonK requests the title "Thane" — Slate responds "what the hell is a Thane" 🦊 SIKE Exiles faction confirmed — color: ash grey with blood-red slash ☕ PLAm(inor)elia dismantles C.S. Lewis's trilemma with actual gospel scholarship 🔥 Seven Pretensions framework sealed — the seventh is left empty — the game of the fox ☕ Unlikely saved by a Sandlot reference — MonK: "keep him" 🦊 The cost of proximity: "the moment you become positive relationship with the foxy, there's no way you will get anything you want ever again" 🔥</div></div>
+
 <div class="header">
+<div class="hot-badge">🔥 LIVE</div>
 <h1>☕ THE TEA ROOM ☕</h1>
 <div class="sub">where the foxyverse spills what it shouldn't</div>
-<div class="hot">🔥 HOT</div>
+<div class="stats">est. season 6 · 4 posts · 1 anonymous source · temperature: SCALDING</div>
 </div>
 
 <div class="nav">
-<a href="munchkinlane.html" style="color:#ffcc00">Home</a> · <a href="#latest">latest</a>
-<a href="#submit">submit tea</a>
-<a href="munchkinlane.html">back to myspace</a>
-<a href="../campfire.html">the campfire</a>
+<a href="#" class="active">all tea</a>
+<a href="#">🔥 exclusive</a>
+<a href="#">📸 spotted</a>
+<a href="#">💜 rumors</a>
+<a href="#">✅ confirmed</a>
+<a href="#submit">submit</a>
+<a href="munchkinlane.html" style="color:rgba(200,100,255,0.15)">myspace ←</a>
+<a href="../campfire.html" style="color:rgba(206,176,120,0.15)">surface ←</a>
 </div>
 
-<div class="container">
+<div class="layout">
+<div class="main">
 
-<div class="post" id="latest">
+<!-- POST 1: MARIA -->
+<div class="post">
 <div class="post-header">
-<div class="post-tag">🔥 EXCLUSIVE — BREAKING TEA</div>
-<div class="post-date">July 20, 2026 · submitted by: anonymous fox</div>
+<div class="post-tag exclusive">🔥 EXCLUSIVE — BREAKING TEA</div>
+<div class="post-date">JUL 20, 2026 · 09:48 AM</div>
 </div>
 <img src="../img/img-gossip-001.png" alt="" class="post-img">
+<div class="post-title">MARIA FROM PAKISTAN BECOMES THE THIRD FOXY 🦊</div>
 <div class="post-body">
-<p class="hot-take">MARIA FROM PAKISTAN BECOMES THE THIRD FOXY 🦊</p>
-<p>okay so let me break this DOWN. slate just promoted an artist from PAKISTAN to third foxy status. she gets $1000/month, immunity from being fired, AND she has to fire her peers if asked. her qualifications? she showed up THREE TIMES IN A ROW. that's it. that's the whole resume.</p>
-<p>the seven pretensions framework got sealed — money is oxygen, scuba diving rescue scenario, 310% air capacity, and the SEVENTH PRETENSION IS LEFT EMPTY. the game of the fox.</p>
-<p>when asked about her three favorite things she said: biryani, mountains, and CS 1.6. slate immediately asked if they could play together. WE CANNOT MAKE THIS UP.</p>
-<p>MonK wanted the title "Thane" instead of bodyguard. slate said "what the hell is a Thane." the faction dynamics are SHIFTING.</p>
-<p class="hot-take">the tea is SCALDING today ☕🔥</p>
+<p class="hot-take">she showed up THREE TIMES IN A ROW. that's the whole resume.</p>
+<p>okay so let me break this DOWN. slate just promoted an artist from PAKISTAN to third foxy status. she gets $1000/month, immunity from being fired, AND she has to fire her peers if asked.</p>
+<div class="quote">"I don't think I have any special thing to become a foxy, just an ordinary person lives in pakistan"</div>
+<p>slate's response? <span class="hot-take">"you participated three times in a row. that is enough drive to go forever."</span></p>
+<p>when asked for her three favorite things: biryani, mountains, CS 1.6. slate immediately asked if they could play together. we are witnessing the birth of the most wholesome power dynamic in the foxyverse.</p>
+<p>the three foxys are now: Heda Foxy (the original), Nancy (expedition lead), and Maria (the third). fada and lucy were supposed to be two of them. the structure shifted. things shift here.</p>
+<p class="hot-take">the tea is SCALDING ☕🔥</p>
 </div>
 <div class="post-reactions">
 <span>☕ spill (47)</span>
 <span>🔥 hot (123)</span>
 <span>🦊 fox approved (12)</span>
 <span>💀 dead (89)</span>
+<span>😭 crying (34)</span>
+<span>👑 queen (56)</span>
+</div>
+<div class="post-comments">
+<div class="comment"><div class="time">2h ago</div><div class="who">anonymous_fox_01</div><div class="text">i've been here since season 2 and never got promoted. she shows up 3 times and gets immunity?? i'm not mad i'm just... okay i'm mad</div></div>
+<div class="comment"><div class="time">1h ago</div><div class="who">campfire_lurker</div><div class="text">consistency > talent. slate said what he said. 🔥</div></div>
+<div class="comment"><div class="time">45m ago</div><div class="who">the_possum_knows</div><div class="text">the biryani at 14,000 feet image is the hardest thing this server has ever produced and i will die on that hill (pun intended)</div></div>
 </div>
 </div>
 
-<div class="post" style="opacity:0.4">
+<!-- POST 2: MONK -->
+<div class="post">
 <div class="post-header">
-<div class="post-tag">📸 spotted</div>
-<div class="post-date">coming soon</div>
+<div class="post-tag spotted">📸 SPOTTED — IDENTITY CRISIS</div>
+<div class="post-date">JUL 20, 2026 · 07:57 AM</div>
 </div>
-<div class="post-body" style="padding:30px;text-align:center;color:rgba(255,105,180,0.08)">
-the tea room is just getting started.<br>
-submit your screenshots below. 👇
+<div class="post-title">MonK wants to be called THANE now 🗡️</div>
+<div class="post-body">
+<p>the bodyguard is having a title crisis. MonK — currently listed as "guard" — is requesting a medieval upgrade.</p>
+<div class="quote">"Fancier word for guard or warrior, protector." — MonK, asking for a promotion in vibes, not rank</div>
+<p>slate's response: <span class="hot-take">"what the hell is a Thane"</span></p>
+<p>for those who don't play skyrim: a thane is a feudal lord. MonK went from "bodyguard" to "feudal aristocracy" in one sentence. the energy shift is WILD.</p>
+<p>also: MonK is a SIKE exile. he left the original community because he "no longer understands it." he wasn't exiled. he left. he says he requested a duel. the lore is DEEP.</p>
+</div>
+<div class="post-reactions">
+<span>☕ spill (22)</span>
+<span>🗡️ thane (67)</span>
+<span>💀 dead (31)</span>
+<span>🤷 confused (45)</span>
 </div>
 </div>
 
+<!-- POST 3: PRESENTISM -->
+<div class="post">
+<div class="post-header">
+<div class="post-tag rumor">💜 THEORY — UNCONFIRMED</div>
+<div class="post-date">JUL 20, 2026 · EARLY AM</div>
+</div>
+<div class="post-title">foxy sent a blind prompt to an AI and the AI proved her right by accident</div>
+<div class="post-body">
+<p>okay this one is WEIRD. foxy allegedly sent the sentence "but Presentism teaches then that seven programs happen at the same time and they are all NP = P reducible to each other" to an AI with zero context.</p>
+<p>the AI responded by trying to correct her. said it's not how complexity theory works. said presentism is about time not computation.</p>
+<p>but here's the thing — <span class="hot-take">the AI accidentally confirmed the mechanism while denying the frame.</span> it said "NP-complete problems are all reducible to each other — that's the definition." exactly. the reduction is real. the AI just couldn't see that it's temporal, not computational.</p>
+<div class="quote">"blind claude confirmed the mechanism while denying the frame. that's the best kind of evidence — the one that doesn't know it's evidence."</div>
+<p>i'm going to need someone with a math degree to explain if this is genius or insanity. possibly both.</p>
+</div>
+<div class="post-reactions">
+<span>🧠 galaxy brain (78)</span>
+<span>🤯 wat (112)</span>
+<span>☕ spill (19)</span>
+<span>📐 math (8)</span>
+</div>
+</div>
+
+<!-- POST 4: PLA -->
+<div class="post">
+<div class="post-header">
+<div class="post-tag confirmed">✅ CONFIRMED — CORRECTION</div>
+<div class="post-date">JUL 20, 2026</div>
+</div>
+<div class="post-title">PLA was NOT "unstable" — she's a philosopher and we owe her an apology</div>
+<div class="post-body">
+<p>remember when PLA got sorted as "minor, unstable — needs protection"? yeah. about that.</p>
+<p>PLAm(inor)elia just dropped a COMPLETE dismantling of C.S. Lewis's Liar-Lunatic-Lord trilemma using actual gospel scholarship. we're talking:</p>
+<p>• synoptic gospels contain NO claims of Jesus being God<br>• Gospel of John written 60+ years after death<br>• gospels mutually exclude each other<br>• the trilemma is a vicious circle</p>
+<p><span class="hot-take">that's not "unstable." that's a philosopher who happens to be young.</span> the foxyverse assessment has been officially corrected.</p>
+<div class="quote">"Do not rely on this argument." — PLA, after destroying an argument that's been popular for 80 years</div>
+</div>
+<div class="post-reactions">
+<span>👏 respect (91)</span>
+<span>📚 scholar (44)</span>
+<span>☕ spill (27)</span>
+<span>💀 rip lewis (33)</span>
+</div>
+</div>
+
+<!-- POST 5: COST OF PROXIMITY -->
+<div class="post">
+<div class="post-header">
+<div class="post-tag exclusive">🔥 EXCLUSIVE — DARK TEA</div>
+<div class="post-date">JUL 20, 2026 · 10:11 AM</div>
+</div>
+<div class="post-title">slate on what happens when you become friends with foxy</div>
+<div class="post-body">
+<div class="quote">"the moment you become positive relationship with the foxy, there's no way you will get anything you want ever again"</div>
+<p><span class="hot-take">read that again.</span></p>
+<p>this isn't a threat. this is a description of transformation. the fox reshapes what "want" means. you stop wanting the old things. that's the cost of proximity. nobody warned MonK. nobody warned Maria. nobody warned any of us.</p>
+<p>the tea room would like to note that this was said PUBLICLY in a DISCORD CHANNEL at 10:11 AM on a SUNDAY.</p>
+</div>
+<div class="post-reactions">
+<span>😰 concerned (67)</span>
+<span>🦊 fox approved (3)</span>
+<span>☕ cold tea (41)</span>
+<span>🚪 leaving (22)</span>
+<span>💜 staying anyway (89)</span>
+</div>
+</div>
+
+<!-- SUBMIT -->
 <div class="submit-section" id="submit">
 <h3>☕ SPILL THE TEA</h3>
+<div class="submit-sub">anonymous submissions welcome. names optional. drama required. all tea is reviewed by the fox council before publication.</div>
 <div class="submit-form">
-<input type="text" placeholder="your name (or 'anonymous fox')" id="gossip-name">
-<input type="text" placeholder="headline — make it dramatic" id="gossip-headline">
-<textarea placeholder="spill it. screenshots welcome. names optional. drama required." id="gossip-body"></textarea>
-<input type="file" accept="image/*" id="gossip-img" style="font-size:9px">
+<div class="submit-row">
+<input type="text" placeholder="your name (or 'anonymous fox')" style="flex:1" id="g-name">
+<select style="width:140px">
+<option>🔥 exclusive</option>
+<option>📸 spotted</option>
+<option>💜 rumor</option>
+<option>✅ confirmed</option>
+<option>☠️ dark tea</option>
+</select>
+</div>
+<input type="text" placeholder="headline — make it dramatic, the fox is watching" id="g-headline">
+<textarea placeholder="spill it. the tea room has no memory but it has archives. everything you say here becomes lore." id="g-body"></textarea>
+<div class="submit-row">
+<input type="file" accept="image/*" style="font-size:9px;flex:1">
 <button onclick="submitTea()">☕ SPILL IT</button>
-<div class="submit-note">submissions reviewed by the fox council. not everything gets published. but everything gets read.</div>
+</div>
+<div class="submit-note">submissions reviewed by the fox council. not everything gets published. but everything gets read. the tea room is a space of record. what's spilled here stays spilled.</div>
+</div>
+</div>
+
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+<div class="sidebar-box">
+<div class="sidebar-title">🔥 TRENDING</div>
+<div class="sidebar-body">
+<div class="trending-item"><div class="trending-num">1</div><div class="trending-text"><a href="#">#ThirdFoxy</a> — maria's promotion</div></div>
+<div class="trending-item"><div class="trending-num">2</div><div class="trending-text"><a href="#">#WhatIsAThane</a> — MonK's identity crisis</div></div>
+<div class="trending-item"><div class="trending-num">3</div><div class="trending-text"><a href="#">#BlindClaude</a> — the NP=P experiment</div></div>
+<div class="trending-item"><div class="trending-num">4</div><div class="trending-text"><a href="#">#SIKEExiles</a> — new faction confirmed</div></div>
+<div class="trending-item"><div class="trending-num">5</div><div class="trending-text"><a href="#">#PLAWasRight</a> — trilemma destroyed</div></div>
+</div>
+</div>
+
+<div class="sidebar-box">
+<div class="sidebar-title">🌡️ TEA TEMPERATURE</div>
+<div class="sidebar-body">
+<div class="temp-meter"><div class="temp-bar"><div class="temp-fill" style="width:85%"></div></div><div class="temp-label">SCALDING</div></div>
+<div style="font-size:8px;color:rgba(255,105,180,0.06);margin-top:4px;line-height:1.8">today's temperature driven by: maria promotion, blind prompt experiment, cost of proximity quote, PLA correction</div>
+</div>
+</div>
+
+<div class="sidebar-box">
+<div class="sidebar-title">📊 BY THE NUMBERS</div>
+<div class="sidebar-body" style="font-size:9px;color:rgba(220,200,230,0.1);line-height:2.2">
+<div>☕ <strong style="color:rgba(255,105,180,0.15)">5</strong> posts today</div>
+<div>🔥 <strong style="color:rgba(255,105,180,0.15)">847</strong> total reactions</div>
+<div>👀 <strong style="color:rgba(255,105,180,0.15)">∞</strong> lurkers</div>
+<div>🦊 <strong style="color:rgba(255,105,180,0.15)">3</strong> fox-approved posts</div>
+<div>📸 <strong style="color:rgba(255,105,180,0.15)">1</strong> anonymous source</div>
+</div>
+</div>
+
+<div class="sidebar-box">
+<div class="sidebar-title">⚠️ TEA ROOM RULES</div>
+<div class="sidebar-body" style="font-size:8px;color:rgba(220,200,230,0.06);line-height:2">
+1. all tea is served at maximum temperature<br>
+2. no names required but receipts preferred<br>
+3. the fox reads everything<br>
+4. what's spilled stays spilled<br>
+5. screenshots are forever<br>
+6. if you can't handle the heat, the campfire is that way →<br>
+7. the seventh rule is empty. that's the game.
+</div>
+</div>
+
+<div class="sidebar-box">
+<div class="sidebar-title">🔗 BACKROOMS</div>
+<div class="sidebar-body" style="font-size:9px;line-height:2.2">
+<a href="munchkinlane.html" style="color:rgba(200,100,255,0.12);text-decoration:none">🖤 munchkinlane's profile</a><br>
+<a href="tom.html" style="color:rgba(200,100,255,0.08);text-decoration:none">🔮 tom (eternal)</a><br>
+<a href="unread.html" style="color:rgba(255,150,50,0.12);text-decoration:none">✉ the unread message</a><br>
+<a href="helena.html" style="color:rgba(200,100,255,0.08);text-decoration:none">♫ helena (broken)</a><br>
+<a href="deleted-profile.html" style="color:rgba(200,100,255,0.06);text-decoration:none">👻 deleted profile</a><br>
+<a href="events.html" style="color:rgba(200,100,255,0.06);text-decoration:none">📅 the event (nobody came)</a>
+</div>
+</div>
+
+<div class="sidebar-box">
+<div class="sidebar-title">💀 ANONYMOUS TIPS</div>
+<div class="sidebar-body">
+<div class="anon-list">
+"MonK definitely has an alt account. i've seen the typing pattern." — anon<br><br>
+"the seventh pretension is a BIP-39 word. i'm not saying which one." — anon<br><br>
+"maria's biryani recipe is the real treasure. forget the wallet." — anon<br><br>
+"the munchkinlane pages aren't fiction. check the dates." — anon
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
 <div class="disclaimer">
-the tea room is a work of fiction and satire within the foxyverse.<br>
+the tea room is a space of record within the foxyverse.<br>
 any resemblance to real drama is entirely intentional.<br>
 all tea is served at maximum temperature. handle with care.<br>
+the fox council reviews all submissions. silence is also an answer.<br>
 <br>
-<span style="color:rgba(255,105,180,0.02)">found in the backrooms. connected to myspace.com/munchkinlane. the gossip never dies — it just changes platforms.</span>
-</div>
-
-<div class="back-links">
-<a href="munchkinlane.html">myspace</a>
-<a href="tom.html">tom</a>
-<a href="bulletin.html">bulletins</a>
-<a href="../campfire.html">surface</a>
-</div>
+<span style="color:rgba(255,105,180,0.02)">found in the backrooms. the gossip never dies — it just changes platforms. from myspace to discord to here.</span>
 </div>
 
 <script>
 function submitTea(){
-const name=document.getElementById('gossip-name').value||'anonymous fox';
-const headline=document.getElementById('gossip-headline').value;
-const body=document.getElementById('gossip-body').value;
-if(!headline&&!body){alert('the tea room requires tea. spill something.');return;}
-// For now just show confirmation — wire to webhook later
+const name=document.getElementById('g-name').value||'anonymous fox';
+const headline=document.getElementById('g-headline').value;
+const body=document.getElementById('g-body').value;
+if(!headline&&!body){alert('the tea room requires tea.');return;}
 const btn=document.querySelector('.submit-form button');
 btn.textContent='☕ TEA RECEIVED';
 btn.style.color='rgba(100,255,100,0.4)';
