@@ -602,7 +602,7 @@ function startDuel(){S.duelS={p:0,q:0};S.duelR=0;$('duel').classList.add('active
 function showDR(){const r=DR[S.duelR];if(!r){endDuel();return;}$('d-score').textContent=`Round ${S.duelR+1}/5 | You: ${S.duelS.p} Queen: ${S.duelS.q}`;$('d-atk').innerHTML='🦊 '+r.atk;$('d-res').textContent='';$('d-res').className='';const c=$('d-opts');c.innerHTML='';r.o.forEach((o,i)=>{const b=document.createElement('button');b.className='do';b.textContent=o;b.onclick=()=>duelPick(i);c.appendChild(b);});}
 function duelPick(c){const r=DR[S.duelR],res=$('d-res');$('d-opts').innerHTML='';if(c===r.cor){S.duelS.p++;res.textContent='✨ '+r.w;res.className='w';sfx('spell');flash('flash-green');}else{S.duelS.q++;res.textContent='💀 '+r.l;res.className='l';sfx('fail');shake();}$('d-score').textContent=`Round ${S.duelR+1}/5 | You: ${S.duelS.p} Queen: ${S.duelS.q}`;if(S.duelS.p>=3||S.duelS.q>=3){setTimeout(endDuel,2200);return;}S.duelR++;setTimeout(showDR,2200);}
 function endDuel(){$('duel').classList.remove('active');if(musOn)playMus('throne');if(S.duelS.p>=3){S.flags.queenWon=1;notif('YOU WIN! 🦊✨','spell');flash('flash-purple');say('<span class="g">"well played, little fox." 🦊</span> talk to the queen.',5000);}else{notif('queen wins...','fail');say('"not bad. not good. 😏" <span class="h">systolic→chaos, paradox→certainty, party→control.</span>',6000);S.duelR=0;S.duelS={p:0,q:0};}renderHS();updateQuest();}
-function showEnd(){$('end').classList.add('active');$('end-t').textContent='🦊 THE SECRET OF FOX ISLAND 🦊';$('end-p').innerHTML='"you were the fox the whole time."<br><br>Spells: '+S.spells.length+'/3 | Items: '+S.inv.length+'/'+Object.keys(ITEMS).length+'<br>Secrets: '+S.secrets+'/4<br><br><span style="color:#ff6bff">'+(S.secrets>=4?'ALL SECRETS 🦊✨':'hidden rooms remain...')+'</span><br><br><span style="color:#9b7abf">🦊⇌✨⇌🌑</span>';}
+function showEnd(){try{localStorage.setItem('bw_awake','true');localStorage.setItem('bw_island_complete','true');}catch(e){}($('end')).classList.add('active');$('end-t').textContent='🦊 THE SECRET OF FOX ISLAND 🦊';$('end-p').innerHTML='"you were the fox the whole time."<br><br>Spells: '+S.spells.length+'/3 | Items: '+S.inv.length+'/'+Object.keys(ITEMS).length+'<br>Secrets: '+S.secrets+'/4<br><br><span style="color:#ff6bff">'+(S.secrets>=4?'ALL SECRETS 🦊✨':'hidden rooms remain...')+'</span><br><br><span style="color:#9b7abf">🦊⇌✨⇌🌑</span>';}
 
 // ── MAP ──
 const MAP_LOCS=[
@@ -750,3 +750,4 @@ function bSanctum(c){c.innerHTML='<div class="mp3-tag">♪ Foxy Revolution</div>
 <script src="../blickwinkel.js"></script>
 </body>
 </html>
+
