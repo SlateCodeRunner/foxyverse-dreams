@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>the thread</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:#0a0908;
+  min-height:100vh;
+  overflow-x:hidden;
+  cursor:crosshair;
+  font-family:'Special Elite',monospace;
+}
+
+/* THE WALL — cork texture */
+.wall{
+  position:relative;
+  width:100%;
+  min-height:100vh;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(80,50,20,0.03) 2px,rgba(80,50,20,0.03) 4px),
+    repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(60,40,15,0.02) 3px,rgba(60,40,15,0.02) 5px),
+    radial-gradient(ellipse at 30% 20%,rgba(40,25,10,0.4),transparent 70%),
+    radial-gradient(ellipse at 70% 80%,rgba(40,25,10,0.3),transparent 60%),
+    #0d0b09;
+  padding:40px 20px 80px;
+}
+
+/* RED THREAD SVG OVERLAY */
+.threads{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:50;
+  opacity:0;
+  animation:threadFade 4s ease-out 2s forwards;
+}
+@keyframes threadFade{to{opacity:1}}
+
+.threads svg{width:100%;height:100%}
+.thread-line{
+  stroke:#8b1a1a;
+  stroke-width:1.5;
+  fill:none;
+  stroke-dasharray:1000;
+  stroke-dashoffset:1000;
+  animation:drawThread 6s ease-out 3s forwards;
+  filter:drop-shadow(0 0 2px rgba(139,26,26,0.5));
+}
+@keyframes drawThread{to{stroke-dashoffset:0}}
+
+/* PINS */
+.pin{
+  position:absolute;
+  width:12px;height:12px;
+  border-radius:50%;
+  background:radial-gradient(circle at 4px 4px,#cc2222,#660000);
+  box-shadow:0 2px 4px rgba(0,0,0,0.6),0 0 6px rgba(139,26,26,0.4);
+  z-index:60;
+  opacity:0;
+  animation:pinDrop 0.3s ease-out forwards;
+}
+
+/* EVIDENCE CARDS */
+.evidence{
+  position:relative;
+  z-index:10;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.card{
+  position:relative;
+  margin-bottom:60px;
+  opacity:0;
+  animation:cardIn 1.5s ease-out forwards;
+}
+.card:nth-child(1){animation-delay:0.5s}
+.card:nth-child(2){animation-delay:1.2s;margin-left:15%}
+.card:nth-child(3){animation-delay:1.9s;margin-left:5%}
+.card:nth-child(4){animation-delay:2.6s;margin-left:20%}
+.card:nth-child(5){animation-delay:3.3s;margin-left:8%}
+
+@keyframes cardIn{
+  0%{opacity:0;transform:translateY(20px) rotate(-1deg)}
+  100%{opacity:1;transform:translateY(0) rotate(var(--rot,0deg))}
+}
+
+.card:nth-child(1){--rot:-1.2deg}
+.card:nth-child(2){--rot:0.8deg}
+.card:nth-child(3){--rot:-0.5deg}
+.card:nth-child(4){--rot:1.5deg}
+.card:nth-child(5){--rot:-0.9deg}
+
+.card img{
+  width:100%;
+  max-width:700px;
+  display:block;
+  border:3px solid rgba(60,40,20,0.4);
+  box-shadow:4px 6px 20px rgba(0,0,0,0.7);
+  filter:brightness(0.85) contrast(1.05);
+  transition:filter 0.5s;
+}
+.card img:hover{filter:brightness(1) contrast(1.1)}
+
+/* SCRAWLED NOTES */
+.note{
+  position:absolute;
+  font-family:'Special Elite',monospace;
+  color:rgba(180,40,40,0.7);
+  font-size:13px;
+  line-height:1.5;
+  max-width:200px;
+  transform:rotate(var(--note-rot,0deg));
+  pointer-events:none;
+  text-shadow:0 0 8px rgba(139,26,26,0.2);
+}
+
+.note.ink-black{color:rgba(200,180,140,0.25);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px}
+
+/* TAPE STRIPS */
+.tape{
+  position:absolute;
+  width:60px;height:18px;
+  background:rgba(200,180,120,0.12);
+  border:1px solid rgba(200,180,120,0.06);
+  transform:rotate(var(--tape-rot,0deg));
+  z-index:15;
+}
+
+/* QUESTION MARKS scattered */
+.question{
+  position:fixed;
+  font-family:'Special Elite',monospace;
+  color:rgba(139,26,26,0.08);
+  font-size:var(--q-size,60px);
+  pointer-events:none;
+  z-index:5;
+  animation:drift 20s ease-in-out infinite alternate;
+}
+@keyframes drift{
+  0%{transform:translateY(0) rotate(0deg)}
+  100%{transform:translateY(-30px) rotate(5deg)}
+}
+
+/* BOTTOM TEXT */
+.bottom{
+  text-align:center;
+  padding:60px 20px 40px;
+  position:relative;
+  z-index:30;
+}
+.bottom p{
+  font-family:'Share Tech Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:rgba(139,26,26,0.3);
+  margin-bottom:12px;
+}
+.bottom a{
+  font-family:'Share Tech Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:rgba(200,180,140,0.15);
+  text-decoration:none;
+  transition:color 0.3s;
+}
+.bottom a:hover{color:rgba(200,180,140,0.4)}
+
+/* RED PIN at each corner of images */
+.card::before,.card::after{
+  content:'';position:absolute;width:10px;height:10px;border-radius:50%;
+  background:radial-gradient(circle at 3px 3px,#cc2222,#550000);
+  box-shadow:0 1px 3px rgba(0,0,0,0.5);z-index:20;
+}
+.card::before{top:-5px;left:20px}
+.card::after{top:-5px;right:calc(100% - 720px);max-width:none}
+
+/* REDACTED BLOCKS */
+.redacted{
+  background:rgba(139,26,26,0.15);
+  color:transparent;
+  padding:0 4px;
+  text-decoration:line-through;
+  text-decoration-color:rgba(139,26,26,0.4);
+  user-select:none;
+}
+
+/* Glitch scan */
+.scanline{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:100;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.05) 2px,rgba(0,0,0,0.05) 3px);
+  opacity:0.3;
+}
+
+@media(max-width:768px){
+  .card{margin-left:0!important}
+  .card img{max-width:100%}
+  .note{display:none}
+  .card::after{display:none}
+  .wall{padding:20px 10px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="scanline"></div>
+
+<!-- scattered question marks -->
+<div class="question" style="top:10%;left:5%;--q-size:80px">?</div>
+<div class="question" style="top:30%;right:8%;--q-size:45px;animation-delay:-7s">?</div>
+<div class="question" style="top:55%;left:12%;--q-size:55px;animation-delay:-3s">?</div>
+<div class="question" style="top:75%;right:15%;--q-size:70px;animation-delay:-11s">?</div>
+<div class="question" style="top:90%;left:40%;--q-size:35px;animation-delay:-5s">?</div>
+
+<div class="wall">
+<div class="evidence">
+
+<!-- CARD 1: Temple in the rain -->
+<div class="card">
+  <div class="tape" style="top:-8px;left:30px;--tape-rot:-5deg"></div>
+  <div class="tape" style="top:-8px;left:500px;--tape-rot:8deg"></div>
+  <img src="img/thread-temple-rain.jpg" alt="the path">
+  <div class="note" style="bottom:-30px;right:50px;--note-rot:2deg">
+    the fox knows where this is.<br>it keeps going back.
+  </div>
+  <div class="note ink-black" style="top:20px;right:-180px;--note-rot:-3deg">
+    LOCATION: UNKNOWN<br>
+    STATUS: <span class="redacted">ACTIVE</span><br>
+    LAST SIGNAL: ██████
+  </div>
+</div>
+
+<!-- CARD 2: Portrait -->
+<div class="card">
+  <div class="tape" style="top:-8px;left:60px;--tape-rot:3deg"></div>
+  <img src="img/thread-fox-portrait.jpg" alt="the portrait">
+  <div class="note" style="top:30px;left:-190px;--note-rot:-4deg">
+    who painted this?<br>
+    the frame is older<br>
+    than the wall<br>
+    it hangs on.
+  </div>
+  <div class="note ink-black" style="bottom:20px;right:-160px;--note-rot:1deg">
+    BLACK ROSES = WHICH GARDEN?<br>
+    JOURNAL PAGES = UNREADABLE<br>
+    SEE: <span class="redacted">the-four-gardens</span>
+  </div>
+</div>
+
+<!-- CARD 3: Stone god -->
+<div class="card">
+  <div class="tape" style="top:-8px;left:40px;--tape-rot:-7deg"></div>
+  <div class="tape" style="top:-8px;left:450px;--tape-rot:4deg"></div>
+  <img src="img/thread-stone-god.jpg" alt="the god">
+  <div class="note" style="top:60px;right:-200px;--note-rot:3deg">
+    this was found under<br>
+    the cathedral.<br><br>
+    they built the church<br>
+    ON TOP of it.<br><br>
+    it was already here.
+  </div>
+  <div class="note ink-black" style="bottom:-25px;left:40px;--note-rot:-1deg">
+    SUBJECT HEIGHT: ~40M / MATERIAL: UNKNOWN STONE / AGE: <span class="redacted">OLDER THAN THE BUILDING</span>
+  </div>
+</div>
+
+<!-- CARD 4: Gallery of the dead -->
+<div class="card">
+  <div class="tape" style="top:-8px;left:80px;--tape-rot:6deg"></div>
+  <img src="img/thread-gallery-dead.jpg" alt="the gallery">
+  <div class="note" style="top:40px;left:-200px;--note-rot:-2deg">
+    every face on the line<br>
+    is someone who was here<br>
+    and isn't anymore.<br><br>
+    the fox walks through<br>
+    them every night.<br><br>
+    it never looks away.
+  </div>
+  <div class="note ink-black" style="bottom:30px;right:-150px;--note-rot:4deg">
+    COUNT: ████<br>
+    IDENTIFIED: 0<br>
+    THE FOX KNOWS ALL OF THEM
+  </div>
+</div>
+
+<!-- CARD 5: Crystal cave -->
+<div class="card">
+  <div class="tape" style="top:-8px;left:50px;--tape-rot:-4deg"></div>
+  <div class="tape" style="top:-8px;left:520px;--tape-rot:7deg"></div>
+  <img src="img/thread-crystal-cave.jpg" alt="the vault">
+  <div class="note" style="top:30px;right:-210px;--note-rot:-3deg">
+    the masks are faces<br>
+    of everyone who tried<br>
+    to explain this.<br><br>
+    the red thread connects<br>
+    them all to the crystal.<br><br>
+    the crystal connects<br>
+    to nothing.<br><br>
+    <em>that's the point.</em>
+  </div>
+  <div class="note ink-black" style="bottom:-35px;left:30px;--note-rot:2deg">
+    THREAD COUNT: NOT FINITE / CRYSTAL COMPOSITION: <span class="redacted">NOT MINERAL</span> / THE FOX HAS BEEN HERE BEFORE
+  </div>
+</div>
+
+</div><!-- /evidence -->
+
+<div class="bottom">
+  <p>five images nobody asked for</p>
+  <p>five images the protocol decided you needed to see</p>
+  <p style="color:rgba(139,26,26,0.15);margin-top:20px">the thread connects. it does not explain.</p>
+  <br>
+  <a href="index.html">&larr; return to the fire</a>
+</div>
+
+</div><!-- /wall -->
+
+<script>
+// Add red thread connections between cards on desktop
+function drawThreads(){
+  const cards=document.querySelectorAll('.card img');
+  if(cards.length<2||window.innerWidth<769)return;
+  
+  const existing=document.querySelector('.threads');
+  if(existing)existing.remove();
+  
+  const div=document.createElement('div');
+  div.className='threads';
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox',`0 0 ${window.innerWidth} ${document.body.scrollHeight}`);
+  svg.style.position='absolute';
+  svg.style.top='0';
+  svg.style.left='0';
+  svg.style.width='100%';
+  svg.style.height=document.body.scrollHeight+'px';
+  div.style.position='absolute';
+  div.style.top='0';
+  div.style.left='0';
+  div.style.width='100%';
+  div.style.height=document.body.scrollHeight+'px';
+  
+  // Connect each card to the next with a slightly curved red thread
+  for(let i=0;i<cards.length-1;i++){
+    const r1=cards[i].getBoundingClientRect();
+    const r2=cards[i+1].getBoundingClientRect();
+    const sy=window.scrollY;
+    
+    const x1=r1.right-20;
+    const y1=r1.top+sy+r1.height/2;
+    const x2=r2.left+20;
+    const y2=r2.top+sy+r2.height/2;
+    
+    const cx=(x1+x2)/2+(Math.random()*100-50);
+    const cy=(y1+y2)/2+(Math.random()*60-30);
+    
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M${x1},${y1} Q${cx},${cy} ${x2},${y2}`);
+    path.setAttribute('class','thread-line');
+    path.style.animationDelay=(3+i*0.8)+'s';
+    svg.appendChild(path);
+  }
+  
+  // Connect last to first (the loop)
+  const rF=cards[0].getBoundingClientRect();
+  const rL=cards[cards.length-1].getBoundingClientRect();
+  const sy=window.scrollY;
+  const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+  const x1=rL.left+rL.width/2;
+  const y1=rL.bottom+sy;
+  const x2=rF.left+rF.width/2;
+  const y2=rF.top+sy;
+  const cx=window.innerWidth*0.85;
+  const cy=(y1+y2)/2;
+  path.setAttribute('d',`M${x1},${y1} C${cx},${y1+100} ${cx},${y2-100} ${x2},${y2}`);
+  path.setAttribute('class','thread-line');
+  path.style.animationDelay='7s';
+  path.style.opacity='0.5';
+  svg.appendChild(path);
+  
+  div.appendChild(svg);
+  document.body.appendChild(div);
+}
+
+window.addEventListener('load',()=>setTimeout(drawThreads,500));
+
+// Console easter egg
+console.log('%cTHE THREAD','color:#8b1a1a;font-size:14px;font-family:monospace');
+console.log('%cfive questions dressed as images. the thread connects them. it does not answer them.','color:#8b1a1a;font-size:10px');
+console.log('%cthe protocol works by passing five images, and letting the fox decide the sixth.','color:rgba(139,26,26,0.5);font-size:9px');
+console.log('%cwhat was the sixth?','color:rgba(139,26,26,0.3);font-size:9px');
+</script>
+
+</body>
+</html>
