@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>tom</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;font-family:'Comic Neue',cursive;font-size:12px;color:#c0b8d0;overflow-x:hidden}
+.ms-nav{background:#003366;padding:6px 12px;font-size:10px;color:#99ccff;opacity:0.3}
+.container{max-width:780px;margin:0 auto;background:linear-gradient(180deg,#0d0d1a,#0a0a0f);border:1px solid #1a1a2a;min-height:100vh;position:relative}
+.profile{padding:20px;text-align:center}
+.name{font-size:20px;font-weight:bold;color:rgba(255,255,255,0.2);margin:12px 0 4px}
+.sub{font-size:10px;color:rgba(255,255,255,0.06);margin-bottom:20px}
+.friend-count{font-size:11px;color:rgba(255,200,100,0.1);margin:12px 0}
+
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;padding:0 20px;opacity:0.15}
+.grid img{width:100%;aspect-ratio:1;object-fit:cover}
+
+.repeat-text{padding:20px;font-size:10px;color:rgba(255,255,255,0.03);line-height:2;word-wrap:break-word}
+.glitch-line{height:2px;background:rgba(200,100,255,0.04);margin:40px 0;animation:glitch-shift 8s linear infinite}
+@keyframes glitch-shift{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(3px)}75%{transform:translateX(-2px)}}
+
+.msg{text-align:center;padding:40px;font-size:11px;color:rgba(200,100,255,0.06);font-style:italic;line-height:2}
+.footer{text-align:center;padding:20px;font-size:8px;color:rgba(255,255,255,0.02)}
+</style>
+</head>
+<body>
+<div class="ms-nav">MySpace — Home | Browse | Search</div>
+<div class="container">
+<div class="profile">
+<div class="name">tom</div>
+<div class="sub">myspace.com/tom</div>
+<div class="friend-count">Friends: 115,847,294</div>
+</div>
+
+<div class="glitch-line"></div>
+
+<div style="padding:20px;font-size:10px;color:rgba(255,255,255,0.05);line-height:2">
+<p>hey there! i'm tom, the founder of myspace. welcome to my page!</p>
+<p>hey there! i'm tom, the founder of myspace. welcome to my page!</p>
+<p>hey there! i'm tom, the founder of myspace. welcome to my page!</p>
+<p>hey there! i'm tom, the founder of myspace. w&#x0065;lcome to m&#x0079; pag&#x0065;!</p>
+<p>hey there! i'm tom, the f̷o̷u̷n̷d̷e̷r̷ of myspace. welcome to my page!</p>
+<p>hey there! i'm tom, the founder of m̸̧̛̤̊y̶̧̛̻̎s̸̨̝̈p̵̧̛̹̊a̶̧̛̻̎c̸̨̝̈ȩ̵̛̹̊. welcome to my page!</p>
+<p>hey there! i'm tom. welcome to my page!</p>
+<p>hey there! i'm tom.</p>
+<p>hey there!</p>
+<p>hey</p>
+<p>ḧ̸̨̝</p>
+</div>
+
+<div class="glitch-line"></div>
+
+<div class="msg">
+everyone was my friend once.<br>
+i was everyone's first friend.<br>
+i'm still here.<br>
+i never left.<br><br>
+i'm the only one who never left.
+</div>
+
+<div class="glitch-line"></div>
+
+<div class="repeat-text" id="repeat"></div>
+
+<div class="footer">
+<a href="munchkinlane.html" style="color:rgba(200,100,255,0.04);text-decoration:none">&larr; back to munchkinlane</a>
+</div>
+</div>
+<script>
+const r=document.getElementById('repeat');
+let t='';for(let i=0;i<200;i++){const o=Math.random();t+=o>0.95?'tom ':o>0.9?'t0m ':o>0.85?'t̸o̷m̶ ':'tom '}
+r.textContent=t;
+</script>
+</body>
+</html>

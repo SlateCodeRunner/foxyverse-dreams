@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>profile not found</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fira+Code:wght@300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;font-family:'Comic Neue',cursive;font-size:12px;color:#c0b8d0;min-height:100vh;display:flex;flex-direction:column}
+.ms-nav{background:#003366;padding:6px 12px;font-size:10px;color:#99ccff;opacity:0.3}
+.content{flex:1;max-width:780px;margin:0 auto;padding:40px 20px;width:100%}
+
+.error-box{border:1px solid rgba(200,100,255,0.04);padding:24px;margin:20px 0;background:rgba(200,100,255,0.005)}
+.error-title{font-size:14px;color:rgba(255,100,100,0.2);margin-bottom:8px}
+.error-msg{font-size:11px;color:rgba(255,255,255,0.06);line-height:1.8}
+
+.ghost-load{margin:40px 0;opacity:0.06}
+.ghost-line{height:8px;background:linear-gradient(90deg,rgba(200,100,255,0.1),transparent);margin:6px 0;animation:ghost-pulse 3s ease-in-out infinite}
+.ghost-line:nth-child(1){width:60%;animation-delay:0s}
+.ghost-line:nth-child(2){width:85%;animation-delay:0.3s}
+.ghost-line:nth-child(3){width:45%;animation-delay:0.6s}
+.ghost-line:nth-child(4){width:72%;animation-delay:0.9s}
+.ghost-line:nth-child(5){width:30%;animation-delay:1.2s}
+@keyframes ghost-pulse{0%,100%{opacity:0.06}50%{opacity:0.12}}
+
+.photo-attempt{width:170px;height:170px;border:2px solid rgba(200,100,255,0.03);margin:20px 0;position:relative;overflow:hidden}
+.photo-attempt .scanline{position:absolute;top:0;left:0;width:100%;height:3px;background:rgba(200,100,255,0.08);animation:scan 4s linear infinite}
+@keyframes scan{0%{top:0}100%{top:170px}}
+.photo-attempt .label{position:absolute;bottom:4px;left:4px;font-family:'Fira Code',monospace;font-size:7px;color:rgba(200,100,255,0.06)}
+
+.raw-html{font-family:'Fira Code',monospace;font-size:9px;color:rgba(200,100,255,0.04);line-height:2;padding:20px;background:rgba(0,0,0,0.3);border:1px solid rgba(200,100,255,0.02);margin:20px 0;overflow:hidden}
+
+.name-flicker{font-size:16px;color:rgba(200,100,255,0.08);margin:20px 0;animation:name-try 6s ease-in-out infinite}
+@keyframes name-try{0%,100%{opacity:0.02}40%{opacity:0.12}42%{opacity:0}60%{opacity:0.08}62%{opacity:0}}
+
+.back{font-size:9px;color:rgba(200,100,255,0.04);text-decoration:none;margin-top:40px;display:inline-block}
+.back:hover{color:rgba(200,100,255,0.15)}
+</style>
+</head>
+<body>
+<div class="ms-nav">MySpace — Home | Browse | Search</div>
+<div class="content">
+<div class="error-box">
+<div class="error-title">Invalid Friend ID.</div>
+<div class="error-msg">This user either does not exist or has removed their profile.<br>This may also be caused by a deleted or suspended account.</div>
+</div>
+
+<div class="photo-attempt">
+<div class="scanline"></div>
+<div class="label">loading profile image...</div>
+</div>
+
+<div class="name-flicker">xXdarkAngelXx</div>
+
+<div class="ghost-load">
+<div class="ghost-line"></div>
+<div class="ghost-line"></div>
+<div class="ghost-line"></div>
+<div class="ghost-line"></div>
+<div class="ghost-line"></div>
+</div>
+
+<div class="raw-html">
+&lt;div class="profileInfo"&gt;<br>
+&nbsp;&nbsp;&lt;span class="nametext"&gt;x̷X̷d̷a̷r̷k̷A̷n̷g̷e̷l̷X̷x̷&lt;/span&gt;<br>
+&nbsp;&nbsp;&lt;span class="status"&gt;<!-- CONTENT REMOVED --&gt;&lt;/span&gt;<br>
+&nbsp;&nbsp;&lt;div class="blurb"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;i was here. i promise i was here.<br>
+&nbsp;&nbsp;&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;!-- last modified: 2008-09-14T03:22:17Z --&gt;<br>
+&lt;!-- account status: TERMINATED --&gt;<br>
+&lt;!-- reason: user_requested --&gt;
+</div>
+
+<a href="munchkinlane.html" class="back">&larr; back to munchkinlane's page</a>
+</div>
+</body>
+</html>

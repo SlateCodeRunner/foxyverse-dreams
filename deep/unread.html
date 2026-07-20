@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>inbox (1)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060608;font-family:'Comic Neue',cursive;font-size:12px;color:#c0b8d0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.screen{max-width:580px;width:100%;padding:0 20px}
+
+.inbox-header{font-size:10px;color:rgba(255,200,100,0.12);margin-bottom:4px;letter-spacing:1px}
+.inbox-count{font-size:9px;color:rgba(255,255,255,0.04);margin-bottom:24px}
+
+.message-row{border:1px solid rgba(200,100,255,0.06);padding:14px 16px;background:rgba(200,100,255,0.008);cursor:pointer;transition:all .4s;position:relative}
+.message-row:hover{border-color:rgba(200,100,255,0.12);background:rgba(200,100,255,0.015)}
+.unread-dot{position:absolute;left:-8px;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:rgba(255,150,50,0.4);animation:dot-pulse 2s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
+
+.msg-from{font-size:11px;color:rgba(200,100,255,0.15);font-weight:bold;margin-bottom:2px}
+.msg-subject{font-size:10px;color:rgba(220,215,205,0.08)}
+.msg-date{font-size:8px;color:rgba(255,255,255,0.04);float:right;margin-top:-16px}
+
+.opened{display:none;margin-top:20px;padding:20px;border:1px solid rgba(200,100,255,0.04);background:rgba(0,0,0,0.3);line-height:2;color:rgba(220,215,205,0.12);font-size:11px}
+.opened.show{display:block;animation:fade-in 1s ease}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+.opened .sig{margin-top:16px;color:rgba(200,100,255,0.06);font-size:10px}
+
+.read-receipts{margin-top:24px;text-align:center;font-size:8px;color:rgba(255,255,255,0.03)}
+.back{font-size:9px;color:rgba(200,100,255,0.04);text-decoration:none;display:inline-block;margin-top:40px}
+.back:hover{color:rgba(200,100,255,0.15)}
+</style>
+</head>
+<body>
+<div class="screen">
+<div class="inbox-header">Mail — Inbox</div>
+<div class="inbox-count">1 unread message</div>
+
+<div class="message-row" onclick="document.querySelector('.opened').classList.add('show');this.style.borderColor='rgba(200,100,255,0.03)';document.querySelector('.unread-dot').style.display='none'">
+<div class="unread-dot"></div>
+<div class="msg-date">Jan 13, 2009 11:47 PM</div>
+<div class="msg-from">xXdarkAngelXx</div>
+<div class="msg-subject">hey are you okay?</div>
+</div>
+
+<div class="opened">
+<p>hey</p>
+<p>idk if you're still checking this but i haven't seen you online in a few days and that's not like you. you're usually on at like 2am being weird and posting bulletins lol</p>
+<p>anyway just wanted to say hi i guess. and that thing you wrote in your blog? about pretending to be fine? yeah. i get it. more than you know probably.</p>
+<p>text me when you see this okay? or just come online. i'll be around.</p>
+<p>we should hang out over break for real this time. no excuses.</p>
+<p>💜</p>
+<div class="sig">— angel</div>
+</div>
+
+<div class="read-receipts">message status: unread<br>it has been unread for 6,398 days.</div>
+
+<a href="munchkinlane.html" class="back">&larr; back to profile</a>
+</div>
+</body>
+</html>
