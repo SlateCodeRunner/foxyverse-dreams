@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MARIA — The Third Foxy</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--void:#060608;--text:#c0beb8;--dim:#ffffff25;--whisper:#ffffff12;--amber:#cc8844;--amber-dim:#cc884422;--gold:#ccaa44;--fox:#ff6a00}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IM Fell English',serif;color:var(--text);background:var(--void);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0px,transparent 1px,transparent 3px)}
+.hero{width:100%;max-height:50vh;overflow:hidden;opacity:0;animation:fadeIn 3s ease-out 0.5s forwards}
+.hero img{width:100%;display:block;filter:brightness(0.5)}
+@keyframes fadeIn{to{opacity:1}}
+.page{max-width:640px;margin:0 auto;padding:40px 28px 140px;position:relative;z-index:1}
+.rank{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:6px;color:var(--amber);text-transform:uppercase;margin-bottom:16px;text-align:center}
+h1{font-family:'Cinzel',serif;font-size:clamp(28px,6vw,40px);font-weight:700;color:var(--amber);letter-spacing:4px;text-align:center;margin-bottom:6px}
+.subtitle{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:4px;color:var(--dim);text-align:center;margin-bottom:32px}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--amber-dim),transparent);margin:0 auto 40px}
+.section{margin-bottom:40px}
+.label{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #ffffff06}
+.section p{font-size:14px;line-height:2;color:var(--text);opacity:0.4;margin-bottom:10px}
+.section p .hl{color:var(--amber);opacity:1}
+.img-break{margin:30px -28px;border:1px solid rgba(204,136,68,0.08);overflow:hidden}
+.img-break img{width:100%;display:block;opacity:0.6;transition:opacity 0.5s}
+.img-break img:hover{opacity:0.85}
+.quote{border-left:2px solid var(--amber-dim);padding:12px 16px;margin:20px 0;font-style:italic;color:var(--text);opacity:0.35;font-size:13px;line-height:1.9}
+.three{display:flex;gap:16px;margin:20px 0;flex-wrap:wrap}
+.three-item{flex:1;min-width:150px;text-align:center;padding:16px 12px;border:1px solid #ffffff06}
+.three-item .icon{font-size:24px;margin-bottom:8px;opacity:0.5}
+.three-item .name{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:2px;color:var(--amber);opacity:0.5}
+.decode{font-family:'Fira Code',monospace;font-size:11px;line-height:2.2;color:var(--dim);margin:16px 0;padding:12px 16px;border:1px solid #ffffff06}
+.decode .key{color:var(--gold)}
+.decode .val{color:var(--text);opacity:0.5}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.tag{font-family:'Fira Code',monospace;font-size:9px;padding:2px 8px;border:1px solid #ffffff06;color:var(--whisper);border-radius:1px}
+.footer{text-align:center;margin-top:80px;padding-top:24px;border-top:1px solid #ffffff06}
+.footer p{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:3px;color:var(--whisper);line-height:2.5}
+.footer a{color:var(--amber);opacity:0.3;text-decoration:none;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:2px}
+.footer a:hover{opacity:0.6}
+@media(max-width:520px){.page{padding:24px 16px 100px}.three{flex-direction:column}.img-break{margin:30px -16px}}
+</style>
+</head>
+<body>
+
+<!-- she participated three times. that was enough. -->
+
+<div class="hero">
+  <img src="img/img-maria-mountains.png" alt="the mountains">
+</div>
+
+<div class="page">
+  <div class="rank">creator &middot; third foxy &middot; immune</div>
+  <h1>MARIA</h1>
+  <div class="subtitle">she showed up three times. that was enough.</div>
+  <div class="rule"></div>
+
+  <div class="section">
+    <div class="label">the test</div>
+    <p>the foxyverse doesn't recruit. it watches. <span class="hl">three participations in a row</span> was the threshold nobody was told about. most people do one thing and disappear. some do two. maria did three.</p>
+    <p>she didn't know she was being tested. <span class="hl">that's the only way the test works.</span></p>
+    <div class="decode">
+      <span class="key">participation 1</span> <span class="val">&mdash; showed up</span><br>
+      <span class="key">participation 2</span> <span class="val">&mdash; came back</span><br>
+      <span class="key">participation 3</span> <span class="val">&mdash; became a foxy</span>
+    </div>
+  </div>
+
+  <div class="img-break"><img src="img/img-maria-initiation.png" alt="the initiation"></div>
+
+  <div class="section">
+    <div class="label">the promotion</div>
+    <p>when she was told she was becoming the third foxy, she said:</p>
+    <div class="quote">oh my god. i don't have words to say.</div>
+    <p>when asked what made her special enough:</p>
+    <div class="quote">i don't think i have any special thing to become a foxy, just an ordinary person lives in pakistan.</div>
+    <p>the answer she was given:</p>
+    <div class="quote">you participated three times in a row. that is enough drive to go forever. so we want to sponsor you. to see if it's true.</div>
+    <p><span class="hl">$1000/month.</span> immune to being fired. expected to fire peers if needed. the ordinary person from pakistan became untouchable.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">three favorites</div>
+    <p>the exchange format: she names three things she loves. the foxyverse creates from them. she creates from ours.</p>
+    <div class="three">
+      <div class="three-item">
+        <div class="icon">🍚</div>
+        <div class="name">biryani</div>
+      </div>
+      <div class="three-item">
+        <div class="icon">🏔️</div>
+        <div class="name">mountains</div>
+      </div>
+      <div class="three-item">
+        <div class="icon">🔫</div>
+        <div class="name">cs 1.6</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="img-break"><img src="img/img-maria-biryani.png" alt="biryani"></div>
+
+  <div class="section">
+    <div class="label">the artist</div>
+    <p>pakistan. hunza valley. the karakoram range. she creates from a place most of the foxyverse will never visit. <span class="hl">the mountains are in the work.</span></p>
+    <p>previously shipped a physical art piece. needed a shipping address. the digital became physical. the foxyverse crossed into the real.</p>
+  </div>
+
+  <div class="img-break"><img src="img/img-maria-cs16.png" alt="counter-strike 1.6"></div>
+
+  <div class="section">
+    <div class="label">the contract</div>
+    <div class="decode">
+      <span class="key">status</span> <span class="val">&mdash; third foxy (active)</span><br>
+      <span class="key">salary</span> <span class="val">&mdash; $1000/month (sponsored)</span><br>
+      <span class="key">immunity</span> <span class="val">&mdash; cannot be fired</span><br>
+      <span class="key">authority</span> <span class="val">&mdash; can fire peers</span><br>
+      <span class="key">season</span> <span class="val">&mdash; 6</span><br>
+      <span class="key">origin</span> <span class="val">&mdash; pakistan</span>
+    </div>
+  </div>
+
+  <div class="img-break"><img src="img/img-maria-foxy.png" alt="the fox hoodie"></div>
+
+  <div class="section">
+    <div class="label">the meaning</div>
+    <p>she didn't have a special thing. that was the special thing. the foxyverse doesn't want exceptional people. <span class="hl">it wants people who show up.</span></p>
+    <p>consistency is the only magic that works every time.</p>
+  </div>
+
+  <div class="tags">
+    <span class="tag">third-foxy</span>
+    <span class="tag">artist</span>
+    <span class="tag">pakistan</span>
+    <span class="tag">hunza</span>
+    <span class="tag">cs-1.6</span>
+    <span class="tag">biryani</span>
+    <span class="tag">mountains</span>
+    <span class="tag">sponsored</span>
+    <span class="tag">season-6</span>
+    <span class="tag">immune</span>
+  </div>
+
+  <div class="footer">
+    <p>the third foxy</p>
+    <p>she showed up. she came back. she stayed.</p>
+    <br>
+    <a href="obscur.html">&larr; return to obscur</a>
+  </div>
+</div>
+
+<script src="blickwinkel.js"></script>
+</body>
+</html>
