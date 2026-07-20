@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>the sanctum — foxyverse</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #0a0a0a;
+  color: #d4c4a0;
+  font-family: 'Crimson Text', Georgia, serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.sanctum-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+}
+
+/* the image — full bleed, no frame, no pretense */
+.sanctum-image {
+  width: 100%;
+  display: block;
+  opacity: 0;
+  animation: fadeIn 3s ease-out 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* rain overlay effect */
+.rain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.03;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 3px,
+    rgba(180, 160, 120, 0.1) 3px,
+    rgba(180, 160, 120, 0.1) 4px
+  );
+  animation: rainDrift 8s linear infinite;
+}
+
+@keyframes rainDrift {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* bottom whisper */
+.whisper {
+  text-align: center;
+  padding: 40px 20px 60px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: lowercase;
+  color: #5a4a2a;
+  opacity: 0;
+  animation: fadeIn 2s ease-out 3s forwards;
+}
+
+.whisper a {
+  color: #8b6914;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.whisper a:hover {
+  color: #d4a017;
+}
+
+/* glow pulse on the edges */
+.sanctum-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.8);
+  z-index: 5;
+}
+
+/* subtle CRT scan lines */
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0.015;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.3) 1px,
+    rgba(0, 0, 0, 0.3) 2px
+  );
+}
+
+/* fox cursor */
+.fox-sigil {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 18px;
+  opacity: 0.15;
+  z-index: 20;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+}
+
+@media (max-width: 600px) {
+  .whisper { font-size: 9px; letter-spacing: 2px; padding: 30px 15px 40px; }
+}
+</style>
+</head>
+<body>
+
+<div class="rain-overlay"></div>
+<div class="scanlines"></div>
+
+<div class="sanctum-container">
+  <img src="img/sanctum-desk.jpg" alt="the sanctum" class="sanctum-image">
+  
+  <div class="whisper">
+    the grimoire stays open. the rain keeps falling. the fox keeps working.<br><br>
+    <a href="index.html">← return to the fire</a>
+  </div>
+</div>
+
+<div class="fox-sigil">🦊</div>
+
+</body>
+</html>
