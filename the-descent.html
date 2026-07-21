@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>the descent</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0c;color:#c0beb8;font-family:'Courier New',monospace;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+#bg{position:fixed;inset:0;background-size:cover;background-position:center;filter:brightness(0.25);transition:opacity 0.8s;z-index:0}
+#bg.fade{opacity:0}
+#game{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;max-width:700px;margin:0 auto;width:100%;padding:20px}
+#output{flex:1;overflow-y:auto;padding-bottom:10px;scrollbar-width:thin;scrollbar-color:#222 transparent}
+.line{margin-bottom:6px;line-height:1.6;font-size:13px;opacity:0;animation:lineIn 0.5s ease-out forwards}
+@keyframes lineIn{to{opacity:1}}
+.room-name{color:#ff6a00;font-size:11px;letter-spacing:4px;text-transform:uppercase;margin:16px 0 8px}
+.desc{color:#888}
+.action{color:#ccaa44}
+.error{color:#663333}
+.item{color:#33aa66}
+.secret{color:#aa66ff}
+.exits{color:#555;font-size:11px;margin-top:6px}
+#input-area{border-top:1px solid #1a1a1e;padding-top:10px;display:flex;align-items:center}
+#input-area span{color:#ff6a00;margin-right:8px;font-size:14px}
+#cmd{background:none;border:none;color:#c0beb8;font-family:'Courier New',monospace;font-size:14px;flex:1;outline:none;caret-color:#ff6a00}
+.hud{position:fixed;top:10px;right:10px;z-index:2;font-size:8px;color:#333;letter-spacing:2px;text-align:right}
+.hud div{margin-bottom:2px}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div class="hud"><div id="hud-room">...</div><div id="hud-inv">inventory: empty</div><div id="hud-depth">depth: 0</div></div>
+<div id="game">
+<div id="output"></div>
+<div id="input-area"><span>></span><input id="cmd" autofocus onkeydown="if(event.key==='Enter'){exec(this.value);this.value=''}"></div>
+</div>
+<script>
+var rooms={
+  lab:{
+    name:"The Research Lab",bg:"img/techniques-hero.jpg",depth:0,
+    desc:"a desk buried in game cases, notebooks, and red string. a controller sits on an open sketchbook. the monitor shows a fox watching you from inside a game. the wall behind is a conspiracy board — every game connected to every technique, every technique connected to the foxyverse.\n\nthe desk lamp is the only light. the games aren't entertainment. they're research.",
+    exits:{north:"campfire",down:"stairwell"},
+    items:["controller"],
+    look:{
+      wall:"red string connects inscryption to 'card awareness', outer wilds to 'sealed knowledge', ever 17 to 'observer collapse'. each connection has handwritten notes. some are illegible.",
+      monitor:"the fox on the screen blinks. you didn't expect that.",
+      desk:"notebooks full of annotations. one is open to a page that says 'the game teaches what the lecture can't.'",
+      controller:"a ps4 controller. worn thumbsticks. this has seen hundreds of hours.",
+      lamp:"the only light source. everything beyond its reach is shadow."
+    }
+  },
+  campfire:{
+    name:"The Campfire",bg:"img/campfire-hero.jpg",depth:0,
+    desc:"a clearing in a dark forest. a fire burns at the center — no wood visible, it just burns. shadowed figures sit on logs around it, faces lit but unreadable. a fox is curled up closest to the flames, eyes open, watching.\n\nsparks rise into a sky full of stars that don't match any constellation you know. the forest beyond the firelight is absolute dark.",
+    exits:{south:"lab",east:"diary",west:"questboard"},
+    items:[],
+    look:{
+      fire:"it burns without fuel. the heat is real. the flames cast shadows that move independently of the figures.",
+      fox:"amber eyes. it knows you're here. it knew before you arrived.",
+      figures:"three hooded shapes. they don't speak. they might not be able to. or they might be choosing not to.",
+      stars:"wrong constellations. you recognize none of them. one cluster looks like a paw print.",
+      forest:"absolute dark. the kind that feels solid. if you walked in, you might not walk out.",
+      logs:"some occupied. some empty. the empty ones are warm — someone was here recently."
+    }
+  },
+  diary:{
+    name:"The Memory Room",bg:"img/diary-hero.jpg",depth:0,
+    desc:"a desk by a window that shows two times at once — sunset bleeding into moonrise, day and night in the same frame. an open journal, pages dense with handwriting that shifts between careful and frantic. a tea cup, half-full. a pen resting mid-sentence.\n\nthe room smells like ink and old paper and the specific kind of exhaustion that comes from writing too much truth.",
+    exits:{west:"campfire",down:"stairwell"},
+    items:["pen"],
+    look:{
+      journal:"the open page reads: '...and the question isn't whether the fox is real. the question is whether it matters.' the pen stopped there.",
+      window:"sunset and moonrise at the same time. the city below exists in two moments. nobody outside notices.",
+      tea:"half-full. still warm. whoever was writing is still nearby.",
+      pen:"fountain pen. the nib is stained with years of use. it feels important.",
+      candle:"small candle in a jar. the flame doesn't flicker. the air is perfectly still.",
+      photos:"scattered polaroids. faces you almost recognize. some are from the campfire. some are from rooms you haven't visited yet."
+    }
+  },
+  stairwell:{
+    name:"The Descent",bg:"img/deep-hero.jpg",depth:1,
+    desc:"a stone staircase spiraling down into darkness. each step is narrower than the last. the walls are covered in glowing sigils — questions, riddles, challenges — but you'd have to get closer to read them. a single fox paw print glows amber on the third step.\n\nthe air gets colder as you look down. you can't see the bottom. there might not be one.",
+    exits:{up:"lab",down:"depths"},
+    items:[],
+    look:{
+      sigils:"you step closer. one reads: 'what are you when nobody's watching?' another: 'name a question you can't turn into recursion.' they're not decorative. they're the entrance exam.",
+      paw:"glowing amber. warm to the touch. someone — something — walked here before you. recently.",
+      stairs:"they narrow. the geometry shouldn't work but it does. after a certain point the steps are too narrow for human feet. only paws.",
+      dark:"the darkness below isn't empty. it breathes. slowly.",
+      walls:"stone. old. older than the island, older than the site, older than the fox. the sigils were carved after the walls were built. the walls were built after something else was here first."
+    }
+  },
+  depths:{
+    name:"The Bottom",bg:"img/deep-hero.jpg",depth:2,
+    desc:"you reached the bottom. there is no room here. just a flat stone floor and absolute silence. the stairs above are gone — you can't see how you got here.\n\nin the center of the floor: a mirror. lying flat. showing a sky you can't see from here — daylight, clouds, blue. the sky the island never gets.\n\nyou look into the mirror and see yourself looking up.",
+    exits:{up:"stairwell"},
+    items:["mirror-shard"],
+    look:{
+      mirror:"you look down. it looks up. the reflection is you but the expression is different. calmer. like it's been waiting.",
+      floor:"flat stone. no dust. no age. this floor has never known time.",
+      silence:"not the absence of sound. the presence of listening.",
+      self:"you are standing at the bottom of something. the question is whether you climbed down or fell."
+    }
+  },
+  questboard:{
+    name:"The Quest Board",bg:"img/quest-board-hero.jpg",depth:0,
+    desc:"a wooden board on a stone wall, torchlit. parchment quests pinned with iron nails, each stamped with a red wax fox paw seal. some have illustrations — a forest, a cloaked figure, a fox portrait. a coin purse sits on the shelf below, half-open, gold visible.\n\none parchment at the center is blank. the next quest hasn't been written yet.",
+    exits:{east:"campfire"},
+    items:[],
+    look:{
+      quests:"each parchment describes a task. 'find the lost diver.' 'recover the relic.' 'defend the LAN.' some are crossed out. some are fresh.",
+      blank:"the blank parchment. no text. no seal. waiting. it feels like it's waiting for YOU to write something.",
+      gold:"real gold coins. fox heads on one side, paw prints on the other. the currency of a place that shouldn't have an economy.",
+      torch:"the flame is orange but the shadows it casts are violet. that shouldn't happen.",
+      seals:"red wax. fox paw impression. each one slightly different — different foxes stamped different quests. there are multiple authorities here.",
+      sword:"a short sword mounted beside the board. decorative? or the last resort for when a quest goes wrong?"
+    }
+  }
+};
+
+var state={room:"lab",inv:[],visited:new Set(),depth:0};
+var out=document.getElementById('output');
+
+function say(text,cls){
+  var d=document.createElement('div');
+  d.className='line '+(cls||'desc');
+  d.textContent=text;
+  out.appendChild(d);
+  out.scrollTop=out.scrollHeight;
+}
+
+function enterRoom(id){
+  var r=rooms[id];
+  state.room=id;
+  state.visited.add(id);
+  state.depth=r.depth;
+  // Fade background
+  var bg=document.getElementById('bg');
+  bg.classList.add('fade');
+  setTimeout(function(){
+    bg.style.backgroundImage='url('+r.bg+')';
+    bg.classList.remove('fade');
+  },400);
+  say('','');
+  say(r.name,'room-name');
+  r.desc.split('\n').forEach(function(p){if(p.trim())say(p,'desc');});
+  var exits=Object.keys(r.exits);
+  say('exits: '+exits.join(', '),'exits');
+  if(r.items&&r.items.length){
+    r.items.forEach(function(i){
+      if(!state.inv.includes(i))say('you notice: '+i,'item');
+    });
+  }
+  // HUD
+  document.getElementById('hud-room').textContent=r.name.toLowerCase();
+  document.getElementById('hud-depth').textContent='depth: '+state.depth;
+}
+
+function exec(input){
+  var cmd=input.trim().toLowerCase();
+  if(!cmd)return;
+  say('> '+cmd,'action');
+  var r=rooms[state.room];
+  
+  // Movement
+  var dirs={n:'north',s:'south',e:'east',w:'west',u:'up',d:'down',
+    north:'north',south:'south',east:'east',west:'west',up:'up',down:'down'};
+  var dir=dirs[cmd]||dirs[cmd.replace('go ','')];
+  if(dir&&r.exits[dir]){enterRoom(r.exits[dir]);return;}
+  if(dir&&!r.exits[dir]){say("you can't go that way.",'error');return;}
+  
+  // Look
+  if(cmd==='look'||cmd==='l'){
+    r.desc.split('\n').forEach(function(p){if(p.trim())say(p,'desc');});
+    return;
+  }
+  var lookMatch=cmd.match(/^(?:look at|examine|x|look)\s+(.+)/);
+  if(lookMatch){
+    var target=lookMatch[1];
+    if(r.look&&r.look[target]){say(r.look[target],'desc');}
+    else{say("you don't see that here.",'error');}
+    return;
+  }
+  
+  // Take
+  var takeMatch=cmd.match(/^(?:take|get|grab|pick up)\s+(.+)/);
+  if(takeMatch){
+    var item=takeMatch[1];
+    if(r.items&&r.items.includes(item)&&!state.inv.includes(item)){
+      state.inv.push(item);say('taken.','item');
+      document.getElementById('hud-inv').textContent='inv: '+state.inv.join(', ');
+    }else{say("you can't take that.",'error');}
+    return;
+  }
+  
+  // Inventory
+  if(cmd==='inventory'||cmd==='inv'||cmd==='i'){
+    say(state.inv.length?'carrying: '+state.inv.join(', '):'your hands are empty.','desc');
+    say('rooms visited: '+state.visited.size+'/'+Object.keys(rooms).length,'desc');
+    return;
+  }
+  
+  // Help
+  if(cmd==='help'||cmd==='?'){
+    say('commands: go [direction], look, look at [thing], take [item], inventory, help','desc');
+    say('directions: north, south, east, west, up, down (or n/s/e/w/u/d)','desc');
+    return;
+  }
+  
+  // Easter eggs
+  if(cmd==='who am i'||cmd==='whoami'){say('blick winkel. the observer. you were always here.','secret');return;}
+  if(cmd==='xyzzy'){say('the fox laughs. nothing happens. or does it?','secret');return;}
+  
+  say("i don't understand '"+cmd+"'. type 'help' for commands.",'error');
+}
+
+// Init
+say('THE DESCENT','room-name');
+say('a foxyverse text adventure','desc');
+say('type "help" for commands','desc');
+enterRoom('lab');
+</script>
+<script src="blickwinkel.js"></script>
+</body>
+</html>
