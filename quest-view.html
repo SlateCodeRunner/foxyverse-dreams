@@ -3,107 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Quest Board</title>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<title>Quest Board · Down</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F98A;</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#060608;color:#c0beb8;font-family:'Fira Code',monospace;min-height:100vh}
-.page{max-width:420px;margin:0 auto;padding:48px 20px 80px}
-h1{font-family:'Cinzel',serif;font-size:20px;color:#ff6a00;letter-spacing:4px;text-align:center;margin-bottom:4px}
-.sub{font-size:9px;color:rgba(255,255,255,0.1);letter-spacing:3px;text-align:center;margin-bottom:32px}
-.rate{text-align:center;padding:20px;border:1px solid rgba(255,106,0,0.1);background:rgba(255,106,0,0.02);margin-bottom:28px}
-.rate-amount{font-family:'Cinzel',serif;font-size:32px;color:#ff6a00}
-.rate-per{font-size:10px;color:rgba(255,255,255,0.15);letter-spacing:3px;margin-top:4px}
-.form{margin-top:20px}
-.field{margin-bottom:12px}
-.label{font-size:8px;letter-spacing:3px;color:rgba(255,255,255,0.1);text-transform:uppercase;margin-bottom:4px}
-input{width:100%;background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);font-family:'Fira Code',monospace;font-size:11px;padding:8px 10px;outline:none}
-input:focus{border-color:rgba(255,106,0,0.2)}
-input::placeholder{color:rgba(255,255,255,0.06)}
-button{width:100%;padding:12px;background:rgba(255,106,0,0.06);border:1px solid rgba(255,106,0,0.2);color:#ff6a00;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;cursor:pointer;margin-top:16px;transition:all 0.3s}
-button:hover{background:rgba(255,106,0,0.1)}
-button:disabled{opacity:0.3;cursor:default}
-.ok{display:none;text-align:center;padding:16px;border:1px solid rgba(78,203,113,0.12);color:#4ecb71;font-size:10px;margin-top:16px;line-height:2}
-.err{display:none;text-align:center;padding:12px;border:1px solid rgba(255,68,68,0.12);color:#ff4444;font-size:10px;margin-top:12px}
-.foot{text-align:center;margin-top:40px;font-size:7px;color:rgba(255,255,255,0.04);letter-spacing:2px}
-.loading{display:none;text-align:center;padding:12px;font-size:10px;color:rgba(255,106,0,0.3)}
+html,body{width:100%;height:100%;background:#050508;color:#c0beb8;font-family:'Fira Code',monospace;overflow:hidden}
+
+.container{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;text-align:center;position:relative}
+
+/* glitch scanlines */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
+
+/* ambient glow */
+.glow{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,68,68,0.03) 0%,rgba(255,68,68,0.01) 40%,transparent 70%);pointer-events:none;animation:pulse 6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.4;transform:translate(-50%,-50%) scale(1)}50%{opacity:0.8;transform:translate(-50%,-50%) scale(1.1)}}
+
+/* status badge */
+.status{display:inline-flex;align-items:center;gap:8px;font-size:7px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,68,68,0.5);margin-bottom:32px}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#ff4444;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+
+/* title */
+h1{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,28px);color:rgba(255,106,0,0.6);letter-spacing:8px;text-transform:uppercase;margin-bottom:6px}
+
+.sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(13px,2vw,16px);color:rgba(255,255,255,0.08);letter-spacing:2px;margin-bottom:40px}
+
+/* incident box */
+.incident{max-width:380px;border:1px solid rgba(255,68,68,0.06);background:rgba(255,68,68,0.01);padding:24px 20px;text-align:left;margin-bottom:32px}
+.incident-title{font-size:8px;letter-spacing:4px;color:rgba(255,68,68,0.3);text-transform:uppercase;margin-bottom:12px}
+.incident-body{font-size:11px;line-height:2;color:rgba(255,255,255,0.2)}
+.incident-body span{color:rgba(255,68,68,0.4)}
+.incident-body .fix{color:rgba(78,203,113,0.35)}
+
+/* fox ascii */
+.fox-ascii{font-size:28px;margin-bottom:24px;opacity:0.15;animation:foxFloat 5s ease-in-out infinite}
+@keyframes foxFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* action */
+.action{margin-top:8px}
+.action a{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:rgba(255,106,0,0.25);text-decoration:none;border:1px solid rgba(255,106,0,0.08);padding:10px 24px;transition:all 0.4s;text-transform:uppercase}
+.action a:hover{color:rgba(255,106,0,0.6);border-color:rgba(255,106,0,0.2);background:rgba(255,106,0,0.03)}
+
+/* workaround */
+.workaround{max-width:380px;border:1px solid rgba(78,203,113,0.06);background:rgba(78,203,113,0.01);padding:16px 20px;text-align:left;margin-bottom:28px}
+.workaround-title{font-size:8px;letter-spacing:4px;color:rgba(78,203,113,0.3);text-transform:uppercase;margin-bottom:8px}
+.workaround-body{font-size:10px;line-height:2;color:rgba(255,255,255,0.15)}
+.workaround-body a{color:rgba(78,203,113,0.4);text-decoration:none;border-bottom:1px solid rgba(78,203,113,0.1)}
+.workaround-body a:hover{color:rgba(78,203,113,0.6)}
+
+/* timestamp */
+.ts{font-size:6px;color:rgba(255,255,255,0.03);letter-spacing:3px;margin-top:24px}
+
+/* mobile */
+@media(max-width:480px){
+  .incident,.workaround{padding:16px 14px}
+}
 </style>
 </head>
 <body>
-<div class="page">
-  <h1>QUEST BOARD</h1>
-  <div class="sub">submit a video · get paid in ETH</div>
-  <div style="margin:10px auto 30px;max-width:700px;border:1px solid rgba(212,175,85,0.08);overflow:hidden"><img src="img/img-quest-board.png" alt="Quest Board" style="width:100%;display:block;opacity:0.65"></div><div class="rate">
-    <div class="rate-amount">$15</div>
-    <div class="rate-per">per video · paid in ETH</div>
+<div class="glow"></div>
+<div class="container">
+  <div class="fox-ascii">&#x1F98A;</div>
+  <div class="status"><span class="status-dot"></span>incident active</div>
+  <h1>Quest Board</h1>
+  <div class="sub">temporarily offline</div>
+
+  <div class="incident">
+    <div class="incident-title">what happened</div>
+    <div class="incident-body">
+      the submission pipeline between the quest board and discord <span>disconnected</span>. video submissions sent during this window did not reach the fox.<br><br>
+      if you submitted a quest and didn't hear back — <span>it was lost in transit</span>. the wiring is being rebuilt.
+    </div>
   </div>
-  <div class="form">
-    <div class="field"><div class="label">discord username</div><input id="n" placeholder="yourname#1234" oninput="check()"></div>
-    <div class="field"><div class="label">ETH wallet address</div><input id="e" placeholder="0x..." oninput="check()"></div>
-    <div class="field"><div class="label">video link</div><input id="l" placeholder="youtube / drive / dropbox" oninput="check()"></div>
-    <button id="btn" onclick="submit()" disabled>SUBMIT</button>
-    <div class="loading" id="loading">submitting...</div>
-    <div class="ok" id="ok">submitted &#x2714;<br>reviewed within 24h<br>$15 ETH on approval</div>
-    <div class="err" id="err">submission failed. try again or DM foxy.</div>
+
+  <div class="workaround">
+    <div class="workaround-title">how to submit now</div>
+    <div class="workaround-body">
+      DM <a href="https://discord.gg/psycheorsike">foxy on discord</a> directly with your video link + ETH address. same rate. same review. the board just can't take it automatically right now.
+    </div>
   </div>
-  <div class="foot">psycheorsike.com · reviewed by the fox</div>
+
+  <div class="action"><a href="index.html">&larr; return</a></div>
+  <div class="ts">psycheorsike.com &middot; incident logged july 21 2026</div>
 </div>
-<script>
-// REPLACE THIS WITH YOUR DISCORD WEBHOOK URL
-var WEBHOOK = "https://discord.com/api/webhooks/1528404260230922343/BkHmVKwdIhLCCC2Hw6QcBfT-YiIBue9gr8BzB7G0iorAjO8-dPA69x7P3hw65urGJ9z2";
-
-function check(){
-  var n=document.getElementById('n').value.trim();
-  var e=document.getElementById('e').value.trim();
-  var l=document.getElementById('l').value.trim();
-  document.getElementById('btn').disabled=!(n.length>1&&e.length>3&&l.length>3);
-}
-
-async function submit(){
-  var n=document.getElementById('n').value.trim();
-  var e=document.getElementById('e').value.trim();
-  var l=document.getElementById('l').value.trim();
-  var btn=document.getElementById('btn');
-  var loading=document.getElementById('loading');
-  var ok=document.getElementById('ok');
-  var err=document.getElementById('err');
-
-  btn.style.display='none';
-  loading.style.display='block';
-  err.style.display='none';
-
-  try{
-    var res=await fetch(WEBHOOK,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        embeds:[{
-          title:'🎬 New Video Submission',
-          color:16744192,
-          fields:[
-            {name:'Discord',value:n,inline:true},
-            {name:'ETH Address',value:'`'+e+'`',inline:false},
-            {name:'Video Link',value:l,inline:false},
-            {name:'Amount',value:'$15',inline:true},
-            {name:'Submitted',value:new Date().toUTCString(),inline:true}
-          ],
-          footer:{text:'Quest Board · psycheorsike.com'}
-        }]
-      })
-    });
-    if(res.ok){
-      loading.style.display='none';
-      ok.style.display='block';
-    }else{
-      throw new Error('webhook failed');
-    }
-  }catch(ex){
-    loading.style.display='none';
-    btn.style.display='block';
-    err.style.display='block';
-  }
-}
-</script>
 <script src="blickwinkel.js"></script>
 </body>
 </html>
