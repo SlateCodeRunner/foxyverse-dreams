@@ -71,7 +71,7 @@ function loadSave(){
 var _addI=window.addI;
 window.addI=function(id){_addI(id);saveGame();};
 var _loadScene=window.loadScene;
-window.loadScene=function(id){_loadScene(id);saveGame();};
+window.loadScene=function(id){_loadScene(id);document.getElementById('viewport').setAttribute('data-scene',id);saveGame();};
 var _endDuel=window.endDuel;
 window.endDuel=function(){_endDuel();saveGame();};
 var _closeDlg=window.closeDlg;
@@ -244,3 +244,4 @@ window.renderInv=function(){
 setInterval(saveGame,30000);
 
 })();
+

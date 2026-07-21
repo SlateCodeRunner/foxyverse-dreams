@@ -6,7 +6,6 @@
 #si img,#si canvas{background-color:transparent!important}
 .map-grid{background-image:url('ui-map.png')!important;background-size:cover!important;background-position:center!important;border-radius:4px}
 
-
 /* TITLE SCREEN */
 #title{background-image:url('title.png')!important;background-size:cover!important;background-position:center!important;background-color:#000!important}
 #title h1,#title .subtitle{text-shadow:0 0 20px rgba(0,0,0,0.9),0 0 40px rgba(0,0,0,0.7)!important}
@@ -25,13 +24,13 @@
 .inv-icon.coal{background-position:-108px -36px!important}
 .inv-icon.tear{background-position:-144px -36px!important}
 .inv-icon.rune{background-position:-180px -36px!important}
-/* PLAYER SPRITE - replaces emoji with animated sprite sheet */
-/* Sheet: 144x252, 6 cols x 7 rows, each frame 24x36 */
-/* Rows: 0=walk-right, 1=walk-left, 2=walk-down, 3=walk-up, 4=idle, 5=actions, 6=specials */
+
+/* PLAYER SPRITE */
 #player{width:48px!important;height:72px!important;font-size:0!important;color:transparent!important;overflow:hidden!important;
 background:url('player.png') no-repeat!important;background-size:288px 504px!important;
 background-position:0 -288px!important;image-rendering:pixelated!important;
-transform:translate(-50%,-100%)!important}
+transform:translate(-50%,-100%)!important;
+filter:drop-shadow(0 3px 6px rgba(0,0,0,0.7))!important}
 #player.idle{animation:spr-idle 1.2s steps(6) infinite!important;background-position:0 -144px!important}
 #player.walk-r{animation:spr-walk-r 0.5s steps(6) infinite!important}
 #player.walk-l{animation:spr-walk-l 0.5s steps(6) infinite!important}
@@ -42,10 +41,23 @@ transform:translate(-50%,-100%)!important}
 @keyframes spr-walk-l{from{background-position:0 -72px}to{background-position:-288px -72px}}
 @keyframes spr-walk-d{from{background-position:0 -144px}to{background-position:-288px -144px}}
 @keyframes spr-walk-u{from{background-position:0 -216px}to{background-position:-288px -216px}}
-/* NPC SPRITE FIX - remove white backgrounds */
-.npc{background-color:transparent!important}
-.npc img{background-color:transparent!important}
-[class*='npc-']{background-color:transparent!important}
-/* GLOBAL WHITE BG NUKE — catch stray images/elements */
+
+/* ═══ NPC SPRITE COMPOSITING ═══ */
+/* Ground sprites into the painted backgrounds */
+.npc{
+  background-color:transparent!important;
+  filter:brightness(0.8) contrast(1.15) saturate(0.7) drop-shadow(0 4px 12px rgba(0,0,0,0.8)) drop-shadow(0 1px 3px rgba(0,0,0,0.9))!important;
+  opacity:0.92!important;
+  image-rendering:auto!important;
+}
+/* Scene-specific color grading to match each background's palette */
+[data-scene="tavern"] .npc,[data-scene="hearth"] .npc{filter:brightness(0.75) contrast(1.1) saturate(0.6) sepia(0.15) drop-shadow(0 4px 12px rgba(0,0,0,0.8))!important}
+[data-scene="temple"] .npc,[data-scene="sanctum"] .npc{filter:brightness(0.8) contrast(1.2) saturate(0.5) hue-rotate(10deg) drop-shadow(0 4px 12px rgba(10,0,30,0.8))!important}
+[data-scene="garden"] .npc,[data-scene="wellspring"] .npc{filter:brightness(0.85) contrast(1.1) saturate(0.65) hue-rotate(-5deg) drop-shadow(0 4px 12px rgba(0,10,0,0.7))!important}
+[data-scene="village"] .npc{filter:brightness(0.8) contrast(1.15) saturate(0.6) drop-shadow(0 4px 12px rgba(20,10,40,0.8))!important}
+[data-scene="dock"] .npc,[data-scene="underdock"] .npc{filter:brightness(0.75) contrast(1.1) saturate(0.5) sepia(0.1) drop-shadow(0 4px 12px rgba(0,0,20,0.8))!important}
+[data-scene="throne"] .npc{filter:brightness(0.85) contrast(1.2) saturate(0.55) hue-rotate(5deg) drop-shadow(0 4px 12px rgba(20,0,40,0.8))!important}
+
+/* GLOBAL WHITE BG NUKE */
 #speech *{background-color:transparent!important}
 .is img,.is svg{background:transparent!important}
