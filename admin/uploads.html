@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>.</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0c;color:#888;font-family:'Courier New',monospace;min-height:100vh;padding:20px}
+.hdr{font-size:9px;letter-spacing:4px;color:#333;text-transform:uppercase;margin-bottom:4px}
+.count{font-size:11px;color:#555;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.card{border:1px solid #1a1a1e;overflow:hidden;background:#0d0d10;transition:border-color 0.3s;cursor:pointer;position:relative}
+.card:hover{border-color:#ff6a0044}
+.card img{width:100%;height:150px;object-fit:cover;display:block;filter:brightness(0.8);transition:filter 0.3s}
+.card:hover img{filter:brightness(1)}
+.card .info{padding:6px 8px}
+.card .name{font-size:8px;color:#666;letter-spacing:1px;word-break:break-all}
+.card .path{font-size:7px;color:#333;margin-top:2px}
+.card .size{font-size:7px;color:#ff6a0033;margin-top:2px}
+.loading{text-align:center;padding:60px;font-size:10px;color:#333;letter-spacing:3px}
+.err{color:#cc3333;font-size:10px;padding:20px}
+.filter{margin-bottom:16px}
+.filter input{background:#111;border:1px solid #222;color:#888;font-family:'Courier New',monospace;font-size:10px;padding:6px 12px;width:300px;outline:none}
+.filter input:focus{border-color:#ff6a0044}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:100;align-items:center;justify-content:center;cursor:zoom-out}
+.modal.open{display:flex}
+.modal img{max-width:90vw;max-height:90vh;object-fit:contain}
+.modal .close{position:absolute;top:16px;right:20px;color:#555;font-size:14px;cursor:pointer}
+.modal .minfo{position:absolute;bottom:16px;left:20px;font-size:9px;color:#444;letter-spacing:2px}
+</style>
+</head>
+<body>
+
+<div class="hdr">fox//uploads</div>
+<div class="count" id="count">loading...</div>
+<div class="filter"><input id="search" placeholder="filter..." oninput="filterCards()"></div>
+<div class="grid" id="grid"></div>
+<div class="loading" id="loading">fetching repository tree...</div>
+
+<div class="modal" id="modal" onclick="closeModal()">
+  <span class="close">×</span>
+  <img id="modal-img" src="">
+  <div class="minfo" id="modal-info"></div>
+</div>
+
+<script>
+var REPO='SlateCodeRunner/foxyverse-dreams';
+var BRANCH='main';
+var RAW='https://raw.githubusercontent.com/'+REPO+'/'+BRANCH+'/';
+var allCards=[];
+
+async function init(){
+  try{
+    // Fetch full repo tree
+    var res=await fetch('https://api.github.com/repos/'+REPO+'/git/trees/'+BRANCH+'?recursive=1');
+    if(!res.ok)throw new Error('API '+res.status);
+    var data=await res.json();
+    
+    // Filter for images
+    var imgs=data.tree.filter(function(f){
+      return f.type==='blob'&&/\.(jpg|jpeg|png|gif|webp)$/i.test(f.path);
+    });
+    
+    // Sort by path (newest naming conventions tend to sort last)
+    // Reverse so newest-named files appear first
+    imgs.sort(function(a,b){return b.path.localeCompare(a.path);});
+    
+    // Take latest 50
+    var latest=imgs.slice(0,50);
+    
+    document.getElementById('loading').style.display='none';
+    document.getElementById('count').textContent=latest.length+' / '+imgs.length+' images in repo';
+    
+    var grid=document.getElementById('grid');
+    latest.forEach(function(f){
+      var card=document.createElement('div');
+      card.className='card';
+      card.dataset.path=f.path.toLowerCase();
+      var sizeKB=f.size?Math.round(f.size/1024)+'KB':'';
+      card.innerHTML='<img loading="lazy" src="'+RAW+f.path+'" alt="'+f.path+'">'
+        +'<div class="info"><div class="name">'+f.path.split('/').pop()+'</div>'
+        +'<div class="path">'+f.path+'</div>'
+        +'<div class="size">'+sizeKB+'</div></div>';
+      card.onclick=function(e){e.stopPropagation();openModal(RAW+f.path,f.path,sizeKB);};
+      grid.appendChild(card);
+      allCards.push(card);
+    });
+    
+  }catch(e){
+    document.getElementById('loading').innerHTML='<div class="err">'+e.message+'</div>';
+  }
+}
+
+function filterCards(){
+  var q=document.getElementById('search').value.toLowerCase();
+  allCards.forEach(function(c){
+    c.style.display=c.dataset.path.includes(q)?'':'none';
+  });
+}
+
+function openModal(src,path,size){
+  document.getElementById('modal-img').src=src;
+  document.getElementById('modal-info').textContent=path+(size?' | '+size:'');
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+init();
+</script>
+</body>
+</html>
