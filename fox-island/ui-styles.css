@@ -1,8 +1,9 @@
-/* UI PANEL ASSETS */
+﻿/* UI PANEL ASSETS */
 #verbs{background-image:url('ui-verbs.png')!important;background-size:100% 100%!important;background-color:transparent!important;border-top:none!important}
 #inv{background-image:url('ui-inventory.png')!important;background-size:100% 100%!important;background-color:transparent!important;border-top:none!important}
-#si{background-image:url('ui-speech.png')!important;background-size:100% 100%!important;background-color:transparent!important;border:none!important;padding:16px 24px 20px 24px!important}
+#si{background-image:url('ui-speech.png')!important;background-size:100% 100%!important;background-color:rgba(8,4,18,.93)!important;background-blend-mode:multiply!important;border:none!important;padding:16px 24px 20px 24px!important}
 #si::after{display:none!important}
+#si img,#si canvas{background-color:transparent!important}
 .map-grid{background-image:url('ui-map.png')!important;background-size:cover!important;background-position:center!important;border-radius:4px}
 
 
@@ -11,7 +12,7 @@
 #title h1,#title .subtitle{text-shadow:0 0 20px rgba(0,0,0,0.9),0 0 40px rgba(0,0,0,0.7)!important}
 
 /* ITEM SPRITE ICONS - 6 cols x 2 rows, each 36x36px */
-.inv-icon{width:36px!important;height:36px!important;background-image:url('items.png')!important;background-repeat:no-repeat!important;display:inline-block!important;image-rendering:pixelated!important}
+.inv-icon{width:36px!important;height:36px!important;background-image:url('items.png')!important;background-repeat:no-repeat!important;display:inline-block!important;image-rendering:pixelated!important;background-color:transparent!important}
 .inv-icon.compass{background-position:0 0!important}
 .inv-icon.grimoire_page{background-position:-36px 0!important}
 .inv-icon.ace_card{background-position:-72px 0!important}
@@ -45,3 +46,6 @@ transform:translate(-50%,-100%)!important}
 .npc{background-color:transparent!important}
 .npc img{background-color:transparent!important}
 [class*='npc-']{background-color:transparent!important}
+/* GLOBAL WHITE BG NUKE — catch stray images/elements */
+#speech *{background-color:transparent!important}
+.is img,.is svg{background:transparent!important}
