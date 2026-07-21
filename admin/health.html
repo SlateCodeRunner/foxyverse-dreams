@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>.</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0c;color:#888;font-family:'Courier New',monospace;min-height:100vh;padding:20px}
+.hdr{font-size:9px;letter-spacing:4px;color:#333;text-transform:uppercase;margin-bottom:4px}
+.sub{font-size:10px;color:#444;margin-bottom:16px}
+.section{margin-bottom:24px}
+.section-title{font-size:9px;letter-spacing:3px;color:#555;border-bottom:1px solid #1a1a1e;padding-bottom:4px;margin-bottom:8px}
+.item{font-size:10px;padding:4px 8px;margin-bottom:2px}
+.item.ok{color:#2a6a2a}.item.warn{color:#aa8822}.item.err{color:#aa3333}
+.item .path{color:#555;margin-left:8px}
+.progress{width:100%;height:3px;background:#111;margin-bottom:16px;overflow:hidden}
+.progress-bar{height:100%;background:#ff6a00;width:0%;transition:width 0.3s}
+.stats{display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap}
+.stat-box{border:1px solid #1a1a1e;padding:10px 16px;background:#0d0d10;min-width:120px}
+.stat-num{font-size:20px;color:#ff6a00;opacity:0.4}.stat-label{font-size:8px;color:#444;letter-spacing:2px;margin-top:2px}
+button{background:#111;border:1px solid #222;color:#666;font-family:'Courier New',monospace;font-size:9px;padding:6px 16px;cursor:pointer;margin-bottom:16px}
+button:hover{border-color:#ff6a0044;color:#aaa}
+</style>
+</head>
+<body>
+<div class="hdr">fox//health</div>
+<div class="sub" id="status">click scan to begin</div>
+<button onclick="runScan()">▶ scan site</button>
+<div class="progress"><div class="progress-bar" id="bar"></div></div>
+<div class="stats" id="stats"></div>
+<div id="results"></div>
+<script>
+var REPO='SlateCodeRunner/foxyverse-dreams',BRANCH='main';
+var RAW='https://raw.githubusercontent.com/'+REPO+'/'+BRANCH+'/';
+async function runScan(){
+  var status=document.getElementById('status'),bar=document.getElementById('bar'),results=document.getElementById('results'),statsDiv=document.getElementById('stats');
+  results.innerHTML='';statsDiv.innerHTML='';
+  status.textContent='fetching file tree...';bar.style.width='5%';
+  
+  var res=await fetch('https://api.github.com/repos/'+REPO+'/git/trees/'+BRANCH+'?recursive=1');
+  var tree=(await res.json()).tree;
+  var allFiles=tree.filter(f=>f.type==='blob').map(f=>f.path);
+  var htmlFiles=allFiles.filter(f=>f.endsWith('.html'));
+  var imgFiles=allFiles.filter(f=>/\.(jpg|jpeg|png|gif|webp)$/i.test(f));
+  var jsFiles=allFiles.filter(f=>f.endsWith('.js'));
+  
+  bar.style.width='10%';
+  status.textContent='scanning '+htmlFiles.length+' pages...';
+  
+  var issues={broken_imgs:[],broken_links:[],no_bw:[],orphan_imgs:[],no_images:[]};
+  var imgRefs=new Set();
+  var linkRefs=new Set();
+  var scanned=0;
+  
+  // Scan each HTML file (batch of 20 to avoid rate limits)
+  for(var i=0;i<htmlFiles.length;i++){
+    var path=htmlFiles[i];
+    try{
+      var r=await fetch(RAW+path);
+      var html=await r.text();
+      
+      // Check for blickwinkel.js
+      if(!html.includes('blickwinkel.js')&&!path.includes('admin/')&&!path.includes('true-route'))issues.no_bw.push(path);
+      
+      // Find image refs
+      var imgMatches=html.matchAll(/src=["']([^"']*?\.(jpg|jpeg|png|gif|webp))["']/gi);
+      var hasImg=false;
+      for(var m of imgMatches){
+        hasImg=true;
+        var ref=m[1];
+        if(ref.startsWith('http')||ref.startsWith('data:'))continue;
+        // Resolve relative path
+        var dir=path.includes('/')?path.substring(0,path.lastIndexOf('/')+1):'';
+        var resolved=ref.startsWith('/')?ref.slice(1):(dir+ref).replace(/[^/]+\/\.\.\//g,'');
+        imgRefs.add(resolved);
+        if(!allFiles.includes(resolved))issues.broken_imgs.push({page:path,img:ref,resolved:resolved});
+      }
+      // bg refs
+      var bgMatches=html.matchAll(/url\(['"]?([^'")\s]*?\.(jpg|jpeg|png|gif|webp))['"]?\)/gi);
+      for(var m of bgMatches){
+        hasImg=true;
+        var ref=m[1];
+        if(ref.startsWith('http'))continue;
+        var dir=path.includes('/')?path.substring(0,path.lastIndexOf('/')+1):'';
+        var resolved=ref.startsWith('/')? ref.slice(1):(dir+ref).replace(/[^/]+\/\.\.\//g,'');
+        imgRefs.add(resolved);
+        if(!allFiles.includes(resolved))issues.broken_imgs.push({page:path,img:ref,resolved:resolved});
+      }
+      
+      if(!hasImg&&!path.includes('admin/'))issues.no_images.push(path);
+      
+    }catch(e){}
+    scanned++;
+    bar.style.width=(10+scanned/htmlFiles.length*80)+'%';
+    status.textContent='scanned '+scanned+'/'+htmlFiles.length+'...';
+    if(scanned%5===0)await new Promise(r=>setTimeout(r,200));// rate limit pause
+  }
+  
+  // Find orphan images
+  imgFiles.forEach(function(f){if(!imgRefs.has(f))issues.orphan_imgs.push(f);});
+  
+  bar.style.width='100%';
+  status.textContent='scan complete';
+  
+  // Stats
+  statsDiv.innerHTML=[
+    {n:htmlFiles.length,l:'pages'},
+    {n:imgFiles.length,l:'images'},
+    {n:issues.broken_imgs.length,l:'broken refs'},
+    {n:issues.orphan_imgs.length,l:'orphan images'},
+    {n:issues.no_bw.length,l:'no visor'},
+    {n:issues.no_images.length,l:'no images'}
+  ].map(s=>'<div class="stat-box"><div class="stat-num">'+s.n+'</div><div class="stat-label">'+s.l+'</div></div>').join('');
+  
+  // Results
+  var html='';
+  if(issues.broken_imgs.length){
+    html+='<div class="section"><div class="section-title">broken image references</div>';
+    issues.broken_imgs.forEach(i=>{html+='<div class="item err">✗ '+i.img+'<span class="path">in '+i.page+'</span></div>';});
+    html+='</div>';
+  }
+  if(issues.no_bw.length){
+    html+='<div class="section"><div class="section-title">pages without blickwinkel.js</div>';
+    issues.no_bw.forEach(p=>{html+='<div class="item warn">⚠ '+p+'</div>';});
+    html+='</div>';
+  }
+  if(issues.orphan_imgs.length){
+    html+='<div class="section"><div class="section-title">orphan images (not referenced)</div>';
+    issues.orphan_imgs.forEach(p=>{html+='<div class="item warn">⚠ '+p+'</div>';});
+    html+='</div>';
+  }
+  if(issues.no_images.length){
+    html+='<div class="section"><div class="section-title">pages with no images</div>';
+    issues.no_images.forEach(p=>{html+='<div class="item warn">⚠ '+p+'</div>';});
+    html+='</div>';
+  }
+  if(!issues.broken_imgs.length&&!issues.no_bw.length)html+='<div class="item ok">✓ no critical issues found</div>';
+  results.innerHTML=html;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>.</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0c;color:#888;font-family:'Courier New',monospace;min-height:100vh;padding:20px}
+.hdr{font-size:9px;letter-spacing:4px;color:#333;text-transform:uppercase;margin-bottom:16px}
+.commit{border:1px solid #1a1a1e;padding:12px 16px;margin-bottom:8px;background:#0d0d10;transition:border-color 0.3s}
+.commit:hover{border-color:#ff6a0022}
+.sha{font-size:9px;color:#ff6a0033;letter-spacing:1px}
+.msg{font-size:12px;color:#aaa;margin:6px 0 4px;line-height:1.5}
+.meta{font-size:8px;color:#444;letter-spacing:1px}
+.stat{display:inline-block;margin-left:8px;font-size:8px}
+.stat.add{color:#33aa33}.stat.del{color:#aa3333}
+.files{font-size:8px;color:#333;margin-top:6px;max-height:0;overflow:hidden;transition:max-height 0.3s}
+.commit.open .files{max-height:500px}
+.files div{padding:1px 0}
+.files .a{color:#2a6a2a}.files .d{color:#6a2a2a}.files .m{color:#6a6a2a}
+.loading{text-align:center;padding:40px;font-size:10px;color:#333;letter-spacing:3px}
+.nav{margin-bottom:16px}
+.nav button{background:#111;border:1px solid #222;color:#666;font-family:'Courier New',monospace;font-size:9px;padding:4px 12px;cursor:pointer;margin-right:4px}
+.nav button:hover{border-color:#ff6a0044;color:#aaa}
+</style>
+</head>
+<body>
+<div class="hdr">fox//changelog</div>
+<div class="nav"><button onclick="loadCommits(1)">latest</button><button onclick="loadCommits(page+1)">older →</button></div>
+<div id="list"></div>
+<div class="loading" id="loading">fetching commits...</div>
+<script>
+var REPO='SlateCodeRunner/foxyverse-dreams',page=1;
+async function loadCommits(p){
+  page=p;var list=document.getElementById('list');list.innerHTML='';
+  document.getElementById('loading').style.display='block';
+  try{
+    var res=await fetch('https://api.github.com/repos/'+REPO+'/commits?per_page=30&page='+p);
+    var commits=await res.json();
+    document.getElementById('loading').style.display='none';
+    commits.forEach(function(c){
+      var d=new Date(c.commit.author.date);
+      var timeAgo=Math.round((Date.now()-d)/3600000);
+      var when=timeAgo<24?timeAgo+'h ago':Math.round(timeAgo/24)+'d ago';
+      var div=document.createElement('div');div.className='commit';
+      div.innerHTML='<div class="sha">'+c.sha.slice(0,7)+'</div>'
+        +'<div class="msg">'+c.commit.message.split('\n')[0]+'</div>'
+        +'<div class="meta">'+when+' · '+d.toLocaleDateString()+' '+d.toLocaleTimeString()
+        +(c.stats?' <span class="stat add">+'+c.stats.additions+'</span><span class="stat del">-'+c.stats.deletions+'</span>':'')
+        +'</div><div class="files"></div>';
+      div.onclick=function(){
+        if(div.classList.contains('open')){div.classList.remove('open');return;}
+        div.classList.add('open');
+        var fd=div.querySelector('.files');
+        if(fd.innerHTML)return;
+        fetch('https://api.github.com/repos/'+REPO+'/commits/'+c.sha).then(r=>r.json()).then(function(detail){
+          fd.innerHTML=detail.files.map(function(f){
+            var cls=f.status==='added'?'a':f.status==='removed'?'d':'m';
+            return '<div class="'+cls+'">'+f.status[0].toUpperCase()+' '+f.filename+'</div>';
+          }).join('');
+        });
+      };
+      list.appendChild(div);
+    });
+  }catch(e){document.getElementById('loading').textContent='error: '+e.message;}
+}
+loadCommits(1);
+</script>
+</body>
+</html>
