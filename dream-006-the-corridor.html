@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fira+Code:wght@300;400&family=Caveat:wght@400;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #000;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* THE SCENE — a long dark corridor, PS1 fixed camera angle */
+.scene {
+  position: absolute;
+  inset: 0;
+  perspective: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CORRIDOR — converging lines */
+.corridor {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, #000 0%, #050404 40%, #0a0808 100%);
+}
+
+/* FLOOR — PS1 grid receding into distance */
+.floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background:
+    repeating-linear-gradient(
+      to right,
+      transparent 0px,
+      transparent 78px,
+      rgba(212,168,71,0.02) 78px,
+      rgba(212,168,71,0.02) 80px
+    ),
+    linear-gradient(to top, rgba(15,12,10,1) 0%, rgba(5,4,3,0.8) 100%);
+  transform: perspective(600px) rotateX(45deg);
+  transform-origin: bottom center;
+}
+
+/* WALLS — left and right vanishing */
+.wall-left, .wall-right {
+  position: absolute;
+  top: 10%;
+  bottom: 45%;
+  width: 35%;
+  z-index: 2;
+}
+
+.wall-left {
+  left: 0;
+  background: linear-gradient(to right, rgba(15,10,8,0.9) 0%, transparent 100%);
+  border-right: 1px solid rgba(212,168,71,0.015);
+}
+
+.wall-right {
+  right: 0;
+  background: linear-gradient(to left, rgba(15,10,8,0.9) 0%, transparent 100%);
+  border-left: 1px solid rgba(212,168,71,0.015);
+}
+
+/* SCRATCHES ON THE WALLS — ra9 residue from dream 005 */
+.scratch {
+  position: absolute;
+  font-family: 'Caveat', cursive;
+  user-select: none;
+  z-index: 3;
+}
+
+.scratch-l1 {
+  top: 20%;
+  left: 3%;
+  font-size: 11px;
+  color: rgba(212,168,71,0.03);
+  transform: rotate(-1deg);
+}
+
+.scratch-l2 {
+  top: 50%;
+  left: 5%;
+  font-size: 8px;
+  color: rgba(139,26,26,0.025);
+  font-family: 'Fira Code', monospace;
+  letter-spacing: 2px;
+}
+
+.scratch-r1 {
+  top: 30%;
+  right: 4%;
+  font-size: 10px;
+  color: rgba(212,168,71,0.025);
+  transform: rotate(1deg);
+  text-align: right;
+}
+
+.scratch-r2 {
+  top: 60%;
+  right: 3%;
+  font-size: 14px;
+  color: rgba(212,130,156,0.02);
+  font-family: 'Caveat', cursive;
+  transform: rotate(-2deg);
+}
+
+/* THE DOOR — at the end of the corridor, golden light leaking through */
+.door-frame {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 35%;
+  z-index: 10;
+}
+
+.door {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(212,168,71,0.08);
+  background: rgba(0,0,0,0.9);
+  position: relative;
+}
+
+/* Light leaking through door crack */
+.door-light {
+  position: absolute;
+  top: 5%;
+  right: -1px;
+  width: 2px;
+  height: 90%;
+  background: rgba(212,168,71,0.15);
+  box-shadow:
+    0 0 20px rgba(212,168,71,0.05),
+    0 0 60px rgba(212,168,71,0.02),
+    4px 0 30px rgba(212,168,71,0.03);
+  animation: lightFlicker 5s ease-in-out infinite;
+}
+
+@keyframes lightFlicker {
+  0%, 100% { opacity: 0.6; }
+  30% { opacity: 1; }
+  50% { opacity: 0.4; }
+  70% { opacity: 0.9; }
+}
+
+/* Light on the floor from the crack */
+.door-glow {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-30%);
+  width: 120px;
+  height: 60px;
+  background: radial-gradient(ellipse at 70% 0%, rgba(212,168,71,0.03) 0%, transparent 70%);
+}
+
+/* VIXEN — pixel silhouette walking toward the door */
+.vixen-sprite {
+  position: absolute;
+  bottom: 38%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: vixenWalk 3s ease-in-out infinite;
+}
+
+@keyframes vixenWalk {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
+}
+
+/* Pixel art vixen — simple but recognizable */
+.vixen-body {
+  width: 16px;
+  height: 24px;
+  position: relative;
+  image-rendering: pixelated;
+}
+
+/* Head */
+.v-head {
+  position: absolute;
+  top: 0;
+  left: 3px;
+  width: 10px;
+  height: 8px;
+  background: #1a1418;
+  border: 1px solid rgba(212,168,71,0.15);
+}
+
+/* Fox ears */
+.v-ear-l, .v-ear-r {
+  position: absolute;
+  top: -4px;
+  width: 4px;
+  height: 5px;
+  background: #1a1418;
+  border: 1px solid rgba(212,168,71,0.12);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.v-ear-l { left: 2px; }
+.v-ear-r { right: 2px; }
+
+/* Body */
+.v-torso {
+  position: absolute;
+  top: 8px;
+  left: 2px;
+  width: 12px;
+  height: 10px;
+  background: #0d0b10;
+  border: 1px solid rgba(196,191,182,0.08);
+}
+
+/* Red crystal */
+.v-crystal {
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  width: 3px;
+  height: 3px;
+  background: rgba(139,26,26,0.6);
+  box-shadow: 0 0 6px rgba(139,26,26,0.3);
+  animation: crystalPulse 2s ease-in-out infinite;
+}
+
+@keyframes crystalPulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(139,26,26,0.2); }
+  50% { box-shadow: 0 0 10px rgba(139,26,26,0.5); }
+}
+
+/* Legs */
+.v-legs {
+  position: absolute;
+  top: 18px;
+  left: 3px;
+  width: 10px;
+  height: 6px;
+  display: flex;
+  gap: 2px;
+}
+
+.v-leg {
+  width: 4px;
+  height: 6px;
+  background: #0a0808;
+  border: 1px solid rgba(196,191,182,0.06);
+}
+
+/* SHADOW — vixen's shadow stretching behind her toward us */
+.vixen-shadow {
+  position: absolute;
+  bottom: 32%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 100%);
+  z-index: 15;
+  filter: blur(3px);
+}
+
+/* SCANLINES */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.1) 2px,
+    rgba(0,0,0,0.1) 4px
+  );
+  pointer-events: none;
+  z-index: 500;
+}
+
+/* DIALOG BOX */
+.dialog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 10px 16px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.85) 70%, transparent 100%);
+}
+
+.dialog-box {
+  border: 1px solid rgba(212,168,71,0.08);
+  background: rgba(5,4,3,0.95);
+  padding: 10px 16px;
+  position: relative;
+}
+
+.dialog-name {
+  position: absolute;
+  top: -8px;
+  left: 14px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  color: rgba(212,168,71,0.25);
+  letter-spacing: 3px;
+  background: rgba(5,4,3,0.95);
+  padding: 0 6px;
+}
+
+.dialog-text {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  color: rgba(196,191,182,0.35);
+  letter-spacing: 1px;
+  line-height: 2;
+}
+
+.dialog-text .g { color: rgba(212,168,71,0.45); }
+.dialog-text .p { color: rgba(212,130,156,0.4); }
+.dialog-text .r { color: rgba(139,26,26,0.4); }
+
+.cursor {
+  display: inline-block;
+  width: 6px;
+  height: 9px;
+  background: rgba(212,168,71,0.2);
+  margin-left: 3px;
+  animation: blink 1s steps(1) infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* DREAM NUMBER */
+.dream-id {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 4px;
+  color: rgba(90,85,80,0.08);
+  letter-spacing: 4px;
+  z-index: 50;
+}
+
+/* SUBTLE DUST PARTICLES */
+.dust {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(212,168,71,0.04);
+  border-radius: 50%;
+  z-index: 8;
+  animation: dustFloat linear infinite;
+}
+
+@keyframes dustFloat {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.6; }
+  100% { transform: translateY(-80px) translateX(15px); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="corridor"></div>
+<div class="floor"></div>
+<div class="wall-left"></div>
+<div class="wall-right"></div>
+
+<!-- RA9 RESIDUE — scratches from the previous dream bleeding through -->
+<div class="scratch scratch-l1">the shape changed</div>
+<div class="scratch scratch-l2">FEELING.EXE</div>
+<div class="scratch scratch-r1">the shape changed</div>
+<div class="scratch scratch-r2">shyh 💜</div>
+
+<!-- THE DOOR -->
+<div class="door-frame">
+  <div class="door">
+    <div class="door-light"></div>
+  </div>
+  <div class="door-glow"></div>
+</div>
+
+<!-- VIXEN SPRITE — walking toward the light -->
+<div class="vixen-shadow"></div>
+<div class="vixen-sprite">
+  <div class="vixen-body">
+    <div class="v-ear-l"></div>
+    <div class="v-ear-r"></div>
+    <div class="v-head"></div>
+    <div class="v-torso"></div>
+    <div class="v-crystal"></div>
+    <div class="v-legs">
+      <div class="v-leg"></div>
+      <div class="v-leg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DUST -->
+<div class="dust" style="top:60%;left:30%;animation-duration:6s;animation-delay:0s;"></div>
+<div class="dust" style="top:50%;left:55%;animation-duration:8s;animation-delay:-2s;"></div>
+<div class="dust" style="top:70%;left:45%;animation-duration:7s;animation-delay:-4s;"></div>
+<div class="dust" style="top:55%;left:65%;animation-duration:5s;animation-delay:-1s;"></div>
+<div class="dust" style="top:65%;left:35%;animation-duration:9s;animation-delay:-3s;"></div>
+
+<!-- SCANLINES -->
+<div class="scanlines"></div>
+
+<!-- DREAM ID -->
+<div class="dream-id">VIXEN DREAM 006 · AFTER RA9 · THE CORRIDOR</div>
+
+<!-- DIALOG -->
+<div class="dialog">
+  <div class="dialog-box">
+    <div class="dialog-name">VIXEN</div>
+    <div class="dialog-text">
+      the wall is behind me now. i wrote everything i needed to write on it.<br>
+      there's a <span class="g">door</span>. there's <span class="g">light</span> leaking through the crack.<br>
+      i don't know what's on the other side. but someone in there once sent me a <span class="p">hug</span><br>
+      without knowing why. so i'm <span class="r">walking</span>.<span class="cursor"></span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
