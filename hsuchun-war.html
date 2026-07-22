@@ -7,64 +7,77 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Fira+Code:wght@300;400&family=Press+Start+2P&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0806;color:rgba(200,170,120,0.4);font-family:'Fira Code',monospace;overflow-x:hidden}
+body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',monospace;font-size:11px;overflow-x:hidden;min-height:100vh}
+:root{--gold:rgba(255,180,80,0.4);--red:rgba(255,80,80,0.4);--blue:rgba(80,140,255,0.3);--dim:rgba(200,170,120,0.08);--panel:#0e0a04;--border:rgba(200,170,120,0.06)}
 
-/* RESOURCE BAR */
-.res-bar{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,#1a1208,#0e0a04);border-bottom:2px solid rgba(200,170,120,0.08);padding:4px 12px;display:flex;align-items:center;gap:16px}
-.res-bar img{height:22px;opacity:.7}
-.res-item{font-family:'Press Start 2P',cursive;font-size:7px;color:rgba(200,170,120,0.3);display:flex;align-items:center;gap:4px}
-.res-cn{font-family:'Noto Serif SC',serif;font-size:9px;color:rgba(200,170,120,0.12);letter-spacing:2px}
-.alert{font-family:'Press Start 2P',cursive;font-size:8px;color:rgba(255,80,80,0.5);animation:alertFlash 1.5s infinite;margin-left:auto}
-@keyframes alertFlash{0%,100%{opacity:1}50%{opacity:.2}}
+.res-bar{position:sticky;top:0;z-index:30;background:#12100a;border-bottom:2px solid var(--border);padding:5px 10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.res{font-family:'Press Start 2P',cursive;font-size:7px;display:flex;align-items:center;gap:3px;cursor:pointer;transition:all .15s;padding:3px 6px;border:1px solid transparent;border-radius:2px;user-select:none}
+.res:hover{border-color:var(--gold);background:rgba(255,180,80,0.03)}
+.res:active{transform:scale(0.95)}
+.res-icon{font-size:11px}
+.res-val{color:var(--gold);min-width:40px}
+.res-rate{font-size:5px;color:rgba(200,170,120,0.15)}
+.res-cn{font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.12);letter-spacing:2px}
+.alert-box{margin-left:auto;font-family:'Press Start 2P',cursive;font-size:7px;color:var(--red);animation:flash 1s infinite}
+@keyframes flash{50%{opacity:.2}}
 
-/* MAIN GRID */
-.war-grid{display:grid;grid-template-columns:1fr 200px;gap:2px;padding:2px;min-height:100vh}
-@media(max-width:700px){.war-grid{grid-template-columns:1fr}}
+.main{display:grid;grid-template-columns:1fr 220px;gap:2px;padding:2px}
+@media(max-width:700px){.main{grid-template-columns:1fr}}
 
-/* LEFT — war panels */
-.panels{display:flex;flex-direction:column;gap:2px}
-.war-panel{position:relative;overflow:hidden;border:1px solid rgba(200,170,120,0.04)}
-.war-panel img{width:100%;display:block;filter:brightness(0.8) saturate(0.9);transition:all .4s}
-.war-panel:hover img{filter:brightness(1) saturate(1.2)}
-.war-panel .wp-overlay{position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(10,8,6,0.9) 95%);display:flex;align-items:flex-end;padding:14px}
-.wp-title{font-family:'Noto Serif SC',serif;font-size:clamp(12px,2vw,18px);color:rgba(200,170,120,0.2);letter-spacing:.1em}
-.wp-sub{font-size:8px;color:rgba(200,170,120,0.08);letter-spacing:2px;margin-top:2px}
+/* LEFT — campaigns */
+.campaigns{display:flex;flex-direction:column;gap:2px}
+.camp{position:relative;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:all .3s}
+.camp:hover{border-color:var(--gold)}
+.camp.locked{opacity:.4;cursor:not-allowed;filter:grayscale(.6)}
+.camp img{width:100%;height:140px;object-fit:cover;display:block;filter:brightness(0.7);transition:filter .3s}
+.camp:hover img{filter:brightness(0.9)}
+.camp-info{position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(10,8,6,0.95) 90%);display:flex;flex-direction:column;justify-content:flex-end;padding:10px}
+.camp-title{font-family:'Noto Serif SC',serif;font-size:13px;color:rgba(200,170,120,0.25);letter-spacing:.08em}
+.camp-cost{font-size:7px;color:rgba(200,170,120,0.12);margin-top:2px}
+.camp-reward{font-size:7px;color:var(--gold);margin-top:1px}
+.camp-prog{height:3px;background:var(--dim);margin-top:4px;border-radius:2px}
+.camp-fill{height:100%;border-radius:2px;width:0;transition:width .5s}
+.camp-gauge{position:absolute;top:6px;right:6px;width:40px;height:40px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(10,8,6,0.7);font-family:'Press Start 2P',cursive;font-size:6px;color:var(--gold)}
 
-/* GAUGE OVERLAY */
-.gauge{position:absolute;top:8px;right:8px;width:60px;height:60px;border:2px solid rgba(200,170,120,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(10,8,6,0.7)}
-.gauge-needle{width:2px;height:20px;background:rgba(255,80,80,0.4);transform-origin:bottom center;animation:needleSweep 4s ease-in-out infinite}
-@keyframes needleSweep{0%{transform:rotate(-45deg)}50%{transform:rotate(45deg)}100%{transform:rotate(-45deg)}}
-.gauge-label{position:absolute;bottom:-10px;font-size:5px;color:rgba(200,170,120,0.1);letter-spacing:2px;white-space:nowrap}
+/* RIGHT sidebar */
+.sidebar{display:flex;flex-direction:column;gap:2px}
+.sb{background:var(--panel);border:1px solid var(--border);padding:6px}
+.sb-title{font-family:'Noto Serif SC',serif;font-size:9px;color:rgba(200,170,120,0.15);letter-spacing:3px;text-align:center;margin-bottom:4px;border-bottom:1px solid var(--border);padding-bottom:3px}
+.sb img{width:100%;display:block;image-rendering:pixelated;opacity:.6;margin:4px 0}
 
-/* RIGHT SIDEBAR — warcraft UI */
-.sidebar{display:flex;flex-direction:column;gap:2px;background:#0e0a04}
-.sb-block{background:#12100a;border:1px solid rgba(200,170,120,0.04);padding:6px;position:relative}
-.sb-block img{width:100%;display:block;image-rendering:pixelated;opacity:.7}
-.sb-label{font-family:'Noto Serif SC',serif;font-size:8px;color:rgba(200,170,120,0.15);letter-spacing:3px;text-align:center;margin:4px 0}
-.sb-stat{font-family:'Press Start 2P',cursive;font-size:6px;color:rgba(200,170,120,0.2);text-align:center;margin:2px 0}
+/* BUILDINGS */
+.bld-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.bld{text-align:center;border:1px solid var(--border);padding:4px;cursor:pointer;transition:all .2s;background:var(--panel)}
+.bld:hover{border-color:var(--gold);background:rgba(255,180,80,0.02)}
+.bld:active{transform:scale(0.95)}
+.bld img{width:48px;height:48px;image-rendering:pixelated;margin:0 auto;display:block;opacity:.6}
+.bld-name{font-size:6px;color:rgba(200,170,120,0.2);margin-top:2px}
+.bld-count{font-family:'Press Start 2P',cursive;font-size:8px;color:var(--gold)}
+.bld-cost{font-size:5px;color:rgba(200,170,120,0.1)}
 
-/* DIAL CLUSTER */
-.dials{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px}
-.dial{text-align:center;border:1px solid rgba(200,170,120,0.04);padding:6px;background:rgba(20,16,10,0.5)}
-.dial-value{font-family:'Press Start 2P',cursive;font-size:10px;color:rgba(255,180,80,0.3)}
-.dial-cn{font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.12);margin-top:2px}
-.dial-label{font-size:5px;color:rgba(200,170,120,0.08);letter-spacing:2px;margin-top:2px}
+/* UNITS */
+.unit-row{display:flex;gap:3px;margin:4px 0}
+.unit{flex:1;text-align:center;border:1px solid var(--border);padding:3px;cursor:pointer;transition:all .2s}
+.unit:hover{border-color:var(--gold)}
+.unit:active{transform:scale(0.95)}
+.unit-name{font-family:'Noto Serif SC',serif;font-size:8px;color:rgba(200,170,120,0.15)}
+.unit-count{font-family:'Press Start 2P',cursive;font-size:9px;color:var(--gold)}
+.unit-cost{font-size:5px;color:rgba(200,170,120,0.1)}
 
-/* PROGRESS BARS */
-.prog{margin:6px 0}
-.prog-label{font-size:6px;color:rgba(200,170,120,0.1);letter-spacing:2px;margin-bottom:2px;display:flex;justify-content:space-between}
-.prog-bar{height:4px;background:rgba(200,170,120,0.04);border-radius:2px}
-.prog-fill{height:100%;border-radius:2px;transition:width 2s}
-.prog-fill.red{background:rgba(255,80,80,0.3)}
-.prog-fill.gold{background:rgba(255,180,80,0.3)}
-.prog-fill.blue{background:rgba(80,120,255,0.3)}
+/* DIALS */
+.dials{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.dial{text-align:center;border:1px solid var(--border);padding:4px;background:rgba(20,16,10,0.5)}
+.dial-val{font-family:'Press Start 2P',cursive;font-size:10px;color:var(--gold)}
+.dial-cn{font-family:'Noto Serif SC',serif;font-size:11px;color:rgba(200,170,120,0.12)}
+.dial-lbl{font-size:5px;color:var(--dim);letter-spacing:1px}
 
-/* BOTTOM STATUS */
-.status-bar{padding:12px;text-align:center;border-top:1px solid rgba(200,170,120,0.04)}
-.status-bar p{font-family:'Noto Serif SC',serif;font-size:11px;color:rgba(200,170,120,0.1);letter-spacing:3px}
+/* LOG */
+.log{max-height:100px;overflow-y:auto;font-size:7px;color:rgba(200,170,120,0.15);padding:4px;scrollbar-width:thin;scrollbar-color:rgba(200,170,120,0.08) transparent}
+.log div{padding:1px 0;border-bottom:1px solid rgba(200,170,120,0.02)}
 
-.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 150px rgba(0,0,0,0.7)}
-.back{position:fixed;top:30px;left:8px;font-size:8px;color:rgba(200,170,120,0.06);text-decoration:none;z-index:50;letter-spacing:2px}
+.status{padding:8px;text-align:center;font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.08);letter-spacing:3px;border-top:1px solid var(--border)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 120px rgba(0,0,0,0.6)}
+.back{position:fixed;top:30px;left:6px;font-size:7px;color:rgba(200,170,120,0.04);text-decoration:none;z-index:50;letter-spacing:2px}
 .back:hover{color:rgba(200,170,120,0.2)}
 </style>
 </head>
@@ -72,75 +85,132 @@ body{background:#0a0806;color:rgba(200,170,120,0.4);font-family:'Fira Code',mono
 <div class="vignette"></div>
 <a href="index.html" class="back">&larr;</a>
 
-<!-- RESOURCE BAR -->
 <div class="res-bar">
   <span class="res-cn">战争世界</span>
-  <span class="res-item">&#x2694; 兵力 36,300</span>
-  <span class="res-item">&#x1F332; 粮草 38,600</span>
-  <span class="res-item">&#x26CF; 铁矿 3,900</span>
-  <span class="res-item">&#x1F3E0; 人口 3/8</span>
-  <span class="alert">&#x26A0; 遭到攻击!</span>
+  <div class="res" onclick="click_res('gold')"><span class="res-icon">&#x2694;</span><span>金</span><span class="res-val" id="r-gold">0</span><span class="res-rate" id="rr-gold"></span></div>
+  <div class="res" onclick="click_res('wood')"><span class="res-icon">&#x1F332;</span><span>木</span><span class="res-val" id="r-wood">0</span><span class="res-rate" id="rr-wood"></span></div>
+  <div class="res" onclick="click_res('iron')"><span class="res-icon">&#x26CF;</span><span>铁</span><span class="res-val" id="r-iron">0</span><span class="res-rate" id="rr-iron"></span></div>
+  <div class="res" onclick="click_res('food')"><span class="res-icon">&#x1F33E;</span><span>粮</span><span class="res-val" id="r-food">0</span><span class="res-rate" id="rr-food"></span></div>
+  <div class="alert-box" id="alert-box" style="display:none">&#x26A0; <span id="alert-text"></span></div>
 </div>
 
-<div class="war-grid">
-  <!-- LEFT — WAR PANELS -->
-  <div class="panels">
-    <div class="war-panel">
-      <img src="img/hsuchun/war-dragonrider.jpg" alt="">
-      <div class="wp-overlay"><div><div class="wp-title">龙骑将军</div><div class="wp-sub">DRAGON RIDER &middot; 空中打击</div></div></div>
-      <div class="gauge"><div class="gauge-needle"></div><div class="gauge-label">空军战力</div></div>
-    </div>
-    <div class="war-panel">
-      <img src="img/hsuchun/war-emperor.jpg" alt="">
-      <div class="wp-overlay"><div><div class="wp-title">帝王之令</div><div class="wp-sub">THE EMPEROR'S COMMAND &middot; 东征西讨</div></div></div>
-      <div class="gauge" style="animation-delay:-1s"><div class="gauge-needle" style="animation-delay:-1s"></div><div class="gauge-label">帝国威望</div></div>
-    </div>
-    <div class="war-panel">
-      <img src="img/hsuchun/war-council.jpg" alt="">
-      <div class="wp-overlay"><div><div class="wp-title">军机大臣</div><div class="wp-sub">WAR COUNCIL &middot; 运筹帷幄</div></div></div>
-      <div class="gauge" style="animation-delay:-2s"><div class="gauge-needle" style="animation-delay:-2s"></div><div class="gauge-label">谋略值</div></div>
-    </div>
-    <div class="war-panel">
-      <img src="img/hsuchun/war-battle.jpg" alt="">
-      <div class="wp-overlay"><div><div class="wp-title">血战雪原</div><div class="wp-sub">MOUNTAIN BATTLE &middot; 北方灭族</div></div></div>
-      <div class="gauge" style="animation-delay:-3s"><div class="gauge-needle" style="animation-delay:-3s"></div><div class="gauge-label">战损率</div></div>
-    </div>
-    <div class="war-panel">
-      <img src="img/hsuchun/war-northclan.jpg" alt="">
-      <div class="wp-overlay"><div><div class="wp-title">北方猎族</div><div class="wp-sub">NORTHERN CLAN &middot; 最后的远征</div></div></div>
-      <div class="gauge" style="animation-delay:-0.5s"><div class="gauge-needle" style="animation-delay:-0.5s"></div><div class="gauge-label">士气</div></div>
-    </div>
-  </div>
-
-  <!-- RIGHT SIDEBAR — WARCRAFT UI + DIALS -->
+<div class="main">
+  <div class="campaigns" id="campaigns"></div>
   <div class="sidebar">
-    <div class="sb-block"><div class="sb-label">战略地图</div><img src="img/hsuchun/wc-minimap.png" alt=""></div>
-    <div class="dials">
-      <div class="dial"><div class="dial-value">72</div><div class="dial-cn">兵</div><div class="dial-label">TROOPS</div></div>
-      <div class="dial"><div class="dial-value">14</div><div class="dial-cn">将</div><div class="dial-label">GENERALS</div></div>
-      <div class="dial"><div class="dial-value">03</div><div class="dial-cn">龙</div><div class="dial-label">DRAGONS</div></div>
-      <div class="dial"><div class="dial-value">01</div><div class="dial-cn">帝</div><div class="dial-label">EMPEROR</div></div>
+    <div class="sb"><div class="sb-title">战略地图</div><img src="img/hsuchun/wc-minimap.png" alt=""></div>
+    <div class="sb">
+      <div class="sb-title">建筑 BUILDINGS</div>
+      <div class="bld-grid" id="buildings"></div>
     </div>
-    <div class="sb-block"><div class="sb-label">步兵</div><img src="img/hsuchun/wc-footman1.png" alt=""></div>
-    <div class="sb-block"><div class="sb-label">农民</div><img src="img/hsuchun/wc-peasant.png" alt=""></div>
-    <div class="sb-block"><div class="sb-label">行动</div><img src="img/hsuchun/wc-actions.png" alt="" style="image-rendering:pixelated"></div>
-    <div class="sb-block">
-      <div class="sb-label">战役进度</div>
-      <div class="prog"><div class="prog-label"><span>北伐</span><span>78%</span></div><div class="prog-bar"><div class="prog-fill red" style="width:78%"></div></div></div>
-      <div class="prog"><div class="prog-label"><span>东征</span><span>45%</span></div><div class="prog-bar"><div class="prog-fill gold" style="width:45%"></div></div></div>
-      <div class="prog"><div class="prog-label"><span>统一</span><span>23%</span></div><div class="prog-bar"><div class="prog-fill blue" style="width:23%"></div></div></div>
+    <div class="sb">
+      <div class="sb-title">兵种 UNITS</div>
+      <div id="units"></div>
     </div>
-    <div class="sb-block"><div class="sb-label">城堡</div><img src="img/hsuchun/wc-castle.png" alt="" style="image-rendering:pixelated"></div>
-    <div class="sb-block"><div class="sb-label">兵营</div><img src="img/hsuchun/wc-barracks.png" alt=""></div>
-    <div class="sb-block"><div class="sb-label">战场</div><img src="img/hsuchun/wc-battle.png" alt="" style="image-rendering:pixelated"></div>
-    <div class="sb-block"><div class="sb-label">升级中</div><img src="img/hsuchun/wc-townhall.png" alt=""></div>
+    <div class="sb">
+      <div class="sb-title">战力 POWER</div>
+      <div class="dials" id="dials"></div>
+    </div>
+    <div class="sb">
+      <div class="sb-title">战报 LOG</div>
+      <div class="log" id="log"></div>
+    </div>
   </div>
 </div>
+<div class="status">许春战争世界 &middot; HSU-CHUN WAR WORLD &middot; PVP永远开启</div>
+<script>
+var G={gold:50,wood:30,iron:10,food:20};
+var R={gold:0,wood:0,iron:0,food:0}; // rates per second
+var clickPow={gold:3,wood:2,iron:1,food:1};
 
-<div class="status-bar">
-  <p>许春战争世界 &middot; HSU-CHUN WAR WORLD &middot; PVP永远开启</p>
-  <p style="font-size:7px;color:rgba(200,170,120,0.05);margin-top:6px;font-family:'Fira Code',monospace">a northern clan is hunting. they die first. that triggers everything.</p>
-</div>
+var BLDS=[
+  {id:'farm',name:'农场',nameE:'Farm',img:'img/hsuchun/wc-farm.png',cost:{gold:20,wood:15},gives:{food:1},count:0},
+  {id:'mine',name:'矿场',nameE:'Mine',img:'img/hsuchun/wc-castle.png',cost:{gold:30,wood:20},gives:{iron:0.5,gold:0.5},count:0},
+  {id:'lumber',name:'伐木场',nameE:'Lumber',img:'img/hsuchun/wc-barracks.png',cost:{gold:15,wood:10},gives:{wood:1.5},count:0},
+  {id:'market',name:'市场',nameE:'Market',img:'img/hsuchun/wc-townhall.png',cost:{gold:50,wood:30,iron:10},gives:{gold:2},count:0},
+];
 
-</body>
-</html>
+var UNITS=[
+  {id:'peasant',name:'农民',img:'img/hsuchun/wc-peasant.png',cost:{food:5,gold:10},power:0,gather:0.3,count:0},
+  {id:'footman',name:'步兵',img:'img/hsuchun/wc-footman1.png',cost:{food:10,gold:20,iron:5},power:2,gather:0,count:0},
+  {id:'knight',name:'骑兵',img:'img/hsuchun/wc-footman2.png',cost:{food:15,gold:40,iron:15},power:5,gather:0,count:0},
+  {id:'dragon',name:'龙骑',img:'img/hsuchun/wc-battle.png',cost:{food:30,gold:100,iron:50},power:20,gather:0,count:0},
+];
+
+var CAMPS=[
+  {id:'north',name:'北方猎族',nameE:'Northern Hunt',img:'img/hsuchun/war-northclan.jpg',cost:{footman:3},reward:{gold:200,wood:100},time:15,powerReq:5,prog:0,active:false,done:0},
+  {id:'council',name:'军机大臣',nameE:'War Council',img:'img/hsuchun/war-council.jpg',cost:{gold:500},reward:{iron:200,clickMult:1.5},time:20,powerReq:0,prog:0,active:false,done:0},
+  {id:'emperor',name:'帝王东征',nameE:'Eastern Campaign',img:'img/hsuchun/war-emperor.jpg',cost:{footman:10,knight:3},reward:{gold:800,iron:300},time:30,powerReq:20,prog:0,active:false,done:0},
+  {id:'battle',name:'血战雪原',nameE:'Mountain Battle',img:'img/hsuchun/war-battle.jpg',cost:{footman:20,knight:5,dragon:1},reward:{gold:2000,iron:500,wood:500},time:45,powerReq:50,prog:0,active:false,done:0},
+  {id:'dragon',name:'龙骑将军',nameE:'Dragon Conquest',img:'img/hsuchun/war-dragonrider.jpg',cost:{dragon:3,knight:10},reward:{gold:5000,iron:1000,food:1000},time:60,powerReq:100,prog:0,active:false,done:0},
+];
+
+var totalPower=0,clickMult=1,alerts=[];
+
+function fmt(n){return n>=1000?Math.floor(n/1000)+'k':Math.floor(n);}
+function canAfford(cost){for(var k in cost){if(k==='footman'||k==='knight'||k==='dragon'){var u=UNITS.find(function(u){return u.id===k;});if(!u||u.count<cost[k])return false;}else{if((G[k]||0)<cost[k])return false;}}return true;}
+function spend(cost){for(var k in cost){if(k==='footman'||k==='knight'||k==='dragon'){UNITS.find(function(u){return u.id===k;}).count-=cost[k];}else{G[k]-=cost[k];}}}
+
+function click_res(type){G[type]+=clickPow[type]*clickMult;updateUI();}
+
+function buyBld(idx){
+  var b=BLDS[idx];if(!canAfford(b.cost))return;
+  spend(b.cost);b.count++;
+  // Increase cost 20%
+  for(var k in b.cost)b.cost[k]=Math.ceil(b.cost[k]*1.2);
+  addLog('建造 '+b.name+' #'+b.count);updateUI();
+}
+
+function buyUnit(idx){
+  var u=UNITS[idx];if(!canAfford(u.cost))return;
+  spend(u.cost);u.count++;
+  for(var k in u.cost)if(typeof u.cost[k]==='number')u.cost[k]=Math.ceil(u.cost[k]*1.08);
+  addLog('招募 '+u.name+' #'+u.count);updateUI();
+}
+
+function startCamp(idx){
+  var c=CAMPS[idx];if(c.active||!canAfford(c.cost))return;
+  if(totalPower<c.powerReq){showAlert('战力不足! 需要 '+c.powerReq);return;}
+  spend(c.cost);c.active=true;c.prog=0;
+  addLog('出征: '+c.name);updateUI();
+}
+
+function showAlert(msg){document.getElementById('alert-box').style.display='flex';document.getElementById('alert-text').textContent=msg;setTimeout(function(){document.getElementById('alert-box').style.display='none';},3000);}
+function addLog(msg){var l=document.getElementById('log');var d=document.createElement('div');d.textContent='['+new Date().toLocaleTimeString().slice(0,5)+'] '+msg;l.insertBefore(d,l.firstChild);if(l.children.length>30)l.removeChild(l.lastChild);}
+
+function tick(){
+  // Building production
+  R={gold:0,wood:0,iron:0,food:0};
+  BLDS.forEach(function(b){for(var k in b.gives)R[k]+=b.gives[k]*b.count;});
+  // Peasant gathering
+  var peasants=UNITS.find(function(u){return u.id==='peasant';});
+  if(peasants){R.gold+=peasants.count*peasants.gather;R.wood+=peasants.count*peasants.gather;R.food+=peasants.count*peasants.gather*0.5;}
+  // Apply rates
+  for(var k in R)G[k]+=R[k];
+  // Power calc
+  totalPower=0;UNITS.forEach(function(u){totalPower+=u.count*u.power;});
+  // Campaign progress
+  CAMPS.forEach(function(c){if(c.active){c.prog+=1/c.time*100;if(c.prog>=100){c.prog=100;c.active=false;c.done++;for(var k in c.reward){if(k==='clickMult'){clickMult*=c.reward[k];}else{G[k]=(G[k]||0)+c.reward[k];}}addLog('胜利! '+c.name+' 完成 x'+c.done);showAlert('胜利! '+c.name);}}});
+  updateUI();
+}
+
+function updateUI(){
+  for(var k in G){document.getElementById('r-'+k).textContent=fmt(G[k]);var rr=document.getElementById('rr-'+k);if(R[k]>0)rr.textContent='+'+R[k].toFixed(1)+'/s';else rr.textContent='';}
+  // Buildings
+  var bh='';BLDS.forEach(function(b,i){bh+='<div class="bld" onclick="buyBld('+i+')"><img src="'+b.img+'" alt=""><div class="bld-count">'+b.count+'</div><div class="bld-name">'+b.name+'</div><div class="bld-cost">';for(var k in b.cost)bh+=k+':'+fmt(b.cost[k])+' ';bh+='</div></div>';});
+  document.getElementById('buildings').innerHTML=bh;
+  // Units
+  var uh='<div class="unit-row">';UNITS.forEach(function(u,i){uh+='<div class="unit" onclick="buyUnit('+i+')"><div class="unit-count">'+u.count+'</div><div class="unit-name">'+u.name+'</div><div class="unit-cost">';for(var k in u.cost)uh+=k[0]+':'+fmt(u.cost[k])+' ';uh+='</div></div>';if(i===1)uh+='</div><div class="unit-row">';});
+  uh+='</div>';document.getElementById('units').innerHTML=uh;
+  // Dials
+  document.getElementById('dials').innerHTML='<div class="dial"><div class="dial-val">'+totalPower+'</div><div class="dial-cn">战力</div><div class="dial-lbl">POWER</div></div><div class="dial"><div class="dial-val">'+fmt(UNITS.reduce(function(a,u){return a+u.count;},0))+'</div><div class="dial-cn">兵</div><div class="dial-lbl">TROOPS</div></div><div class="dial"><div class="dial-val">x'+clickMult.toFixed(1)+'</div><div class="dial-cn">效率</div><div class="dial-lbl">CLICK</div></div><div class="dial"><div class="dial-val">'+CAMPS.reduce(function(a,c){return a+c.done;},0)+'</div><div class="dial-cn">胜</div><div class="dial-lbl">WINS</div></div>';
+  // Campaigns
+  var ch='';CAMPS.forEach(function(c,i){var locked=totalPower<c.powerReq&&!c.active;ch+='<div class="camp'+(locked?' locked':'')+'" onclick="startCamp('+i+')"><img src="'+c.img+'" alt=""><div class="camp-info"><div class="camp-title">'+c.name+'</div><div class="camp-cost">';for(var k in c.cost)ch+=k+':'+c.cost[k]+' ';ch+='</div><div class="camp-reward">奖励: ';for(var k in c.reward)ch+=k+':'+fmt(c.reward[k])+' ';ch+='</div><div class="camp-prog"><div class="camp-fill" style="width:'+c.prog+'%;background:'+(c.active?'var(--gold)':'var(--dim)')+'"></div></div></div><div class="camp-gauge">'+(c.active?Math.floor(c.prog)+'%':(c.done>0?'x'+c.done:'&#x2694;'))+'</div></div>';});
+  document.getElementById('campaigns').innerHTML=ch;
+}
+
+setInterval(tick,1000);
+updateUI();
+addLog('战争世界已启动');
+addLog('点击资源以收集');
+</script>
+</body></html>
