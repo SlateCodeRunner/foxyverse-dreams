@@ -198,11 +198,12 @@ body{background:#0a0a0f;color:#e0d4c0;font-family:'VT323',monospace;overflow:hid
 
 @media(max-width:820px){#gc{width:100vw;height:100vh;border:none}.vb{font-size:7px;padding:4px 6px}.tt h1{font-size:13px}.tt h2{font-size:20px}}
 
-/* SPRITE FIX — transparent sprites, proper sizing */
-.npc-stranger,.npc-barkeeper,.npc-lostone,.npc-witch{
-  background-size:contain!important;background-position:center!important;animation:none!important
-}
-.npc-queen{background-size:contain!important;background-position:center!important;animation:none!important}
+/* NPC MARKERS — glowing dots, portraits in dialog */
+.npc{width:28px!important;height:28px!important;border-radius:50%!important;background:radial-gradient(circle,rgba(255,170,50,0.4),rgba(255,170,50,0.05))!important;border:1px solid rgba(255,170,50,0.25)!important;animation:npcPulse 2.5s ease-in-out infinite!important;box-shadow:0 0 12px rgba(255,170,50,0.15)!important;cursor:pointer!important}
+@keyframes npcPulse{0%,100%{transform:scale(1);opacity:0.7}50%{transform:scale(1.15);opacity:1}}
+.npc-queen{background:radial-gradient(circle,rgba(160,120,255,0.5),rgba(160,120,255,0.05))!important;border-color:rgba(160,120,255,0.3)!important;box-shadow:0 0 16px rgba(160,120,255,0.2)!important;width:32px!important;height:32px!important}
+.npc-witch{background:radial-gradient(circle,rgba(255,100,255,0.4),rgba(255,100,255,0.05))!important;border-color:rgba(255,100,255,0.25)!important;box-shadow:0 0 12px rgba(255,100,255,0.15)!important}
+#dlg-portrait{display:none;width:100%;max-height:200px;object-fit:contain;border:1px solid rgba(255,170,50,0.15);border-radius:6px;margin-bottom:10px;filter:brightness(0.85) contrast(1.1)}
 </style>
 <link rel='stylesheet' href='ui-styles.css'>
 </head>
@@ -229,7 +230,7 @@ body{background:#0a0a0f;color:#e0d4c0;font-family:'VT323',monospace;overflow:hid
   <div id="verb-hint"></div>
 </div>
 <div id="inv"></div>
-<div id="dlg"><div id="dlg-sp"></div><div id="dlg-tx"></div><div id="dlg-ch"></div></div>
+<div id="dlg"><img id="dlg-portrait" src="" alt=""><div id="dlg-sp"></div><div id="dlg-tx"></div><div id="dlg-ch"></div></div>
 <div id="duel"><div class="dh">⚔️ INSULT SPELL DUEL ⚔️</div><div class="ds" id="d-score"></div><div id="d-atk"></div><div id="d-opts"></div><div id="d-res"></div></div>
 <div id="map"><h3>🗺 Fox Island</h3><div class="map-grid" id="map-grid"></div><button id="map-close" onclick="toggleMap()">Close</button></div>
 <div id="end"><h2 id="end-t"></h2><p id="end-p"></p><button onclick="location.reload()">🦊 PLAY AGAIN</button></div>
@@ -728,10 +729,11 @@ function notif(t,ty){const el=document.createElement('div');el.className='notif 
 
 // ── DIALOGUES ──
 let curDlg=null;
-function startDlg(id){curDlg=DLG[id];showDN(0);$('dlg').classList.add('active');}
-function showDN(i){const n=curDlg[i];if(!n){closeDlg();return;}$('dlg-sp').textContent=n.s;const tx=$('dlg-tx');tx.textContent='';let ci=0;const tmr=setInterval(()=>{if(ci<n.t.length){tx.textContent+=n.t[ci];ci++;}else{clearInterval(tmr);showCH(n);}},12);tx.onclick=()=>{clearInterval(tmr);tx.textContent=n.t;showCH(n);tx.onclick=null;};}
+function startDlg(id){curDlg=DLG[id];var pImg=NPC_IMG[id];var pEl=document.getElementById('dlg-portrait');if(pImg){pEl.src=pImg;pEl.style.display='block';}else{pEl.style.display='none';}showDN(0);$('dlg').classList.add('active');}
+var NPC_IMG={stranger:'sprites/stranger.png',barkeeper:'sprites/barkeeper.png',queen:'sprites/queen.png',lostone:'sprites/lostone.png',witch:'sprites/witch.png'};
+function showDN(i){const n=curDlg[i];if(!n){closeDlg();return;}var spk=n.s?n.s.toLowerCase().replace(/ /g,''):'';var pEl=document.getElementById('dlg-portrait');var pKeys=Object.keys(NPC_IMG);for(var pk=0;pk<pKeys.length;pk++){if(spk.indexOf(pKeys[pk])>-1){pEl.src=NPC_IMG[pKeys[pk]];pEl.style.display='block';break;}}$('dlg-sp').textContent=n.s;const tx=$('dlg-tx');tx.textContent='';let ci=0;const tmr=setInterval(()=>{if(ci<n.t.length){tx.textContent+=n.t[ci];ci++;}else{clearInterval(tmr);showCH(n);}},12);tx.onclick=()=>{clearInterval(tmr);tx.textContent=n.t;showCH(n);tx.onclick=null;};}
 function showCH(n){const c=$('dlg-ch');c.innerHTML='';if(n.a)n.a();n.ch.forEach(ch=>{if(ch.c&&!ch.c())return;const b=document.createElement('button');b.className='dc';b.textContent=ch.t;b.onclick=()=>{sfx('click');if(ch.a)ch.a();if(ch.x)closeDlg();else if(ch.n!==undefined)showDN(ch.n);};c.appendChild(b);});}
-function closeDlg(){$('dlg').classList.remove('active');renderHS();updateQuest();}
+function closeDlg(){document.getElementById('dlg-portrait').style.display='none';$('dlg').classList.remove('active');renderHS();updateQuest();}
 
 // ── SCENE BUILDERS ──
 function bDock(c){if(!S.flags.dockTalked)c.innerHTML+='<div class="npc npc-stranger" style="left:40%;top:35%"></div>';}
