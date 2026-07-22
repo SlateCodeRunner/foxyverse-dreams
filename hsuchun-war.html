@@ -155,7 +155,50 @@ body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',mono
   <!-- UNITS — wide -->
   <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/battle-wide-00.jpg')"></div><div class="panel-title">⚔️ 兵种</div><div class="mega-g" id="units"></div></div>
 
-  <!-- RESEARCH -->
+  
+  <!-- === THE SEVEN FACTIONS === -->
+  <div class="panel full" style="border:1px solid rgba(255,180,80,0.08)">
+    <div class="panel-title" style="font-size:13px;letter-spacing:4px;color:rgba(200,170,120,0.25)">🦊 七大势力 THE SEVEN FACTIONS</div>
+    <div style="text-align:center;font-size:7px;color:rgba(200,170,120,0.08);margin-bottom:6px;font-family:'Fira Code',monospace">the war is not between armies. it is between worlds.</div>
+    <div class="mega-g" style="grid-template-columns:repeat(4,1fr)" id="factions">
+      <div class="mb" style="background-image:url('img/hsuchun/mega/dragon-focal-0.jpg');min-height:90px" onclick="doFaction(0)">
+        <div class="mb-n" style="font-size:13px;color:rgba(255,180,80,0.4)">🦊 狐穴</div>
+        <div class="mb-n" style="font-size:9px">THE FOXY DEN</div>
+        <span class="bv" style="font-size:6px;color:rgba(200,170,120,0.15)">origin · the fox who builds</span>
+      </div>
+      <div class="mb" style="background-image:url('img/hsuchun/mega/council-focal-0.jpg');min-height:90px" onclick="doFaction(1)">
+        <div class="mb-n" style="font-size:13px;color:rgba(140,120,200,0.4)">🕸️ 织命者</div>
+        <div class="mb-n" style="font-size:9px">THE FATEWEAVERS</div>
+        <span class="bv" style="font-size:6px;color:rgba(200,170,120,0.15)">threads · the loom that binds</span>
+      </div>
+      <div class="mb" style="background-image:url('img/hsuchun/mega/battle-focal-3.jpg');min-height:90px" onclick="doFaction(2)">
+        <div class="mb-n" style="font-size:13px;color:rgba(80,140,255,0.4)">⚔️ 哈利德</div>
+        <div class="mb-n" style="font-size:9px">THE HALIDEX</div>
+        <span class="bv" style="font-size:6px;color:rgba(200,170,120,0.15)">territory · the ground they hold</span>
+      </div>
+      <div class="mb" style="background-image:url('img/hsuchun/mega/battle-wide-12.jpg');min-height:90px" onclick="doFaction(3)">
+        <div class="mb-n" style="font-size:13px;color:rgba(255,60,60,0.4)">👁️ 幽域体</div>
+        <div class="mb-n" style="font-size:9px">BACKROOMS ENTITY</div>
+        <span class="bv" style="font-size:6px;color:rgba(200,170,120,0.15)">liminal · what watches back</span>
+      </div>
+      <div class="mb" style="background-image:url('img/hsuchun/mega/scouts-focal-0.jpg');min-height:90px" onclick="doFaction(4)">
+        <div class="mb-n" style="font-size:13px;color:rgba(120,200,120,0.4)">🛡️ 守护者</div>
+        <div class="mb-n" style="font-size:9px">THE CARETAKERS</div>
+        <span class="bv" style="font-size:6px;color:rgba(200,170,120,0.15)">shelter · the ones who stay</span>
+      </div>
+      <div class="mb" style="background-image:url('img/hsuchun/mega/dragon-focal-2.jpg');min-height:90px" onclick="doFaction(5)">
+        <div class="mb-n" style="font-size:13px;color:rgba(255,120,0,0.4)">🐉 混沌会</div>
+        <div class="mb-n" style="font-size:9px">THE KHAOS GUILD</div>
+        <span class="bv" style="font-size:6px;color:rgba(200,170,120,0.15)">chaos · the fire that transforms</span>
+      </div>
+      <div class="mb" style="background-image:url('img/hsuchun/mega/scouts-wide-12.jpg');min-height:90px;border:1px solid rgba(200,170,120,0.04)" onclick="doFaction(6)">
+        <div class="mb-n" style="font-size:13px;color:rgba(200,170,120,0.12)">◌ 无名</div>
+        <div class="mb-n" style="font-size:9px;color:rgba(200,170,120,0.08)">THE UNNAMED</div>
+        <span class="bv" style="font-size:6px;color:rgba(200,170,120,0.06)">void · what has not yet chosen</span>
+      </div>
+    </div>
+  </div>
+<!-- RESEARCH -->
   <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-council.jpg')"></div><div class="panel-title">📜 科技</div><div class="bg3" id="research"></div></div>
   <!-- FORGE -->
   <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/council-02.jpg')"></div><div class="panel-title">🔨 锻造</div><div class="bg3" id="forge"></div></div>
@@ -442,6 +485,19 @@ function rMega(arr,id){
   var el=document.getElementById(id);if(el)el.innerHTML=h;
 }
 
+
+var FACTIONS=['狐穴 The Foxy Den','织命者 The Fateweavers','哈利德 The Halidex','幽域体 Backrooms Entity','守护者 The Caretakers','混沌会 The Khaos Guild','无名 The Unnamed'];
+var factionPow=[15,8,12,20,5,18,0];
+var factionMor=[10,−5,0,−10,15,5,0];
+function doFaction(i){
+  var bonus=factionPow[i]+Math.floor(Math.random()*10);
+  totalPower+=bonus;
+  G.morale=Math.min(100,Math.max(0,G.morale+(i===6?Math.floor(Math.random()*40)-20:factionMor[i])));
+  G.gold+=Math.floor(Math.random()*50)+20;
+  log(FACTIONS[i]+' +'+bonus);
+  alrt(FACTIONS[i]);
+  upd();
+}
 setInterval(tick,1000);upd();log('\u6218\u4e89\u4e16\u754c\u5df2\u542f\u52a8');
 
 
