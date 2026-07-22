@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -9,151 +9,201 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#050505;color:rgba(220,215,205,0.3);font-family:'Fira Code',monospace;overflow-x:hidden}
 
-/* VIDEO HERO */
-.video-hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
-.video-wrap{position:relative;width:100%;max-width:900px;aspect-ratio:16/9}
+.video-hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
+.video-wrap{width:100%;max-width:900px;aspect-ratio:16/9}
 .video-wrap iframe{width:100%;height:100%;border:none}
-.video-overlay{position:absolute;inset:0;background:linear-gradient(0deg,#050505 0%,transparent 15%,transparent 85%,#050505 100%);pointer-events:none;z-index:2}
-.video-title{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;pointer-events:none}
-.vt-jp{font-family:'Noto Serif JP',serif;font-size:clamp(20px,4vw,36px);color:rgba(100,160,255,0.2);letter-spacing:.2em}
-.vt-en{font-family:'Cinzel',serif;font-size:clamp(10px,2vw,14px);letter-spacing:.3em;color:rgba(220,215,205,0.1);margin-top:6px;text-transform:uppercase}
+.video-overlay{position:absolute;inset:0;background:linear-gradient(0deg,#050505 0%,transparent 12%,transparent 88%,#050505 100%);pointer-events:none;z-index:2}
+.vt{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;pointer-events:none}
+.vt-jp{font-family:'Noto Serif JP',serif;font-size:clamp(22px,5vw,40px);color:rgba(100,160,255,0.15);letter-spacing:.25em}
+.vt-en{font-family:'Cinzel',serif;font-size:clamp(9px,1.5vw,13px);letter-spacing:.35em;color:rgba(220,215,205,0.08);margin-top:6px;text-transform:uppercase}
 
-/* KANJI SECTION */
-.kanji-flow{display:flex;justify-content:center;gap:0;padding:60px 0;background:#050505}
-.kanji-char{width:25%;max-width:200px;opacity:0;transform:scale(0.8);transition:all 1s ease-out}
-.kanji-char.visible{opacity:1;transform:scale(1)}
-.kanji-char img{width:100%;display:block;filter:brightness(1.2) contrast(1.1)}
+/* CINEMATIC SECTIONS */
+.cin{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cin-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity .3s}
+.cin-fg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;mix-blend-mode:screen}
+.cin-text{position:relative;z-index:5;text-align:center;padding:20px;max-width:600px}
+.cin-text h2{font-family:'Cinzel',serif;font-size:clamp(13px,2.5vw,20px);color:rgba(100,160,255,0.2);letter-spacing:.12em;line-height:2;font-weight:400}
+.cin-text p{font-size:9px;color:rgba(220,215,205,0.06);letter-spacing:3px;margin-top:10px}
+.cin::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,#050505 75%);z-index:3}
 
-/* FRAMES */
-.frames{max-width:900px;margin:0 auto;padding:0 16px}
-.frame{margin:0 0 2px;overflow:hidden;opacity:0;transform:translateY(20px);transition:all 0.8s ease-out}
-.frame.visible{opacity:1;transform:translateY(0)}
-.frame img{width:100%;display:block;filter:saturate(0.8) brightness(0.9)}
-.frame.impact img{filter:saturate(1.2) brightness(1.1) contrast(1.15)}
+/* FLASH */
+.flash-layer{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:50;transition:opacity .05s}
+.flash-layer.on{opacity:.6;transition:none}
 
-/* TEXT MOMENTS */
-.moment{text-align:center;padding:50px 20px;opacity:0;transition:opacity 1.5s}
-.moment.visible{opacity:1}
-.moment-text{font-family:'Cinzel',serif;font-size:clamp(12px,2.5vw,18px);color:rgba(100,160,255,0.15);letter-spacing:.15em;line-height:2}
-.moment-sub{font-size:10px;color:rgba(220,215,205,0.06);letter-spacing:4px;margin-top:12px}
+/* RAPID SEQUENCE */
+.rapid{position:relative;height:300vh;background:#050505}
+.rapid-canvas{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.rapid-frame{position:absolute;inset:5%;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0;transition:opacity .15s;filter:saturate(1.3) contrast(1.2)}
+.rapid-frame.active{opacity:1}
+
+/* IMPACT */
+.impact-section{position:relative;height:150vh}
+.impact-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+.impact-img{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.5);opacity:0;transition:all .6s ease-out}
+.impact-img.hit{opacity:1;transform:scale(1);filter:brightness(1.3) contrast(1.2) saturate(1.4)}
+.impact-text{position:absolute;bottom:15%;left:50%;transform:translateX(-50%);z-index:5;font-family:'Noto Serif JP',serif;font-size:clamp(18px,4vw,32px);color:rgba(255,200,100,0.3);letter-spacing:.2em;opacity:0;transition:opacity .8s}
+.impact-text.show{opacity:1}
+
+/* KANJI SLASH */
+.kanji-section{height:400vh;position:relative}
+.kanji-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#050505}
+.kanji-img{position:absolute;width:60vw;max-width:500px;opacity:0;transform:scale(2) rotate(-5deg);transition:all .4s cubic-bezier(.2,.8,.3,1);filter:brightness(1.5)}
+.kanji-img.slash{opacity:1;transform:scale(1) rotate(0deg)}
 
 /* CLOSING */
-.closing{text-align:center;padding:80px 20px 120px}
-.closing-text{font-family:'Noto Serif JP',serif;font-size:clamp(14px,3vw,22px);color:rgba(255,170,200,0.1);letter-spacing:.1em}
-.closing-sub{font-size:8px;color:rgba(220,215,205,0.04);letter-spacing:4px;margin-top:16px}
+.closing{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:linear-gradient(180deg,#050505 0%,#080810 50%,#050505 100%)}
+.closing h2{font-family:'Cinzel',serif;font-size:clamp(11px,2vw,16px);color:rgba(255,170,200,0.12);letter-spacing:.15em;line-height:2.5;text-align:center;max-width:550px}
+.closing-mood{font-size:8px;color:rgba(255,100,150,0.06);letter-spacing:6px;margin-top:30px}
 
-.back{position:fixed;top:10px;left:12px;font-size:9px;letter-spacing:2px;color:rgba(200,180,140,0.06);text-decoration:none;z-index:20;transition:color .3s}
+.back{position:fixed;top:10px;left:12px;font-size:9px;letter-spacing:2px;color:rgba(200,180,140,0.06);text-decoration:none;z-index:60;transition:color .3s}
 .back:hover{color:rgba(200,180,140,0.2)}
-.vignette{position:fixed;inset:0;pointer-events:none;z-index:10;box-shadow:inset 0 0 200px rgba(0,0,0,0.8)}
-.scanlines{position:fixed;inset:0;pointer-events:none;z-index:11;opacity:.03;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.4) 2px,rgba(0,0,0,.4) 3px)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 200px rgba(0,0,0,0.8)}
 </style>
 </head>
 <body>
 <div class="vignette"></div>
-<div class="scanlines"></div>
+<div class="flash-layer" id="flash"></div>
 <a href="ost.html" class="back">&larr; OST</a>
 
 <div class="video-hero">
-  <div class="video-wrap">
-    <div id="yt-player"></div>
-    <div class="video-overlay"></div>
+  <div class="video-wrap"><div id="yt-player"></div><div class="video-overlay"></div></div>
+  <div class="vt"><div class="vt-jp">天翔龍閃</div><div class="vt-en">Amakakeru Ryu no Hirameki</div></div>
+</div>
+
+<!-- HIKO'S TEACHING -->
+<div class="cin">
+  <div class="cin-bg" style="background-image:url('img/kenshin/frame-01.jpg');opacity:.2"></div>
+  <div class="cin-fg" style="background-image:url('img/kenshin/frame-02.jpg')"></div>
+  <div class="cin-text">
+    <h2>hiko told him: you cannot learn this technique. not because you lack skill. because you fight to atone for the dead instead of fighting to live for the living.</h2>
+    <p>the ama kakeru ryu no hirameki answers one question: what are you swinging for?</p>
   </div>
-  <div class="video-title">
-    <div class="vt-jp">天翔龍閃</div>
-    <div class="vt-en">Amakakeru Ryu no Hirameki</div>
+</div>
+
+<!-- THE READ -->
+<div class="cin">
+  <div class="cin-bg" style="background-image:url('img/kenshin/frame-03.jpg');opacity:.25"></div>
+  <div class="cin-text">
+    <h2>shishio read the vacuum. the first strike displaces the air, pulling the opponent into the second. he knew the mechanics. he thought that was enough.</h2>
   </div>
 </div>
 
-<div class="moment" data-reveal>
-  <div class="moment-text">hiko told him: you cannot learn this technique. not because you lack skill. because you fight to atone for the dead instead of fighting to live for the living.</div>
-  <div class="moment-sub">the ama kakeru ryu no hirameki answers one question: what are you swinging for?</div>
+<!-- RAPID FRAME SEQUENCE — the kanji -->
+<div class="kanji-section" id="kanji-section">
+  <div class="kanji-sticky">
+    <img class="kanji-img" id="k1" src="img/kenshin/frame-06.jpg" alt="">
+    <img class="kanji-img" id="k2" src="img/kenshin/frame-07.jpg" alt="">
+    <img class="kanji-img" id="k3" src="img/kenshin/frame-08.jpg" alt="">
+    <img class="kanji-img" id="k4" src="img/kenshin/frame-09.jpg" alt="">
+  </div>
 </div>
 
-<div class="kanji-flow">
-  <div class="kanji-char" data-reveal><img src="img/kenshin/frame-06.jpg" alt="閃"></div>
-  <div class="kanji-char" data-reveal><img src="img/kenshin/frame-07.jpg" alt="龍"></div>
-  <div class="kanji-char" data-reveal><img src="img/kenshin/frame-08.jpg" alt="翔"></div>
-  <div class="kanji-char" data-reveal><img src="img/kenshin/frame-09.jpg" alt="天"></div>
+<!-- RAPID FRAME FLIPBOOK — the strike -->
+<div class="rapid" id="rapid-section">
+  <div class="rapid-canvas" id="rapid-canvas">
+    <div class="rapid-frame" style="background-image:url('img/kenshin/frame-04.jpg')"></div>
+    <div class="rapid-frame" style="background-image:url('img/kenshin/frame-05.jpg')"></div>
+    <div class="rapid-frame" style="background-image:url('img/kenshin/frame-10.jpg')"></div>
+    <div class="rapid-frame" style="background-image:url('img/kenshin/frame-11.jpg')"></div>
+    <div class="rapid-frame" style="background-image:url('img/kenshin/frame-12.jpg')"></div>
+    <div class="rapid-frame" style="background-image:url('img/kenshin/frame-13.jpg')"></div>
+    <div class="rapid-frame" style="background-image:url('img/kenshin/frame-14.jpg')"></div>
+  </div>
 </div>
 
-<div class="moment" data-reveal>
-  <div class="moment-text">shishio read the vacuum. the first strike displaces the air, pulling the opponent into the second. he knew the mechanics. he thought that was enough.</div>
+<!-- IMPACT — he stopped it -->
+<div class="impact-section" id="impact-section">
+  <div class="impact-sticky">
+    <div class="impact-img" id="impact-img" style="background-image:url('img/kenshin/frame-15.jpg')"></div>
+    <div class="impact-text" id="impact-text">the technique was countered. the will was not.</div>
+  </div>
 </div>
 
-<div class="frames">
-  <div class="frame" data-reveal><img src="img/kenshin/frame-01.jpg" alt=""></div>
-  <div class="frame" data-reveal><img src="img/kenshin/frame-02.jpg" alt=""></div>
-  <div class="frame" data-reveal><img src="img/kenshin/frame-03.jpg" alt=""></div>
+<!-- THE WILL -->
+<div class="cin">
+  <div class="cin-bg" style="background-image:url('img/kenshin/frame-16.jpg');opacity:.2"></div>
+  <div class="cin-fg" style="background-image:url('img/kenshin/frame-17.jpg')"></div>
+  <div class="cin-text">
+    <h2>you cannot predict what a man will do when he is fighting for something he only just learned he has.</h2>
+    <p>the second step is not technique. it is kaoru. yahiko. sanosuke. megumi.</p>
+  </div>
 </div>
 
-<div class="moment" data-reveal>
-  <div class="moment-text">but the second step isn't technique. it's the will to return to the people waiting for you. kaoru. yahiko. sanosuke. megumi. the step exists because kenshin found a reason to survive.</div>
+<!-- FINAL FRAMES -->
+<div class="cin">
+  <div class="cin-bg" style="background-image:url('img/kenshin/frame-18.jpg');opacity:.3"></div>
+  <div class="cin-fg" style="background-image:url('img/kenshin/frame-19.jpg')"></div>
+  <div class="cin-text">
+    <h2>the battousai fought to die. kenshin learned to fight to live. same body, same blade, different reason. the reversed edge was never about mercy. it was about refusing to let the hitokiri be the final version.</h2>
+  </div>
 </div>
 
-<div class="frames">
-  <div class="frame" data-reveal><img src="img/kenshin/frame-04.jpg" alt=""></div>
-  <div class="frame impact" data-reveal><img src="img/kenshin/frame-05.jpg" alt=""></div>
-</div>
-
-<div class="moment" data-reveal>
-  <div class="moment-text">the battousai fought to die. kenshin learned to fight to live. same body, same blade, different reason. the reversed edge was never about mercy. it was about refusing to let the hitokiri be the final version.</div>
-</div>
-
-<div class="frames">
-  <div class="frame" data-reveal><img src="img/kenshin/frame-10.jpg" alt=""></div>
-  <div class="frame" data-reveal><img src="img/kenshin/frame-11.jpg" alt=""></div>
-  <div class="frame impact" data-reveal><img src="img/kenshin/frame-12.jpg" alt=""></div>
-</div>
-
-<div class="moment" data-reveal>
-  <div class="moment-text">shishio countered the vacuum. he understood the physics. but he could not counter the reason behind the third step. you cannot predict what a man will do when he is fighting for something he only just learned he has.</div>
-</div>
-
-<div class="frames">
-  <div class="frame" data-reveal><img src="img/kenshin/frame-13.jpg" alt=""></div>
-  <div class="frame" data-reveal><img src="img/kenshin/frame-14.jpg" alt=""></div>
-  <div class="frame impact" data-reveal><img src="img/kenshin/frame-15.jpg" alt=""></div>
-</div>
-
-<div class="moment" data-reveal>
-  <div class="moment-text">the technique was countered. the will was not.</div>
-  <div class="moment-sub">shishio understood swordsmanship. he did not understand why someone would choose to hold back and still win.</div>
-</div>
-
-<div class="frames">
-  <div class="frame" data-reveal><img src="img/kenshin/frame-16.jpg" alt=""></div>
-  <div class="frame" data-reveal><img src="img/kenshin/frame-17.jpg" alt=""></div>
-  <div class="frame" data-reveal><img src="img/kenshin/frame-18.jpg" alt=""></div>
-  <div class="frame impact" data-reveal><img src="img/kenshin/frame-19.jpg" alt=""></div>
-  <div class="frame impact" data-reveal><img src="img/kenshin/frame-20.jpg" alt=""></div>
-</div>
-
+<!-- CLOSING -->
 <div class="closing">
-  <div class="closing-text">restraint is not weakness held in check. restraint is power that found something worth more than winning. kenshin reversed the blade because the people behind him mattered more than the enemy in front of him. that is the hirameki. not a technique. a reason.</div>
-  <div class="closing-sub">MOOD: RESTRAINT</div>
+  <h2>restraint is not weakness held in check. restraint is power that found something worth more than winning. the reversed blade exists because the people behind him mattered more than the enemy in front of him. that is the hirameki. not a technique. a reason.</h2>
+  <div class="closing-mood">MOOD: RESTRAINT</div>
 </div>
 
 <script>
-// YouTube autoplay
-var tag=document.createElement('script');
-tag.src='https://www.youtube.com/iframe_api';
-document.head.appendChild(tag);
-function onYouTubeIframeAPIReady(){
-  new YT.Player('yt-player',{
-    videoId:'omJGlopGhPs',
-    playerVars:{autoplay:1,controls:1,rel:0,modestbranding:1,start:0},
-    events:{onReady:function(e){e.target.playVideo();}}
-  });
-}
+var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
+function onYouTubeIframeAPIReady(){new YT.Player('yt-player',{videoId:'omJGlopGhPs',playerVars:{autoplay:1,controls:1,rel:0,modestbranding:1},events:{onReady:function(e){e.target.playVideo();}}});}
 
-// Scroll reveal
-var els=document.querySelectorAll('[data-reveal]');
-var obs=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-    if(e.isIntersecting){e.target.classList.add('visible');}
+var flash=document.getElementById('flash');
+function doFlash(){flash.classList.add('on');setTimeout(function(){flash.classList.remove('on');},80);}
+
+// Parallax on cin-fg layers
+var cins=document.querySelectorAll('.cin');
+window.addEventListener('scroll',function(){
+  var sy=window.scrollY;
+  cins.forEach(function(c){
+    var rect=c.getBoundingClientRect();
+    var progress=(window.innerHeight-rect.top)/(window.innerHeight+rect.height);
+    progress=Math.max(0,Math.min(1,progress));
+    var fg=c.querySelector('.cin-fg');
+    if(fg){fg.style.opacity=progress>0.3&&progress<0.8?Math.min((progress-0.3)*3,0.4):0;}
+    var tx=c.querySelector('.cin-text');
+    if(tx){tx.style.opacity=progress>0.2&&progress<0.9?1:0;tx.style.transform='translateY('+((0.5-progress)*30)+'px)';}
   });
-},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
-els.forEach(function(el){obs.observe(el);});
+
+  // Kanji slash sequence
+  var ks=document.getElementById('kanji-section');
+  if(ks){
+    var kr=ks.getBoundingClientRect();
+    var kp=-kr.top/(kr.height-window.innerHeight);
+    kp=Math.max(0,Math.min(1,kp));
+    var kanji=['k1','k2','k3','k4'];
+    kanji.forEach(function(id,i){
+      var threshold=(i+1)*0.2;
+      var el=document.getElementById(id);
+      if(kp>=threshold&&!el.classList.contains('slash')){el.classList.add('slash');doFlash();}
+      if(kp<threshold)el.classList.remove('slash');
+    });
+  }
+
+  // Rapid frame flipbook
+  var rs=document.getElementById('rapid-section');
+  if(rs){
+    var rr=rs.getBoundingClientRect();
+    var rp=-rr.top/(rr.height-window.innerHeight);
+    rp=Math.max(0,Math.min(1,rp));
+    var frames=document.querySelectorAll('.rapid-frame');
+    var activeIdx=Math.min(Math.floor(rp*frames.length),frames.length-1);
+    frames.forEach(function(f,i){f.classList.toggle('active',i===activeIdx);});
+    if(rp>0.95&&!rs.dataset.flashed){rs.dataset.flashed='1';doFlash();}
+  }
+
+  // Impact zoom
+  var is=document.getElementById('impact-section');
+  if(is){
+    var ir=is.getBoundingClientRect();
+    var ip=-ir.top/(ir.height-window.innerHeight);
+    ip=Math.max(0,Math.min(1,ip));
+    var ii=document.getElementById('impact-img');
+    var it=document.getElementById('impact-text');
+    if(ip>0.3){ii.classList.add('hit');if(ip>0.5)it.classList.add('show');if(ip>0.35&&!is.dataset.flashed){is.dataset.flashed='1';doFlash();}}
+    else{ii.classList.remove('hit');it.classList.remove('show');}
+  }
+});
 </script>
 </body>
 </html>
