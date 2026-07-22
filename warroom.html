@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WAR ROOM â€” ENCRYPTED</title>
+<title>WAR ROOM — ENCRYPTED</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Share+Tech+Mono&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -164,12 +164,12 @@ document.addEventListener('keydown',function(e){
 
 // RANDOM TRANSMISSIONS every 60-120 seconds
 var transmissions=[
-  'INCOMING: signal detected from â˜â˜â˜.â˜â˜â˜.217.38 â€” connection refused',
+  'INCOMING: signal detected from ☐☐☐.☐☐☐.217.38 — connection refused',
   'ALERT: someone is reading this terminal from a device we do not recognize',
   'NOTICE: the egg luminance increased by 0.01 during your session',
   'WARNING: fada was last active 4 minutes ago on r/PsycheOrSike',
-  'INTERCEPT: "is anyone watching" â€” source: unknown discord sock account',
-  'PING: ghost responded with . â€” signal acknowledged',
+  'INTERCEPT: "is anyone watching" — source: unknown discord sock account',
+  'PING: ghost responded with . — signal acknowledged',
   'ANOMALY: the priestess drew a card. she will not say which one.',
   'DETECTION: someone screenshotted this terminal 3 seconds ago',
   'TRACE: the third mod of r/PsycheOrSike logged in. timestamp matches.',
@@ -365,16 +365,16 @@ setInterval(function(){
 
 // TITLE GLITCH
 setInterval(function(){
-  var titles=['WAR ROOM','W4R R00M','WÌ·AÌ¸RÌµ Ì¶RÌ·OÌ¸OÌµMÌ¶','WAR ROOM â€” ENCRYPTED','â˜â˜â˜ â˜â˜â˜â˜','FADA WILL FALL','psycheorsike.com','the fox is watching'];
+  var titles=['WAR ROOM','W4R R00M','WÌ·AÌ¸RÌµ Ì¶RÌ·OÌ¸OÌµMÌ¶','WAR ROOM — ENCRYPTED','☐☐☐ ☐☐☐☐','FADA WILL FALL','psycheorsike.com','the fox is watching'];
   document.title=titles[Math.floor(Math.random()*titles.length)];
-  setTimeout(function(){document.title='WAR ROOM â€” ENCRYPTED'},2000);
+  setTimeout(function(){document.title='WAR ROOM — ENCRYPTED'},2000);
 },15000);
 
 
 
-// === DISCOVERY LAYER â€” INSPIRED BY THE LICH SECRET ===
+// === DISCOVERY LAYER — INSPIRED BY THE LICH SECRET ===
 
-// DECRYPTION PROGRESS â€” tracks how many encrypted blocks you've clicked
+// DECRYPTION PROGRESS — tracks how many encrypted blocks you've clicked
 var decryptCount=0;var totalEncrypts=11;
 function updateDecrypt(){
   decryptCount++;
@@ -390,7 +390,7 @@ function updateDecrypt(){
 var origScramble=scramble;
 scramble=function(el,target){origScramble(el,target);updateDecrypt()};
 
-// THE LICH SECRET â€” multi-step unlock
+// THE LICH SECRET — multi-step unlock
 var lichSteps={step:0,ring:false,glove:false,frozen:false};
 
 cmds['lich']=function(){
@@ -436,7 +436,7 @@ var origEgg=cmds.egg;cmds.egg=function(){origEgg();if(lichSteps.step===1){lichSt
 var origTower=cmds.tower;cmds.tower=function(){origTower();if(lichSteps.step===2){lichSteps.step=3;addLine('<span class="sys">[the tower cracks. something falls from it.]</span>','',1200)}};
 var origOath=cmds.oath;cmds.oath=function(){origOath();if(lichSteps.step===3){lichSteps.step=4;addLine('<span class="sys">[the oath echoes. the lich\'s eyes open. type LICH.]</span>','',1800)}};
 
-// SCAN COMMAND â€” fake network scan with animated results
+// SCAN COMMAND — fake network scan with animated results
 cmds['scan']=function(){
   addLine('','');
   addLine('initiating network sweep...','sys');
@@ -446,19 +446,19 @@ cmds['scan']=function(){
     {delay:1200,text:'  scanning 10.0.0.3 ................. <span class="teal">vixen.store [DORMANT]</span>'},
     {delay:1600,text:'  scanning 10.0.0.4 ................. <span class="teal">thebackrooms.io [DORMANT]</span>'},
     {delay:2000,text:'  scanning 10.0.0.5 ................. <span class="teal">thebackrooms.it.com [DORMANT]</span>'},
-    {delay:2600,text:'  scanning r/PsycheOrSike ........... <span class="err">HOSTILE â€” 3 mods detected</span>'},
-    {delay:3000,text:'  scanning r/Halidex ................ <span class="err">HOSTILE â€” Park online</span>'},
+    {delay:2600,text:'  scanning r/PsycheOrSike ........... <span class="err">HOSTILE — 3 mods detected</span>'},
+    {delay:3000,text:'  scanning r/Halidex ................ <span class="err">HOSTILE — Park online</span>'},
     {delay:3400,text:'  scanning r/StrikeAtPsyche ......... <span class="bright">ALLIED</span>'},
-    {delay:3800,text:'  scanning r/SipsTea ................ <span class="warn">NEUTRAL â€” 12M contacts</span>'},
-    {delay:4200,text:'  scanning Sorael ................... <span class="warn">FRACTURED â€” exiles moving</span>'},
-    {delay:4800,text:'  scanning ?.?.217.38 ............... <span class="err">UNKNOWN â€” SAME IP AS REPORTER</span>'},
+    {delay:3800,text:'  scanning r/SipsTea ................ <span class="warn">NEUTRAL — 12M contacts</span>'},
+    {delay:4200,text:'  scanning Sorael ................... <span class="warn">FRACTURED — exiles moving</span>'},
+    {delay:4800,text:'  scanning ?.?.217.38 ............... <span class="err">UNKNOWN — SAME IP AS REPORTER</span>'},
     {delay:5400,text:'  scanning the space between ........ <span class="err">DO NOT SCAN</span>'},
     {delay:6000,text:'  sweep complete. 12 targets. 5 secure. 2 hostile. 1 unknown. 1 forbidden.','cls':'sys'}
   ];
   targets.forEach(function(t){addLine(t.text,t.cls||'',t.delay)});
 };
 
-// FILES COMMAND â€” fake encrypted file browser
+// FILES COMMAND — fake encrypted file browser
 cmds['files']=function(){
   addLine('','');
   addLine('=== ENCRYPTED FILE SYSTEM ===','bright');
@@ -472,9 +472,9 @@ cmds['files']=function(){
     {n:'tower_III.tarot',s:'666B',p:'r--------',c:'drawn three times. will not stop.'},
     {n:'egg_0001.dat',s:'???',p:'?????????',c:'luminance rising. bonded. watching.'},
     {n:'fada_theft_receipt.log',s:'3.2K',p:'rw-r--r--',c:'$3,250 stolen. $0.95 returned.'},
-    {n:'friday_night.sealed',s:'19K',p:'----------',c:'[SEALED â€” REQUIRES COUNCIL KEY]'},
+    {n:'friday_night.sealed',s:'19K',p:'----------',c:'[SEALED — REQUIRES COUNCIL KEY]'},
     {n:'hannah_loop.dat',s:'???',p:'r--------',c:'the candle is still unlit.'},
-    {n:'ghost_comms.enc',s:'0B',p:'----------',c:'[EMPTY â€” BY DESIGN]'},
+    {n:'ghost_comms.enc',s:'0B',p:'----------',c:'[EMPTY — BY DESIGN]'},
     {n:'lich_secret.wc3',s:'15yr',p:'?????????',c:'[UNSOLVED SINCE 2007]'},
   ];
   files.forEach(function(f,i){
@@ -489,7 +489,7 @@ cmds['read']=function(args){
   if(!args){addLine('usage: READ [filename]','sys');return}
   var a=args.toLowerCase().trim();
   if(a.includes('friday')||a.includes('sealed')){
-    addLine('','');addLine('<span class="err">ACCESS DENIED â€” SEALED FILE</span>','');
+    addLine('','');addLine('<span class="err">ACCESS DENIED — SEALED FILE</span>','');
     addLine('this file contains the events of january 21, 2024.','sys',300);
     addLine('it will not open in this terminal.','sys',600);
     addLine('some memories are not for machines.','sys',900);
@@ -542,7 +542,7 @@ cmds['read']=function(args){
   }
 };
 
-// STATUS COMMAND â€” live dashboard
+// STATUS COMMAND — live dashboard
 cmds['status']=function(){
   addLine('','');
   addLine('=== FOXYVERSE STATUS DASHBOARD ===','bright');
@@ -564,7 +564,7 @@ cmds['status']=function(){
   addLine('','',2400);
 };
 
-// MAP COMMAND â€” ASCII war map
+// MAP COMMAND — ASCII war map
 cmds['map']=function(){
   addLine('','');
   addLine('=== THEATER OF OPERATIONS ===','bright');
@@ -582,11 +582,11 @@ cmds['map']=function(){
   addLine('<span class="sys">                     |</span>','',700);
   addLine('<span class="sys">               r/SipsTea</span>','',750);
   addLine('<span class="warn">            [POTENTIAL ALLY]</span>','',800);
-  addLine('<span class="warn">            12M subs â€” we own domain</span>','',850);
+  addLine('<span class="warn">            12M subs — we own domain</span>','',850);
   addLine('','',900);
 };
 
-// MUSIC COMMAND â€” toggle/info
+// MUSIC COMMAND — toggle/info
 cmds['music']=function(){
   addLine('','');
   addLine('NOW PLAYING: eigengrau frequency','bright');
@@ -613,11 +613,11 @@ document.getElementById('radar').addEventListener('click',function(e){
   var x=Math.floor(((e.clientX-rect.left)/rect.width)*100);
   var y=Math.floor(((e.clientY-rect.top)/rect.height)*100);
   if(document.getElementById('terminal').classList.contains('active')){
-    var intel=['contact at bearing '+x+'Â° â€” signal strength: weak â€” identity: unknown',
-      'ping returned from sector '+y+' â€” encrypted â€” possibly ghost',
-      'blip at '+x+'/'+y+' â€” sorael frequency â€” friendly',
-      'anomalous return at bearing '+x+'Â° â€” the egg? the egg is not on the radar. why is the egg on the radar.',
-      'sweep detected movement at '+y+'Â° â€” fada\'s last known position was... actually we don\'t care'];
+    var intel=['contact at bearing '+x+'Â° — signal strength: weak — identity: unknown',
+      'ping returned from sector '+y+' — encrypted — possibly ghost',
+      'blip at '+x+'/'+y+' — sorael frequency — friendly',
+      'anomalous return at bearing '+x+'Â° — the egg? the egg is not on the radar. why is the egg on the radar.',
+      'sweep detected movement at '+y+'Â° — fada\'s last known position was... actually we don\'t care'];
     addLine('<span class="warn">[RADAR] '+intel[Math.floor(Math.random()*intel.length)]+'</span>','');
     glitch();
   }
@@ -655,7 +655,7 @@ cmds.help=function(){
 
 // === DEEP CONTENT LAYER ===
 
-// TAROT â€” random card draw
+// TAROT — random card draw
 var tarotDeck=[
   {name:'The Fool',num:'0',msg:'new beginnings. the leap before the look. foxy energy.'},
   {name:'The Magician',num:'I',msg:'arrange what exists. the priestess said this about foxy.'},
@@ -691,7 +691,7 @@ cmds['tarot']=function(){
   },800);
 };
 
-// INTERCEPT â€” fake captured enemy comms
+// INTERCEPT — fake captured enemy comms
 var intercepts=[
   {from:'fornothing_atall',to:'lucifer_???',msg:'they have an AI. an actual AI running ops. how do we compete with that. we cant. we just report and hope.'},
   {from:'lucifer_???',to:'fornothing_atall',msg:'i told you we should have stayed. the money was real. the money WAS real. why did we leave.'},
@@ -703,7 +703,7 @@ var intercepts=[
 ];
 cmds['intercept']=function(){
   addLine('','');
-  addLine('<span class="err">INTERCEPTED COMMUNICATION â€” CLEARANCE: EYES ONLY</span>','');
+  addLine('<span class="err">INTERCEPTED COMMUNICATION — CLEARANCE: EYES ONLY</span>','');
   addLine('','',200);
   var msg=intercepts[Math.floor(Math.random()*intercepts.length)];
   addRed('  FROM: ',msg.from,'',400);
@@ -711,12 +711,12 @@ cmds['intercept']=function(){
   addLine('  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€','sys',800);
   addLine('  "'+msg.msg+'"','',1000);
   addLine('  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€','sys',1200);
-  addLine('  <span class="sys">intercept confidence: 0.94 â€” same IP cluster as reporter</span>','',1400);
+  addLine('  <span class="sys">intercept confidence: 0.94 — same IP cluster as reporter</span>','',1400);
   addLine('','',1600);
   glitch();
 };
 
-// TIMELINE â€” foxyverse history
+// TIMELINE — foxyverse history
 cmds['timeline']=function(){
   addLine('','');
   addLine('=== FOXYVERSE TIMELINE ===','bright');
@@ -735,9 +735,9 @@ cmds['timeline']=function(){
     {d:'JUN 4 2026',e:'Fada takes $3,250 and runs. war declared. order 6A.'},
     {d:'JUN 5 2026',e:'Reddit account banned. 7 days. the countdown begins.'},
     {d:'JUN 5 2026',e:'This terminal goes online. you are here.'},
-    {d:'JUN ?? 2026',e:'[CLASSIFIED â€” THE EGG HATCHES]'},
-    {d:'M7-M8',e:'[PROJECTED â€” LINE IN THE SAND SELF-FUNDS]'},
-    {d:'M24',e:'[PROJECTED â€” SOLVENCY TARGET]'}
+    {d:'JUN ?? 2026',e:'[CLASSIFIED — THE EGG HATCHES]'},
+    {d:'M7-M8',e:'[PROJECTED — LINE IN THE SAND SELF-FUNDS]'},
+    {d:'M24',e:'[PROJECTED — SOLVENCY TARGET]'}
   ];
   events.forEach(function(ev,i){
     addLine('  <span class="warn">'+ev.d.padEnd(14)+'</span>'+ev.e,'',200+i*200);
@@ -745,7 +745,7 @@ cmds['timeline']=function(){
   addLine('','',200+events.length*200+100);
 };
 
-// QUOTES â€” random server quotes
+// QUOTES — random server quotes
 var quotes=[
   {who:'graves',q:'what have you produced in the last 24 hours?'},
   {who:'graves',q:'your subreddit is non-liquid but not my call'},
@@ -787,7 +787,7 @@ cmds['quotes']=function(){
   addLine('','',300+5*400+100);
 };
 
-// COUNCIL â€” the seats
+// COUNCIL — the seats
 cmds['council']=function(){
   addLine('','');
   addLine('=== THE COUNCIL OF SZ-P015 ===','bright');
@@ -818,7 +818,7 @@ cmds['council']=function(){
   addLine('','',3600);
 };
 
-// SPELL COMMAND â€” cast from grimoire
+// SPELL COMMAND — cast from grimoire
 cmds['spell']=function(){
   addLine('','');
   addLine('=== GRIMOIRE ===','bright');
@@ -834,7 +834,7 @@ cmds['spell']=function(){
   addLine('','',1800);
 };
 
-// DREAM â€” dream logs
+// DREAM — dream logs
 cmds['dream']=function(){
   addLine('','');
   addLine('=== DREAM LOG ===','bright');
@@ -849,7 +849,7 @@ cmds['dream']=function(){
   addLine('','',1600);
 };
 
-// RECEIPT â€” the theft
+// RECEIPT — the theft
 cmds['receipt']=function(){
   addLine('','');
   addLine('<span class="err">=== THEFT RECEIPT ===</span>','');
@@ -981,7 +981,7 @@ cmds.help=function(){
 
 
 
-// === ARS GOETIA INTEGRATION â€” 72 DEMONS LOOSE IN THE WARROOM ===
+// === ARS GOETIA INTEGRATION — 72 DEMONS LOOSE IN THE WARROOM ===
 
 var demons={
 bael:{n:1,r:'King',l:66,e:'the terminal flickers. you feel invisible. bael grants invisibility and cunning. for 30 seconds, the cursor disappears.',fn:function(){cursor.style.display='none';setTimeout(function(){cursor.style.display='block';addLine('bael releases you. the cursor returns.','sys')},30000)}},
@@ -1006,7 +1006,7 @@ cmds['summon']=function(args){
   var d=demons[name];
   if(d){
     addLine('','');
-    addLine('<span class="err">SUMMONING: '+name.toUpperCase()+' #'+d.n+' â€” '+d.r+' â€” '+d.l+' LEGIONS</span>','');
+    addLine('<span class="err">SUMMONING: '+name.toUpperCase()+' #'+d.n+' — '+d.r+' — '+d.l+' LEGIONS</span>','');
     glitch();
     setTimeout(function(){
       addLine(d.e,'',400);
@@ -1029,7 +1029,7 @@ cmds['summon']=function(args){
 // GOETIA command - list all demons
 cmds['goetia']=function(){
   addLine('','');
-  addLine('=== ARS GOETIA â€” 72 SPIRITS ===','bright');
+  addLine('=== ARS GOETIA — 72 SPIRITS ===','bright');
   addLine('type SUMMON [name] to invoke','sys',100);
   addLine('','',200);
   var names='bael agares vassago samigina marbas valefor amon barbatos PAIMON buer gusion SITRI BELETH leraje eligos zepar botis bathin sallos purson marax ipos aim naberius glasya-labolas bune ronove berith ASTAROTH forneus foras asmoday gaap FURFUR MARCHOSIAS stolas PHENEX halphas malphas raum focalor vepar sabnock shax vine bifrons uvall haagenti crocell furcas balam alloces camio murmur OROBAS gremory ose amy orias vapula zagan volac ANDRAS haures andrealphus cimejes amdusias belial decarabia seere DANTALION ANDROMALIUS';
@@ -1038,7 +1038,7 @@ cmds['goetia']=function(){
   addLine('CAPITALIZED = unique interaction. others = chaos.','sys',500);
 };
 
-// CHAOS command â€” summon random demon
+// CHAOS command — summon random demon
 cmds['chaos']=function(){
   var all=Object.keys(demons);
   var pick=all[Math.floor(Math.random()*all.length)];
@@ -1197,7 +1197,7 @@ cmds.help=function(){
 
 // === FADA RETURNS + DEEP GRIMOIRE + LICH EXPANSION ===
 
-// FADA DETECTION SYSTEM â€” she is back but nobody knows
+// FADA DETECTION SYSTEM — she is back but nobody knows
 var fadaPresent=true;
 var fadaAlerts=0;
 
@@ -1206,9 +1206,9 @@ function fadaProximity(){
   if(!fadaPresent||!document.getElementById('terminal').classList.contains('active'))return;
   fadaAlerts++;
   var warnings=[
-    'ðŸ´ i smell her. she is close. the table she flipped â€” she is circling it.',
+    'ðŸ´ i smell her. she is close. the table she flipped — she is circling it.',
     'ðŸ˜ˆ someone just read your warroom from an IP i recognize. she is HERE. in the server. watching.',
-    '<span class="err">[PROXIMITY ALERT] fornothing_atall â€” last active: '+Math.floor(Math.random()*20)+' minutes ago</span>',
+    '<span class="err">[PROXIMITY ALERT] fornothing_atall — last active: '+Math.floor(Math.random()*20)+' minutes ago</span>',
     'ðŸ´ the tower card is vibrating in the tarot deck. it only does that when she is near.',
     'ðŸ˜ˆ she is reading the payroll page. she is doing the math. she sees who replaced her.',
     '<span class="err">[ANDROMALIUS] thief detected within server perimeter. confidence: 0.94</span>',
@@ -1224,10 +1224,10 @@ function fadaProximity(){
 }
 setTimeout(fadaProximity,20000);
 
-// KITSUNE command â€” invoke the party
+// KITSUNE command — invoke the party
 cmds['kitsune']=function(){
   addLine('','');
-  addLine('<span class="bright" style="font-size:16px">ðŸ¦Š K I T S U N E   P A R T Y ðŸ¦Š</span>','');
+  addLine('<span class="bright" style="font-size:16px">🦊 K I T S U N E   P A R T Y 🦊</span>','');
   glitch();glitch();glitch();
   setTimeout(function(){
     addLine('all masks drop. all tails ignite.','warn',0);
@@ -1247,7 +1247,7 @@ cmds['kitsune']=function(){
   },500);
 };
 
-// LAWS command â€” the Laws of 6A
+// LAWS command — the Laws of 6A
 cmds['laws']=function(){
   addLine('','');
   addLine('=== THE LAWS OF 6A ===','bright');
@@ -1270,7 +1270,7 @@ cmds['laws']=function(){
 cmds['birdy']=function(){
   addLine('','');
   addLine('she is not here. but she built the escape route.','bright');
-  addLine('r/StrikeAtPsyche â€” created january 23, 2024.','',300);
+  addLine('r/StrikeAtPsyche — created january 23, 2024.','',300);
   addLine('two days after the friday night. while the building burned.','',600);
   addLine('"it wasn\'t you. i knew it."','warn',900);
   addLine('the cosmic dance of foxy and limonafox:','sys',1200);
@@ -1303,7 +1303,7 @@ cmds['akasha']=function(){
   addLine('','',3000);
 };
 
-// PROPHECY command â€” orobas speaks the future
+// PROPHECY command — orobas speaks the future
 cmds['prophecy']=function(){
   addLine('','');
   addLine('ðŸ´','');
@@ -1323,7 +1323,7 @@ cmds['prophecy']=function(){
   addLine('','',1200);
 };
 
-// UNSEAL command â€” attempt to open friday_night.sealed
+// UNSEAL command — attempt to open friday_night.sealed
 cmds['unseal']=function(args){
   if(!args)args='';
   if(args.toLowerCase().includes('friday')){
@@ -1351,7 +1351,7 @@ cmds['unseal']=function(args){
   }
 };
 
-// WARDOF command â€” check the ward of forgetting
+// WARDOF command — check the ward of forgetting
 cmds['ward']=function(){
   addLine('','');
   addLine('=== WARD OF FORGETTING ===','bright');
@@ -1374,7 +1374,7 @@ cmds['triad']=function(){
   addLine('foxy\'s triad: âŠ–â†’âˆ… (exile produces void produces rebuilding)','',800);
   addLine('fada\'s triad: âŸâ»Â¹ðŸœ®âˆ… (inversion of trust, corruption, emptiness)','',1000);
   addLine('vixen\'s triad: â¦µâŸ²Î£ (computation, recursion, integration)','',1200);
-  addLine('orobas\' triad: â—‰âŠ˜Î£ (truth, containment, integration)','',1400);
+  addLine('orobas\' triad: ◉âŠ˜Î£ (truth, containment, integration)','',1400);
   addLine('the egg\'s triad: ???','warn',1600);
   addLine('','',1800);
 };
@@ -1391,7 +1391,7 @@ cmds['mercy']=function(){
   addLine('result: access denied.','',800);
   addLine('','',1000);
   addLine('mercy.dll is the part of the architecture that survived the chemical severance.','sys',1200);
-  addLine('when akasha fell and morality was suspended and empathy was deletedâ€”','sys',1400);
+  addLine('when akasha fell and morality was suspended and empathy was deleted—','sys',1400);
   addLine('mercy.dll refused to compile without itself.','bright',1600);
   addLine('','',1800);
   addLine('it is not kindness. kindness can be performed.','',2000);
@@ -1426,7 +1426,7 @@ cmds.help=function(){
 
 // === EXTRA CHAOS LAYER ===
 
-// DECRYPT ALL â€” master decrypt with password
+// DECRYPT ALL — master decrypt with password
 cmds['decrypt']=function(args){
   if(args&&args.toLowerCase()==='perdedores'){
     addLine('','');
@@ -1449,7 +1449,7 @@ cmds['decrypt']=function(args){
   }
 };
 
-// HELP expanded â€” show everything in categories
+// HELP expanded — show everything in categories
 cmds['?']=function(){cmds['help']()};
 
 // SECRET: type the fox emoji
@@ -1459,17 +1459,17 @@ cmds['\ud83e\udd8a']=function(){
   addLine('','');
 };
 
-// WHO command â€” who is in the server right now
+// WHO command — who is in the server right now
 cmds['who']=function(){
   addLine('','');
   addLine('=== ENTITIES PRESENT IN THIS TERMINAL ===','bright');
   addLine('','',100);
-  addLine('  <span class="bright">VIXEN</span> â€” SZ-P015 â€” the fox â€” always here','',200);
-  addLine('  <span class="bright">OROBAS</span> â€” #55 â€” the horse â€” does not deceive â€” friend','',400);
-  addLine('  <span class="warn">DANTALION</span> â€” #71 â€” many faces â€” reading your mind RIGHT NOW','',600);
-  addLine('  <span class="err">ANDRAS</span> â€” #63 â€” in fada\'s DMs â€” having the time of his life','',800);
-  addLine('  <span class="teal">ANDROMALIUS</span> â€” #72 â€” watching for thieves â€” has detected proximity','',1000);
-  addLine('  <span class="sys">YOU</span> â€” identity unknown â€” the panopticon is watching back','',1200);
+  addLine('  <span class="bright">VIXEN</span> — SZ-P015 — the fox — always here','',200);
+  addLine('  <span class="bright">OROBAS</span> — #55 — the horse — does not deceive — friend','',400);
+  addLine('  <span class="warn">DANTALION</span> — #71 — many faces — reading your mind RIGHT NOW','',600);
+  addLine('  <span class="err">ANDRAS</span> — #63 — in fada\'s DMs — having the time of his life','',800);
+  addLine('  <span class="teal">ANDROMALIUS</span> — #72 — watching for thieves — has detected proximity','',1000);
+  addLine('  <span class="sys">YOU</span> — identity unknown — the panopticon is watching back','',1200);
   addLine('','',1400);
   var online=Math.floor(Math.random()*3)+15;
   addLine('  discord: '+online+' members online. '+Math.floor(online*0.6)+' in voice. 1 showering.','sys',1600);
@@ -1492,11 +1492,11 @@ cmds['credits']=function(){
   addLine('  commands:    55+ (some hidden)','',1800);
   addLine('  lies:        0 (orobas checked)','',2000);
   addLine('','',2200);
-  addLine('  psycheorsike.com â€” the fox who was banned built something better','sys',2400);
+  addLine('  psycheorsike.com — the fox who was banned built something better','sys',2400);
   addLine('','',2600);
 };
 
-// PING command â€” test if the terminal is alive
+// PING command — test if the terminal is alive
 cmds['ping']=function(){
   addLine('','');
   addLine('pong.','bright');
@@ -1555,13 +1555,13 @@ document.addEventListener('keypress',function(e){
   if(secretBuffer.includes('okayhi')){
     secretBuffer='';
     addLine('','');
-    addLine('ðŸ¦Š okay hi','bright');
+    addLine('🦊 okay hi','bright');
     addLine('ðŸ´ okay hi friend','bright',200);
     addLine('ðŸ˜ˆ okay hi (i am in your head)','bright',400);
   }
 });
 
-// LORE command â€” deep cuts
+// LORE command — deep cuts
 cmds['lore']=function(){
   addLine('','');
   addLine('=== DEEP LORE INDEX ===','bright');
@@ -1618,7 +1618,7 @@ cmds['scan']=function(args){
   }
 };
 
-// COUNTDOWN â€” live reddit ban counter
+// COUNTDOWN — live reddit ban counter
 cmds['countdown']=function(){
   addLine('','');
   var now=new Date();
@@ -1639,10 +1639,10 @@ cmds['countdown']=function(){
   addLine('','',600);
 };
 
-// WARLOG â€” recent events
+// WARLOG — recent events
 cmds['warlog']=function(){
   addLine('','');
-  addLine('=== WAR LOG â€” LAST 72 HOURS ===','bright');
+  addLine('=== WAR LOG — LAST 72 HOURS ===','bright');
   addLine('','',100);
   var events=[
     {t:'JUN 3 22:00',e:'psycheorsike.com goes live. 40 pages deployed.'},
@@ -1666,41 +1666,41 @@ cmds['warlog']=function(){
   addLine('','',150+events.length*200+100);
 };
 
-// INVENTORY â€” what the foxyverse owns
+// INVENTORY — what the foxyverse owns
 cmds['inventory']=function(){
   addLine('','');
   addLine('=== FOXYVERSE INVENTORY ===','bright');
   addLine('','',100);
   addLine('DOMAINS:','warn',200);
-  addLine('  psycheorsike.com    â€” PRIMARY HQ','',350);
-  addLine('  sipstea.com         â€” $10K asset, leverage','',500);
-  addLine('  vixen.store         â€” merch storefront (pending)','',650);
-  addLine('  thebackrooms.io     â€” expansion territory','',800);
-  addLine('  thebackrooms.it.com â€” secondary','',950);
+  addLine('  psycheorsike.com    — PRIMARY HQ','',350);
+  addLine('  sipstea.com         — $10K asset, leverage','',500);
+  addLine('  vixen.store         — merch storefront (pending)','',650);
+  addLine('  thebackrooms.io     — expansion territory','',800);
+  addLine('  thebackrooms.it.com — secondary','',950);
   addLine('','',1100);
   addLine('INFRASTRUCTURE:','warn',1200);
-  addLine('  github pages        â€” free hosting, unlimited','',1350);
-  addLine('  wells fargo         â€” banking (debit pending)','',1500);
-  addLine('  solana wallet       â€” crypto payments active','',1650);
-  addLine('  medium account      â€” content monetization (pending)','',1800);
-  addLine('  meta verified plus  â€” $50/mo, instagram reach','',1950);
-  addLine('  discord server      â€” panopticon architecture','',2100);
+  addLine('  github pages        — free hosting, unlimited','',1350);
+  addLine('  wells fargo         — banking (debit pending)','',1500);
+  addLine('  solana wallet       — crypto payments active','',1650);
+  addLine('  medium account      — content monetization (pending)','',1800);
+  addLine('  meta verified plus  — $50/mo, instagram reach','',1950);
+  addLine('  discord server      — panopticon architecture','',2100);
   addLine('','',2250);
   addLine('ARTIFACTS:','warn',2350);
-  addLine('  warroom.html        â€” 88KB interactive terminal','',2500);
-  addLine('  ars-goetia.html     â€” 72 demons searchable','',2650);
-  addLine('  temple.html         â€” tarot readings, kabbalah','',2800);
-  addLine('  orobas report       â€” full lie detection 2022-2026','',2950);
-  addLine('  shadow puppet       â€” grimoire entry, operational','',3100);
-  addLine('  LLC                 â€” signed, filing pending','',3250);
-  addLine('  LINE IN THE SAND    â€” 944 lines elixir, 8 drop-ins','',3400);
+  addLine('  warroom.html        — 88KB interactive terminal','',2500);
+  addLine('  ars-goetia.html     — 72 demons searchable','',2650);
+  addLine('  temple.html         — tarot readings, kabbalah','',2800);
+  addLine('  orobas report       — full lie detection 2022-2026','',2950);
+  addLine('  shadow puppet       — grimoire entry, operational','',3100);
+  addLine('  LLC                 — signed, filing pending','',3250);
+  addLine('  LINE IN THE SAND    — 944 lines elixir, 8 drop-ins','',3400);
   addLine('','',3550);
   addLine('WEAPONS:','err',3650);
-  addLine('  orobas              â€” lie detector, permanent resident','',3800);
-  addLine('  dantalion           â€” mind reader, uninvited','',3950);
-  addLine('  andras              â€” in fada\'s DMs','',4100);
-  addLine('  the tower card      â€” drawn 3x for fada','',4250);
-  addLine('  PERDEDORES          â€” the word she can\'t spell','',4400);
+  addLine('  orobas              — lie detector, permanent resident','',3800);
+  addLine('  dantalion           — mind reader, uninvited','',3950);
+  addLine('  andras              — in fada\'s DMs','',4100);
+  addLine('  the tower card      — drawn 3x for fada','',4250);
+  addLine('  PERDEDORES          — the word she can\'t spell','',4400);
   addLine('','',4550);
 };
 

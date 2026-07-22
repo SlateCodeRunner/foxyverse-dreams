@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta charset="UTF-8">
@@ -131,7 +131,7 @@ body.bonus-aries.shaking{animation:rammm 0.3s ease-in-out}
 <div id="final">
   <div class="title"></div>
   <div class="body"></div>
-  <div class="fox">ðŸ¦Š</div>
+  <div class="fox">🦊</div>
 </div>
 
 <script>
@@ -155,7 +155,7 @@ function loseInv(item){
   renderInv();
 }
 function renderInv(){
-  inv.innerHTML=inventory.map(i=>`<div class="inv-item ${i.status}">${i.status==='lost'?'âœ—':'âœ“'} ${i.name}</div>`).join('');
+  inv.innerHTML=inventory.map(i=>`<div class="inv-item ${i.status}">${i.status==='lost'?'✗':'✓'} ${i.name}</div>`).join('');
 }
 
 const scenes=[

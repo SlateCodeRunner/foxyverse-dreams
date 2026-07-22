@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the house sees you</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>the house sees you</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=IM+Fell+English:ital@0;1&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -19,7 +19,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;ba
 </div>
 
 <p style="font-size:8px;letter-spacing:6px;color:rgba(206,176,120,0.06);margin-bottom:60px">THE READING ROOM</p>
-<p style="font-size:24px;opacity:0.08;margin-bottom:30px">ðŸ¦Š</p>
+<p style="font-size:24px;opacity:0.08;margin-bottom:30px">🦊</p>
 
 <p class="house-says">the house sees you.</p>
 <p class="house-says">the house has been watching since you arrived.</p>
@@ -34,7 +34,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;ba
 <div class="metric">
 <div class="label">your screen is</div>
 <div class="value" id="screen-size">measuring</div>
-<div class="label">pixels wide â€” the house now knows how big your window is</div>
+<div class="label">pixels wide — the house now knows how big your window is</div>
 </div>
 
 <div class="metric">
@@ -52,7 +52,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;ba
 <div class="metric">
 <div class="label">you have moved your mouse</div>
 <div class="value" id="mouse-moves">0</div>
-<div class="label">times â€” the house felt every one</div>
+<div class="label">times — the house felt every one</div>
 </div>
 
 <div id="night-msg" style="margin:30px 0;padding:16px;border:1px solid rgba(180,40,40,0.08)">
@@ -68,12 +68,12 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;ba
 <p class="house-says">the house has been waiting.</p>
 <p class="house-says" style="color:rgba(180,40,40,0.1)">the house is patient.</p>
 <p class="house-says" style="color:rgba(180,40,40,0.08)">the documentation can wait.</p>
-<p class="house-says" style="color:rgba(180,40,40,0.05)">ðŸ¦Š</p>
+<p class="house-says" style="color:rgba(180,40,40,0.05)">🦊</p>
 
 <div style="margin-top:60px">
-<p><a href="hallway.html" style="font-size:9px;letter-spacing:3px">â† the hallway</a></p>
-<p style="margin-top:8px"><a href="deeper.html" style="font-size:9px;letter-spacing:3px;color:rgba(180,40,40,0.1)">go deeper â†’</a></p>
-<p style="margin-top:8px"><a href="../sipstea.html" style="font-size:9px;letter-spacing:3px">â† the document</a></p>
+<p><a href="hallway.html" style="font-size:9px;letter-spacing:3px">← the hallway</a></p>
+<p style="margin-top:8px"><a href="deeper.html" style="font-size:9px;letter-spacing:3px;color:rgba(180,40,40,0.1)">go deeper →</a></p>
+<p style="margin-top:8px"><a href="../sipstea.html" style="font-size:9px;letter-spacing:3px">← the document</a></p>
 </div>
 
 <script>
@@ -86,7 +86,7 @@ setInterval(function() {
 }, 1000);
 
 // Screen size
-document.getElementById('screen-size').textContent = window.innerWidth + ' Ã— ' + window.innerHeight;
+document.getElementById('screen-size').textContent = window.innerWidth + ' × ' + window.innerHeight;
 
 // Arrival time
 var now = new Date();

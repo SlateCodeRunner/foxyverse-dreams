@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Quest Board â€” The FoxyVerse</title>
+<title>Quest Board — The FoxyVerse</title>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -117,7 +117,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
 
     <div id="quests"></div>
 
-    <div class="footer"><p>QUEST BOARD Â· PSYCHEORSIKE.COM Â· TIER-BASED ACCESS</p></div>
+    <div class="footer"><p>QUEST BOARD · PSYCHEORSIKE.COM · TIER-BASED ACCESS</p></div>
   </div>
 </div>
 
@@ -175,9 +175,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
 </div>
 
 <script>
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// FIREBASE CONFIG â€” REPLACE WITH YOUR PROJECT
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════
+// FIREBASE CONFIG — REPLACE WITH YOUR PROJECT
+// ═══════════════════════════════════════════
 // 1. Go to console.firebase.google.com
 // 2. Create project (free)
 // 3. Add web app
@@ -203,30 +203,30 @@ try {
   }
 } catch(e) { console.log("Firebase not configured yet"); }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// TIER SYSTEM â€” passphrases (SHA-256 hashed)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════
+// TIER SYSTEM — passphrases (SHA-256 hashed)
+// ═══════════════════════════════════════════
 // Set your passphrases here. Replace the hashes.
 // To generate: run in console: 
 //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('your-passphrase')).then(h => console.log(Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')))
 var TIER_HASHES = {
   // REPLACE THESE with your actual hashed passphrases
   // tier 1 = foxy only
-  "TIER1_HASH_HERE": { tier: 1, label: "I Â· FOXLORD", class: "tier-1" },
+  "TIER1_HASH_HERE": { tier: 1, label: "I · FOXLORD", class: "tier-1" },
   // tier 2 = leaders, assistants  
-  "TIER2_HASH_HERE": { tier: 2, label: "II Â· LEADER", class: "tier-2" },
+  "TIER2_HASH_HERE": { tier: 2, label: "II · LEADER", class: "tier-2" },
   // tier 3 = expeditioners
-  "TIER3_HASH_HERE": { tier: 3, label: "III Â· EXPEDITIONER", class: "tier-3" },
+  "TIER3_HASH_HERE": { tier: 3, label: "III · EXPEDITIONER", class: "tier-3" },
   // tier 4 = initiates
-  "TIER4_HASH_HERE": { tier: 4, label: "IV Â· INITIATE", class: "tier-4" }
+  "TIER4_HASH_HERE": { tier: 4, label: "IV · INITIATE", class: "tier-4" }
 };
 
-// For testing without hashes â€” plaintext fallback (REMOVE IN PRODUCTION)
+// For testing without hashes — plaintext fallback (REMOVE IN PRODUCTION)
 var TIER_PLAINTEXT = {
-  "foxlord": { tier: 1, label: "I Â· FOXLORD", class: "tier-1" },
-  "leader": { tier: 2, label: "II Â· LEADER", class: "tier-2" },
-  "expedition": { tier: 3, label: "III Â· EXPEDITIONER", class: "tier-3" },
-  "initiate": { tier: 4, label: "IV Â· INITIATE", class: "tier-4" }
+  "foxlord": { tier: 1, label: "I · FOXLORD", class: "tier-1" },
+  "leader": { tier: 2, label: "II · LEADER", class: "tier-2" },
+  "expedition": { tier: 3, label: "III · EXPEDITIONER", class: "tier-3" },
+  "initiate": { tier: 4, label: "IV · INITIATE", class: "tier-4" }
 };
 
 var currentTier = null;
@@ -234,9 +234,9 @@ var currentAgent = "";
 var currentFilter = "all";
 var quests = [];
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════
 // AUTH
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════
 async function hashPass(pass) {
   var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pass));
   return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
@@ -289,9 +289,9 @@ function logout() {
   document.getElementById('agent-name').value = '';
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════
 // QUEST CRUD
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════
 function loadQuests() {
   if (!firebaseReady) {
     // Fallback: use localStorage for testing
@@ -385,9 +385,9 @@ async function deleteQuest(id) {
   }
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════
 // RENDER
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════
 function filterQ(f, btn) {
   currentFilter = f;
   document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
@@ -446,15 +446,15 @@ document.getElementById('agent-name').addEventListener('keydown', function(e) { 
 </script>
 
 <!--
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+═══════════════════════════════════════════
 SETUP INSTRUCTIONS
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+═══════════════════════════════════════════
 
 1. Go to console.firebase.google.com
 2. Create new project (free, no analytics needed)
-3. Click "Add app" â†’ Web â†’ register
+3. Click "Add app" → Web → register
 4. Copy the firebaseConfig object and paste above
-5. Go to Firestore Database â†’ Create Database â†’ Start in test mode
+5. Go to Firestore Database → Create Database → Start in test mode
 6. Set your tier passphrases:
    - Open browser console
    - Run: crypto.subtle.digest('SHA-256', new TextEncoder().encode('your-secret-passphrase')).then(h => console.log(Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')))
@@ -475,7 +475,7 @@ service cloud.firestore {
     }
   }
 }
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+═══════════════════════════════════════════
 -->
 
 <script src="blickwinkel.js"></script>
