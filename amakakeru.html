@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Amakakeru Ryu no Hirameki</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Fira+Code:wght@300;400&family=Noto+Serif+JP:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#050505;color:rgba(220,215,205,0.3);font-family:'Fira Code',monospace;overflow-x:hidden}
+
+/* VIDEO HERO */
+.video-hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
+.video-wrap{position:relative;width:100%;max-width:900px;aspect-ratio:16/9}
+.video-wrap iframe{width:100%;height:100%;border:none}
+.video-overlay{position:absolute;inset:0;background:linear-gradient(0deg,#050505 0%,transparent 15%,transparent 85%,#050505 100%);pointer-events:none;z-index:2}
+.video-title{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;pointer-events:none}
+.vt-jp{font-family:'Noto Serif JP',serif;font-size:clamp(20px,4vw,36px);color:rgba(100,160,255,0.2);letter-spacing:.2em}
+.vt-en{font-family:'Cinzel',serif;font-size:clamp(10px,2vw,14px);letter-spacing:.3em;color:rgba(220,215,205,0.1);margin-top:6px;text-transform:uppercase}
+
+/* KANJI SECTION */
+.kanji-flow{display:flex;justify-content:center;gap:0;padding:60px 0;background:#050505}
+.kanji-char{width:25%;max-width:200px;opacity:0;transform:scale(0.8);transition:all 1s ease-out}
+.kanji-char.visible{opacity:1;transform:scale(1)}
+.kanji-char img{width:100%;display:block;filter:brightness(1.2) contrast(1.1)}
+
+/* FRAMES */
+.frames{max-width:900px;margin:0 auto;padding:0 16px}
+.frame{margin:0 0 2px;overflow:hidden;opacity:0;transform:translateY(20px);transition:all 0.8s ease-out}
+.frame.visible{opacity:1;transform:translateY(0)}
+.frame img{width:100%;display:block;filter:saturate(0.8) brightness(0.9)}
+.frame.impact img{filter:saturate(1.2) brightness(1.1) contrast(1.15)}
+
+/* TEXT MOMENTS */
+.moment{text-align:center;padding:50px 20px;opacity:0;transition:opacity 1.5s}
+.moment.visible{opacity:1}
+.moment-text{font-family:'Cinzel',serif;font-size:clamp(12px,2.5vw,18px);color:rgba(100,160,255,0.15);letter-spacing:.15em;line-height:2}
+.moment-sub{font-size:10px;color:rgba(220,215,205,0.06);letter-spacing:4px;margin-top:12px}
+
+/* CLOSING */
+.closing{text-align:center;padding:80px 20px 120px}
+.closing-text{font-family:'Noto Serif JP',serif;font-size:clamp(14px,3vw,22px);color:rgba(255,170,200,0.1);letter-spacing:.1em}
+.closing-sub{font-size:8px;color:rgba(220,215,205,0.04);letter-spacing:4px;margin-top:16px}
+
+.back{position:fixed;top:10px;left:12px;font-size:9px;letter-spacing:2px;color:rgba(200,180,140,0.06);text-decoration:none;z-index:20;transition:color .3s}
+.back:hover{color:rgba(200,180,140,0.2)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:10;box-shadow:inset 0 0 200px rgba(0,0,0,0.8)}
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:11;opacity:.03;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.4) 2px,rgba(0,0,0,.4) 3px)}
+</style>
+</head>
+<body>
+<div class="vignette"></div>
+<div class="scanlines"></div>
+<a href="ost.html" class="back">&larr; OST</a>
+
+<div class="video-hero">
+  <div class="video-wrap">
+    <div id="yt-player"></div>
+    <div class="video-overlay"></div>
+  </div>
+  <div class="video-title">
+    <div class="vt-jp">天翔龍閃</div>
+    <div class="vt-en">Amakakeru Ryu no Hirameki</div>
+  </div>
+</div>
+
+<div class="moment" data-reveal>
+  <div class="moment-text">the technique cannot be learned by wanting to kill.</div>
+  <div class="moment-sub">it can only be learned by wanting to live.</div>
+</div>
+
+<div class="kanji-flow">
+  <div class="kanji-char" data-reveal><img src="img/kenshin/frame-06.jpg" alt="閃"></div>
+  <div class="kanji-char" data-reveal><img src="img/kenshin/frame-07.jpg" alt="龍"></div>
+  <div class="kanji-char" data-reveal><img src="img/kenshin/frame-08.jpg" alt="翔"></div>
+  <div class="kanji-char" data-reveal><img src="img/kenshin/frame-09.jpg" alt="天"></div>
+</div>
+
+<div class="moment" data-reveal>
+  <div class="moment-text">from the right? or the left?</div>
+</div>
+
+<div class="frames">
+  <div class="frame" data-reveal><img src="img/kenshin/frame-01.jpg" alt=""></div>
+  <div class="frame" data-reveal><img src="img/kenshin/frame-02.jpg" alt=""></div>
+  <div class="frame" data-reveal><img src="img/kenshin/frame-03.jpg" alt=""></div>
+</div>
+
+<div class="moment" data-reveal>
+  <div class="moment-text">left.</div>
+</div>
+
+<div class="frames">
+  <div class="frame" data-reveal><img src="img/kenshin/frame-04.jpg" alt=""></div>
+  <div class="frame impact" data-reveal><img src="img/kenshin/frame-05.jpg" alt=""></div>
+</div>
+
+<div class="moment" data-reveal>
+  <div class="moment-text">the blade reversed. the battousai chose to protect.</div>
+</div>
+
+<div class="frames">
+  <div class="frame" data-reveal><img src="img/kenshin/frame-10.jpg" alt=""></div>
+  <div class="frame" data-reveal><img src="img/kenshin/frame-11.jpg" alt=""></div>
+  <div class="frame impact" data-reveal><img src="img/kenshin/frame-12.jpg" alt=""></div>
+</div>
+
+<div class="moment" data-reveal>
+  <div class="moment-text">he stopped it.</div>
+</div>
+
+<div class="frames">
+  <div class="frame" data-reveal><img src="img/kenshin/frame-13.jpg" alt=""></div>
+  <div class="frame" data-reveal><img src="img/kenshin/frame-14.jpg" alt=""></div>
+  <div class="frame impact" data-reveal><img src="img/kenshin/frame-15.jpg" alt=""></div>
+</div>
+
+<div class="moment" data-reveal>
+  <div class="moment-text">amakakeru ryu no hirameki has been beaten.</div>
+  <div class="moment-sub">the air between us was forced away from the initial impact of...</div>
+</div>
+
+<div class="frames">
+  <div class="frame" data-reveal><img src="img/kenshin/frame-16.jpg" alt=""></div>
+  <div class="frame" data-reveal><img src="img/kenshin/frame-17.jpg" alt=""></div>
+  <div class="frame" data-reveal><img src="img/kenshin/frame-18.jpg" alt=""></div>
+  <div class="frame impact" data-reveal><img src="img/kenshin/frame-19.jpg" alt=""></div>
+  <div class="frame impact" data-reveal><img src="img/kenshin/frame-20.jpg" alt=""></div>
+</div>
+
+<div class="closing">
+  <div class="closing-text">the most dangerous person in the room chose not to cut.</div>
+  <div class="closing-sub">MOOD: RESTRAINT</div>
+</div>
+
+<script>
+// YouTube autoplay
+var tag=document.createElement('script');
+tag.src='https://www.youtube.com/iframe_api';
+document.head.appendChild(tag);
+function onYouTubeIframeAPIReady(){
+  new YT.Player('yt-player',{
+    videoId:'omJGlopGhPs',
+    playerVars:{autoplay:1,controls:1,rel:0,modestbranding:1,start:0},
+    events:{onReady:function(e){e.target.playVideo();}}
+  });
+}
+
+// Scroll reveal
+var els=document.querySelectorAll('[data-reveal]');
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('visible');}
+  });
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+els.forEach(function(el){obs.observe(el);});
+</script>
+</body>
+</html>
