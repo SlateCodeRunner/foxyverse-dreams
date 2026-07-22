@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 // FOX ISLAND — PATCH v2
 // sprite flicker · save system · map secrets
 // combinations · cast responses · mobile UX
@@ -9,6 +9,7 @@ if(!p)return;
 
 // ═══ 1. SPRITE DIRECTION — kill class conflict ═══
 p.textContent='';
+var pSprite=document.createElement('span');pSprite.textContent='\uD83E\uDD8A';pSprite.style.cssText='font-size:44px;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,.8))';p.appendChild(pSprite);
 
 // Nuke the OLD walk/idle CSS animations so they never fire
 var killOld=document.createElement('style');
