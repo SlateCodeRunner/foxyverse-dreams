@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>written</title><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>written</title><style>
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Special+Elite&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:#060608;color:rgba(220,215,205,0.4);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
@@ -47,9 +47,43 @@ CANNOT WORK TOGETHER:<br><br>
 <p style="margin-top:8px"><a href="room-005.html" style="color:rgba(180,40,40,0.15);border-color:rgba(180,40,40,0.05)">the door is locked but the wall beside it isn't</a></p>
 <p style="margin-top:8px"><a href="../the-twelve.html" style="color:rgba(206,176,120,0.1)">there's a number scratched into the doorframe: 12</a></p>
 </div>
+
+<!-- THE CHEST -->
+<div id="bw-chest" style="margin:30px auto;width:44px;height:44px;cursor:pointer;opacity:0.04;transition:all 0.5s;text-align:center;font-size:28px;filter:grayscale(1)" title="..." onclick="openChest()">&#x1F4E6;</div>
+<div id="bw-reward" style="display:none;text-align:center;padding:16px;margin:16px 0;border:1px solid rgba(255,106,0,0.1);background:rgba(255,106,0,0.02)">
+  <div style="font-family:'Fira Code',monospace;font-size:9px;letter-spacing:4px;color:rgba(255,106,0,0.4);margin-bottom:8px">ITEM FOUND</div>
+  <div style="font-size:24px;margin:8px 0">&#x1F98A;</div>
+  <div style="font-family:'Fira Code',monospace;font-size:10px;color:rgba(255,106,0,0.5);letter-spacing:2px">FOX//VISOR</div>
+  <div style="font-family:'Fira Code',monospace;font-size:7px;color:rgba(200,180,140,0.2);margin-top:6px;line-height:1.8">the observer becomes the observed.<br>the HUD activates across all pages.</div>
+</div>
+<script>
+function openChest(){
+  var c=document.getElementById('bw-chest');
+  var r=document.getElementById('bw-reward');
+  if(r.style.display!=='none')return;
+  c.style.opacity='0.6';
+  c.style.filter='none';
+  c.style.transform='scale(1.3)';
+  c.style.cursor='default';
+  setTimeout(function(){
+    c.style.display='none';
+    r.style.display='block';
+    try{localStorage.setItem('bw_visor_found','true')}catch(e){}
+    // Load the visor
+    var s=document.createElement('script');
+    s.src='../blickwinkel.js';
+    document.body.appendChild(s);
+  },600);
+}
+// If already found, auto-load visor
+try{if(localStorage.getItem('bw_visor_found')==='true'){
+  document.getElementById('bw-chest').style.display='none';
+  var s=document.createElement('script');s.src='../blickwinkel.js';document.body.appendChild(s);
+}}catch(e){}
+</script>
 <script src="../js/intercept.js"></script>
 <script src="../js/broken-game.js"></script>
 <script src="../js/foxgames.js"></script>
 <script src="../js/ghosts.js"></script>
-<script src="../blickwinkel.js"></script>
+
 </body></html>
