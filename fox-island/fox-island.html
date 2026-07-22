@@ -198,16 +198,11 @@ body{background:#0a0a0f;color:#e0d4c0;font-family:'VT323',monospace;overflow:hid
 
 @media(max-width:820px){#gc{width:100vw;height:100vh;border:none}.vb{font-size:7px;padding:4px 6px}.tt h1{font-size:13px}.tt h2{font-size:20px}}
 
-/* SPRITE FIX — white bg removal + proper sizing for AI portraits */
-.npc{mix-blend-mode:multiply;image-rendering:auto}
+/* SPRITE FIX — transparent sprites, proper sizing */
 .npc-stranger,.npc-barkeeper,.npc-lostone,.npc-witch{
   background-size:contain!important;background-position:center!important;animation:none!important
 }
-.npc-stranger.standing,.npc-barkeeper.standing,.npc-lostone.standing,.npc-witch.standing{
-  background-position:center!important;animation:none!important
-}
 .npc-queen{background-size:contain!important;background-position:center!important;animation:none!important}
-.npc-queen.standing{background-position:center!important;animation:none!important}
 </style>
 <link rel='stylesheet' href='ui-styles.css'>
 </head>
