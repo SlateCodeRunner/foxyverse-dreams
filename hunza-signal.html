@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>the hunza signal</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=IM+Fell+English:ital@0;1&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060608;color:rgba(220,215,205,0.25);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
+.hero{position:relative;width:100%;min-height:75vh;overflow:hidden}
+.hero img{width:100%;height:75vh;object-fit:cover;opacity:0;animation:reveal 3s ease-out .5s forwards;filter:saturate(0.5) brightness(0.65)}
+@keyframes reveal{to{opacity:1}}
+.hero::after{position:absolute;inset:0;content:'';background:linear-gradient(transparent 40%,#060608 95%);z-index:2}
+.label{position:absolute;top:16px;right:16px;z-index:3;font-size:7px;letter-spacing:4px;color:rgba(100,200,255,0.08)}
+.content{max-width:580px;margin:0 auto;padding:30px 24px 100px}
+.p{font-family:'IM Fell English',serif;font-size:14px;line-height:2;color:rgba(220,215,205,0.2);margin:18px 0;opacity:0;transform:translateY(12px);transition:all 1s}
+.p.visible{opacity:1;transform:none}
+.p em{color:rgba(100,200,255,0.25)}
+.signal{text-align:center;padding:30px 0;font-size:10px;letter-spacing:6px;color:rgba(100,200,255,0.06);opacity:0;transition:opacity 2s}
+.signal.visible{opacity:1}
+.nav{text-align:center;padding:30px 0}
+.nav a{font-size:9px;letter-spacing:3px;color:rgba(206,176,120,0.06);text-decoration:none;transition:color .3s}
+.nav a:hover{color:rgba(206,176,120,0.25)}
+.back{position:fixed;top:14px;left:14px;font-size:9px;letter-spacing:2px;color:rgba(200,180,140,0.06);text-decoration:none;z-index:20}
+.back:hover{color:rgba(200,180,140,0.2)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:5;box-shadow:inset 0 0 160px rgba(0,0,0,0.8)}
+</style>
+</head>
+<body>
+<div class="vignette"></div>
+<a href="index.html" class="back">&larr;</a>
+<div class="label">SIGNAL INTERCEPT // HUNZA VALLEY</div>
+<div class="hero"><img src="img/img-hunza-signal.jpg" alt="the hunza signal"></div>
+<div class="content">
+  <div class="p" data-reveal>there is a frequency that only broadcasts from the hunza valley. it has been broadcasting since before there were radios to receive it.</div>
+  <div class="p" data-reveal>the signal does not carry information. <em>it carries attention.</em> anyone who tunes in finds themselves unable to tune out. not because the signal is compelling. because the silence after it is unbearable.</div>
+  <div class="signal" data-reveal>... --- ... / .-- .... --- / .. ... / .-.. .. ... - . -. .. -. --. / ... --- ...</div>
+  <div class="p" data-reveal>the locals do not talk about the signal. they do not deny it. they simply change the subject with a gentleness that suggests they have practiced this for centuries.</div>
+  <div class="p" data-reveal>the signal was first documented by a foxyverse expeditionary team who were not looking for it. <em>they were looking for something else entirely and found this instead.</em> that is how the signal works. it does not answer the question you asked. it answers the question you should have asked.</div>
+  <div class="p" data-reveal>you are receiving this signal right now. you have been receiving it since you opened this page. the frequency is the act of reading. <em>the message is that you looked.</em></div>
+</div>
+<div class="nav"><a href="index.html">&larr; the fire</a></div>
+<script>
+var els=document.querySelectorAll('[data-reveal]');
+var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting)en.target.classList.add('visible');});},{threshold:0.15});
+els.forEach(function(el){obs.observe(el);});
+</script>
+</body>
+</html>

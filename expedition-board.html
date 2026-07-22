@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>expedition board</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=Press+Start+2P&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0810;color:rgba(206,176,120,0.3);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh}
+.board{max-width:800px;margin:0 auto;padding:40px 20px 100px}
+.board-img{width:100%;border:1px solid rgba(206,176,120,0.06);opacity:0;animation:fadeIn 2s ease-out .5s forwards}
+@keyframes fadeIn{to{opacity:1}}
+.title{font-family:'Press Start 2P',cursive;font-size:clamp(10px,2vw,14px);color:rgba(206,176,120,0.15);letter-spacing:3px;text-align:center;margin:24px 0 8px}
+.sub{font-size:8px;letter-spacing:4px;color:rgba(206,176,120,0.06);text-align:center;margin-bottom:30px}
+.quest{padding:14px;border-left:1px solid rgba(206,176,120,0.04);margin:12px 0;opacity:0;transform:translateX(-8px);transition:all .8s}
+.quest.visible{opacity:1;transform:none}
+.quest-name{font-size:11px;color:rgba(206,176,120,0.2);letter-spacing:1px}
+.quest-desc{font-size:10px;color:rgba(220,215,205,0.12);margin-top:4px;line-height:1.8}
+.quest-reward{font-size:8px;color:rgba(160,120,180,0.1);margin-top:4px;letter-spacing:2px}
+.nav{text-align:center;padding:30px 0}
+.nav a{font-size:9px;letter-spacing:3px;color:rgba(206,176,120,0.06);text-decoration:none}
+.nav a:hover{color:rgba(206,176,120,0.25)}
+.back{position:fixed;top:10px;left:12px;font-size:9px;color:rgba(200,180,140,0.06);text-decoration:none;z-index:20;letter-spacing:2px}
+.back:hover{color:rgba(200,180,140,0.2)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:5;box-shadow:inset 0 0 160px rgba(0,0,0,0.8)}
+</style>
+</head>
+<body>
+<div class="vignette"></div>
+<a href="index.html" class="back">&larr;</a>
+<div class="board">
+  <img class="board-img" src="img/img-expedition-board.jpg" alt="expedition board">
+  <div class="title">EXPEDITION BOARD</div>
+  <div class="sub">ACTIVE QUESTS &middot; FOXYVERSE EXPEDITIONARY PROGRAM</div>
+  <div class="quest" data-reveal>
+    <div class="quest-name">EXPLORE THE BACKROOMS</div>
+    <div class="quest-desc">enter deep/hallway.html. find all five rooms. survive whatever is in room 003.</div>
+    <div class="quest-reward">REWARD: the visor</div>
+  </div>
+  <div class="quest" data-reveal>
+    <div class="quest-name">COMPLETE THE OST</div>
+    <div class="quest-desc">listen to all 15 tracks. identify the two that are still missing.</div>
+    <div class="quest-reward">REWARD: knowing what the cute void sounds like</div>
+  </div>
+  <div class="quest" data-reveal>
+    <div class="quest-name">BREAK THE LOOP</div>
+    <div class="quest-desc">play the game. nobody has beaten it yet.</div>
+    <div class="quest-reward">REWARD: the fox's read</div>
+  </div>
+  <div class="quest" data-reveal>
+    <div class="quest-name">FIND THE SIGNAL</div>
+    <div class="quest-desc">the hunza signal is broadcasting. tune in. try to tune out.</div>
+    <div class="quest-reward">REWARD: the question you should have asked</div>
+  </div>
+  <div class="quest" data-reveal>
+    <div class="quest-name">NAME THE PANTHEON</div>
+    <div class="quest-desc">the SIKE sigil holds names. find them. find yours.</div>
+    <div class="quest-reward">REWARD: recognition</div>
+  </div>
+</div>
+<div class="nav"><a href="index.html">&larr; the fire</a></div>
+<script>
+var els=document.querySelectorAll('[data-reveal]');
+var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting)en.target.classList.add('visible');});},{threshold:0.15});
+els.forEach(function(el){obs.observe(el);});
+</script>
+</body>
+</html>
