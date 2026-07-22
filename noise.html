@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>feed</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0e;color:#e0ddd8;font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.5;min-height:100vh}
+a{color:#7b8fee;text-decoration:none}a:hover{text-decoration:underline}
+.feed{max-width:580px;margin:0 auto;padding:12px 12px 120px}
+.card{background:#16161e;border:1px solid #1e1e28;border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+.card:hover{border-color:#2a2a38}
+.card-head{display:flex;align-items:center;gap:10px;padding:14px 16px 0}
+.avatar{width:32px;height:32px;border-radius:50%;background:#2a2a38;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.meta{flex:1;min-width:0}.user{font-size:13px;font-weight:600;color:#b0adb8}
+.user .src{font-weight:400;color:#5a5868;margin-left:4px}
+.sub{font-size:12px;color:#6a68a4;font-weight:500}
+.card-title{font-size:16px;font-weight:600;color:#e8e6e2;padding:10px 16px 4px;line-height:1.35}
+.card-body{padding:6px 16px 14px;font-size:14px;color:#9a98a4;line-height:1.6}
+.engage{display:flex;gap:20px;padding:8px 16px 12px;font-size:12px;color:#5a5868}
+.engage span{display:flex;align-items:center;gap:4px;cursor:pointer;transition:color .15s}
+.engage span:hover{color:#8a88a4}
+.up{color:#4a8}
+.tag{display:inline-block;font-size:11px;color:#6a68a4;background:#1a1a2e;padding:2px 8px;border-radius:10px;margin:2px}
+.card.signal{border-left:1px solid rgba(255,106,0,.04)}.card.signal .user{color:#c0b8a8}
+.card.ad{opacity:.7}.card.ad:hover{opacity:.85}
+.ad-tag{font-size:9px;letter-spacing:1px;color:#4a4858;text-transform:uppercase;padding:8px 16px 0}
+.glitch{animation:gflick 8s infinite}
+@keyframes gflick{0%,97%{opacity:1}97.5%{opacity:.6;transform:translateX(1px)}98%{opacity:1;transform:translateX(0)}}
+.loader{text-align:center;padding:40px;color:#3a3848;font-size:12px;letter-spacing:2px}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:100;box-shadow:inset 0 0 120px rgba(0,0,0,.5)}
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:101;opacity:.008;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.3) 2px,rgba(0,0,0,.3) 3px)}
+@media(max-width:600px){.feed{padding:8px 0 100px}.card{border-radius:0;margin-bottom:8px;border-left:none;border-right:none}}
+</style>
+</head>
+<body>
+<div class="vignette"></div>
+<div class="scanlines"></div>
+<div class="feed">
+<div class="card"><div class="card-head"><div class="avatar">&#x1F4B0;</div><div class="meta"><div class="user">Crypto on The Street <span class="src">&middot; 22h</span></div></div></div><div class="card-title">Over $700 million in Bitcoin left major exchanges in a single day</div><div class="card-body">Analysts say the mass withdrawal signals growing institutional confidence in self-custody solutions amid regulatory uncertainty.</div><div class="engage"><span class="up">&uarr; 2.4k</span><span>&#x1F4AC; 891</span><span>&#x1F504; Share</span></div></div>
+<div class="card"><div class="card-head"><div class="avatar">&#x1F9C8;</div><div class="meta"><div class="user">Allrecipes <span class="src">&middot; 18h</span></div></div></div><div class="card-title">Land O'Lakes finally settles the debate: How long can you leave butter out on the counter?</div><div class="card-body">Short answer: 1&ndash;2 days at room temperature in a covered dish is fine. Stop refrigerating your butter and live a little.</div><div class="engage"><span class="up">&uarr; 5.1k</span><span>&#x1F4AC; 2.3k</span><span>&#x1F504; Share</span></div></div>
+<div class="card signal glitch"><div class="card-head"><div class="avatar">&#x1F98A;</div><div class="meta"><div class="user">u/VulpineNexus <span class="src">&middot; 6mo</span></div><div class="sub">r/StrikeAtPsyche</div></div></div><div class="card-title">FOXY: BREAK THE LOOP (a FULL MOVIE by Vixen)</div><div class="card-body">made entirely with sora. the platform is dead now. the film remains.<br><br><a href="https://www.youtube.com/watch?v=33d_f6mATxU">watch the full film &rarr;</a></div><div class="engage"><span class="up">&uarr; 4</span><span>&#x1F4AC; 2</span><span>&#x1F504; Share</span></div></div>
+<div class="card"><div class="card-head"><div class="avatar">&#x1F914;</div><div class="meta"><div class="user">u/throwaway_brain42 <span class="src">&middot; 5h</span></div><div class="sub">r/Showerthoughts</div></div></div><div class="card-title">Your future self is watching you right now through memories</div><div class="engage"><span class="up">&uarr; 12.8k</span><span>&#x1F4AC; 340</span><span>&#x1F504; Share</span></div></div>
+<div class="card ad"><div class="ad-tag">Promoted</div><div class="card-head"><div class="avatar">&#x1F3A7;</div><div class="meta"><div class="user">SoundCore <span class="src">&middot; Ad</span></div></div></div><div class="card-title">Block out the noise. Keep the signal.</div><div class="card-body">New Q45 noise-cancelling headphones. 50hr battery. Adaptive ANC. Sometimes silence is the answer.</div><div class="engage"><span>&#x1F4AC; 12</span></div></div>
+<div class="card signal"><div class="card-head"><div class="avatar">&#x1F300;</div><div class="meta"><div class="user">u/loop_theory <span class="src">&middot; 3h</span></div><div class="sub">r/Showerthoughts</div></div></div><div class="card-title">what if the loop isn't punishment. what if it's practice.</div><div class="card-body">like. what if you keep waking up in the same situation not because you're trapped but because you haven't learned the thing yet. and the moment you do, the door was always open.</div><div class="engage"><span class="up">&uarr; 847</span><span>&#x1F4AC; 203</span><span>&#x1F504; Share</span></div></div>
+<div class="card"><div class="card-head"><div class="avatar">P</div><div class="meta"><div class="user">People <span class="src">&middot; 23h</span></div></div></div><div class="card-title">Pregnant woman, 29, medically evacuated from cruise ship off Miami coast after experiencing complications</div><div class="card-body">The Coast Guard dispatched a helicopter crew to the vessel approximately 37 miles southeast of Miami Beach.</div><div class="engage"><span class="up">&uarr; 1.2k</span><span>&#x1F4AC; 445</span><span>&#x1F504; Share</span></div></div>
+<div class="card"><div class="card-head"><div class="avatar">&#x1F431;</div><div class="meta"><div class="user">u/catparent_99 <span class="src">&middot; 11h</span></div><div class="sub">r/cats</div></div></div><div class="card-title">my cat won't stop staring at the exact same spot on the wall. it's been three days.</div><div class="card-body">there is nothing there. i've checked. she just watches. should i be worried or is this normal cat firmware.</div><div class="engage"><span class="up">&uarr; 3.4k</span><span>&#x1F4AC; 672</span><span>&#x1F504; Share</span></div></div>
+<div class="card signal"><div class="card-head"><div class="avatar">&#x1F47E;</div><div class="meta"><div class="user">u/deleted_user <span class="src">&middot; 2d</span></div><div class="sub">r/InternetMysteries</div></div></div><div class="card-title">found this site at 3am and i can't tell if it's an ARG or someone's actual breakdown</div><div class="card-body">it's called <a href="https://psycheorsike.com">psycheorsike.com</a>. there's a campfire, a quest board, something called "the foxyverse," and like 100+ pages of lore about foxes and tarot and quantum witchcraft. some pages are password-locked. some pages only appear if you've visited enough other pages. there's a working point-and-click adventure game?? has anyone seen this before</div><div class="engage"><span class="up">&uarr; 23</span><span>&#x1F4AC; 14</span><span>&#x1F504; Share</span></div></div>
+<div class="card"><div class="card-head"><div class="avatar">&#x1F30A;</div><div class="meta"><div class="user">Waterline Stories <span class="src">&middot; 2d</span></div></div></div><div class="card-title">Divers were recovering bodies 100 feet down &mdash; then a dead man reached out and grabbed the rescuer's arm</div><div class="card-body">The survivor had been trapped in an air pocket for three days in near-total darkness.</div><div class="engage"><span class="up">&uarr; 18.2k</span><span>&#x1F4AC; 4.1k</span><span>&#x1F504; Share</span></div></div>
+<div class="card"><div class="card-head"><div class="avatar">&#x1F3AC;</div><div class="meta"><div class="user">u/filmtakes_cold <span class="src">&middot; 8h</span></div><div class="sub">r/movies</div></div></div><div class="card-title">Name a movie everyone loves that you think is mid</div><div class="card-body">i'll go first: inception. it's a heist movie wearing a philosophy costume. the emotional core is paper thin. fight me.</div><div class="engage"><span class="up">&uarr; 6.7k</span><span>&#x1F4AC; 8.9k</span><span>&#x1F504; Share</span></div></div>
+<div class="card signal"><div class="card-head"><div class="avatar">&#x1F319;</div><div class="meta"><div class="user">u/the_rooms_remember <span class="src">&middot; 14h</span></div><div class="sub">r/Dreams</div></div></div><div class="card-title">i keep dreaming about the same hallway. there's a fox sitting at the end. it knows my name.</div><div class="card-body">every night for two weeks. the hallway is yellow. the walls breathe. at the end there's a door and a fox and the fox says something i can't hear. last night i got closer and it said "you already know." then i woke up and my phone was on a page i didn't open.<br><br><span class="tag">recurring</span> <span class="tag">lucid</span> <span class="tag">entity contact</span></div><div class="engage"><span class="up">&uarr; 67</span><span>&#x1F4AC; 31</span><span>&#x1F504; Share</span></div></div>
+<div class="card"><div class="card-head"><div class="avatar">&#x1F4CB;</div><div class="meta"><div class="user">PSA Bot <span class="src">&middot; 1h</span></div></div></div><div class="card-title">your posture right now is terrible and you know it</div><div class="card-body">sit up. unclench your jaw. drop your shoulders. drink water. you've been scrolling for 20 minutes. the algorithm does not love you. go outside.</div><div class="engage"><span class="up">&uarr; 41.2k</span><span>&#x1F4AC; 1.8k</span><span>&#x1F504; Share</span></div></div>
+<div class="card signal" style="border-color:rgba(255,106,0,.06)"><div class="card-head"><div class="avatar" style="background:rgba(255,106,0,.08);color:#ff6a00">&#x1F98A;</div><div class="meta"><div class="user" style="color:#c8a878">the fire <span class="src">&middot; now</span></div></div></div><div class="card-body" style="color:#8a8474;font-family:'Fira Code',monospace;font-size:12px;letter-spacing:.5px">you scrolled past 4 things that were for you and didn't notice.<br><br>that's how it works in real life too.<br><br>the signal was always there. you were just reading the noise.<br><br><a href="https://psycheorsike.com" style="color:rgba(255,106,0,.4)">okay hi &#x1F98A;</a></div><div class="engage"><span style="color:rgba(255,106,0,.15)">&uarr; &infin;</span><span style="color:rgba(255,106,0,.1)">&#x1F4AC; you</span></div></div>
+<div class="card" style="opacity:.5"><div class="card-head"><div class="avatar">&#x2614;</div><div class="meta"><div class="user">Weather <span class="src">&middot; 3h</span></div></div></div><div class="card-title">Severe thunderstorm watch issued for 14 counties until 9 PM</div><div class="card-body">Damaging winds up to 70 mph possible. Stay indoors. Charge your devices.</div><div class="engage"><span class="up">&uarr; 892</span><span>&#x1F4AC; 156</span></div></div>
+<div class="card" style="opacity:.4"><div class="card-head"><div class="avatar">&#x1F4F1;</div><div class="meta"><div class="user">u/definitely_not_ai <span class="src">&middot; 6h</span></div><div class="sub">r/technology</div></div></div><div class="card-title">I asked ChatGPT to write my resignation letter and my boss said it was the most human thing I've ever written</div><div class="engage"><span class="up">&uarr; 9.1k</span><span>&#x1F4AC; 1.4k</span></div></div>
+<div class="loader">loading more posts...</div>
+<div class="loader" style="color:#1a1828;font-size:9px;padding:8px">or are you done looking at noise</div>
+</div>
+<script src="blickwinkel.js"></script>
+</body>
+</html>
