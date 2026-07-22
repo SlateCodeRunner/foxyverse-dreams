@@ -37,7 +37,7 @@ h1{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,28px);color:rgba(255,106,
 .incident-body .fix{color:rgba(78,203,113,0.35)}
 
 /* fox ascii */
-.fox-ascii{font-size:28px;margin-bottom:24px;opacity:0.15;animation:foxFloat 5s ease-in-out infinite}
+.fox-ascii{font-size:28px;display:block;margin-bottom:24px;opacity:0.15;animation:foxFloat 5s ease-in-out infinite}
 @keyframes foxFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
 /* action */
@@ -64,7 +64,7 @@ h1{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,28px);color:rgba(255,106,
 <body>
 <div class="glow"></div>
 <div class="container">
-  <div class="fox-ascii">&#x1F98A;</div>
+  <img src="img/incident-rabbit.jpg" alt="clock rabbit" class="fox-ascii" style="width:160px;height:auto;border-radius:8px;opacity:0.7;filter:saturate(0.6) brightness(0.8)">
   <div class="status"><span class="status-dot"></span>incident active</div>
   <h1>Quest Board</h1>
   <div class="sub">temporarily offline</div>
@@ -90,3 +90,4 @@ h1{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,28px);color:rgba(255,106,
 <script src="blickwinkel.js"></script>
 </body>
 </html>
+
