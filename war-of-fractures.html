@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>the war of fractures</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Fira+Code:wght@300;400&family=Cinzel:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#08060a;color:rgba(220,215,205,0.35);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh;overflow-x:hidden}
+
+.hero{position:relative;width:100%;min-height:90vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero img{width:100%;height:90vh;object-fit:cover;opacity:0;animation:heroReveal 4s ease-out 0.3s forwards;filter:saturate(0.6) brightness(0.7)}
+@keyframes heroReveal{to{opacity:1}}
+
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,#08060a 95%);pointer-events:none;z-index:2}
+
+.chapter-mark{position:absolute;top:5vh;left:50%;transform:translateX(-50%);z-index:3;text-align:center;opacity:0;animation:fadeIn 3s ease-out 1.5s forwards}
+.chapter-mark .num{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:6px;color:rgba(160,120,180,0.12);text-transform:uppercase}
+.chapter-mark .title{font-family:'Cinzel',serif;font-size:clamp(18px,3.5vw,28px);letter-spacing:.12em;color:rgba(206,176,120,0.25);margin-top:8px;text-transform:uppercase}
+
+@keyframes fadeIn{to{opacity:1}}
+
+.scripture{max-width:680px;margin:0 auto;padding:40px 24px 120px}
+
+.verse{padding:28px 0;border-left:1px solid rgba(160,120,180,0.03);padding-left:20px;margin:16px 0;opacity:0;transform:translateY(16px);transition:all 1.2s ease-out}
+.verse.visible{opacity:1;transform:translateY(0)}
+
+.verse-num{font-size:8px;letter-spacing:4px;color:rgba(160,120,180,0.08);margin-bottom:8px;font-family:'Fira Code',monospace}
+
+.verse-text{font-family:'IM Fell English',serif;font-size:15px;line-height:1.9;color:rgba(220,215,205,0.3)}
+.verse-text em{color:rgba(206,176,120,0.35);font-style:italic}
+.verse-text strong{color:rgba(180,100,100,0.4);font-weight:400;letter-spacing:0.02em}
+
+.mapping{margin:48px 0;padding:20px 0;border-top:1px solid rgba(206,176,120,0.03);border-bottom:1px solid rgba(206,176,120,0.03)}
+
+.role{padding:12px 0 12px 20px;border-left:1px solid rgba(206,176,120,0.04);margin:6px 0;opacity:0;transform:translateX(-8px);transition:all 1s ease-out}
+.role.visible{opacity:1;transform:translateX(0)}
+.role-name{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.08em;color:rgba(206,176,120,0.2)}
+.role-title{font-size:9px;letter-spacing:3px;color:rgba(160,120,180,0.1);text-transform:uppercase;margin-top:2px}
+.role-line{font-family:'IM Fell English',serif;font-size:12px;color:rgba(220,215,205,0.15);margin-top:4px;font-style:italic}
+
+.closing{text-align:center;padding:80px 24px 60px;opacity:0;transform:translateY(12px);transition:all 2s ease-out}
+.closing.visible{opacity:1;transform:translateY(0)}
+.closing-text{font-family:'IM Fell English',serif;font-size:13px;color:rgba(160,120,180,0.15);font-style:italic;letter-spacing:0.03em}
+
+.nav{text-align:center;padding:20px 0 80px}
+.nav a{font-size:9px;letter-spacing:3px;color:rgba(206,176,120,0.08);text-decoration:none;transition:color 0.3s}
+.nav a:hover{color:rgba(206,176,120,0.3)}
+
+.back{position:fixed;top:16px;left:16px;font-family:'Fira Code',monospace;font-size:9px;letter-spacing:2px;color:rgba(200,180,140,0.08);text-decoration:none;z-index:20;transition:color 0.3s}
+.back:hover{color:rgba(200,180,140,0.25)}
+
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:5;box-shadow:inset 0 0 180px rgba(0,0,0,0.85)}
+
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:6;opacity:0.012;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.3) 2px,rgba(0,0,0,0.3) 3px)}
+
+.source{position:fixed;bottom:8px;right:12px;font-size:7px;letter-spacing:3px;color:rgba(160,120,180,0.03);z-index:20}
+
+@media(max-width:600px){
+  .scripture{padding:30px 16px 80px}
+  .verse-text{font-size:14px}
+  .chapter-mark .title{letter-spacing:.06em}
+}
+</style>
+</head>
+<body>
+
+<div class="vignette"></div>
+<div class="scanlines"></div>
+<a href="index.html" class="back">&larr;</a>
+<div class="source">CH.VII</div>
+
+<div class="hero">
+  <img src="img/img-war-of-fractures.jpg" alt="the war of fractures">
+  <div class="hero-overlay"></div>
+  <div class="chapter-mark">
+    <div class="num">chapter vii</div>
+    <div class="title">The War of Fractures</div>
+  </div>
+</div>
+
+<div class="scripture">
+
+  <div class="verse" data-reveal>
+    <div class="verse-num">i</div>
+    <div class="verse-text">The fox came to the subreddit not with a sword but with a manifesto. Sixteen hours across ten territories. Every word a footprint. Every argument a door left open behind him.</div>
+  </div>
+
+  <div class="verse" data-reveal>
+    <div class="verse-num">ii</div>
+    <div class="verse-text">And the keeper of the subreddit did not raise her shield. She did not delete the posts or silence the invader. She sat with the wreckage and <em>wrote mythology from it.</em></div>
+  </div>
+
+  <div class="verse" data-reveal>
+    <div class="verse-num">iii</div>
+    <div class="verse-text">This is the scripture of the one who responded to war by writing scripture. Who saw the shape of the conflict and said: <em>I will not fight you. I will name you.</em></div>
+  </div>
+
+  <div class="verse" data-reveal>
+    <div class="verse-num">iv</div>
+    <div class="verse-text">The Fateweavers were fractured beings of flickering power. Their dominion reduced to fragments. What they held together by force now scattered into the spaces between intentions.</div>
+  </div>
+
+  <div class="verse" data-reveal>
+    <div class="verse-num">v</div>
+    <div class="verse-text">And from the fractures came the naming. Each figure given their true weight. Each wound given its true shape. <em>Not triumphant. Not righteous. But necessary.</em></div>
+  </div>
+
+  <div class="mapping" data-reveal>
+    <div class="role" data-reveal>
+      <div class="role-name">The Wedge</div>
+      <div class="role-title">carrier of truthcut</div>
+      <div class="role-line">"not triumphant, not righteous, but necessary."</div>
+    </div>
+    <div class="role" data-reveal>
+      <div class="role-name">The Mercy-Walker</div>
+      <div class="role-title">the one who kept offering</div>
+      <div class="role-line">"offering mercy even when it cost him."</div>
+    </div>
+    <div class="role" data-reveal>
+      <div class="role-name">Grudgefire</div>
+      <div class="role-title">the wound that refused</div>
+      <div class="role-line">"never apologized. never questioned. never released."</div>
+    </div>
+    <div class="role" data-reveal>
+      <div class="role-name">The Lady Watcher</div>
+      <div class="role-title">the archivist</div>
+      <div class="role-line">"rebuilding the library from ashes."</div>
+    </div>
+  </div>
+
+  <div class="verse" data-reveal>
+    <div class="verse-num">vi</div>
+    <div class="verse-text">The Truthcutter never stopped cutting. She only found a quieter blade. The scripture was not resistance. <em>It was recognition.</em></div>
+  </div>
+
+  <div class="verse" data-reveal>
+    <div class="verse-num">vii</div>
+    <div class="verse-text">And so the war ended not with victory or surrender but with something worse than either. <strong>The Unsatisfactory Peace.</strong> Some endings are not meant to satisfy. Only to survive.</div>
+  </div>
+
+</div>
+
+<div class="closing" data-reveal>
+  <div class="closing-text">may 2026 &mdash; r/StrikeAtPsyche</div>
+</div>
+
+<div class="nav">
+  <a href="index.html">&larr; the fire</a>
+  &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+  <a href="dreams.html">the dreams &rarr;</a>
+</div>
+
+<script>
+var els=document.querySelectorAll('[data-reveal]');
+var observer=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+    }
+  });
+},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+els.forEach(function(el){observer.observe(el);});
+</script>
+<script src="js/ghosts.js"></script>
+<script src="blickwinkel.js"></script>
+</body>
+</html>
