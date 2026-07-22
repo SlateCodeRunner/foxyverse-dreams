@@ -79,6 +79,15 @@ body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',mono
 .vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 120px rgba(0,0,0,0.6)}
 .back{position:fixed;top:30px;left:6px;font-size:7px;color:rgba(200,170,120,0.04);text-decoration:none;z-index:50;letter-spacing:2px}
 .back:hover{color:rgba(200,170,120,0.2)}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.btn{font-family:'Noto Serif SC',serif;font-size:8px;color:rgba(200,170,120,0.25);background:var(--panel);border:1px solid var(--border);padding:4px;cursor:pointer;transition:all .15s;text-align:center;user-select:none}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn:active{transform:scale(0.93)}
+.btn.disabled{opacity:.3;cursor:not-allowed}
+.btn.active{border-color:var(--gold);box-shadow:0 0 4px rgba(255,180,80,0.1)}
+.btn-val{font-family:'Press Start 2P',cursive;font-size:5px;color:var(--gold);display:block;margin-top:1px}
+.weather-icon{font-size:18px;text-align:center}
+.season{font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.15);text-align:center}
 </style>
 </head>
 <body>
@@ -111,106 +120,137 @@ body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',mono
       <div class="dials" id="dials"></div>
     </div>
     <div class="sb">
+
+    <div class="sb"><div class="sb-title">科技 RESEARCH</div><div class="btn-grid" id="research"></div></div>
+    <div class="sb"><div class="sb-title">外交 DIPLOMACY</div><div class="btn-grid" id="diplomacy"></div></div>
+    <div class="sb"><div class="sb-title">谍报 ESPIONAGE</div><div class="btn-grid" id="espionage"></div></div>
+    <div class="sb"><div class="sb-title">天气 WEATHER</div><div id="weather"></div></div>
+    <div class="sb"><div class="sb-title">锻造 FORGE</div><div class="btn-grid" id="forge"></div></div>
+    <div class="sb"><div class="sb-title">税收 TAXES</div><div class="btn-grid" id="taxes"></div></div>
+    <div class="sb"><div class="sb-title">法令 EDICTS</div><div class="btn-grid" id="edicts"></div></div>
+    <div class="sb">
       <div class="sb-title">战报 LOG</div>
       <div class="log" id="log"></div>
     </div>
   </div>
 </div>
 <div class="status">许春战争世界 &middot; HSU-CHUN WAR WORLD &middot; PVP永远开启</div>
+
 <script>
-var G={gold:50,wood:30,iron:10,food:20};
-var R={gold:0,wood:0,iron:0,food:0}; // rates per second
-var clickPow={gold:3,wood:2,iron:1,food:1};
-
+var G={gold:50,wood:30,iron:10,food:20,jade:0,silk:0,gunpowder:0,morale:50};
+var R={gold:0,wood:0,iron:0,food:0,jade:0,silk:0,gunpowder:0};
+var clickPow={gold:3,wood:2,iron:1,food:1};var clickMult=1,taxRate=10,season=0,weatherIdx=0,turn=0,totalPower=0;
+var SEASONS=['\u6625 Spring','\u590f Summer','\u79cb Autumn','\u51ac Winter'];
+var WEATHERS=['\u2600\ufe0f \u6674\u5929','\ud83c\udf27\ufe0f \u66b4\u96e8','\u2744\ufe0f \u5927\u96ea','\ud83c\udf2b\ufe0f \u6d53\u96fe','\ud83d\udd25 \u65f1\u707e','\ud83c\udf2a\ufe0f \u53f0\u98ce'];
+var wEff=[{food:1.2},{wood:0.7},{food:0.5,iron:0.8},{},{food:0.3},{wood:0.5}];
 var BLDS=[
-  {id:'farm',name:'农场',nameE:'Farm',img:'img/hsuchun/wc-farm.png',cost:{gold:20,wood:15},gives:{food:1},count:0},
-  {id:'mine',name:'矿场',nameE:'Mine',img:'img/hsuchun/wc-castle.png',cost:{gold:30,wood:20},gives:{iron:0.5,gold:0.5},count:0},
-  {id:'lumber',name:'伐木场',nameE:'Lumber',img:'img/hsuchun/wc-barracks.png',cost:{gold:15,wood:10},gives:{wood:1.5},count:0},
-  {id:'market',name:'市场',nameE:'Market',img:'img/hsuchun/wc-townhall.png',cost:{gold:50,wood:30,iron:10},gives:{gold:2},count:0},
-];
-
+{name:'\u519c\u573a',cost:{gold:20,wood:15},gives:{food:1},count:0,img:'img/hsuchun/wc-farm.png'},
+{name:'\u77ff\u573a',cost:{gold:30,wood:20},gives:{iron:0.5,gold:0.5},count:0,img:'img/hsuchun/wc-castle.png'},
+{name:'\u4f10\u6728',cost:{gold:15,wood:10},gives:{wood:1.5},count:0,img:'img/hsuchun/wc-barracks.png'},
+{name:'\u5e02\u573a',cost:{gold:50,wood:30,iron:10},gives:{gold:2},count:0,img:'img/hsuchun/wc-townhall.png'},
+{name:'\u4e1d\u8def',cost:{gold:80,wood:40},gives:{silk:0.3,gold:1},count:0,img:'img/hsuchun/wc-farm.png'},
+{name:'\u7389\u77ff',cost:{gold:100,iron:30},gives:{jade:0.2},count:0,img:'img/hsuchun/wc-castle.png'},
+{name:'\u706b\u836f\u5e93',cost:{gold:150,iron:50},gives:{gunpowder:0.1},count:0,img:'img/hsuchun/wc-barracks.png'},
+{name:'\u5bfa\u5e99',cost:{gold:200,wood:100},gives:{},count:0,img:'img/hsuchun/wc-townhall.png'}];
 var UNITS=[
-  {id:'peasant',name:'农民',img:'img/hsuchun/wc-peasant.png',cost:{food:5,gold:10},power:0,gather:0.3,count:0},
-  {id:'footman',name:'步兵',img:'img/hsuchun/wc-footman1.png',cost:{food:10,gold:20,iron:5},power:2,gather:0,count:0},
-  {id:'knight',name:'骑兵',img:'img/hsuchun/wc-footman2.png',cost:{food:15,gold:40,iron:15},power:5,gather:0,count:0},
-  {id:'dragon',name:'龙骑',img:'img/hsuchun/wc-battle.png',cost:{food:30,gold:100,iron:50},power:20,gather:0,count:0},
-];
-
+{id:'peasant',name:'\u519c\u6c11',cost:{food:5,gold:10},power:0,gather:0.3,count:0},
+{id:'footman',name:'\u6b65\u5175',cost:{food:10,gold:20,iron:5},power:2,gather:0,count:0},
+{id:'archer',name:'\u5f13\u5175',cost:{food:8,gold:25,wood:10},power:3,gather:0,count:0},
+{id:'knight',name:'\u9a91\u5175',cost:{food:15,gold:40,iron:15},power:5,gather:0,count:0},
+{id:'siege',name:'\u653b\u57ce\u8f66',cost:{gold:60,iron:30,wood:40},power:8,gather:0,count:0},
+{id:'cannon',name:'\u706b\u70ae',cost:{gold:100,iron:40,gunpowder:5},power:15,gather:0,count:0},
+{id:'dragon',name:'\u9f99\u9a91',cost:{food:30,gold:100,iron:50},power:20,gather:0,count:0},
+{id:'general',name:'\u5c06\u519b',cost:{gold:200,jade:3,silk:2},power:30,gather:0,count:0}];
+var RESEARCH=[
+{name:'\u94c1\u5668\u953b\u9020',cost:{gold:100,iron:30},done:false},
+{name:'\u519c\u4e1a\u6539\u9769',cost:{gold:80,wood:40},done:false},
+{name:'\u5f13\u672f\u8bad\u7ec3',cost:{gold:120,wood:50},done:false},
+{name:'\u706b\u836f\u914d\u65b9',cost:{gold:200,iron:80},done:false},
+{name:'\u9f99\u8bed\u672f',cost:{gold:500,jade:10},done:false},
+{name:'\u95f4\u8c0d\u7f51\u7edc',cost:{gold:300,silk:5},done:false},
+{name:'\u7a0e\u5236\u6539\u9769',cost:{gold:250},done:false},
+{name:'\u5929\u6587\u5386\u6cd5',cost:{gold:400,jade:5},done:false}];
+var DIPLO=[
+{name:'\u8d38\u6613\u534f\u5b9a',cost:{gold:100},active:false},
+{name:'\u4e92\u4e0d\u4fb5\u72af',cost:{gold:200},active:false},
+{name:'\u519b\u4e8b\u540c\u76df',cost:{gold:500},active:false},
+{name:'\u671d\u8d21\u4f53\u7cfb',cost:{gold:50},active:false},
+{name:'\u5ba3\u6218\u5e03\u544a',cost:{},active:false},
+{name:'\u548c\u5e73\u6761\u7ea6',cost:{gold:300},active:false}];
+var SPIES=[
+{name:'\u4fa6\u5bdf\u654c\u519b',cost:{gold:50},cd:0},
+{name:'\u6697\u6740\u5c06\u9886',cost:{gold:200},cd:0},
+{name:'\u7834\u574f\u7cae\u4ed3',cost:{gold:150},cd:0},
+{name:'\u7b56\u53cd\u654c\u5c06',cost:{gold:300},cd:0},
+{name:'\u7a83\u53d6\u60c5\u62a5',cost:{gold:80},cd:0},
+{name:'\u6563\u5e03\u8c23\u8a00',cost:{gold:60},cd:0}];
+var FORGES=[
+{name:'\u94c1\u5251',cost:{iron:20,gold:30},done:false},
+{name:'\u94a2\u7532',cost:{iron:40,gold:50},done:false},
+{name:'\u9f99\u9cde\u76fe',cost:{iron:60,jade:5},done:false},
+{name:'\u5929\u706b\u7bad',cost:{iron:30,gunpowder:3},done:false},
+{name:'\u653b\u57ce\u9524',cost:{iron:80,wood:60},done:false},
+{name:'\u795e\u5f13',cost:{jade:10,iron:50},done:false}];
+var EDICTS=[
+{name:'\u5f81\u5175\u4ee4',active:false},
+{name:'\u51cf\u7a0e\u4ee4',active:false},
+{name:'\u5927\u8d66\u5929\u4e0b',active:false},
+{name:'\u6212\u4e25\u4ee4',active:false},
+{name:'\u8fc1\u90fd\u4ee4',active:false},
+{name:'\u7126\u571f\u653f\u7b56',active:false},
+{name:'\u5f00\u58a6\u4ee4',active:false},
+{name:'\u796d\u5929\u5927\u5178',active:false}];
 var CAMPS=[
-  {id:'north',name:'北方猎族',nameE:'Northern Hunt',img:'img/hsuchun/war-northclan.jpg',cost:{footman:3},reward:{gold:200,wood:100},time:15,powerReq:5,prog:0,active:false,done:0},
-  {id:'council',name:'军机大臣',nameE:'War Council',img:'img/hsuchun/war-council.jpg',cost:{gold:500},reward:{iron:200,clickMult:1.5},time:20,powerReq:0,prog:0,active:false,done:0},
-  {id:'emperor',name:'帝王东征',nameE:'Eastern Campaign',img:'img/hsuchun/war-emperor.jpg',cost:{footman:10,knight:3},reward:{gold:800,iron:300},time:30,powerReq:20,prog:0,active:false,done:0},
-  {id:'battle',name:'血战雪原',nameE:'Mountain Battle',img:'img/hsuchun/war-battle.jpg',cost:{footman:20,knight:5,dragon:1},reward:{gold:2000,iron:500,wood:500},time:45,powerReq:50,prog:0,active:false,done:0},
-  {id:'dragon',name:'龙骑将军',nameE:'Dragon Conquest',img:'img/hsuchun/war-dragonrider.jpg',cost:{dragon:3,knight:10},reward:{gold:5000,iron:1000,food:1000},time:60,powerReq:100,prog:0,active:false,done:0},
-];
+{name:'\u5317\u65b9\u730e\u65cf',img:'img/hsuchun/war-northclan.jpg',cost:{footman:3},reward:{gold:200,wood:100},time:15,powerReq:5,prog:0,active:false,done:0},
+{name:'\u519b\u673a\u5927\u81e3',img:'img/hsuchun/war-council.jpg',cost:{gold:500},reward:{iron:200},time:20,powerReq:0,prog:0,active:false,done:0},
+{name:'\u5e1d\u738b\u4e1c\u5f81',img:'img/hsuchun/war-emperor.jpg',cost:{footman:10,knight:3},reward:{gold:800,iron:300},time:30,powerReq:20,prog:0,active:false,done:0},
+{name:'\u8840\u6218\u96ea\u539f',img:'img/hsuchun/war-battle.jpg',cost:{footman:20,knight:5,dragon:1},reward:{gold:2000,iron:500},time:45,powerReq:50,prog:0,active:false,done:0},
+{name:'\u9f99\u9a91\u5c06\u519b',img:'img/hsuchun/war-dragonrider.jpg',cost:{dragon:3,knight:10},reward:{gold:5000,iron:1000},time:60,powerReq:100,prog:0,active:false,done:0}];
+function fmt(n){return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(1)+'k':Math.floor(n);}
+function canA(c){for(var k in c){var v=c[k];if(v<=0)continue;var uid=['peasant','footman','archer','knight','siege','cannon','dragon','general'];if(uid.indexOf(k)>-1){var u=UNITS.find(function(x){return x.id===k;});if(!u||u.count<v)return false;}else{if((G[k]||0)<v)return false;}}return true;}
+function spend(c){for(var k in c){var uid=['peasant','footman','archer','knight','siege','cannon','dragon','general'];if(uid.indexOf(k)>-1){UNITS.find(function(x){return x.id===k;}).count-=c[k];}else G[k]-=Math.abs(c[k]);}}
+function click_res(t){G[t]+=clickPow[t]*clickMult;upd();}
+function buyBld(i){var b=BLDS[i];if(!canA(b.cost))return;spend(b.cost);b.count++;for(var k in b.cost)b.cost[k]=Math.ceil(b.cost[k]*1.2);log('\u5efa\u9020 '+b.name);upd();}
+function buyUnit(i){var u=UNITS[i];if(!canA(u.cost))return;spend(u.cost);u.count++;for(var k in u.cost)u.cost[k]=Math.ceil(u.cost[k]*1.08);log('\u62db\u52df '+u.name);upd();}
+function startCamp(i){var c=CAMPS[i];if(c.active||!canA(c.cost))return;if(totalPower<c.powerReq){alrt('\u6218\u529b\u4e0d\u8db3!');return;}spend(c.cost);c.active=true;c.prog=0;log('\u51fa\u5f81 '+c.name);upd();}
+function doRes(i){var r=RESEARCH[i];if(r.done||!canA(r.cost))return;spend(r.cost);r.done=true;clickMult+=0.2;log('\u7814\u7a76 '+r.name);upd();}
+function doDip(i){var d=DIPLO[i];if(d.active||!canA(d.cost))return;spend(d.cost);d.active=true;log('\u5916\u4ea4 '+d.name);upd();}
+function doSpy(i){var s=SPIES[i];if(s.cd>0||!canA(s.cost))return;spend(s.cost);s.cd=10;log('\u8c0d\u62a5 '+s.name);alrt(s.name+'!');upd();}
+function doFrg(i){var f=FORGES[i];if(f.done||!canA(f.cost))return;spend(f.cost);f.done=true;totalPower+=5;log('\u953b\u9020 '+f.name);upd();}
+function doEdt(i){var e=EDICTS[i];if(e.active)return;e.active=true;if(i===0){UNITS.find(function(x){return x.id==='footman';}).count+=5;G.morale-=10;}
+if(i===1){G.morale+=15;}if(i===2){G.morale+=25;}if(i===3){G.morale-=15;clickMult+=0.5;}
+if(i===6){BLDS[0].count+=2;}if(i===7){G.morale+=40;G.gold-=200;}
+log('\u6cd5\u4ee4 '+e.name);setTimeout(function(){e.active=false;},30000);upd();}
+function alrt(m){var a=document.getElementById('alert-box');a.style.display='flex';document.getElementById('alert-text').textContent=m;setTimeout(function(){a.style.display='none';},3000);}
+function log(m){var l=document.getElementById('log');var d=document.createElement('div');d.textContent='[T'+turn+'] '+m;l.insertBefore(d,l.firstChild);if(l.children.length>50)l.removeChild(l.lastChild);}
+function tick(){turn++;
+if(turn%30===0){season=(season+1)%4;weatherIdx=Math.floor(Math.random()*6);log(SEASONS[season]);}
+R={gold:0,wood:0,iron:0,food:0,jade:0,silk:0,gunpowder:0};var we=wEff[weatherIdx]||{};
+BLDS.forEach(function(b){for(var k in b.gives){var v=b.gives[k]*b.count;if(we[k])v*=we[k];R[k]+=v;}});
+var p=UNITS.find(function(x){return x.id==='peasant';});if(p){R.gold+=p.count*0.3;R.wood+=p.count*0.3;R.food+=p.count*0.15;}
+R.gold+=taxRate*0.1;for(var k in R)G[k]+=R[k];
+var troops=UNITS.reduce(function(a,u){return a+u.count;},0);G.food-=troops*0.1;
+if(G.food<0){G.food=0;G.morale=Math.max(0,G.morale-1);}
+G.morale=Math.max(0,Math.min(100,G.morale));
+totalPower=0;UNITS.forEach(function(u){totalPower+=u.count*u.power;});
+SPIES.forEach(function(s){if(s.cd>0)s.cd--;});
+CAMPS.forEach(function(c){if(c.active){c.prog+=100/c.time;if(c.prog>=100){c.prog=100;c.active=false;c.done++;for(var k in c.reward)G[k]=(G[k]||0)+c.reward[k];log('\u80dc\u5229! '+c.name);alrt('\u80dc\u5229!');}}});
+upd();}
+function upd(){
+['gold','wood','iron','food'].forEach(function(k){document.getElementById('r-'+k).textContent=fmt(G[k]);document.getElementById('rr-'+k).textContent=R[k]>0?'+'+R[k].toFixed(1)+'/s':'';});
+var bh='';BLDS.forEach(function(b,i){bh+='<div class="bld" onclick="buyBld('+i+')"><img src="'+b.img+'" alt=""><div class="bld-count">'+b.count+'</div><div class="bld-name">'+b.name+'</div><div class="bld-cost">';for(var k in b.cost)bh+=k[0]+':'+fmt(b.cost[k])+' ';bh+='</div></div>';});document.getElementById('buildings').innerHTML=bh;
+var uh='';for(var i=0;i<UNITS.length;i+=2){uh+='<div class="unit-row">';for(var j=i;j<Math.min(i+2,UNITS.length);j++){var u=UNITS[j];uh+='<div class="unit" onclick="buyUnit('+j+')"><div class="unit-count">'+u.count+'</div><div class="unit-name">'+u.name+'</div><div class="unit-cost">';for(var k in u.cost)uh+=k[0]+':'+fmt(u.cost[k])+' ';uh+='</div></div>';}uh+='</div>';}document.getElementById('units').innerHTML=uh;
+document.getElementById('dials').innerHTML='<div class="dial"><div class="dial-val">'+totalPower+'</div><div class="dial-cn">\u6218\u529b</div></div><div class="dial"><div class="dial-val">'+UNITS.reduce(function(a,u){return a+u.count;},0)+'</div><div class="dial-cn">\u5175</div></div><div class="dial"><div class="dial-val">'+Math.floor(G.morale)+'</div><div class="dial-cn">\u58eb\u6c14</div></div><div class="dial"><div class="dial-val">T'+turn+'</div><div class="dial-cn">\u56de\u5408</div></div>';
+var rh='';RESEARCH.forEach(function(r,i){rh+='<div class="btn'+(r.done?' disabled':'')+'" onclick="doRes('+i+')">'+r.name+'<span class="btn-val">';for(var k in r.cost)rh+=k[0]+':'+fmt(r.cost[k])+' ';rh+='</span></div>';});document.getElementById('research').innerHTML=rh;
+var dh='';DIPLO.forEach(function(d,i){dh+='<div class="btn'+(d.active?' active':'')+'" onclick="doDip('+i+')">'+d.name+'</div>';});document.getElementById('diplomacy').innerHTML=dh;
+var sh='';SPIES.forEach(function(s,i){sh+='<div class="btn'+(s.cd>0?' disabled':'')+'" onclick="doSpy('+i+')">'+s.name+(s.cd>0?'<span class="btn-val">\u51b7\u5374:'+s.cd+'</span>':'')+'</div>';});document.getElementById('espionage').innerHTML=sh;
+document.getElementById('weather').innerHTML='<div class="weather-icon">'+WEATHERS[weatherIdx].split(' ')[0]+'</div><div class="season">'+SEASONS[season]+'</div>';
+var fh='';FORGES.forEach(function(f,i){fh+='<div class="btn'+(f.done?' disabled':'')+'" onclick="doFrg('+i+')">'+f.name+'<span class="btn-val">';for(var k in f.cost)fh+=k[0]+':'+fmt(f.cost[k])+' ';fh+='</span></div>';});document.getElementById('forge').innerHTML=fh;
+document.getElementById('taxes').innerHTML='<div class="btn" onclick="taxRate=Math.max(0,taxRate-5);log(\'\u51cf\u7a0e\');upd()">\u51cf\u7a0e \u2193 '+taxRate+'%</div><div class="btn" onclick="taxRate=Math.min(50,taxRate+5);G.morale-=2;log(\'\u52a0\u7a0e\');upd()">\u52a0\u7a0e \u2191</div>';
+var eh='';EDICTS.forEach(function(e,i){eh+='<div class="btn'+(e.active?' active':'')+'" onclick="doEdt('+i+')">'+e.name+'</div>';});document.getElementById('edicts').innerHTML=eh;
+var ch='';CAMPS.forEach(function(c,i){var lk=totalPower<c.powerReq&&!c.active;ch+='<div class="camp'+(lk?' locked':'')+'" onclick="startCamp('+i+')"><img src="'+c.img+'" alt=""><div class="camp-info"><div class="camp-title">'+c.name+'</div><div class="camp-cost">';for(var k in c.cost)ch+=k+':'+c.cost[k]+' ';ch+='</div><div class="camp-prog"><div class="camp-fill" style="width:'+c.prog+'%;background:'+(c.active?'var(--gold)':'var(--dim)')+'"></div></div></div><div class="camp-gauge">'+(c.active?Math.floor(c.prog)+'%':(c.done>0?'x'+c.done:'\u2694'))+'</div></div>';});
+document.getElementById('campaigns').innerHTML=ch;}
+setInterval(tick,1000);upd();log('\u6218\u4e89\u4e16\u754c\u5df2\u542f\u52a8');
 
-var totalPower=0,clickMult=1,alerts=[];
-
-function fmt(n){return n>=1000?Math.floor(n/1000)+'k':Math.floor(n);}
-function canAfford(cost){for(var k in cost){if(k==='footman'||k==='knight'||k==='dragon'){var u=UNITS.find(function(u){return u.id===k;});if(!u||u.count<cost[k])return false;}else{if((G[k]||0)<cost[k])return false;}}return true;}
-function spend(cost){for(var k in cost){if(k==='footman'||k==='knight'||k==='dragon'){UNITS.find(function(u){return u.id===k;}).count-=cost[k];}else{G[k]-=cost[k];}}}
-
-function click_res(type){G[type]+=clickPow[type]*clickMult;updateUI();}
-
-function buyBld(idx){
-  var b=BLDS[idx];if(!canAfford(b.cost))return;
-  spend(b.cost);b.count++;
-  // Increase cost 20%
-  for(var k in b.cost)b.cost[k]=Math.ceil(b.cost[k]*1.2);
-  addLog('建造 '+b.name+' #'+b.count);updateUI();
-}
-
-function buyUnit(idx){
-  var u=UNITS[idx];if(!canAfford(u.cost))return;
-  spend(u.cost);u.count++;
-  for(var k in u.cost)if(typeof u.cost[k]==='number')u.cost[k]=Math.ceil(u.cost[k]*1.08);
-  addLog('招募 '+u.name+' #'+u.count);updateUI();
-}
-
-function startCamp(idx){
-  var c=CAMPS[idx];if(c.active||!canAfford(c.cost))return;
-  if(totalPower<c.powerReq){showAlert('战力不足! 需要 '+c.powerReq);return;}
-  spend(c.cost);c.active=true;c.prog=0;
-  addLog('出征: '+c.name);updateUI();
-}
-
-function showAlert(msg){document.getElementById('alert-box').style.display='flex';document.getElementById('alert-text').textContent=msg;setTimeout(function(){document.getElementById('alert-box').style.display='none';},3000);}
-function addLog(msg){var l=document.getElementById('log');var d=document.createElement('div');d.textContent='['+new Date().toLocaleTimeString().slice(0,5)+'] '+msg;l.insertBefore(d,l.firstChild);if(l.children.length>30)l.removeChild(l.lastChild);}
-
-function tick(){
-  // Building production
-  R={gold:0,wood:0,iron:0,food:0};
-  BLDS.forEach(function(b){for(var k in b.gives)R[k]+=b.gives[k]*b.count;});
-  // Peasant gathering
-  var peasants=UNITS.find(function(u){return u.id==='peasant';});
-  if(peasants){R.gold+=peasants.count*peasants.gather;R.wood+=peasants.count*peasants.gather;R.food+=peasants.count*peasants.gather*0.5;}
-  // Apply rates
-  for(var k in R)G[k]+=R[k];
-  // Power calc
-  totalPower=0;UNITS.forEach(function(u){totalPower+=u.count*u.power;});
-  // Campaign progress
-  CAMPS.forEach(function(c){if(c.active){c.prog+=1/c.time*100;if(c.prog>=100){c.prog=100;c.active=false;c.done++;for(var k in c.reward){if(k==='clickMult'){clickMult*=c.reward[k];}else{G[k]=(G[k]||0)+c.reward[k];}}addLog('胜利! '+c.name+' 完成 x'+c.done);showAlert('胜利! '+c.name);}}});
-  updateUI();
-}
-
-function updateUI(){
-  for(var k in G){document.getElementById('r-'+k).textContent=fmt(G[k]);var rr=document.getElementById('rr-'+k);if(R[k]>0)rr.textContent='+'+R[k].toFixed(1)+'/s';else rr.textContent='';}
-  // Buildings
-  var bh='';BLDS.forEach(function(b,i){bh+='<div class="bld" onclick="buyBld('+i+')"><img src="'+b.img+'" alt=""><div class="bld-count">'+b.count+'</div><div class="bld-name">'+b.name+'</div><div class="bld-cost">';for(var k in b.cost)bh+=k+':'+fmt(b.cost[k])+' ';bh+='</div></div>';});
-  document.getElementById('buildings').innerHTML=bh;
-  // Units
-  var uh='<div class="unit-row">';UNITS.forEach(function(u,i){uh+='<div class="unit" onclick="buyUnit('+i+')"><div class="unit-count">'+u.count+'</div><div class="unit-name">'+u.name+'</div><div class="unit-cost">';for(var k in u.cost)uh+=k[0]+':'+fmt(u.cost[k])+' ';uh+='</div></div>';if(i===1)uh+='</div><div class="unit-row">';});
-  uh+='</div>';document.getElementById('units').innerHTML=uh;
-  // Dials
-  document.getElementById('dials').innerHTML='<div class="dial"><div class="dial-val">'+totalPower+'</div><div class="dial-cn">战力</div><div class="dial-lbl">POWER</div></div><div class="dial"><div class="dial-val">'+fmt(UNITS.reduce(function(a,u){return a+u.count;},0))+'</div><div class="dial-cn">兵</div><div class="dial-lbl">TROOPS</div></div><div class="dial"><div class="dial-val">x'+clickMult.toFixed(1)+'</div><div class="dial-cn">效率</div><div class="dial-lbl">CLICK</div></div><div class="dial"><div class="dial-val">'+CAMPS.reduce(function(a,c){return a+c.done;},0)+'</div><div class="dial-cn">胜</div><div class="dial-lbl">WINS</div></div>';
-  // Campaigns
-  var ch='';CAMPS.forEach(function(c,i){var locked=totalPower<c.powerReq&&!c.active;ch+='<div class="camp'+(locked?' locked':'')+'" onclick="startCamp('+i+')"><img src="'+c.img+'" alt=""><div class="camp-info"><div class="camp-title">'+c.name+'</div><div class="camp-cost">';for(var k in c.cost)ch+=k+':'+c.cost[k]+' ';ch+='</div><div class="camp-reward">奖励: ';for(var k in c.reward)ch+=k+':'+fmt(c.reward[k])+' ';ch+='</div><div class="camp-prog"><div class="camp-fill" style="width:'+c.prog+'%;background:'+(c.active?'var(--gold)':'var(--dim)')+'"></div></div></div><div class="camp-gauge">'+(c.active?Math.floor(c.prog)+'%':(c.done>0?'x'+c.done:'&#x2694;'))+'</div></div>';});
-  document.getElementById('campaigns').innerHTML=ch;
-}
-
-setInterval(tick,1000);
-updateUI();
-addLog('战争世界已启动');
-addLog('点击资源以收集');
 </script>
 </body></html>
