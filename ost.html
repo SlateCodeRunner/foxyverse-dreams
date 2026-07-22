@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -43,7 +43,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;ba
 
 /* RIGHT — NOW PLAYING */
 .right{background:var(--panel);padding:20px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden}
-.np-bg{position:absolute;inset:0;opacity:.12;background-size:cover;background-position:center;transition:background-image .5s;pointer-events:none}
+.np-bg{position:absolute;inset:0;opacity:.2;background-size:cover;background-position:center;transition:background-image .5s;pointer-events:none}
 .np-content{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center}
 .np-label{font-size:6px;letter-spacing:4px;color:var(--dim);margin-bottom:12px;align-self:flex-start}
 .np-crystal{width:100px;height:100px;object-fit:contain;animation:crystalFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(255,68,68,.3));margin-bottom:16px}
@@ -248,7 +248,23 @@ var TRACKS=[
 ];
 
 var cur=0,playing=false,player=null;
-var BG_MAP={I:'img/ost-crystal-hero.png',II:'img/ost-temple.png',III:'img/ost-campfire.png'};
+var TRACK_IMG={
+1:'img/ost-track-01-worldline.png',
+2:'img/ost-track-02-campfire.png',
+3:'img/ost-track-03-deviant.png',
+4:'img/ost-track-04-pen.png',
+5:'img/ost-track-05-loop.png',
+6:'img/ost-track-06-heda.png',
+7:'img/ost-track-07-tower-card.png',
+8:'img/ost-track-08-gamble.png',
+9:'img/ost-track-09-restraint.png',
+10:'img/ost-track-10-cute-void.png',
+11:'img/ost-track-11-after.png',
+12:'img/ost-track-12-containment.png',
+13:'img/ost-track-13-ra9.png',
+14:'img/ost-track-14-vixen.png',
+15:'img/ost-track-15-end.png'
+};
 
 function buildList(){
   var el=document.getElementById('tracklist'),html='',lastAct='';
@@ -269,7 +285,7 @@ function updateUI(){
   document.getElementById('np-source').textContent=t.src+' \u00B7 '+t.inf;
   document.getElementById('np-mood').textContent='MOOD: '+t.mood;
   document.getElementById('np-desc').textContent=t.desc;
-  document.getElementById('np-bg').style.backgroundImage='url('+BG_MAP[t.act]+')';
+  document.getElementById('np-bg').style.backgroundImage='url('+(TRACK_IMG[t.n]||'img/ost-crystal-hero.png')+')';
   document.getElementById('ti-track').textContent=String(t.n).padStart(2,'0')+' '+t.name;
   document.getElementById('ti-artist').textContent=t.artist;
   document.getElementById('ti-influence').textContent=t.inf;
@@ -279,6 +295,7 @@ function updateUI(){
   document.getElementById('mood-text').textContent=t.desc;
   document.getElementById('viz-track').textContent='NOW PLAYING: '+String(t.n).padStart(2,'0')+' '+t.name;
   document.getElementById('viz-mood').textContent='MOOD: '+t.mood;
+  var tiBg=document.querySelector('.info-panel-bg');if(tiBg)tiBg.style.backgroundImage='url('+(TRACK_IMG[t.n]||'img/ost-temple.png')+')';
   document.getElementById('bb-track').textContent=String(t.n).padStart(2,'0')+' '+t.name;
   document.querySelectorAll('.track').forEach(function(el,i){el.classList.toggle('active',i===cur);});
   var active=document.querySelector('.track.active');
