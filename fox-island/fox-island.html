@@ -443,7 +443,7 @@ const SC={
       H('path',58,8,32,40,'Path North ↑','exit',{walk:()=>{fadeGo('village');return 0;}},12,55)
     ];
     if(S.flags.fdock)a.push(H('ud',50,80,30,18,'Descend ⬇','exit',{walk:()=>{fadeGo('underdock');return 0;}},48,82));
-    if(!S.flags.dockTalked)a.push(H('stranger',32,22,18,42,'Hooded Stranger','npc',{look:'cloaked figure. foxy ears poke through.',talk:()=>{S.flags.dockTalked=1;startDlg('stranger');return 0;},take:0},72,72));
+    if(!S.flags.dockTalked)a.push(H('stranger',38,32,8,12,'Hooded Stranger','npc',{look:'cloaked figure. foxy ears poke through.',talk:()=>{S.flags.dockTalked=1;startDlg('stranger');return 0;},take:0},72,72));
     return a;}},
 
   village:{nm:'Village Square',bg:'bg-village',enter:'violet lanterns float. tavern west, temple east, garden north. a fox fountain gurgles.',build:bVillage,
@@ -463,7 +463,7 @@ const SC={
     ];
     if(S.flags.fwell)a.push(H('ws',42,72,14,10,'Wellspring ⬇','exit',{walk:()=>{fadeGo('wellspring');return 0;}},48,78));
     // PRACTICE DUEL NPC — appears after first spell
-    if(S.spells.length>=1&&!S.flags.queenWon)a.push(H('witch',62,50,12,25,'Scrappy Witch','npc',{
+    if(S.spells.length>=1&&!S.flags.queenWon)a.push(H('witch',56,52,8,12,'Scrappy Witch','npc',{
       look:'a young fox-eared witch with messy hair and a patched cloak. she\'s practicing spells on a fencepost. badly.',
       talk:()=>{startDlg('witch');return 0;},take:0
     },60,78));
@@ -471,8 +471,8 @@ const SC={
 
   tavern:{nm:'Mystic Tavern',bg:'bg-tavern',enter:'cinnamon and brimstone. barkeeper. lost one. fox mask on the wall.',build:bTavern,
     hs:()=>{const a=[
-      H('bk',5,10,28,42,'Barkeeper','npc',{look:'faintly amused. cleans the same glass forever.',talk:()=>{startDlg('barkeeper');return 0;},take:0}),
-      H('lo',68,28,16,35,'Lost One','npc',{look:'flickering like a bad signal. mumbling about "the loop."',talk:()=>{startDlg(S.flags.descent?'descent-start':'lost-one');return 0;},take:0}),
+      H('bk',15,22,8,12,'Barkeeper','npc',{look:'faintly amused. cleans the same glass forever.',talk:()=>{startDlg('barkeeper');return 0;},take:0}),
+      H('lo',70,35,8,12,'Lost One','npc',{look:'flickering like a bad signal. mumbling about "the loop."',talk:()=>{startDlg(S.flags.descent?'descent-start':'lost-one');return 0;},take:0}),
       H('msk',82,8,12,18,'Fox Mask','item',{look:'expression shifts — playful, menacing, sad.',take:()=>has('fox-mask')?'one mask is enough.':(addI('fox-mask'),'<span class="g">fox mask taken!</span> "it was waiting."')},12,40,'fox-mask'),
       H('fire',72,52,22,30,'Fireplace','obj',{
         look:'eternal flame. heat older than the building.',
@@ -513,7 +513,7 @@ const SC={
 
   throne:{nm:'Throne of Shadows',bg:'bg-throne',enter:'"so. you made it. 🦊" nine tails. amber eyes. she smiles.',build:bThrone,
     hs:()=>[
-      H('queen',30,5,35,48,'Fox Queen 🦊','npc',{look:'nine tails. not evil, not good. alive.',talk:()=>{startDlg(S.flags.queenWon?'queen-won':'queen');return 0;},take:0}),
+      H('queen',38,18,10,14,'Fox Queen 🦊','npc',{look:'nine tails. not evil, not good. alive.',talk:()=>{startDlg(S.flags.queenWon?'queen-won':'queen');return 0;},take:0}),
       H('arena',15,55,65,30,'Dueling Arena','obj',{look:'circle of fox-fire. runes pulse.',use:()=>S.flags.queenWon?'over.':(S.spells.length>=3&&has('skeleton-key')?(startDuel(),0):'<span class="h">need 3 spells + skeleton key.</span>'),walk:()=>S.flags.queenWon?'quiet.':(S.spells.length>=3&&has('skeleton-key')?(startDuel(),0):'arena doesn\'t activate.')},44,78),
       H('exit',38,86,22,12,'Back ↓','exit',{walk:()=>{fadeGo('garden');return 0;}},48,88)
     ]},
@@ -749,8 +749,7 @@ function bSanctum(c){c.innerHTML='<div class="mp3-tag">♪ Foxy Revolution</div>
   sv('look');
   $('start-btn').onclick=()=>{
     initA();musOn=true;$('mus-btn').textContent='♪ ON';$('mus-btn').classList.add('on');
-    $('title').style.display='none';
-    loadScene('dock');playMus('dock');
+    $('title').style.transition='opacity 1.2s';$('title').style.opacity='0';setTimeout(()=>{$('title').style.display='none';loadScene('dock');},1200);playMus('dock');
   };
   resetHintTimer();
 
