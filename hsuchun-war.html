@@ -277,37 +277,38 @@ var TREASURY=[{name:'🏦存金',cost:{gold:100},done:false},{name:'🏦借贷',
 var HORSES=[{name:'🐎养马',cost:{food:20,gold:15},done:false},{name:'🐎驿站',cost:{wood:30,gold:20},done:false},{name:'🐎铁蹄',cost:{iron:30},done:false},{name:'🐎骑射',cost:{gold:80},done:false},{name:'🐎马铠',cost:{iron:50,gold:40},done:false},{name:'🐎种马',cost:{gold:120,food:40},done:false}];
 var FARMING=[{name:'🌾开荒',cost:{wood:15},done:false},{name:'🌾水利',cost:{gold:30,wood:20},done:false},{name:'🌾轮作',cost:{gold:50},done:false},{name:'🌾蚕桑',cost:{gold:40,wood:15},done:false},{name:'🌾茶园',cost:{gold:60,wood:25},done:false},{name:'🌾酿酒',cost:{food:30,gold:20},done:false}];
 
-function doGeneric(arr,i,type){var a=arr[i];if(a.done||a.active)return;if(a.cost&&!canA(a.cost))return;if(a.cost)spend(a.cost);if(a.cd!==undefined){a.cd=8;log(type+' '+a.name);}else if(a.pow){totalPower+=a.pow;log(type+' '+a.name+' +'+a.pow);}else{a.done=true;a.active=true;log(type+' '+a.name);if(a.eff&&a.eff.indexOf('morale')>-1){var v=parseInt(a.eff.replace('morale+','').replace('power+',''));G.morale=Math.min(100,G.morale+v);}if(a.eff&&a.eff.indexOf('power')>-1){totalPower+=parseInt(a.eff.split('+')[1]);}}if(a.active!==undefined)setTimeout(function(){a.active=false;},20000);upd();}
 
-function renderGeneric(arr,elId,type,cols){
+function doArr(arrName,i){
+  var arrays={DEFENSE:DEFENSE,NAVAL:NAVAL,PRAYERS:PRAYERS,PROMOTE:PROMOTE,TREASURES:TREASURES,MERCS:MERCS,COMMANDS:COMMANDS,FESTIVALS:FESTIVALS,PUNISH:PUNISH,TREASURY:TREASURY,HORSES:HORSES,FARMING:FARMING};
+  var a=arrays[arrName][i];if(!a||a.done||a.active)return;
+  if(a.cost&&!canA(a.cost))return;if(a.cost)spend(a.cost);
+  if(a.cd!==undefined){a.cd=8;}
+  else if(a.pow){totalPower+=a.pow;}
+  else{if(a.done!==undefined)a.done=true;if(a.active!==undefined){a.active=true;setTimeout(function(){a.active=false;},20000);}}
+  if(a.eff){var v=parseInt(a.eff.replace(/[^0-9]/g,''));if(a.eff.indexOf('morale')>-1)G.morale=Math.min(100,G.morale+v);if(a.eff.indexOf('power')>-1)totalPower+=v;}
+  log(a.name);upd();
+}
+function rArr(arr,id,arrName){
   var h='';arr.forEach(function(a,i){
     var off=(a.done||a.active||(a.cd&&a.cd>0))?' off':'';
-    h+='<div class="b'+off+'" onclick="doGeneric('+type+','+i+',\''+type.replace(/([A-Z])/g,' $1').trim()+'\')">';
+    h+='<div class="b'+off+'" onclick="doArr(\''+arrName+'\','+i+')">';
     h+=a.name;
     if(a.cost){h+='<span class="bv">';for(var k in a.cost)h+=k[0]+':'+fmt(a.cost[k])+' ';h+='</span>';}
     if(a.cd&&a.cd>0)h+='<span class="bv">'+a.cd+'</span>';
     h+='</div>';
   });
-  var el=document.getElementById(elId);if(el)el.innerHTML=h;
+  var el=document.getElementById(id);if(el)el.innerHTML=h;
 }
 
-// Render extra panels in upd()
-var _origUpd = upd;
-upd = function(){
+var _origUpd=upd;
+upd=function(){
   _origUpd();
-  renderGeneric(DEFENSE,'defense','DEFENSE',3);
-  renderGeneric(NAVAL,'naval','NAVAL',3);
-  renderGeneric(PRAYERS,'prayers','PRAYERS',3);
-  renderGeneric(PROMOTE,'promote','PROMOTE',3);
-  renderGeneric(TREASURES,'treasures','TREASURES',3);
-  renderGeneric(MERCS,'mercs','MERCS',3);
-  renderGeneric(COMMANDS,'commands','COMMANDS',3);
-  renderGeneric(FESTIVALS,'festivals','FESTIVALS',3);
-  renderGeneric(PUNISH,'punish','PUNISH',3);
-  renderGeneric(TREASURY,'treasury','TREASURY',3);
-  renderGeneric(HORSES,'horses','HORSES',3);
-  renderGeneric(FARMING,'farming','FARMING',3);
-  // Prayer cooldowns
+  rArr(DEFENSE,'defense','DEFENSE');rArr(NAVAL,'naval','NAVAL');
+  rArr(PRAYERS,'prayers','PRAYERS');rArr(PROMOTE,'promote','PROMOTE');
+  rArr(TREASURES,'treasures','TREASURES');rArr(MERCS,'mercs','MERCS');
+  rArr(COMMANDS,'commands','COMMANDS');rArr(FESTIVALS,'festivals','FESTIVALS');
+  rArr(PUNISH,'punish','PUNISH');rArr(TREASURY,'treasury','TREASURY');
+  rArr(HORSES,'horses','HORSES');rArr(FARMING,'farming','FARMING');
   PRAYERS.forEach(function(p){if(p.cd>0)p.cd--;});
 };
 setInterval(tick,1000);upd();log('\u6218\u4e89\u4e16\u754c\u5df2\u542f\u52a8');
