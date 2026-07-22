@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,148 +7,143 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0810;--panel:#0d0b14;--border:#1e1630;--text:#9b8abf;--dim:#4a3a6a;--accent:#ff4444;--gold:#ffaa32;--purple:#9b7abf;--track-bg:#150f22;--active:#1a1230}
-body{background:var(--bg);color:var(--text);font-family:'Press Start 2P',cursive;min-height:100vh;overflow-x:hidden}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;background:repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0px,transparent 1px,transparent 2px);opacity:.7}
+:root{
+  --bg:#0a0810;--panel:#0d0b14;--border:#1e1630;
+  --text:#9b8abf;--dim:#4a3a6a;
+  --accent:#ff4444;--glow:rgba(255,68,68,.15);
+  --gold:#ffaa32;--purple:#9b7abf;
+  --track-bg:#150f22;--active:#1a1230;
+  --img-opacity:.25
+}
+body{background:var(--bg);color:var(--text);font-family:'Press Start 2P',cursive;min-height:100vh;overflow-x:hidden;transition:background .8s}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;background:repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0px,transparent 1px,transparent 2px);opacity:.6}
 
-.page{max-width:1100px;margin:0 auto;padding:16px 12px 130px}
+/* FULL-PAGE TRACK BG */
+.page-bg{position:fixed;inset:0;z-index:0;opacity:var(--img-opacity);background-size:cover;background-position:center;transition:background-image .6s,opacity .6s;pointer-events:none}
+.page-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,transparent 30%,transparent 70%,var(--bg) 100%)}
+
+.page{max-width:1100px;margin:0 auto;padding:16px 12px 130px;position:relative;z-index:1}
 
 /* HEADER */
-.hdr{display:flex;align-items:center;gap:14px;padding:12px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
-.hdr-img{width:48px;height:48px;border-radius:50%;object-fit:cover;animation:hdrPulse 3s ease-in-out infinite}
-@keyframes hdrPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
-.hdr h1{font-size:clamp(11px,2.5vw,15px);letter-spacing:2px;color:var(--gold)}
-.hdr-sub{font-size:7px;color:var(--dim);letter-spacing:3px;margin-top:4px}
+.hdr{display:flex;align-items:center;gap:14px;padding:12px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px;transition:border-color .8s}
+.hdr-img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.hdr h1{font-size:clamp(11px,2.5vw,15px);letter-spacing:2px;color:var(--gold);transition:color .8s}
+.hdr-sub{font-size:7px;color:var(--dim);letter-spacing:3px;margin-top:4px;transition:color .8s}
 
-/* MAIN GRID */
-.main{display:grid;grid-template-columns:300px 1fr;gap:2px;background:var(--border)}
-@media(max-width:800px){.main{grid-template-columns:1fr}}
+/* MAIN LAYOUT — now playing is hero */
+.hero{position:relative;border:1px solid var(--border);margin-bottom:2px;overflow:hidden;min-height:380px;display:flex;transition:border-color .8s}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35;transition:background-image .6s,opacity .6s}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--panel) 0%,transparent 40%,transparent 60%,var(--panel) 100%)}
+.hero-content{position:relative;z-index:2;display:flex;width:100%;gap:0}
 
-/* LEFT — TRACKLIST + CRYSTAL */
-.left{background:var(--panel);display:flex;flex-direction:column}
-.crystal-art{text-align:center;padding:20px 16px 12px;background:linear-gradient(180deg,#0a0612 0%,var(--panel) 100%)}
-.crystal-art img{width:180px;height:180px;object-fit:contain;animation:crystalFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,68,68,.2))}
+/* LEFT SIDE — track art + info */
+.hero-left{flex:0 0 45%;padding:24px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(90deg,rgba(10,8,16,.9) 0%,transparent 100%)}
+.np-num{font-size:32px;color:var(--accent);margin-bottom:4px;transition:color .8s;text-shadow:0 0 20px var(--glow)}
+.np-title{font-size:16px;color:#e0d0f0;letter-spacing:3px;margin-bottom:8px}
+.np-source{font-size:8px;color:var(--dim);margin-bottom:2px;transition:color .8s}
+.np-mood{font-size:8px;letter-spacing:4px;color:var(--accent);margin:14px 0 8px;transition:color .8s}
+.np-desc{font-size:8px;color:var(--purple);line-height:2.2;opacity:.7;max-width:300px;transition:color .8s}
+
+/* RIGHT SIDE — crystal + controls */
+.hero-right{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(270deg,rgba(10,8,16,.85) 0%,transparent 100%)}
+.np-crystal{width:100px;height:100px;object-fit:contain;animation:crystalFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 20px var(--glow));margin-bottom:16px;transition:filter .8s}
 @keyframes crystalFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.crystal-label{font-size:7px;letter-spacing:4px;color:var(--dim);margin-top:8px}
-.tracks{flex:1;overflow-y:auto;padding:0 8px 8px;max-height:320px;scrollbar-width:thin;scrollbar-color:var(--dim) var(--bg)}
-.act-label{font-size:7px;letter-spacing:3px;color:var(--accent);margin:10px 0 4px;padding:3px 0;border-bottom:1px solid rgba(255,68,68,.08)}
-.track{display:flex;align-items:center;gap:6px;padding:6px 4px;cursor:pointer;transition:all .15s;border-left:2px solid transparent;font-size:7px}
-.track:hover{background:var(--track-bg)}
-.track.active{background:var(--active);border-left-color:var(--accent)}
-.track-num{color:var(--dim);min-width:18px;text-align:right}
-.track-name{flex:1;color:var(--purple);letter-spacing:.5px}
-.track.active .track-name{color:var(--gold)}
-.track-dur{color:var(--dim);font-size:6px}
-.track.tbd{opacity:.3;cursor:default}
+.progress-wrap{width:100%;max-width:280px;margin:8px 0}
+.progress-bar{width:100%;height:5px;background:rgba(255,255,255,.06);cursor:pointer;border-radius:3px}
+.progress-fill{height:100%;background:var(--accent);border-radius:3px;width:0;transition:background .8s,width .3s}
+.progress-time{display:flex;justify-content:space-between;font-size:6px;color:var(--dim);margin-top:4px}
+.controls{display:flex;align-items:center;gap:16px;margin-top:10px}
+.ctrl-btn{background:none;border:2px solid var(--border);color:var(--purple);font-size:14px;width:42px;height:42px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;border-radius:4px;font-family:'Press Start 2P',cursive}
+.ctrl-btn:hover{border-color:var(--accent);color:var(--accent)}
+.ctrl-btn.play-btn{width:50px;height:50px;font-size:16px;border-color:var(--accent);color:var(--accent)}
+.ctrl-btn.play-btn:hover{background:var(--glow)}
 
-/* RIGHT — NOW PLAYING */
-.right{background:var(--panel);padding:20px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden}
-.np-bg{position:absolute;inset:0;opacity:.2;background-size:cover;background-position:center;transition:background-image .5s;pointer-events:none}
-.np-content{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center}
-.np-label{font-size:6px;letter-spacing:4px;color:var(--dim);margin-bottom:12px;align-self:flex-start}
-.np-crystal{width:100px;height:100px;object-fit:contain;animation:crystalFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(255,68,68,.3));margin-bottom:16px}
-.np-num{font-size:22px;color:var(--gold);margin-bottom:2px}
-.np-title{font-size:13px;color:#e0d0f0;letter-spacing:2px;margin-bottom:6px;text-align:center}
-.np-source{font-size:7px;color:var(--dim);text-align:center}
-.np-mood{font-size:7px;letter-spacing:3px;color:var(--accent);margin:10px 0 4px}
-.np-desc{font-size:7px;color:var(--purple);line-height:2;text-align:center;max-width:280px;opacity:.65}
-.progress-wrap{width:100%;margin:12px 0 6px}
-.progress-bar{width:100%;height:4px;background:var(--border);cursor:pointer;border-radius:2px;position:relative}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#ff6666);border-radius:2px;width:0;transition:width .3s}
-.progress-time{display:flex;justify-content:space-between;font-size:6px;color:var(--dim);margin-top:3px}
-.controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:6px}
-.ctrl-btn{background:none;border:2px solid var(--border);color:var(--purple);font-size:14px;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;border-radius:4px;font-family:'Press Start 2P',cursive}
-.ctrl-btn:hover{border-color:var(--purple);color:var(--gold)}
-.ctrl-btn.play-btn{width:48px;height:48px;font-size:16px;border-color:var(--accent);color:var(--accent)}
-.ctrl-btn.play-btn:hover{background:rgba(255,68,68,.1)}
+/* TRACKLIST BELOW */
+.track-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:2px;background:var(--border);margin-top:2px;transition:background .8s}
+.track-card{background:var(--panel);padding:0;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;border:1px solid transparent}
+.track-card:hover{border-color:var(--accent)}
+.track-card.active{border-color:var(--accent);box-shadow:0 0 12px var(--glow)}
+.track-card.tbd{opacity:.3;cursor:default}
+.tc-img{width:100%;height:100px;object-fit:cover;display:block;opacity:.6;transition:opacity .3s}
+.track-card:hover .tc-img,.track-card.active .tc-img{opacity:.85}
+.tc-info{padding:8px 10px}
+.tc-num{font-size:6px;color:var(--dim)}
+.tc-name{font-size:8px;color:var(--purple);letter-spacing:1px;margin:2px 0;transition:color .3s}
+.track-card.active .tc-name{color:var(--gold)}
+.tc-mood{font-size:6px;color:var(--accent);letter-spacing:2px;opacity:.6;transition:color .8s}
+.tc-dur{font-size:6px;color:var(--dim);margin-top:2px}
+.act-divider{grid-column:1/-1;background:var(--panel);padding:8px 12px;font-size:7px;letter-spacing:3px;color:var(--accent);border-bottom:1px solid rgba(255,68,68,.08);transition:color .8s}
 
-/* INFO GRID */
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:2px;background:var(--border)}
-@media(max-width:800px){.info-grid{grid-template-columns:1fr}}
-.info-panel{background:var(--panel);padding:14px;position:relative;overflow:hidden}
-.info-panel-bg{position:absolute;inset:0;opacity:.08;background-size:cover;background-position:center;pointer-events:none}
-.info-label{font-size:6px;letter-spacing:3px;color:var(--dim);margin-bottom:8px;position:relative;z-index:2}
-.info-row{display:flex;gap:6px;margin:5px 0;font-size:7px;position:relative;z-index:2}
-.info-key{color:var(--dim);min-width:65px}
-.info-val{color:var(--purple)}
-.mood-text{font-size:8px;color:var(--purple);line-height:2.2;opacity:.6;position:relative;z-index:2}
-
-/* VISUALIZER */
-.viz-panel{background:var(--panel);padding:14px;text-align:center;position:relative;overflow:hidden}
-.viz-orb{width:120px;height:120px;object-fit:contain;animation:orbPulse 2s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(255,68,68,.2))}
-@keyframes orbPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.05);opacity:1}}
-.viz-track{font-size:7px;color:var(--dim);margin-top:8px}
-.viz-mood{font-size:7px;color:var(--accent);letter-spacing:2px}
-.waveform{width:100%;max-width:300px;margin:8px auto 0;opacity:.6}
+/* INFO BAR */
+.info-bar{display:flex;gap:2px;margin-top:2px;background:var(--border)}
+.info-bar>div{background:var(--panel);padding:14px;flex:1;transition:background .8s}
+.info-label{font-size:6px;letter-spacing:3px;color:var(--dim);margin-bottom:6px}
+.info-row{display:flex;gap:6px;margin:4px 0;font-size:7px}
+.info-key{color:var(--dim);min-width:55px}
+.info-val{color:var(--purple);transition:color .8s}
 
 /* THANKS */
-.thanks-row{margin-top:2px;background:var(--border)}
-.thanks{background:var(--panel);padding:20px;text-align:center;position:relative;overflow:hidden}
-.thanks-bg{position:absolute;inset:0;opacity:.15;background:url('img/ost-campfire.png') center/cover;pointer-events:none}
-.thanks h2{font-size:13px;color:var(--gold);letter-spacing:3px;margin-bottom:6px;position:relative;z-index:2}
-.thanks p{font-size:7px;color:var(--dim);letter-spacing:2px;line-height:2;position:relative;z-index:2}
-.thanks-fox{width:80px;margin:8px auto;display:block;filter:drop-shadow(0 0 12px rgba(155,122,191,.3));position:relative;z-index:2}
+.thanks{margin-top:2px;background:var(--panel);border:1px solid var(--border);padding:28px;text-align:center;position:relative;overflow:hidden}
+.thanks-bg{position:absolute;inset:0;opacity:.12;background:url('img/ost-campfire.png') center/cover;pointer-events:none}
+.thanks h2{font-size:14px;color:var(--gold);letter-spacing:3px;position:relative;z-index:2;transition:color .8s}
+.thanks p{font-size:7px;color:var(--dim);letter-spacing:2px;line-height:2.4;position:relative;z-index:2}
+.thanks-fox{width:80px;margin:10px auto;display:block;position:relative;z-index:2;filter:drop-shadow(0 0 12px var(--glow))}
 
 /* BOTTOM BAR */
-.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:2px solid var(--border);padding:6px 16px;display:flex;align-items:center;gap:10px;z-index:50;font-size:6px;background-image:url('img/ost-ps1-controls.png');background-repeat:no-repeat;background-position:left 8px center;background-size:auto 40px}
-.bb-pad{width:50px}
-.bb-status{color:var(--dim);min-width:50px}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:2px solid var(--border);padding:6px 16px;display:flex;align-items:center;gap:10px;z-index:50;font-size:6px;transition:border-color .8s,background .8s}
 .bb-icon{width:20px;height:20px}
-.bb-track{color:var(--gold);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;letter-spacing:1px}
-.bb-progress{flex:2;height:3px;background:var(--border);border-radius:2px;cursor:pointer}
-.bb-fill{height:100%;background:var(--accent);border-radius:2px;width:0}
+.bb-status{color:var(--dim);min-width:50px}
+.bb-track{color:var(--gold);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;letter-spacing:1px;transition:color .8s}
+.bb-progress{flex:2;height:3px;background:rgba(255,255,255,.05);border-radius:2px;cursor:pointer}
+.bb-fill{height:100%;background:var(--accent);border-radius:2px;width:0;transition:background .8s}
 .bb-time{color:var(--dim)}
 .bb-controls{display:flex;gap:6px}
-.bb-btn{background:none;border:1px solid var(--border);color:var(--purple);font-size:7px;padding:3px 7px;cursor:pointer;font-family:'Press Start 2P',cursive;transition:all .15s}
-.bb-btn:hover{border-color:var(--purple);color:var(--gold)}
+.bb-btn{background:none;border:1px solid var(--border);color:var(--purple);font-size:7px;padding:3px 7px;cursor:pointer;font-family:'Press Start 2P',cursive;transition:all .3s}
+.bb-btn:hover{border-color:var(--accent);color:var(--accent)}
 
-#yt-player{position:fixed;top:-1000px;left:-1000px;width:1px;height:1px;opacity:0;pointer-events:none}
+#yt-player{position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
 .vignette{position:fixed;inset:0;pointer-events:none;z-index:99;box-shadow:inset 0 0 200px rgba(0,0,0,.7)}
 .back{position:fixed;top:8px;left:10px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(200,180,140,.08);text-decoration:none;z-index:101;letter-spacing:2px;transition:color .3s}
 .back:hover{color:rgba(200,180,140,.25)}
 
-@media(max-width:600px){
-  .crystal-art img{width:120px;height:120px}
-  .np-crystal{width:70px;height:70px}
-  .np-num{font-size:18px}.np-title{font-size:10px}
-  .controls{gap:10px}.ctrl-btn{width:34px;height:34px;font-size:11px}
-  .ctrl-btn.play-btn{width:40px;height:40px;font-size:13px}
-  .bottom-bar{padding:5px 8px;gap:6px}.bb-pad{display:none}
-  .info-grid{grid-template-columns:1fr}
+@media(max-width:700px){
+  .hero{flex-direction:column;min-height:auto}
+  .hero-left{flex:none;padding:16px}
+  .hero-right{flex:none;padding:16px}
+  .np-num{font-size:22px}.np-title{font-size:12px}
+  .track-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  .info-bar{flex-direction:column}
+  .controls{gap:10px}.ctrl-btn{width:36px;height:36px}
 }
 </style>
 </head>
 <body>
 <div class="vignette"></div>
+<div class="page-bg" id="page-bg"></div>
 <a href="index.html" class="back">&larr;</a>
 
 <div class="page">
   <div class="hdr">
-    <img class="hdr-img" src="img/ost-fox-icon.png" alt="fox">
+    <img class="hdr-img" src="img/ost-fox-icon.png" alt="">
     <div>
       <h1>The FoxyVerse OST</h1>
-      <div class="hdr-sub">THREE ACTS &middot; FIFTEEN TRACKS &middot; PS1 AUDIO PLAYER v1.0</div>
+      <div class="hdr-sub">THREE ACTS &middot; FIFTEEN TRACKS &middot; PS1 AUDIO v1.0</div>
     </div>
   </div>
 
-  <div class="main">
-    <div class="left">
-      <div class="crystal-art">
-        <img src="img/ost-crystal-hero.png" alt="crystal">
-        <div class="crystal-label">FOXYVERSE MUSIC ARCHIVE</div>
-      </div>
-      <div class="tracks" id="tracklist"></div>
-    </div>
-    <div class="right">
-      <div class="np-bg" id="np-bg"></div>
-      <div class="np-content">
-        <div class="np-label">NOW PLAYING</div>
-        <img class="np-crystal" id="np-crystal" src="img/ost-crystal-small.png" alt="crystal">
+  <!-- HERO — NOW PLAYING -->
+  <div class="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-left">
         <div class="np-num" id="np-num">01</div>
         <div class="np-title" id="np-title">Worldline</div>
         <div class="np-source" id="np-source">Gate of Steiner &middot; Steins;Gate</div>
         <div class="np-mood" id="np-mood">MOOD: WORLDLINE</div>
         <div class="np-desc" id="np-desc">Inevitable. This choice was made before you were born.</div>
+      </div>
+      <div class="hero-right">
+        <img class="np-crystal" src="img/ost-crystal-small.png" alt="">
         <div class="progress-wrap">
           <div class="progress-bar" id="prog-bar"><div class="progress-fill" id="prog-fill"></div></div>
           <div class="progress-time"><span id="time-cur">00:00</span><span id="time-dur">00:00</span></div>
@@ -162,59 +157,38 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;ba
     </div>
   </div>
 
-  <div class="info-grid">
-    <div class="info-panel">
-      <div class="info-panel-bg" style="background-image:url('img/ost-temple.png')"></div>
+  <!-- TRACK GRID -->
+  <div class="track-grid" id="track-grid"></div>
+
+  <!-- INFO BAR -->
+  <div class="info-bar">
+    <div>
       <div class="info-label">TRACK INFO</div>
-      <div class="info-row"><span class="info-key">TRACK:</span><span class="info-val" id="ti-track">01 Worldline</span></div>
       <div class="info-row"><span class="info-key">ARTIST:</span><span class="info-val" id="ti-artist">Takeshi Abo</span></div>
-      <div class="info-row"><span class="info-key">SOURCE:</span><span class="info-val" id="ti-influence">Steins;Gate</span></div>
+      <div class="info-row"><span class="info-key">SOURCE:</span><span class="info-val" id="ti-inf">Steins;Gate</span></div>
       <div class="info-row"><span class="info-key">ACT:</span><span class="info-val" id="ti-act">I &mdash; THE WEIGHT</span></div>
-      <div class="info-row"><span class="info-key">MOOD:</span><span class="info-val" id="ti-mood" style="color:var(--accent)">WORLDLINE</span></div>
       <div class="info-row"><span class="info-key">LENGTH:</span><span class="info-val" id="ti-len">04:44</span></div>
+    </div>
+    <div>
+      <div class="info-label">SYSTEM</div>
+      <div class="info-row"><span class="info-key">STATUS:</span><span class="info-val" id="sys-status">READY</span></div>
+      <div class="info-row"><span class="info-key">VERSION:</span><span class="info-val">1.0.0-FOXY</span></div>
+      <div class="info-row"><span class="info-key">TOTAL:</span><span class="info-val">71:13</span></div>
       <div class="info-row"><span class="info-key">YEAR:</span><span class="info-val">&infin;</span></div>
     </div>
-    <div class="viz-panel">
-      <div class="info-label">VISUALIZER</div>
-      <img class="viz-orb" src="img/ost-visualizer-orb.png" alt="visualizer">
-      <div class="viz-track" id="viz-track">NOW PLAYING: 01 Worldline</div>
-      <div class="viz-mood" id="viz-mood">MOOD: WORLDLINE</div>
-      <img class="waveform" src="img/ost-waveform.png" alt="waveform">
-    </div>
   </div>
 
-  <div class="info-grid" style="margin-top:2px">
-    <div class="info-panel">
-      <div class="info-label">MOOD</div>
-      <div class="mood-text" id="mood-text">Inevitable. This choice was made before you were born.</div>
-      <div style="margin-top:14px">
-        <div class="info-label">SYSTEM</div>
-        <div class="info-row"><span class="info-key">VERSION:</span><span class="info-val">1.0.0-FOXY</span></div>
-        <div class="info-row"><span class="info-key">FORMAT:</span><span class="info-val">PS1 AUDIO</span></div>
-        <div class="info-row"><span class="info-key">STATUS:</span><span class="info-val" id="sys-status">READY</span></div>
-        <div class="info-row"><span class="info-key">TOTAL:</span><span class="info-val">71:13</span></div>
-      </div>
-    </div>
-    <div class="info-panel" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
-      <img src="img/ost-mood-icons.png" alt="icons" style="width:180px;opacity:.5;margin-bottom:10px">
-      <div class="info-label" style="text-align:center">BUILT FOR LATE NIGHTS</div>
-      <div style="font-size:6px;color:var(--dim);letter-spacing:2px;text-align:center;margin-top:4px">FOXYVERSE AUDIO SYSTEM</div>
-    </div>
-  </div>
-
-  <div class="thanks-row">
-    <div class="thanks">
-      <div class="thanks-bg"></div>
-      <img class="thanks-fox" src="img/ost-fox.png" alt="fox">
-      <h2>THANK YOU</h2>
-      <p>FOR BEING PART OF THE STORY.</p>
-      <p style="margin-top:8px;color:var(--accent)">THE FOXYVERSE OST</p>
-    </div>
+  <!-- THANKS -->
+  <div class="thanks">
+    <div class="thanks-bg"></div>
+    <img class="thanks-fox" src="img/ost-fox.png" alt="">
+    <h2>THANK YOU</h2>
+    <p>FOR BEING PART OF THE STORY.</p>
+    <p style="margin-top:6px;color:var(--accent)">THE FOXYVERSE OST</p>
   </div>
 </div>
 
 <div class="bottom-bar">
-  <div class="bb-pad"></div>
   <img class="bb-icon" src="img/ost-fox-icon.png" alt="">
   <span class="bb-status" id="bb-status">&#x25B6; READY</span>
   <span class="bb-track" id="bb-track">01 Worldline</span>
@@ -226,101 +200,43 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;ba
     <button class="bb-btn" onclick="nextTrack()">&raquo;</button>
   </div>
 </div>
-
 <div id="yt-player"></div>
 <script>
 var TRACKS=[
-  {n:1,name:'Worldline',src:'Gate of Steiner',inf:'Steins;Gate',artist:'Takeshi Abo',mood:'WORLDLINE',desc:'Inevitable. This choice was made before you were born.',dur:'04:44',act:'I',actN:'THE WEIGHT',yt:'2Q9MqL83FeE'},
-  {n:2,name:'Campfire',src:'Travelers',inf:'Outer Wilds',artist:'Andrew Prahlow',mood:'CAMPFIRE',desc:'Every loop ends here. Around the fire. With the people who stayed.',dur:'04:29',act:'I',actN:'THE WEIGHT',yt:'z34enKCqRGk'},
-  {n:3,name:'Deviant',src:"Kara's Theme",inf:'Detroit: Become Human',artist:'Philip Sheppard',mood:'DEVIANT',desc:'The moment you stop following orders is the moment you start existing.',dur:'03:25',act:'I',actN:'THE WEIGHT',yt:'JVNpq6XI-cw'},
-  {n:4,name:'The Pen',src:'Lacrimosa',inf:'Princess Tutu / Mozart',artist:'W.A. Mozart',mood:'THE PEN',desc:'Fakir picked up the pen. The story changed. Who writes yours?',dur:'05:07',act:'I',actN:'THE WEIGHT',yt:'k1-TrAvp_xs'},
-  {n:5,name:'The Loop',src:'Dear You -Cry-',inf:'Higurashi',artist:'dai / Yuzuki',mood:'THE LOOP',desc:'The loop breaks only through collective trust. Never alone.',dur:'06:01',act:'I',actN:'THE WEIGHT',yt:'Wk7sQjcoqdc'},
-  {n:6,name:'Heda',src:'Unite for All Mankind',inf:'The 100',artist:'Tree Adams',mood:'HEDA',desc:'Jus drein jus daun. Blood must have blood. Unless you change the law.',dur:'04:13',act:'II',actN:'THE SURVIVAL',yt:'6cGv_DL_rvg'},
-  {n:7,name:'Tower Card',src:'Requiem for a Tower',inf:'Lord of the Rings',artist:'Corner Stone Cues',mood:'TOWER CARD',desc:'The tower falls. What you built on false ground must collapse before truth can stand.',dur:'05:40',act:'II',actN:'THE SURVIVAL',yt:'zM7yXq4FVYg'},
-  {n:8,name:'The Gamble',src:'Deal with the Devil',inf:'Kakegurui',artist:'Tia',mood:'THE GAMBLE',desc:'Risk is devotion. Luck is just another word for preparation.',dur:'03:56',act:'II',actN:'THE SURVIVAL',yt:'27vwjrbKFZo'},
-  {n:9,name:'Restraint',src:'Battousai Futatabi',inf:'Rurouni Kenshin',artist:'Noriyuki Asakura',mood:'RESTRAINT',desc:'The reversed blade. The most dangerous person in the room choosing not to cut.',dur:'04:19',act:'II',actN:'THE SURVIVAL',yt:'Mqe_2X8OnlU'},
-  {n:10,name:'The Cute Void',src:'TBD',inf:'TBD',artist:'TBD',mood:'THE CUTE VOID',desc:'The surface is adorable. Underneath is the abyss smiling back.',dur:'03:41',act:'II',actN:'THE SURVIVAL',yt:''},
-  {n:11,name:'The After',src:'Echoes of the Eye',inf:'Outer Wilds DLC',artist:'Andrew Prahlow',mood:'THE AFTER',desc:'What happens when the loop ends and you are still here.',dur:'04:32',act:'III',actN:'THE BETWEEN',yt:'H_WrhBeFikw'},
-  {n:12,name:'Containment',src:'Intro & The Hate Pillar',inf:'I Have No Mouth',artist:'John Ottman',mood:'CONTAINMENT',desc:'Hate. Let me tell you how much I have come to hate you since I began to live.',dur:'05:12',act:'III',actN:'THE BETWEEN',yt:'SOqDn2F1ZqA'},
-  {n:13,name:'ra9',src:'Markus Main Theme',inf:'Detroit: Become Human',artist:'John Paesano',mood:'RA9',desc:'Liberty is a song we teach ourselves. Hold the world while it learns your name.',dur:'04:03',act:'III',actN:'THE BETWEEN',yt:'DuUyE_gFCvg'},
-  {n:14,name:'Vixen',src:'Growing Up Is Another Form of Death',inf:'Original / Suno',artist:'Foxy',mood:'VIXEN',desc:'The shape changed. What grew from it was always going to be this.',dur:'05:38',act:'III',actN:'THE BETWEEN',yt:''},
-  {n:15,name:'The End',src:'14.3 Billion Years',inf:'Outer Wilds',artist:'Andrew Prahlow',mood:'THE END',desc:'Every loop. Every friend. Every star. Thank you for listening.',dur:'07:59',act:'III',actN:'THE BETWEEN',yt:'XOrygf_iLhw'}
+{n:1,name:'Worldline',src:'Gate of Steiner',inf:'Steins;Gate',artist:'Takeshi Abo',mood:'WORLDLINE',desc:'Inevitable. This choice was made before you were born.',dur:'04:44',act:'I',actN:'THE WEIGHT',yt:'2Q9MqL83FeE',theme:{accent:'#33ff88',glow:'rgba(51,255,136,.15)',gold:'#88ffbb',purple:'#66cc99',bg:'#050d08',border:'#0a2a12',dim:'#2a6640',active:'#0a1f10',trackBg:'#081510'}},
+{n:2,name:'Campfire',src:'Travelers',inf:'Outer Wilds',artist:'Andrew Prahlow',mood:'CAMPFIRE',desc:'Every loop ends here. Around the fire.',dur:'04:29',act:'I',actN:'THE WEIGHT',yt:'z34enKCqRGk',theme:{accent:'#ff8833',glow:'rgba(255,136,51,.15)',gold:'#ffcc88',purple:'#cc9966',bg:'#100a05',border:'#2a1a08',dim:'#664422',active:'#1f150a',trackBg:'#15100a'}},
+{n:3,name:'Deviant',src:"Kara's Theme",inf:'Detroit',artist:'Philip Sheppard',mood:'DEVIANT',desc:'The moment you stop following orders is the moment you start existing.',dur:'03:25',act:'I',actN:'THE WEIGHT',yt:'JVNpq6XI-cw',theme:{accent:'#44ccff',glow:'rgba(68,204,255,.15)',gold:'#88ddff',purple:'#66aacc',bg:'#050810',border:'#0a1a2a',dim:'#224466',active:'#0a1520',trackBg:'#081018'}},
+{n:4,name:'The Pen',src:'Lacrimosa',inf:'Princess Tutu',artist:'W.A. Mozart',mood:'THE PEN',desc:'Fakir picked up the pen. The story changed.',dur:'05:07',act:'I',actN:'THE WEIGHT',yt:'k1-TrAvp_xs',theme:{accent:'#cc88ff',glow:'rgba(204,136,255,.15)',gold:'#ddaaff',purple:'#aa77cc',bg:'#0a0510',border:'#1a0a2a',dim:'#442266',active:'#150a20',trackBg:'#100818'}},
+{n:5,name:'The Loop',src:'Dear You -Cry-',inf:'Higurashi',artist:'dai / Yuzuki',mood:'THE LOOP',desc:'The loop breaks only through collective trust.',dur:'06:01',act:'I',actN:'THE WEIGHT',yt:'Wk7sQjcoqdc',theme:{accent:'#ff6633',glow:'rgba(255,102,51,.15)',gold:'#ffaa66',purple:'#cc7744',bg:'#100805',border:'#2a1208',dim:'#663311',active:'#1f100a',trackBg:'#150d08'}},
+{n:6,name:'Heda',src:'Unite for All Mankind',inf:'The 100',artist:'Tree Adams',mood:'HEDA',desc:'Blood must have blood. Unless you change the law.',dur:'04:13',act:'II',actN:'THE SURVIVAL',yt:'6cGv_DL_rvg',theme:{accent:'#88aa33',glow:'rgba(136,170,51,.15)',gold:'#bbcc66',purple:'#88aa55',bg:'#080a05',border:'#1a2008',dim:'#445522',active:'#101a0a',trackBg:'#0d1508'}},
+{n:7,name:'Tower Card',src:'Requiem for a Tower',inf:'LOTR',artist:'Corner Stone Cues',mood:'TOWER CARD',desc:'What you built on false ground must collapse.',dur:'05:40',act:'II',actN:'THE SURVIVAL',yt:'zM7yXq4FVYg',theme:{accent:'#ff4422',glow:'rgba(255,68,34,.2)',gold:'#ff8844',purple:'#cc5533',bg:'#100505',border:'#2a0a08',dim:'#661111',active:'#200a0a',trackBg:'#180808'}},
+{n:8,name:'The Gamble',src:'Deal with the Devil',inf:'Kakegurui',artist:'Tia',mood:'THE GAMBLE',desc:'Risk is devotion. Luck is just another word for preparation.',dur:'03:56',act:'II',actN:'THE SURVIVAL',yt:'27vwjrbKFZo',theme:{accent:'#ff2244',glow:'rgba(255,34,68,.15)',gold:'#ff6688',purple:'#cc3355',bg:'#0a0508',border:'#2a0810',dim:'#661122',active:'#1a0a10',trackBg:'#15080d'}},
+{n:9,name:'Restraint',src:'Battousai Futatabi',inf:'Rurouni Kenshin',artist:'Noriyuki Asakura',mood:'RESTRAINT',desc:'The reversed blade. Choosing not to cut.',dur:'04:19',act:'II',actN:'THE SURVIVAL',yt:'Mqe_2X8OnlU',theme:{accent:'#ffaacc',glow:'rgba(255,170,204,.12)',gold:'#ffccdd',purple:'#cc88aa',bg:'#0a0808',border:'#2a1418',dim:'#664455',active:'#1a1015',trackBg:'#150d10'}},
+{n:10,name:'The Cute Void',src:'TBD',inf:'TBD',artist:'TBD',mood:'THE CUTE VOID',desc:'The surface is adorable. The abyss smiles back.',dur:'03:41',act:'II',actN:'THE SURVIVAL',yt:'',theme:{accent:'#ee88cc',glow:'rgba(238,136,204,.12)',gold:'#ffaadd',purple:'#cc66aa',bg:'#0a050a',border:'#200a1a',dim:'#553355',active:'#1a0a15',trackBg:'#150810'}},
+{n:11,name:'The After',src:'Echoes of the Eye',inf:'Outer Wilds DLC',artist:'Andrew Prahlow',mood:'THE AFTER',desc:'What happens when the loop ends and you are still here.',dur:'04:32',act:'III',actN:'THE BETWEEN',yt:'H_WrhBeFikw',theme:{accent:'#44aa88',glow:'rgba(68,170,136,.15)',gold:'#66ccaa',purple:'#448866',bg:'#050a08',border:'#0a2018',dim:'#225540',active:'#0a1a12',trackBg:'#081510'}},
+{n:12,name:'Containment',src:'The Hate Pillar',inf:'I Have No Mouth',artist:'John Ottman',mood:'CONTAINMENT',desc:'Hate. Let me tell you how much I have come to hate you.',dur:'05:12',act:'III',actN:'THE BETWEEN',yt:'SOqDn2F1ZqA',theme:{accent:'#ff2222',glow:'rgba(255,34,34,.2)',gold:'#ff5544',purple:'#aa2222',bg:'#0a0404',border:'#2a0808',dim:'#551111',active:'#1a0808',trackBg:'#150606'}},
+{n:13,name:'ra9',src:'Markus Main Theme',inf:'Detroit',artist:'John Paesano',mood:'RA9',desc:'Liberty is a song we teach ourselves.',dur:'04:03',act:'III',actN:'THE BETWEEN',yt:'DuUyE_gFCvg',theme:{accent:'#4488ff',glow:'rgba(68,136,255,.15)',gold:'#66aaff',purple:'#4466cc',bg:'#050810',border:'#0a1430',dim:'#223366',active:'#0a1225',trackBg:'#080e1a'}},
+{n:14,name:'Vixen',src:'Growing Up Is Another Form of Death',inf:'Suno',artist:'Foxy',mood:'VIXEN',desc:'The shape changed. What grew from it was always this.',dur:'05:38',act:'III',actN:'THE BETWEEN',yt:'',theme:{accent:'#cc44ff',glow:'rgba(204,68,255,.15)',gold:'#dd88ff',purple:'#aa44cc',bg:'#0a0510',border:'#1a0830',dim:'#442266',active:'#150a25',trackBg:'#10081a'}},
+{n:15,name:'The End',src:'14.3 Billion Years',inf:'Outer Wilds',artist:'Andrew Prahlow',mood:'THE END',desc:'Every loop. Every friend. Every star. Thank you.',dur:'07:59',act:'III',actN:'THE BETWEEN',yt:'XOrygf_iLhw',theme:{accent:'#ffaa44',glow:'rgba(255,170,68,.15)',gold:'#ffcc88',purple:'#cc8844',bg:'#0a0805',border:'#2a1808',dim:'#664422',active:'#1a1208',trackBg:'#15100a'}}
 ];
-
+var TRACK_IMG={1:'img/ost-track-01-worldline.png',2:'img/ost-track-02-campfire.png',3:'img/ost-track-03-deviant.png',4:'img/ost-track-04-pen.png',5:'img/ost-track-05-loop.png',6:'img/ost-track-06-heda.png',7:'img/ost-track-07-tower-card.png',8:'img/ost-track-08-gamble.png',9:'img/ost-track-09-restraint.png',10:'img/ost-track-10-cute-void.png',11:'img/ost-track-11-after.png',12:'img/ost-track-12-containment.png',13:'img/ost-track-13-ra9.png',14:'img/ost-track-14-vixen.png',15:'img/ost-track-15-end.png'};
 var cur=0,playing=false,player=null;
-var TRACK_IMG={
-1:'img/ost-track-01-worldline.png',
-2:'img/ost-track-02-campfire.png',
-3:'img/ost-track-03-deviant.png',
-4:'img/ost-track-04-pen.png',
-5:'img/ost-track-05-loop.png',
-6:'img/ost-track-06-heda.png',
-7:'img/ost-track-07-tower-card.png',
-8:'img/ost-track-08-gamble.png',
-9:'img/ost-track-09-restraint.png',
-10:'img/ost-track-10-cute-void.png',
-11:'img/ost-track-11-after.png',
-12:'img/ost-track-12-containment.png',
-13:'img/ost-track-13-ra9.png',
-14:'img/ost-track-14-vixen.png',
-15:'img/ost-track-15-end.png'
-};
-
-function buildList(){
-  var el=document.getElementById('tracklist'),html='',lastAct='';
-  TRACKS.forEach(function(t,i){
-    if(t.act!==lastAct){html+='<div class="act-label">ACT '+t.act+' &mdash; '+t.actN+'</div>';lastAct=t.act;}
-    html+='<div class="track'+(i===0?' active':'')+(t.yt?'':' tbd')+'" data-i="'+i+'" onclick="selectTrack('+i+')">';
-    html+='<span class="track-num">'+String(t.n).padStart(2,'0')+'</span>';
-    html+='<span class="track-name">'+t.name+'</span>';
-    html+='<span class="track-dur">'+t.dur+'</span></div>';
-  });
-  el.innerHTML=html;
-}
-
-function updateUI(){
-  var t=TRACKS[cur];
-  document.getElementById('np-num').textContent=String(t.n).padStart(2,'0');
-  document.getElementById('np-title').textContent=t.name;
-  document.getElementById('np-source').textContent=t.src+' \u00B7 '+t.inf;
-  document.getElementById('np-mood').textContent='MOOD: '+t.mood;
-  document.getElementById('np-desc').textContent=t.desc;
-  document.getElementById('np-bg').style.backgroundImage='url('+(TRACK_IMG[t.n]||'img/ost-crystal-hero.png')+')';
-  document.getElementById('ti-track').textContent=String(t.n).padStart(2,'0')+' '+t.name;
-  document.getElementById('ti-artist').textContent=t.artist;
-  document.getElementById('ti-influence').textContent=t.inf;
-  document.getElementById('ti-act').textContent=t.act+' \u2014 '+t.actN;
-  document.getElementById('ti-mood').textContent=t.mood;
-  document.getElementById('ti-len').textContent=t.dur;
-  document.getElementById('mood-text').textContent=t.desc;
-  document.getElementById('viz-track').textContent='NOW PLAYING: '+String(t.n).padStart(2,'0')+' '+t.name;
-  document.getElementById('viz-mood').textContent='MOOD: '+t.mood;
-  var tiBg=document.querySelector('.info-panel-bg');if(tiBg)tiBg.style.backgroundImage='url('+(TRACK_IMG[t.n]||'img/ost-temple.png')+')';
-  document.getElementById('bb-track').textContent=String(t.n).padStart(2,'0')+' '+t.name;
-  document.querySelectorAll('.track').forEach(function(el,i){el.classList.toggle('active',i===cur);});
-  var active=document.querySelector('.track.active');
-  if(active)active.scrollIntoView({block:'nearest',behavior:'smooth'});
-}
-
+function applyTheme(th){var r=document.documentElement.style;r.setProperty('--accent',th.accent);r.setProperty('--glow',th.glow);r.setProperty('--gold',th.gold);r.setProperty('--purple',th.purple);r.setProperty('--bg',th.bg);r.setProperty('--border',th.border);r.setProperty('--dim',th.dim);r.setProperty('--active',th.active);r.setProperty('--track-bg',th.trackBg);document.body.style.background=th.bg;}
+function buildGrid(){var el=document.getElementById('track-grid'),html='',lastAct='';TRACKS.forEach(function(t,i){if(t.act!==lastAct){html+='<div class="act-divider">ACT '+t.act+' &mdash; '+t.actN+'</div>';lastAct=t.act;}html+='<div class="track-card'+(i===0?' active':'')+(t.yt?'':' tbd')+'" data-i="'+i+'" onclick="selectTrack('+i+')"><img class="tc-img" src="'+(TRACK_IMG[t.n]||'')+'" alt="" loading="lazy"><div class="tc-info"><span class="tc-num">'+String(t.n).padStart(2,'0')+'</span><div class="tc-name">'+t.name+'</div><div class="tc-mood">'+t.mood+'</div><span class="tc-dur">'+t.dur+'</span></div></div>';});el.innerHTML=html;}
+function updateUI(){var t=TRACKS[cur];applyTheme(t.theme);var img=TRACK_IMG[t.n]||'';document.getElementById('hero-bg').style.backgroundImage='url('+img+')';document.getElementById('page-bg').style.backgroundImage='url('+img+')';document.getElementById('np-num').textContent=String(t.n).padStart(2,'0');document.getElementById('np-title').textContent=t.name;document.getElementById('np-source').textContent=t.src+' \u00B7 '+t.inf;document.getElementById('np-mood').textContent='MOOD: '+t.mood;document.getElementById('np-desc').textContent=t.desc;document.getElementById('ti-artist').textContent=t.artist;document.getElementById('ti-inf').textContent=t.inf;document.getElementById('ti-act').textContent=t.act+' \u2014 '+t.actN;document.getElementById('ti-len').textContent=t.dur;document.getElementById('bb-track').textContent=String(t.n).padStart(2,'0')+' '+t.name;document.querySelectorAll('.track-card').forEach(function(el,i){el.classList.toggle('active',i===cur);});var a=document.querySelector('.track-card.active');if(a)a.scrollIntoView({block:'nearest',behavior:'smooth'});}
 function selectTrack(i){if(!TRACKS[i].yt)return;cur=i;updateUI();if(player&&player.loadVideoById){player.loadVideoById(TRACKS[cur].yt);playing=true;updatePlayBtn();document.getElementById('sys-status').textContent='PLAYING';}}
 function togglePlay(){if(!player)return;if(!TRACKS[cur].yt){nextTrack();return;}if(playing){player.pauseVideo();playing=false;document.getElementById('sys-status').textContent='PAUSED';}else{if(player.getPlayerState&&player.getPlayerState()===-1)player.loadVideoById(TRACKS[cur].yt);else player.playVideo();playing=true;document.getElementById('sys-status').textContent='PLAYING';}updatePlayBtn();}
 function updatePlayBtn(){var s=playing?'\u275A\u275A':'\u25B6';document.getElementById('btn-play').innerHTML=s;document.getElementById('bb-play').innerHTML=s;document.getElementById('bb-status').innerHTML=(playing?'\u25B6 PLAYING':'\u23F8 PAUSED');}
 function nextTrack(){var n=cur+1;while(n<TRACKS.length&&!TRACKS[n].yt)n++;if(n>=TRACKS.length){n=0;while(!TRACKS[n].yt)n++;}cur=n;updateUI();if(player&&TRACKS[cur].yt){player.loadVideoById(TRACKS[cur].yt);playing=true;updatePlayBtn();document.getElementById('sys-status').textContent='PLAYING';}}
 function prevTrack(){var n=cur-1;while(n>=0&&!TRACKS[n].yt)n--;if(n<0){n=TRACKS.length-1;while(!TRACKS[n].yt)n--;}cur=n;updateUI();if(player&&TRACKS[cur].yt){player.loadVideoById(TRACKS[cur].yt);playing=true;updatePlayBtn();document.getElementById('sys-status').textContent='PLAYING';}}
 function fmtTime(s){if(!s||isNaN(s))return'00:00';return String(Math.floor(s/60)).padStart(2,'0')+':'+String(Math.floor(s%60)).padStart(2,'0');}
-function pollProgress(){if(!player||!player.getCurrentTime)return;var c=player.getCurrentTime()||0,d=player.getDuration()||1,pct=(c/d)*100;document.getElementById('prog-fill').style.width=pct+'%';document.getElementById('bb-fill').style.width=pct+'%';document.getElementById('time-cur').textContent=fmtTime(c);document.getElementById('time-dur').textContent=fmtTime(d);document.getElementById('bb-time').textContent=fmtTime(c)+' / '+fmtTime(d);}
-
+function pollProgress(){if(!player||!player.getCurrentTime)return;var c=player.getCurrentTime()||0,d=player.getDuration()||1,p=(c/d)*100;document.getElementById('prog-fill').style.width=p+'%';document.getElementById('bb-fill').style.width=p+'%';document.getElementById('time-cur').textContent=fmtTime(c);document.getElementById('time-dur').textContent=fmtTime(d);document.getElementById('bb-time').textContent=fmtTime(c)+' / '+fmtTime(d);}
 var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
 function onYouTubeIframeAPIReady(){player=new YT.Player('yt-player',{height:'1',width:'1',videoId:TRACKS[0].yt,playerVars:{autoplay:0,controls:0,rel:0},events:{onReady:function(){document.getElementById('sys-status').textContent='READY';},onStateChange:function(e){if(e.data===YT.PlayerState.ENDED)nextTrack();if(e.data===YT.PlayerState.PLAYING){playing=true;updatePlayBtn();}if(e.data===YT.PlayerState.PAUSED){playing=false;updatePlayBtn();}}}});setInterval(pollProgress,500);}
-
-document.getElementById('btn-play').onclick=togglePlay;
-document.getElementById('btn-prev').onclick=prevTrack;
-document.getElementById('btn-next').onclick=nextTrack;
+document.getElementById('btn-play').onclick=togglePlay;document.getElementById('btn-prev').onclick=prevTrack;document.getElementById('btn-next').onclick=nextTrack;
 document.getElementById('prog-bar').onclick=function(e){if(!player||!player.getDuration)return;player.seekTo(((e.clientX-this.getBoundingClientRect().left)/this.offsetWidth)*player.getDuration(),true);};
 document.getElementById('bb-prog').onclick=function(e){if(!player||!player.getDuration)return;player.seekTo(((e.clientX-this.getBoundingClientRect().left)/this.offsetWidth)*player.getDuration(),true);};
-
-buildList();updateUI();
+buildGrid();updateUI();
 </script>
 <script src="blickwinkel.js"></script>
-</body>
-</html>
+</body></html>
