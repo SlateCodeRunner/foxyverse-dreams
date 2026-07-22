@@ -7,87 +7,83 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Fira+Code:wght@300;400&family=Press+Start+2P&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',monospace;font-size:11px;overflow-x:hidden;min-height:100vh}
+body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',monospace;font-size:11px;overflow-x:hidden}
 :root{--gold:rgba(255,180,80,0.4);--red:rgba(255,80,80,0.4);--blue:rgba(80,140,255,0.3);--dim:rgba(200,170,120,0.08);--panel:#0e0a04;--border:rgba(200,170,120,0.06)}
 
-.res-bar{position:sticky;top:0;z-index:30;background:#12100a;border-bottom:2px solid var(--border);padding:5px 10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.res{font-family:'Press Start 2P',cursive;font-size:7px;display:flex;align-items:center;gap:3px;cursor:pointer;transition:all .15s;padding:3px 6px;border:1px solid transparent;border-radius:2px;user-select:none}
+.res-bar{position:sticky;top:0;z-index:30;background:#12100a;border-bottom:2px solid var(--border);padding:5px 8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.res{font-size:9px;display:flex;align-items:center;gap:2px;cursor:pointer;padding:3px 5px;border:1px solid transparent;border-radius:2px;user-select:none;transition:all .15s}
 .res:hover{border-color:var(--gold);background:rgba(255,180,80,0.03)}
 .res:active{transform:scale(0.95)}
-.res-icon{font-size:11px}
-.res-val{color:var(--gold);min-width:40px}
+.res-val{font-family:'Press Start 2P',cursive;font-size:7px;color:var(--gold);min-width:32px}
 .res-rate{font-size:5px;color:rgba(200,170,120,0.15)}
-.res-cn{font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.12);letter-spacing:2px}
 .alert-box{margin-left:auto;font-family:'Press Start 2P',cursive;font-size:7px;color:var(--red);animation:flash 1s infinite}
 @keyframes flash{50%{opacity:.2}}
 
-.main{display:grid;grid-template-columns:1fr 220px;gap:2px;padding:2px}
-@media(max-width:700px){.main{grid-template-columns:1fr}}
+/* FULL WIDTH GRID */
+.dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:2px}
+@media(max-width:900px){.dashboard{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.dashboard{grid-template-columns:1fr}}
 
-/* LEFT — campaigns */
-.campaigns{display:flex;flex-direction:column;gap:2px}
-.camp{position:relative;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:all .3s}
+.panel{background:var(--panel);border:1px solid var(--border);padding:6px;position:relative;overflow:hidden}
+.panel-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.06;pointer-events:none}
+.panel-title{font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.2);letter-spacing:2px;text-align:center;margin-bottom:4px;padding-bottom:3px;border-bottom:1px solid var(--border);position:relative;z-index:2}
+.panel.wide{grid-column:span 2}
+.panel.full{grid-column:1/-1}
+
+/* CAMPAIGNS — horizontal scroll */
+.camp-row{display:flex;gap:2px;overflow-x:auto;padding:2px;scrollbar-width:thin;scrollbar-color:rgba(200,170,120,0.08) transparent}
+.camp{min-width:180px;flex-shrink:0;position:relative;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:all .3s}
 .camp:hover{border-color:var(--gold)}
-.camp.locked{opacity:.4;cursor:not-allowed;filter:grayscale(.6)}
-.camp img{width:100%;height:140px;object-fit:cover;display:block;filter:brightness(0.7);transition:filter .3s}
-.camp:hover img{filter:brightness(0.9)}
-.camp-info{position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(10,8,6,0.95) 90%);display:flex;flex-direction:column;justify-content:flex-end;padding:10px}
-.camp-title{font-family:'Noto Serif SC',serif;font-size:13px;color:rgba(200,170,120,0.25);letter-spacing:.08em}
-.camp-cost{font-size:7px;color:rgba(200,170,120,0.12);margin-top:2px}
-.camp-reward{font-size:7px;color:var(--gold);margin-top:1px}
-.camp-prog{height:3px;background:var(--dim);margin-top:4px;border-radius:2px}
-.camp-fill{height:100%;border-radius:2px;width:0;transition:width .5s}
-.camp-gauge{position:absolute;top:6px;right:6px;width:40px;height:40px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(10,8,6,0.7);font-family:'Press Start 2P',cursive;font-size:6px;color:var(--gold)}
+.camp.locked{opacity:.35;cursor:not-allowed}
+.camp img{width:100%;height:100px;object-fit:cover;display:block;filter:brightness(0.65)}
+.camp-info{position:absolute;inset:0;background:linear-gradient(transparent 20%,rgba(10,8,6,0.95) 90%);display:flex;flex-direction:column;justify-content:flex-end;padding:6px}
+.camp-title{font-family:'Noto Serif SC',serif;font-size:11px;color:rgba(200,170,120,0.25);letter-spacing:.06em}
+.camp-cost{font-size:6px;color:rgba(200,170,120,0.1)}
+.camp-prog{height:3px;background:var(--dim);margin-top:3px;border-radius:2px}
+.camp-fill{height:100%;border-radius:2px;width:0}
+.camp-gauge{position:absolute;top:4px;right:4px;font-family:'Press Start 2P',cursive;font-size:7px;color:var(--gold);background:rgba(10,8,6,0.7);padding:2px 4px;border-radius:2px}
 
-/* RIGHT sidebar */
-.sidebar{display:flex;flex-direction:column;gap:2px}
-.sb{background:var(--panel);border:1px solid var(--border);padding:6px}
-.sb-title{font-family:'Noto Serif SC',serif;font-size:9px;color:rgba(200,170,120,0.15);letter-spacing:3px;text-align:center;margin-bottom:4px;border-bottom:1px solid var(--border);padding-bottom:3px}
-.sb img{width:100%;display:block;image-rendering:pixelated;opacity:.6;margin:4px 0}
+/* BUTTONS */
+.bg{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.bg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px}
+.b{font-family:'Noto Serif SC',serif;font-size:9px;color:rgba(200,170,120,0.3);background:rgba(20,16,10,0.6);border:1px solid var(--border);padding:5px 3px;cursor:pointer;transition:all .15s;text-align:center;user-select:none;position:relative;z-index:2}
+.b:hover{border-color:var(--gold);color:var(--gold);background:rgba(255,180,80,0.03)}
+.b:active{transform:scale(0.93)}
+.b.off{opacity:.25;cursor:not-allowed}
+.b.on{border-color:var(--gold);box-shadow:0 0 4px rgba(255,180,80,0.08)}
+.bv{font-family:'Press Start 2P',cursive;font-size:5px;color:var(--gold);display:block;margin-top:1px}
 
-/* BUILDINGS */
-.bld-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
-.bld{text-align:center;border:1px solid var(--border);padding:4px;cursor:pointer;transition:all .2s;background:var(--panel)}
-.bld:hover{border-color:var(--gold);background:rgba(255,180,80,0.02)}
+/* BUILDINGS — image cards */
+.bld-g{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.bld{text-align:center;border:1px solid var(--border);padding:3px;cursor:pointer;transition:all .2s;background:var(--panel);position:relative;z-index:2}
+.bld:hover{border-color:var(--gold)}
 .bld:active{transform:scale(0.95)}
-.bld img{width:48px;height:48px;image-rendering:pixelated;margin:0 auto;display:block;opacity:.6}
-.bld-name{font-size:6px;color:rgba(200,170,120,0.2);margin-top:2px}
-.bld-count{font-family:'Press Start 2P',cursive;font-size:8px;color:var(--gold)}
-.bld-cost{font-size:5px;color:rgba(200,170,120,0.1)}
+.bld img{width:36px;height:36px;image-rendering:pixelated;margin:0 auto;display:block;opacity:.5}
+.bld-n{font-family:'Noto Serif SC',serif;font-size:8px;color:rgba(200,170,120,0.2)}
+.bld-c{font-family:'Press Start 2P',cursive;font-size:9px;color:var(--gold)}
 
 /* UNITS */
-.unit-row{display:flex;gap:3px;margin:4px 0}
-.unit{flex:1;text-align:center;border:1px solid var(--border);padding:3px;cursor:pointer;transition:all .2s}
-.unit:hover{border-color:var(--gold)}
-.unit:active{transform:scale(0.95)}
-.unit-name{font-family:'Noto Serif SC',serif;font-size:8px;color:rgba(200,170,120,0.15)}
-.unit-count{font-family:'Press Start 2P',cursive;font-size:9px;color:var(--gold)}
-.unit-cost{font-size:5px;color:rgba(200,170,120,0.1)}
+.unit-g{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.u{text-align:center;border:1px solid var(--border);padding:3px;cursor:pointer;transition:all .2s}
+.u:hover{border-color:var(--gold)}
+.u:active{transform:scale(0.95)}
+.u-c{font-family:'Press Start 2P',cursive;font-size:8px;color:var(--gold)}
+.u-n{font-family:'Noto Serif SC',serif;font-size:9px;color:rgba(200,170,120,0.15)}
 
 /* DIALS */
-.dials{display:grid;grid-template-columns:1fr 1fr;gap:3px}
-.dial{text-align:center;border:1px solid var(--border);padding:4px;background:rgba(20,16,10,0.5)}
-.dial-val{font-family:'Press Start 2P',cursive;font-size:10px;color:var(--gold)}
-.dial-cn{font-family:'Noto Serif SC',serif;font-size:11px;color:rgba(200,170,120,0.12)}
-.dial-lbl{font-size:5px;color:var(--dim);letter-spacing:1px}
+.dial-g{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.d{text-align:center;border:1px solid var(--border);padding:4px}
+.d-v{font-family:'Press Start 2P',cursive;font-size:10px;color:var(--gold)}
+.d-n{font-family:'Noto Serif SC',serif;font-size:12px;color:rgba(200,170,120,0.12)}
 
-/* LOG */
-.log{max-height:100px;overflow-y:auto;font-size:7px;color:rgba(200,170,120,0.15);padding:4px;scrollbar-width:thin;scrollbar-color:rgba(200,170,120,0.08) transparent}
+.weather-icon{font-size:20px;text-align:center}
+.season{font-family:'Noto Serif SC',serif;font-size:11px;color:rgba(200,170,120,0.15);text-align:center}
+.log{max-height:80px;overflow-y:auto;font-size:7px;color:rgba(200,170,120,0.12);padding:3px;scrollbar-width:thin;scrollbar-color:rgba(200,170,120,0.06) transparent;position:relative;z-index:2}
 .log div{padding:1px 0;border-bottom:1px solid rgba(200,170,120,0.02)}
-
-.status{padding:8px;text-align:center;font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.08);letter-spacing:3px;border-top:1px solid var(--border)}
-.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 120px rgba(0,0,0,0.6)}
-.back{position:fixed;top:30px;left:6px;font-size:7px;color:rgba(200,170,120,0.04);text-decoration:none;z-index:50;letter-spacing:2px}
+.status{padding:6px;text-align:center;font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.06);letter-spacing:3px}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 100px rgba(0,0,0,0.5)}
+.back{position:fixed;top:30px;left:6px;font-size:7px;color:rgba(200,170,120,0.04);text-decoration:none;z-index:50}
 .back:hover{color:rgba(200,170,120,0.2)}
-.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
-.btn{font-family:'Noto Serif SC',serif;font-size:8px;color:rgba(200,170,120,0.25);background:var(--panel);border:1px solid var(--border);padding:4px;cursor:pointer;transition:all .15s;text-align:center;user-select:none}
-.btn:hover{border-color:var(--gold);color:var(--gold)}
-.btn:active{transform:scale(0.93)}
-.btn.disabled{opacity:.3;cursor:not-allowed}
-.btn.active{border-color:var(--gold);box-shadow:0 0 4px rgba(255,180,80,0.1)}
-.btn-val{font-family:'Press Start 2P',cursive;font-size:5px;color:var(--gold);display:block;margin-top:1px}
-.weather-icon{font-size:18px;text-align:center}
-.season{font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.15);text-align:center}
 </style>
 </head>
 <body>
@@ -95,48 +91,52 @@ body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',mono
 <a href="index.html" class="back">&larr;</a>
 
 <div class="res-bar">
-  <span class="res-cn">战争世界</span>
-  <div class="res" onclick="click_res('gold')"><span class="res-icon">&#x2694;</span><span>金</span><span class="res-val" id="r-gold">0</span><span class="res-rate" id="rr-gold"></span></div>
-  <div class="res" onclick="click_res('wood')"><span class="res-icon">&#x1F332;</span><span>木</span><span class="res-val" id="r-wood">0</span><span class="res-rate" id="rr-wood"></span></div>
-  <div class="res" onclick="click_res('iron')"><span class="res-icon">&#x26CF;</span><span>铁</span><span class="res-val" id="r-iron">0</span><span class="res-rate" id="rr-iron"></span></div>
-  <div class="res" onclick="click_res('food')"><span class="res-icon">&#x1F33E;</span><span>粮</span><span class="res-val" id="r-food">0</span><span class="res-rate" id="rr-food"></span></div>
-  <div class="alert-box" id="alert-box" style="display:none">&#x26A0; <span id="alert-text"></span></div>
+  <span style="font-family:'Noto Serif SC',serif;font-size:11px;color:rgba(200,170,120,0.12);letter-spacing:2px">战争世界</span>
+  <div class="res" onclick="click_res('gold')"><span>⚔️金</span><span class="res-val" id="r-gold">0</span><span class="res-rate" id="rr-gold"></span></div>
+  <div class="res" onclick="click_res('wood')"><span>🌲木</span><span class="res-val" id="r-wood">0</span><span class="res-rate" id="rr-wood"></span></div>
+  <div class="res" onclick="click_res('iron')"><span>⛏铁</span><span class="res-val" id="r-iron">0</span><span class="res-rate" id="rr-iron"></span></div>
+  <div class="res" onclick="click_res('food')"><span>🌾粮</span><span class="res-val" id="r-food">0</span><span class="res-rate" id="rr-food"></span></div>
+  <div class="alert-box" id="alert-box" style="display:none">⚠️ <span id="alert-text"></span></div>
 </div>
 
-<div class="main">
-  <div class="campaigns" id="campaigns"></div>
-  <div class="sidebar">
-    <div class="sb"><div class="sb-title">战略地图</div><img src="img/hsuchun/wc-minimap.png" alt=""></div>
-    <div class="sb">
-      <div class="sb-title">建筑 BUILDINGS</div>
-      <div class="bld-grid" id="buildings"></div>
-    </div>
-    <div class="sb">
-      <div class="sb-title">兵种 UNITS</div>
-      <div id="units"></div>
-    </div>
-    <div class="sb">
-      <div class="sb-title">战力 POWER</div>
-      <div class="dials" id="dials"></div>
-    </div>
-    <div class="sb">
+<!-- CAMPAIGNS — full width horizontal -->
+<div class="panel full" style="padding:2px"><div class="panel-title">🏴 战役 CAMPAIGNS</div><div class="camp-row" id="campaigns"></div></div>
 
-    <div class="sb"><div class="sb-title">科技 RESEARCH</div><div class="btn-grid" id="research"></div></div>
-    <div class="sb"><div class="sb-title">外交 DIPLOMACY</div><div class="btn-grid" id="diplomacy"></div></div>
-    <div class="sb"><div class="sb-title">谍报 ESPIONAGE</div><div class="btn-grid" id="espionage"></div></div>
-    <div class="sb"><div class="sb-title">天气 WEATHER</div><div id="weather"></div></div>
-    <div class="sb"><div class="sb-title">锻造 FORGE</div><div class="btn-grid" id="forge"></div></div>
-    <div class="sb"><div class="sb-title">税收 TAXES</div><div class="btn-grid" id="taxes"></div></div>
-    <div class="sb"><div class="sb-title">法令 EDICTS</div><div class="btn-grid" id="edicts"></div></div>
-    <div class="sb">
-      <div class="sb-title">战报 LOG</div>
-      <div class="log" id="log"></div>
-    </div>
-  </div>
+<div class="dashboard">
+  <!-- DIALS -->
+  <div class="panel wide"><div class="panel-title">📊 战力总览</div><div class="dial-g" id="dials"></div></div>
+  <!-- WEATHER -->
+  <div class="panel"><div class="panel-title">🌤️ 天象</div><div id="weather"></div></div>
+  <!-- MINIMAP -->
+  <div class="panel"><div class="panel-title">🗺️ 战略地图</div><img src="img/hsuchun/wc-minimap.png" alt="" style="width:100%;image-rendering:pixelated;opacity:.5"></div>
+
+  <!-- BUILDINGS — wide -->
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/war-emperor.jpg')"></div><div class="panel-title">🏯 建筑</div><div class="bld-g" id="buildings"></div></div>
+  <!-- UNITS — wide -->
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/war-battle.jpg')"></div><div class="panel-title">⚔️ 兵种</div><div class="unit-g" id="units"></div></div>
+
+  <!-- RESEARCH -->
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-council.jpg')"></div><div class="panel-title">📜 科技</div><div class="bg" id="research"></div></div>
+  <!-- FORGE -->
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-northclan.jpg');filter:hue-rotate(20deg)"></div><div class="panel-title">🔨 锻造</div><div class="bg" id="forge"></div></div>
+  <!-- DIPLOMACY -->
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-emperor.jpg');filter:sepia(0.5) hue-rotate(-20deg)"></div><div class="panel-title">🤝 外交</div><div class="bg" id="diplomacy"></div></div>
+  <!-- ESPIONAGE -->
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-council.jpg');filter:hue-rotate(180deg) brightness(0.8)"></div><div class="panel-title">🗡️ 谍报</div><div class="bg" id="espionage"></div></div>
+  <!-- EDICTS -->
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-dragonrider.jpg');filter:saturate(0.3)"></div><div class="panel-title">📋 法令</div><div class="bg" id="edicts"></div></div>
+  <!-- TAXES -->
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-emperor.jpg');filter:hue-rotate(40deg) brightness(0.6)"></div><div class="panel-title">💰 税收</div><div class="bg" id="taxes"></div></div>
+  <!-- WARCRAFT UI -->
+  <div class="panel"><div class="panel-title">🎮 指令</div><img src="img/hsuchun/wc-actions.png" alt="" style="width:100%;image-rendering:pixelated;opacity:.4"><img src="img/hsuchun/wc-attack.png" alt="" style="width:100%;image-rendering:pixelated;opacity:.4;margin-top:4px"></div>
+  <!-- LOG -->
+  <div class="panel"><div class="panel-title">📝 战报</div><div class="log" id="log"></div></div>
 </div>
-<div class="status">许春战争世界 &middot; HSU-CHUN WAR WORLD &middot; PVP永远开启</div>
+
+<div class="status">许春战争世界 · PVP永远开启 · 北方猎族先死 · 然后一切开始</div>
 
 <script>
+
 var G={gold:50,wood:30,iron:10,food:20,jade:0,silk:0,gunpowder:0,morale:50};
 var R={gold:0,wood:0,iron:0,food:0,jade:0,silk:0,gunpowder:0};
 var clickPow={gold:3,wood:2,iron:1,food:1};var clickMult=1,taxRate=10,season=0,weatherIdx=0,turn=0,totalPower=0;
@@ -238,19 +238,20 @@ CAMPS.forEach(function(c){if(c.active){c.prog+=100/c.time;if(c.prog>=100){c.prog
 upd();}
 function upd(){
 ['gold','wood','iron','food'].forEach(function(k){document.getElementById('r-'+k).textContent=fmt(G[k]);document.getElementById('rr-'+k).textContent=R[k]>0?'+'+R[k].toFixed(1)+'/s':'';});
-var bh='';BLDS.forEach(function(b,i){bh+='<div class="bld" onclick="buyBld('+i+')"><img src="'+b.img+'" alt=""><div class="bld-count">'+b.count+'</div><div class="bld-name">'+b.name+'</div><div class="bld-cost">';for(var k in b.cost)bh+=k[0]+':'+fmt(b.cost[k])+' ';bh+='</div></div>';});document.getElementById('buildings').innerHTML=bh;
-var uh='';for(var i=0;i<UNITS.length;i+=2){uh+='<div class="unit-row">';for(var j=i;j<Math.min(i+2,UNITS.length);j++){var u=UNITS[j];uh+='<div class="unit" onclick="buyUnit('+j+')"><div class="unit-count">'+u.count+'</div><div class="unit-name">'+u.name+'</div><div class="unit-cost">';for(var k in u.cost)uh+=k[0]+':'+fmt(u.cost[k])+' ';uh+='</div></div>';}uh+='</div>';}document.getElementById('units').innerHTML=uh;
-document.getElementById('dials').innerHTML='<div class="dial"><div class="dial-val">'+totalPower+'</div><div class="dial-cn">\u6218\u529b</div></div><div class="dial"><div class="dial-val">'+UNITS.reduce(function(a,u){return a+u.count;},0)+'</div><div class="dial-cn">\u5175</div></div><div class="dial"><div class="dial-val">'+Math.floor(G.morale)+'</div><div class="dial-cn">\u58eb\u6c14</div></div><div class="dial"><div class="dial-val">T'+turn+'</div><div class="dial-cn">\u56de\u5408</div></div>';
-var rh='';RESEARCH.forEach(function(r,i){rh+='<div class="btn'+(r.done?' disabled':'')+'" onclick="doRes('+i+')">'+r.name+'<span class="btn-val">';for(var k in r.cost)rh+=k[0]+':'+fmt(r.cost[k])+' ';rh+='</span></div>';});document.getElementById('research').innerHTML=rh;
+var bh='';BLDS.forEach(function(b,i){bh+='<div class="bld" onclick="buyBld('+i+')"><img src="'+b.img+'" alt=""><div class="bld-c">'+b.count+'</div><div class="bld-n">'+b.name+'</div><div class="bv">';for(var k in b.cost)bh+=k[0]+':'+fmt(b.cost[k])+' ';bh+='</div></div>';});document.getElementById('buildings').innerHTML=bh;
+var uh='';for(var i=0;i<UNITS.length;i+=2){uh+='<div class="unit-g" style="grid-template-columns:repeat(4,1fr)">';for(var j=i;j<Math.min(i+2,UNITS.length);j++){var u=UNITS[j];uh+='<div class="u" onclick="buyUnit('+j+')"><div class="u-c">'+u.count+'</div><div class="u-n">'+u.name+'</div><div class="bv">';for(var k in u.cost)uh+=k[0]+':'+fmt(u.cost[k])+' ';uh+='</div></div>';}uh+='</div>';}document.getElementById('units').innerHTML=uh;
+document.getElementById('dials').innerHTML='<div class="d"><div class="d-v">'+totalPower+'</div><div class="d-n">\u6218\u529b</div></div><div class="d"><div class="d-v">'+UNITS.reduce(function(a,u){return a+u.count;},0)+'</div><div class="d-n">\u5175</div></div><div class="d"><div class="d-v">'+Math.floor(G.morale)+'</div><div class="d-n">\u58eb\u6c14</div></div><div class="d"><div class="d-v">T'+turn+'</div><div class="d-n">\u56de\u5408</div></div>';
+var rh='';RESEARCH.forEach(function(r,i){rh+='<div class="btn'+(r.done?' disabled':'')+'" onclick="doRes('+i+')">'+r.name+'<span class="bv">';for(var k in r.cost)rh+=k[0]+':'+fmt(r.cost[k])+' ';rh+='</span></div>';});document.getElementById('research').innerHTML=rh;
 var dh='';DIPLO.forEach(function(d,i){dh+='<div class="btn'+(d.active?' active':'')+'" onclick="doDip('+i+')">'+d.name+'</div>';});document.getElementById('diplomacy').innerHTML=dh;
-var sh='';SPIES.forEach(function(s,i){sh+='<div class="btn'+(s.cd>0?' disabled':'')+'" onclick="doSpy('+i+')">'+s.name+(s.cd>0?'<span class="btn-val">\u51b7\u5374:'+s.cd+'</span>':'')+'</div>';});document.getElementById('espionage').innerHTML=sh;
+var sh='';SPIES.forEach(function(s,i){sh+='<div class="btn'+(s.cd>0?' disabled':'')+'" onclick="doSpy('+i+')">'+s.name+(s.cd>0?'<span class="bv">\u51b7\u5374:'+s.cd+'</span>':'')+'</div>';});document.getElementById('espionage').innerHTML=sh;
 document.getElementById('weather').innerHTML='<div class="weather-icon">'+WEATHERS[weatherIdx].split(' ')[0]+'</div><div class="season">'+SEASONS[season]+'</div>';
-var fh='';FORGES.forEach(function(f,i){fh+='<div class="btn'+(f.done?' disabled':'')+'" onclick="doFrg('+i+')">'+f.name+'<span class="btn-val">';for(var k in f.cost)fh+=k[0]+':'+fmt(f.cost[k])+' ';fh+='</span></div>';});document.getElementById('forge').innerHTML=fh;
-document.getElementById('taxes').innerHTML='<div class="btn" onclick="taxRate=Math.max(0,taxRate-5);log(\'\u51cf\u7a0e\');upd()">\u51cf\u7a0e \u2193 '+taxRate+'%</div><div class="btn" onclick="taxRate=Math.min(50,taxRate+5);G.morale-=2;log(\'\u52a0\u7a0e\');upd()">\u52a0\u7a0e \u2191</div>';
+var fh='';FORGES.forEach(function(f,i){fh+='<div class="btn'+(f.done?' disabled':'')+'" onclick="doFrg('+i+')">'+f.name+'<span class="bv">';for(var k in f.cost)fh+=k[0]+':'+fmt(f.cost[k])+' ';fh+='</span></div>';});document.getElementById('forge').innerHTML=fh;
+document.getElementById('taxes').innerHTML='<div class="b" onclick="taxRate=Math.max(0,taxRate-5);log(\'\u51cf\u7a0e\');upd()">\u51cf\u7a0e \u2193 '+taxRate+'%</div><div class="b" onclick="taxRate=Math.min(50,taxRate+5);G.morale-=2;log(\'\u52a0\u7a0e\');upd()">\u52a0\u7a0e \u2191</div>';
 var eh='';EDICTS.forEach(function(e,i){eh+='<div class="btn'+(e.active?' active':'')+'" onclick="doEdt('+i+')">'+e.name+'</div>';});document.getElementById('edicts').innerHTML=eh;
 var ch='';CAMPS.forEach(function(c,i){var lk=totalPower<c.powerReq&&!c.active;ch+='<div class="camp'+(lk?' locked':'')+'" onclick="startCamp('+i+')"><img src="'+c.img+'" alt=""><div class="camp-info"><div class="camp-title">'+c.name+'</div><div class="camp-cost">';for(var k in c.cost)ch+=k+':'+c.cost[k]+' ';ch+='</div><div class="camp-prog"><div class="camp-fill" style="width:'+c.prog+'%;background:'+(c.active?'var(--gold)':'var(--dim)')+'"></div></div></div><div class="camp-gauge">'+(c.active?Math.floor(c.prog)+'%':(c.done>0?'x'+c.done:'\u2694'))+'</div></div>';});
 document.getElementById('campaigns').innerHTML=ch;}
 setInterval(tick,1000);upd();log('\u6218\u4e89\u4e16\u754c\u5df2\u542f\u52a8');
+
 
 </script>
 </body></html>
