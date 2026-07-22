@@ -7,140 +7,130 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fira+Code:wght@300;400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#030308;color:rgba(140,120,220,0.3);font-family:'Fira Code',monospace;font-size:12px;overflow-x:hidden}
+body{background:#030308;color:rgba(140,120,220,0.3);font-family:'Fira Code',monospace;overflow-x:hidden}
 
-.video-hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
-.video-wrap{width:100%;max-width:900px;aspect-ratio:16/9}
-.video-wrap iframe{width:100%;height:100%;border:none}
-.video-overlay{position:absolute;inset:0;background:linear-gradient(0deg,#030308 0%,transparent 10%,transparent 90%,#030308 100%);pointer-events:none;z-index:2}
-.vt{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;pointer-events:none}
-.vt h1{font-family:'Cinzel',serif;font-size:clamp(16px,4vw,28px);color:rgba(100,80,200,0.15);letter-spacing:.2em}
-.vt p{font-size:9px;color:rgba(140,120,220,0.06);letter-spacing:4px;margin-top:6px}
+/* VIDEO — smaller, not full screen */
+.video-sec{padding:40px 0 0;text-align:center;background:#000}
+.video-wrap{max-width:750px;margin:0 auto;aspect-ratio:16/9;position:relative}
+#yt-player{width:100%;height:100%}
+.vt{text-align:center;padding:12px 0 30px}
+.vt h1{font-family:'Cinzel',serif;font-size:clamp(14px,3.5vw,24px);color:rgba(100,80,200,0.15);letter-spacing:.2em}
+.vt p{font-size:8px;color:rgba(140,120,220,0.05);letter-spacing:4px;margin-top:4px}
 
-.cin{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.cin-bg{position:absolute;inset:0;background-size:cover;background-position:center}
-.cin::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,#030308 70%);z-index:3}
-.cin-text{position:relative;z-index:5;text-align:center;padding:20px;max-width:550px}
-.cin-text h2{font-family:'Cinzel',serif;font-size:clamp(14px,3vw,22px);color:rgba(140,120,220,0.2);letter-spacing:.1em;line-height:2;font-weight:400}
-.cin-text p{font-size:8px;color:rgba(140,120,220,0.06);letter-spacing:3px;margin-top:8px}
+/* COMPOSITED HERO — all 8 frames layered */
+.composite{position:relative;height:80vh;overflow:hidden;background:#030308}
+.comp-layer{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity .4s,transform .4s}
+.comp-text{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;text-align:center}
+.comp-text h2{font-family:'Cinzel',serif;font-size:clamp(16px,4vw,28px);color:rgba(140,120,220,0.25);letter-spacing:.12em;line-height:1.8;text-shadow:0 0 40px rgba(80,60,180,0.3);transition:all .5s}
+.comp-text p{font-size:9px;color:rgba(140,120,220,0.08);letter-spacing:3px;margin-top:8px}
 
-.rapid{position:relative;height:250vh;background:#030308}
-.rapid-canvas{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.rapid-frame{position:absolute;inset:5%;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0;transition:opacity .2s}
-.rapid-frame.active{opacity:1}
+/* GLITCH OVERLAY */
+.glitch{animation:glitchAnim 8s infinite}
+@keyframes glitchAnim{0%,92%,100%{transform:none;filter:none}93%{transform:translateX(-3px) skewX(-1deg);filter:hue-rotate(90deg)}95%{transform:translateX(2px);filter:hue-rotate(-60deg) saturate(2)}97%{transform:translateY(-2px) skewX(1deg);filter:brightness(1.5)}}
 
-.flash-layer{position:fixed;inset:0;background:rgba(100,80,220,0.8);opacity:0;pointer-events:none;z-index:50;transition:opacity .05s}
-.flash-layer.on{opacity:.5;transition:none}
+/* BATTLE GRID — all battle frames visible at once */
+.battle-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:2px;background:rgba(100,80,200,0.03)}
+.battle-cell{position:relative;overflow:hidden;aspect-ratio:16/10}
+.battle-cell img{width:100%;height:100%;object-fit:cover;filter:saturate(1.2) contrast(1.1);transition:all .3s}
+.battle-cell:hover img{filter:saturate(1.8) contrast(1.3) brightness(1.2);transform:scale(1.05)}
+.battle-cell::after{content:attr(data-line);position:absolute;bottom:0;left:0;right:0;padding:8px;font-family:'Cinzel',serif;font-size:clamp(9px,1.5vw,13px);color:rgba(140,120,220,0.2);letter-spacing:.08em;background:linear-gradient(transparent,rgba(3,3,8,0.9));text-align:center}
+.battle-cell.wide{grid-column:span 2}
 
-.closing{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:#030308}
-.closing h2{font-family:'Cinzel',serif;font-size:clamp(12px,2.5vw,18px);color:rgba(140,120,220,0.12);letter-spacing:.15em;line-height:2.5;text-align:center;max-width:500px}
+/* PULSE BORDER */
+.pulse-border{border:1px solid rgba(100,80,200,0.08);animation:borderPulse 3s ease-in-out infinite}
+@keyframes borderPulse{0%,100%{border-color:rgba(100,80,200,0.08)}50%{border-color:rgba(100,80,200,0.2)}}
+
+/* CLOSING */
+.closing{padding:50px 20px;text-align:center;background:linear-gradient(180deg,#030308,#060612,#030308)}
+.closing h2{font-family:'Cinzel',serif;font-size:clamp(11px,2vw,15px);color:rgba(140,120,220,0.12);letter-spacing:.1em;line-height:2.5;max-width:500px;margin:0 auto}
 .closing p{font-size:7px;color:rgba(140,120,220,0.04);letter-spacing:4px;margin-top:20px}
+.links{text-align:center;padding:16px 0 60px}
+.links a{font-size:7px;color:rgba(140,120,220,0.04);text-decoration:none;letter-spacing:2px;margin:0 12px}
+.links a:hover{color:rgba(140,120,220,0.15)}
 
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 200px rgba(0,0,0,0.85)}
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:41;opacity:.04;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.3) 2px,rgba(0,0,0,.3) 3px)}
 .back{position:fixed;top:10px;left:12px;font-size:9px;letter-spacing:2px;color:rgba(140,120,220,0.06);text-decoration:none;z-index:60}
 .back:hover{color:rgba(140,120,220,0.2)}
-.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 200px rgba(0,0,0,0.85)}
-.scanlines{position:fixed;inset:0;pointer-events:none;z-index:41;opacity:.03;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.4) 2px,rgba(0,0,0,.4) 3px)}
 </style>
 </head>
 <body>
 <div class="vignette"></div>
 <div class="scanlines"></div>
-<div class="flash-layer" id="flash"></div>
 <a href="ost.html" class="back">&larr; OST</a>
 
-<div class="video-hero">
-  <div class="video-wrap"><div id="yt-player"></div><div class="video-overlay"></div></div>
+<!-- VIDEO -->
+<div class="video-sec">
+  <div class="video-wrap"><div id="yt-player"></div></div>
   <div class="vt"><h1>Magus's Castle</h1><p>CHRONO TRIGGER &middot; 600 A.D.</p></div>
 </div>
 
-<div class="cin">
-  <div class="cin-bg" style="background-image:url('img/magus/magus-01.jpg');opacity:.3"></div>
-  <div class="cin-text">
-    <h2>in exchange for the life of this world...</h2>
+<!-- COMPOSITED HERO — layers of images stacked -->
+<div class="composite glitch" id="composite">
+  <div class="comp-layer" style="background-image:url('img/magus/magus-02.jpg');opacity:.25"></div>
+  <div class="comp-layer" style="background-image:url('img/magus/magus-03.jpg');opacity:0;mix-blend-mode:screen" id="cl2"></div>
+  <div class="comp-layer" style="background-image:url('img/magus/magus-05.jpg');opacity:0;mix-blend-mode:lighten" id="cl3"></div>
+  <div class="comp-layer" style="background-image:url('img/magus/magus-07.jpg');opacity:0;mix-blend-mode:screen" id="cl4"></div>
+  <div class="comp-text" id="comp-text">
+    <div>
+      <h2 id="comp-h">in exchange for the life of this world...</h2>
+      <p id="comp-p"></p>
+    </div>
   </div>
 </div>
 
-<div class="cin">
-  <div class="cin-bg" style="background-image:url('img/magus/magus-02.jpg');opacity:.35"></div>
-  <div class="cin-text">
-    <h2>the summoning circle is drawn. the blue flames hold position. the ritual was never meant to be interrupted.</h2>
-  </div>
+<!-- BATTLE GRID — all frames visible, hover to intensify -->
+<div class="battle-grid pulse-border">
+  <div class="battle-cell" data-line="the circle is drawn"><img src="img/magus/magus-02.jpg" alt=""></div>
+  <div class="battle-cell" data-line="again, the bitter black winds begin to howl"><img src="img/magus/magus-03.jpg" alt=""></div>
+  <div class="battle-cell" data-line="very well."><img src="img/magus/magus-04.jpg" alt=""></div>
+  <div class="battle-cell" data-line="come, if it is death you seek!"><img src="img/magus/magus-05.jpg" alt=""></div>
+  <div class="battle-cell wide" data-line="crono &middot; frog &middot; marle"><img src="img/magus/magus-06.jpg" alt=""></div>
+  <div class="battle-cell" data-line=""><img src="img/magus/magus-07.jpg" alt=""></div>
+  <div class="battle-cell" data-line="HP 499 &middot; MP 62"><img src="img/magus/magus-08.jpg" alt=""></div>
 </div>
 
-<div class="cin">
-  <div class="cin-bg" style="background-image:url('img/magus/magus-03.jpg');opacity:.4"></div>
-  <div class="cin-text">
-    <h2>again, the bitter black winds begin to howl.</h2>
-  </div>
-</div>
-
-<div class="cin">
-  <div class="cin-bg" style="background-image:url('img/magus/magus-04.jpg');opacity:.35"></div>
-  <div class="cin-text">
-    <h2>very well.</h2>
-  </div>
-</div>
-
-<div class="cin">
-  <div class="cin-bg" style="background-image:url('img/magus/magus-05.jpg');opacity:.5"></div>
-  <div class="cin-text">
-    <h2>come, if it is death you seek!</h2>
-  </div>
-</div>
-
-<div class="rapid" id="rapid-section">
-  <div class="rapid-canvas">
-    <div class="rapid-frame" style="background-image:url('img/magus/magus-06.jpg')"></div>
-    <div class="rapid-frame" style="background-image:url('img/magus/magus-07.jpg')"></div>
-    <div class="rapid-frame" style="background-image:url('img/magus/magus-08.jpg')"></div>
-    <div class="rapid-frame" style="background-image:url('img/magus/magus-06.jpg');filter:brightness(1.3)"></div>
-    <div class="rapid-frame" style="background-image:url('img/magus/magus-08.jpg');filter:contrast(1.3) saturate(1.3)"></div>
-  </div>
-</div>
-
+<!-- CLOSING -->
 <div class="closing">
   <h2>magus was never the villain. he was a child who lost his sister and spent a lifetime learning to summon the thing that took her. you interrupted a grief ritual and called it a boss fight.</h2>
   <p>CHRONO TRIGGER &middot; 1995 &middot; SQUARESOFT</p>
 </div>
-
-<div style="text-align:center;padding:20px">
-  <a href="ost.html" style="font-size:7px;color:rgba(140,120,220,0.04);text-decoration:none;letter-spacing:2px">the soundtrack remembers</a>
-</div>
-<div style="text-align:center;padding:8px">
-  <a href="amakakeru.html" style="font-size:7px;color:rgba(255,170,200,0.03);text-decoration:none;letter-spacing:2px">another fight that was never about fighting</a>
+<div class="links">
+  <a href="amakakeru.html">another fight that was never about fighting</a>
+  <a href="ost.html">the soundtrack remembers</a>
 </div>
 
 <script>
 var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
 function onYouTubeIframeAPIReady(){new YT.Player('yt-player',{videoId:'Kfegbe-B8Ek',playerVars:{autoplay:1,controls:1,rel:0,modestbranding:1},events:{onReady:function(e){e.target.playVideo();}}});}
 
-var flash=document.getElementById('flash');
-function doFlash(){flash.classList.add('on');setTimeout(function(){flash.classList.remove('on');},100);}
+// Composite layer cycling
+var lines=[
+  {h:'in exchange for the life of this world...',layers:[0.25,0,0,0]},
+  {h:'again, the bitter black winds begin to howl.',layers:[0.1,0.3,0,0]},
+  {h:'very well.',layers:[0,0.1,0.35,0]},
+  {h:'come, if it is death you seek!',layers:[0,0,0.15,0.4]},
+];
+var compIdx=0;
+function cycleComp(){
+  compIdx=(compIdx+1)%lines.length;
+  var l=lines[compIdx];
+  document.getElementById('comp-h').textContent=l.h;
+  document.getElementById('cl2').style.opacity=l.layers[1];
+  document.getElementById('cl3').style.opacity=l.layers[2];
+  document.getElementById('cl4').style.opacity=l.layers[3];
+}
+setInterval(cycleComp,3500);
 
-var cins=document.querySelectorAll('.cin');
+// Scroll parallax on composite
 window.addEventListener('scroll',function(){
-  var sy=window.scrollY;
-  cins.forEach(function(c){
-    var rect=c.getBoundingClientRect();
-    var p=(window.innerHeight-rect.top)/(window.innerHeight+rect.height);
-    p=Math.max(0,Math.min(1,p));
-    var tx=c.querySelector('.cin-text');
-    if(tx){tx.style.opacity=p>0.2&&p<0.85?1:0;tx.style.transform='translateY('+((0.5-p)*40)+'px)';}
-    var bg=c.querySelector('.cin-bg');
-    if(bg){bg.style.transform='scale('+(1+p*0.1)+')'}
-  });
-
-  var rs=document.getElementById('rapid-section');
-  if(rs){
-    var rr=rs.getBoundingClientRect();
-    var rp=-rr.top/(rr.height-window.innerHeight);
-    rp=Math.max(0,Math.min(1,rp));
-    var frames=document.querySelectorAll('.rapid-frame');
-    var idx=Math.min(Math.floor(rp*frames.length),frames.length-1);
-    frames.forEach(function(f,i){f.classList.toggle('active',i===idx);});
-    if(rp>0.15&&rp<0.2&&!rs.dataset.f1){rs.dataset.f1='1';doFlash();}
-    if(rp>0.85&&!rs.dataset.f2){rs.dataset.f2='1';doFlash();}
-  }
+  var c=document.getElementById('composite');
+  if(!c)return;
+  var r=c.getBoundingClientRect();
+  var p=(window.innerHeight-r.top)/(window.innerHeight+r.height);
+  p=Math.max(0,Math.min(1,p));
+  var layers=c.querySelectorAll('.comp-layer');
+  layers.forEach(function(l,i){l.style.transform='scale('+(1+p*0.08+i*0.02)+') translateY('+(p*-10-i*3)+'px)';});
 });
 </script>
 </body>
