@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Magus's Castle</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fira+Code:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#030308;color:rgba(140,120,220,0.3);font-family:'Fira Code',monospace;font-size:12px;overflow-x:hidden}
+
+.video-hero{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
+.video-wrap{width:100%;max-width:900px;aspect-ratio:16/9}
+.video-wrap iframe{width:100%;height:100%;border:none}
+.video-overlay{position:absolute;inset:0;background:linear-gradient(0deg,#030308 0%,transparent 10%,transparent 90%,#030308 100%);pointer-events:none;z-index:2}
+.vt{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;pointer-events:none}
+.vt h1{font-family:'Cinzel',serif;font-size:clamp(16px,4vw,28px);color:rgba(100,80,200,0.15);letter-spacing:.2em}
+.vt p{font-size:9px;color:rgba(140,120,220,0.06);letter-spacing:4px;margin-top:6px}
+
+.cin{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cin-bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.cin::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,#030308 70%);z-index:3}
+.cin-text{position:relative;z-index:5;text-align:center;padding:20px;max-width:550px}
+.cin-text h2{font-family:'Cinzel',serif;font-size:clamp(14px,3vw,22px);color:rgba(140,120,220,0.2);letter-spacing:.1em;line-height:2;font-weight:400}
+.cin-text p{font-size:8px;color:rgba(140,120,220,0.06);letter-spacing:3px;margin-top:8px}
+
+.rapid{position:relative;height:250vh;background:#030308}
+.rapid-canvas{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.rapid-frame{position:absolute;inset:5%;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0;transition:opacity .2s}
+.rapid-frame.active{opacity:1}
+
+.flash-layer{position:fixed;inset:0;background:rgba(100,80,220,0.8);opacity:0;pointer-events:none;z-index:50;transition:opacity .05s}
+.flash-layer.on{opacity:.5;transition:none}
+
+.closing{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:#030308}
+.closing h2{font-family:'Cinzel',serif;font-size:clamp(12px,2.5vw,18px);color:rgba(140,120,220,0.12);letter-spacing:.15em;line-height:2.5;text-align:center;max-width:500px}
+.closing p{font-size:7px;color:rgba(140,120,220,0.04);letter-spacing:4px;margin-top:20px}
+
+.back{position:fixed;top:10px;left:12px;font-size:9px;letter-spacing:2px;color:rgba(140,120,220,0.06);text-decoration:none;z-index:60}
+.back:hover{color:rgba(140,120,220,0.2)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 200px rgba(0,0,0,0.85)}
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:41;opacity:.03;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.4) 2px,rgba(0,0,0,.4) 3px)}
+</style>
+</head>
+<body>
+<div class="vignette"></div>
+<div class="scanlines"></div>
+<div class="flash-layer" id="flash"></div>
+<a href="ost.html" class="back">&larr; OST</a>
+
+<div class="video-hero">
+  <div class="video-wrap"><div id="yt-player"></div><div class="video-overlay"></div></div>
+  <div class="vt"><h1>Magus's Castle</h1><p>CHRONO TRIGGER &middot; 600 A.D.</p></div>
+</div>
+
+<div class="cin">
+  <div class="cin-bg" style="background-image:url('img/magus/magus-01.jpg');opacity:.3"></div>
+  <div class="cin-text">
+    <h2>in exchange for the life of this world...</h2>
+  </div>
+</div>
+
+<div class="cin">
+  <div class="cin-bg" style="background-image:url('img/magus/magus-02.jpg');opacity:.35"></div>
+  <div class="cin-text">
+    <h2>the summoning circle is drawn. the blue flames hold position. the ritual was never meant to be interrupted.</h2>
+  </div>
+</div>
+
+<div class="cin">
+  <div class="cin-bg" style="background-image:url('img/magus/magus-03.jpg');opacity:.4"></div>
+  <div class="cin-text">
+    <h2>again, the bitter black winds begin to howl.</h2>
+  </div>
+</div>
+
+<div class="cin">
+  <div class="cin-bg" style="background-image:url('img/magus/magus-04.jpg');opacity:.35"></div>
+  <div class="cin-text">
+    <h2>very well.</h2>
+  </div>
+</div>
+
+<div class="cin">
+  <div class="cin-bg" style="background-image:url('img/magus/magus-05.jpg');opacity:.5"></div>
+  <div class="cin-text">
+    <h2>come, if it is death you seek!</h2>
+  </div>
+</div>
+
+<div class="rapid" id="rapid-section">
+  <div class="rapid-canvas">
+    <div class="rapid-frame" style="background-image:url('img/magus/magus-06.jpg')"></div>
+    <div class="rapid-frame" style="background-image:url('img/magus/magus-07.jpg')"></div>
+    <div class="rapid-frame" style="background-image:url('img/magus/magus-08.jpg')"></div>
+    <div class="rapid-frame" style="background-image:url('img/magus/magus-06.jpg');filter:brightness(1.3)"></div>
+    <div class="rapid-frame" style="background-image:url('img/magus/magus-08.jpg');filter:contrast(1.3) saturate(1.3)"></div>
+  </div>
+</div>
+
+<div class="closing">
+  <h2>magus was never the villain. he was a child who lost his sister and spent a lifetime learning to summon the thing that took her. you interrupted a grief ritual and called it a boss fight.</h2>
+  <p>CHRONO TRIGGER &middot; 1995 &middot; SQUARESOFT</p>
+</div>
+
+<div style="text-align:center;padding:20px">
+  <a href="ost.html" style="font-size:7px;color:rgba(140,120,220,0.04);text-decoration:none;letter-spacing:2px">the soundtrack remembers</a>
+</div>
+<div style="text-align:center;padding:8px">
+  <a href="amakakeru.html" style="font-size:7px;color:rgba(255,170,200,0.03);text-decoration:none;letter-spacing:2px">another fight that was never about fighting</a>
+</div>
+
+<script>
+var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
+function onYouTubeIframeAPIReady(){new YT.Player('yt-player',{videoId:'yKca4X3AKR0',playerVars:{autoplay:1,controls:1,rel:0,modestbranding:1},events:{onReady:function(e){e.target.playVideo();}}});}
+
+var flash=document.getElementById('flash');
+function doFlash(){flash.classList.add('on');setTimeout(function(){flash.classList.remove('on');},100);}
+
+var cins=document.querySelectorAll('.cin');
+window.addEventListener('scroll',function(){
+  var sy=window.scrollY;
+  cins.forEach(function(c){
+    var rect=c.getBoundingClientRect();
+    var p=(window.innerHeight-rect.top)/(window.innerHeight+rect.height);
+    p=Math.max(0,Math.min(1,p));
+    var tx=c.querySelector('.cin-text');
+    if(tx){tx.style.opacity=p>0.2&&p<0.85?1:0;tx.style.transform='translateY('+((0.5-p)*40)+'px)';}
+    var bg=c.querySelector('.cin-bg');
+    if(bg){bg.style.transform='scale('+(1+p*0.1)+')'}
+  });
+
+  var rs=document.getElementById('rapid-section');
+  if(rs){
+    var rr=rs.getBoundingClientRect();
+    var rp=-rr.top/(rr.height-window.innerHeight);
+    rp=Math.max(0,Math.min(1,rp));
+    var frames=document.querySelectorAll('.rapid-frame');
+    var idx=Math.min(Math.floor(rp*frames.length),frames.length-1);
+    frames.forEach(function(f,i){f.classList.toggle('active',i===idx);});
+    if(rp>0.15&&rp<0.2&&!rs.dataset.f1){rs.dataset.f1='1';doFlash();}
+    if(rp>0.85&&!rs.dataset.f2){rs.dataset.f2='1';doFlash();}
+  }
+});
+</script>
+</body>
+</html>
