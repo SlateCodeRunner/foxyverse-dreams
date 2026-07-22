@@ -124,9 +124,9 @@ body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',mono
   <div class="panel"><div class="panel-title">🗺️ 战略地图</div><img src="img/hsuchun/wc-minimap.png" alt="" style="width:100%;image-rendering:pixelated;opacity:.5"></div>
 
   <!-- BUILDINGS — wide -->
-  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/war-emperor.jpg')"></div><div class="panel-title">🏯 建筑</div><div class="bld-g" id="buildings"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/emperor-wide-00.jpg')"></div><div class="panel-title">🏯 建筑</div><div class="mega-g" id="buildings"></div></div>
   <!-- UNITS — wide -->
-  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/war-battle.jpg')"></div><div class="panel-title">⚔️ 兵种</div><div class="unit-g" id="units"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/battle-wide-00.jpg')"></div><div class="panel-title">⚔️ 兵种</div><div class="mega-g" id="units"></div></div>
 
   <!-- RESEARCH -->
   <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-council.jpg')"></div><div class="panel-title">📜 科技</div><div class="bg3" id="research"></div></div>
@@ -186,23 +186,23 @@ var SEASONS=['\u6625 Spring','\u590f Summer','\u79cb Autumn','\u51ac Winter'];
 var WEATHERS=['\u2600\ufe0f \u6674\u5929','\ud83c\udf27\ufe0f \u66b4\u96e8','\u2744\ufe0f \u5927\u96ea','\ud83c\udf2b\ufe0f \u6d53\u96fe','\ud83d\udd25 \u65f1\u707e','\ud83c\udf2a\ufe0f \u53f0\u98ce'];
 var wEff=[{food:1.2},{wood:0.7},{food:0.5,iron:0.8},{},{food:0.3},{wood:0.5}];
 var BLDS=[
-{name:'\u519c\u573a',cost:{gold:20,wood:15},gives:{food:1},count:0,img:'img/hsuchun/wc-farm.png'},
-{name:'\u77ff\u573a',cost:{gold:30,wood:20},gives:{iron:0.5,gold:0.5},count:0,img:'img/hsuchun/wc-castle.png'},
-{name:'\u4f10\u6728',cost:{gold:15,wood:10},gives:{wood:1.5},count:0,img:'img/hsuchun/wc-barracks.png'},
-{name:'\u5e02\u573a',cost:{gold:50,wood:30,iron:10},gives:{gold:2},count:0,img:'img/hsuchun/wc-townhall.png'},
-{name:'\u4e1d\u8def',cost:{gold:80,wood:40},gives:{silk:0.3,gold:1},count:0,img:'img/hsuchun/wc-farm.png'},
-{name:'\u7389\u77ff',cost:{gold:100,iron:30},gives:{jade:0.2},count:0,img:'img/hsuchun/wc-castle.png'},
-{name:'\u706b\u836f\u5e93',cost:{gold:150,iron:50},gives:{gunpowder:0.1},count:0,img:'img/hsuchun/wc-barracks.png'},
-{name:'\u5bfa\u5e99',cost:{gold:200,wood:100},gives:{},count:0,img:'img/hsuchun/wc-townhall.png'}];
+{name:'\u{1F33E}\u519c\u573a',cost:{gold:20,wood:15},gives:{food:1},count:0,img:'img/hsuchun/mega/scouts-wide-11.jpg'},
+{name:'\u26CF\u77ff\u573a',cost:{gold:30,wood:20},gives:{iron:0.5,gold:0.5},count:0,img:'img/hsuchun/mega/battle-11.jpg'},
+{name:'\u{1FA93}\u4f10\u6728',cost:{gold:15,wood:10},gives:{wood:1.5},count:0,img:'img/hsuchun/mega/scouts-03.jpg'},
+{name:'\u{1F3EA}\u5e02\u573a',cost:{gold:50,wood:30,iron:10},gives:{gold:2},count:0,img:'img/hsuchun/mega/emperor-wide-11.jpg'},
+{name:'\u{1F42B}\u4e1d\u8def',cost:{gold:80,wood:40},gives:{silk:0.3,gold:1},count:0,img:'img/hsuchun/mega/scouts-wide-02.jpg'},
+{name:'\u{1F48E}\u7389\u77ff',cost:{gold:100,iron:30},gives:{jade:0.2},count:0,img:'img/hsuchun/mega/battle-wide-02.jpg'},
+{name:'\u{1F4A5}\u706b\u836f\u5e93',cost:{gold:150,iron:50},gives:{gunpowder:0.1},count:0,img:'img/hsuchun/mega/dragon-focal-3.jpg'},
+{name:'\u{1F3EF}\u5bfa\u5e99',cost:{gold:200,wood:100},gives:{},count:0,img:'img/hsuchun/mega/emperor-focal-3.jpg'}];
 var UNITS=[
-{id:'peasant',name:'\u519c\u6c11',cost:{food:5,gold:10},power:0,gather:0.3,count:0},
-{id:'footman',name:'\u6b65\u5175',cost:{food:10,gold:20,iron:5},power:2,gather:0,count:0},
-{id:'archer',name:'\u5f13\u5175',cost:{food:8,gold:25,wood:10},power:3,gather:0,count:0},
-{id:'knight',name:'\u9a91\u5175',cost:{food:15,gold:40,iron:15},power:5,gather:0,count:0},
-{id:'siege',name:'\u653b\u57ce\u8f66',cost:{gold:60,iron:30,wood:40},power:8,gather:0,count:0},
-{id:'cannon',name:'\u706b\u70ae',cost:{gold:100,iron:40,gunpowder:5},power:15,gather:0,count:0},
-{id:'dragon',name:'\u9f99\u9a91',cost:{food:30,gold:100,iron:50},power:20,gather:0,count:0},
-{id:'general',name:'\u5c06\u519b',cost:{gold:200,jade:3,silk:2},power:30,gather:0,count:0}];
+{id:'peasant',name:'\u519c\u6c11',cost:{food:5,gold:10},power:0,gather:0.3,count:0,img:'img/hsuchun/mega/scouts-20.jpg'},
+{id:'footman',name:'\u6b65\u5175',cost:{food:10,gold:20,iron:5},power:2,gather:0,count:0,img:'img/hsuchun/mega/battle-21.jpg'},
+{id:'archer',name:'\u5f13\u5175',cost:{food:8,gold:25,wood:10},power:3,gather:0,count:0,img:'img/hsuchun/mega/battle-22.jpg'},
+{id:'knight',name:'\u9a91\u5175',cost:{food:15,gold:40,iron:15},power:5,gather:0,count:0,img:'img/hsuchun/mega/battle-23.jpg'},
+{id:'siege',name:'\u653b\u57ce\u8f66',cost:{gold:60,iron:30,wood:40},power:8,gather:0,count:0,img:'img/hsuchun/mega/dragon-wide-00.jpg'},
+{id:'cannon',name:'\u706b\u70ae',cost:{gold:100,iron:40,gunpowder:5},power:15,gather:0,count:0,img:'img/hsuchun/mega/dragon-wide-01.jpg'},
+{id:'dragon',name:'\u9f99\u9a91',cost:{food:30,gold:100,iron:50},power:20,gather:0,count:0,img:'img/hsuchun/mega/dragon-00.jpg'},
+{id:'general',name:'\u5c06\u519b',cost:{gold:200,jade:3,silk:2},power:30,gather:0,count:0,img:'img/hsuchun/mega/emperor-focal-0.jpg'}];
 var RESEARCH=[
 {name:'\u94c1\u5668\u953b\u9020',cost:{gold:100,iron:30},done:false},
 {name:'\u519c\u4e1a\u6539\u9769',cost:{gold:80,wood:40},done:false},
@@ -280,8 +280,8 @@ CAMPS.forEach(function(c){if(c.active){c.prog+=100/c.time;if(c.prog>=100){c.prog
 upd();}
 function upd(){
 ['gold','wood','iron','food'].forEach(function(k){document.getElementById('r-'+k).textContent=fmt(G[k]);document.getElementById('rr-'+k).textContent=R[k]>0?'+'+R[k].toFixed(1)+'/s':'';});
-var bh='';BLDS.forEach(function(b,i){bh+='<div class="bld" onclick="buyBld('+i+')"><img src="'+b.img+'" alt=""><div class="bld-c">'+b.count+'</div><div class="bld-n">'+b.name+'</div><div class="bv">';for(var k in b.cost)bh+=k[0]+':'+fmt(b.cost[k])+' ';bh+='</div></div>';});document.getElementById('buildings').innerHTML=bh;
-var uh='';for(var i=0;i<UNITS.length;i+=2){uh+='<div class="unit-g" style="grid-template-columns:repeat(4,1fr)">';for(var j=i;j<Math.min(i+2,UNITS.length);j++){var u=UNITS[j];uh+='<div class="u" onclick="buyUnit('+j+')"><div class="u-c">'+u.count+'</div><div class="u-n">'+u.name+'</div><div class="bv">';for(var k in u.cost)uh+=k[0]+':'+fmt(u.cost[k])+' ';uh+='</div></div>';}uh+='</div>';}document.getElementById('units').innerHTML=uh;
+var bh='';BLDS.forEach(function(b,i){bh+='<div class="mb" style="background-image:url(\''+b.img+'\')" onclick="buyBld('+i+')"><div class="mb-n">'+b.name+'</div><div class="bld-c" style="position:relative;z-index:2;font-family:Press Start 2P,cursive;font-size:12px;color:rgba(255,180,80,0.5)">'+b.count+'</div><span class="bv">';for(var k in b.gives)bh+=k[0]+':+'+b.gives[k]+'/s ';bh+='</span><span class="bv">';for(var k in b.cost)bh+=k[0]+':'+fmt(b.cost[k])+' ';bh+='</span></div>';});document.getElementById('buildings').innerHTML=bh;
+var uh='';UNITS.forEach(function(u,j){uh+='<div class="mb" style="background-image:url(\''+u.img+'\')" onclick="buyUnit('+j+')"><div class="mb-n">'+u.name+'</div><div class="u-c" style="position:relative;z-index:2;font-family:Press Start 2P,cursive;font-size:12px;color:rgba(255,180,80,0.5)">'+u.count+'</div><span class="bv">\u2694'+u.power+' ';for(var k in u.cost)uh+=k[0]+':'+fmt(u.cost[k])+' ';uh+='</span></div>';});document.getElementById('units').innerHTML=uh;
 document.getElementById('dials').innerHTML='<div class="d"><div class="d-v">'+totalPower+'</div><div class="d-n">\u6218\u529b</div></div><div class="d"><div class="d-v">'+UNITS.reduce(function(a,u){return a+u.count;},0)+'</div><div class="d-n">\u5175</div></div><div class="d"><div class="d-v">'+Math.floor(G.morale)+'</div><div class="d-n">\u58eb\u6c14</div></div><div class="d"><div class="d-v">T'+turn+'</div><div class="d-n">\u56de\u5408</div></div>';
 var rh='';RESEARCH.forEach(function(r,i){rh+='<div class="btn'+(r.done?' disabled':'')+'" onclick="doRes('+i+')">'+r.name+'<span class="bv">';for(var k in r.cost)rh+=k[0]+':'+fmt(r.cost[k])+' ';rh+='</span></div>';});document.getElementById('research').innerHTML=rh;
 var dh='';DIPLO.forEach(function(d,i){dh+='<div class="btn'+(d.active?' active':'')+'" onclick="doDip('+i+')">'+d.name+'</div>';});document.getElementById('diplomacy').innerHTML=dh;
