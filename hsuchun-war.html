@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -84,6 +84,19 @@ body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',mono
 .vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 100px rgba(0,0,0,0.5)}
 .back{position:fixed;top:30px;left:6px;font-size:7px;color:rgba(200,170,120,0.04);text-decoration:none;z-index:50}
 .back:hover{color:rgba(200,170,120,0.2)}
+
+/* MEGA BUTTONS */
+.mega-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.mb{position:relative;min-height:55px;background-size:cover;background-position:center;border:1px solid var(--border);cursor:pointer;transition:all .2s;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;user-select:none}
+.mb::before{content:'';position:absolute;inset:0;background:rgba(10,8,6,0.72);transition:background .2s}
+.mb:hover{border-color:var(--gold);transform:scale(1.02)}
+.mb:hover::before{background:rgba(10,8,6,0.55)}
+.mb:active{transform:scale(0.95)}
+.mb.off{opacity:.3;cursor:not-allowed}
+.mb.off:hover{transform:none;border-color:var(--border)}
+.mb-n{position:relative;z-index:2;font-family:'Noto Serif SC',serif;font-size:11px;color:rgba(200,170,120,0.35);letter-spacing:.05em}
+.mb .bv{position:relative;z-index:2}
+@media(max-width:600px){.mega-g{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -118,32 +131,48 @@ body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',mono
   <!-- RESEARCH -->
   <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-council.jpg')"></div><div class="panel-title">📜 科技</div><div class="bg3" id="research"></div></div>
   <!-- FORGE -->
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-northclan.jpg');filter:hue-rotate(20deg)"></div><div class="panel-title">🔨 锻造</div><div class="bg3" id="forge"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/council-02.jpg')"></div><div class="panel-title">🔨 锻造</div><div class="bg3" id="forge"></div></div>
   <!-- DIPLOMACY -->
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-emperor.jpg');filter:sepia(0.5) hue-rotate(-20deg)"></div><div class="panel-title">🤝 外交</div><div class="bg3" id="diplomacy"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/emperor-10.jpg')"></div><div class="panel-title">🤝 外交</div><div class="bg3" id="diplomacy"></div></div>
   <!-- ESPIONAGE -->
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-council.jpg');filter:hue-rotate(180deg) brightness(0.8)"></div><div class="panel-title">🗡️ 谍报</div><div class="bg3" id="espionage"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/council-10.jpg')"></div><div class="panel-title">🗡️ 谍报</div><div class="bg3" id="espionage"></div></div>
   <!-- EDICTS -->
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-dragonrider.jpg');filter:saturate(0.3)"></div><div class="panel-title">📋 法令</div><div class="bg3" id="edicts"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/battle-03.jpg')"></div><div class="panel-title">📋 法令</div><div class="bg3" id="edicts"></div></div>
   <!-- TAXES -->
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-emperor.jpg');filter:hue-rotate(40deg) brightness(0.6)"></div><div class="panel-title">💰 税收</div><div class="bg3" id="taxes"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/emperor-12.jpg')"></div><div class="panel-title">💰 税收</div><div class="bg3" id="taxes"></div></div>
 
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-battle.jpg');filter:hue-rotate(90deg)"></div><div class="panel-title">🛡️ 防御</div><div class="bg3" id="defense"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-northclan.jpg');filter:hue-rotate(270deg) brightness(0.7)"></div><div class="panel-title">⛵ 水军</div><div class="bg3" id="naval"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-dragonrider.jpg');filter:hue-rotate(120deg)"></div><div class="panel-title">🙏 祈福</div><div class="bg3" id="prayers"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-emperor.jpg');filter:hue-rotate(200deg) saturate(0.5)"></div><div class="panel-title">🎖️ 晋升</div><div class="bg3" id="promote"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-council.jpg');filter:hue-rotate(60deg) contrast(1.2)"></div><div class="panel-title">💎 宝物</div><div class="bg3" id="treasures"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-battle.jpg');filter:sepia(0.8) brightness(0.7)"></div><div class="panel-title">🏴‍☠️ 佣兵</div><div class="bg3" id="mercs"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-northclan.jpg');filter:invert(0.1) hue-rotate(300deg)"></div><div class="panel-title">📯 号令</div><div class="bg3" id="commands"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-dragonrider.jpg');filter:hue-rotate(240deg) saturate(1.5)"></div><div class="panel-title">🎪 庆典</div><div class="bg3" id="festivals"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-emperor.jpg');filter:grayscale(0.8)"></div><div class="panel-title">⚖️ 刑罚</div><div class="bg3" id="punish"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-council.jpg');filter:hue-rotate(150deg)"></div><div class="panel-title">🏦 国库</div><div class="bg3" id="treasury"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-battle.jpg');filter:hue-rotate(330deg) brightness(0.6)"></div><div class="panel-title">🐎 马政</div><div class="bg3" id="horses"></div></div>
-  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/war-northclan.jpg');filter:sepia(0.3) hue-rotate(40deg)"></div><div class="panel-title">🌾 屯田</div><div class="bg3" id="farming"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/battle-10.jpg')"></div><div class="panel-title">🛡️ 防御</div><div class="bg3" id="defense"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/scouts-02.jpg')"></div><div class="panel-title">⛵ 水军</div><div class="bg3" id="naval"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/scouts-11.jpg')"></div><div class="panel-title">🙏 祈福</div><div class="bg3" id="prayers"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/emperor-20.jpg')"></div><div class="panel-title">🎖️ 晋升</div><div class="bg3" id="promote"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/council-20.jpg')"></div><div class="panel-title">💎 宝物</div><div class="bg3" id="treasures"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/battle-12.jpg')"></div><div class="panel-title">🏴‍☠️ 佣兵</div><div class="bg3" id="mercs"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/scouts-12.jpg')"></div><div class="panel-title">📯 号令</div><div class="bg3" id="commands"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/dragon-13.jpg')"></div><div class="panel-title">🎪 庆典</div><div class="bg3" id="festivals"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/battle-13.jpg')"></div><div class="panel-title">⚖️ 刑罚</div><div class="bg3" id="punish"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/council-21.jpg')"></div><div class="panel-title">🏦 国库</div><div class="bg3" id="treasury"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/battle-20.jpg')"></div><div class="panel-title">🐎 马政</div><div class="bg3" id="horses"></div></div>
+  <div class="panel"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/scouts-13.jpg')"></div><div class="panel-title">🌾 屯田</div><div class="bg3" id="farming"></div></div>
   <!-- WARCRAFT UI -->
   <div class="panel"><div class="panel-title">🎮 指令</div><img src="img/hsuchun/wc-actions.png" alt="" style="width:100%;image-rendering:pixelated;opacity:.4"><img src="img/hsuchun/wc-attack.png" alt="" style="width:100%;image-rendering:pixelated;opacity:.4;margin-top:4px"></div>
   <!-- LOG -->
   <div class="panel"><div class="panel-title">📝 战报</div><div class="log" id="log"></div></div>
+</div>
+
+
+  <!-- === MEGA EXPANSION === -->
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/dragon-03.jpg')"></div><div class="panel-title">🏰 攻城</div><div class="mega-g" id="siege"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/dragon-21.jpg')"></div><div class="panel-title">🌊 天灾</div><div class="mega-g" id="disaster"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/emperor-focal-2.jpg')"></div><div class="panel-title">🎓 学堂</div><div class="mega-g" id="academy"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/scouts-focal-3.jpg')"></div><div class="panel-title">🗺️ 探索</div><div class="mega-g" id="explore"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/council-focal-0.jpg')"></div><div class="panel-title">🏥 医馆</div><div class="mega-g" id="medical"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/council-wide-12.jpg')"></div><div class="panel-title">🎭 间者</div><div class="mega-g" id="agents"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/emperor-wide-01.jpg')"></div><div class="panel-title">🏺 文化</div><div class="mega-g" id="culture"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/dragon-focal-2.jpg')"></div><div class="panel-title">⚗️ 炼丹</div><div class="mega-g" id="alchemy"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/dragon-01.jpg')"></div><div class="panel-title">🐲 神兽</div><div class="mega-g" id="beasts"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/dragon-focal-1.jpg')"></div><div class="panel-title">🌙 天命</div><div class="mega-g" id="mandate"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/battle-wide-10.jpg')"></div><div class="panel-title">🗡️ 武术</div><div class="mega-g" id="martial"></div></div>
+  <div class="panel wide"><div class="panel-bg" style="background-image:url('img/hsuchun/mega/emperor-focal-0.jpg')"></div><div class="panel-title">👑 朝代</div><div class="mega-g" id="dynasty"></div></div>
 </div>
 
 <div class="status">许春战争世界 · PVP永远开启 · 北方猎族先死 · 然后一切开始</div>
@@ -309,8 +338,53 @@ upd=function(){
   rArr(COMMANDS,'commands','COMMANDS');rArr(FESTIVALS,'festivals','FESTIVALS');
   rArr(PUNISH,'punish','PUNISH');rArr(TREASURY,'treasury','TREASURY');
   rArr(HORSES,'horses','HORSES');rArr(FARMING,'farming','FARMING');
+  rMega(MEGA_SIEGE,'siege');rMega(MEGA_DISASTER,'disaster');rMega(MEGA_ACADEMY,'academy');rMega(MEGA_EXPLORE,'explore');rMega(MEGA_MEDICAL,'medical');rMega(MEGA_AGENTS,'agents');rMega(MEGA_CULTURE,'culture');rMega(MEGA_ALCHEMY,'alchemy');rMega(MEGA_BEASTS,'beasts');rMega(MEGA_MANDATE,'mandate');rMega(MEGA_MARTIAL,'martial');rMega(MEGA_DYNASTY,'dynasty');
   PRAYERS.forEach(function(p){if(p.cd>0)p.cd--;});
 };
+
+var MEGA_SIEGE=[{name:'🏰投石车',cost:{iron:40,wood:30},bg:'img/hsuchun/mega/dragon-wide-00.jpg',done:false},{name:'🏰云梯',cost:{wood:50},bg:'img/hsuchun/mega/dragon-wide-01.jpg',done:false},{name:'🏰冲车',cost:{iron:60,wood:40},bg:'img/hsuchun/mega/dragon-wide-02.jpg',done:false},{name:'🏰地道',cost:{gold:80},bg:'img/hsuchun/mega/dragon-wide-10.jpg',done:false},{name:'🏰火牛',cost:{food:30,gold:20},bg:'img/hsuchun/mega/dragon-wide-11.jpg',done:false},{name:'🏰水攻',cost:{gold:100},bg:'img/hsuchun/mega/dragon-wide-12.jpg',done:false}];
+var MEGA_DISASTER=[{name:'🌊洪水',cost:{gold:40},bg:'img/hsuchun/mega/dragon-focal-0.jpg',done:false},{name:'🌊蝗灾',cost:{food:50},bg:'img/hsuchun/mega/dragon-focal-3.jpg',done:false},{name:'🌊瘟疫',cost:{gold:60},bg:'img/hsuchun/mega/emperor-00.jpg',done:false},{name:'🌊地震',cost:{iron:30},bg:'img/hsuchun/mega/emperor-01.jpg',done:false},{name:'🌊火山',cost:{gold:80},bg:'img/hsuchun/mega/emperor-03.jpg',done:false},{name:'🌊旱魃',cost:{jade:3},bg:'img/hsuchun/mega/emperor-11.jpg',done:false}];
+var MEGA_ACADEMY=[{name:'🎓兵法',cost:{gold:60},bg:'img/hsuchun/mega/emperor-13.jpg',done:false},{name:'🎓书院',cost:{wood:40,gold:30},bg:'img/hsuchun/mega/emperor-21.jpg',done:false},{name:'🎓武馆',cost:{gold:80,iron:20},bg:'img/hsuchun/mega/emperor-22.jpg',done:false},{name:'🎓医术',cost:{gold:50},bg:'img/hsuchun/mega/emperor-23.jpg',done:false},{name:'🎓天文',cost:{jade:5},bg:'img/hsuchun/mega/emperor-wide-00.jpg',done:false},{name:'🎓算学',cost:{gold:40},bg:'img/hsuchun/mega/emperor-wide-02.jpg',done:false}];
+var MEGA_EXPLORE=[{name:'🗺️荒野',cost:{gold:30},bg:'img/hsuchun/mega/scouts-focal-0.jpg',done:false},{name:'🗺️古墓',cost:{gold:80},bg:'img/hsuchun/mega/scouts-focal-1.jpg',done:false},{name:'🗺️山洞',cost:{gold:50},bg:'img/hsuchun/mega/scouts-focal-2.jpg',done:false},{name:'🗺️海岛',cost:{gold:120},bg:'img/hsuchun/mega/scouts-wide-00.jpg',done:false},{name:'🗺️沙漠',cost:{gold:90},bg:'img/hsuchun/mega/scouts-wide-01.jpg',done:false},{name:'🗺️密林',cost:{gold:60},bg:'img/hsuchun/mega/scouts-wide-02.jpg',done:false}];
+var MEGA_MEDICAL=[{name:'🏥草药',cost:{gold:20},bg:'img/hsuchun/mega/council-focal-1.jpg',done:false},{name:'🏥针灸',cost:{gold:40},bg:'img/hsuchun/mega/council-focal-2.jpg',done:false},{name:'🏥伤兵',cost:{food:30},bg:'img/hsuchun/mega/council-focal-3.jpg',done:false},{name:'🏥解毒',cost:{gold:60,jade:1},bg:'img/hsuchun/mega/council-wide-00.jpg',done:false},{name:'🏥军医',cost:{gold:80},bg:'img/hsuchun/mega/council-wide-01.jpg',done:false},{name:'🏥仙丹',cost:{jade:10},bg:'img/hsuchun/mega/council-wide-02.jpg',done:false}];
+var MEGA_AGENTS=[{name:'🎭美人计',cost:{gold:100,silk:3},bg:'img/hsuchun/mega/council-wide-10.jpg',done:false},{name:'🎭反间计',cost:{gold:150},bg:'img/hsuchun/mega/council-wide-11.jpg',done:false},{name:'🎭苦肉计',cost:{gold:80},bg:'img/hsuchun/mega/battle-00.jpg',done:false},{name:'🎭连环计',cost:{gold:200},bg:'img/hsuchun/mega/battle-01.jpg',done:false},{name:'🎭空城计',cost:{gold:60},bg:'img/hsuchun/mega/battle-02.jpg',done:false},{name:'🎭走为上',cost:{gold:40},bg:'img/hsuchun/mega/battle-focal-0.jpg',done:false}];
+var MEGA_CULTURE=[{name:'🏺诗赋',cost:{gold:30,silk:1},bg:'img/hsuchun/mega/emperor-wide-10.jpg',done:false},{name:'🏺书画',cost:{gold:50,silk:2},bg:'img/hsuchun/mega/emperor-wide-11.jpg',done:false},{name:'🏺琴艺',cost:{gold:40},bg:'img/hsuchun/mega/emperor-wide-12.jpg',done:false},{name:'🏺棋道',cost:{gold:30},bg:'img/hsuchun/mega/emperor-focal-1.jpg',done:false},{name:'🏺茶道',cost:{gold:25},bg:'img/hsuchun/mega/emperor-focal-3.jpg',done:false},{name:'🏺礼乐',cost:{gold:60,jade:2},bg:'img/hsuchun/mega/council-00.jpg',done:false}];
+var MEGA_ALCHEMY=[{name:'⚗️金丹',cost:{jade:8},bg:'img/hsuchun/mega/dragon-10.jpg',done:false},{name:'⚗️火药',cost:{iron:20,gold:30},bg:'img/hsuchun/mega/dragon-11.jpg',done:false},{name:'⚗️毒药',cost:{gold:40},bg:'img/hsuchun/mega/dragon-12.jpg',done:false},{name:'⚗️长生',cost:{jade:20},bg:'img/hsuchun/mega/dragon-20.jpg',done:false},{name:'⚗️聚气',cost:{jade:5},bg:'img/hsuchun/mega/dragon-22.jpg',done:false},{name:'⚗️破阵',cost:{gunpowder:3,gold:50},bg:'img/hsuchun/mega/dragon-23.jpg',done:false}];
+var MEGA_BEASTS=[{name:'🐲青龙',cost:{jade:15},bg:'img/hsuchun/mega/dragon-00.jpg',done:false},{name:'🐲白虎',cost:{jade:15},bg:'img/hsuchun/mega/dragon-02.jpg',done:false},{name:'🐲朱雀',cost:{jade:15},bg:'img/hsuchun/mega/battle-focal-1.jpg',done:false},{name:'🐲玄武',cost:{jade:15},bg:'img/hsuchun/mega/battle-focal-2.jpg',done:false},{name:'🐲麒麟',cost:{jade:25},bg:'img/hsuchun/mega/battle-focal-3.jpg',done:false},{name:'🐲凤凰',cost:{jade:30},bg:'img/hsuchun/mega/battle-wide-00.jpg',done:false}];
+var MEGA_MANDATE=[{name:'🌙祥瑞',cost:{jade:5},bg:'img/hsuchun/mega/battle-wide-01.jpg',done:false},{name:'🌙天兆',cost:{jade:8},bg:'img/hsuchun/mega/battle-wide-02.jpg',done:false},{name:'🌙龙气',cost:{jade:12},bg:'img/hsuchun/mega/battle-wide-11.jpg',done:false},{name:'🌙帝星',cost:{jade:20},bg:'img/hsuchun/mega/battle-wide-12.jpg',done:false},{name:'🌙封禅',cost:{jade:30,gold:500},bg:'img/hsuchun/mega/scouts-00.jpg',done:false},{name:'🌙受命',cost:{jade:50,gold:1000},bg:'img/hsuchun/mega/scouts-01.jpg',done:false}];
+var MEGA_MARTIAL=[{name:'🗡️太极',cost:{gold:30},bg:'img/hsuchun/mega/scouts-10.jpg',done:false},{name:'🗡️形意',cost:{gold:40},bg:'img/hsuchun/mega/scouts-20.jpg',done:false},{name:'🗡️八卦',cost:{gold:50},bg:'img/hsuchun/mega/scouts-21.jpg',done:false},{name:'🗡️咏春',cost:{gold:60},bg:'img/hsuchun/mega/scouts-22.jpg',done:false},{name:'🗡️少林',cost:{gold:80},bg:'img/hsuchun/mega/scouts-23.jpg',done:false},{name:'🗡️武当',cost:{gold:100,jade:3},bg:'img/hsuchun/mega/scouts-wide-10.jpg',done:false}];
+var MEGA_DYNASTY=[{name:'👑先秦',cost:{gold:200},bg:'img/hsuchun/mega/emperor-focal-0.jpg',done:false},{name:'👑秦汉',cost:{gold:300},bg:'img/hsuchun/mega/council-01.jpg',done:false},{name:'👑三国',cost:{gold:400},bg:'img/hsuchun/mega/council-03.jpg',done:false},{name:'👑隋唐',cost:{gold:500},bg:'img/hsuchun/mega/council-11.jpg',done:false},{name:'👑宋元',cost:{gold:600},bg:'img/hsuchun/mega/council-12.jpg',done:false},{name:'👑明清',cost:{gold:800},bg:'img/hsuchun/mega/council-13.jpg',done:false}];
+
+function doMega(panelId,i){
+  var lookup={siege:MEGA_SIEGE,disaster:MEGA_DISASTER,academy:MEGA_ACADEMY,explore:MEGA_EXPLORE,medical:MEGA_MEDICAL,agents:MEGA_AGENTS,culture:MEGA_CULTURE,alchemy:MEGA_ALCHEMY,beasts:MEGA_BEASTS,mandate:MEGA_MANDATE,martial:MEGA_MARTIAL,dynasty:MEGA_DYNASTY};
+  var arr=lookup[panelId];if(!arr)return;
+  var a=arr[i];if(!a||a.done)return;
+  if(a.cost&&!canA(a.cost))return;if(a.cost)spend(a.cost);
+  a.done=true;
+  var bonus=Math.floor(Math.random()*20)+5;
+  if(panelId==='beasts'||panelId==='mandate'){totalPower+=bonus;G.morale=Math.min(100,G.morale+10);}
+  else if(panelId==='medical'){G.morale=Math.min(100,G.morale+bonus);}
+  else if(panelId==='siege'||panelId==='martial'){totalPower+=bonus;}
+  else if(panelId==='culture'||panelId==='academy'){clickMult+=0.3;}
+  else if(panelId==='alchemy'){G.gunpowder=(G.gunpowder||0)+bonus*0.5;totalPower+=Math.floor(bonus/2);}
+  else if(panelId==='explore'){G.gold+=bonus*10;G.jade=(G.jade||0)+Math.floor(bonus/5);}
+  else if(panelId==='agents'){totalPower+=Math.floor(bonus/2);G.morale=Math.min(100,G.morale+5);}
+  else if(panelId==='disaster'){G.morale=Math.max(0,G.morale-10);G.gold+=bonus*5;}
+  else if(panelId==='dynasty'){clickMult+=0.5;totalPower+=bonus*2;G.morale=Math.min(100,G.morale+20);}
+  else{totalPower+=Math.floor(bonus/3);}
+  log(a.name+' +'+bonus);upd();
+}
+function rMega(arr,id){
+  var h='';arr.forEach(function(a,i){
+    var off=a.done?' off':'';
+    h+='<div class="mb'+off+'" style="background-image:url(\''+a.bg+'\')" onclick="doMega(\''+id+'\','+i+')">';
+    h+='<div class="mb-n">'+a.name+'</div>';
+    if(a.cost){h+='<span class="bv">';for(var k in a.cost)h+=k[0]+':'+fmt(a.cost[k])+' ';h+='</span>';}
+    h+='</div>';
+  });
+  var el=document.getElementById(id);if(el)el.innerHTML=h;
+}
+
 setInterval(tick,1000);upd();log('\u6218\u4e89\u4e16\u754c\u5df2\u542f\u52a8');
 
 

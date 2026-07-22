@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>战争世界 — War World</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Fira+Code:wght@300;400&family=Press+Start+2P&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0806;color:rgba(200,170,120,0.5);font-family:'Fira Code',monospace;font-size:11px;overflow-x:hidden;min-height:100vh}
+:root{--gold:rgba(255,180,80,0.4);--red:rgba(255,80,80,0.4);--blue:rgba(80,140,255,0.3);--dim:rgba(200,170,120,0.08);--panel:#0e0a04;--border:rgba(200,170,120,0.06)}
+
+.res-bar{position:sticky;top:0;z-index:30;background:#12100a;border-bottom:2px solid var(--border);padding:5px 10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.res{font-family:'Press Start 2P',cursive;font-size:7px;display:flex;align-items:center;gap:3px;cursor:pointer;transition:all .15s;padding:3px 6px;border:1px solid transparent;border-radius:2px;user-select:none}
+.res:hover{border-color:var(--gold);background:rgba(255,180,80,0.03)}
+.res:active{transform:scale(0.95)}
+.res-icon{font-size:11px}
+.res-val{color:var(--gold);min-width:40px}
+.res-rate{font-size:5px;color:rgba(200,170,120,0.15)}
+.res-cn{font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.12);letter-spacing:2px}
+.alert-box{margin-left:auto;font-family:'Press Start 2P',cursive;font-size:7px;color:var(--red);animation:flash 1s infinite}
+@keyframes flash{50%{opacity:.2}}
+
+.main{display:grid;grid-template-columns:1fr 220px;gap:2px;padding:2px}
+@media(max-width:700px){.main{grid-template-columns:1fr}}
+
+/* LEFT — campaigns */
+.campaigns{display:flex;flex-direction:column;gap:2px}
+.camp{position:relative;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:all .3s}
+.camp:hover{border-color:var(--gold)}
+.camp.locked{opacity:.4;cursor:not-allowed;filter:grayscale(.6)}
+.camp img{width:100%;height:140px;object-fit:cover;display:block;filter:brightness(0.7);transition:filter .3s}
+.camp:hover img{filter:brightness(0.9)}
+.camp-info{position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(10,8,6,0.95) 90%);display:flex;flex-direction:column;justify-content:flex-end;padding:10px}
+.camp-title{font-family:'Noto Serif SC',serif;font-size:13px;color:rgba(200,170,120,0.25);letter-spacing:.08em}
+.camp-cost{font-size:7px;color:rgba(200,170,120,0.12);margin-top:2px}
+.camp-reward{font-size:7px;color:var(--gold);margin-top:1px}
+.camp-prog{height:3px;background:var(--dim);margin-top:4px;border-radius:2px}
+.camp-fill{height:100%;border-radius:2px;width:0;transition:width .5s}
+.camp-gauge{position:absolute;top:6px;right:6px;width:40px;height:40px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(10,8,6,0.7);font-family:'Press Start 2P',cursive;font-size:6px;color:var(--gold)}
+
+/* RIGHT sidebar */
+.sidebar{display:flex;flex-direction:column;gap:2px}
+.sb{background:var(--panel);border:1px solid var(--border);padding:6px}
+.sb-title{font-family:'Noto Serif SC',serif;font-size:9px;color:rgba(200,170,120,0.15);letter-spacing:3px;text-align:center;margin-bottom:4px;border-bottom:1px solid var(--border);padding-bottom:3px}
+.sb img{width:100%;display:block;image-rendering:pixelated;opacity:.6;margin:4px 0}
+
+/* BUILDINGS */
+.bld-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.bld{text-align:center;border:1px solid var(--border);padding:4px;cursor:pointer;transition:all .2s;background:var(--panel)}
+.bld:hover{border-color:var(--gold);background:rgba(255,180,80,0.02)}
+.bld:active{transform:scale(0.95)}
+.bld img{width:48px;height:48px;image-rendering:pixelated;margin:0 auto;display:block;opacity:.6}
+.bld-name{font-size:6px;color:rgba(200,170,120,0.2);margin-top:2px}
+.bld-count{font-family:'Press Start 2P',cursive;font-size:8px;color:var(--gold)}
+.bld-cost{font-size:5px;color:rgba(200,170,120,0.1)}
+
+/* UNITS */
+.unit-row{display:flex;gap:3px;margin:4px 0}
+.unit{flex:1;text-align:center;border:1px solid var(--border);padding:3px;cursor:pointer;transition:all .2s}
+.unit:hover{border-color:var(--gold)}
+.unit:active{transform:scale(0.95)}
+.unit-name{font-family:'Noto Serif SC',serif;font-size:8px;color:rgba(200,170,120,0.15)}
+.unit-count{font-family:'Press Start 2P',cursive;font-size:9px;color:var(--gold)}
+.unit-cost{font-size:5px;color:rgba(200,170,120,0.1)}
+
+/* DIALS */
+.dials{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.dial{text-align:center;border:1px solid var(--border);padding:4px;background:rgba(20,16,10,0.5)}
+.dial-val{font-family:'Press Start 2P',cursive;font-size:10px;color:var(--gold)}
+.dial-cn{font-family:'Noto Serif SC',serif;font-size:11px;color:rgba(200,170,120,0.12)}
+.dial-lbl{font-size:5px;color:var(--dim);letter-spacing:1px}
+
+/* LOG */
+.log{max-height:100px;overflow-y:auto;font-size:7px;color:rgba(200,170,120,0.15);padding:4px;scrollbar-width:thin;scrollbar-color:rgba(200,170,120,0.08) transparent}
+.log div{padding:1px 0;border-bottom:1px solid rgba(200,170,120,0.02)}
+
+.status{padding:8px;text-align:center;font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.08);letter-spacing:3px;border-top:1px solid var(--border)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;box-shadow:inset 0 0 120px rgba(0,0,0,0.6)}
+.back{position:fixed;top:30px;left:6px;font-size:7px;color:rgba(200,170,120,0.04);text-decoration:none;z-index:50;letter-spacing:2px}
+.back:hover{color:rgba(200,170,120,0.2)}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.btn{font-family:'Noto Serif SC',serif;font-size:8px;color:rgba(200,170,120,0.25);background:var(--panel);border:1px solid var(--border);padding:4px;cursor:pointer;transition:all .15s;text-align:center;user-select:none}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn:active{transform:scale(0.93)}
+.btn.disabled{opacity:.3;cursor:not-allowed}
+.btn.active{border-color:var(--gold);box-shadow:0 0 4px rgba(255,180,80,0.1)}
+.btn-val{font-family:'Press Start 2P',cursive;font-size:5px;color:var(--gold);display:block;margin-top:1px}
+.weather-icon{font-size:18px;text-align:center}
+.season{font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(200,170,120,0.15);text-align:center}
+</style>
+</head>
+<body>
+<div class="vignette"></div>
+<a href="index.html" class="back">&larr;</a>
+
+<div class="res-bar">
+  <span class="res-cn">战争世界</span>
+  <div class="res" onclick="click_res('gold')"><span class="res-icon">&#x2694;</span><span>金</span><span class="res-val" id="r-gold">0</span><span class="res-rate" id="rr-gold"></span></div>
+  <div class="res" onclick="click_res('wood')"><span class="res-icon">&#x1F332;</span><span>木</span><span class="res-val" id="r-wood">0</span><span class="res-rate" id="rr-wood"></span></div>
+  <div class="res" onclick="click_res('iron')"><span class="res-icon">&#x26CF;</span><span>铁</span><span class="res-val" id="r-iron">0</span><span class="res-rate" id="rr-iron"></span></div>
+  <div class="res" onclick="click_res('food')"><span class="res-icon">&#x1F33E;</span><span>粮</span><span class="res-val" id="r-food">0</span><span class="res-rate" id="rr-food"></span></div>
+  <div class="alert-box" id="alert-box" style="display:none">&#x26A0; <span id="alert-text"></span></div>
+</div>
+
+<div class="main">
+  <div class="campaigns" id="campaigns"></div>
+  <div class="sidebar">
+    <div class="sb"><div class="sb-title">战略地图</div><img src="img/hsuchun/wc-minimap.png" alt=""></div>
+    <div class="sb">
+      <div class="sb-title">建筑 BUILDINGS</div>
+      <div class="bld-grid" id="buildings"></div>
+    </div>
+    <div class="sb">
+      <div class="sb-title">兵种 UNITS</div>
+      <div id="units"></div>
+    </div>
+    <div class="sb">
+      <div class="sb-title">战力 POWER</div>
+      <div class="dials" id="dials"></div>
+    </div>
+    <div class="sb">
+
+    <div class="sb"><div class="sb-title">科技 RESEARCH</div><div class="btn-grid" id="research"></div></div>
+    <div class="sb"><div class="sb-title">外交 DIPLOMACY</div><div class="btn-grid" id="diplomacy"></div></div>
+    <div class="sb"><div class="sb-title">谍报 ESPIONAGE</div><div class="btn-grid" id="espionage"></div></div>
+    <div class="sb"><div class="sb-title">天气 WEATHER</div><div id="weather"></div></div>
+    <div class="sb"><div class="sb-title">锻造 FORGE</div><div class="btn-grid" id="forge"></div></div>
+    <div class="sb"><div class="sb-title">税收 TAXES</div><div class="btn-grid" id="taxes"></div></div>
+    <div class="sb"><div class="sb-title">法令 EDICTS</div><div class="btn-grid" id="edicts"></div></div>
+    <div class="sb">
+      <div class="sb-title">战报 LOG</div>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+</div>
+<div class="status">许春战争世界 &middot; HSU-CHUN WAR WORLD &middot; PVP永远开启</div>
