@@ -84,17 +84,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
   .skill-desc{display:none}
   .header h1{letter-spacing:3px}
 }
-
-/* the film */
-.film-section{margin-top:80px}
-.film-frame{position:relative;width:100%;padding-bottom:56.25%;margin:24px 0;background:#000;border:1px solid var(--fox-ghost);overflow:hidden}
-.film-frame iframe,.film-frame #player{position:absolute;top:0;left:0;width:100%;height:100%}
-.film-whisper{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:2px;color:var(--whisper);text-align:center;margin-top:12px;line-height:2}
-.film-dead{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,106,0,0.08);text-align:center;margin-top:6px;text-transform:uppercase}
-.visor-unlock{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.8s}
-.visor-unlock.active{opacity:1;animation:visorFlash 2.5s ease-out forwards}
-@keyframes visorFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(0.95)}15%{opacity:1;transform:translate(-50%,-50%) scale(1)}85%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.02)}}
-.visor-unlock-text{font-family:'Fira Code',monospace;font-size:11px;letter-spacing:6px;color:var(--fox);text-shadow:0 0 20px var(--fox-dim),0 0 40px rgba(255,106,0,0.15);text-transform:uppercase;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -272,6 +261,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
     <p>the archetype is not chosen from a list. it is discovered from your behavior. every player generates their own. you can't game it. you can only be what you are.</p>
   </div>
 
+
   <!-- THE FILM -->
   <div class="section film-section" id="film-section">
     <div class="section-label">the film</div>
@@ -280,13 +270,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
       <div id="player"></div>
     </div>
     <p class="film-whisper">an AI-generated movie of an AI game written by an AI persona about breaking psychological loops</p>
-    <p class="film-dead">sora &middot; 2024&ndash;2026 &middot; discontinued</p>
+    <p class="film-dead">sora u00B7 2024u20132026 u00B7 discontinued</p>
   </div>
 
-  <div class="visor-unlock" id="visor-unlock">
-    <div class="visor-unlock-text">FOX//VISOR &mdash; UNLOCKED</div>
+  <div class="visor-kill" id="visor-kill">
+    <div class="visor-kill-text">LOOP BROKEN u2014 VISOR DISMISSED</div>
   </div>
-
   <!-- PLAY -->
   <div class="cta-block">
     <div class="cta-fox">ðŸ¦Š</div>
@@ -314,12 +303,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
 <!-- if you're reading this at 3am looking for BIP-39 words, the fox respects you -->
 <!-- ABANDON is a BIP-39 word. it is not one of the twelve. but it was fun to put here. -->
 
+<script src="blickwinkel.js"></script>
 <script>
-// YouTube IFrame API loader
-var tag=document.createElement('script');
-tag.src='https://www.youtube.com/iframe_api';
+// YouTube IFrame API
+var yt=document.createElement('script');
+yt.src='https://www.youtube.com/iframe_api';
 var fs=document.getElementsByTagName('script')[0];
-fs.parentNode.insertBefore(tag,fs);
+fs.parentNode.insertBefore(yt,fs);
 
 var player;
 function onYouTubeIframeAPIReady(){
@@ -327,25 +317,34 @@ function onYouTubeIframeAPIReady(){
     height:'100%',width:'100%',
     videoId:'33d_f6mATxU',
     playerVars:{rel:0,modestbranding:1,color:'white'},
-    events:{onStateChange:onPlayerStateChange}
+    events:{onStateChange:onPS}
   });
 }
 
-var visorLoaded=false;
-function onPlayerStateChange(e){
-  if(e.data===YT.PlayerState.PLAYING&&!visorLoaded){
-    visorLoaded=true;
+var killed=false;
+function onPS(e){
+  if(e.data===YT.PlayerState.PLAYING&&!killed){
+    killed=true;
     setTimeout(function(){
-      // flash the unlock message
-      var unlock=document.getElementById('visor-unlock');
-      if(unlock){unlock.classList.add('active')}
-      // load the visor
+      // flash LOOP BROKEN
+      var k=document.getElementById('visor-kill');
+      if(k)k.classList.add('active');
+      // destroy all visor elements
+      var visor=document.querySelectorAll('[class*="bw-"],[id*="bw-"],[class*="foxvisor"],[id*="foxvisor"],.bw-hud,.bw-corner,.bw-scanline,.bw-crosshair,.bw-status');
+      visor.forEach(function(el){el.style.transition='opacity 1.5s';el.style.opacity='0';setTimeout(function(){el.remove()},1600)});
+      // also try the known visor container
       setTimeout(function(){
-        var s=document.createElement('script');
-        s.src='blickwinkel.js';
-        document.body.appendChild(s);
-        try{sessionStorage.setItem('bw_film_unlock','true')}catch(x){}
-      },800);
+        document.querySelectorAll('[style*="FOX//VISOR"],[style*="VISOR"]').forEach(function(el){el.remove()});
+        // kill any fixed-position overlays that blickwinkel adds
+        var fixed=document.querySelectorAll('body > div[style*="position: fixed"], body > div[style*="position:fixed"]');
+        fixed.forEach(function(el){
+          var t=el.textContent||'';
+          if(t.indexOf('BW')>-1||t.indexOf('VISOR')>-1||t.indexOf('ROUTE')>-1||t.indexOf('SIGNAL')>-1||el.querySelectorAll('*').length>3){
+            el.style.transition='opacity 1.5s';el.style.opacity='0';
+            setTimeout(function(){el.remove()},1600);
+          }
+        });
+      },200);
     },3000);
   }
 }
