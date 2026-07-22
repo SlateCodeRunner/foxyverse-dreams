@@ -15,7 +15,22 @@ a:hover{color:rgba(206,176,120,0.7);border-color:rgba(206,176,120,0.3)}
 .glitch{animation:g 8s ease-in-out infinite}
 @keyframes g{0%,96%,100%{opacity:1;transform:none}97%{opacity:0.5;transform:translateX(-2px)}98%{opacity:0.8;transform:translateX(1px)}}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px)}
-</style></head><body><div style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.15"><img src="../img/img-hannah-mirror.png" alt="" style="width:100%;height:100%;object-fit:cover;filter:saturate(0.3) brightness(0.7)"></div>
+</style></head><body>
+<script>
+// 50% chance you fall into the wrong backrooms
+(function(){
+  try{
+    // Only flip on fresh entry, not on back-navigation
+    var key='bk_flip_'+Date.now().toString(36).slice(0,4);
+    if(!sessionStorage.getItem('bk_entered')){
+      sessionStorage.setItem('bk_entered','1');
+      if(Math.random()<0.5){
+        window.location.replace('https://dreamyyy23.github.io/backrooms/');
+      }
+    }
+  }catch(e){}
+})();
+</script><div style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.15"><img src="../img/img-hannah-mirror.png" alt="" style="width:100%;height:100%;object-fit:cover;filter:saturate(0.3) brightness(0.7)"></div>
 <div class="room-id">DEEP/HALLWAY</div>
 
 <div style="position:relative;margin:-60px -24px 40px;overflow:hidden;max-height:60vh">
