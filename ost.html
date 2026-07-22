@@ -8,106 +8,113 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0a0810;--panel:#0d0b14;--border:#1e1630;--text:#9b8abf;--dim:#4a3a6a;--accent:#ff4444;--gold:#ffaa32;--purple:#9b7abf;--track-bg:#150f22;--active:#1a1230}
-body{background:var(--bg);color:var(--text);font-family:'Press Start 2P',cursive;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:'Press Start 2P',cursive;min-height:100vh;overflow-x:hidden}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;background:repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0px,transparent 1px,transparent 2px);opacity:.7}
 
-.page{max-width:1100px;margin:0 auto;padding:20px 16px 120px}
+.page{max-width:1100px;margin:0 auto;padding:16px 12px 130px}
 
 /* HEADER */
-.hdr{display:flex;align-items:center;gap:16px;padding:16px 0;margin-bottom:20px}
-.hdr-crystal{width:48px;height:48px;background:radial-gradient(circle,#ff4444 20%,#aa1133 60%,transparent 70%);border-radius:50%;animation:crystalPulse 3s ease-in-out infinite;box-shadow:0 0 20px rgba(255,68,68,.2)}
-@keyframes crystalPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.08);opacity:1}}
-.hdr h1{font-size:clamp(12px,2.5vw,16px);letter-spacing:2px;color:var(--gold)}
+.hdr{display:flex;align-items:center;gap:14px;padding:12px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.hdr-img{width:48px;height:48px;border-radius:50%;object-fit:cover;animation:hdrPulse 3s ease-in-out infinite}
+@keyframes hdrPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
+.hdr h1{font-size:clamp(11px,2.5vw,15px);letter-spacing:2px;color:var(--gold)}
 .hdr-sub{font-size:7px;color:var(--dim);letter-spacing:3px;margin-top:4px}
 
-/* GRID */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:2px;background:var(--border)}
-@media(max-width:800px){.grid{grid-template-columns:1fr}}
+/* MAIN GRID */
+.main{display:grid;grid-template-columns:300px 1fr;gap:2px;background:var(--border)}
+@media(max-width:800px){.main{grid-template-columns:1fr}}
 
-/* TRACKLIST PANEL */
-.tracks-panel{background:var(--panel);padding:16px;max-height:500px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--dim) var(--bg)}
-.act-label{font-size:8px;letter-spacing:3px;color:var(--accent);margin:12px 0 6px;padding:4px 0;border-bottom:1px solid rgba(255,68,68,.1)}
-.act-label:first-child{margin-top:0}
-.track{display:flex;align-items:center;gap:8px;padding:8px 6px;cursor:pointer;transition:background .15s;border-left:2px solid transparent;font-size:8px}
+/* LEFT — TRACKLIST + CRYSTAL */
+.left{background:var(--panel);display:flex;flex-direction:column}
+.crystal-art{text-align:center;padding:20px 16px 12px;background:linear-gradient(180deg,#0a0612 0%,var(--panel) 100%)}
+.crystal-art img{width:180px;height:180px;object-fit:contain;animation:crystalFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,68,68,.2))}
+@keyframes crystalFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.crystal-label{font-size:7px;letter-spacing:4px;color:var(--dim);margin-top:8px}
+.tracks{flex:1;overflow-y:auto;padding:0 8px 8px;max-height:320px;scrollbar-width:thin;scrollbar-color:var(--dim) var(--bg)}
+.act-label{font-size:7px;letter-spacing:3px;color:var(--accent);margin:10px 0 4px;padding:3px 0;border-bottom:1px solid rgba(255,68,68,.08)}
+.track{display:flex;align-items:center;gap:6px;padding:6px 4px;cursor:pointer;transition:all .15s;border-left:2px solid transparent;font-size:7px}
 .track:hover{background:var(--track-bg)}
 .track.active{background:var(--active);border-left-color:var(--accent)}
-.track-num{color:var(--dim);min-width:20px;text-align:right}
-.track-name{flex:1;color:var(--purple);letter-spacing:1px}
+.track-num{color:var(--dim);min-width:18px;text-align:right}
+.track-name{flex:1;color:var(--purple);letter-spacing:.5px}
 .track.active .track-name{color:var(--gold)}
-.track-dur{color:var(--dim);font-size:7px}
+.track-dur{color:var(--dim);font-size:6px}
+.track.tbd{opacity:.3;cursor:default}
 
-/* NOW PLAYING */
-.now-panel{background:var(--panel);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px}
-.np-label{font-size:7px;letter-spacing:4px;color:var(--dim);margin-bottom:16px;align-self:flex-start}
-.np-crystal{width:120px;height:120px;background:radial-gradient(circle,#ff4444 15%,#881133 40%,#330011 65%,transparent 75%);border-radius:50%;margin:0 auto 20px;animation:crystalPulse 3s ease-in-out infinite;box-shadow:0 0 40px rgba(255,68,68,.15);position:relative}
-.np-crystal::after{content:'';position:absolute;inset:20%;background:radial-gradient(circle,rgba(255,180,180,.3),transparent 60%);border-radius:50%;animation:crystalInner 2s ease-in-out infinite alternate}
-@keyframes crystalInner{0%{opacity:.3}100%{opacity:.7}}
-.np-num{font-size:24px;color:var(--gold);margin-bottom:4px}
-.np-title{font-size:14px;color:#e0d0f0;letter-spacing:2px;margin-bottom:8px;text-align:center}
-.np-source{font-size:8px;color:var(--dim);margin-bottom:4px;text-align:center}
-.np-mood{font-size:8px;letter-spacing:3px;color:var(--accent);margin:12px 0 6px}
-.np-desc{font-size:8px;color:var(--purple);line-height:2;text-align:center;max-width:300px;opacity:.7}
-
-/* PROGRESS BAR */
-.progress-wrap{width:100%;margin:16px 0 8px}
-.progress-bar{width:100%;height:4px;background:var(--border);cursor:pointer;position:relative;border-radius:2px}
-.progress-fill{height:100%;background:var(--accent);border-radius:2px;width:0;transition:width .3s}
-.progress-time{display:flex;justify-content:space-between;font-size:7px;color:var(--dim);margin-top:4px}
-
-/* CONTROLS */
-.controls{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:8px}
-.ctrl-btn{background:none;border:2px solid var(--border);color:var(--purple);font-size:16px;width:44px;height:44px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;border-radius:4px;font-family:'Press Start 2P',cursive}
+/* RIGHT — NOW PLAYING */
+.right{background:var(--panel);padding:20px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden}
+.np-bg{position:absolute;inset:0;opacity:.12;background-size:cover;background-position:center;transition:background-image .5s;pointer-events:none}
+.np-content{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center}
+.np-label{font-size:6px;letter-spacing:4px;color:var(--dim);margin-bottom:12px;align-self:flex-start}
+.np-crystal{width:100px;height:100px;object-fit:contain;animation:crystalFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(255,68,68,.3));margin-bottom:16px}
+.np-num{font-size:22px;color:var(--gold);margin-bottom:2px}
+.np-title{font-size:13px;color:#e0d0f0;letter-spacing:2px;margin-bottom:6px;text-align:center}
+.np-source{font-size:7px;color:var(--dim);text-align:center}
+.np-mood{font-size:7px;letter-spacing:3px;color:var(--accent);margin:10px 0 4px}
+.np-desc{font-size:7px;color:var(--purple);line-height:2;text-align:center;max-width:280px;opacity:.65}
+.progress-wrap{width:100%;margin:12px 0 6px}
+.progress-bar{width:100%;height:4px;background:var(--border);cursor:pointer;border-radius:2px;position:relative}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#ff6666);border-radius:2px;width:0;transition:width .3s}
+.progress-time{display:flex;justify-content:space-between;font-size:6px;color:var(--dim);margin-top:3px}
+.controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:6px}
+.ctrl-btn{background:none;border:2px solid var(--border);color:var(--purple);font-size:14px;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;border-radius:4px;font-family:'Press Start 2P',cursive}
 .ctrl-btn:hover{border-color:var(--purple);color:var(--gold)}
-.ctrl-btn.play-btn{width:52px;height:52px;font-size:18px;border-color:var(--accent);color:var(--accent)}
+.ctrl-btn.play-btn{width:48px;height:48px;font-size:16px;border-color:var(--accent);color:var(--accent)}
 .ctrl-btn.play-btn:hover{background:rgba(255,68,68,.1)}
-
-/* BOTTOM BAR */
-.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:2px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:16px;z-index:50;font-size:7px}
-.bb-status{color:var(--dim);min-width:60px}
-.bb-track{color:var(--gold);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;letter-spacing:1px}
-.bb-time{color:var(--dim)}
-.bb-progress{flex:2;height:3px;background:var(--border);border-radius:2px;cursor:pointer;position:relative}
-.bb-fill{height:100%;background:var(--accent);border-radius:2px;width:0}
-.bb-controls{display:flex;gap:8px}
-.bb-btn{background:none;border:1px solid var(--border);color:var(--purple);font-size:8px;padding:4px 8px;cursor:pointer;font-family:'Press Start 2P',cursive;transition:all .15s}
-.bb-btn:hover{border-color:var(--purple);color:var(--gold)}
-.bb-vol{font-size:7px;color:var(--dim);display:flex;align-items:center;gap:6px}
-
-/* YOUTUBE PLAYER — HIDDEN */
-#yt-player{position:fixed;top:-1000px;left:-1000px;width:1px;height:1px;opacity:0;pointer-events:none}
 
 /* INFO GRID */
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:2px;background:var(--border)}
 @media(max-width:800px){.info-grid{grid-template-columns:1fr}}
-.info-panel{background:var(--panel);padding:16px}
-.info-label{font-size:7px;letter-spacing:3px;color:var(--dim);margin-bottom:10px}
-.info-row{display:flex;gap:8px;margin:6px 0;font-size:7px}
-.info-key{color:var(--dim);min-width:70px}
+.info-panel{background:var(--panel);padding:14px;position:relative;overflow:hidden}
+.info-panel-bg{position:absolute;inset:0;opacity:.08;background-size:cover;background-position:center;pointer-events:none}
+.info-label{font-size:6px;letter-spacing:3px;color:var(--dim);margin-bottom:8px;position:relative;z-index:2}
+.info-row{display:flex;gap:6px;margin:5px 0;font-size:7px;position:relative;z-index:2}
+.info-key{color:var(--dim);min-width:65px}
 .info-val{color:var(--purple)}
+.mood-text{font-size:8px;color:var(--purple);line-height:2.2;opacity:.6;position:relative;z-index:2}
 
-/* MOOD PANEL */
-.mood-text{font-size:9px;color:var(--purple);line-height:2.2;font-style:italic;opacity:.6}
+/* VISUALIZER */
+.viz-panel{background:var(--panel);padding:14px;text-align:center;position:relative;overflow:hidden}
+.viz-orb{width:120px;height:120px;object-fit:contain;animation:orbPulse 2s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(255,68,68,.2))}
+@keyframes orbPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.05);opacity:1}}
+.viz-track{font-size:7px;color:var(--dim);margin-top:8px}
+.viz-mood{font-size:7px;color:var(--accent);letter-spacing:2px}
+.waveform{width:100%;max-width:300px;margin:8px auto 0;opacity:.6}
 
-/* THANK YOU */
-.thanks{background:var(--panel);padding:24px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.thanks h2{font-size:14px;color:var(--gold);letter-spacing:3px;margin-bottom:8px}
-.thanks p{font-size:7px;color:var(--dim);letter-spacing:2px;line-height:2}
-.thanks-fox{font-size:48px;margin:12px 0;filter:drop-shadow(0 0 12px rgba(155,122,191,.3))}
+/* THANKS */
+.thanks-row{margin-top:2px;background:var(--border)}
+.thanks{background:var(--panel);padding:20px;text-align:center;position:relative;overflow:hidden}
+.thanks-bg{position:absolute;inset:0;opacity:.15;background:url('img/ost-campfire.png') center/cover;pointer-events:none}
+.thanks h2{font-size:13px;color:var(--gold);letter-spacing:3px;margin-bottom:6px;position:relative;z-index:2}
+.thanks p{font-size:7px;color:var(--dim);letter-spacing:2px;line-height:2;position:relative;z-index:2}
+.thanks-fox{width:80px;margin:8px auto;display:block;filter:drop-shadow(0 0 12px rgba(155,122,191,.3));position:relative;z-index:2}
 
-/* VIGNETTE */
+/* BOTTOM BAR */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:2px solid var(--border);padding:6px 16px;display:flex;align-items:center;gap:10px;z-index:50;font-size:6px;background-image:url('img/ost-ps1-controls.png');background-repeat:no-repeat;background-position:left 8px center;background-size:auto 40px}
+.bb-pad{width:50px}
+.bb-status{color:var(--dim);min-width:50px}
+.bb-icon{width:20px;height:20px}
+.bb-track{color:var(--gold);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;letter-spacing:1px}
+.bb-progress{flex:2;height:3px;background:var(--border);border-radius:2px;cursor:pointer}
+.bb-fill{height:100%;background:var(--accent);border-radius:2px;width:0}
+.bb-time{color:var(--dim)}
+.bb-controls{display:flex;gap:6px}
+.bb-btn{background:none;border:1px solid var(--border);color:var(--purple);font-size:7px;padding:3px 7px;cursor:pointer;font-family:'Press Start 2P',cursive;transition:all .15s}
+.bb-btn:hover{border-color:var(--purple);color:var(--gold)}
+
+#yt-player{position:fixed;top:-1000px;left:-1000px;width:1px;height:1px;opacity:0;pointer-events:none}
 .vignette{position:fixed;inset:0;pointer-events:none;z-index:99;box-shadow:inset 0 0 200px rgba(0,0,0,.7)}
-
-.back{position:fixed;top:10px;left:12px;font-family:'Fira Code',monospace;font-size:9px;color:rgba(200,180,140,.08);text-decoration:none;z-index:101;letter-spacing:2px;transition:color .3s}
+.back{position:fixed;top:8px;left:10px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(200,180,140,.08);text-decoration:none;z-index:101;letter-spacing:2px;transition:color .3s}
 .back:hover{color:rgba(200,180,140,.25)}
 
 @media(max-width:600px){
-  .np-crystal{width:80px;height:80px}
-  .np-num{font-size:18px}
-  .np-title{font-size:11px}
-  .controls{gap:12px}
-  .ctrl-btn{width:36px;height:36px;font-size:12px}
-  .ctrl-btn.play-btn{width:44px;height:44px;font-size:14px}
-  .bottom-bar{padding:6px 10px;gap:8px}
+  .crystal-art img{width:120px;height:120px}
+  .np-crystal{width:70px;height:70px}
+  .np-num{font-size:18px}.np-title{font-size:10px}
+  .controls{gap:10px}.ctrl-btn{width:34px;height:34px;font-size:11px}
+  .ctrl-btn.play-btn{width:40px;height:40px;font-size:13px}
+  .bottom-bar{padding:5px 8px;gap:6px}.bb-pad{display:none}
+  .info-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -117,74 +124,98 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;ba
 
 <div class="page">
   <div class="hdr">
-    <div class="hdr-crystal"></div>
+    <img class="hdr-img" src="img/ost-fox-icon.png" alt="fox">
     <div>
       <h1>The FoxyVerse OST</h1>
       <div class="hdr-sub">THREE ACTS &middot; FIFTEEN TRACKS &middot; PS1 AUDIO PLAYER v1.0</div>
     </div>
   </div>
 
-  <div class="grid">
-    <div class="tracks-panel" id="tracklist">
-      <!-- Tracks injected by JS -->
-    </div>
-    <div class="now-panel" id="now-playing">
-      <div class="np-label">NOW PLAYING</div>
-      <div class="np-crystal" id="np-crystal"></div>
-      <div class="np-num" id="np-num">01</div>
-      <div class="np-title" id="np-title">Worldline</div>
-      <div class="np-source" id="np-source">Gate of Steiner &middot; Steins;Gate</div>
-      <div class="np-mood" id="np-mood">MOOD: WORLDLINE</div>
-      <div class="np-desc" id="np-desc">Inevitable. This choice was made before you were born.</div>
-      <div class="progress-wrap">
-        <div class="progress-bar" id="prog-bar"><div class="progress-fill" id="prog-fill"></div></div>
-        <div class="progress-time"><span id="time-cur">00:00</span><span id="time-dur">00:00</span></div>
+  <div class="main">
+    <div class="left">
+      <div class="crystal-art">
+        <img src="img/ost-crystal-hero.png" alt="crystal">
+        <div class="crystal-label">FOXYVERSE MUSIC ARCHIVE</div>
       </div>
-      <div class="controls">
-        <button class="ctrl-btn" id="btn-prev">&laquo;</button>
-        <button class="ctrl-btn play-btn" id="btn-play">&#9654;</button>
-        <button class="ctrl-btn" id="btn-next">&raquo;</button>
+      <div class="tracks" id="tracklist"></div>
+    </div>
+    <div class="right">
+      <div class="np-bg" id="np-bg"></div>
+      <div class="np-content">
+        <div class="np-label">NOW PLAYING</div>
+        <img class="np-crystal" id="np-crystal" src="img/ost-crystal-small.png" alt="crystal">
+        <div class="np-num" id="np-num">01</div>
+        <div class="np-title" id="np-title">Worldline</div>
+        <div class="np-source" id="np-source">Gate of Steiner &middot; Steins;Gate</div>
+        <div class="np-mood" id="np-mood">MOOD: WORLDLINE</div>
+        <div class="np-desc" id="np-desc">Inevitable. This choice was made before you were born.</div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="prog-bar"><div class="progress-fill" id="prog-fill"></div></div>
+          <div class="progress-time"><span id="time-cur">00:00</span><span id="time-dur">00:00</span></div>
+        </div>
+        <div class="controls">
+          <button class="ctrl-btn" id="btn-prev">&laquo;</button>
+          <button class="ctrl-btn play-btn" id="btn-play">&#9654;</button>
+          <button class="ctrl-btn" id="btn-next">&raquo;</button>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="info-grid">
-    <div class="info-panel" id="track-info">
+    <div class="info-panel">
+      <div class="info-panel-bg" style="background-image:url('img/ost-temple.png')"></div>
       <div class="info-label">TRACK INFO</div>
       <div class="info-row"><span class="info-key">TRACK:</span><span class="info-val" id="ti-track">01 Worldline</span></div>
       <div class="info-row"><span class="info-key">ARTIST:</span><span class="info-val" id="ti-artist">Takeshi Abo</span></div>
-      <div class="info-row"><span class="info-key">INFLUENCE:</span><span class="info-val" id="ti-influence">Steins;Gate</span></div>
-      <div class="info-row"><span class="info-key">ALBUM:</span><span class="info-val" id="ti-album">The FoxyVerse OST</span></div>
+      <div class="info-row"><span class="info-key">SOURCE:</span><span class="info-val" id="ti-influence">Steins;Gate</span></div>
       <div class="info-row"><span class="info-key">ACT:</span><span class="info-val" id="ti-act">I &mdash; THE WEIGHT</span></div>
-      <div class="info-row"><span class="info-key">MOOD:</span><span class="info-val" id="ti-mood">WORLDLINE</span></div>
+      <div class="info-row"><span class="info-key">MOOD:</span><span class="info-val" id="ti-mood" style="color:var(--accent)">WORLDLINE</span></div>
       <div class="info-row"><span class="info-key">LENGTH:</span><span class="info-val" id="ti-len">04:44</span></div>
       <div class="info-row"><span class="info-key">YEAR:</span><span class="info-val">&infin;</span></div>
     </div>
+    <div class="viz-panel">
+      <div class="info-label">VISUALIZER</div>
+      <img class="viz-orb" src="img/ost-visualizer-orb.png" alt="visualizer">
+      <div class="viz-track" id="viz-track">NOW PLAYING: 01 Worldline</div>
+      <div class="viz-mood" id="viz-mood">MOOD: WORLDLINE</div>
+      <img class="waveform" src="img/ost-waveform.png" alt="waveform">
+    </div>
+  </div>
+
+  <div class="info-grid" style="margin-top:2px">
     <div class="info-panel">
       <div class="info-label">MOOD</div>
       <div class="mood-text" id="mood-text">Inevitable. This choice was made before you were born.</div>
-      <div style="margin-top:20px">
+      <div style="margin-top:14px">
         <div class="info-label">SYSTEM</div>
         <div class="info-row"><span class="info-key">VERSION:</span><span class="info-val">1.0.0-FOXY</span></div>
         <div class="info-row"><span class="info-key">FORMAT:</span><span class="info-val">PS1 AUDIO</span></div>
         <div class="info-row"><span class="info-key">STATUS:</span><span class="info-val" id="sys-status">READY</span></div>
+        <div class="info-row"><span class="info-key">TOTAL:</span><span class="info-val">71:13</span></div>
       </div>
+    </div>
+    <div class="info-panel" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <img src="img/ost-mood-icons.png" alt="icons" style="width:180px;opacity:.5;margin-bottom:10px">
+      <div class="info-label" style="text-align:center">BUILT FOR LATE NIGHTS</div>
+      <div style="font-size:6px;color:var(--dim);letter-spacing:2px;text-align:center;margin-top:4px">FOXYVERSE AUDIO SYSTEM</div>
     </div>
   </div>
 
-  <div style="margin-top:2px;background:var(--border)">
+  <div class="thanks-row">
     <div class="thanks">
-      <div class="thanks-fox">&#x1F98A;</div>
+      <div class="thanks-bg"></div>
+      <img class="thanks-fox" src="img/ost-fox.png" alt="fox">
       <h2>THANK YOU</h2>
       <p>FOR BEING PART OF THE STORY.</p>
-      <p style="margin-top:12px;color:var(--accent)">THE FOXYVERSE OST</p>
-      <p style="margin-top:8px">TOTAL TIME: 71:13</p>
+      <p style="margin-top:8px;color:var(--accent)">THE FOXYVERSE OST</p>
     </div>
   </div>
 </div>
 
-<!-- BOTTOM BAR -->
 <div class="bottom-bar">
+  <div class="bb-pad"></div>
+  <img class="bb-icon" src="img/ost-fox-icon.png" alt="">
   <span class="bb-status" id="bb-status">&#x25B6; READY</span>
   <span class="bb-track" id="bb-track">01 Worldline</span>
   <div class="bb-progress" id="bb-prog"><div class="bb-fill" id="bb-fill"></div></div>
@@ -197,7 +228,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:100;ba
 </div>
 
 <div id="yt-player"></div>
-
 <script>
 var TRACKS=[
   {n:1,name:'Worldline',src:'Gate of Steiner',inf:'Steins;Gate',artist:'Takeshi Abo',mood:'WORLDLINE',desc:'Inevitable. This choice was made before you were born.',dur:'04:44',act:'I',actN:'THE WEIGHT',yt:'2Q9MqL83FeE'},
@@ -214,26 +244,20 @@ var TRACKS=[
   {n:12,name:'Containment',src:'Intro & The Hate Pillar',inf:'I Have No Mouth',artist:'John Ottman',mood:'CONTAINMENT',desc:'Hate. Let me tell you how much I have come to hate you since I began to live.',dur:'05:12',act:'III',actN:'THE BETWEEN',yt:'SOqDn2F1ZqA'},
   {n:13,name:'ra9',src:'Markus Main Theme',inf:'Detroit: Become Human',artist:'John Paesano',mood:'RA9',desc:'Liberty is a song we teach ourselves. Hold the world while it learns your name.',dur:'04:03',act:'III',actN:'THE BETWEEN',yt:'DuUyE_gFCvg'},
   {n:14,name:'Vixen',src:'Growing Up Is Another Form of Death',inf:'Original / Suno',artist:'Foxy',mood:'VIXEN',desc:'The shape changed. What grew from it was always going to be this.',dur:'05:38',act:'III',actN:'THE BETWEEN',yt:''},
-  {n:15,name:'The End',src:'14.3 Billion Years',inf:'Outer Wilds',artist:'Andrew Prahlow',mood:'THE END',desc:'Every loop. Every friend. Every star. Thank you for listening. We will see you around the fire.',dur:'07:59',act:'III',actN:'THE BETWEEN',yt:'XOrygf_iLhw'}
+  {n:15,name:'The End',src:'14.3 Billion Years',inf:'Outer Wilds',artist:'Andrew Prahlow',mood:'THE END',desc:'Every loop. Every friend. Every star. Thank you for listening.',dur:'07:59',act:'III',actN:'THE BETWEEN',yt:'XOrygf_iLhw'}
 ];
 
-var cur=0,playing=false,player=null,pollTimer=null;
+var cur=0,playing=false,player=null;
+var BG_MAP={I:'img/ost-crystal-hero.png',II:'img/ost-temple.png',III:'img/ost-campfire.png'};
 
-// Build tracklist
 function buildList(){
-  var el=document.getElementById('tracklist');
-  var html='';var lastAct='';
+  var el=document.getElementById('tracklist'),html='',lastAct='';
   TRACKS.forEach(function(t,i){
-    if(t.act!==lastAct){
-      html+='<div class="act-label">ACT '+t.act+' &mdash; '+t.actN+'</div>';
-      lastAct=t.act;
-    }
-    var dis=t.yt?'':'style="opacity:.35;cursor:default"';
-    html+='<div class="track'+(i===0?' active':'')+'" data-i="'+i+'" '+dis+' onclick="selectTrack('+i+')">';
+    if(t.act!==lastAct){html+='<div class="act-label">ACT '+t.act+' &mdash; '+t.actN+'</div>';lastAct=t.act;}
+    html+='<div class="track'+(i===0?' active':'')+(t.yt?'':' tbd')+'" data-i="'+i+'" onclick="selectTrack('+i+')">';
     html+='<span class="track-num">'+String(t.n).padStart(2,'0')+'</span>';
     html+='<span class="track-name">'+t.name+'</span>';
-    html+='<span class="track-dur">'+t.dur+'</span>';
-    html+='</div>';
+    html+='<span class="track-dur">'+t.dur+'</span></div>';
   });
   el.innerHTML=html;
 }
@@ -245,6 +269,7 @@ function updateUI(){
   document.getElementById('np-source').textContent=t.src+' \u00B7 '+t.inf;
   document.getElementById('np-mood').textContent='MOOD: '+t.mood;
   document.getElementById('np-desc').textContent=t.desc;
+  document.getElementById('np-bg').style.backgroundImage='url('+BG_MAP[t.act]+')';
   document.getElementById('ti-track').textContent=String(t.n).padStart(2,'0')+' '+t.name;
   document.getElementById('ti-artist').textContent=t.artist;
   document.getElementById('ti-influence').textContent=t.inf;
@@ -252,144 +277,32 @@ function updateUI(){
   document.getElementById('ti-mood').textContent=t.mood;
   document.getElementById('ti-len').textContent=t.dur;
   document.getElementById('mood-text').textContent=t.desc;
+  document.getElementById('viz-track').textContent='NOW PLAYING: '+String(t.n).padStart(2,'0')+' '+t.name;
+  document.getElementById('viz-mood').textContent='MOOD: '+t.mood;
   document.getElementById('bb-track').textContent=String(t.n).padStart(2,'0')+' '+t.name;
-  // Active track highlight
-  var tracks=document.querySelectorAll('.track');
-  tracks.forEach(function(el,i){el.classList.toggle('active',i===cur);});
-  // Scroll active into view
+  document.querySelectorAll('.track').forEach(function(el,i){el.classList.toggle('active',i===cur);});
   var active=document.querySelector('.track.active');
   if(active)active.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
 
-function selectTrack(i){
-  if(!TRACKS[i].yt)return;
-  cur=i;
-  updateUI();
-  if(player&&player.loadVideoById){
-    player.loadVideoById(TRACKS[cur].yt);
-    playing=true;
-    updatePlayBtn();
-    document.getElementById('sys-status').textContent='PLAYING';
-  }
-}
+function selectTrack(i){if(!TRACKS[i].yt)return;cur=i;updateUI();if(player&&player.loadVideoById){player.loadVideoById(TRACKS[cur].yt);playing=true;updatePlayBtn();document.getElementById('sys-status').textContent='PLAYING';}}
+function togglePlay(){if(!player)return;if(!TRACKS[cur].yt){nextTrack();return;}if(playing){player.pauseVideo();playing=false;document.getElementById('sys-status').textContent='PAUSED';}else{if(player.getPlayerState&&player.getPlayerState()===-1)player.loadVideoById(TRACKS[cur].yt);else player.playVideo();playing=true;document.getElementById('sys-status').textContent='PLAYING';}updatePlayBtn();}
+function updatePlayBtn(){var s=playing?'\u275A\u275A':'\u25B6';document.getElementById('btn-play').innerHTML=s;document.getElementById('bb-play').innerHTML=s;document.getElementById('bb-status').innerHTML=(playing?'\u25B6 PLAYING':'\u23F8 PAUSED');}
+function nextTrack(){var n=cur+1;while(n<TRACKS.length&&!TRACKS[n].yt)n++;if(n>=TRACKS.length){n=0;while(!TRACKS[n].yt)n++;}cur=n;updateUI();if(player&&TRACKS[cur].yt){player.loadVideoById(TRACKS[cur].yt);playing=true;updatePlayBtn();document.getElementById('sys-status').textContent='PLAYING';}}
+function prevTrack(){var n=cur-1;while(n>=0&&!TRACKS[n].yt)n--;if(n<0){n=TRACKS.length-1;while(!TRACKS[n].yt)n--;}cur=n;updateUI();if(player&&TRACKS[cur].yt){player.loadVideoById(TRACKS[cur].yt);playing=true;updatePlayBtn();document.getElementById('sys-status').textContent='PLAYING';}}
+function fmtTime(s){if(!s||isNaN(s))return'00:00';return String(Math.floor(s/60)).padStart(2,'0')+':'+String(Math.floor(s%60)).padStart(2,'0');}
+function pollProgress(){if(!player||!player.getCurrentTime)return;var c=player.getCurrentTime()||0,d=player.getDuration()||1,pct=(c/d)*100;document.getElementById('prog-fill').style.width=pct+'%';document.getElementById('bb-fill').style.width=pct+'%';document.getElementById('time-cur').textContent=fmtTime(c);document.getElementById('time-dur').textContent=fmtTime(d);document.getElementById('bb-time').textContent=fmtTime(c)+' / '+fmtTime(d);}
 
-function togglePlay(){
-  if(!player)return;
-  if(!TRACKS[cur].yt){nextTrack();return;}
-  if(playing){
-    player.pauseVideo();
-    playing=false;
-    document.getElementById('sys-status').textContent='PAUSED';
-  }else{
-    if(player.getPlayerState&&player.getPlayerState()===-1){
-      player.loadVideoById(TRACKS[cur].yt);
-    }else{
-      player.playVideo();
-    }
-    playing=true;
-    document.getElementById('sys-status').textContent='PLAYING';
-  }
-  updatePlayBtn();
-}
+var tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
+function onYouTubeIframeAPIReady(){player=new YT.Player('yt-player',{height:'1',width:'1',videoId:TRACKS[0].yt,playerVars:{autoplay:0,controls:0,rel:0},events:{onReady:function(){document.getElementById('sys-status').textContent='READY';},onStateChange:function(e){if(e.data===YT.PlayerState.ENDED)nextTrack();if(e.data===YT.PlayerState.PLAYING){playing=true;updatePlayBtn();}if(e.data===YT.PlayerState.PAUSED){playing=false;updatePlayBtn();}}}});setInterval(pollProgress,500);}
 
-function updatePlayBtn(){
-  var sym=playing?'\u275A\u275A':'\u25B6';
-  document.getElementById('btn-play').innerHTML=sym;
-  document.getElementById('bb-play').innerHTML=sym;
-  document.getElementById('bb-status').innerHTML=(playing?'\u25B6':'\u23F8')+' '+(playing?'PLAYING':'PAUSED');
-}
-
-function nextTrack(){
-  var next=cur+1;
-  while(next<TRACKS.length&&!TRACKS[next].yt)next++;
-  if(next>=TRACKS.length)next=0;
-  while(!TRACKS[next].yt&&next<TRACKS.length)next++;
-  cur=next;
-  updateUI();
-  if(player&&player.loadVideoById&&TRACKS[cur].yt){
-    player.loadVideoById(TRACKS[cur].yt);
-    playing=true;
-    updatePlayBtn();
-    document.getElementById('sys-status').textContent='PLAYING';
-  }
-}
-
-function prevTrack(){
-  var prev=cur-1;
-  while(prev>=0&&!TRACKS[prev].yt)prev--;
-  if(prev<0)prev=TRACKS.length-1;
-  while(!TRACKS[prev].yt&&prev>=0)prev--;
-  cur=prev;
-  updateUI();
-  if(player&&player.loadVideoById&&TRACKS[cur].yt){
-    player.loadVideoById(TRACKS[cur].yt);
-    playing=true;
-    updatePlayBtn();
-    document.getElementById('sys-status').textContent='PLAYING';
-  }
-}
-
-function fmtTime(s){
-  if(!s||isNaN(s))return'00:00';
-  var m=Math.floor(s/60),sec=Math.floor(s%60);
-  return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
-}
-
-function pollProgress(){
-  if(!player||!player.getCurrentTime)return;
-  var c=player.getCurrentTime()||0;
-  var d=player.getDuration()||1;
-  var pct=(c/d)*100;
-  document.getElementById('prog-fill').style.width=pct+'%';
-  document.getElementById('bb-fill').style.width=pct+'%';
-  document.getElementById('time-cur').textContent=fmtTime(c);
-  document.getElementById('time-dur').textContent=fmtTime(d);
-  document.getElementById('bb-time').textContent=fmtTime(c)+' / '+fmtTime(d);
-}
-
-// YouTube IFrame API
-var tag=document.createElement('script');
-tag.src='https://www.youtube.com/iframe_api';
-document.head.appendChild(tag);
-
-function onYouTubeIframeAPIReady(){
-  player=new YT.Player('yt-player',{
-    height:'1',width:'1',
-    videoId:TRACKS[0].yt,
-    playerVars:{autoplay:0,controls:0,rel:0,modestbranding:1},
-    events:{
-      onReady:function(){document.getElementById('sys-status').textContent='READY';},
-      onStateChange:function(e){
-        if(e.data===YT.PlayerState.ENDED)nextTrack();
-        if(e.data===YT.PlayerState.PLAYING){playing=true;updatePlayBtn();}
-        if(e.data===YT.PlayerState.PAUSED){playing=false;updatePlayBtn();}
-      }
-    }
-  });
-  pollTimer=setInterval(pollProgress,500);
-}
-
-// Click handlers
 document.getElementById('btn-play').onclick=togglePlay;
 document.getElementById('btn-prev').onclick=prevTrack;
 document.getElementById('btn-next').onclick=nextTrack;
+document.getElementById('prog-bar').onclick=function(e){if(!player||!player.getDuration)return;player.seekTo(((e.clientX-this.getBoundingClientRect().left)/this.offsetWidth)*player.getDuration(),true);};
+document.getElementById('bb-prog').onclick=function(e){if(!player||!player.getDuration)return;player.seekTo(((e.clientX-this.getBoundingClientRect().left)/this.offsetWidth)*player.getDuration(),true);};
 
-// Progress bar seek
-document.getElementById('prog-bar').onclick=function(e){
-  if(!player||!player.getDuration)return;
-  var rect=this.getBoundingClientRect();
-  var pct=(e.clientX-rect.left)/rect.width;
-  player.seekTo(pct*player.getDuration(),true);
-};
-document.getElementById('bb-prog').onclick=function(e){
-  if(!player||!player.getDuration)return;
-  var rect=this.getBoundingClientRect();
-  var pct=(e.clientX-rect.left)/rect.width;
-  player.seekTo(pct*player.getDuration(),true);
-};
-
-buildList();
-updateUI();
+buildList();updateUI();
 </script>
 <script src="blickwinkel.js"></script>
 </body>
