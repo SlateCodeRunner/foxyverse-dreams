@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ghost bride station</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Fira+Code:wght@300;400&family=Cinzel:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060608;color:rgba(220,215,205,0.25);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh;overflow-x:hidden}
+.hero{position:relative;width:100%;min-height:80vh;overflow:hidden}
+.hero img{width:100%;height:80vh;object-fit:cover;opacity:0;animation:reveal 4s ease-out .3s forwards;filter:saturate(0.4) brightness(0.6) contrast(1.1)}
+@keyframes reveal{to{opacity:1}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(transparent 50%,#060608 95%);z-index:2}
+.title-block{position:absolute;bottom:20%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;opacity:0;animation:fadeIn 2.5s ease-out 1.5s forwards}
+@keyframes fadeIn{to{opacity:1}}
+.title-block .sub{font-size:7px;letter-spacing:6px;color:rgba(160,120,180,0.1)}
+.title-block h1{font-family:'Cinzel',serif;font-size:clamp(14px,3vw,22px);letter-spacing:.1em;color:rgba(160,120,180,0.2);margin-top:6px}
+.content{max-width:580px;margin:0 auto;padding:30px 24px 100px}
+.p{font-family:'IM Fell English',serif;font-size:14px;line-height:2;color:rgba(220,215,205,0.2);margin:20px 0;opacity:0;transform:translateY(12px);transition:all 1s}
+.p.visible{opacity:1;transform:translateY(0)}
+.p em{color:rgba(160,120,180,0.3)}
+.whisper{font-size:9px;color:rgba(220,215,205,0.04);text-align:center;margin-top:60px;letter-spacing:3px;user-select:all;cursor:crosshair}
+.whisper:hover{color:rgba(220,215,205,0.1)}
+.nav{text-align:center;padding:30px 0}
+.nav a{font-size:9px;letter-spacing:3px;color:rgba(206,176,120,0.06);text-decoration:none;transition:color .3s}
+.nav a:hover{color:rgba(206,176,120,0.25)}
+.back{position:fixed;top:14px;left:14px;font-size:9px;letter-spacing:2px;color:rgba(200,180,140,0.06);text-decoration:none;z-index:20;transition:color .3s}
+.back:hover{color:rgba(200,180,140,0.2)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:5;box-shadow:inset 0 0 180px rgba(0,0,0,0.85)}
+</style>
+</head>
+<body>
+<div class="vignette"></div>
+<a href="index.html" class="back">&larr;</a>
+<div class="hero">
+  <img src="img/img-ghost-bride-station.jpg" alt="ghost bride station">
+  <div class="hero-overlay"></div>
+  <div class="title-block">
+    <div class="sub">terminal</div>
+    <h1>Ghost Bride Station</h1>
+  </div>
+</div>
+<div class="content">
+  <div class="p" data-reveal>she waits at the platform. the train left years ago. she waits anyway. the dress is still white. the flowers are still fresh. <em>time does not apply to people who never got their answer.</em></div>
+  <div class="p" data-reveal>every station has one. the figure at the end of the platform who is always facing the tracks. always almost boarding. always staying. you have seen her in every goodbye that went wrong.</div>
+  <div class="p" data-reveal>the ghost bride does not haunt the station. <em>the station haunts her.</em> it keeps her in the moment before departure. the last second where it could have gone differently. she lives in the breath between yes and the door closing.</div>
+  <div class="p" data-reveal>you recognize her. not from a story. from a mirror. from every time you stood at a threshold and chose to stay because leaving would mean admitting it was over.</div>
+  <div class="p" data-reveal>the train is not coming. it was never coming. <em>that was never the point.</em></div>
+  <div class="whisper">she has been waiting since before the station was built. the station was built because she was waiting.</div>
+</div>
+<div class="nav">
+  <a href="index.html">&larr; the fire</a>
+</div>
+<script>
+var els=document.querySelectorAll('[data-reveal]');
+var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting)en.target.classList.add('visible');});},{threshold:0.15});
+els.forEach(function(el){obs.observe(el);});
+</script>
+<script src="js/ghosts.js"></script>
+</body>
+</html>

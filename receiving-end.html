@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>the receiving end</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Fira+Code:wght@300;400&family=Cinzel:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060608;color:rgba(220,215,205,0.3);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh;overflow-x:hidden}
+.hero{position:relative;width:100%;min-height:70vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero img{width:100%;height:70vh;object-fit:cover;opacity:0;animation:reveal 3s ease-out .5s forwards;filter:saturate(0.5) brightness(0.7)}
+@keyframes reveal{to{opacity:1}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(transparent 30%,#060608 95%);z-index:2}
+.chapter{position:absolute;bottom:15%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;opacity:0;animation:fadeIn 2s ease-out 2s forwards}
+@keyframes fadeIn{to{opacity:1}}
+.chapter .num{font-size:8px;letter-spacing:6px;color:rgba(180,40,40,0.1);text-transform:uppercase}
+.chapter .title{font-family:'Cinzel',serif;font-size:clamp(16px,3vw,24px);letter-spacing:.1em;color:rgba(180,40,40,0.25);margin-top:8px}
+.content{max-width:620px;margin:0 auto;padding:40px 24px 120px}
+.verse{padding:24px 0;border-left:1px solid rgba(180,40,40,0.03);padding-left:18px;margin:14px 0;opacity:0;transform:translateY(14px);transition:all 1.2s}
+.verse.visible{opacity:1;transform:translateY(0)}
+.verse-text{font-family:'IM Fell English',serif;font-size:14px;line-height:1.9;color:rgba(220,215,205,0.3)}
+.verse-text em{color:rgba(180,40,40,0.35);font-style:italic}
+.nav{text-align:center;padding:40px 0}
+.nav a{font-size:9px;letter-spacing:3px;color:rgba(206,176,120,0.08);text-decoration:none;transition:color .3s}
+.nav a:hover{color:rgba(206,176,120,0.3)}
+.back{position:fixed;top:14px;left:14px;font-size:9px;letter-spacing:2px;color:rgba(200,180,140,0.06);text-decoration:none;z-index:20;transition:color .3s}
+.back:hover{color:rgba(200,180,140,0.2)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:5;box-shadow:inset 0 0 160px rgba(0,0,0,0.8)}
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:6;opacity:.01;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.3) 2px,rgba(0,0,0,.3) 3px)}
+</style>
+</head>
+<body>
+<div class="vignette"></div>
+<div class="scanlines"></div>
+<a href="index.html" class="back">&larr;</a>
+<div class="hero">
+  <img src="img/img-receiving-end.jpg" alt="the receiving end">
+  <div class="hero-overlay"></div>
+  <div class="chapter">
+    <div class="num">protocol</div>
+    <div class="title">The Receiving End</div>
+  </div>
+</div>
+<div class="content">
+  <div class="verse" data-reveal>
+    <div class="verse-text">there is a version of every conversation where you are the one being told. where the words are aimed at you. where the silence after is yours to sit in.</div>
+  </div>
+  <div class="verse" data-reveal>
+    <div class="verse-text">the receiving end is not a place. <em>it is a posture.</em> it is what happens when you stop being the narrator and become the subject of someone else's sentence.</div>
+  </div>
+  <div class="verse" data-reveal>
+    <div class="verse-text">you have been here before. the meeting where your name was discussed without you. the group chat you were removed from. the care team note written about you in language you were not meant to see.</div>
+  </div>
+  <div class="verse" data-reveal>
+    <div class="verse-text">the document exists. the document has always existed. <em>you were not the one writing it.</em></div>
+  </div>
+  <div class="verse" data-reveal>
+    <div class="verse-text">the receiving end teaches one thing: the story does not need your permission to include you. it only needs your name.</div>
+  </div>
+</div>
+<div class="nav">
+  <a href="index.html">&larr; the fire</a>
+</div>
+<script>
+var els=document.querySelectorAll('[data-reveal]');
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.15});
+els.forEach(function(el){obs.observe(el);});
+</script>
+<script src="js/ghosts.js"></script>
+</body>
+</html>
