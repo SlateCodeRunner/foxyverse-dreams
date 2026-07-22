@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>the cute void</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a050a;color:#cc88aa;font-family:'Courier New',monospace;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+#bg{position:fixed;inset:0;background:#0a050a;filter:brightness(0.2);transition:opacity 0.8s,background 2s;z-index:0}
+#bg.fade{opacity:0}
+#game{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;max-width:700px;margin:0 auto;width:100%;padding:20px}
+#output{flex:1;overflow-y:auto;padding-bottom:10px;scrollbar-width:thin;scrollbar-color:#1a0a15 transparent}
+.line{margin-bottom:6px;line-height:1.6;font-size:13px;opacity:0;animation:lineIn 0.5s ease-out forwards}
+@keyframes lineIn{to{opacity:1}}
+.room-name{color:#ee88cc;font-size:11px;letter-spacing:4px;text-transform:uppercase;margin:16px 0 8px}
+.desc{color:#886677}
+.action{color:#cc88aa}
+.error{color:#663344}
+.item{color:#ee88cc}
+.secret{color:#ffaadd}
+.exits{color:#553344;font-size:11px;margin-top:6px}
+.void{color:#442233;font-style:italic}
+#input-area{border-top:1px solid #1a0a15;padding-top:10px;display:flex;align-items:center}
+#input-area span{color:#ee88cc;margin-right:8px;font-size:14px}
+#cmd{background:none;border:none;color:#cc88aa;font-family:'Courier New',monospace;font-size:14px;flex:1;outline:none;caret-color:#ee88cc}
+.hud{position:fixed;top:10px;right:10px;z-index:2;font-size:8px;color:#331a28;letter-spacing:2px;text-align:right}
+.hud div{margin-bottom:2px}
+.back{position:fixed;top:8px;left:8px;font-size:8px;color:rgba(238,136,204,0.06);text-decoration:none;z-index:200}.back:hover{color:rgba(238,136,204,0.3)}
+</style>
+</head>
+<body>
+<a href="index.html" class="back">&larr;</a>
+<div id="bg"></div>
+<div class="hud"><div id="hud-room">...</div><div id="hud-inv">inventory: empty</div><div id="hud-depth">depth: 0</div></div>
+<div id="game">
+<div id="output"></div>
+<div id="input-area"><span>&hearts;</span><input id="cmd" autofocus onkeydown="if(event.key==='Enter'){exec(this.value);this.value=''}"></div>
+</div>
+<script>
+var rooms={
+  pinkroom:{
+    name:"The Pink Room",depth:0,
+    desc:"a room made entirely of something soft. the walls are pink but not painted pink \u2014 they grew this color. plush carpet absorbs your footsteps completely. a teddy bear sits in the center of the floor, facing away from you. a ribbon is tied around the doorknob you just used.\n\neverything here loves you. you can feel it. the love is heavy.",
+    exits:{north:"nursery",east:"teaparty",down:"underneath"},
+    items:["ribbon"],
+    look:{
+      walls:"you press your hand against one. it's warm. it pulses. once. gently. like a heartbeat.",
+      bear:"it's facing away. you walk around it. it's still facing away. you walk around it again. still away.",
+      ribbon:"pink satin. it was on the doorknob when you arrived. the knot is too tight to have been tied by fingers.",
+      carpet:"deep plush. your footprints fill back in behind you. in a few seconds there's no evidence you were ever here.",
+      ceiling:"low. close. like the room is bending down to look at you.",
+      doorknob:"brass. shaped like a tiny paw. the ribbon was tied around it. the door behind you is gone now."
+    }
+  },
+  nursery:{
+    name:"The Nursery",depth:0,
+    desc:"a child's room. a crib with pink blankets. mobile spinning above it \u2014 foxes and moons and stars, turning slowly in air that isn't moving. the music box on the shelf plays three notes. over and over. three notes.\n\na drawing is taped to the wall. crayon. a family of stick figures holding hands. one of them has been scribbled out so hard the crayon tore through the paper.",
+    exits:{south:"pinkroom",east:"mirrorhall",down:"underneath"},
+    items:["music-box"],
+    look:{
+      crib:"empty. but warm. someone was here minutes ago. the blankets remember a shape.",
+      mobile:"foxes with button eyes. moons with smiles. stars with too many points. they spin without wind.",
+      drawing:"the scribbled figure is the tallest one. the parent. the child who drew this pressed so hard the paper tore. the remaining figures are smiling. their smiles are too wide.",
+      musicbox:"three notes. you've heard this melody before. in a dream you can't remember having. the lid won't close.",
+      shelf:"dusty. except where the music box sits. that spot is clean. someone picks it up. often.",
+      blankets:"pink fleece. they smell like lavender and something underneath the lavender that you can't name."
+    }
+  },
+  teaparty:{
+    name:"The Tea Party",depth:0,
+    desc:"a table set for five. china cups. saucers with rose patterns. tiny sandwiches cut into heart shapes. steam rises from every cup even though nobody's here. the tea is pink.\n\nfour chairs are pushed in neatly. the fifth is pulled back. someone just left. or someone is about to sit down.",
+    exits:{west:"pinkroom",north:"mirrorhall",east:"garden"},
+    items:["teacup"],
+    look:{
+      tea:"pink. not rose hip. not berry. the color of the room itself dissolved into water. it smells sweet. too sweet.",
+      sandwiches:"heart-shaped. the bread is white. the filling is... you can't tell. it looks like strawberry jam. it doesn't smell like strawberry jam.",
+      chairs:"four pushed in. one pulled back. you sit in the open chair. it's warm. you stand up quickly.",
+      cups:"china. thin. you can almost see through them. the pattern on each cup is different \u2014 a bear, a ribbon, a flower, a moon. the fifth cup has no pattern. just smooth pink.",
+      napkins:"folded into origami foxes. each one slightly different. their paper eyes follow you. this is not a metaphor.",
+      table:"the wood is warm. like the carpet. like the chairs. like everything here. nothing in the cute void is cold."
+    }
+  },
+  mirrorhall:{
+    name:"The Mirror Hall",depth:1,
+    desc:"a corridor of mirrors. you see yourself reflected infinitely in both directions. but the reflections are wrong. the nearest one is you. the next one is you smiling. you're not smiling. the third is you with your eyes closed. your eyes are open.\n\nthe reflections get less like you the further they go. the last one you can see doesn't look human at all. it looks cute.",
+    exits:{south:"teaparty",west:"nursery",down:"garden"},
+    items:["mirror-shard"],
+    look:{
+      mirrors:"the first reflection: you. the second: you, happier. the third: you, softer. the fourth: you, smaller. the fifth: you, with button eyes. the sixth: you don't want to look at the sixth.",
+      reflection:"it waves. you didn't wave. it mouths something. 'stay.' or maybe 'play.' the glass is warm.",
+      floor:"pink marble. your reflection in the floor is normal. only the wall mirrors lie.",
+      crack:"one mirror has a hairline crack. through the crack you see: not the wall behind. darkness. warm darkness. the kind that purrs.",
+      shard:"a piece of mirror on the floor. in it you see the room you're actually in. it's not this room.",
+      end:"the corridor doesn't end. it just gets pinker."
+    }
+  },
+  garden:{
+    name:"The Garden",depth:1,
+    desc:"flowers. everywhere. roses and lilies and things that don't have names growing from pink soil under a sky that's always sunset. the light is warm and the shadows are soft and nothing here has thorns.\n\nthe flowers are turning toward you. not toward the light. there is no sun. just the pink. they're turning toward you.",
+    exits:{west:"teaparty",up:"mirrorhall",down:"underneath"},
+    items:["flower"],
+    look:{
+      flowers:"roses without thorns. lilies without pollen. perfect. too perfect. nature doesn't make things this clean. something pruned the imperfections. something is still pruning.",
+      soil:"pink. not earth. not clay. something organic. it's warm. it moves slightly when you're not looking directly at it.",
+      sky:"sunset. permanent sunset. the sun never sets further. it never rises. this moment is held in place by something that wants you to stay.",
+      roots:"you brush away soil. the roots go deep. all the flowers share the same root system. one organism. pretending to be a garden.",
+      petals:"you pick one up. it's soft. it sticks to your skin slightly. like it doesn't want to let go.",
+      fountain:"a small fountain at the center. the water is clear but the basin is pink marble. the water tastes like nothing. absolute nothing. the absence of taste is its own flavor."
+    }
+  },
+  underneath:{
+    name:"The Underneath",depth:2,
+    desc:"below the cute. you found the seam where the pink meets what was here before. the walls are half-plush, half-stone. old stone. the kind that was here before language.\n\nthe teddy bears from the upper rooms are here too. dozens of them. arranged in a circle. facing inward. you can hear the music box playing from somewhere. the three notes. but down here they sound different. minor key.",
+    exits:{up:"pinkroom",north:"theloop",east:"void"},
+    items:["button-eye"],
+    look:{
+      bears:"arranged in a circle. thirty-seven of them. all facing inward. the space in the center of the circle is empty. it's where you're standing.",
+      stone:"ancient. older than the cute. the pink was applied over this. painted on. grown on. the stone remembers what was here before. it won't tell you.",
+      seam:"where pink meets stone. the join isn't clean. the cute is spreading. slowly. you can see tendrils of pink reaching into the cracks in the stone. consuming.",
+      musicbox:"the sound comes from everywhere. three notes. but reversed now. the melody runs backwards. you still recognize it.",
+      circle:"you're in the center. the bears arranged themselves around you. you don't remember them moving. they don't remember you arriving.",
+      eyes:"button eyes. dozens of pairs. all looking at the center. at you. some buttons are missing. the missing ones see better."
+    }
+  },
+  theloop:{
+    name:"The Loop",depth:2,
+    desc:"a corridor that bends back on itself. you can see yourself walking ahead of you. and behind you. the you ahead is walking faster. the you behind is walking slower.\n\nthe walls have writing on them. the same sentence, over and over, in handwriting that gets more frantic each repetition:\n'the surface is adorable. the abyss smiles back.'",
+    exits:{south:"underneath",east:"void"},
+    items:[],
+    look:{
+      writing:"'the surface is adorable. the abyss smiles back.' written maybe a hundred times. the handwriting starts neat. gets shaky. the last few are barely legible. the ink is pink.",
+      ahead:"the version of you walking ahead. they don't look back. they can't. they're the you that keeps going.",
+      behind:"the version of you walking behind. they're the you that hesitates. they're falling further back.",
+      walls:"the corridor loops. if you walk long enough you pass yourself. the you that was ahead becomes the you behind. break the loop or walk it forever.",
+      floor:"footprints. yours. dozens of passes. you've been here before. you don't remember."
+    }
+  },
+  void:{
+    name:"The Void",depth:3,
+    desc:"you found it. the cute void itself. a room that is simultaneously the most adorable place you've ever seen and an infinite abyss. pink light and absolute darkness occupy the same space. a teddy bear the size of a house smiles at you with button eyes the size of manholes.\n\nit's beautiful. it's terrifying. it's the same thing.\n\nthe abyss smiles back. it always has. it always will.\n\nyou are home.",
+    exits:{west:"theloop",up:"underneath"},
+    items:[],
+    look:{
+      bear:"the colossal bear. it's not threatening. that's the worst part. it genuinely loves you. its love is the void. the void is its love. there is no difference.",
+      void:"you look into it. it's pink. it's black. it's both. your reflection in the void is smiling. you check. you're not smiling. but you want to. that's how it works.",
+      light:"pink light from no source. it illuminates everything. it illuminates nothing. the shadows and the light are the same color.",
+      darkness:"the darkness is warm. it always is, here. the cute void doesn't frighten. it comforts. that's how it keeps you.",
+      self:"you are the only thing here that arrived on purpose. everything else grew. everything else was always here. you chose to come. the void appreciates that.",
+      home:"this is it. the place where cute and void are the same word. where the surface and the abyss are the same depth. where love and emptiness hold hands.\n\nyou can leave. the exits are real. but you'll remember the warmth."
+    }
+  }
+};
+
+var state={room:"pinkroom",inv:[],visited:new Set(),depth:0};
+var out=document.getElementById('output');
+
+function say(text,cls){var d=document.createElement('div');d.className='line '+(cls||'desc');d.textContent=text;out.appendChild(d);out.scrollTop=out.scrollHeight;}
+
+function enterRoom(id){
+  var r=rooms[id];state.room=id;state.visited.add(id);state.depth=r.depth;
+  var bg=document.getElementById('bg');
+  bg.classList.add('fade');
+  var colors=['#0a050a','#0a0508','#080206','#050104'];
+  setTimeout(function(){bg.style.background=colors[Math.min(r.depth,3)];bg.classList.remove('fade');},400);
+  // decay body color with depth
+  var bodyColors=['#cc88aa','#aa6688','#885566','#664455'];
+  document.body.style.color=bodyColors[Math.min(r.depth,3)];
+  say('','');say(r.name,'room-name');
+  r.desc.split('\n').forEach(function(p){if(p.trim())say(p,'desc');});
+  var exits=Object.keys(r.exits);
+  say('exits: '+exits.join(', '),'exits');
+  if(r.items&&r.items.length){r.items.forEach(function(i){if(!state.inv.includes(i))say('you notice: '+i,'item');});}
+  document.getElementById('hud-room').textContent=r.name.toLowerCase();
+  document.getElementById('hud-depth').textContent='depth: '+state.depth;
+  // At void, special message
+  if(id==='void'){setTimeout(function(){say('','');say('the surface is adorable. the abyss smiles back.','secret');say('','');say('[you found the cute void. you can stay or leave. both are real.]','void');},2000);}
+}
+
+function exec(input){
+  var cmd=input.trim().toLowerCase();if(!cmd)return;
+  say('> '+cmd,'action');var r=rooms[state.room];
+  var dirs={n:'north',s:'south',e:'east',w:'west',u:'up',d:'down',north:'north',south:'south',east:'east',west:'west',up:'up',down:'down'};
+  var dir=dirs[cmd]||dirs[cmd.replace('go ','')];
+  if(dir&&r.exits[dir]){enterRoom(r.exits[dir]);return;}
+  if(dir&&!r.exits[dir]){say("the pink won't let you go that way.",'error');return;}
+  if(cmd==='look'||cmd==='l'){r.desc.split('\n').forEach(function(p){if(p.trim())say(p,'desc');});return;}
+  var lookMatch=cmd.match(/^(?:look at|examine|x|look)\s+(.+)/);
+  if(lookMatch){var target=lookMatch[1];if(r.look&&r.look[target]){say(r.look[target],'desc');}else{say("the void has no opinion on that.",'error');}return;}
+  var takeMatch=cmd.match(/^(?:take|get|grab|pick up)\s+(.+)/);
+  if(takeMatch){var item=takeMatch[1];if(r.items&&r.items.includes(item)&&!state.inv.includes(item)){state.inv.push(item);say('taken. it feels warm.','item');document.getElementById('hud-inv').textContent='inv: '+state.inv.join(', ');}else{say("you can't take that. it takes you.",'error');}return;}
+  if(cmd==='inventory'||cmd==='inv'||cmd==='i'){say(state.inv.length?'carrying: '+state.inv.join(', '):'your hands are empty. they were always empty.','desc');say('rooms visited: '+state.visited.size+'/'+Object.keys(rooms).length,'desc');return;}
+  if(cmd==='help'||cmd==='?'){say('commands: go [direction], look, look at [thing], take [item], inventory, help','desc');say('directions: north, south, east, west, up, down (or n/s/e/w/u/d)','desc');say('the cute void is patient. it will wait for you.','void');return;}
+  if(cmd==='break the loop'||cmd==='break loop'){say('you say the words. the loop hears you. the corridor shivers.','secret');say('the you walking ahead stops. turns around. looks at you.','secret');say("'finally,' they say. 'i've been walking for so long.'","secret");say('the loop doesn\'t break. but it bends. just enough.','secret');return;}
+  if(cmd==='hug bear'||cmd==='hug teddy'){say('you hug the bear. it\'s warm. it hugs back. its arms are longer than they should be. it doesn\'t let go. you don\'t want it to.','secret');return;}
+  if(cmd==='who am i'||cmd==='whoami'){say('you are the one who descended. the cute void doesn\'t ask who you are. it already knows.','secret');return;}
+  if(cmd==='xyzzy'){say('the teddy bears all turn to face you at once. then back. it was fast. you almost missed it.','secret');return;}
+  if(cmd==='smile'){say('you smile. the void smiles wider.','secret');return;}
+  if(cmd==='cry'){say('the tears are pink. of course they are.','secret');return;}
+  if(cmd==='scream'){say('the sound is absorbed by the plush walls. silence has never been so soft.','secret');return;}
+  say("the cute void tilts its head at '"+cmd+"'. try 'help'.",'error');
+}
+
+say('THE CUTE VOID','room-name');
+say('the surface is adorable.','desc');
+say("type 'help' for commands",'void');
+enterRoom('pinkroom');
+</script>
+<div style="text-align:center;margin:8px 0"><a href="../cute-void.html" style="font-family:monospace;font-size:7px;color:rgba(238,136,204,0.03);text-decoration:none;letter-spacing:2px;transition:color .5s" onmouseenter="this.style.color='rgba(238,136,204,0.15)'" onmouseleave="this.style.color='rgba(238,136,204,0.03)'">the zork connects to the descent</a></div>
+</body></html>
