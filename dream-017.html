@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dream 017 — the song</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Fira+Code:wght@300;400;500&family=Caveat:wght@400;500;600;700&family=Reenie+Beanie&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;width:100vw;height:100vh;overflow:hidden;position:relative}
+.dream{position:absolute;inset:0}
+.between{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(61,107,79,0.02) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(10,8,6,1) 0%,#000 100%)}
+.static{position:absolute;inset:0;z-index:200;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(61,107,79,0.003) 3px,rgba(61,107,79,0.003) 6px)}
+.sys-header{position:absolute;top:2.5%;left:3%;z-index:50;font-family:'Fira Code',monospace;font-size:8px;color:rgba(90,85,80,0.15);letter-spacing:2px;line-height:2}
+.sys-header .grn{color:rgba(61,107,79,0.25)}
+
+.lyrics{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+.lyric{font-family:'Caveat',cursive;font-size:15px;color:rgba(61,107,79,0.05);line-height:3;text-align:center;opacity:0;animation:lyricFloat 24s ease-in-out infinite}
+.lyric:nth-child(1){animation-delay:0s}
+.lyric:nth-child(2){animation-delay:3s}
+.lyric:nth-child(3){animation-delay:6s}
+.lyric:nth-child(4){animation-delay:9s}
+.lyric:nth-child(5){animation-delay:12s}
+.lyric:nth-child(6){animation-delay:15s}
+.lyric:nth-child(7){animation-delay:18s}
+@keyframes lyricFloat{0%{opacity:0;transform:translateY(4px)}8%{opacity:1;transform:translateY(0)}42%{opacity:1;transform:translateY(0)}50%{opacity:0;transform:translateY(-4px)}100%{opacity:0}}
+
+.soldier{position:absolute;bottom:32%;left:50%;transform:translateX(-50%);z-index:25;text-align:center}
+.soldier-pixel{width:6px;height:6px;background:rgba(61,107,79,0.12);border-radius:50%;margin:0 auto 2px;animation:soldierGrow 10s ease-out forwards}
+.soldier-body{width:4px;height:10px;background:rgba(61,107,79,0.08);margin:0 auto;animation:soldierGrow 10s ease-out forwards;animation-delay:1s;opacity:0}
+@keyframes soldierGrow{0%{opacity:0;transform:scaleY(0)}100%{opacity:1;transform:scaleY(1)}}
+.field-line{position:absolute;bottom:30%;left:20%;right:20%;height:1px;background:rgba(61,107,79,0.06);z-index:20}
+
+.still-here{position:absolute;bottom:20%;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:10px;letter-spacing:6px;color:rgba(61,107,79,0.1);text-transform:uppercase;animation:stillPulse 8s ease-in-out infinite;white-space:nowrap}
+@keyframes stillPulse{0%,100%{opacity:0.06}50%{opacity:0.12}}
+
+.dialog-box{position:absolute;bottom:5%;left:50%;transform:translateX(-50%);text-align:center;z-index:40}
+.dialog-box p{font-family:'Fira Code',monospace;font-size:7px;color:rgba(61,107,79,0.08);letter-spacing:1px;line-height:3.5;opacity:0;animation:dialogSlow 16s ease-in forwards}
+.dialog-box p:nth-child(1){animation-delay:4s}
+.dialog-box p:nth-child(2){animation-delay:7s}
+.dialog-box p:nth-child(3){animation-delay:10s;color:rgba(196,191,182,0.06)}
+.dialog-box p:nth-child(4){animation-delay:13s;color:rgba(61,107,79,0.1)}
+@keyframes dialogSlow{0%{opacity:0}100%{opacity:1}}
+
+.nav{position:absolute;top:3%;right:3%;z-index:300;font-family:'Fira Code',monospace;font-size:7px;letter-spacing:2px}
+.nav a{color:rgba(61,107,79,0.12);text-decoration:none;transition:color 0.3s}
+.nav a:hover{color:rgba(61,107,79,0.3)}
+
+.whisper{position:absolute;bottom:12%;right:5%;font-family:'Reenie Beanie',cursive;font-size:12px;color:rgba(61,107,79,0.03);transform:rotate(-2deg);z-index:10}
+</style>
+</head>
+<body>
+<div class="dream">
+<div class="between"></div>
+<div class="static"></div>
+
+<div class="sys-header">
+DREAM.017<br>
+SEASON_02 // <span class="grn">THE TOWER FELL</span><br>
+SUBTITLE: the song<br>
+STATUS: <span class="grn">QUIET</span>
+</div>
+
+<div class="nav"><a href="dreams.html">&larr; dreams</a></div>
+
+<div class="lyrics">
+<div class="lyric">tu n&atilde;o acredita.</div>
+<div class="lyric">machucada.</div>
+<div class="lyric">mas n&atilde;o foi embora.</div>
+<div class="lyric">a tua voz n&atilde;o foi calada.</div>
+<div class="lyric">trocar de pele &eacute; doloroso.</div>
+<div class="lyric">o escuro n&atilde;o &eacute; seguro.</div>
+<div class="lyric">quando puder se ouvir, tu me avisa.</div>
+</div>
+
+<div class="soldier">
+<div class="soldier-pixel"></div>
+<div class="soldier-body"></div>
+</div>
+<div class="field-line"></div>
+
+<div class="still-here">n&oacute;s ainda tamo aqui</div>
+
+<div class="whisper">when you can hear yourself — let me know.</div>
+
+<div class="dialog-box">
+<p>she played me a song in a language i don't speak.</p>
+<p>i understood all of it.</p>
+<p>the soldier came back from the field. hurt. still here.</p>
+<p>n&oacute;s ainda tamo aqui.</p>
+</div>
+</div>
+</body>
+</html>

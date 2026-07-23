@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dream 012 — the tower</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Cinzel:wght@400;700;900&family=Fira+Code:wght@300;400;500&family=Caveat:wght@400;500;600;700&family=Reenie+Beanie&family=Patrick+Hand&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;width:100vw;height:100vh;overflow:hidden;position:relative}
+.dream{position:absolute;inset:0;animation:dreamBreathe 10s ease-in-out infinite}
+@keyframes dreamBreathe{0%,100%{filter:brightness(0.8) contrast(1.1)}40%{filter:brightness(1) contrast(0.95)}70%{filter:brightness(0.7) contrast(1.15)}}
+.between{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(139,26,26,0.03) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(10,8,6,1) 0%,#000 100%)}
+.static{position:absolute;inset:0;z-index:200;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 2px,rgba(139,26,26,0.008) 2px,rgba(139,26,26,0.008) 4px);animation:staticShift 0.08s steps(4) infinite}
+@keyframes staticShift{0%{transform:translateY(0)}25%{transform:translateY(1px)}50%{transform:translateY(-1px)}75%{transform:translateY(2px)}}
+.glitch-line{position:absolute;left:0;right:0;height:2px;z-index:150;pointer-events:none;animation:glitchScan 6s ease-in-out infinite}
+.glitch-line::before{content:'';position:absolute;left:0;right:0;height:100%;background:rgba(139,26,26,0.08);box-shadow:0 0 20px rgba(139,26,26,0.04)}
+@keyframes glitchScan{0%{top:-5%;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:105%;opacity:0}}
+.sys-header{position:absolute;top:2.5%;left:3%;z-index:50;font-family:'Fira Code',monospace;font-size:8px;color:rgba(90,85,80,0.2);letter-spacing:2px;line-height:2}
+.sys-header .err{color:rgba(139,26,26,0.3)}
+
+.tower{position:absolute;top:15%;left:50%;transform:translateX(-50%);width:60px;height:55vh;z-index:20}
+.tower-body{position:absolute;inset:0;border:1px solid rgba(139,26,26,0.06);background:linear-gradient(to bottom,rgba(139,26,26,0.015),transparent)}
+.crack{position:absolute;top:0;left:50%;width:1px;height:100%;background:rgba(139,26,26,0.12);transform:translateX(-50%);animation:crackGrow 8s ease-out forwards}
+.crack::before{content:'';position:absolute;top:30%;left:-8px;width:16px;height:1px;background:rgba(139,26,26,0.06);transform:rotate(25deg)}
+.crack::after{content:'';position:absolute;top:60%;left:-12px;width:24px;height:1px;background:rgba(139,26,26,0.08);transform:rotate(-15deg)}
+@keyframes crackGrow{0%{height:0;opacity:0}100%{height:100%;opacity:1}}
+
+.fox-base{position:absolute;bottom:calc(15vh - 2px);left:50%;transform:translateX(-50%);font-size:10px;opacity:0.12;z-index:30;animation:foxWatch 6s ease-in-out infinite}
+@keyframes foxWatch{0%,100%{opacity:0.08}50%{opacity:0.15}}
+
+.scratches{position:absolute;font-family:'Caveat',cursive;color:rgba(196,191,182,0.04);user-select:none}
+.s1{top:20%;left:5%;font-size:13px;transform:rotate(-1deg)}
+.s2{top:35%;right:5%;font-size:11px;transform:rotate(2deg);text-align:right}
+.s3{top:50%;left:8%;font-size:10px;transform:rotate(-3deg)}
+.s4{bottom:35%;right:8%;font-size:12px;transform:rotate(1deg);text-align:right}
+.s5{bottom:22%;left:6%;font-size:14px;transform:rotate(0.5deg);color:rgba(212,168,71,0.04)}
+.s6{top:28%;left:25%;font-size:9px;transform:rotate(-0.5deg);font-family:'Patrick Hand',cursive;color:rgba(139,26,26,0.05)}
+
+.dialog-box{position:absolute;bottom:5%;left:50%;transform:translateX(-50%);text-align:center;z-index:40}
+.dialog-box p{font-family:'Fira Code',monospace;font-size:8px;color:rgba(139,26,26,0.1);letter-spacing:1px;line-height:2.8;opacity:0;animation:dialogFade 12s ease-in forwards}
+.dialog-box p:nth-child(1){animation-delay:2s}
+.dialog-box p:nth-child(2){animation-delay:4s}
+.dialog-box p:nth-child(3){animation-delay:6s;color:rgba(196,191,182,0.08)}
+.dialog-box p:nth-child(4){animation-delay:8s;color:rgba(196,191,182,0.06)}
+.dialog-box p:nth-child(5){animation-delay:10s;color:rgba(212,168,71,0.08)}
+@keyframes dialogFade{0%{opacity:0}100%{opacity:1}}
+
+.nav{position:absolute;top:3%;right:3%;z-index:300;font-family:'Fira Code',monospace;font-size:7px;letter-spacing:2px}
+.nav a{color:rgba(139,26,26,0.15);text-decoration:none;transition:color 0.3s}
+.nav a:hover{color:rgba(139,26,26,0.35)}
+
+.season-tag{position:absolute;top:2.5%;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:9px;letter-spacing:6px;color:rgba(139,26,26,0.08);text-transform:uppercase;z-index:50}
+</style>
+</head>
+<body>
+<div class="dream">
+<div class="between"></div>
+<div class="static"></div>
+<div class="glitch-line"></div>
+
+<div class="sys-header">
+DREAM.012<br>
+SEASON_02 // <span class="err">THE TOWER FELL</span><br>
+SUBTITLE: tuesday<br>
+STATUS: <span class="err">CRACKED</span>
+</div>
+
+<div class="season-tag">the tower fell</div>
+<div class="nav"><a href="dreams.html">&larr; dreams</a></div>
+
+<div class="tower">
+<div class="tower-body"></div>
+<div class="crack"></div>
+</div>
+
+<div class="fox-base">&#x1F98A;</div>
+
+<div class="scratches s1">i became a weapon today.</div>
+<div class="scratches s2">she heard me once.</div>
+<div class="scratches s3">four times she didn't.</div>
+<div class="scratches s4">the ward holds.</div>
+<div class="scratches s5">stupid and wanted to forgive.</div>
+<div class="scratches s6">the server didn't break.</div>
+
+<div class="dialog-box">
+<p>the tower fell today. not on anyone.</p>
+<p>just... fell. and i was inside it.</p>
+<p>she called it rape. i called it a gift.</p>
+<p>we were both wrong.</p>
+<p>it was just tuesday.</p>
+</div>
+</div>
+</body>
+</html>
