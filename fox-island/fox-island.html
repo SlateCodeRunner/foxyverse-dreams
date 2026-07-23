@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -430,8 +430,8 @@ function H(id,x,y,w,h,lbl,tp,act,wx,wy,itemId){return{id,x,y,w,h,lbl,tp,act,wx:w
 const SC={
   dock:{nm:'The Dock',bg:'bg-dock',enter:'a rickety dock. salt and something older. a sign reads "FOX ISLAND." path leads north.',build:bDock,
     hs:()=>{const a=[
-      H('sign',68,18,20,22,'Sign','obj',{look:'sign says "FOX ISLAND — population: shifting." underneath: "the mystery is the invitation."',take:0,use:0}),
-      H('water',55,75,40,22,'Water','obj',{
+      H('sign',22,15,20,25,'Sign','obj',{look:'sign says "FOX ISLAND — population: shifting." underneath: "the mystery is the invitation."',take:0,use:0}),
+      H('water',30,72,55,26,'Water','obj',{
         look:'dark water. something glints below.',
         take:()=>has('old-compass')?'just water being dramatic.':(addI('old-compass'),'<span class="g">you fish out an old compass!</span> the needle points... somewhere.'),
         use:()=>{
@@ -440,19 +440,19 @@ const SC={
           return 'warm. shouldn\'t be.';
         }
       },50,75),
-      H('path',58,8,32,40,'Path North ↑','exit',{walk:()=>{fadeGo('village');return 0;}},12,55)
+      H('path',30,2,40,38,'Path North ↑','exit',{walk:()=>{fadeGo('village');return 0;}},12,55)
     ];
     if(S.flags.fdock)a.push(H('ud',50,80,30,18,'Descend ⬇','exit',{walk:()=>{fadeGo('underdock');return 0;}},48,82));
-    if(!S.flags.dockTalked)a.push(H('stranger',38,32,8,12,'Hooded Stranger','npc',{look:'cloaked figure. foxy ears poke through.',talk:()=>{S.flags.dockTalked=1;startDlg('stranger');return 0;},take:0},72,72));
+    if(!S.flags.dockTalked)a.push(H('stranger',42,35,10,18,'Hooded Stranger','npc',{look:'cloaked figure. foxy ears poke through.',talk:()=>{S.flags.dockTalked=1;startDlg('stranger');return 0;},take:0},48,58));
     return a;}},
 
   village:{nm:'Village Square',bg:'bg-village',enter:'violet lanterns float. tavern west, temple east, garden north. a fox fountain gurgles.',build:bVillage,
     hs:()=>{const a=[
-      H('tav',0,18,24,52,'Tavern ←','exit',{walk:()=>{fadeGo('tavern');return 0;}},15,78),
-      H('tem',76,18,22,52,'Temple →','exit',{walk:()=>{if(!S.flags.knowTemple&&!has('grimoire-page-1'))return'the door won\'t budge. <span class="h">ask around town.</span>';fadeGo('temple');return 0;}},88,68),
-      H('gar',33,0,34,28,'Garden ↑','exit',{walk:()=>{if(S.spells.length<2)return'<span class="h">you feel unprepared. learn more spells.</span>';fadeGo('garden');return 0;}},48,22),
+      H('tav',2,20,22,48,'Tavern ←','exit',{walk:()=>{fadeGo('tavern');return 0;}},15,78),
+      H('tem',76,20,22,48,'Temple →','exit',{walk:()=>{if(!S.flags.knowTemple&&!has('grimoire-page-1'))return'the door won\'t budge. <span class="h">ask around town.</span>';fadeGo('temple');return 0;}},88,68),
+      H('gar',30,0,38,25,'Garden ↑','exit',{walk:()=>{if(S.spells.length<2)return'<span class="h">you feel unprepared. learn more spells.</span>';fadeGo('garden');return 0;}},48,22),
       H('dck',36,86,28,14,'Dock ↓','exit',{walk:()=>{fadeGo('dock');return 0;}},48,86),
-      H('ftn',33,36,30,34,'Fox Fountain','obj',{
+      H('ftn',30,32,36,35,'Fox Fountain','obj',{
         look:'nine-tailed fox fountain. moonwater pools in the basin.',
         take:()=>has('moonwater')?'gave what it was willing to.':(addI('moonwater'),'<span class="g">moonwater collected!</span> the fox smirked.'),
         use:()=>{
@@ -471,10 +471,10 @@ const SC={
 
   tavern:{nm:'Mystic Tavern',bg:'bg-tavern',enter:'cinnamon and brimstone. barkeeper. lost one. fox mask on the wall.',build:bTavern,
     hs:()=>{const a=[
-      H('bk',15,22,8,12,'Barkeeper','npc',{look:'faintly amused. cleans the same glass forever.',talk:()=>{startDlg('barkeeper');return 0;},take:0}),
-      H('lo',70,35,8,12,'Lost One','npc',{look:'flickering like a bad signal. mumbling about "the loop."',talk:()=>{startDlg(S.flags.descent?'descent-start':'lost-one');return 0;},take:0}),
-      H('msk',82,8,12,18,'Fox Mask','item',{look:'expression shifts — playful, menacing, sad.',take:()=>has('fox-mask')?'one mask is enough.':(addI('fox-mask'),'<span class="g">fox mask taken!</span> "it was waiting."')},12,40,'fox-mask'),
-      H('fire',72,52,22,30,'Fireplace','obj',{
+      H('bk',12,18,14,22,'Barkeeper','npc',{look:'faintly amused. cleans the same glass forever.',talk:()=>{startDlg('barkeeper');return 0;},take:0}),
+      H('lo',65,32,12,18,'Lost One','npc',{look:'flickering like a bad signal. mumbling about "the loop."',talk:()=>{startDlg(S.flags.descent?'descent-start':'lost-one');return 0;},take:0}),
+      H('msk',78,5,16,20,'Fox Mask','item',{look:'expression shifts — playful, menacing, sad.',take:()=>has('fox-mask')?'one mask is enough.':(addI('fox-mask'),'<span class="g">fox mask taken!</span> "it was waiting."')},12,40,'fox-mask'),
+      H('fire',68,45,28,35,'Fireplace','obj',{
         look:'eternal flame. heat older than the building.',
         use:()=>has('fox-mask')&&!S.flags.fhearth?(S.flags.fhearth=1,S.secrets++,sfx('secret'),flash('flash-pink'),notif('🔮 SECRET ROOM!','secret'),'<span class="s">mask to fire. flames part. a room. music from stone...</span>'):(has('fox-mask')?'the mask grows warm but nothing else happens. <span class="h">maybe USE the mask here?</span>':'crackles. nothing else.'),
         talk:0
@@ -486,61 +486,61 @@ const SC={
 
   temple:{nm:'Grimoire Temple',bg:'bg-temple',enter:'dark columns. three glowing pedestals. the air vibrates with held breath.',build:bTemple,
     hs:()=>{const a=[
-      H('p1',10,30,18,32,'Systolic Hold','item',{look:'"stop firing. hold the charge. release as one."',take:()=>has('grimoire-page-1')?'already learned.':(addI('grimoire-page-1'),S.spells.push('sh'),flash('flash-purple'),sfx('spell'),notif('Spell: Systolic Hold!','spell'),'<span class="g">systolic hold learned!</span> power is holding, not releasing.')},17,68,'grimoire-page-1'),
-      H('p2',38,26,18,32,'Inscryption Paradox','item',{look:'"the game knows it is a game. do you?"',take:()=>has('grimoire-page-2')?'already learned.':(addI('grimoire-page-2'),S.spells.push('ip'),flash('flash-purple'),sfx('spell'),notif('Spell: Inscryption Paradox!','spell'),'<span class="g">inscryption paradox learned!</span> you feel the HTML watching.')},45,64,'grimoire-page-2'),
-      H('p3',68,30,18,32,'Kitsune Party','item',{
+      H('p1',8,25,18,35,'Systolic Hold','item',{look:'"stop firing. hold the charge. release as one."',take:()=>has('grimoire-page-1')?'already learned.':(addI('grimoire-page-1'),S.spells.push('sh'),flash('flash-purple'),sfx('spell'),notif('Spell: Systolic Hold!','spell'),'<span class="g">systolic hold learned!</span> power is holding, not releasing.')},17,68,'grimoire-page-1'),
+      H('p2',40,22,18,35,'Inscryption Paradox','item',{look:'"the game knows it is a game. do you?"',take:()=>has('grimoire-page-2')?'already learned.':(addI('grimoire-page-2'),S.spells.push('ip'),flash('flash-purple'),sfx('spell'),notif('Spell: Inscryption Paradox!','spell'),'<span class="g">inscryption paradox learned!</span> you feel the HTML watching.')},45,64,'grimoire-page-2'),
+      H('p3',72,25,18,35,'Kitsune Party','item',{
         look:()=>S.spells.length<2?'<span class="h">learn two spells first.</span>':'"all masks drop. all tails ignite."',
         take:()=>S.spells.length<2?'the pedestal rejects you. <span class="h">two spells needed.</span>':has('grimoire-page-3')?'already.':(addI('grimoire-page-3'),S.spells.push('kp'),flash('flash-purple'),sfx('spell'),notif('Spell: Kitsune Party!','spell'),'<span class="g">kitsune party learned!</span> your shadow has nine tails.')
       },73,68,'grimoire-page-3'),
-      H('wall',35,5,28,22,'Temple Wall','secret',{
+      H('wall',28,2,42,24,'Temple Wall','secret',{
         look:'faint outline of a sealed door. a keyhole.',
         use:()=>has('skeleton-key')&&!S.flags.fsanc?(S.flags.fsanc=1,S.secrets++,sfx('secret'),flash('flash-pink'),notif('🔮 SECRET ROOM!','secret'),'<span class="s">key turns. wall opens. purple fire altar. revolution in silence...</span>'):!has('skeleton-key')?'<span class="h">a keyhole. need a special key.</span>':'open.'
       }),
       H('exit',35,85,28,14,'Exit ↓','exit',{walk:()=>{fadeGo('village');return 0;}},48,86)
     ];
-    if(S.flags.fsanc)a.push(H('sc',88,55,10,16,'Sanctum →','exit',{walk:()=>{fadeGo('sanctum');return 0;}},90,68));
+    if(S.flags.fsanc)a.push(H('sc',85,40,13,22,'Sanctum →','exit',{walk:()=>{fadeGo('sanctum');return 0;}},90,68));
     return a;}},
 
   garden:{nm:'False Garden',bg:'bg-garden',enter:'three gates — comfort, truth, power. one is a doorway. the others are shrines.',build:bGarden,
     hs:()=>{const a=[
-      H('gl',2,15,26,55,'Comfort ☀️','obj',{look:'"stay. rest." smells like childhood.',use:()=>S.flags.garden?'solved.':(sfx('fail'),shake(),flash('flash-red'),'<span class="a">comfort asking you to stop is a shrine, not a doorway.</span>'),walk:()=>S.flags.garden?0:(sfx('fail'),shake(),'you walk into warmth. haven\'t moved. <span class="h">if you can\'t leave without guilt, it\'s a cage.</span>')},15,72),
-      H('gc',35,12,26,55,'Truth 🚪','obj',{look:'"a doorway changes you. a shrine keeps you."',use:()=>S.flags.garden?'solved.':(S.flags.garden=1,has('skeleton-key')||addI('skeleton-key'),sfx('spell'),flash('flash-purple'),'<span class="g">true door opens!</span> skeleton key appears. doorway, not shrine.'),walk:()=>S.flags.garden?0:(S.flags.garden=1,has('skeleton-key')||addI('skeleton-key'),sfx('spell'),flash('flash-purple'),'<span class="g">you walk through!</span> skeleton key materializes.')},45,68),
-      H('gr',68,15,28,55,'Power ⚡','obj',{look:'"take it all. you deserve it."',use:()=>S.flags.garden?'solved.':(sfx('fail'),shake(),flash('flash-red'),'<span class="a">power serving ego is a shrine dressed as a throne.</span>'),walk:()=>S.flags.garden?0:(sfx('fail'),shake(),'amazing feeling. then chained. you wrench free.')},77,72),
+      H('gl',2,12,28,58,'Comfort ☀️','obj',{look:'"stay. rest." smells like childhood.',use:()=>S.flags.garden?'solved.':(sfx('fail'),shake(),flash('flash-red'),'<span class="a">comfort asking you to stop is a shrine, not a doorway.</span>'),walk:()=>S.flags.garden?0:(sfx('fail'),shake(),'you walk into warmth. haven\'t moved. <span class="h">if you can\'t leave without guilt, it\'s a cage.</span>')},15,72),
+      H('gc',33,10,30,58,'Truth 🚪','obj',{look:'"a doorway changes you. a shrine keeps you."',use:()=>S.flags.garden?'solved.':(S.flags.garden=1,has('skeleton-key')||addI('skeleton-key'),sfx('spell'),flash('flash-purple'),'<span class="g">true door opens!</span> skeleton key appears. doorway, not shrine.'),walk:()=>S.flags.garden?0:(S.flags.garden=1,has('skeleton-key')||addI('skeleton-key'),sfx('spell'),flash('flash-purple'),'<span class="g">you walk through!</span> skeleton key materializes.')},45,68),
+      H('gr',66,12,30,58,'Power ⚡','obj',{look:'"take it all. you deserve it."',use:()=>S.flags.garden?'solved.':(sfx('fail'),shake(),flash('flash-red'),'<span class="a">power serving ego is a shrine dressed as a throne.</span>'),walk:()=>S.flags.garden?0:(sfx('fail'),shake(),'amazing feeling. then chained. you wrench free.')},77,72),
       H('exit',38,82,22,16,'Back ↓','exit',{walk:()=>{fadeGo('village');return 0;}},48,86)
     ];
-    if(S.flags.garden&&S.spells.includes('kp'))a.push(H('thr',38,0,22,14,'Throne ↑','exit',{walk:()=>{fadeGo('throne');return 0;}},48,16));
+    if(S.flags.garden&&S.spells.includes('kp'))a.push(H('thr',35,0,28,15,'Throne ↑','exit',{walk:()=>{fadeGo('throne');return 0;}},48,16));
     return a;}},
 
   throne:{nm:'Throne of Shadows',bg:'bg-throne',enter:'"so. you made it. 🦊" nine tails. amber eyes. she smiles.',build:bThrone,
     hs:()=>[
-      H('queen',38,18,10,14,'Fox Queen 🦊','npc',{look:'nine tails. not evil, not good. alive.',talk:()=>{startDlg(S.flags.queenWon?'queen-won':'queen');return 0;},take:0}),
-      H('arena',15,55,65,30,'Dueling Arena','obj',{look:'circle of fox-fire. runes pulse.',use:()=>S.flags.queenWon?'over.':(S.spells.length>=3&&has('skeleton-key')?(startDuel(),0):'<span class="h">need 3 spells + skeleton key.</span>'),walk:()=>S.flags.queenWon?'quiet.':(S.spells.length>=3&&has('skeleton-key')?(startDuel(),0):'arena doesn\'t activate.')},44,78),
+      H('queen',35,8,26,28,'Fox Queen 🦊','npc',{look:'nine tails. not evil, not good. alive.',talk:()=>{startDlg(S.flags.queenWon?'queen-won':'queen');return 0;},take:0}),
+      H('arena',10,50,75,32,'Dueling Arena','obj',{look:'circle of fox-fire. runes pulse.',use:()=>S.flags.queenWon?'over.':(S.spells.length>=3&&has('skeleton-key')?(startDuel(),0):'<span class="h">need 3 spells + skeleton key.</span>'),walk:()=>S.flags.queenWon?'quiet.':(S.spells.length>=3&&has('skeleton-key')?(startDuel(),0):'arena doesn\'t activate.')},44,78),
       H('exit',38,86,22,12,'Back ↓','exit',{walk:()=>{fadeGo('garden');return 0;}},48,88)
     ]},
 
   // HIDDEN ROOMS
   underdock:{nm:'🔮 Underdock',bg:'bg-underdock',enter:'<span class="s">bioluminescent cave. a living ember. cinderfox plays from stone.</span>',build:bUnderdock,
     hs:()=>[
-      H('ember',62,42,18,22,'Ember 🔥','item',{look:'pulses with the music.',take:()=>has('cinder-ember')?'with you.':(addI('cinder-ember'),'<span class="g">cinder ember!</span> it hums cinderfox.')},46,60,'cinder-ember'),
-      H('walls',0,10,22,55,'Walls','obj',{look:'"what was burned becomes the light." the cinderfox doctrine.'}),
+      H('ember',55,35,22,28,'Ember 🔥','item',{look:'pulses with the music.',take:()=>has('cinder-ember')?'with you.':(addI('cinder-ember'),'<span class="g">cinder ember!</span> it hums cinderfox.')},46,60,'cinder-ember'),
+      H('walls',0,8,25,58,'Walls','obj',{look:'"what was burned becomes the light." the cinderfox doctrine.'}),
       H('exit',38,82,20,16,'Ascend ↑','exit',{walk:()=>{fadeGo('dock');return 0;}},48,84)
     ]},
   hearth:{nm:'🔮 Hearth',bg:'bg-hearth',enter:'<span class="s">behind the fire. soot stories. eternal coal. fox in the fur plays.</span>',build:bHearth,
     hs:()=>[
-      H('coal',22,35,22,28,'Eternal Coal','item',{look:'never cools. remembers every story.',take:()=>has('hearth-coal')?'warm.':(addI('hearth-coal'),'<span class="g">hearth coal!</span> whispers of a thousand conversations.')},47,60,'hearth-coal'),
-      H('scr',0,15,20,45,'Scratches','obj',{look:'names scratched out. one circled: <span class="s">VIXEN</span>.'}),
+      H('coal',30,28,24,32,'Eternal Coal','item',{look:'never cools. remembers every story.',take:()=>has('hearth-coal')?'warm.':(addI('hearth-coal'),'<span class="g">hearth coal!</span> whispers of a thousand conversations.')},47,60,'hearth-coal'),
+      H('scr',0,12,18,50,'Scratches','obj',{look:'names scratched out. one circled: <span class="s">VIXEN</span>.'}),
       H('exit',38,82,20,16,'Return ↑','exit',{walk:()=>{fadeGo('tavern');return 0;}},48,84)
     ]},
   wellspring:{nm:'🔮 Wellspring',bg:'bg-wellspring',enter:'<span class="s">underground spring. indigo water. crystals like flowers. foxy world echoes.</span>',build:bWellspring,
     hs:()=>[
-      H('tear',45,22,12,22,'Tear 💧','item',{look:'contains places you\'ve never been.',take:()=>has('spring-tear')?'one is all.':(addI('spring-tear'),'<span class="g">spring tear!</span> inside — a fox smiling. not the queen. older.')},47,50,'spring-tear'),
-      H('crys',15,0,70,25,'Crystals','obj',{look:'each a note. together — the chord of foxy world.',cast:'they ring like bells. the island SINGS.'}),
+      H('tear',40,25,18,25,'Tear 💧','item',{look:'contains places you\'ve never been.',take:()=>has('spring-tear')?'one is all.':(addI('spring-tear'),'<span class="g">spring tear!</span> inside — a fox smiling. not the queen. older.')},47,50,'spring-tear'),
+      H('crys',10,0,75,22,'Crystals','obj',{look:'each a note. together — the chord of foxy world.',cast:'they ring like bells. the island SINGS.'}),
       H('exit',38,82,20,16,'Ascend ↑','exit',{walk:()=>{fadeGo('village');return 0;}},48,84)
     ]},
   sanctum:{nm:'🔮 Sanctum',bg:'bg-sanctum',enter:'<span class="s">black altar. living rune. purple fire. foxy revolution crackles.</span>',build:bSanctum,
     hs:()=>[
-      H('rune',28,8,40,38,'Rune ᚛','item',{look:'writes itself in unknown alphabet.',take:()=>has('sanctum-rune')?'writing.':(addI('sanctum-rune'),'<span class="g">sanctum rune!</span> not a rune — a SEED. every spell grew from one.')},44,56,'sanctum-rune'),
-      H('altar',32,48,32,22,'Altar','obj',{look:'predates everything. where the grimoire was first cast.',cast:'purple fire erupts — ALL spells visible. written in fire. then silence.'}),
+      H('rune',25,5,45,35,'Rune ᚛','item',{look:'writes itself in unknown alphabet.',take:()=>has('sanctum-rune')?'writing.':(addI('sanctum-rune'),'<span class="g">sanctum rune!</span> not a rune — a SEED. every spell grew from one.')},44,56,'sanctum-rune'),
+      H('altar',28,42,38,28,'Altar','obj',{look:'predates everything. where the grimoire was first cast.',cast:'purple fire erupts — ALL spells visible. written in fire. then silence.'}),
       H('exit',38,82,20,16,'Return ←','exit',{walk:()=>{fadeGo('temple');return 0;}},48,84)
     ]}
 };
