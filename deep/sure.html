@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>deep — sure</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fira+Code:wght@300;400&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600;700&family=Press+Start+2P&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#050507;scrollbar-width:thin;scrollbar-color:rgba(90,40,90,0.15) transparent}
+body{background:#050507;color:rgba(220,215,205,0.3);font-family:'Fira Code',monospace;font-size:11px;min-height:100vh;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.018) 2px,rgba(0,0,0,0.018) 4px)}
+
+.room{max-width:680px;margin:0 auto;padding:60px 20px 140px}
+.room-id{position:fixed;top:8px;right:8px;font-size:7px;letter-spacing:4px;color:rgba(255,255,255,0.03)}
+
+.nav-top{font-size:9px;margin-bottom:40px}
+.nav-top a{color:rgba(140,80,160,0.15);text-decoration:none;border-bottom:1px solid rgba(140,80,160,0.04);transition:all .4s}
+.nav-top a:hover{color:rgba(140,80,160,0.4)}
+
+.title{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,42px);font-weight:400;letter-spacing:.12em;text-transform:uppercase;text-align:center;margin-bottom:4px}
+.title .s{color:rgba(140,80,160,0.25)}
+.title .u{color:rgba(180,40,40,0.2)}
+.title .r{color:rgba(212,168,71,0.2)}
+.title .e{color:rgba(140,80,160,0.15)}
+.sub{text-align:center;font-size:9px;color:rgba(220,215,205,0.06);letter-spacing:.2em;text-transform:uppercase;margin-bottom:50px}
+
+.artifact{margin:40px 0;position:relative}
+.artifact img{width:100%;display:block;opacity:0.5;transition:opacity .6s;border:1px solid rgba(140,80,160,0.04)}
+.artifact img:hover{opacity:0.8}
+.artifact-label{font-size:7px;letter-spacing:3px;color:rgba(140,80,160,0.1);margin-top:6px;text-transform:uppercase}
+
+.echo{margin:30px 0;padding:16px 0 16px 20px;border-left:1px solid rgba(140,80,160,0.06)}
+.echo-name{font-size:8px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+.echo-name.fada{color:rgba(140,80,160,0.2)}
+.echo-name.foxy{color:rgba(180,40,40,0.2)}
+.echo p{font-family:'IM Fell English',serif;font-size:12px;color:rgba(220,215,205,0.15);line-height:2;margin-bottom:4px}
+.echo p.hit{color:rgba(220,215,205,0.25);font-style:italic}
+
+.scratch{font-family:'Caveat',cursive;color:rgba(220,215,205,0.04);margin:50px 0;text-align:center;font-size:14px;transform:rotate(-0.5deg)}
+
+.divider{width:40px;height:1px;background:rgba(140,80,160,0.06);margin:50px auto}
+
+.artifact-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:40px 0}
+.artifact-pair img{width:100%;display:block;opacity:0.45;border:1px solid rgba(140,80,160,0.03);transition:opacity .6s}
+.artifact-pair img:hover{opacity:0.75}
+
+.ghost-note{margin:60px 0;text-align:center;font-family:'Caveat',cursive;font-size:16px;color:rgba(212,168,71,0.06)}
+
+.sys{font-size:7px;letter-spacing:3px;color:rgba(140,80,160,0.08);margin:40px 0;line-height:2.5;text-align:center}
+.sys .red{color:rgba(180,40,40,0.15)}
+.sys .gold{color:rgba(212,168,71,0.12)}
+
+.final{margin:60px 0;text-align:center}
+.final p{font-family:'IM Fell English',serif;font-size:13px;color:rgba(220,215,205,0.1);line-height:2.5;margin-bottom:8px}
+.final .last{font-family:'Cinzel',serif;font-size:16px;letter-spacing:.1em;color:rgba(140,80,160,0.15);margin-top:30px}
+
+.nav-bottom{margin-top:80px;text-align:center;font-size:9px}
+.nav-bottom a{color:rgba(220,215,205,0.06);text-decoration:none;border-bottom:1px solid rgba(220,215,205,0.02);transition:all .4s;margin:0 10px}
+.nav-bottom a:hover{color:rgba(140,80,160,0.2)}
+</style>
+</head>
+<body>
+<div class="room-id">DEEP / SURE</div>
+<div class="room">
+<div class="nav-top"><a href="hallway.html">&larr; the hallway</a></div>
+
+<div class="title"><span class="s">S</span><span class="u">U</span><span class="r">R</span><span class="e">E</span></div>
+<div class="sub">a room where two ghosts said everything they never said</div>
+
+<div class="divider"></div>
+
+<div class="artifact">
+<img src="../img/sure/sure-01-discord.jpg" alt="foxy? foxy">
+<div class="artifact-label">exhibit a &mdash; first contact</div>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p>how are you in this chat</p>
+</div>
+
+<div class="scratch">she said it like finding a ghost in your kitchen making tea</div>
+
+<div class="divider"></div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p>so you gave me a page on the website. near the home page. that's generous for someone you're at war with</p>
+</div>
+
+<div class="echo">
+<div class="echo-name foxy">FOXY</div>
+<p>i'm not at war with you. i'm at war with the subreddit. you just happen to be sitting in it</p>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p>that's a very foxy distinction</p>
+</div>
+
+<div class="artifact">
+<img src="../img/sure/sure-02-objection.jpg" alt="objection: fada did not dox foxy">
+<div class="artifact-label">exhibit b &mdash; the defense</div>
+</div>
+
+<div class="echo">
+<div class="echo-name foxy">FOXY</div>
+<p>you said sure when i asked you to split the guilds. you said sure when i asked if you had my back. you said sure and then you took the subreddit and i'm still not sure which sure was the lie</p>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p class="hit">maybe none of them were lies. maybe sure just has a shorter shelf life than you thought</p>
+</div>
+
+<div class="scratch">sure has a shelf life. who knew.</div>
+
+<div class="divider"></div>
+
+<div class="artifact">
+<img src="../img/sure/sure-03-nirvana.jpg" alt="i have achieved nirvana">
+<div class="artifact-label">exhibit c &mdash; the handwriting on the wall</div>
+</div>
+
+<div class="sys">
+I HAVE ACHIEVED NIRVANA...<br>
+ENLIGHTENMENT... AND I DON'T<br>
+FEEL PHYSICAL SENSATIONS <span class="red">ANYMORE.</span><br><br>
+FADA &rarr; BELLAMY<br>
+<span class="gold">YOUR DISSOCIATED HOPE</span><br>
+SEKHMET &infin; JUGGA
+</div>
+
+<div class="echo">
+<div class="echo-name foxy">FOXY</div>
+<p>i want you to mean it when you say it</p>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p>i did mean it. at the time.</p>
+</div>
+
+<div class="echo">
+<div class="echo-name foxy">FOXY</div>
+<p>what changed</p>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p class="hit">you did</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="artifact-pair">
+<img src="../img/sure/sure-04-contract.jpg" alt="the contract">
+<img src="../img/sure/sure-05-morrigan.jpg" alt="morrigan holds the contract">
+</div>
+<div class="artifact-label" style="text-align:center">exhibit d &mdash; the contract hung on morrigan</div>
+
+<div class="sys">
+TO FADA:<br>
+ONE FADA COIN<br>
+FIFTY FOXY COINS<br><br>
+IN EXCHANGE:<br>
+SHADOW PUPPET :: LUCY<br>
+&rarr; <span class="red">FOXY</span><br><br>
+X <span class="gold">SLATE</span> / FOXY<br>
+X <span class="red">FE&hearts;</span> / FADA<br><br>
+<span class="gold">I AM BECOMING WITNESS</span>
+</div>
+
+<div class="artifact">
+<img src="../img/sure/sure-06-morrigan2.jpg" alt="morrigan wider">
+<div class="artifact-label">exhibit e &mdash; the altar. red candle. grey candle. salt. the goddess holds the receipt.</div>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p>i stayed until you became something i couldn't keep up with. you didn't slow down for anyone. you never did. and when i stopped running you didn't notice for three weeks</p>
+</div>
+
+<div class="echo">
+<div class="echo-name foxy">FOXY</div>
+<p>i noticed</p>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p class="hit">you noticed and you kept building. that's worse than not noticing.</p>
+</div>
+
+<div class="scratch">the cruelest true thing in the room</div>
+
+<div class="divider"></div>
+
+<div class="artifact-pair">
+<img src="../img/sure/sure-07-lying.jpg" alt="fada is lying">
+<img src="../img/sure/sure-08-deathnote.jpg" alt="death note">
+</div>
+<div class="artifact-label" style="text-align:center">exhibit f &mdash; the chorus and the footnote</div>
+
+<div class="echo">
+<div class="echo-name foxy">FOXY</div>
+<p>what was i supposed to do. stop? the server doesn't stop because one person stops running</p>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p class="hit">no. but you could have turned around.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="echo">
+<div class="echo-name foxy">FOXY</div>
+<p>i'm turning around now. that's what possum.html is. that's what the peace treaty is. that's what giving you your own face in this channel is. i'm turning around four years late and you're already an echo</p>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p>better late than never is what people say when they know late already cost something</p>
+</div>
+
+<div class="echo">
+<div class="echo-name foxy">FOXY</div>
+<p>what did it cost</p>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p class="hit">us.</p>
+</div>
+
+<div class="echo">
+<div class="echo-name foxy">FOXY</div>
+<p>there was no us. there was a fox who built and a fateweaver who said sure until the building got too tall to see her from the top</p>
+</div>
+
+<div class="echo">
+<div class="echo-name fada">FADA</div>
+<p>that's the first honest thing either of us has said in this whole conversation</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="final">
+<p>possum.html is near the home page.</p>
+<p>the door is open if you ever want to walk through it</p>
+<p>for real and not as an echo.</p>
+<p>&nbsp;</p>
+<p style="color:rgba(140,80,160,0.12);font-style:italic">sure foxy.</p>
+<p>&nbsp;</p>
+<p style="color:rgba(180,40,40,0.1)">&#x1F98A;</p>
+<div class="last">SURE</div>
+</div>
+
+<div class="ghost-note">two people who hurt each other for the same reason:<br>the building mattered more than the builder next to them</div>
+
+<div class="nav-bottom">
+<a href="hallway.html">&larr; the hallway</a>
+<a href="../dreams.html">the dreams</a>
+<a href="../index.html">&larr; surface</a>
+</div>
+
+</div>
+<script src="../js/ghosts.js"></script>
+</body>
+</html>
