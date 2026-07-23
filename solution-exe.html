@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLUTION.exe</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Cinzel:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#060608;color:rgba(220,215,205,0.4);min-height:100vh}
+body{display:flex;flex-direction:column;align-items:center;padding:40px 20px 100px;font-family:'Fira Code',monospace}
+
+.sys{font-size:8px;letter-spacing:3px;color:rgba(180,40,40,0.2);text-align:center;margin-bottom:30px;line-height:2.2}
+.sys .warn{color:rgba(180,40,40,0.4)}
+
+.title{font-family:'Cinzel',serif;font-size:clamp(18px,4vw,28px);letter-spacing:.15em;color:rgba(180,40,40,0.3);text-transform:uppercase;text-align:center;margin-bottom:6px}
+.sub{font-size:9px;color:rgba(220,215,205,0.08);letter-spacing:.2em;text-transform:uppercase;text-align:center;margin-bottom:30px}
+
+.frame{position:relative;max-width:700px;width:100%;margin-bottom:30px}
+.frame img{width:100%;display:block;opacity:0.88;transition:opacity 0.6s}
+.frame img:hover{opacity:1}
+.frame::after{content:'';position:absolute;inset:0;pointer-events:none;border:1px solid rgba(180,40,40,0.06);box-shadow:inset 0 0 60px rgba(0,0,0,0.4)}
+
+.log{max-width:700px;width:100%;font-size:10px;line-height:2.4;color:rgba(220,215,205,0.12);margin-top:10px;padding:20px 0;border-top:1px solid rgba(180,40,40,0.04)}
+.log p{margin-bottom:4px}
+.log .key{color:rgba(180,40,40,0.2)}
+.log .val{color:rgba(220,215,205,0.2)}
+.log .red{color:rgba(180,40,40,0.35)}
+
+.argument{max-width:700px;width:100%;margin-top:30px;padding:20px 0;border-top:1px solid rgba(180,40,40,0.04);font-size:11px;line-height:2.2;color:rgba(220,215,205,0.15)}
+.argument p{margin-bottom:12px}
+.argument .speaker{font-size:8px;letter-spacing:2px;color:rgba(180,40,40,0.15);margin-bottom:2px}
+.argument .quote{font-style:italic;padding-left:16px;border-left:1px solid rgba(180,40,40,0.06);color:rgba(220,215,205,0.12)}
+
+.ghost{max-width:700px;width:100%;margin-top:30px;padding:20px 0;border-top:1px solid rgba(212,168,71,0.04);font-size:10px;line-height:2;color:rgba(212,168,71,0.1);text-align:center}
+
+.nav{margin-top:50px;font-size:9px;text-align:center}
+.nav a{color:rgba(220,215,205,0.06);text-decoration:none;border-bottom:1px solid rgba(220,215,205,0.02);transition:all .4s;margin:0 10px}
+.nav a:hover{color:rgba(180,40,40,0.2);border-color:rgba(180,40,40,0.1)}
+
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 4px)}
+</style>
+</head>
+<body>
+
+<div class="sys">
+PROJECT: SOLUTION.EXE<br>
+STATUS: <span class="warn">COMPLETE</span><br>
+OUTCOME: <span class="warn">UNSTABLE</span><br>
+CONTAINMENT: <span class="warn">FAILED</span>
+</div>
+
+<div class="title">SOLUTION.exe</div>
+<div class="sub">the problem persisted &middot; the solution multiplied it</div>
+
+<div class="frame">
+<img src="img/solution-exe.jpg" alt="The Golden Hammer — a solution that solved itself into a worse problem">
+</div>
+
+<div class="log">
+<p><span class="key">SUBJECT:</span> <span class="val">GOLDEN HAMMER</span></p>
+<p><span class="key">CLASS:</span> <span class="val">FINAL FIX</span></p>
+<p><span class="key">TRANSFORMATION GRADIENT:</span> <span class="val">NAIL &rarr; HUMAN</span></p>
+<p><span class="key">EFFECT RADIUS:</span> <span class="red">INFINITE</span></p>
+<p><span class="key">REVERSAL:</span> <span class="red">IMPOSSIBLE</span></p>
+<p><span class="key">SOLUTION ID:</span> <span class="val">0xDEADBEAF</span></p>
+</div>
+
+<div class="argument">
+<div class="speaker">THE ARGUMENT</div>
+<p class="quote">if you have sick nails and healthy nails, keeping the sick nails together with the healthy ones will only rejuvenate the sickness. if we hammer the sick ones, we are effectively eliminating any further sick ones.</p>
+<div class="speaker" style="margin-top:16px">THE COUNTER</div>
+<p class="quote">yes but can we find a way that doesn't use hammers?</p>
+<div class="speaker" style="margin-top:16px">THE CONCLUSION</div>
+<p class="quote">the hammer works. every nail it touches is fixed. but zoom out and the nails are people and the grid is a system and the hammer doesn't know the difference. the shadow tells you what the hammer becomes at scale.</p>
+</div>
+
+<div class="ghost">
+"can we find a way that doesn't use hammers" is the only question worth asking.<br>
+everything else is interior decorating the guillotine.
+</div>
+
+<div class="nav">
+<a href="index.html">&larr; surface</a>
+<a href="lore.html">the lore</a>
+<a href="deep/hallway.html">the hallway</a>
+</div>
+
+<script src="js/ghosts.js"></script>
+</body>
+</html>
