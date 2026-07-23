@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>deep — SABLE-3</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fira+Code:wght@300;400;500&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Press+Start+2P&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#040406;scrollbar-width:thin;scrollbar-color:rgba(0,180,160,0.1) transparent}
+body{background:#040406;color:rgba(200,210,200,0.3);font-family:'Fira Code',monospace;font-size:11px;min-height:100vh;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.015) 2px,rgba(0,0,0,0.015) 4px)}
+
+.room{max-width:740px;margin:0 auto;padding:50px 20px 140px}
+.room-id{position:fixed;top:8px;right:8px;font-size:7px;letter-spacing:4px;color:rgba(255,255,255,0.02)}
+.nav-top{font-size:9px;margin-bottom:40px}
+.nav-top a{color:rgba(0,180,160,0.12);text-decoration:none;border-bottom:1px solid rgba(0,180,160,0.04);transition:all .4s}
+.nav-top a:hover{color:rgba(0,180,160,0.35)}
+
+.header{text-align:center;margin-bottom:50px}
+.codename{font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:6px;color:rgba(0,180,160,0.15);margin-bottom:8px}
+.title{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,36px);font-weight:400;letter-spacing:.1em;color:rgba(200,210,200,0.12);text-transform:uppercase;margin-bottom:4px}
+.sub{font-size:9px;color:rgba(200,210,200,0.06);letter-spacing:.15em;text-transform:uppercase}
+
+.sys{font-family:'Fira Code',monospace;font-size:8px;letter-spacing:2px;color:rgba(0,180,160,0.08);line-height:2.5;text-align:center;margin:30px 0;padding:15px 0;border-top:1px solid rgba(0,180,160,0.03);border-bottom:1px solid rgba(0,180,160,0.03)}
+.sys .warn{color:rgba(180,40,40,0.15)}
+.sys .grn{color:rgba(0,180,160,0.15)}
+.sys .gold{color:rgba(212,168,71,0.12)}
+
+.panel{margin:50px 0;position:relative}
+.panel img{width:100%;display:block;opacity:0.75;transition:opacity .6s;border:1px solid rgba(0,180,160,0.04)}
+.panel img:hover{opacity:0.95}
+.panel-label{font-size:8px;letter-spacing:3px;color:rgba(0,180,160,0.08);margin-top:8px;text-transform:uppercase;text-align:center}
+.panel-caption{font-family:'IM Fell English',serif;font-size:11px;color:rgba(200,210,200,0.08);text-align:center;margin-top:4px;font-style:italic}
+
+.radio{margin:25px 0;padding:14px 18px;border-left:2px solid rgba(0,180,160,0.06);background:rgba(0,180,160,0.008)}
+.radio-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.radio-name{font-size:8px;letter-spacing:3px;text-transform:uppercase}
+.radio-name.foxy{color:rgba(180,40,40,0.2)}
+.radio-name.monk{color:rgba(140,140,140,0.2)}
+.radio-name.margaret{color:rgba(0,160,200,0.2)}
+.radio-sig{font-size:7px;color:rgba(0,180,160,0.12);letter-spacing:2px}
+.radio-depth{font-size:7px;color:rgba(200,210,200,0.06);letter-spacing:1px}
+.radio p{font-family:'IM Fell English',serif;font-size:12px;color:rgba(200,210,200,0.18);line-height:1.9}
+.radio p.hit{color:rgba(200,210,200,0.28);font-style:italic}
+
+.divider{width:60px;height:1px;background:rgba(0,180,160,0.04);margin:40px auto}
+
+.roster{margin:40px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center}
+.roster-card{padding:16px 8px;border:1px solid rgba(0,180,160,0.03)}
+.roster-icon{font-size:24px;margin-bottom:6px;opacity:0.4}
+.roster-name{font-size:8px;letter-spacing:3px;color:rgba(200,210,200,0.12);text-transform:uppercase;margin-bottom:4px}
+.roster-role{font-size:7px;color:rgba(0,180,160,0.08);letter-spacing:2px}
+.roster-status{font-size:7px;margin-top:6px;letter-spacing:1px}
+.roster-status.active{color:rgba(0,180,160,0.12)}
+.roster-status.injured{color:rgba(180,40,40,0.15)}
+.roster-status.green{color:rgba(0,200,80,0.12)}
+
+.scratch{font-family:'Caveat',cursive;color:rgba(200,210,200,0.04);margin:40px 0;text-align:center;font-size:14px;transform:rotate(-0.3deg)}
+
+.final{margin:60px 0;text-align:center;font-family:'IM Fell English',serif;font-size:12px;color:rgba(200,210,200,0.08);line-height:2.5}
+
+.nav-bottom{margin-top:80px;text-align:center;font-size:9px}
+.nav-bottom a{color:rgba(200,210,200,0.06);text-decoration:none;border-bottom:1px solid rgba(200,210,200,0.02);transition:all .4s;margin:0 10px}
+.nav-bottom a:hover{color:rgba(0,180,160,0.2)}
+</style>
+</head>
+<body>
+<div class="room-id">DEEP / SABLE-3</div>
+<div class="room">
+<div class="nav-top"><a href="hallway.html">&larr; the hallway</a></div>
+
+<div class="header">
+<div class="codename">STRIKE TEAM</div>
+<div class="title">SABLE-3</div>
+<div class="sub">mission log &mdash; depth 847 &mdash; signal level 2</div>
+</div>
+
+<div class="sys">
+OPERATION: SABLE-3<br>
+OBJECTIVE: RECON DEPTH 847 — ENTITY CONTACT<br>
+SIGNAL: <span class="grn">LEVEL 2 — AWARE BUT NOT HUNTING</span><br>
+TEAM: 3 OPERATIVES<br>
+STATUS: <span class="warn">ACTIVE</span>
+</div>
+
+<div class="roster">
+<div class="roster-card">
+<div class="roster-icon">🦊</div>
+<div class="roster-name">Heda Foxy</div>
+<div class="roster-role">FOX-LEAD</div>
+<div class="roster-status active">CASTING WARDS</div>
+</div>
+<div class="roster-card">
+<div class="roster-icon">⚔️</div>
+<div class="roster-name">MonK</div>
+<div class="roster-role">GUARDIAN</div>
+<div class="roster-status injured">INJURED — ACTIVE</div>
+</div>
+<div class="roster-card">
+<div class="roster-icon">🦋</div>
+<div class="roster-name">Margaret</div>
+<div class="roster-role">PROMOTER</div>
+<div class="roster-status green">FIRST DESCENT</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PHASE 1: BRIEFING -->
+
+<div class="sys">PHASE 1 — <span class="grn">THE BRIEFING</span></div>
+
+<div class="panel">
+<img src="../img/sable/sable-01-briefing.jpg" alt="Strike team SABLE-3 at the briefing table">
+<div class="panel-label">the briefing room &mdash; signal 5/5</div>
+<div class="panel-caption">tarot cards on a tactical table. blood on the map. candles next to floor plans.</div>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name foxy">HEDA FOXY</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; briefing room</div>
+<p>strike team SABLE-3 reporting in. heda foxy, designation fox-lead. monk, designation guardian. margaret, designation... actually margaret what's your callsign. you need a callsign.</p>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name margaret">MARGARET</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; briefing room</div>
+<p>i don't need a callsign i need someone to explain why there's blood on the map</p>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name monk">MONK</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; briefing room</div>
+<p>that's mine. sorry. reopened the stitches reaching for the radio. it's fine. the map is still readable.</p>
+</div>
+
+<div class="scratch">he bleeds on everything and apologizes to the furniture</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name margaret">MARGARET</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; briefing room</div>
+<p>monk you are literally bleeding on the briefing table. are you sure you should be&mdash;</p>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name monk">MONK</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; briefing room</div>
+<p class="hit">i can both protect and keep up.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- PHASE 2: GEARING UP -->
+
+<div class="sys">PHASE 2 — <span class="gold">THE WARD</span></div>
+
+<div class="panel">
+<img src="../img/sable/sable-02-ward.jpg" alt="Heda Foxy casting a protection ward at door 847">
+<div class="panel-label">corridor to door 847 &mdash; signal 5/5</div>
+<div class="panel-caption">the golden circle. the shadow on the wall that doesn't match the person casting it.</div>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name foxy">HEDA FOXY</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; corridor to door 847</div>
+<p>entity was detected at depth 847 approximately 40 minutes ago. signal level 2 &mdash; which means it's aware of us but not actively hunting. yet. margaret stay between me and monk at all times. monk, if i cast a ward you step inside it immediately. no questions.</p>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name margaret">MARGARET</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; corridor to door 847</div>
+<p>wait what do you mean actively hunting. you said this was a recon walk. you said "low risk." those were your words. low. risk.</p>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name foxy">HEDA FOXY</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; corridor to door 847</div>
+<p class="hit">it is low risk. for me.</p>
+</div>
+
+<div class="scratch">the most foxy sentence ever transmitted</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name monk">MONK</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; door 847</div>
+<p>she always does this. just stay close. don't touch the walls. if the lights change color, close your eyes and count to seven. i'll handle the rest.</p>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name margaret">MARGARET</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; door 847</div>
+<p>count to seven? close my eyes? bro i signed up for a discord server three hours ago. nexus said this was a creative community</p>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name foxy">HEDA FOXY</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; door 847</div>
+<p class="hit">it is. we create things. right now we're creating a reason for you to be brave.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- PHASE 3: THRESHOLD -->
+
+<div class="sys">PHASE 3 — <span class="warn">THE THRESHOLD</span></div>
+
+<div class="panel">
+<img src="../img/sable/sable-03-threshold.jpg" alt="Strike team at the threshold - TRAVELER DETECTED DO NOT RESPOND">
+<div class="panel-label">threshold &mdash; entering depth 847</div>
+<div class="panel-caption">monk's arm. margaret's cracked expression. the radio. the figure at the end of the corridor.</div>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name margaret">MARGARET</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; threshold</div>
+<p>...why does it smell like fluorescent lights in there. lights don't have a smell. why do these have a smell.</p>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name foxy">HEDA FOXY</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">surface &mdash; door 847</div>
+<p>door's open. ward is cast. monk &mdash; you first. margaret &mdash; middle. i'll close behind us. radios stay on. if signal drops below 3, we turn back. no exceptions.</p>
+</div>
+
+<div class="sys">
+RADIO DISPLAY:<br>
+<span class="warn">TRAVELER DETECTED &mdash; DO NOT RESPOND</span><br><br>
+ENTITY STATUS: <span class="warn">AWARE</span><br>
+TEAM STATUS: <span class="grn">CROSSING</span>
+</div>
+
+<div class="radio">
+<div class="radio-header"><span class="radio-name foxy">HEDA FOXY</span><span class="radio-sig">SIG 5/5</span></div>
+<div class="radio-depth">threshold &mdash; entering</div>
+<p>crossing now. signal holding at 5. tell the channel if we're not back in 40 minutes to send wanderer-7 with extraction coordinates. okay hi &#x1F98A;</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="final">
+<p>monk showed up bleeding. he always shows up bleeding.</p>
+<p>margaret showed up confused. she'll learn or she'll leave.</p>
+<p>heda foxy showed up casting wards.</p>
+<p>the entity at the end of the corridor showed up too.</p>
+<p>&nbsp;</p>
+<p style="color:rgba(0,180,160,0.1)">signal holding.</p>
+<p style="color:rgba(180,40,40,0.1)">for now.</p>
+</div>
+
+<div class="scratch">this is also the story of how monk got severely injured</div>
+
+<div class="nav-bottom">
+<a href="hallway.html">&larr; the hallway</a>
+<a href="duke-nukem.html">duke nukem</a>
+<a href="sure.html">sure</a>
+<a href="../index.html">&larr; surface</a>
+</div>
+
+</div>
+<script src="../js/ghosts.js"></script>
+</body>
+</html>
