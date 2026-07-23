@@ -8,50 +8,54 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#000;overflow:hidden;cursor:none;font-family:'Courier New',monospace}
 canvas{display:block;image-rendering:pixelated}
-#hud{position:fixed;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to bottom,#1a1a2e,#0a0a18);border-top:2px solid #333;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:10}
-.hud-box{text-align:center;min-width:80px}
-.hud-label{font-size:9px;color:#666;letter-spacing:2px}
-.hud-val{font-size:22px;font-weight:bold;letter-spacing:1px}
+#hud{position:fixed;bottom:0;left:0;right:0;height:64px;background:linear-gradient(to bottom,#1a1a2e,#08080f);border-top:2px solid #444;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:10}
+.hud-box{text-align:center;min-width:70px}
+.hud-label{font-size:8px;color:#555;letter-spacing:2px}
+.hud-val{font-size:20px;font-weight:bold;letter-spacing:1px}
 .hud-health .hud-val{color:#e44}
 .hud-ammo .hud-val{color:#ee4}
 .hud-armor .hud-val{color:#4ae}
-.hud-face{width:50px;height:50px;border:2px solid #444;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:28px;border-radius:4px}
-.hud-weapon{font-size:10px;color:#888;letter-spacing:1px}
+.hud-kills .hud-val{color:#4e4}
+.hud-face{width:48px;height:48px;border:2px solid #555;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:26px;border-radius:4px}
 #crosshair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;pointer-events:none}
 #crosshair::before,#crosshair::after{content:'';position:absolute;background:rgba(255,255,100,0.6)}
-#crosshair::before{width:12px;height:2px;left:-6px;top:-1px}
-#crosshair::after{width:2px;height:12px;left:-1px;top:-6px}
-#overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#ee4;font-family:'Courier New',monospace;cursor:default}
-#overlay h1{font-size:28px;letter-spacing:6px;margin-bottom:8px;text-shadow:0 0 20px rgba(238,68,68,0.4)}
-#overlay h2{font-size:14px;color:#e44;letter-spacing:4px;margin-bottom:30px}
-#overlay .sub{font-size:11px;color:#888;margin-bottom:6px;letter-spacing:1px}
-#overlay .start{font-size:16px;color:#ee4;margin-top:20px;animation:blink 1.2s ease-in-out infinite;letter-spacing:3px}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-#overlay .controls{font-size:10px;color:#555;margin-top:30px;line-height:2;text-align:center}
-#minimap{position:fixed;top:10px;right:10px;z-index:8;border:1px solid rgba(255,255,100,0.15);opacity:0.6}
-.msg{position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);font-size:13px;color:#ee4;letter-spacing:2px;z-index:6;text-shadow:0 0 10px rgba(238,238,68,0.3);opacity:0;transition:opacity 0.3s;pointer-events:none;text-align:center}
+#crosshair::before{width:14px;height:2px;left:-7px;top:-1px}
+#crosshair::after{width:2px;height:14px;left:-1px;top:-7px}
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#ee4;cursor:default}
+#overlay h1{font-size:32px;letter-spacing:8px;margin-bottom:6px;text-shadow:0 0 20px rgba(238,68,68,0.4)}
+#overlay h2{font-size:13px;color:#e44;letter-spacing:5px;margin-bottom:30px}
+#overlay .sub{font-size:10px;color:#777;margin-bottom:5px;letter-spacing:1px}
+#overlay .start{font-size:15px;color:#ee4;margin-top:24px;animation:blink 1s ease-in-out infinite;letter-spacing:3px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+#overlay .controls{font-size:9px;color:#555;margin-top:25px;line-height:2.2;text-align:center}
+#minimap{position:fixed;top:8px;right:8px;z-index:8;border:1px solid rgba(255,255,100,0.12);opacity:0.5}
+.msg{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);font-size:14px;color:#ee4;letter-spacing:2px;z-index:6;text-shadow:0 0 12px rgba(238,238,68,0.4);opacity:0;transition:opacity 0.3s;pointer-events:none;text-align:center;white-space:pre-line}
 .msg.show{opacity:1}
+#dmg{position:fixed;inset:0;z-index:4;pointer-events:none;background:rgba(255,0,0,0);transition:background 0.15s}
+#muzzle{position:fixed;z-index:7;pointer-events:none;opacity:0;transition:opacity 0.05s}
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
 <div id="crosshair"></div>
-<canvas id="minimap" width="120" height="120"></canvas>
+<div id="dmg"></div>
+<canvas id="minimap" width="110" height="110"></canvas>
 <div id="hud">
-<div class="hud-box hud-health"><div class="hud-label">HEALTH</div><div class="hud-val">100</div></div>
-<div class="hud-box hud-weapon"><div class="hud-label">WEAPON</div><div class="hud-val" style="color:#aaa">PISTOL</div></div>
-<div class="hud-face">🦊</div>
+<div class="hud-box hud-health"><div class="hud-label">HEALTH</div><div class="hud-val" id="hp">100</div></div>
+<div class="hud-box hud-kills"><div class="hud-label">KILLS</div><div class="hud-val" id="kills">0</div></div>
+<div class="hud-face" id="face">😤</div>
 <div class="hud-box hud-armor"><div class="hud-label">DEPTH</div><div class="hud-val">847</div></div>
-<div class="hud-box hud-ammo"><div class="hud-label">AMMO</div><div class="hud-val">∞</div></div>
+<div class="hud-box hud-ammo"><div class="hud-label">AMMO</div><div class="hud-val" id="ammo">48</div></div>
 </div>
 <div class="msg" id="msg"></div>
 <div id="overlay">
 <h1>DUKE NUKEM</h1>
-<h2>THE BACKROOMS</h2>
-<div class="sub">A FOXYVERSE TRIBUTE</div>
-<div class="sub">LEVEL 847 — THE HALLWAY THAT DOESN'T END</div>
+<h2>LEVEL 847 — THE BACKROOMS</h2>
+<div class="sub">PAREDES DE BLOQUES DE CEMENTO GRIS</div>
+<div class="sub">PISO Y TECHO PLATEADOS COMO METAL</div>
+<div class="sub">SE MATABAN MONSTRUOS EN AQUEL ENTONCES</div>
 <div class="start">[ CLICK TO ENTER ]</div>
-<div class="controls">WASD — MOVE &nbsp;|&nbsp; MOUSE — LOOK &nbsp;|&nbsp; ESC — RELEASE<br>FIND THE FOX. IF YOU CAN.</div>
+<div class="controls">WASD — MOVE &nbsp;|&nbsp; MOUSE — LOOK &nbsp;|&nbsp; CLICK — SHOOT<br>KILL THE MONSTERS. FIND THE FOX.</div>
 </div>
 
 <script>
@@ -84,14 +88,30 @@ const map=[
 ];
 const MW=map[0].length,MH=map.length;
 
-// Messages at locations
+// Monsters
+let monsters=[
+{x:5.5,y:5.5,hp:3,alive:true,type:'grunt'},
+{x:10.5,y:3.5,hp:3,alive:true,type:'grunt'},
+{x:14.5,y:8.5,hp:3,alive:true,type:'grunt'},
+{x:3.5,y:10.5,hp:5,alive:true,type:'captain'},
+{x:19.5,y:5.5,hp:3,alive:true,type:'grunt'},
+{x:8.5,y:15.5,hp:3,alive:true,type:'grunt'},
+{x:15.5,y:15.5,hp:5,alive:true,type:'captain'},
+{x:5.5,y:19.5,hp:3,alive:true,type:'grunt'},
+{x:20.5,y:15.5,hp:3,alive:true,type:'grunt'},
+{x:12.5,y:20.5,hp:5,alive:true,type:'captain'},
+{x:3.5,y:22.5,hp:3,alive:true,type:'grunt'},
+{x:18.5,y:20.5,hp:3,alive:true,type:'grunt'},
+];
+let killCount=0,ammo=48,hp=100,shootCool=0,hurtFlash=0;
+
 const msgs=[
-{x:5.5,y:2.5,text:"THE FLUORESCENTS HUM A SONG\nYOU ALMOST REMEMBER",shown:false},
-{x:10.5,y:10.5,text:"HALLWAY 847\nTHE COUNT NEVER CHANGES",shown:false},
-{x:18.5,y:5.5,text:"SOMEONE WROTE 'SURE' ON THE WALL\nIN SOMETHING THAT ISN'T PAINT",shown:false},
-{x:3.5,y:15.5,text:"THE EXIT IS NOT A DOOR\nIT'S A DECISION",shown:false},
-{x:10.5,y:17.5,text:"DUKE NEVER MADE IT\nTO THIS LEVEL",shown:false},
-{x:20.5,y:22.5,text:"🦊",shown:false,isFox:true}
+{x:5.5,y:2.5,text:"PAREDES DE BLOQUES DE CEMENTO GRIS\nJUST LIKE SHE REMEMBERS"},
+{x:10.5,y:10.5,text:"HALLWAY 847\nTHE COUNT NEVER CHANGES"},
+{x:18.5,y:5.5,text:"SOMEONE WROTE 'SURE' ON THE WALL\nIN SOMETHING THAT ISN'T PAINT"},
+{x:3.5,y:15.5,text:"SE MATABAN MONSTRUOS\nEN AQUEL ENTONCES"},
+{x:10.5,y:17.5,text:"DUKE NEVER MADE IT\nTO THIS LEVEL"},
+{x:20.5,y:22.5,text:"🦊\nYOU FOUND THE FOX",isFox:true}
 ];
 
 let px=2.5,py=2.5,pa=-Math.PI/4,running=false;
@@ -101,43 +121,70 @@ const ctx=can.getContext('2d');
 const mcan=document.getElementById('minimap');
 const mctx=mcan.getContext('2d');
 const msgEl=document.getElementById('msg');
-
 can.width=W;can.height=H;
 
-// Generate wall texture
-function genTex(base,accent,grime){
+// Gray cement block texture
+function genCement(base,mortar,noise){
 const c=document.createElement('canvas');c.width=TEX;c.height=TEX;
 const x=c.getContext('2d');
 x.fillStyle=base;x.fillRect(0,0,TEX,TEX);
-// Brick pattern
-x.strokeStyle=accent;x.lineWidth=0.5;
-for(let i=0;i<TEX;i+=8){x.beginPath();x.moveTo(0,i);x.lineTo(TEX,i);x.stroke();}
-for(let j=0;j<TEX;j+=16){
-for(let i=0;i<TEX;i+=8){
-const off=(Math.floor(i/8)%2)*8;
-x.beginPath();x.moveTo(j+off,i);x.lineTo(j+off,i+8);x.stroke();
+// Block grid - cement blocks
+x.strokeStyle=mortar;x.lineWidth=1;
+for(let row=0;row<4;row++){
+const y=row*16;
+x.beginPath();x.moveTo(0,y);x.lineTo(TEX,y);x.stroke();
+const off=(row%2)*32;
+for(let col=0;col<3;col++){
+x.beginPath();x.moveTo(off+col*32,y);x.lineTo(off+col*32,y+16);x.stroke();
 }}
-// Grime
-for(let i=0;i<40;i++){
-x.fillStyle=`rgba(${grime},${0.02+Math.random()*0.06})`;
-x.fillRect(Math.random()*TEX,Math.random()*TEX,1+Math.random()*3,1+Math.random()*3);
+// Surface noise
+for(let i=0;i<80;i++){
+const v=Math.random()>0.5?noise:'0,0,0';
+x.fillStyle=`rgba(${v},${0.03+Math.random()*0.08})`;
+x.fillRect(Math.random()*TEX,Math.random()*TEX,1+Math.random()*2,1+Math.random()*2);
+}
+// Cracks
+x.strokeStyle=`rgba(0,0,0,0.06)`;x.lineWidth=0.5;
+for(let i=0;i<3;i++){
+x.beginPath();
+const sx=Math.random()*TEX,sy=Math.random()*TEX;
+x.moveTo(sx,sy);
+x.lineTo(sx+Math.random()*12-6,sy+Math.random()*12);
+x.stroke();
 }
 return x.getImageData(0,0,TEX,TEX);
 }
 
-const texWall=genTex('#8B7D3B','#6B5D2B','40,35,20');
-const texWall2=genTex('#6B5D2B','#4B3D1B','30,25,15');
-const texFox=genTex('#3B1B3B','#5B2B5B','80,20,80');
+// Metallic floor/ceiling texture
+function genMetal(base,line){
+const c=document.createElement('canvas');c.width=TEX;c.height=TEX;
+const x=c.getContext('2d');
+x.fillStyle=base;x.fillRect(0,0,TEX,TEX);
+// Metallic streaks
+x.strokeStyle=line;x.lineWidth=0.5;
+for(let i=0;i<TEX;i+=4){x.beginPath();x.moveTo(0,i);x.lineTo(TEX,i);x.stroke();}
+// Rivets
+x.fillStyle=line;
+x.beginPath();x.arc(4,4,1.5,0,Math.PI*2);x.fill();
+x.beginPath();x.arc(60,4,1.5,0,Math.PI*2);x.fill();
+x.beginPath();x.arc(4,60,1.5,0,Math.PI*2);x.fill();
+x.beginPath();x.arc(60,60,1.5,0,Math.PI*2);x.fill();
+// Specular noise
+for(let i=0;i<20;i++){
+x.fillStyle=`rgba(255,255,255,${0.01+Math.random()*0.04})`;
+x.fillRect(Math.random()*TEX,Math.random()*TEX,Math.random()*8,1);
+}
+return x.getImageData(0,0,TEX,TEX);
+}
 
-// Floor/ceiling colors
-const floorColor=[60,55,40];
-const ceilColor=[45,42,35];
+const texWallLight=genCement('#7a7a78','#555553','140,140,135');
+const texWallDark=genCement('#626260','#444442','100,100,96');
+const texFox=genCement('#3a2040','#5a3060','120,40,120');
+const texFloor=genMetal('#585858','#6a6a68');
+const texCeil=genMetal('#505050','#626260');
 
 function castRay(angle){
 const sin=Math.sin(angle),cos=Math.cos(angle);
-let t=0;const step=0.02;
-let side=0;
-// DDA raycasting
 const dx=cos,dy=sin;
 let mapX=Math.floor(px),mapY=Math.floor(py);
 const ddx=Math.abs(1/dx),ddy=Math.abs(1/dy);
@@ -146,7 +193,7 @@ if(dx<0){stepX=-1;sideDistX=(px-mapX)*ddx;}
 else{stepX=1;sideDistX=(mapX+1-px)*ddx;}
 if(dy<0){stepY=-1;sideDistY=(py-mapY)*ddy;}
 else{stepY=1;sideDistY=(mapY+1-py)*ddy;}
-let hit=0,dist=0,cell=1;
+let hit=0,dist=0,side=0,cell=1;
 while(!hit&&dist<20){
 if(sideDistX<sideDistY){sideDistX+=ddx;mapX+=stepX;side=0;dist=sideDistX-ddx;}
 else{sideDistY+=ddy;mapY+=stepY;side=1;dist=sideDistY-ddy;}
@@ -154,204 +201,304 @@ if(mapX>=0&&mapX<MW&&mapY>=0&&mapY<MH&&map[mapY][mapX]>0){hit=1;cell=map[mapY][m
 if(dist>20)break;
 }
 let wallX;
-if(side===0)wallX=py+dist*dy;
-else wallX=px+dist*dx;
+if(side===0)wallX=py+dist*dy;else wallX=px+dist*dx;
 wallX-=Math.floor(wallX);
 return{dist,side,wallX,cell};
+}
+
+// Sprite rendering for monsters
+function getMonsterScreenPos(m){
+const dx=m.x-px,dy=m.y-py;
+const angle=Math.atan2(dy,dx)-pa;
+let a=angle;
+while(a<-Math.PI)a+=Math.PI*2;
+while(a>Math.PI)a-=Math.PI*2;
+const dist=Math.sqrt(dx*dx+dy*dy);
+const screenX=W/2+a/(FOV/2)*W/2;
+const spriteH=Math.min(H,H/dist);
+const screenY=(H-spriteH)/2;
+return{screenX,screenY,spriteH,dist,angle:a};
 }
 
 function render(){
 const buf=ctx.createImageData(W,H);
 const d=buf.data;
-// Ceiling and floor
+const zBuf=new Float32Array(W).fill(20);
+
+// Floor and ceiling with texture sampling
 for(let y=0;y<H;y++){
 const isFloor=y>H/2;
-const rowDist=isFloor?(H/(2*y-H+0.01)):(H/(H-2*y+0.01));
-const shade=Math.max(0,1-rowDist*0.06);
+const p=isFloor?y-H/2:H/2-y;
+if(p===0)continue;
+const rowDist=H/(2*p);
+const shade=Math.max(0.12,1-rowDist*0.07);
+const floorStepX=rowDist*(Math.cos(pa+FOV/2)-Math.cos(pa-FOV/2))/W;
+const floorStepY=rowDist*(Math.sin(pa+FOV/2)-Math.sin(pa-FOV/2))/W;
+let floorX=px+rowDist*Math.cos(pa-FOV/2);
+let floorY=py+rowDist*Math.sin(pa-FOV/2);
 for(let x=0;x<W;x++){
+const tx=Math.floor(floorX*TEX)&(TEX-1);
+const ty=Math.floor(floorY*TEX)&(TEX-1);
+const tex=isFloor?texFloor:texCeil;
+const ti=(ty*TEX+tx)*4;
 const i=(y*W+x)*4;
-if(isFloor){
-// Floor with pattern
-const fx=((x/W-0.5)*rowDist*2+px);
-const fy=(rowDist*Math.cos(pa-(x/W-0.5)*FOV)+py);
-const checker=((Math.floor(fx*2)^Math.floor(fy*2))&1)?0.9:1.0;
-d[i]=floorColor[0]*shade*checker;
-d[i+1]=floorColor[1]*shade*checker;
-d[i+2]=floorColor[2]*shade*checker;
-}else{
-// Ceiling with fluorescent strips
-const isStrip=(Math.floor(((x/W-0.5)*rowDist*4+px)*3)%4===0)&&rowDist<3;
-if(isStrip){
-const bright=Math.max(0.3,1-rowDist*0.15);
-d[i]=180*bright;d[i+1]=175*bright;d[i+2]=140*bright;
-}else{
-d[i]=ceilColor[0]*shade;d[i+1]=ceilColor[1]*shade;d[i+2]=ceilColor[2]*shade;
-}
+const s=shade*(isFloor?1:0.85);
+d[i]=tex.data[ti]*s;
+d[i+1]=tex.data[ti+1]*s;
+d[i+2]=tex.data[ti+2]*s;
+// Fluorescent strip glow on ceiling
+if(!isFloor&&(tx<4||tx>60)&&rowDist<4){
+const glow=Math.max(0,(1-rowDist*0.2))*0.3;
+d[i]+=180*glow;d[i+1]+=175*glow;d[i+2]+=150*glow;
 }
 d[i+3]=255;
+floorX+=floorStepX;
+floorY+=floorStepY;
 }}
 
-// Walls via raycasting
+// Walls
 for(let x=0;x<W;x++){
 const angle=pa-FOV/2+FOV*(x/W);
 const r=castRay(angle);
 const perpDist=r.dist*Math.cos(angle-pa);
-const wallH=Math.min(H,H/perpDist);
-const drawStart=Math.floor((H-wallH)/2);
-const drawEnd=Math.floor((H+wallH)/2);
-const tex=r.cell===2?texFox:(r.side?texWall2:texWall);
-
+zBuf[x]=perpDist;
+const wallH=Math.min(H*2,H/perpDist);
+const drawStart=Math.max(0,Math.floor((H-wallH)/2));
+const drawEnd=Math.min(H,Math.floor((H+wallH)/2));
+const tex=r.cell===2?texFox:(r.side?texWallDark:texWallLight);
 const texX=Math.floor(r.wallX*TEX)%TEX;
 for(let y=drawStart;y<drawEnd;y++){
-if(y<0||y>=H)continue;
 const texY=Math.floor(((y-drawStart)/wallH)*TEX)%TEX;
 const ti=(texY*TEX+texX)*4;
-const shade=Math.max(0.15,1-perpDist*0.08);
-const sideMul=r.side?0.7:1;
+const shade=Math.max(0.1,1-perpDist*0.065);
+const sideMul=r.side?0.72:1;
 const i=(y*W+x)*4;
 d[i]=tex.data[ti]*shade*sideMul;
 d[i+1]=tex.data[ti+1]*shade*sideMul;
 d[i+2]=tex.data[ti+2]*shade*sideMul;
 d[i+3]=255;
-}
-}
+}}
 
 ctx.putImageData(buf,0,0);
 
-// Scanline overlay
-ctx.fillStyle='rgba(0,0,0,0.04)';
-for(let y=0;y<H;y+=2)ctx.fillRect(0,y,W,1);
+// Draw monsters as sprites
+const sortedMonsters=monsters.filter(m=>m.alive).map(m=>({...m,...getMonsterScreenPos(m)}))
+.filter(m=>m.dist>0.3&&Math.abs(m.angle)<FOV/2+0.2)
+.sort((a,b)=>b.dist-a.dist);
 
+for(const m of sortedMonsters){
+const sz=m.spriteH*0.7;
+const sx=m.screenX-sz/2;
+const sy=m.screenY+m.spriteH*0.15;
+// Check z-buffer
+const centerX=Math.floor(m.screenX);
+if(centerX>=0&&centerX<W&&m.dist<zBuf[centerX]){
+const shade=Math.max(0.2,1-m.dist*0.07);
+// Monster body
+const isCapt=m.type==='captain';
+const bodyColor=isCapt?`rgba(${Math.floor(180*shade)},${Math.floor(50*shade)},${Math.floor(50*shade)},0.95)`
+:`rgba(${Math.floor(100*shade)},${Math.floor(140*shade)},${Math.floor(80*shade)},0.95)`;
+const headColor=isCapt?`rgba(${Math.floor(200*shade)},${Math.floor(60*shade)},${Math.floor(60*shade)},0.95)`
+:`rgba(${Math.floor(120*shade)},${Math.floor(160*shade)},${Math.floor(90*shade)},0.95)`;
+// Body
+ctx.fillStyle=bodyColor;
+ctx.fillRect(sx+sz*0.25,sy+sz*0.35,sz*0.5,sz*0.55);
+// Head
+ctx.fillStyle=headColor;
+ctx.fillRect(sx+sz*0.3,sy+sz*0.1,sz*0.4,sz*0.3);
+// Eyes
+ctx.fillStyle=isCapt?`rgba(255,${Math.floor(200*shade)},0,0.9)`:`rgba(255,${Math.floor(100*shade)},${Math.floor(100*shade)},0.9)`;
+ctx.fillRect(sx+sz*0.35,sy+sz*0.18,sz*0.08,sz*0.06);
+ctx.fillRect(sx+sz*0.55,sy+sz*0.18,sz*0.08,sz*0.06);
+// Arms
+ctx.fillStyle=bodyColor;
+ctx.fillRect(sx+sz*0.12,sy+sz*0.38,sz*0.15,sz*0.35);
+ctx.fillRect(sx+sz*0.72,sy+sz*0.38,sz*0.15,sz*0.35);
+// Legs
+ctx.fillRect(sx+sz*0.28,sy+sz*0.82,sz*0.18,sz*0.18);
+ctx.fillRect(sx+sz*0.54,sy+sz*0.82,sz*0.18,sz*0.18);
+// Pixelation lines
+ctx.strokeStyle=`rgba(0,0,0,${0.15*shade})`;ctx.lineWidth=1;
+for(let py2=sy+sz*0.1;py2<sy+sz;py2+=sz*0.08){
+ctx.beginPath();ctx.moveTo(sx+sz*0.12,py2);ctx.lineTo(sx+sz*0.87,py2);ctx.stroke();
+}
+}}
+
+// Scanlines
+ctx.fillStyle='rgba(0,0,0,0.035)';
+for(let y=0;y<H;y+=2)ctx.fillRect(0,y,W,1);
 // Vignette
-const vg=ctx.createRadialGradient(W/2,H/2,W*0.3,W/2,H/2,W*0.7);
-vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,0.4)');
+const vg=ctx.createRadialGradient(W/2,H/2,W*0.25,W/2,H/2,W*0.65);
+vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,0.45)');
 ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
 
-// Gun
 drawGun();
 }
 
+let gunKick=0;
 function drawGun(){
-const gx=W/2+Math.sin(Date.now()*0.003)*3;
-const gy=H-70+Math.abs(Math.sin(Date.now()*0.005))*4;
+const bob=running?Math.sin(Date.now()*0.008)*3:0;
+const bobY=running?Math.abs(Math.sin(Date.now()*0.006))*4:0;
+const kick=gunKick>0?-gunKick*6:0;
+const gx=W/2+20+bob;
+const gy=H-90+bobY+kick;
+// Gun barrel
+ctx.fillStyle='#3a3a3a';
+ctx.fillRect(gx-5,gy-20,10,25);
+ctx.fillStyle='#4a4a4a';
+ctx.fillRect(gx-3,gy-20,6,20);
+// Body
 ctx.fillStyle='#2a2a2a';
-ctx.fillRect(gx-8,gy,16,60);
-ctx.fillRect(gx-12,gy+10,24,8);
-ctx.fillRect(gx-4,gy-10,8,15);
-ctx.fillStyle='#444';
-ctx.fillRect(gx-2,gy-10,4,12);
-ctx.fillStyle='#1a1a1a';
-ctx.fillRect(gx-6,gy+25,12,30);
-ctx.fillRect(gx+2,gy+30,10,12);
+ctx.fillRect(gx-12,gy,24,12);
+ctx.fillRect(gx-8,gy+5,16,50);
+// Trigger guard
+ctx.fillStyle='#222';
+ctx.fillRect(gx+4,gy+18,10,14);
+ctx.fillRect(gx+6,gy+20,3,10);
+// Grip
+ctx.fillStyle='#3a2a1a';
+ctx.fillRect(gx-6,gy+30,12,28);
+// Highlight
+ctx.fillStyle='rgba(255,255,255,0.06)';
+ctx.fillRect(gx-4,gy-18,2,18);
 // Muzzle
-ctx.fillStyle='#333';
-ctx.beginPath();
-ctx.arc(gx,gy-10,5,0,Math.PI*2);
-ctx.fill();
+ctx.fillStyle='#222';
+ctx.beginPath();ctx.arc(gx,gy-20,5,0,Math.PI*2);ctx.fill();
+// Muzzle flash
+if(gunKick>3){
+ctx.fillStyle=`rgba(255,220,100,${gunKick/8})`;
+ctx.beginPath();ctx.arc(gx,gy-28,8+Math.random()*6,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=`rgba(255,180,50,${gunKick/10})`;
+ctx.beginPath();ctx.arc(gx,gy-32,4+Math.random()*4,0,Math.PI*2);ctx.fill();
+}
+if(gunKick>0)gunKick-=0.8;
 }
 
 function drawMinimap(){
-mctx.fillStyle='rgba(0,0,0,0.8)';
-mctx.fillRect(0,0,120,120);
-const s=5;const ox=px-12,oy=py-12;
-for(let y=0;y<24;y++)for(let x=0;x<24;x++){
-const mx=x-ox+px-12,my=y-oy+py-12;
-const sx=Math.floor((x-Math.floor(ox))*s);
-const sy=Math.floor((y-Math.floor(oy))*s);
-if(x>=0&&x<MW&&y>=0&&y<MH){
-if(map[y][x]===1){mctx.fillStyle='rgba(139,125,59,0.4)';mctx.fillRect(sx,sy,s,s);}
-else if(map[y][x]===2){mctx.fillStyle='rgba(140,60,160,0.5)';mctx.fillRect(sx,sy,s,s);}
-}}
+mctx.fillStyle='rgba(0,0,0,0.85)';mctx.fillRect(0,0,110,110);
+const s=4.5;
+for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){
+const sx=x*s,sy=y*s;
+if(map[y][x]===1){mctx.fillStyle='rgba(122,122,120,0.35)';mctx.fillRect(sx,sy,s,s);}
+else if(map[y][x]===2){mctx.fillStyle='rgba(90,40,120,0.4)';mctx.fillRect(sx,sy,s,s);}
+}
+// Monsters
+for(const m of monsters){
+if(!m.alive)continue;
+mctx.fillStyle=m.type==='captain'?'rgba(255,80,80,0.6)':'rgba(100,200,80,0.5)';
+mctx.fillRect(m.x*s-1,m.y*s-1,3,3);
+}
 // Player
-const ppx=60,ppy=60;
-mctx.fillStyle='#ee4';
-mctx.fillRect(ppx-2,ppy-2,4,4);
-// Direction
-mctx.strokeStyle='rgba(238,238,68,0.5)';
-mctx.beginPath();mctx.moveTo(ppx,ppy);
-mctx.lineTo(ppx+Math.cos(pa)*12,ppy+Math.sin(pa)*12);
-mctx.stroke();
+mctx.fillStyle='#ee4';mctx.fillRect(px*s-2,py*s-2,4,4);
+mctx.strokeStyle='rgba(238,238,68,0.5)';mctx.lineWidth=1;
+mctx.beginPath();mctx.moveTo(px*s,py*s);
+mctx.lineTo(px*s+Math.cos(pa)*10,py*s+Math.sin(pa)*10);mctx.stroke();
 }
 
+function shoot(){
+if(ammo<=0||shootCool>0)return;
+ammo--;shootCool=12;gunKick=5;
+document.getElementById('ammo').textContent=ammo;
+// Check if hitting a monster
+let closest=null,closestDist=20;
+for(const m of monsters){
+if(!m.alive)continue;
+const dx=m.x-px,dy=m.y-py;
+const dist=Math.sqrt(dx*dx+dy*dy);
+const ang=Math.atan2(dy,dx)-pa;
+let a=ang;while(a<-Math.PI)a+=Math.PI*2;while(a>Math.PI)a-=Math.PI*2;
+if(Math.abs(a)<0.1&&dist<closestDist){
+// Ray check - is there a wall between?
+const r=castRay(Math.atan2(dy,dx));
+if(r.dist>dist*0.9){closest=m;closestDist=dist;}
+}
+}
+if(closest){
+closest.hp--;
+if(closest.hp<=0){
+closest.alive=false;killCount++;
+document.getElementById('kills').textContent=killCount;
+if(killCount>=monsters.length){
+document.getElementById('face').textContent='🦊';
+showMsg("ALL MONSTERS ELIMINATED\nTHE FOX APPROVES");
+}
+}
+}
+}
+
+function monsterAI(){
+for(const m of monsters){
+if(!m.alive)continue;
+const dx=px-m.x,dy=py-m.y;
+const dist=Math.sqrt(dx*dx+dy*dy);
+if(dist<8){
+// Move toward player slowly
+const spd=0.015;
+const nx=m.x+dx/dist*spd;
+const ny=m.y+dy/dist*spd;
+if(map[Math.floor(ny)][Math.floor(nx)]===0){m.x=nx;m.y=ny;}
+// Attack if close
+if(dist<1.2&&Math.random()<0.02){
+hp-=5+(m.type==='captain'?5:0);
+document.getElementById('hp').textContent=Math.max(0,hp);
+document.getElementById('dmg').style.background='rgba(255,0,0,0.25)';
+setTimeout(()=>document.getElementById('dmg').style.background='rgba(255,0,0,0)',150);
+if(hp<=30)document.getElementById('face').textContent='😫';
+if(hp<=0){document.getElementById('face').textContent='💀';running=false;showMsg("YOU DIED IN THE BACKROOMS\nDEPTH 847 — NO EXIT FOUND");}
+}
+}
+}
+}
+
+let msgTimer=0;
+function showMsg(t){msgEl.textContent=t;msgEl.classList.add('show');msgTimer=180;}
 function checkMessages(){
 let found=false;
 for(const m of msgs){
 const dx=px-m.x,dy=py-m.y;
-if(dx*dx+dy*dy<2){
-msgEl.textContent=m.text;
-msgEl.classList.add('show');
-found=true;
-if(m.isFox&&!m.shown){
-m.shown=true;
-document.querySelector('.hud-face').textContent='🦊';
-document.querySelector('.hud-armor .hud-val').textContent='HOME';
-document.querySelector('.hud-armor .hud-val').style.color='#e4a';
-}
+if(dx*dx+dy*dy<2){showMsg(m.text);found=true;
+if(m.isFox){document.getElementById('face').textContent='🦊';}
 break;
-}
-}
-if(!found)msgEl.classList.remove('show');
+}}
+if(!found&&msgTimer<=0)msgEl.classList.remove('show');
+if(msgTimer>0)msgTimer--;else if(msgTimer===0)msgEl.classList.remove('show');
 }
 
 function update(){
 if(!running)return;
-const spd=0.06,rspd=0.04;
+const spd=0.055,rspd=0.04;
 let dx=0,dy=0;
 if(keys['w']||keys['arrowup']){dx+=Math.cos(pa)*spd;dy+=Math.sin(pa)*spd;}
 if(keys['s']||keys['arrowdown']){dx-=Math.cos(pa)*spd;dy-=Math.sin(pa)*spd;}
-if(keys['a']||keys['arrowleft']){dx+=Math.cos(pa-Math.PI/2)*spd*0.6;dy+=Math.sin(pa-Math.PI/2)*spd*0.6;}
-if(keys['d']||keys['arrowright']){dx+=Math.cos(pa+Math.PI/2)*spd*0.6;dy+=Math.sin(pa+Math.PI/2)*spd*0.6;}
-
+if(keys['a']){dx+=Math.cos(pa-Math.PI/2)*spd*0.6;dy+=Math.sin(pa-Math.PI/2)*spd*0.6;}
+if(keys['d']){dx+=Math.cos(pa+Math.PI/2)*spd*0.6;dy+=Math.sin(pa+Math.PI/2)*spd*0.6;}
+if(keys['arrowleft'])pa-=rspd;
+if(keys['arrowright'])pa+=rspd;
 const margin=0.2;
-if(map[Math.floor(py)][Math.floor(px+dx+Math.sign(dx)*margin)]===0)px+=dx;
-if(map[Math.floor(py+dy+Math.sign(dy)*margin)][Math.floor(px)]===0)py+=dy;
-// Allow walking into cell 2 (fox room)
-if(map[Math.floor(py)][Math.floor(px+dx+Math.sign(dx)*margin)]===2)px+=dx;
-if(map[Math.floor(py+dy+Math.sign(dy)*margin)][Math.floor(px)]===2)py+=dy;
-
+const newCellX=map[Math.floor(py)][Math.floor(px+dx+Math.sign(dx)*margin)];
+const newCellY=map[Math.floor(py+dy+Math.sign(dy)*margin)][Math.floor(px)];
+if(newCellX===0||newCellX===2)px+=dx;
+if(newCellY===0||newCellY===2)py+=dy;
+if(shootCool>0)shootCool--;
 checkMessages();
+monsterAI();
 }
 
-function loop(){
-update();
-if(running){render();drawMinimap();}
-requestAnimationFrame(loop);
-}
-
+function loop(){update();if(running){render();drawMinimap();}requestAnimationFrame(loop);}
 function resize(){
-const scale=Math.min(window.innerWidth/W,(window.innerHeight-60)/H);
-can.style.width=W*scale+'px';
-can.style.height=H*scale+'px';
+const scale=Math.min(window.innerWidth/W,(window.innerHeight-64)/H);
+can.style.width=W*scale+'px';can.style.height=H*scale+'px';
 can.style.marginLeft=(window.innerWidth-W*scale)/2+'px';
-can.style.marginTop=(window.innerHeight-60-H*scale)/2+'px';
+can.style.marginTop=(window.innerHeight-64-H*scale)/2+'px';
 }
-
-window.addEventListener('resize',resize);
-resize();
-
+window.addEventListener('resize',resize);resize();
 document.addEventListener('keydown',e=>keys[e.key.toLowerCase()]=true);
 document.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
-
-document.addEventListener('mousemove',e=>{
-if(running&&document.pointerLockElement===can){
-pa+=e.movementX*0.002;
-}
-});
-
+document.addEventListener('mousemove',e=>{if(running&&document.pointerLockElement===can)pa+=e.movementX*0.002;});
 document.getElementById('overlay').addEventListener('click',()=>{
-document.getElementById('overlay').style.display='none';
-can.requestPointerLock();
-running=true;
-});
-
-document.addEventListener('pointerlockchange',()=>{
-if(!document.pointerLockElement)running=false;
-});
-
-can.addEventListener('click',()=>{
-if(running)can.requestPointerLock();
-});
-
+document.getElementById('overlay').style.display='none';can.requestPointerLock();running=true;});
+document.addEventListener('pointerlockchange',()=>{if(!document.pointerLockElement){running=false;}});
+can.addEventListener('click',()=>{if(running){shoot();if(!document.pointerLockElement)can.requestPointerLock();}});
 loop();
 </script>
 </body>
