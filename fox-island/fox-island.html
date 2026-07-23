@@ -225,7 +225,7 @@ body{background:#0a0a0f;color:#e0d4c0;font-family:'VT323',monospace;overflow:hid
   <button class="vb" onclick="sv('use')" data-v="use">Use</button>
   <button class="vb" onclick="sv('take')" data-v="take">Pick up</button>
   <button class="vb" onclick="sv('talk')" data-v="talk">Talk to</button>
-  <button class="vb" onclick="sv('cast')" data-v="cast">Cast ✨</button>
+  <button class="vb" onclick="sv('cast')" data-v="cast" title="Use grimoire spells on objects">Cast ✨</button>
   <button class="vb" data-v="map" onclick="toggleMap()">Map 🗺</button>
   <div id="verb-hint"></div>
 </div>
@@ -741,7 +741,7 @@ function bVillage(c){if(S.spells.length>=1&&!S.flags.queenWon)c.innerHTML+='<div
 function bTavern(c){c.innerHTML+='<div class="npc npc-barkeeper" style="left:18%;top:22%"></div>';c.innerHTML+='<div class="npc npc-lostone'+(S.flags.descentDone?' cleared':'')+'" style="left:75%;top:38%"></div>';}
 function bTemple(c){}
 function bGarden(c){}
-function bThrone(c){c.innerHTML+='<div class="npc npc-queen'+(S.flags.queenWon?' defeated':'')+'" style="left:40%;top:14%"></div>';}
+function bThrone(c){c.innerHTML+='<div class="npc npc-queen'+(S.flags.queenWon?' defeated':'')+'" style="left:42%;top:12%"></div>';}
 function bUnderdock(c){c.innerHTML='<div class="mp3-tag">♪ Cinderfox</div>';}
 function bHearth(c){c.innerHTML='<div class="mp3-tag">♪ Fox in the Fur</div>';}
 function bWellspring(c){c.innerHTML='<div class="mp3-tag">♪ Foxy World</div>';}
