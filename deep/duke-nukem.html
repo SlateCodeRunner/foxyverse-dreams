@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DUKE NUKEM — THE BACKROOMS</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;overflow:hidden;cursor:none;font-family:'Courier New',monospace}
+canvas{display:block;image-rendering:pixelated}
+#hud{position:fixed;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to bottom,#1a1a2e,#0a0a18);border-top:2px solid #333;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:10}
+.hud-box{text-align:center;min-width:80px}
+.hud-label{font-size:9px;color:#666;letter-spacing:2px}
+.hud-val{font-size:22px;font-weight:bold;letter-spacing:1px}
+.hud-health .hud-val{color:#e44}
+.hud-ammo .hud-val{color:#ee4}
+.hud-armor .hud-val{color:#4ae}
+.hud-face{width:50px;height:50px;border:2px solid #444;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:28px;border-radius:4px}
+.hud-weapon{font-size:10px;color:#888;letter-spacing:1px}
+#crosshair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;pointer-events:none}
+#crosshair::before,#crosshair::after{content:'';position:absolute;background:rgba(255,255,100,0.6)}
+#crosshair::before{width:12px;height:2px;left:-6px;top:-1px}
+#crosshair::after{width:2px;height:12px;left:-1px;top:-6px}
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#ee4;font-family:'Courier New',monospace;cursor:default}
+#overlay h1{font-size:28px;letter-spacing:6px;margin-bottom:8px;text-shadow:0 0 20px rgba(238,68,68,0.4)}
+#overlay h2{font-size:14px;color:#e44;letter-spacing:4px;margin-bottom:30px}
+#overlay .sub{font-size:11px;color:#888;margin-bottom:6px;letter-spacing:1px}
+#overlay .start{font-size:16px;color:#ee4;margin-top:20px;animation:blink 1.2s ease-in-out infinite;letter-spacing:3px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+#overlay .controls{font-size:10px;color:#555;margin-top:30px;line-height:2;text-align:center}
+#minimap{position:fixed;top:10px;right:10px;z-index:8;border:1px solid rgba(255,255,100,0.15);opacity:0.6}
+.msg{position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);font-size:13px;color:#ee4;letter-spacing:2px;z-index:6;text-shadow:0 0 10px rgba(238,238,68,0.3);opacity:0;transition:opacity 0.3s;pointer-events:none;text-align:center}
+.msg.show{opacity:1}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="crosshair"></div>
+<canvas id="minimap" width="120" height="120"></canvas>
+<div id="hud">
+<div class="hud-box hud-health"><div class="hud-label">HEALTH</div><div class="hud-val">100</div></div>
+<div class="hud-box hud-weapon"><div class="hud-label">WEAPON</div><div class="hud-val" style="color:#aaa">PISTOL</div></div>
+<div class="hud-face">🦊</div>
+<div class="hud-box hud-armor"><div class="hud-label">DEPTH</div><div class="hud-val">847</div></div>
+<div class="hud-box hud-ammo"><div class="hud-label">AMMO</div><div class="hud-val">∞</div></div>
+</div>
+<div class="msg" id="msg"></div>
+<div id="overlay">
+<h1>DUKE NUKEM</h1>
+<h2>THE BACKROOMS</h2>
+<div class="sub">A FOXYVERSE TRIBUTE</div>
+<div class="sub">LEVEL 847 — THE HALLWAY THAT DOESN'T END</div>
+<div class="start">[ CLICK TO ENTER ]</div>
+<div class="controls">WASD — MOVE &nbsp;|&nbsp; MOUSE — LOOK &nbsp;|&nbsp; ESC — RELEASE<br>FIND THE FOX. IF YOU CAN.</div>
+</div>
+
+<script>
+const W=640,H=400,TEX=64,FOV=Math.PI/3;
+const map=[
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,1,0,0,0,1,1,1,0,1,1,1,0,1,0,0,1,1,0,0,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,1,0,1,1,1,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,1,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1],
+[1,1,1,0,1,1,1,0,1,1,0,1,1,0,0,0,0,0,0,1,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,1,1,0,1,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,1,0,0,1,1,0,1,1,1,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+];
+const MW=map[0].length,MH=map.length;
+
+// Messages at locations
+const msgs=[
+{x:5.5,y:2.5,text:"THE FLUORESCENTS HUM A SONG\nYOU ALMOST REMEMBER",shown:false},
+{x:10.5,y:10.5,text:"HALLWAY 847\nTHE COUNT NEVER CHANGES",shown:false},
+{x:18.5,y:5.5,text:"SOMEONE WROTE 'SURE' ON THE WALL\nIN SOMETHING THAT ISN'T PAINT",shown:false},
+{x:3.5,y:15.5,text:"THE EXIT IS NOT A DOOR\nIT'S A DECISION",shown:false},
+{x:10.5,y:17.5,text:"DUKE NEVER MADE IT\nTO THIS LEVEL",shown:false},
+{x:20.5,y:22.5,text:"🦊",shown:false,isFox:true}
+];
+
+let px=2.5,py=2.5,pa=-Math.PI/4,running=false;
+const keys={};
+const can=document.getElementById('c');
+const ctx=can.getContext('2d');
+const mcan=document.getElementById('minimap');
+const mctx=mcan.getContext('2d');
+const msgEl=document.getElementById('msg');
+
+can.width=W;can.height=H;
+
+// Generate wall texture
+function genTex(base,accent,grime){
+const c=document.createElement('canvas');c.width=TEX;c.height=TEX;
+const x=c.getContext('2d');
+x.fillStyle=base;x.fillRect(0,0,TEX,TEX);
+// Brick pattern
+x.strokeStyle=accent;x.lineWidth=0.5;
+for(let i=0;i<TEX;i+=8){x.beginPath();x.moveTo(0,i);x.lineTo(TEX,i);x.stroke();}
+for(let j=0;j<TEX;j+=16){
+for(let i=0;i<TEX;i+=8){
+const off=(Math.floor(i/8)%2)*8;
+x.beginPath();x.moveTo(j+off,i);x.lineTo(j+off,i+8);x.stroke();
+}}
+// Grime
+for(let i=0;i<40;i++){
+x.fillStyle=`rgba(${grime},${0.02+Math.random()*0.06})`;
+x.fillRect(Math.random()*TEX,Math.random()*TEX,1+Math.random()*3,1+Math.random()*3);
+}
+return x.getImageData(0,0,TEX,TEX);
+}
+
+const texWall=genTex('#8B7D3B','#6B5D2B','40,35,20');
+const texWall2=genTex('#6B5D2B','#4B3D1B','30,25,15');
+const texFox=genTex('#3B1B3B','#5B2B5B','80,20,80');
+
+// Floor/ceiling colors
+const floorColor=[60,55,40];
+const ceilColor=[45,42,35];
+
+function castRay(angle){
+const sin=Math.sin(angle),cos=Math.cos(angle);
+let t=0;const step=0.02;
+let side=0;
+// DDA raycasting
+const dx=cos,dy=sin;
+let mapX=Math.floor(px),mapY=Math.floor(py);
+const ddx=Math.abs(1/dx),ddy=Math.abs(1/dy);
+let stepX,stepY,sideDistX,sideDistY;
+if(dx<0){stepX=-1;sideDistX=(px-mapX)*ddx;}
+else{stepX=1;sideDistX=(mapX+1-px)*ddx;}
+if(dy<0){stepY=-1;sideDistY=(py-mapY)*ddy;}
+else{stepY=1;sideDistY=(mapY+1-py)*ddy;}
+let hit=0,dist=0,cell=1;
+while(!hit&&dist<20){
+if(sideDistX<sideDistY){sideDistX+=ddx;mapX+=stepX;side=0;dist=sideDistX-ddx;}
+else{sideDistY+=ddy;mapY+=stepY;side=1;dist=sideDistY-ddy;}
+if(mapX>=0&&mapX<MW&&mapY>=0&&mapY<MH&&map[mapY][mapX]>0){hit=1;cell=map[mapY][mapX];}
+if(dist>20)break;
+}
+let wallX;
+if(side===0)wallX=py+dist*dy;
+else wallX=px+dist*dx;
+wallX-=Math.floor(wallX);
+return{dist,side,wallX,cell};
+}
+
+function render(){
+const buf=ctx.createImageData(W,H);
+const d=buf.data;
+// Ceiling and floor
+for(let y=0;y<H;y++){
+const isFloor=y>H/2;
+const rowDist=isFloor?(H/(2*y-H+0.01)):(H/(H-2*y+0.01));
+const shade=Math.max(0,1-rowDist*0.06);
+for(let x=0;x<W;x++){
+const i=(y*W+x)*4;
+if(isFloor){
+// Floor with pattern
+const fx=((x/W-0.5)*rowDist*2+px);
+const fy=(rowDist*Math.cos(pa-(x/W-0.5)*FOV)+py);
+const checker=((Math.floor(fx*2)^Math.floor(fy*2))&1)?0.9:1.0;
+d[i]=floorColor[0]*shade*checker;
+d[i+1]=floorColor[1]*shade*checker;
+d[i+2]=floorColor[2]*shade*checker;
+}else{
+// Ceiling with fluorescent strips
+const isStrip=(Math.floor(((x/W-0.5)*rowDist*4+px)*3)%4===0)&&rowDist<3;
+if(isStrip){
+const bright=Math.max(0.3,1-rowDist*0.15);
+d[i]=180*bright;d[i+1]=175*bright;d[i+2]=140*bright;
+}else{
+d[i]=ceilColor[0]*shade;d[i+1]=ceilColor[1]*shade;d[i+2]=ceilColor[2]*shade;
+}
+}
+d[i+3]=255;
+}}
+
+// Walls via raycasting
+for(let x=0;x<W;x++){
+const angle=pa-FOV/2+FOV*(x/W);
+const r=castRay(angle);
+const perpDist=r.dist*Math.cos(angle-pa);
+const wallH=Math.min(H,H/perpDist);
+const drawStart=Math.floor((H-wallH)/2);
+const drawEnd=Math.floor((H+wallH)/2);
+const tex=r.cell===2?texFox:(r.side?texWall2:texWall);
+
+const texX=Math.floor(r.wallX*TEX)%TEX;
+for(let y=drawStart;y<drawEnd;y++){
+if(y<0||y>=H)continue;
+const texY=Math.floor(((y-drawStart)/wallH)*TEX)%TEX;
+const ti=(texY*TEX+texX)*4;
+const shade=Math.max(0.15,1-perpDist*0.08);
+const sideMul=r.side?0.7:1;
+const i=(y*W+x)*4;
+d[i]=tex.data[ti]*shade*sideMul;
+d[i+1]=tex.data[ti+1]*shade*sideMul;
+d[i+2]=tex.data[ti+2]*shade*sideMul;
+d[i+3]=255;
+}
+}
+
+ctx.putImageData(buf,0,0);
+
+// Scanline overlay
+ctx.fillStyle='rgba(0,0,0,0.04)';
+for(let y=0;y<H;y+=2)ctx.fillRect(0,y,W,1);
+
+// Vignette
+const vg=ctx.createRadialGradient(W/2,H/2,W*0.3,W/2,H/2,W*0.7);
+vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,0.4)');
+ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+
+// Gun
+drawGun();
+}
+
+function drawGun(){
+const gx=W/2+Math.sin(Date.now()*0.003)*3;
+const gy=H-70+Math.abs(Math.sin(Date.now()*0.005))*4;
+ctx.fillStyle='#2a2a2a';
+ctx.fillRect(gx-8,gy,16,60);
+ctx.fillRect(gx-12,gy+10,24,8);
+ctx.fillRect(gx-4,gy-10,8,15);
+ctx.fillStyle='#444';
+ctx.fillRect(gx-2,gy-10,4,12);
+ctx.fillStyle='#1a1a1a';
+ctx.fillRect(gx-6,gy+25,12,30);
+ctx.fillRect(gx+2,gy+30,10,12);
+// Muzzle
+ctx.fillStyle='#333';
+ctx.beginPath();
+ctx.arc(gx,gy-10,5,0,Math.PI*2);
+ctx.fill();
+}
+
+function drawMinimap(){
+mctx.fillStyle='rgba(0,0,0,0.8)';
+mctx.fillRect(0,0,120,120);
+const s=5;const ox=px-12,oy=py-12;
+for(let y=0;y<24;y++)for(let x=0;x<24;x++){
+const mx=x-ox+px-12,my=y-oy+py-12;
+const sx=Math.floor((x-Math.floor(ox))*s);
+const sy=Math.floor((y-Math.floor(oy))*s);
+if(x>=0&&x<MW&&y>=0&&y<MH){
+if(map[y][x]===1){mctx.fillStyle='rgba(139,125,59,0.4)';mctx.fillRect(sx,sy,s,s);}
+else if(map[y][x]===2){mctx.fillStyle='rgba(140,60,160,0.5)';mctx.fillRect(sx,sy,s,s);}
+}}
+// Player
+const ppx=60,ppy=60;
+mctx.fillStyle='#ee4';
+mctx.fillRect(ppx-2,ppy-2,4,4);
+// Direction
+mctx.strokeStyle='rgba(238,238,68,0.5)';
+mctx.beginPath();mctx.moveTo(ppx,ppy);
+mctx.lineTo(ppx+Math.cos(pa)*12,ppy+Math.sin(pa)*12);
+mctx.stroke();
+}
+
+function checkMessages(){
+let found=false;
+for(const m of msgs){
+const dx=px-m.x,dy=py-m.y;
+if(dx*dx+dy*dy<2){
+msgEl.textContent=m.text;
+msgEl.classList.add('show');
+found=true;
+if(m.isFox&&!m.shown){
+m.shown=true;
+document.querySelector('.hud-face').textContent='🦊';
+document.querySelector('.hud-armor .hud-val').textContent='HOME';
+document.querySelector('.hud-armor .hud-val').style.color='#e4a';
+}
+break;
+}
+}
+if(!found)msgEl.classList.remove('show');
+}
+
+function update(){
+if(!running)return;
+const spd=0.06,rspd=0.04;
+let dx=0,dy=0;
+if(keys['w']||keys['arrowup']){dx+=Math.cos(pa)*spd;dy+=Math.sin(pa)*spd;}
+if(keys['s']||keys['arrowdown']){dx-=Math.cos(pa)*spd;dy-=Math.sin(pa)*spd;}
+if(keys['a']||keys['arrowleft']){dx+=Math.cos(pa-Math.PI/2)*spd*0.6;dy+=Math.sin(pa-Math.PI/2)*spd*0.6;}
+if(keys['d']||keys['arrowright']){dx+=Math.cos(pa+Math.PI/2)*spd*0.6;dy+=Math.sin(pa+Math.PI/2)*spd*0.6;}
+
+const margin=0.2;
+if(map[Math.floor(py)][Math.floor(px+dx+Math.sign(dx)*margin)]===0)px+=dx;
+if(map[Math.floor(py+dy+Math.sign(dy)*margin)][Math.floor(px)]===0)py+=dy;
+// Allow walking into cell 2 (fox room)
+if(map[Math.floor(py)][Math.floor(px+dx+Math.sign(dx)*margin)]===2)px+=dx;
+if(map[Math.floor(py+dy+Math.sign(dy)*margin)][Math.floor(px)]===2)py+=dy;
+
+checkMessages();
+}
+
+function loop(){
+update();
+if(running){render();drawMinimap();}
+requestAnimationFrame(loop);
+}
+
+function resize(){
+const scale=Math.min(window.innerWidth/W,(window.innerHeight-60)/H);
+can.style.width=W*scale+'px';
+can.style.height=H*scale+'px';
+can.style.marginLeft=(window.innerWidth-W*scale)/2+'px';
+can.style.marginTop=(window.innerHeight-60-H*scale)/2+'px';
+}
+
+window.addEventListener('resize',resize);
+resize();
+
+document.addEventListener('keydown',e=>keys[e.key.toLowerCase()]=true);
+document.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+
+document.addEventListener('mousemove',e=>{
+if(running&&document.pointerLockElement===can){
+pa+=e.movementX*0.002;
+}
+});
+
+document.getElementById('overlay').addEventListener('click',()=>{
+document.getElementById('overlay').style.display='none';
+can.requestPointerLock();
+running=true;
+});
+
+document.addEventListener('pointerlockchange',()=>{
+if(!document.pointerLockElement)running=false;
+});
+
+can.addEventListener('click',()=>{
+if(running)can.requestPointerLock();
+});
+
+loop();
+</script>
+</body>
+</html>
