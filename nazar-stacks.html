@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>nazar | the stacks</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#d4c8b0;font-family:Verdana,Geneva,sans-serif;font-size:11px;color:#443322}
+.np-h{background:linear-gradient(180deg,#2e5a1e,#1e3a12);padding:4px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #4a8a2e}
+.np-h .l{font-family:Trebuchet MS,sans-serif;font-size:18px;font-weight:bold;color:#8cdf44;text-shadow:1px 1px 0 #1a3010}.np-h .l span{color:#f0e060}
+.np-h a{font-size:9px;color:#a0d870;text-decoration:none;padding:2px 6px;border-radius:2px;background:rgba(0,0,0,.15);margin-left:2px}
+.np-sb{background:#f0e8d0;padding:3px 12px;font-size:9px;color:#887755;border-bottom:1px solid #c4b898}
+.np-sb a{color:#336699;text-decoration:none}
+.page{max-width:700px;margin:12px auto;padding:0 8px}
+.box{background:#f8f2e4;border:1px solid #c4b898;border-radius:4px;padding:14px;box-shadow:1px 1px 3px rgba(0,0,0,.06);margin-bottom:10px}
+.box h3{font-size:11px;color:#336699;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #ddd4c0}
+.back{display:inline-block;font-size:10px;color:#336699;text-decoration:none;margin-bottom:10px}.back:hover{text-decoration:underline}
+.ft{text-align:center;padding:16px;font-size:8px;color:#bbb}
+.ft a{color:#998877;text-decoration:none}
+.np-count{font-size:14px;color:#336699;font-weight:bold;text-align:center;margin:10px 0}
+.flavor{font-family:Caveat,cursive;font-size:16px;color:#8b6a4a;opacity:.4;text-align:center;margin:10px 0}
+.hero-img{width:100%;border-radius:4px;border:1px solid #c4b898;margin-bottom:12px}
+
+.scramble-box{text-align:center;padding:20px}
+.scramble-word{font-size:28px;font-family:Caveat,cursive;color:#8b6a4a;letter-spacing:4px;margin-bottom:12px}
+.guess-input{font-family:Verdana;font-size:14px;padding:6px 12px;border:1px solid #c4b898;border-radius:4px;background:#fdfaf2;color:#443322;width:200px;text-align:center}
+.guess-input:focus{outline:none;border-color:#336699}
+.result{font-size:11px;margin-top:8px;min-height:16px}
+.correct{color:#2d6a3f}.wrong{color:#a03030}
+
+</style></head><body>
+<div class="np-h"><div class="l">neo<span>pets</span></div><div><a href="nazar.html">My Page</a><a href="nazar.html#pets">Pets</a><a href="nazar.html#game">Games</a></div></div>
+<div class="np-sb"><a href="nazar.html">&larr; back to nazar's page</a> | NP: <b id="np" style="color:#336699">12,847</b></div>
+<div class="page"><a class="back" href="nazar.html">&larr; nazar's page</a>
+<div class="box">
+<h3>📚 the stacks — word unscramble</h3>
+<img src="img/nazar/nazar-10-books.jpg" alt="" class="hero-img" style="height:180px;object-fit:cover">
+<p style="color:#665544;line-height:2;margin-bottom:12px">unscramble the words from nazar's bookshelf. each correct answer earns 100 NP. she reads like breathing.</p>
+<div class="scramble-box">
+<div>unscramble this:</div>
+<div class="scramble-word" id="sw"></div>
+<input class="guess-input" id="gi" placeholder="type your answer..." onkeydown="if(event.key==='Enter')checkGuess()">
+<div class="result" id="res"></div>
+<div style="margin-top:12px;font-size:10px;color:#998877">solved: <b id="solved">0</b>/8 · earned: <b id="ge">0</b> NP</div>
+</div></div>
+<script>
+const words=["mystery","library","silence","chapter","fiction","stories","reading","whisper"];
+let ci=0,solved=0,ge=0;
+function scramble(w){return w.split("").sort(()=>Math.random()-.5).join("");}
+function show(){if(ci>=words.length){document.getElementById("sw").textContent="📚 done!!";document.getElementById("gi").style.display="none";return;}
+let s=scramble(words[ci]);while(s===words[ci])s=scramble(words[ci]);document.getElementById("sw").textContent=s;document.getElementById("gi").value="";document.getElementById("res").textContent="";}
+function checkGuess(){const g=document.getElementById("gi").value.toLowerCase().trim();if(g===words[ci]){solved++;ge+=100;document.getElementById("solved").textContent=solved;document.getElementById("ge").textContent=ge;
+document.getElementById("res").innerHTML='<span class="correct">✓ correct! +100 NP</span>';ci++;setTimeout(show,1000);}else{document.getElementById("res").innerHTML='<span class="wrong">✗ try again</span>';}}
+show();
+</script><div class="ft"><p>nazar_ward_847 · <a href="https://psycheorsike.com">psycheorsike.com</a> · layout at 3am</p></div></div></body></html>

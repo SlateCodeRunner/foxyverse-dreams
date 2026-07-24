@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>nazar | the keys</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#d4c8b0;font-family:Verdana,Geneva,sans-serif;font-size:11px;color:#443322}
+.np-h{background:linear-gradient(180deg,#2e5a1e,#1e3a12);padding:4px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #4a8a2e}
+.np-h .l{font-family:Trebuchet MS,sans-serif;font-size:18px;font-weight:bold;color:#8cdf44;text-shadow:1px 1px 0 #1a3010}.np-h .l span{color:#f0e060}
+.np-h a{font-size:9px;color:#a0d870;text-decoration:none;padding:2px 6px;border-radius:2px;background:rgba(0,0,0,.15);margin-left:2px}
+.np-sb{background:#f0e8d0;padding:3px 12px;font-size:9px;color:#887755;border-bottom:1px solid #c4b898}
+.np-sb a{color:#336699;text-decoration:none}
+.page{max-width:700px;margin:12px auto;padding:0 8px}
+.box{background:#f8f2e4;border:1px solid #c4b898;border-radius:4px;padding:14px;box-shadow:1px 1px 3px rgba(0,0,0,.06);margin-bottom:10px}
+.box h3{font-size:11px;color:#336699;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #ddd4c0}
+.back{display:inline-block;font-size:10px;color:#336699;text-decoration:none;margin-bottom:10px}.back:hover{text-decoration:underline}
+.ft{text-align:center;padding:16px;font-size:8px;color:#bbb}
+.ft a{color:#998877;text-decoration:none}
+.np-count{font-size:14px;color:#336699;font-weight:bold;text-align:center;margin:10px 0}
+.flavor{font-family:Caveat,cursive;font-size:16px;color:#8b6a4a;opacity:.4;text-align:center;margin:10px 0}
+.hero-img{width:100%;border-radius:4px;border:1px solid #c4b898;margin-bottom:12px}
+
+.piano{display:flex;justify-content:center;gap:2px;margin:12px 0;user-select:none}
+.key{width:40px;height:120px;background:#fdfaf2;border:1px solid #c4b898;border-radius:0 0 4px 4px;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;font-size:9px;color:#998877;transition:all .1s}
+.key:hover{background:#f0ead8}
+.key:active,.key.pressed{background:#e8dcc6;transform:scaleY(.98)}
+.key.correct{background:#d4edda;border-color:#8caa6e}
+.key.wrong{background:#f8d7da;border-color:#c47a7a}
+.key-black{width:28px;height:75px;background:#2a2520;border-color:#1a1510;color:#665544;margin:0 -14px;z-index:2;border-radius:0 0 3px 3px}
+.key-black:hover{background:#3a3530}
+.key-black:active,.key-black.pressed{background:#4a4540}
+.seq-display{text-align:center;font-size:13px;color:#8b6a4a;margin:10px 0;min-height:20px;font-family:Caveat,cursive;font-size:18px}
+
+</style></head><body>
+<div class="np-h"><div class="l">neo<span>pets</span></div><div><a href="nazar.html">My Page</a><a href="nazar.html#pets">Pets</a><a href="nazar.html#game">Games</a></div></div>
+<div class="np-sb"><a href="nazar.html">&larr; back to nazar's page</a> | NP: <b id="np" style="color:#336699">12,847</b></div>
+<div class="page"><a class="back" href="nazar.html">&larr; nazar's page</a>
+<div class="box">
+<h3>🎹 the keys — play the melody</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:12px">
+<img src="img/nazar/nazar-11-piano.jpg" alt="" style="width:100%;border-radius:3px;border:1px solid #c4b898">
+<img src="img/nazar/nazar-03-home.jpg" alt="" style="width:100%;border-radius:3px;border:1px solid #c4b898">
+</div>
+<p style="color:#665544;line-height:2;margin-bottom:10px">the piano plays a melody at 3am. can you repeat it? each correct sequence earns 150 NP. listen, then play.</p>
+<div class="seq-display" id="sd">press "play melody" to begin</div>
+<div class="piano" id="piano">
+<div class="key" data-n="C">C</div><div class="key key-black" data-n="C#">C#</div>
+<div class="key" data-n="D">D</div><div class="key key-black" data-n="Eb">Eb</div>
+<div class="key" data-n="E">E</div>
+<div class="key" data-n="F">F</div><div class="key key-black" data-n="F#">F#</div>
+<div class="key" data-n="G">G</div><div class="key key-black" data-n="Ab">Ab</div>
+<div class="key" data-n="A">A</div><div class="key key-black" data-n="Bb">Bb</div>
+<div class="key" data-n="B">B</div>
+</div>
+<div style="text-align:center;margin:10px 0"><button onclick="playMelody()" style="font-family:Verdana;font-size:10px;padding:6px 16px;background:#336699;color:#fff;border:none;border-radius:3px;cursor:pointer">play melody</button></div>
+<div style="text-align:center;font-size:10px;color:#998877">round: <b id="rnd">1</b> · earned: <b id="knp">0</b> NP</div>
+<div class="flavor">always b flat. every night.</div>
+</div>
+<script>
+const notes=["C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B"];
+const keys=document.querySelectorAll(".key");
+let melody=[],playerSeq=[],playing=false,round=1,knp=0;
+function genMelody(){const len=2+round;melody=[];for(let i=0;i<len;i++){melody.push(notes[Math.floor(Math.random()*12)]);}}
+function highlightKey(n,dur){const k=document.querySelector(`.key[data-n="${n}"]`);if(k){k.classList.add("pressed");setTimeout(()=>k.classList.remove("pressed"),dur||300);}}
+async function playMelody(){if(playing)return;playing=true;genMelody();document.getElementById("sd").textContent="listen...";playerSeq=[];
+for(const n of melody){highlightKey(n,400);await new Promise(r=>setTimeout(r,500));}
+document.getElementById("sd").textContent="your turn! repeat the melody";playing=false;}
+keys.forEach(k=>{k.addEventListener("click",()=>{if(playing)return;const n=k.dataset.n;highlightKey(n,200);playerSeq.push(n);
+const i=playerSeq.length-1;if(playerSeq[i]!==melody[i]){k.classList.add("wrong");setTimeout(()=>k.classList.remove("wrong"),500);
+document.getElementById("sd").textContent="wrong! try again";playerSeq=[];return;}
+k.classList.add("correct");setTimeout(()=>k.classList.remove("correct"),300);
+if(playerSeq.length===melody.length){round++;knp+=150;document.getElementById("rnd").textContent=round;document.getElementById("knp").textContent=knp;
+document.getElementById("sd").textContent="✓ correct! +150 NP — press play for next round";}});});
+</script><div class="ft"><p>nazar_ward_847 · <a href="https://psycheorsike.com">psycheorsike.com</a> · layout at 3am</p></div></div></body></html>
