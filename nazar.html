@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -109,6 +109,40 @@ body{background:#d4c8b0;font-family:Verdana,Geneva,sans-serif;font-size:11px;col
 .gc.rv{background:#e8f0e0;border-color:#8caa6e}
 .gc.mt{background:#f0e8d0;border-color:#c2956a}
 .gscore{font-size:10px;color:#998877;margin-top:8px}
+
+/* CORRUPTION — the ward distorts what it protects */
+.gallery img, .pet-card .pet-img, .sb-box > img, .hero-img {
+  filter: contrast(1.8) saturate(0.1) brightness(0.7) sepia(0.4) hue-rotate(15deg) blur(1.5px);
+  mix-blend-mode: luminosity;
+  position: relative;
+}
+.gallery img::after, .sb-box > img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(58,124,165,0.3), rgba(139,41,66,0.2), rgba(194,149,106,0.25));
+  mix-blend-mode: color;
+  pointer-events: none;
+}
+/* each photo gets its own corruption signature */
+.gallery img:nth-child(1) { filter: contrast(2.2) saturate(0) brightness(0.5) blur(2px); }
+.gallery img:nth-child(2) { filter: contrast(1.5) hue-rotate(180deg) saturate(0.2) blur(1.8px) brightness(0.6); }
+.gallery img:nth-child(3) { filter: contrast(2) saturate(0.05) brightness(0.65) blur(2.2px) sepia(0.6); }
+.gallery img:nth-child(4) { filter: contrast(1.8) hue-rotate(90deg) saturate(0.15) blur(1.5px) brightness(0.55); }
+.gallery img:nth-child(5) { filter: contrast(2.5) saturate(0) brightness(0.4) blur(2px); mix-blend-mode: exclusion; }
+.gallery img:nth-child(6) { filter: contrast(1.6) hue-rotate(270deg) saturate(0.1) blur(2px) brightness(0.6); }
+.gallery img:nth-child(7) { filter: contrast(2) saturate(0.08) brightness(0.55) blur(1.8px) sepia(0.8); }
+.gallery img:nth-child(8) { filter: contrast(1.4) saturate(0) brightness(0.7) blur(2.5px); mix-blend-mode: multiply; }
+.gallery img:nth-child(9) { filter: contrast(2.2) hue-rotate(45deg) saturate(0.12) blur(1.5px) brightness(0.5); }
+.gallery img:nth-child(10) { filter: contrast(1.9) saturate(0) brightness(0.6) blur(2px) sepia(0.5); }
+.gallery img:nth-child(11) { filter: contrast(2) hue-rotate(200deg) saturate(0.08) blur(2.2px) brightness(0.55); }
+.gallery img:nth-child(12) { filter: contrast(2.5) saturate(0.05) brightness(0.45) blur(1.8px); }
+.gallery img:nth-child(13) { filter: contrast(1.7) hue-rotate(120deg) saturate(0.1) blur(2px) brightness(0.6); mix-blend-mode: difference; }
+.gallery img:nth-child(14) { filter: contrast(2) saturate(0) brightness(0.5) blur(2.5px) sepia(0.3); }
+/* sidebar profile pic — heavy corruption */
+.sb-box > img { filter: contrast(2.5) saturate(0) brightness(0.4) blur(3px) sepia(0.5); mix-blend-mode: luminosity; }
+/* gallery hover — corruption deepens, doesn't reveal */
+.gallery img:hover { filter: contrast(3) saturate(0) brightness(0.3) blur(3px) !important; mix-blend-mode: exclusion !important; }
 </style>
 </head>
 <body>
@@ -348,3 +382,4 @@ init();
 </script>
 </body>
 </html>
+

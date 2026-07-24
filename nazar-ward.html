@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>nazar | the ward</title>
 <style>
@@ -27,6 +27,21 @@ body{background:#d4c8b0;font-family:Verdana,Geneva,sans-serif;font-size:11px;col
 @keyframes eyeCatch{to{transform:scale(2);opacity:0}}
 .ward-score{text-align:center;font-size:12px;color:#665544;margin:8px 0}
 
+
+/* CORRUPTION */
+img:not(.np-logo-img) { filter: contrast(2) saturate(0.08) brightness(0.55) blur(2px) sepia(0.4); mix-blend-mode: luminosity; }
+img:hover { filter: contrast(2.5) saturate(0) brightness(0.35) blur(3px) !important; mix-blend-mode: exclusion !important; }
+.hero-img { filter: contrast(2.2) saturate(0.05) brightness(0.45) blur(2.5px) sepia(0.5) !important; }
+.drive-photos img:nth-child(1) { filter: contrast(2.2) saturate(0) brightness(0.5) blur(2px); }
+.drive-photos img:nth-child(2) { filter: contrast(1.8) hue-rotate(180deg) saturate(0.1) blur(2.2px) brightness(0.55); }
+.drive-photos img:nth-child(3) { filter: contrast(2.5) saturate(0.05) brightness(0.4) blur(1.8px); mix-blend-mode: exclusion; }
+.drive-photos img:nth-child(4) { filter: contrast(2) hue-rotate(90deg) saturate(0.12) blur(2px) brightness(0.6); }
+.field-photos img:nth-child(1) { filter: contrast(2) saturate(0.1) brightness(0.6) blur(1.8px) sepia(0.3); }
+.field-photos img:nth-child(2) { filter: contrast(1.6) hue-rotate(270deg) saturate(0.08) blur(2.2px) brightness(0.55); }
+.field-photos img:nth-child(3) { filter: contrast(2.2) saturate(0) brightness(0.5) blur(2px); }
+.mirrors img:nth-child(1) { filter: contrast(2.5) saturate(0) brightness(0.4) blur(2.5px) sepia(0.6); }
+.mirrors img:nth-child(2) { filter: contrast(2) hue-rotate(45deg) saturate(0.1) blur(2px) brightness(0.5); }
+.neon-img { filter: contrast(2) hue-rotate(180deg) saturate(0.15) blur(2px) brightness(0.4) !important; mix-blend-mode: difference !important; }
 </style></head><body>
 <div class="np-h"><div class="l">neo<span>pets</span></div><div><a href="nazar.html">My Page</a><a href="nazar.html#pets">Pets</a><a href="nazar.html#game">Games</a></div></div>
 <div class="np-sb"><a href="nazar.html">&larr; back to nazar's page</a> | NP: <b id="np" style="color:#336699">12,847</b></div>
