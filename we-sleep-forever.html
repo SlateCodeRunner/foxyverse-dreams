@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>we sleep forever</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Fira+Code:wght@300;400&family=IM+Fell+English+SC&family=Caveat:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#020408;color:rgba(140,170,200,0.3);overflow-x:hidden;min-height:100vh}
+
+/* the blue — everything is this blue */
+:root{--blue:rgba(60,100,140,1);--bluefaint:rgba(60,100,140,0.06);--blueglow:rgba(80,140,200,0.12);--bluedeep:#0a1420}
+
+/* permanent scanlines */
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(60,100,140,0.015) 1px,rgba(60,100,140,0.015) 2px)}
+
+/* slow pulse on the entire page */
+body{animation:bodyPulse 8s ease-in-out infinite}
+@keyframes bodyPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(0.92)}}
+
+/* HERO — vocalist screaming into the void */
+.hero{position:relative;height:100vh;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.35;filter:contrast(1.3)}
+.hero::after{content:'';position:absolute;inset:0;background:
+radial-gradient(ellipse at 30% 60%,transparent 20%,rgba(2,4,8,0.6) 60%,rgba(2,4,8,0.95) 100%),
+linear-gradient(to top,#020408,transparent 40%)}
+.hero-text{position:absolute;bottom:10%;left:5%;z-index:2;max-width:600px}
+.hero-text h1{font-family:'Cinzel',serif;font-size:clamp(42px,8vw,80px);font-weight:900;color:rgba(60,100,140,0.15);line-height:0.9;letter-spacing:0.04em;text-transform:uppercase}
+.hero-text .artist{font-family:'IM Fell English SC',serif;font-size:14px;color:rgba(140,170,200,0.1);letter-spacing:0.3em;margin-top:12px}
+
+/* BAND — wide shot in the forest */
+.band{position:relative;margin:0;overflow:hidden}
+.band img{width:100%;display:block;opacity:0.3;filter:contrast(1.2)}
+.band::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,#020408 0%,transparent 15%,transparent 85%,#020408 100%)}
+
+/* GHOST SHOT — blurred figures */
+.ghosts{position:relative;overflow:hidden}
+.ghosts img{width:100%;display:block;opacity:0.2;filter:contrast(1.1) blur(0.5px)}
+.ghosts::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,#020408 0%,transparent 20%,transparent 80%,#020408 100%)}
+
+/* TEXT SECTIONS */
+.verse{max-width:640px;margin:0 auto;padding:80px 24px}
+.verse p{font-family:'IM Fell English SC',serif;font-size:clamp(14px,2.5vw,18px);color:rgba(140,170,200,0.08);line-height:2.4;margin-bottom:20px;text-align:center}
+.verse p.loud{color:rgba(60,100,140,0.15);font-size:clamp(18px,3vw,24px)}
+.verse p.whisper{color:rgba(140,170,200,0.04);font-size:12px;letter-spacing:0.15em}
+.verse p.scream{font-family:'Cinzel',serif;font-size:clamp(24px,4vw,36px);color:rgba(60,100,140,0.12);font-weight:900;text-transform:uppercase;letter-spacing:0.06em;
+animation:screamPulse 6s ease-in-out infinite}
+@keyframes screamPulse{0%,100%{opacity:0.6}50%{opacity:1;text-shadow:0 0 30px rgba(60,100,140,0.08)}}
+
+/* the forest grew inside the hallway */
+.interlude{padding:40px 24px;text-align:center}
+.interlude .note{font-family:'Caveat',cursive;font-size:20px;color:rgba(60,100,140,0.05)}
+
+/* youtube embed area */
+.embed-wrap{max-width:800px;margin:0 auto;padding:40px 24px;text-align:center}
+.embed-frame{position:relative;width:100%;padding-bottom:56.25%;background:#0a0e14;border:1px solid rgba(60,100,140,0.06);border-radius:2px;overflow:hidden}
+.embed-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.embed-label{font-family:'Fira Code',monospace;font-size:9px;color:rgba(140,170,200,0.06);margin-top:10px;letter-spacing:3px}
+
+/* the room */
+.room-desc{max-width:500px;margin:60px auto;padding:0 24px;text-align:center}
+.room-desc p{font-family:'Fira Code',monospace;font-size:10px;color:rgba(140,170,200,0.06);line-height:2.5;letter-spacing:0.05em}
+.room-desc .sys{color:rgba(60,100,140,0.1);font-size:8px;letter-spacing:3px;margin:20px 0}
+
+/* NAV */
+.nav-bottom{padding:60px 24px;text-align:center}
+.nav-bottom a{font-family:'Fira Code',monospace;font-size:9px;color:rgba(140,170,200,0.06);text-decoration:none;letter-spacing:3px;border-bottom:1px solid rgba(60,100,140,0.03);padding-bottom:2px;margin:0 12px;transition:all .4s}
+.nav-bottom a:hover{color:rgba(60,100,140,0.2);border-color:rgba(60,100,140,0.1)}
+
+/* floating timestamp */
+.timestamp{position:fixed;bottom:12px;left:12px;font-family:'Fira Code',monospace;font-size:8px;color:rgba(60,100,140,0.05);letter-spacing:2px;z-index:100;animation:timeFlicker 10s ease-in-out infinite}
+@keyframes timeFlicker{0%,88%,92%,100%{opacity:1}90%{opacity:0}}
+
+/* divider */
+.div-blue{width:1px;height:60px;background:linear-gradient(to bottom,transparent,rgba(60,100,140,0.06),transparent);margin:0 auto}
+
+@media(max-width:600px){.hero{height:80vh}}
+</style>
+</head>
+<body>
+
+<div class="timestamp">ROOM ∞ · THE FOREST THAT GREW INSIDE</div>
+
+<!-- HERO: vocalist -->
+<div class="hero">
+<img src="img/aiden/aiden-01.jpg" alt="">
+<div class="hero-text">
+<h1>We Sleep<br>Forever</h1>
+<div class="artist">A I D E N</div>
+</div>
+</div>
+
+<!-- first verse -->
+<div class="verse">
+<p>there is a room in the backrooms where a forest grew through the floor.</p>
+<p>nobody planted it. nobody watered it. the fluorescent lights broke and something else grew in their place.</p>
+<p class="whisper">the trees are not trees. they are the shapes that grief makes when it has nowhere else to go.</p>
+</div>
+
+<div class="div-blue"></div>
+
+<!-- BAND: wide shot -->
+<div class="band">
+<img src="img/aiden/aiden-02.jpg" alt="">
+</div>
+
+<!-- second verse -->
+<div class="verse">
+<p>a band set up in the clearing.</p>
+<p>drums in the mud. guitars strung with something that isn't wire. a vocalist screaming into a microphone connected to nothing.</p>
+<p>they play one song.</p>
+<p class="loud">the same song.</p>
+<p>every night.</p>
+<p class="whisper">they don't know they're dead. they think it's still the show. they think the audience is just very quiet.</p>
+</div>
+
+<div class="div-blue"></div>
+
+<!-- GHOSTS: blurred figures -->
+<div class="ghosts">
+<img src="img/aiden/aiden-03.jpg" alt="">
+</div>
+
+<!-- third verse -->
+<div class="verse">
+<p>the audience is the backrooms.</p>
+<p>the walls listen. the carpet absorbs the bass. the fluorescent lights that used to be here flicker in time with the drums even though they've been dead for years.</p>
+<p class="scream">we sleep forever</p>
+<p>that's what the vocalist screams. over and over. and the trees grow a little taller every time he says it. because the trees are made of the same thing the song is made of.</p>
+<p class="whisper">the refusal to stop performing after the show is over.</p>
+</div>
+
+<div class="div-blue"></div>
+
+<!-- the embed -->
+<div class="embed-wrap">
+<div class="embed-frame">
+<iframe src="https://www.youtube.com/embed/sIlWyn4WNHA?autoplay=0&rel=0&modestbranding=1&color=white" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+</div>
+<div class="embed-label">INTERCEPTED SIGNAL · ROOM ∞ · ON LOOP SINCE 2007</div>
+</div>
+
+<div class="div-blue"></div>
+
+<!-- the room description -->
+<div class="room-desc">
+<div class="sys">BACKROOMS INCIDENT REPORT</div>
+<p>traveler wanderer-7 reported hearing music from behind a wall on level 4. upon investigation, the wall was not a wall. it was bark.</p>
+<p>the forest extends approximately 200 meters in every direction. there is no ceiling. the sky above the trees is the underside of level 3's carpet.</p>
+<p>the band has been playing continuously since the room was discovered. they do not acknowledge travelers. they do not eat. they do not stop.</p>
+<p>the vocalist's microphone is connected to the radio network. every transmission on 89.6 FM has this song playing underneath it at very low volume. we do not know how long this has been happening.</p>
+<div class="sys">RECOMMENDATION: DO NOT APPLAUD</div>
+<p>one traveler applauded after the song ended. the song did not end. it restarted. the traveler is now part of the audience. the audience is the carpet. the carpet is the floor of level 3.</p>
+<div class="sys">STATUS: PERMANENT · SIGNAL: ∞ · ROOM: ∞</div>
+</div>
+
+<div class="interlude">
+<div class="note">the show never ended because the show was never a show</div>
+</div>
+
+<!-- nav -->
+<div class="nav-bottom">
+<a href="index.html">&larr; surface</a>
+<a href="deep/hallway.html">the hallway</a>
+<a href="deep/sure.html">sure</a>
+<a href="dreams.html">dreams</a>
+</div>
+
+</body>
+</html>
