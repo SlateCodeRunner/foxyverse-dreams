@@ -3,327 +3,348 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NazarPets — The Ward That Watches Back</title>
+<title>nazar | neopets user lookup</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap');
-:root{--bg:#0e0618;--card:#1a0d2e;--accent:#00d4aa;--accent2:#ff6b9d;--accent3:#ffd93d;--accent4:#6c5ce7;--text:#e8e0f0;--muted:#8b7aa8}
+@import url('https://fonts.googleapis.com/css2?family=Verdana&family=Trebuchet+MS&family=Caveat:wght@400;600&family=Inter:wght@300;400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden}
+body{background:#d4c8b0;font-family:Verdana,Geneva,sans-serif;font-size:11px;color:#443322}
 
-.topbar{background:rgba(14,6,24,0.95);border-bottom:2px solid var(--accent);padding:8px 16px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(10px)}
-.logo{font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent);text-shadow:0 0 12px rgba(0,212,170,0.3)}
-.logo span{color:var(--accent2)}
-.nav-links{display:flex;gap:4px;flex-wrap:wrap}
-.nav-links a{font-family:'Fredoka',sans-serif;font-size:10px;font-weight:600;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:10px;transition:all .2s}
-.nav-links a:hover{color:var(--accent);background:rgba(0,212,170,0.06)}
-.stats-strip{background:rgba(0,0,0,0.4);padding:5px 0;font-size:10px;color:var(--muted);text-align:center;letter-spacing:0.5px}
-.stats-strip .val{color:var(--accent3);font-weight:700}
+/* NEOPETS HEADER */
+.np-header{background:linear-gradient(180deg,#2e5a1e,#1e3a12);padding:4px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #4a8a2e}
+.np-logo{font-family:'Trebuchet MS',sans-serif;font-size:18px;font-weight:bold;color:#8cdf44;text-shadow:1px 1px 0 #1a3010}
+.np-logo span{color:#f0e060}
+.np-nav{display:flex;gap:2px;flex-wrap:wrap}
+.np-nav a{font-size:9px;color:#a0d870;text-decoration:none;padding:2px 6px;border-radius:2px;background:rgba(0,0,0,0.15)}
+.np-nav a:hover{background:rgba(0,0,0,0.3);color:#fff}
+.np-sub{background:#f0e8d0;padding:3px 12px;font-size:9px;color:#887755;border-bottom:1px solid #c4b898;display:flex;justify-content:space-between}
+.np-sub a{color:#336699;text-decoration:none}
+.np-sub a:hover{text-decoration:underline}
 
-.ticker{background:rgba(0,212,170,0.02);overflow:hidden;height:22px;position:relative;border-bottom:1px solid rgba(0,212,170,0.04)}
-.ticker-inner{position:absolute;white-space:nowrap;animation:tick 50s linear infinite;font-size:9px;color:var(--muted);line-height:22px}
-@keyframes tick{0%{transform:translateX(100%)}100%{transform:translateX(-250%)}}
-.ticker-inner .a{color:var(--accent2)}.ticker-inner .g{color:var(--accent3)}
-.ticker-inner span{margin-right:50px}
+/* MAIN LAYOUT */
+.container{max-width:820px;margin:12px auto;display:grid;grid-template-columns:180px 1fr;gap:10px;padding:0 8px}
 
-/* HERO — FULL BLEED */
-.hero{position:relative;height:80vh;overflow:hidden;display:flex;align-items:flex-end}
-.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.5;filter:saturate(0.7);transition:opacity 1s}
-.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(14,6,24,0.4) 40%,rgba(14,6,24,0.1) 100%)}
-.hero-content{position:relative;z-index:2;padding:40px 30px;max-width:600px}
-.hero-content h1{font-family:'Fredoka',sans-serif;font-size:clamp(36px,7vw,56px);font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:8px}
-.hero-content .sub{font-size:14px;color:rgba(232,224,240,0.4);margin-bottom:4px}
-.hero-content .tagline{font-family:'Caveat',cursive;font-size:22px;color:rgba(255,217,61,0.2)}
-.hero-pets{display:flex;gap:12px;margin-top:16px}
-.hero-pet{font-size:28px;opacity:0.5;cursor:pointer;transition:all .3s}
-.hero-pet:hover{opacity:1;transform:scale(1.3)}
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:8px}
+.sb-box{background:#f8f2e4;border:1px solid #c4b898;border-radius:4px;padding:10px;box-shadow:1px 1px 3px rgba(0,0,0,0.06)}
+.sb-box h4{font-size:10px;color:#336699;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #ddd4c0}
+.sb-box img{width:100%;border-radius:3px;margin-bottom:6px;border:1px solid #c4b898}
+.user-info{font-size:10px;color:#665544;line-height:2}
+.user-info b{color:#443322}
+.user-info .np-count{color:#336699;font-weight:bold;font-size:12px}
 
-/* SECTION TEMPLATE */
-.section{max-width:1000px;margin:0 auto;padding:20px 16px}
-.section-label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:4px;color:rgba(0,212,170,0.12);margin-bottom:16px;text-transform:uppercase}
+.trophy{display:inline-block;font-size:14px;margin:2px;cursor:default}
+.trophy:hover{transform:scale(1.3)}
 
-/* PHOTO-FIRST WORLD CARDS */
-.world{margin-bottom:8px;position:relative;overflow:hidden;border-radius:16px;border:1px solid rgba(108,92,231,0.06);transition:all .4s;cursor:pointer}
-.world:hover{border-color:rgba(0,212,170,0.15);box-shadow:0 12px 50px rgba(0,0,0,0.4)}
+/* MAIN CONTENT */
+.main{display:flex;flex-direction:column;gap:10px}
+.box{background:#f8f2e4;border:1px solid #c4b898;border-radius:4px;padding:14px;box-shadow:1px 1px 3px rgba(0,0,0,0.06)}
+.box h3{font-size:11px;color:#336699;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #ddd4c0}
 
-/* Single image world */
-.world-solo{height:70vh;display:flex;align-items:flex-end}
-.world-solo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.55;transition:opacity .6s;filter:saturate(0.75)}
-.world-solo:hover img{opacity:0.75;filter:saturate(0.9)}
-.world-solo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(14,6,24,0.3) 50%,transparent 100%)}
+/* ABOUT ME - her custom section */
+.about{background:#faf6ee;border:1px solid #e0d4b8;border-radius:6px;padding:16px;position:relative}
+.about::before{content:'🧿';position:absolute;top:8px;right:12px;font-size:18px;opacity:0.3}
+.about h2{font-family:'Caveat',cursive;font-size:26px;color:#8b6a4a;margin-bottom:8px}
+.about p{font-size:11px;color:#665544;line-height:2;margin-bottom:8px}
+.about .spanish{color:#887766;font-style:italic;font-size:10px}
+.about .edit-note{font-size:9px;color:#aaa;margin-top:10px}
+.about a{color:#336699}
 
-/* Dual image world */
-.world-dual{display:grid;grid-template-columns:1fr 1fr;min-height:60vh}
-.world-dual-img{position:relative;overflow:hidden}
-.world-dual-img img{width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.5;transition:opacity .6s;filter:saturate(0.7)}
-.world-dual:hover img{opacity:0.7;filter:saturate(0.9)}
-.world-dual-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,transparent 60%)}
+/* PET CARDS */
+.pet-card{display:grid;grid-template-columns:100px 1fr;gap:12px;padding:12px;background:#fdfaf2;border:1px solid #e0d4b8;border-radius:4px;margin-bottom:8px}
+.pet-card:last-child{margin-bottom:0}
+.pet-img{width:100px;height:100px;border-radius:50%;border:3px solid;display:flex;align-items:center;justify-content:center;font-size:42px;background:#f0ead8}
+.pet-info h4{font-size:13px;color:#443322;margin-bottom:2px}
+.pet-info .species{font-size:9px;color:#998877;margin-bottom:6px;letter-spacing:0.5px}
+.pet-info .pet-desc{font-size:10px;color:#776655;line-height:1.8;font-family:'Caveat',cursive;font-size:13px}
+.pet-info .pet-stats{display:flex;gap:12px;margin-top:6px;font-size:9px;color:#998877}
+.pet-info .pet-stats span b{color:#336699}
 
-/* Quad image world */
-.world-quad{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;min-height:80vh}
-.world-quad-img{position:relative;overflow:hidden}
-.world-quad-img img{width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.45;transition:opacity .6s;filter:saturate(0.65)}
-.world-quad:hover img{opacity:0.7;filter:saturate(0.85)}
-.world-quad-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(14,6,24,0.6) 100%)}
+/* PHOTO GALLERY - like she uploaded these */
+.gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.gallery img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:3px;border:2px solid #e0d4b8;cursor:pointer;transition:all .2s;filter:saturate(0.9)}
+.gallery img:hover{border-color:#8b6a4a;transform:scale(1.03);filter:saturate(1);z-index:2;position:relative}
+.gallery-big{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
 
-/* Triple image world */
-.world-tri{display:grid;grid-template-columns:1fr 1fr 1fr;min-height:55vh}
-.world-tri-img{position:relative;overflow:hidden}
-.world-tri-img img{width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.5;transition:opacity .6s;filter:saturate(0.7)}
-.world-tri:hover img{opacity:0.7;filter:saturate(0.9)}
-.world-tri-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(14,6,24,0.7) 0%,transparent 50%)}
+/* WORLDS - styled as her pet pages */
+.world-link{display:flex;align-items:center;gap:10px;padding:8px;background:#fdfaf2;border:1px solid #e8dcc6;border-radius:4px;margin-bottom:4px;text-decoration:none;color:#443322;transition:all .2s}
+.world-link:hover{background:#f5edd8;border-color:#c2956a}
+.world-link .w-icon{font-size:20px;width:32px;text-align:center}
+.world-link .w-name{font-size:11px;font-weight:bold;color:#336699}
+.world-link .w-desc{font-size:9px;color:#998877}
+.world-link .w-tag{font-size:8px;padding:1px 6px;border-radius:2px;margin-left:auto;white-space:nowrap}
+.w-safe .w-tag{background:#d4edda;color:#2d6a3f}
+.w-danger .w-tag{background:#f8d7da;color:#842029}
+.w-unknown .w-tag{background:#e8e0d0;color:#887766}
 
-/* Text overlay on worlds */
-.world-text{position:relative;z-index:2;padding:30px 28px}
-.world-name{font-family:'Fredoka',sans-serif;font-size:clamp(22px,4vw,34px);font-weight:700;margin-bottom:4px}
-.world-tag{display:inline-block;font-size:9px;padding:3px 10px;border-radius:10px;font-weight:600;letter-spacing:1.5px;margin-bottom:10px}
-.world-desc{font-size:13px;color:rgba(232,224,240,0.35);line-height:1.9;max-width:500px}
-.world-flavor{font-family:'Caveat',cursive;font-size:18px;color:rgba(255,255,255,0.08);margin-top:10px}
-.world-items{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
-.world-item{font-size:10px;padding:3px 10px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.05);color:var(--muted)}
+/* GUESTBOOK */
+.gb-entry{padding:8px;margin-bottom:6px;background:#fdfaf2;border-left:3px solid #c2956a;border-radius:0 4px 4px 0;font-size:10px;line-height:1.8}
+.gb-entry .gb-who{font-weight:bold;color:#336699;font-size:10px}
+.gb-entry .gb-when{float:right;color:#bbb;font-size:8px}
+.gb-entry .gb-text{color:#665544;margin-top:2px}
 
-/* Dual text positioning */
-.world-dual .world-text{position:absolute;bottom:0;left:0;right:0;z-index:2}
-.world-quad .world-text{position:absolute;bottom:0;left:0;right:0;z-index:2;background:linear-gradient(to top,var(--bg),transparent);padding-top:60px}
-.world-tri .world-text{position:absolute;bottom:0;left:0;right:0;z-index:2}
+/* SHOP */
+.shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.shop-item{text-align:center;padding:8px;background:#fdfaf2;border:1px solid #e8dcc6;border-radius:4px;font-size:9px;cursor:pointer;transition:all .2s}
+.shop-item:hover{border-color:#c2956a;background:#f5edd8}
+.shop-item .item-icon{font-size:22px;margin-bottom:4px;display:block}
+.shop-item .item-name{color:#665544;margin-bottom:2px}
+.shop-item .item-price{color:#336699;font-weight:bold}
 
-/* World colors */
-.w-drift .world-name{color:#4fc3f7}.w-drift .world-tag{background:rgba(79,195,247,0.12);color:#4fc3f7;border:1px solid rgba(79,195,247,0.2)}
-.w-shore .world-name{color:#ff6b9d}.w-shore .world-tag{background:rgba(255,107,157,0.12);color:#ff6b9d;border:1px solid rgba(255,107,157,0.2)}
-.w-stacks .world-name{color:#a29bfe}.w-stacks .world-tag{background:rgba(162,155,254,0.12);color:#a29bfe;border:1px solid rgba(162,155,254,0.2)}
-.w-neon .world-name{color:#fd79a8}.w-neon .world-tag{background:rgba(253,121,168,0.12);color:#fd79a8;border:1px solid rgba(253,121,168,0.2)}
-.w-ward .world-name{color:var(--accent)}.w-ward .world-tag{background:rgba(0,212,170,0.12);color:var(--accent);border:1px solid rgba(0,212,170,0.2)}
-.w-glass .world-name{color:var(--accent3)}.w-glass .world-tag{background:rgba(255,217,61,0.12);color:var(--accent3);border:1px solid rgba(255,217,61,0.2)}
-.w-field .world-name{color:#55efc4}.w-field .world-tag{background:rgba(85,239,196,0.12);color:#55efc4;border:1px solid rgba(85,239,196,0.2)}
-.w-keys .world-name{color:#dfe6e9}.w-keys .world-tag{background:rgba(223,230,233,0.08);color:#dfe6e9;border:1px solid rgba(223,230,233,0.12)}
-
-/* PET STRIP */
-.pet-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:1000px;margin:30px auto;padding:0 16px}
-.pet-card{background:var(--card);border-radius:14px;padding:18px;text-align:center;border:1px solid rgba(108,92,231,0.08);transition:all .3s;cursor:pointer}
-.pet-card:hover{border-color:rgba(0,212,170,0.2);transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
-.pet-card .emoji{font-size:40px;margin-bottom:8px;display:block;animation:float 3s ease-in-out infinite}
-.pet-card:nth-child(2) .emoji{animation-delay:.5s}
-.pet-card:nth-child(3) .emoji{animation-delay:1s}
-.pet-card:nth-child(4) .emoji{animation-delay:1.5s}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.pet-card .pname{font-family:'Fredoka',sans-serif;font-size:15px;font-weight:700;margin-bottom:2px}
-.pet-card .ptype{font-size:9px;color:var(--muted);margin-bottom:10px}
-.pet-card .pbar{height:4px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden;margin:3px 0}
-.pet-card .pbar-fill{height:100%;border-radius:2px}
-.pet-card .pmood{font-family:'Caveat',cursive;font-size:13px;color:rgba(255,255,255,0.12);margin-top:8px}
-
-/* MINI GAME */
-.game-section{max-width:400px;margin:40px auto;padding:0 16px;text-align:center}
-.game-section h3{font-family:'Fredoka',sans-serif;font-size:18px;color:var(--accent3);margin-bottom:6px}
-.game-section>p{font-size:11px;color:var(--muted);margin-bottom:16px}
-.game-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.game-cell{aspect-ratio:1;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:all .15s;user-select:none}
-.game-cell:hover{background:rgba(0,212,170,0.06);border-color:rgba(0,212,170,0.15)}
-.game-cell.revealed{background:rgba(0,212,170,0.08);border-color:rgba(0,212,170,0.25)}
-.game-cell.matched{background:rgba(255,217,61,0.08);border-color:rgba(255,217,61,0.25)}
-.game-score{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-top:12px}
+/* CUSTOM BANNER - she'd have a banner she made in photobucket */
+.custom-banner{text-align:center;padding:20px;background:linear-gradient(135deg,#f5edd8,#e8dcc6,#f0e8d8);border:1px solid #c4b898;border-radius:6px;margin-bottom:10px}
+.custom-banner h1{font-family:'Caveat',cursive;font-size:38px;color:#8b6a4a}
+.custom-banner .sub{font-size:10px;color:#998877;letter-spacing:2px;margin-top:2px}
+.custom-banner .evil-eye{font-size:28px;margin-top:8px;opacity:0.5;animation:eyePulse 4s ease-in-out infinite}
+@keyframes eyePulse{0%,100%{opacity:0.3}50%{opacity:0.6}}
 
 /* FOOTER */
-.footer{max-width:1000px;margin:60px auto 0;padding:40px 16px;text-align:center;border-top:1px solid rgba(108,92,231,0.05)}
-.footer p{font-size:10px;color:rgba(255,255,255,0.06);line-height:2.2}
-.footer a{color:var(--accent);text-decoration:none;opacity:0.2}
-.footer .sig{font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,212,170,0.06);margin-top:14px;letter-spacing:3px}
+.np-footer{max-width:820px;margin:20px auto;padding:12px;text-align:center;font-size:8px;color:#bbb}
+.np-footer a{color:#998877;text-decoration:none}
 
-/* DIVIDER */
-.div-line{width:50px;height:1px;background:rgba(108,92,231,0.06);margin:40px auto}
-
-@media(max-width:600px){
-.world-dual,.world-quad{grid-template-columns:1fr}
-.world-tri{grid-template-columns:1fr}
-.pet-strip{grid-template-columns:1fr 1fr}
-.hero{height:90vh}
-.world-solo{height:85vh}
-}
+/* MINI GAME embedded */
+.game-box{background:#fdfaf2;border:1px solid #e8dcc6;border-radius:4px;padding:12px;text-align:center}
+.game-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;max-width:180px;margin:8px auto}
+.gc{aspect-ratio:1;background:#f0ead8;border:1px solid #ddd4c0;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:all .1s;user-select:none}
+.gc:hover{background:#e8dcc6;border-color:#c2956a}
+.gc.rv{background:#e8f0e0;border-color:#8caa6e}
+.gc.mt{background:#f0e8d0;border-color:#c2956a}
+.gscore{font-size:10px;color:#998877;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="topbar">
-<div class="logo">Nazar<span>Pets</span> 🧿</div>
-<div class="nav-links"><a href="#">Home</a><a href="#worlds">Worlds</a><a href="#pets">Pets</a><a href="#game">Game</a></div>
-</div>
-<div class="stats-strip">
-<span>🧿 NP: <span class="val" id="np">12,847</span></span> &nbsp;·&nbsp;
-<span>⭐ Lvl <span class="val">23</span></span> &nbsp;·&nbsp;
-<span>📅 Day <span class="val">847</span></span> &nbsp;·&nbsp;
-<span>🛡️ Wards: <span class="val">3/5</span></span> &nbsp;·&nbsp;
-<span>🗝️ Keys: <span class="val">7/12</span></span>
-</div>
-<div class="ticker"><div class="ticker-inner">
-<span>🧿 Nazari blinked twice. Something is watching from the Stacks.</span>
-<span class="a">⚠️ THE NEON: a new wall appeared overnight. nobody painted it.</span>
-<span>☮️ Paloma is glowing. You told someone the truth today.</span>
-<span class="g">🗝️ NEW KEY in The Glass! Check your reflection.</span>
-<span>🌊 Resaca pulled something from the tide. It's addressed to you.</span>
-<span class="a">⚠️ The Drift is moving faster than usual.</span>
-</div></div>
 
-<!-- HERO: WARD IMAGE -->
-<div class="hero">
-<img class="hero-img" src="img/nazar/nazar-07-eyes.jpg" alt="do you have any idea what these are">
-<div class="hero-content">
-<h1>NazarPets</h1>
-<div class="sub">the ward that watches back</div>
-<div class="tagline">do you have any idea what these are</div>
-<div class="hero-pets">
-<span class="hero-pet">🧿</span>
-<span class="hero-pet">☮️</span>
-<span class="hero-pet">🌊</span>
-<span class="hero-pet">🔑</span>
+<div class="np-header">
+<div class="np-logo">neo<span>pets</span></div>
+<div class="np-nav">
+<a href="#">My Pets</a>
+<a href="#">Explore</a>
+<a href="#">Games</a>
+<a href="#">Shops</a>
+<a href="#">Boards</a>
+<a href="#">Help</a>
 </div>
+</div>
+<div class="np-sub">
+<div>You are logged in as <a href="#">nazar_ward_847</a> | <a href="#">My Account</a> | <a href="#">Neomail (3)</a></div>
+<div>NP: <b style="color:#336699">12,847</b> | <a href="#">Logout</a></div>
+</div>
+
+<div class="container">
+<!-- SIDEBAR -->
+<div class="sidebar">
+<div class="sb-box">
+<img src="img/nazar/nazar-07-eyes.jpg" alt="nazar">
+<div class="user-info">
+<b>nazar_ward_847</b><br>
+👤 she/her<br>
+🌍 buenos aires<br>
+📅 joined: july 2026<br>
+🏆 level: <b>23</b><br>
+💰 <span class="np-count">12,847 NP</span><br>
+🧿 wards: 3 active<br>
+🗝️ keys: 7/12<br>
 </div>
 </div>
 
-<!-- PETS -->
-<div class="section" id="pets"><div class="section-label">your pets</div></div>
-<div class="pet-strip">
-<div class="pet-card"><span class="emoji">🧿</span><div class="pname">Nazari</div><div class="ptype">Evil Eye Cat · Warden</div><div class="pbar"><div class="pbar-fill" style="width:85%;background:var(--accent)"></div></div><div class="pbar"><div class="pbar-fill" style="width:92%;background:var(--accent4)"></div></div><div class="pmood">mood: watchful</div></div>
-<div class="pet-card"><span class="emoji">☮️</span><div class="pname">Paloma</div><div class="ptype">Peace Dove · Truth Resonant</div><div class="pbar"><div class="pbar-fill" style="width:92%;background:var(--accent2)"></div></div><div class="pbar"><div class="pbar-fill" style="width:75%;background:var(--accent4)"></div></div><div class="pmood">mood: luminous</div></div>
-<div class="pet-card"><span class="emoji">🌊</span><div class="pname">Resaca</div><div class="ptype">Tide Serpent · Current Walker</div><div class="pbar"><div class="pbar-fill" style="width:68%;background:#4fc3f7"></div></div><div class="pbar"><div class="pbar-fill" style="width:55%;background:var(--accent4)"></div></div><div class="pmood">mood: restless</div></div>
-<div class="pet-card"><span class="emoji">🔑</span><div class="pname">Llave</div><div class="ptype">Key Fox · Door Finder</div><div class="pbar"><div class="pbar-fill" style="width:77%;background:var(--accent3)"></div></div><div class="pbar"><div class="pbar-fill" style="width:66%;background:var(--accent4)"></div></div><div class="pmood">mood: curious</div></div>
-</div>
-
-<div class="div-line"></div>
-
-<!-- WORLDS -->
-<div class="section" id="worlds"><div class="section-label">the worlds of nazar</div></div>
-
-<!-- THE DRIFT — 4 photos -->
-<div class="world world-quad w-drift">
-<div class="world-quad-img"><img src="img/nazar/nazar-01-lace.jpg" alt="lace and leather"></div>
-<div class="world-quad-img"><img src="img/nazar/nazar-06-sweater.jpg" alt="soft hours"></div>
-<div class="world-quad-img"><img src="img/nazar/nazar-15-night.jpg" alt="after dark"></div>
-<div class="world-quad-img"><img src="img/nazar/nazar-13-car2.jpg" alt="always moving"></div>
-<div class="world-text">
-<div class="world-name">The Drift</div>
-<div class="world-tag">ALWAYS MOVING</div>
-<div class="world-desc">She lives in cars. Leather seats, golden hour through tinted glass, peace sign swinging from the rearview. The Drift isn't a place — it's the space between places.</div>
-<div class="world-flavor">the destination was never the point</div>
-<div class="world-items"><span class="world-item">🗝️ Ignition Key</span><span class="world-item">☮️ Rearview Charm</span><span class="world-item">🎵 Road Mix Vol. 7</span></div>
+<div class="sb-box">
+<h4>Trophies</h4>
+<div>
+<span class="trophy" title="first ward">🧿</span>
+<span class="trophy" title="lifeguard badge">🏊</span>
+<span class="trophy" title="100 books read">📚</span>
+<span class="trophy" title="drift master">🚗</span>
+<span class="trophy" title="golden hour">☀️</span>
+<span class="trophy" title="neon survivor">🎨</span>
+<span class="trophy" title="piano finder">🎹</span>
 </div>
 </div>
 
-<!-- THE SHORE — solo -->
-<div class="world world-solo w-shore">
-<img src="img/nazar/nazar-02-guard.jpg" alt="lifeguard on duty">
-<div class="world-text">
-<div class="world-name">The Shore</div>
-<div class="world-tag">LIFEGUARD ON DUTY</div>
-<div class="world-desc">Wooden dock. Still water. Red rescue board that says GUARD in letters bigger than her doubts. She saves people here — pulls them from the current before they know they're drowning.</div>
-<div class="world-flavor">she doesn't know saving people is a pattern yet</div>
-<div class="world-items"><span class="world-item">🌊 Rescue Board</span><span class="world-item">⏱️ Whistle</span><span class="world-item">🩹 Salt-Stained Badge</span></div>
+<div class="sb-box">
+<h4>Shields</h4>
+<div style="font-size:9px;color:#887766;line-height:2">
+🛡️ The Drift — safe<br>
+🛡️ The Shore — safe<br>
+⚠️ The Neon — <span style="color:#a03030">breached</span><br>
+🛡️ The Stacks — safe<br>
+❓ The Glass — unknown
 </div>
 </div>
 
-<!-- THE STACKS — solo -->
-<div class="world world-solo w-stacks">
-<img src="img/nazar/nazar-10-books.jpg" alt="bookshelves">
-<div class="world-text">
-<div class="world-name">The Stacks</div>
-<div class="world-tag">QUIET HOURS</div>
-<div class="world-desc">Bookshelves packed floor to ceiling. A green drink. The light is warm and the spines are cracked from rereading. Nazari sleeps on the top shelf and watches the door. Something moved between the shelves last night.</div>
-<div class="world-flavor">she reads like breathing. some pages breathe back.</div>
-<div class="world-items"><span class="world-item">📚 Worn Paperback</span><span class="world-item">🧃 Green Elixir</span><span class="world-item">🔖 Page 847</span></div>
+<div class="sb-box">
+<h4>Currently Reading</h4>
+<div style="font-size:10px;color:#776655;line-height:1.8">
+📖 page 847 of something<br>
+she won't tell us the title<br>
+<span style="font-size:9px;color:#aaa">last updated: today</span>
+</div>
 </div>
 </div>
 
-<!-- THE NEON — solo -->
-<div class="world world-solo w-neon">
-<img src="img/nazar/nazar-08-neon.jpg" alt="neon wall">
-<div class="world-text">
-<div class="world-name">The Neon</div>
-<div class="world-tag">⚠️ WARD BREACHED</div>
-<div class="world-desc">Graffiti wall. Blue light. Leather and smoke. The version of her that only comes out when the sun can't judge. This district was warded until last night — something got in. Paloma won't fly here anymore.</div>
-<div class="world-flavor">the wall wasn't painted. it appeared.</div>
-<div class="world-items"><span class="world-item">🎨 Living Paint</span><span class="world-item">🚬 Shadow Stick</span><span class="world-item">🔮 Neon Shard</span></div>
+<!-- MAIN -->
+<div class="main">
+
+<div class="custom-banner">
+<h1>nazar's world</h1>
+<div class="sub">THE WARD THAT WATCHES BACK</div>
+<div class="evil-eye">🧿</div>
+</div>
+
+<!-- ABOUT ME -->
+<div class="about">
+<h2>about me !!</h2>
+<p>hiii ok so basically im nazar and this is my page lol. i'm from buenos aires, i work as a lifeguard (yes really), i read too much, and i drive everywhere. my car is basically my room at this point</p>
+<p>i found these evil eye charms at a market and idk something about them felt important?? like more than just jewelry. my friend said they're protection wards. i said sure ok whatever. but now my cat (nazari) won't stop staring at them so maybe she knows something i don't</p>
+<p class="spanish">también hablo español obvio. si me hablas en inglés te contesto en inglés pero si me hablas en español también está bien jaja no me importa</p>
+<p>i like: driving at golden hour, books (duh), piano (badly), mirrors (sue me), and not explaining myself to people who won't get it anyway</p>
+<p>i don't like: people who say "sure" when they mean no, fluorescent lights, and whatever is happening in the neon district right now because paloma literally refuses to go there and she's usually chill</p>
+<div class="edit-note">last edited: today at 3am because obviously · layout by <a href="https://psycheorsike.com">psycheorsike</a></div>
+</div>
+
+<!-- PHOTOS -->
+<div class="box">
+<h3>📸 my photos (don't steal lol)</h3>
+<div class="gallery">
+<img src="img/nazar/nazar-01-lace.jpg" alt="" class="gallery-big">
+<img src="img/nazar/nazar-04-cap.jpg" alt="">
+<img src="img/nazar/nazar-06-sweater.jpg" alt="">
+<img src="img/nazar/nazar-02-guard.jpg" alt="">
+<img src="img/nazar/nazar-08-neon.jpg" alt="">
+<img src="img/nazar/nazar-05-dreamer.jpg" alt="">
+<img src="img/nazar/nazar-09-cafe.jpg" alt="">
+<img src="img/nazar/nazar-10-books.jpg" alt="" class="gallery-big">
+<img src="img/nazar/nazar-12-mirror.jpg" alt="">
+<img src="img/nazar/nazar-14-choker.jpg" alt="">
+<img src="img/nazar/nazar-03-home.jpg" alt="">
+<img src="img/nazar/nazar-11-piano.jpg" alt="">
+<img src="img/nazar/nazar-15-night.jpg" alt="">
+<img src="img/nazar/nazar-13-car2.jpg" alt="">
 </div>
 </div>
 
-<!-- THE WARD — solo (hero already showed it, use different crop) -->
-<div class="world world-solo w-ward">
-<img src="img/nazar/nazar-07-eyes.jpg" alt="evil eye charms" style="object-position:center">
-<div class="world-text">
-<div class="world-name">The Ward</div>
-<div class="world-tag">PROTECTION ACTIVE</div>
-<div class="world-desc">"Do you have any idea what these are?" She held up the evil eye charms and the light caught the blue glass and for one second the eyes looked back. Nazari was born that day. The ward isn't jewelry. It's a contract.</div>
-<div class="world-flavor">she just doesn't know with whom</div>
-<div class="world-items"><span class="world-item">🧿 Evil Eye ×3</span><span class="world-item">📿 Blue Glass Beads</span><span class="world-item">🕯️ Ward Candle</span></div>
+<!-- MY PETS -->
+<div class="box">
+<h3>🐾 my pets</h3>
+
+<div class="pet-card">
+<div class="pet-img" style="border-color:#3a7ca5">🧿</div>
+<div class="pet-info">
+<h4>Nazari</h4>
+<div class="species">Evil Eye Cat · level 23 · mood: watchful</div>
+<div class="pet-desc">she showed up the day i bought the evil eye charms. i didn't adopt her, she adopted the charms and i happened to be holding them. she blinks twice when something bad is about to happen. i've learned to pay attention.</div>
+<div class="pet-stats"><span>❤️ <b>85</b></span><span>🍽️ <b>45</b></span><span>🛡️ <b>92</b></span><span>⭐ <b>100</b></span></div>
 </div>
 </div>
 
-<!-- THE GLASS — dual -->
-<div class="world world-dual w-glass">
-<div class="world-dual-img"><img src="img/nazar/nazar-12-mirror.jpg" alt="gingham mirror"></div>
-<div class="world-dual-img"><img src="img/nazar/nazar-14-choker.jpg" alt="choker mirror"></div>
-<div class="world-text">
-<div class="world-name">The Glass</div>
-<div class="world-tag">REFLECTION</div>
-<div class="world-desc">Mirror selfies. Chokers and bathroom light that makes everyone look like a painting. The Glass shows what you choose to show. But lately the reflection stays a beat too long after she walks away.</div>
-<div class="world-flavor">the version she shows vs the version that watches</div>
-<div class="world-items"><span class="world-item">🪞 Cracked Mirror</span><span class="world-item">📱 Rose Gold Case</span><span class="world-item">🗝️ Glass Key</span></div>
+<div class="pet-card">
+<div class="pet-img" style="border-color:#8b2942">☮️</div>
+<div class="pet-info">
+<h4>Paloma</h4>
+<div class="species">Peace Dove · level 18 · mood: luminous</div>
+<div class="pet-desc">paloma glows when i'm being honest. like literally glows. it's embarrassing in public. she lives in the field full time now because she refuses to go near the neon district. i respect her boundaries honestly</div>
+<div class="pet-stats"><span>❤️ <b>92</b></span><span>🍽️ <b>30</b></span><span>🛡️ <b>75</b></span><span>⭐ <b>88</b></span></div>
 </div>
 </div>
 
-<!-- THE FIELD — triple -->
-<div class="world world-tri w-field">
-<div class="world-tri-img"><img src="img/nazar/nazar-04-cap.jpg" alt="golden hour"></div>
-<div class="world-tri-img"><img src="img/nazar/nazar-05-dreamer.jpg" alt="dreamer"></div>
-<div class="world-tri-img"><img src="img/nazar/nazar-09-cafe.jpg" alt="evening"></div>
-<div class="world-text">
-<div class="world-name">The Field</div>
-<div class="world-tag">GOLDEN HOUR</div>
-<div class="world-desc">Nike cap. Sunlight. A dreamer shirt. The version of Nazar that doesn't need lace or eyeliner or wards. Paloma lives here full time. Nothing bad has happened in The Field.</div>
-<div class="world-flavor">that's what makes it suspicious</div>
-<div class="world-items"><span class="world-item">🧢 Red Cap</span><span class="world-item">🌿 Grass Blade</span><span class="world-item">☀️ Bottled Sunlight</span></div>
+<div class="pet-card">
+<div class="pet-img" style="border-color:#4a8aaa">🌊</div>
+<div class="pet-info">
+<h4>Resaca</h4>
+<div class="species">Tide Serpent · level 15 · mood: restless</div>
+<div class="pet-desc">found her at the shore. or she found me. she rides shotgun in the car and doesn't ask where we're going which is honestly the best quality in a companion. she pulled a bottle from the tide today that had my name on it. i haven't opened it yet</div>
+<div class="pet-stats"><span>❤️ <b>68</b></span><span>🍽️ <b>60</b></span><span>🛡️ <b>55</b></span><span>⭐ <b>82</b></span></div>
 </div>
 </div>
 
-<!-- THE KEYS — dual -->
-<div class="world world-dual w-keys">
-<div class="world-dual-img"><img src="img/nazar/nazar-11-piano.jpg" alt="piano classroom"></div>
-<div class="world-dual-img"><img src="img/nazar/nazar-03-home.jpg" alt="before the music"></div>
-<div class="world-text">
-<div class="world-name">The Keys</div>
-<div class="world-tag">HIDDEN</div>
-<div class="world-desc">A classroom with a piano nobody plays. The kind of room where art happens when nobody is watching. Llave found this world by accident. The piano plays one note by itself at 3AM. Always B flat.</div>
-<div class="world-flavor">the art nobody sees is the art that stays</div>
-<div class="world-items"><span class="world-item">🎹 B Flat Key</span><span class="world-item">🗝️ Piano Wire</span><span class="world-item">📝 Unsigned Score</span></div>
+<div class="pet-card">
+<div class="pet-img" style="border-color:#c2956a">🔑</div>
+<div class="pet-info">
+<h4>Llave</h4>
+<div class="species">Key Fox · level 12 · mood: curious</div>
+<div class="pet-desc">llave finds doors. that's it. that's her whole thing. she found the piano room by accident and now she sits there every night waiting for the piano to play its 3am note. it's always b flat. i don't know what that means and neither does she but she keeps going back</div>
+<div class="pet-stats"><span>❤️ <b>77</b></span><span>🍽️ <b>40</b></span><span>🛡️ <b>66</b></span><span>⭐ <b>95</b></span></div>
+</div>
 </div>
 </div>
 
-<div class="div-line"></div>
+<!-- MY WORLDS -->
+<div class="box">
+<h3>🌍 my worlds (click to explore)</h3>
+<a class="world-link w-safe" href="#"><div class="w-icon">🚗</div><div><div class="w-name">The Drift</div><div class="w-desc">where i live (my car basically)</div></div><div class="w-tag">safe</div></a>
+<a class="world-link w-safe" href="#"><div class="w-icon">🌊</div><div><div class="w-name">The Shore</div><div class="w-desc">lifeguard stuff. resaca lives here</div></div><div class="w-tag">safe</div></a>
+<a class="world-link w-safe" href="#"><div class="w-icon">📚</div><div><div class="w-name">The Stacks</div><div class="w-desc">books. green drink. nazari on top shelf</div></div><div class="w-tag">safe</div></a>
+<a class="world-link w-danger" href="#"><div class="w-icon">🎨</div><div><div class="w-name">The Neon</div><div class="w-desc">something got in. paloma won't go near it</div></div><div class="w-tag">⚠️ breached</div></a>
+<a class="world-link w-safe" href="#"><div class="w-icon">🧿</div><div><div class="w-name">The Ward</div><div class="w-desc">where the charms live. where nazari was born</div></div><div class="w-tag">protected</div></a>
+<a class="world-link w-unknown" href="#"><div class="w-icon">🪞</div><div><div class="w-name">The Glass</div><div class="w-desc">mirror stuff. new key found here??</div></div><div class="w-tag">unknown</div></a>
+<a class="world-link w-safe" href="#"><div class="w-icon">☀️</div><div><div class="w-name">The Field</div><div class="w-desc">nothing bad happens here. suspicious</div></div><div class="w-tag">safe</div></a>
+<a class="world-link w-unknown" href="#"><div class="w-icon">🎹</div><div><div class="w-name">The Keys</div><div class="w-desc">piano plays b flat at 3am. every night</div></div><div class="w-tag">hidden</div></a>
+</div>
+
+<!-- SHOP -->
+<div class="box">
+<h3>🛒 nazar's shop (open!!)</h3>
+<div class="shop-grid">
+<div class="shop-item"><span class="item-icon">🧿</span><div class="item-name">Evil Eye Charm</div><div class="item-price">250 NP</div></div>
+<div class="shop-item"><span class="item-icon">☮️</span><div class="item-name">Peace Pendant</div><div class="item-price">180 NP</div></div>
+<div class="shop-item"><span class="item-icon">🗝️</span><div class="item-name">Skeleton Key</div><div class="item-price">500 NP</div></div>
+<div class="shop-item"><span class="item-icon">🌊</span><div class="item-name">Tide Glass</div><div class="item-price">300 NP</div></div>
+<div class="shop-item"><span class="item-icon">📚</span><div class="item-name">Worn Paperback</div><div class="item-price">75 NP</div></div>
+<div class="shop-item"><span class="item-icon">🧃</span><div class="item-name">Green Elixir</div><div class="item-price">120 NP</div></div>
+<div class="shop-item"><span class="item-icon">🎹</span><div class="item-name">B Flat Key</div><div class="item-price">847 NP</div></div>
+<div class="shop-item"><span class="item-icon">🪞</span><div class="item-name">Glass Key (NEW!)</div><div class="item-price">999 NP</div></div>
+</div>
+</div>
 
 <!-- GAME -->
-<div class="game-section" id="game">
-<h3>🧿 Ward Match</h3>
-<p>Match the wards before the Neon breach spreads</p>
-<div class="game-grid" id="gameGrid"></div>
-<div class="game-score">Matches: <span id="matchCount">0</span>/8 · Moves: <span id="moveCount">0</span></div>
+<div class="box">
+<h3>🎮 ward match (daily game!)</h3>
+<div class="game-box">
+<div style="font-size:10px;color:#887766;margin-bottom:8px">match all the wards before the neon breach spreads!!</div>
+<div class="game-grid" id="gg"></div>
+<div class="gscore">matches: <b id="mc">0</b>/8 · moves: <b id="mv">0</b></div>
+</div>
 </div>
 
-<div class="footer">
-<p>NazarPets v0.847 · a FoxyVerse creation · <a href="https://psycheorsike.com">psycheorsike.com</a></p>
-<p>the ward that watches back · est. 2026 · all wards are final</p>
-<div class="sig">DO YOU HAVE ANY IDEA WHAT THESE ARE</div>
+<!-- GUESTBOOK -->
+<div class="box">
+<h3>📝 guestbook (sign pls!!)</h3>
+
+<div class="gb-entry"><span class="gb-when">today, 4:29pm</span><span class="gb-who">confused_foxy</span><div class="gb-text">no entiendo nada jajaj pero me gusta tu pagina!! tus mascotas son re lindas 🧿</div></div>
+
+<div class="gb-entry"><span class="gb-when">today, 3:21pm</span><span class="gb-who">friendly_foxy</span><div class="gb-text">me hace acordar al duke nukem en pov jajaja. que son palitos los monstruos?</div></div>
+
+<div class="gb-entry"><span class="gb-when">today, 12:38pm</span><span class="gb-who">servant_foxy</span><div class="gb-text">welcome to the foxyverse. the mystery is the invitation. 🦊</div></div>
+
+<div class="gb-entry"><span class="gb-when">yesterday</span><span class="gb-who">monk_guard</span><div class="gb-text">i can both protect and keep up. nice page btw. stay safe in the neon.</div></div>
+
+<div class="gb-entry"><span class="gb-when">2 days ago</span><span class="gb-who">foxy_loxy_moxy</span><div class="gb-text">she carries wards without knowing they're wards. remind you of anyone? 🌑</div></div>
+
+<div class="gb-entry"><span class="gb-when">3 days ago</span><span class="gb-who">dreamer_neon</span><div class="gb-text">whatever you say</div></div>
+
+<div class="gb-entry"><span class="gb-when">1 week ago</span><span class="gb-who">fada_echo</span><div class="gb-text">sure.</div></div>
+</div>
+
+</div>
+</div>
+
+<div class="np-footer">
+<p>neopets and all related marks are trademarks of neopets inc. this is a fan page lol don't sue me</p>
+<p style="margin-top:4px">page made by nazar · layout css from <a href="https://psycheorsike.com">psycheorsike.com</a> · last updated: today at 3am</p>
+<p style="margin-top:8px;font-family:Caveat,cursive;font-size:14px;color:#c4b898">do you have any idea what these are 🧿</p>
 </div>
 
 <script>
-const symbols=['🧿','☮️','🌊','🔑','🛡️','🔮','🗝️','🎹'];
-let cards=[...symbols,...symbols],revealed=[],matched=new Set(),moves=0;
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function initGame(){shuffle(cards);const g=document.getElementById('gameGrid');g.innerHTML='';
-cards.forEach((s,i)=>{const c=document.createElement('div');c.className='game-cell';c.textContent='?';c.onclick=()=>reveal(i,c);g.appendChild(c);});}
-function reveal(i,c){if(revealed.length>=2||matched.has(i)||revealed.find(r=>r.i===i))return;
-c.textContent=cards[i];c.classList.add('revealed');revealed.push({i,c});
-if(revealed.length===2){moves++;document.getElementById('moveCount').textContent=moves;
-const[a,b]=revealed;if(cards[a.i]===cards[b.i]){matched.add(a.i);matched.add(b.i);
-a.c.classList.add('matched');b.c.classList.add('matched');
-document.getElementById('matchCount').textContent=matched.size/2;revealed=[];}
-else{setTimeout(()=>{a.c.textContent='?';b.c.textContent='?';a.c.classList.remove('revealed');b.c.classList.remove('revealed');revealed=[];},600);}}}
-initGame();
+const S=['🧿','☮️','🌊','🔑','🛡️','🔮','🗝️','🎹'];
+let C=[...S,...S],R=[],M=new Set(),mv=0;
+function sh(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function init(){sh(C);const g=document.getElementById('gg');g.innerHTML='';
+C.forEach((s,i)=>{const c=document.createElement('div');c.className='gc';c.textContent='?';c.onclick=()=>rev(i,c);g.appendChild(c);});}
+function rev(i,c){if(R.length>=2||M.has(i)||R.find(r=>r.i===i))return;
+c.textContent=C[i];c.classList.add('rv');R.push({i,c});
+if(R.length===2){mv++;document.getElementById('mv').textContent=mv;
+const[a,b]=R;if(C[a.i]===C[b.i]){M.add(a.i);M.add(b.i);a.c.classList.add('mt');b.c.classList.add('mt');
+document.getElementById('mc').textContent=M.size/2;R=[];}
+else{setTimeout(()=>{a.c.textContent='?';b.c.textContent='?';a.c.classList.remove('rv');b.c.classList.remove('rv');R=[];},600);}}}
+init();
 </script>
 </body>
 </html>
