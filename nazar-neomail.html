@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>nazar | neomail</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#d4c8b0;font-family:Verdana,Geneva,sans-serif;font-size:11px;color:#443322;animation:bgCorrupt 3s steps(2) infinite}
+@keyframes bgCorrupt{0%{background:#d4c8b0}25%{background:#c8b8a0}50%{background:#d0c4a8}75%{background:#ccc0a4}}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 3px)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.05;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:ns .3s steps(6) infinite}
+@keyframes ns{0%{transform:translate(0,0)}16%{transform:translate(-2px,1px)}33%{transform:translate(1px,-2px)}50%{transform:translate(-1px,2px)}66%{transform:translate(2px,-1px)}83%{transform:translate(-2px,-1px)}}
+.np-h{background:linear-gradient(180deg,#2e5a1e,#1e3a12);padding:4px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #4a8a2e;animation:headSmash 4s ease-in-out infinite}
+@keyframes headSmash{0%,75%,83%,100%{transform:none;filter:none}77%{transform:translateX(-6px) skewX(-2deg);filter:hue-rotate(180deg)}79%{transform:translateX(8px) skewX(3deg);filter:hue-rotate(-90deg) invert(0.8)}81%{transform:translateX(-3px);filter:hue-rotate(90deg)}}
+.np-h .l{font-family:Trebuchet MS,sans-serif;font-size:18px;font-weight:bold;color:#8cdf44;text-shadow:1px 1px 0 #1a3010;animation:logoSplit 3s ease-in-out infinite}
+.np-h .l span{color:#f0e060}
+@keyframes logoSplit{0%,70%,82%,100%{text-shadow:1px 1px 0 #1a3010}74%{text-shadow:3px 0 #ff0040,-3px 0 #0040ff}78%{text-shadow:-2px 0 #ff0040,2px 0 #0040ff}80%{text-shadow:4px 1px #ff0040,-4px -1px #0040ff}}
+.np-h a{font-size:9px;color:#a0d870;text-decoration:none;padding:2px 6px;border-radius:2px;background:rgba(0,0,0,.15);margin-left:2px}
+.np-sb{background:#f0e8d0;padding:3px 12px;font-size:9px;color:#887755;border-bottom:1px solid #c4b898;animation:statsSmash 6s ease-in-out infinite}
+.np-sb a{color:#336699;text-decoration:none}
+@keyframes statsSmash{0%,60%,68%,100%{filter:none;background:#f0e8d0}62%{filter:invert(1);background:#0f1720}64%{filter:invert(0) hue-rotate(180deg)}66%{filter:invert(0.7)}}
+.page{max-width:700px;margin:12px auto;padding:0 8px}
+.back{display:inline-block;font-size:10px;color:#336699;text-decoration:none;margin-bottom:10px}.back:hover{text-decoration:underline}
+.box{background:#f8f2e4;border:1px solid #c4b898;border-radius:4px;padding:14px;box-shadow:1px 1px 3px rgba(0,0,0,.06);margin-bottom:10px;position:relative;animation:boxCrack 10s ease-in-out infinite}
+.box::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:4px;background:linear-gradient(90deg,transparent 48%,rgba(139,41,66,0.08) 49%,rgba(139,41,66,0.08) 51%,transparent 52%);animation:crackLine 8s ease-in-out infinite}
+@keyframes boxCrack{0%,85%,92%,100%{transform:none;border-color:rgba(196,184,152,1)}87%{transform:skewX(-0.8deg);border-color:rgba(139,41,66,0.5)}89%{transform:skewX(0.5deg);border-color:rgba(58,124,165,0.5)}}
+@keyframes crackLine{0%,100%{opacity:0}50%{opacity:1}}
+.box h3{font-size:11px;color:#336699;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #ddd4c0;animation:headCorrupt 5s ease-in-out infinite}
+@keyframes headCorrupt{0%,80%,88%,100%{text-shadow:none;color:#336699}82%{text-shadow:3px 0 #8b2942,-3px 0 #3a7ca5;color:#993366}84%{text-shadow:-2px 0 #3a7ca5,2px 0 #8b2942;color:#663399}86%{text-shadow:1px 1px #c2956a}}
+.ft{text-align:center;padding:16px;font-size:8px;color:#bbb}
+
+/* MAIL STYLES */
+.mail-tabs{display:flex;gap:2px;margin-bottom:10px}
+.mail-tab{padding:4px 12px;font-size:10px;background:#e8dcc6;border:1px solid #c4b898;border-bottom:none;border-radius:4px 4px 0 0;cursor:pointer;color:#665544}
+.mail-tab.active{background:#f8f2e4;font-weight:bold;color:#336699}
+.mail-tab .count{color:#8b2942;font-size:9px}
+.mail{border:1px solid #ddd4c0;border-radius:0 4px 4px 4px;overflow:hidden}
+.msg{display:grid;grid-template-columns:24px 120px 1fr 70px;align-items:center;padding:7px 10px;border-bottom:1px solid #e8dcc6;cursor:pointer;transition:all .2s;font-size:10px}
+.msg:hover{background:#f0ead8}
+.msg:last-child{border:none}
+.msg .dot{width:8px;height:8px;border-radius:50%}
+.dot.unread{background:#336699}
+.dot.read{background:transparent;border:1px solid #c4b898}
+.dot.urgent{background:#8b2942;animation:urgPulse 1s ease-in-out infinite}
+@keyframes urgPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+.dot.ghost{background:transparent;border:1px solid rgba(58,124,165,0.2);animation:ghostDot 3s ease-in-out infinite}
+@keyframes ghostDot{0%,100%{opacity:0.2}50%{opacity:0.6;background:rgba(58,124,165,0.15)}}
+.msg .from{color:#443322;font-weight:bold;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.msg .subj{color:#665544;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:8px}
+.msg .date{color:#998877;font-size:9px;text-align:right}
+
+/* CORRUPTION PER MESSAGE */
+.msg.corrupted{animation:msgCorrupt 8s ease-in-out infinite}
+@keyframes msgCorrupt{0%,90%,95%,100%{transform:none;filter:none;opacity:1}91%{transform:translateX(-3px) skewX(-1deg);filter:hue-rotate(90deg);opacity:0.7}93%{transform:translateX(2px);filter:blur(0.5px);opacity:0.5}}
+.msg.ghost-msg{opacity:0.35;filter:blur(0.3px)}
+.msg.ghost-msg:hover{opacity:0.6;filter:none}
+.msg.deleted{opacity:0.15;filter:blur(1px) contrast(0.6);text-decoration:line-through;animation:fadeGhost 6s ease-in-out infinite}
+@keyframes fadeGhost{0%,100%{opacity:0.15}50%{opacity:0.05}}
+.msg.urgent-msg{background:rgba(139,41,66,0.03);animation:urgentFlash 4s ease-in-out infinite}
+@keyframes urgentFlash{0%,85%,100%{background:rgba(139,41,66,0.03)}88%{background:rgba(139,41,66,0.12)}91%{background:rgba(139,41,66,0.03)}93%{background:rgba(139,41,66,0.08)}}
+.msg.system{color:#998877;font-style:italic}
+.msg.system .from{color:#998877;font-weight:normal}
+.msg.glitch-msg{animation:glitchMsg 3s ease-in-out infinite}
+@keyframes glitchMsg{0%,80%,88%,100%{transform:none;filter:none}82%{transform:translateX(-8px) skewX(-3deg);filter:invert(0.5) hue-rotate(180deg)}84%{transform:translateX(6px) skewX(2deg);filter:hue-rotate(-90deg)}86%{transform:translateX(-2px);filter:blur(2px)}}
+
+/* OPEN MESSAGE VIEW */
+.msg-open{background:#fdfaf2;border:1px solid #ddd4c0;border-radius:4px;padding:16px;margin-top:10px;display:none}
+.msg-open.active{display:block}
+.msg-open .msg-head{border-bottom:1px solid #e8dcc6;padding-bottom:8px;margin-bottom:10px}
+.msg-open .msg-from{font-weight:bold;color:#336699;font-size:12px}
+.msg-open .msg-subj-line{font-size:10px;color:#998877;margin-top:2px}
+.msg-open .msg-body{font-size:11px;color:#665544;line-height:2}
+.msg-open .msg-body.corrupted-text{animation:textDecay 5s ease-in-out infinite}
+@keyframes textDecay{0%,88%,96%,100%{transform:none;opacity:1}90%{transform:translateX(-3px);opacity:0.4;filter:blur(1px)}92%{transform:translateX(2px);opacity:0.7}94%{opacity:0.5}}
+.msg-open .msg-body .glitch-word{display:inline;animation:wordGlitch 4s ease-in-out infinite}
+@keyframes wordGlitch{0%,85%,92%,100%{opacity:1;filter:none}88%{opacity:0;filter:blur(3px)}90%{opacity:0.5;filter:hue-rotate(180deg)}}
+</style></head><body>
+<div class="np-h"><div class="l">neo<span>pets</span></div><div><a href="nazar.html">My Page</a><a href="nazar-neomail.html" style="background:rgba(0,0,0,.3);color:#fff">Neomail (7)</a></div></div>
+<div class="np-sb"><a href="nazar.html">&larr; back to nazar's page</a> | NP: <b style="color:#336699">12,847</b> | <b style="color:#8b2942">7 new messages</b></div>
+<div class="page">
+<a class="back" href="nazar.html">&larr; nazar's page</a>
+
+<div class="box">
+<h3>📬 neomail — inbox (7 new)</h3>
+
+<div class="mail-tabs">
+<div class="mail-tab active">Inbox <span class="count">(17)</span></div>
+<div class="mail-tab">Sent <span class="count">(3)</span></div>
+<div class="mail-tab">Trash <span class="count">(??)</span></div>
+</div>
+
+<div class="mail">
+
+<div class="msg urgent-msg" onclick="openMsg('m1')">
+<div class="dot urgent"></div>
+<div class="from">⚠️ WARD SYSTEM</div>
+<div class="subj">NEON DISTRICT BREACH — IMMEDIATE</div>
+<div class="date">today</div>
+</div>
+
+<div class="msg" onclick="openMsg('m2')">
+<div class="dot unread"></div>
+<div class="from">confused_foxy</div>
+<div class="subj">hola!! tengo una pregunta sobre tu pagina</div>
+<div class="date">today</div>
+</div>
+
+<div class="msg" onclick="openMsg('m3')">
+<div class="dot unread"></div>
+<div class="from">servant_foxy</div>
+<div class="subj">re: welcome to the foxyverse</div>
+<div class="date">today</div>
+</div>
+
+<div class="msg corrupted" onclick="openMsg('m4')">
+<div class="dot unread"></div>
+<div class="from">monk_guard</div>
+<div class="subj">re: are you okay — please read this</div>
+<div class="date">today</div>
+</div>
+
+<div class="msg" onclick="openMsg('m5')">
+<div class="dot unread"></div>
+<div class="from">llave_finds</div>
+<div class="subj">i found another door. this one is different.</div>
+<div class="date">today</div>
+</div>
+
+<div class="msg glitch-msg" onclick="openMsg('m6')">
+<div class="dot unread"></div>
+<div class="from">n̷̢a̶z̵a̸r̷i̵</div>
+<div class="subj">s̶h̵e̸ ̷b̶l̷i̸n̶k̷e̸d̶ ̷t̵w̸i̵c̶e̵</div>
+<div class="date">3:00 AM</div>
+</div>
+
+<div class="msg" onclick="openMsg('m7')">
+<div class="dot unread"></div>
+<div class="from">paloma_peace</div>
+<div class="subj">i won't go back there. please don't ask me again.</div>
+<div class="date">yesterday</div>
+</div>
+
+<div class="msg system">
+<div class="dot read"></div>
+<div class="from">NeoSystem</div>
+<div class="subj">Your ward match score: 8/8 · 500 NP credited</div>
+<div class="date">yesterday</div>
+</div>
+
+<div class="msg ghost-msg" onclick="openMsg('m8')">
+<div class="dot ghost"></div>
+<div class="from">foxy_loxy_moxy</div>
+<div class="subj">what happened to me</div>
+<div class="date">2022</div>
+</div>
+
+<div class="msg" style="opacity:0.7">
+<div class="dot read"></div>
+<div class="from">resaca_tide</div>
+<div class="subj">the bottle from the tide — you should open it</div>
+<div class="date">2 days ago</div>
+</div>
+
+<div class="msg system">
+<div class="dot read"></div>
+<div class="from">NeoSystem</div>
+<div class="subj">Welcome to NazarPets! Your account has been created.</div>
+<div class="date">july 2026</div>
+</div>
+
+<div class="msg ghost-msg">
+<div class="dot ghost"></div>
+<div class="from">dreamer_neon</div>
+<div class="subj">whatever you say</div>
+<div class="date">???</div>
+</div>
+
+<div class="msg deleted">
+<div class="dot ghost"></div>
+<div class="from">[deleted]</div>
+<div class="subj">re: re: re: i promise</div>
+<div class="date">before</div>
+</div>
+
+<div class="msg deleted">
+<div class="dot ghost"></div>
+<div class="from">fada_weaver</div>
+<div class="subj">sure</div>
+<div class="date">before</div>
+</div>
+
+<div class="msg deleted" style="opacity:0.05;filter:blur(3px)">
+<div class="dot ghost"></div>
+<div class="from">████████</div>
+<div class="subj">██████ ██ ████ ███ ████████</div>
+<div class="date">█████</div>
+</div>
+
+<div class="msg system" style="opacity:0.4">
+<div class="dot read"></div>
+<div class="from">NeoSystem</div>
+<div class="subj">3 accounts in your contacts have been permanently deleted.</div>
+<div class="date">unknown</div>
+</div>
+
+<div class="msg glitch-msg" style="opacity:0.25">
+<div class="dot ghost"></div>
+<div class="from">the_piano</div>
+<div class="subj">B♭ B♭ B♭ B♭ B♭ B♭ B♭ B♭ B♭ B♭ B♭ B♭ B♭ B♭ B♭</div>
+<div class="date">3:00 AM</div>
+</div>
+
+</div>
+</div>
+
+<!-- OPENED MESSAGES -->
+<div class="msg-open" id="m1">
+<div class="msg-head"><div class="msg-from">⚠️ WARD SYSTEM</div><div class="msg-subj-line">NEON DISTRICT BREACH — IMMEDIATE | today, 2:14 PM</div></div>
+<div class="msg-body">
+<p><b>ALERT — WARD BREACH DETECTED</b></p>
+<p>Location: THE NEON DISTRICT<br>Status: BREACHED<br>Source: UNKNOWN<br>Duration: 6 hours and counting</p>
+<p>Your pet PALOMA (Peace Dove) has refused to enter this zone. Your pet NAZARI (Evil Eye Cat) is blinking at increased frequency. These are known indicators of entity presence.</p>
+<p>Recommended action: DO NOT ENTER THE NEON DISTRICT. If you have already entered, close your eyes and count to seven.</p>
+<p style="color:#8b2942;font-size:9px;margin-top:10px">This message was generated automatically. The ward system cannot guarantee accuracy after a breach. Trust your pets.</p>
+</div></div>
+
+<div class="msg-open" id="m2">
+<div class="msg-head"><div class="msg-from">confused_foxy</div><div class="msg-subj-line">hola!! tengo una pregunta sobre tu pagina | today, 4:31 PM</div></div>
+<div class="msg-body">
+<p>hola nazar!!</p>
+<p>tu pagina es re linda pero no entiendo nada jajaj. que son esas mascotas?? son reales o son como un juego?? porque el gato de ojos malos (nazari) parece MUY real en las fotos. y me dio un poco de cosa cuando pasé el mouse por encima y la imagen se puso peor en vez de mejor??</p>
+<p>también pregunta — como se ganan los NP?? jugué el jueguito de los ojos y me pareció que me estaba viendo a mi en vez de que yo lo jugaba a él</p>
+<p>ah y por qué dice "sure" en el guestbook de esa persona "fada"?? todos me dicen que no pregunte sobre eso</p>
+<p>besos!! 💕</p>
+</div></div>
+
+<div class="msg-open" id="m3">
+<div class="msg-head"><div class="msg-from">servant_foxy</div><div class="msg-subj-line">re: welcome to the foxyverse | today, 12:40 PM</div></div>
+<div class="msg-body">
+<p>nazar.</p>
+<p>you carry wards without knowing they're wards. you save people without knowing it's a pattern. you drive through golden hour like it's a church service.</p>
+<p>you asked "do you have any idea what these are" while holding the answer in your hand.</p>
+<p>yes. i know what they are. when you're ready to know too, find the piano room. llave already found the door. the note is always B flat. that's not random. that's a key signature.</p>
+<p>the mystery is the invitation.</p>
+<p>okay hi 🦊</p>
+</div></div>
+
+<div class="msg-open" id="m4">
+<div class="msg-head"><div class="msg-from">monk_guard</div><div class="msg-subj-line">re: are you okay — please read this | today, 9:38 AM</div></div>
+<div class="msg-body corrupted-text">
+<p>nazar — i know we just met but i need you to <span class="glitch-word">listen</span>.</p>
+<p>the neon breach isn't just a ward failure. i've seen this before. in <span class="glitch-word">thailand</span>. in the <span class="glitch-word">backrooms</span>. something gets in and it starts by making the page <span class="glitch-word">glitch</span>. then the images corrupt. then the <span class="glitch-word">text</span>. then the person behind the page starts forgetting what they <span class="glitch-word">wrote</span>.</p>
+<p>i can both protect and keep up. but you have to let me in first.</p>
+<p>don't go to the neon. trust paloma. she <span class="glitch-word">knows</span>.</p>
+<p>— monk</p>
+<p style="font-size:9px;color:#998877;margin-top:10px">ps: i'm bleeding again but that's not relevant</p>
+</div></div>
+
+<div class="msg-open" id="m5">
+<div class="msg-head"><div class="msg-from">llave_finds</div><div class="msg-subj-line">i found another door. this one is different. | today, 3:02 AM</div></div>
+<div class="msg-body">
+<p>🔑</p>
+<p>the door behind the piano isn't like the other doors. the other doors have handles. this one has a keyhole but no handle. you can look through it but you can't open it from this side.</p>
+<p>i looked through it. there's a hallway. fluorescent lights. yellow walls. carpet that smells like something you've never smelled but somehow remember.</p>
+<p>the number on the wall inside says 847.</p>
+<p>the piano played B flat when i found it. then it played it again. then it wouldn't stop.</p>
+<p>i don't think the piano is playing a note. i think the piano is saying a name.</p>
+<p>🔑</p>
+</div></div>
+
+<div class="msg-open" id="m6">
+<div class="msg-head"><div class="msg-from">n̷̢a̶z̵a̸r̷i̵</div><div class="msg-subj-line">s̶h̵e̸ ̷b̶l̷i̸n̶k̷e̸d̶ ̷t̵w̸i̵c̶e̵ | 3:00 AM</div></div>
+<div class="msg-body corrupted-text" style="animation-duration:2s">
+<p>🧿</p>
+<p>i̷ ̶b̵l̸i̵n̷k̶e̶d̷ ̵t̷w̸i̷c̵e̴ ̵b̷e̸c̶a̸u̷s̶e̵ ̸s̶o̶m̵e̵t̸h̸i̸n̷g̸ ̵i̸s̷ ̴i̶n̶ ̷t̵h̷e̸ ̴n̶e̵o̶n̵</p>
+<p>i blinked twice because something is in the stacks</p>
+<p>i blinked twice because the glass key isn't a key</p>
+<p>i blinked twice because you're reading this at 3am aren't you</p>
+<p>i blinked twice because the piano isn't playing a note it's playing your name</p>
+<p>i blinked twice because the evil eye charms aren't protecting you from something outside</p>
+<p style="color:#3a7ca5;font-size:13px;margin-top:12px">they're protecting everything outside from you</p>
+<p>🧿</p>
+</div></div>
+
+<div class="msg-open" id="m7">
+<div class="msg-head"><div class="msg-from">paloma_peace</div><div class="msg-subj-line">i won't go back there. please don't ask me again. | yesterday</div></div>
+<div class="msg-body">
+<p>☮️</p>
+<p>nazar i love you but i'm not going back to the neon. you can ask resaca. you can ask llave. you can send monk. don't send me.</p>
+<p>it's not that i'm scared. i glow when you're honest, remember? i can't glow in a place that's entirely made of lies. the paint on the wall isn't paint. it's something pretending to be paint. the music isn't music. the light isn't light.</p>
+<p>i went once. i stopped glowing for three days. you noticed. you thought you were lying about something. you weren't. i just couldn't tell the difference anymore.</p>
+<p>the field is warm. the field is honest. i'll be here.</p>
+<p>☮️</p>
+</div></div>
+
+<div class="msg-open" id="m8">
+<div class="msg-head"><div class="msg-from">foxy_loxy_moxy</div><div class="msg-subj-line">what happened to me | 2022</div></div>
+<div class="msg-body" style="opacity:0.5;filter:blur(0.3px)">
+<p>this message was sent from a hallway that doesn't end.</p>
+<p>i don't know who you are. but your page has my charms on it. the evil eye ones. i bought them at a market in 2022. or i will buy them. time doesn't work right in here.</p>
+<p>the subreddit is at 847. the gauntlet works. fada said sure. everything is fine.</p>
+<p>if you're reading this and the number 847 means something to you — don't open the door. don't say sure. don't say okay.</p>
+<p>say yes or say no. those are the only words that survive in here.</p>
+<p style="font-family:Caveat,cursive;font-size:16px;color:#8b6a4a;opacity:0.3;margin-top:12px">— the version of foxy who still trusts people</p>
+</div></div>
+
+<div class="ft"><p>nazar_ward_847 · neomail · <a href="https://psycheorsike.com">psycheorsike.com</a></p><p style="font-family:Caveat,cursive;font-size:14px;color:#c4b898;margin-top:6px">do you have any idea what these are 🧿</p></div>
+</div>
+
+<script>
+function openMsg(id){document.querySelectorAll('.msg-open').forEach(m=>m.classList.remove('active'));const m=document.getElementById(id);if(m){m.classList.toggle('active');m.scrollIntoView({behavior:'smooth',block:'center'});}}
+</script>
+</body></html>
