@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virus Infection Mechanics — Algodoo Simulation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#e8e4dc;font-family:'Inter',sans-serif;overflow:hidden;height:100vh;display:flex;flex-direction:column}
+
+.top{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:#f4f1ec;border-bottom:2px solid #d4cfc6}
+.top h1{font-family:'Fredoka',sans-serif;font-size:18px;font-weight:700;color:#3a3630}
+.top .sub{font-size:10px;color:#8a857c;letter-spacing:0.5px}
+.top .legend{display:flex;gap:12px;font-size:10px;color:#5a554e}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:3px;border:1.5px solid rgba(0,0,0,0.15)}
+.dot.healthy{background:#6ecf6e}.dot.infected{background:#e85d5d}.dot.recovered{background:#5d9de8}.dot.dead{background:#888}
+.dot.vaccinated{background:#d4a0e8}
+
+.main{flex:1;display:flex;overflow:hidden}
+
+/* SIMULATION CANVAS */
+.sim-wrap{flex:1;position:relative;background:#f8f6f2;border-right:2px solid #d4cfc6}
+canvas#sim{width:100%;height:100%;cursor:crosshair}
+
+/* SIDE PANEL */
+.panel{width:280px;background:#f4f1ec;padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;font-size:11px;color:#4a4540}
+.panel h3{font-family:'Fredoka',sans-serif;font-size:13px;font-weight:600;color:#3a3630;margin-bottom:4px}
+.ctrl{display:flex;flex-direction:column;gap:3px}
+.ctrl label{font-size:10px;color:#6a655e;display:flex;justify-content:space-between}
+.ctrl label span{color:#3a3630;font-weight:500}
+.ctrl input[type=range]{-webkit-appearance:none;width:100%;height:6px;background:#ddd8d0;border-radius:3px;outline:none}
+.ctrl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:#6ecf6e;border-radius:50%;cursor:pointer;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.15)}
+.ctrl.inf input::-webkit-slider-thumb{background:#e85d5d}
+.ctrl.rec input::-webkit-slider-thumb{background:#5d9de8}
+.ctrl.mort input::-webkit-slider-thumb{background:#888}
+.ctrl.vax input::-webkit-slider-thumb{background:#d4a0e8}
+
+.btn-row{display:flex;gap:6px;flex-wrap:wrap}
+.btn{font-family:'Fredoka',sans-serif;font-size:11px;font-weight:600;padding:6px 14px;border-radius:8px;border:2px solid;cursor:pointer;transition:all .15s}
+.btn:hover{transform:scale(1.03)}
+.btn:active{transform:scale(0.97)}
+.btn.start{background:#6ecf6e;border-color:#4aa84a;color:#1a4a1a}
+.btn.pause{background:#e8c95d;border-color:#c4a83a;color:#4a3a1a}
+.btn.reset{background:#e85d5d;border-color:#c43a3a;color:#fff}
+.btn.vax{background:#d4a0e8;border-color:#a870c8;color:#3a1a4a}
+.btn.wall{background:#aaa69e;border-color:#8a857c;color:#fff}
+
+/* GRAPH */
+.graph-wrap{height:120px;background:#f8f6f2;border-radius:8px;border:1.5px solid #d4cfc6;overflow:hidden;position:relative}
+canvas#graph{width:100%;height:100%}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.stat{background:#f8f6f2;border-radius:6px;padding:6px 8px;border:1px solid #e4e0d8}
+.stat .sval{font-family:'Fredoka',sans-serif;font-size:16px;font-weight:700}
+.stat .slbl{font-size:8px;color:#8a857c;letter-spacing:0.5px;text-transform:uppercase}
+.stat.s-h .sval{color:#4aaa4a}
+.stat.s-i .sval{color:#d83a3a}
+.stat.s-r .sval{color:#3a7ad8}
+.stat.s-d .sval{color:#666}
+.stat.s-v .sval{color:#a050c8}
+.stat.s-r0 .sval{color:#c87030}
+
+/* TOOLS */
+.tools{display:flex;gap:4px}
+.tool{width:32px;height:32px;border-radius:6px;border:1.5px solid #d4cfc6;background:#f8f6f2;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:all .15s}
+.tool:hover{background:#ece8e0;border-color:#aaa69e}
+.tool.active{background:#6ecf6e;border-color:#4aa84a}
+
+/* INFO */
+
+.adv{margin:0}
+.adv summary{font-family:'Fredoka',sans-serif;font-size:11px;font-weight:600;color:#6a655e;cursor:pointer;padding:6px 0;list-style:none;user-select:none}
+.adv summary::-webkit-details-marker{display:none}
+.adv summary::before{content:'▸ ';transition:transform .2s}
+.adv[open] summary::before{content:'▾ '}
+.adv-inner{display:flex;flex-direction:column;gap:8px;padding:8px 0 4px;border-top:1px solid #e4e0d8;margin-top:4px}
+.info{font-size:9px;color:#aaa69e;line-height:1.8;padding:6px;background:#f8f6f2;border-radius:6px;border:1px solid #e4e0d8}
+</style>
+</head>
+<body>
+<div class="top">
+<div>
+<h1>🦠 Virus Infection Mechanics</h1>
+<div class="sub">Algodoo-style physics simulation · SIR+D model</div>
+</div>
+<div class="legend">
+<span><span class="dot healthy"></span>Healthy</span>
+<span><span class="dot infected"></span>Infected</span>
+<span><span class="dot recovered"></span>Immune</span>
+<span><span class="dot dead"></span>Dead</span>
+<span><span class="dot vaccinated"></span>Vaccinated</span>
+</div>
+</div>
+<div class="main">
+<div class="sim-wrap"><canvas id="sim"></canvas></div>
+<div class="panel">
+<h3>Controls</h3>
+<div class="btn-row">
+<button class="btn start" onclick="toggleSim()" id="startBtn">▶ Start</button>
+<button class="btn pause" onclick="stepSim()">⏭ Step</button>
+<button class="btn reset" onclick="resetSim()">↺ Reset</button>
+</div>
+
+<div class="ctrl">
+<label>Population <span id="vPop">120</span></label>
+<input type="range" min="20" max="300" value="120" oninput="params.pop=+this.value;document.getElementById('vPop').textContent=this.value">
+</div>
+<div class="ctrl">
+<label>Initial Infected <span id="vInit">3</span></label>
+<input type="range" min="1" max="20" value="3" oninput="params.initInf=+this.value;document.getElementById('vInit').textContent=this.value">
+</div>
+<details class="adv">
+<summary>⚙️ Advanced Settings</summary>
+<div class="adv-inner">
+<div class="ctrl inf">
+<label>Infection Rate <span id="vInf">35%</span></label>
+<input type="range" min="1" max="100" value="35" oninput="params.infRate=+this.value/100;document.getElementById('vInf').textContent=this.value+'%'">
+</div>
+<div class="ctrl">
+<label>Infection Radius <span id="vRad">30</span></label>
+<input type="range" min="10" max="80" value="30" oninput="params.infRadius=+this.value;document.getElementById('vRad').textContent=this.value">
+</div>
+<div class="ctrl rec">
+<label>Recovery Time <span id="vRec">200</span> frames</label>
+<input type="range" min="50" max="600" value="200" oninput="params.recTime=+this.value;document.getElementById('vRec').textContent=this.value">
+</div>
+<div class="ctrl mort">
+<label>Mortality Rate <span id="vMort">5%</span></label>
+<input type="range" min="0" max="50" value="5" oninput="params.mortRate=+this.value/100;document.getElementById('vMort').textContent=this.value+'%'">
+</div>
+<div class="ctrl">
+<label>Cell Speed <span id="vSpd">1.5</span></label>
+<input type="range" min="5" max="40" value="15" oninput="params.speed=+this.value/10;document.getElementById('vSpd').textContent=(+this.value/10).toFixed(1)">
+</div>
+
+<h3>Interventions</h3>
+<div class="btn-row">
+<button class="btn vax" onclick="vaccinate()">💉 Vaccinate 10</button>
+<button class="btn wall" onclick="toggleQuarantine()">🧱 Quarantine Zone</button>
+</div>
+<div class="ctrl vax">
+<label>Vaccine Efficacy <span id="vVax">85%</span></label>
+<input type="range" min="10" max="100" value="85" oninput="params.vaxEff=+this.value/100;document.getElementById('vVax').textContent=this.value+'%'">
+</div>
+<div class="ctrl">
+<label>Social Distance <span id="vDist">0</span></label>
+<input type="range" min="0" max="50" value="0" oninput="params.socialDist=+this.value;document.getElementById('vDist').textContent=this.value">
+</div>
+</div>
+</details>
+
+<h3>Live Graph (SIR)</h3>
+<div class="graph-wrap"><canvas id="graph"></canvas></div>
+
+<h3>Statistics</h3>
+<div class="stats">
+<div class="stat s-h"><div class="sval" id="sH">0</div><div class="slbl">Healthy</div></div>
+<div class="stat s-i"><div class="sval" id="sI">0</div><div class="slbl">Infected</div></div>
+<div class="stat s-r"><div class="sval" id="sR">0</div><div class="slbl">Recovered</div></div>
+<div class="stat s-d"><div class="sval" id="sD">0</div><div class="slbl">Dead</div></div>
+<div class="stat s-v"><div class="sval" id="sV">0</div><div class="slbl">Vaccinated</div></div>
+<div class="stat s-r0"><div class="sval" id="sR0">—</div><div class="slbl">R₀ estimate</div></div>
+</div>
+
+<details class="adv">
+<summary>🔧 Tools</summary>
+<div class="adv-inner">
+<div class="tools">
+<div class="tool" onclick="setTool('infect')" title="Click to infect" id="tInfect">🦠</div>
+<div class="tool" onclick="setTool('wall')" title="Draw wall" id="tWall">🧱</div>
+<div class="tool" onclick="setTool('heal')" title="Click to heal" id="tHeal">💚</div>
+<div class="tool" onclick="setTool('kill')" title="Remove cell" id="tKill">💀</div>
+<div class="tool" onclick="setTool('add')" title="Add healthy cell" id="tAdd">➕</div>
+</div>
+</div>
+</details>
+
+<div class="info">
+<b>How it works:</b> Cells bounce around like Algodoo particles. When an infected cell (red) gets within the infection radius of a healthy cell (green), there's a chance of transmission. Infected cells either recover (blue) or die (gray) after a set time. Use tools to interact: infect, heal, add walls, vaccinate. The graph tracks the SIR curve in real time. Drag on the canvas to draw quarantine walls.
+</div>
+</div>
+</div>
+
+<script>
+const simC=document.getElementById('sim');
+const ctx=simC.getContext('2d');
+const grC=document.getElementById('graph');
+const gctx=grC.getContext('2d');
+
+const params={pop:120,initInf:3,infRate:0.35,infRadius:30,recTime:200,mortRate:0.05,speed:1.5,vaxEff:0.85,socialDist:0,cellR:6};
+
+let cells=[],walls=[],running=false,frame=0,graphData=[],tool='infect',drawingWall=false,wallStart=null;
+let totalInfections=0,gen0Time=0;
+
+const S=0,I=1,R=2,D=3,V=4;
+const colors={[S]:'#6ecf6e',[I]:'#e85d5d',[R]:'#5d9de8',[D]:'#888888',[V]:'#d4a0e8'};
+const outlines={[S]:'#3a8a3a',[I]:'#a83030',[R]:'#3060a8',[D]:'#555',[V]:'#8040a0'};
+
+function resize(){
+const r=simC.parentElement.getBoundingClientRect();
+simC.width=r.width;simC.height=r.height;
+grC.width=grC.parentElement.clientWidth;grC.height=grC.parentElement.clientHeight;
+}
+window.addEventListener('resize',resize);
+
+function createCell(x,y,state){
+const a=Math.random()*Math.PI*2;
+return{x,y,vx:Math.cos(a)*params.speed,vy:Math.sin(a)*params.speed,state,infTimer:0,r:params.cellR+Math.random()*2,pulse:0,trail:[]};
+}
+
+function initSim(){
+cells=[];walls=[];frame=0;graphData=[];totalInfections=0;gen0Time=0;
+const W=simC.width,H=simC.height;
+for(let i=0;i<params.pop;i++){
+const s=i<params.initInf?I:S;
+cells.push(createCell(30+Math.random()*(W-60),30+Math.random()*(H-60),s));
+if(s===I)totalInfections++;
+}
+updateStats();
+}
+
+function toggleSim(){running=!running;document.getElementById('startBtn').textContent=running?'⏸ Pause':'▶ Start';if(running)loop();}
+function stepSim(){running=false;document.getElementById('startBtn').textContent='▶ Start';update();render();renderGraph();}
+function resetSim(){running=false;document.getElementById('startBtn').textContent='▶ Start';resize();initSim();render();renderGraph();}
+
+function update(){
+const W=simC.width,H=simC.height;
+frame++;
+
+for(const c of cells){
+if(c.state===D)continue;
+
+// Social distancing force
+if(params.socialDist>0){
+for(const o of cells){
+if(o===c||o.state===D)continue;
+const dx=c.x-o.x,dy=c.y-o.y,d=Math.sqrt(dx*dx+dy*dy);
+if(d<params.socialDist&&d>0){
+const f=(params.socialDist-d)/params.socialDist*0.15;
+c.vx+=dx/d*f;c.vy+=dy/d*f;
+}
+}
+}
+
+// Speed normalization
+const spd=Math.sqrt(c.vx*c.vx+c.vy*c.vy);
+if(spd>params.speed*1.5){c.vx*=params.speed*1.5/spd;c.vy*=params.speed*1.5/spd;}
+if(spd<params.speed*0.5){c.vx*=params.speed*0.8/spd;c.vy*=params.speed*0.8/spd;}
+
+c.x+=c.vx;c.y+=c.vy;
+
+// Bounce off walls
+if(c.x<c.r){c.x=c.r;c.vx*=-1;}
+if(c.x>W-c.r){c.x=W-c.r;c.vx*=-1;}
+if(c.y<c.r){c.y=c.r;c.vy*=-1;}
+if(c.y>H-c.r){c.y=H-c.r;c.vy*=-1;}
+
+// Bounce off custom walls
+for(const w of walls){
+const dx=w.x2-w.x1,dy=w.y2-w.y1;
+const len=Math.sqrt(dx*dx+dy*dy);if(len===0)continue;
+const nx=-dy/len,ny=dx/len;
+const t=((c.x-w.x1)*(-dy)+(c.y-w.y1)*dx)/(len*len);
+const proj=((c.x-w.x1)*dx+(c.y-w.y1)*dy)/(len*len);
+if(proj>=0&&proj<=1){
+const dist=Math.abs((c.x-w.x1)*(-dy/len)+(c.y-w.y1)*(dx/len));
+if(dist<c.r+3){
+const dot=c.vx*nx+c.vy*ny;
+c.vx-=2*dot*nx;c.vy-=2*dot*ny;
+c.x+=nx*(c.r+4-dist);c.y+=ny*(c.r+4-dist);
+}
+}
+}
+
+// Trail
+c.trail.push({x:c.x,y:c.y});
+if(c.trail.length>8)c.trail.shift();
+
+// Infection spread
+if(c.state===I){
+c.infTimer++;
+// Recovery or death
+if(c.infTimer>params.recTime){
+c.state=Math.random()<params.mortRate?D:R;
+c.pulse=10;
+}
+// Spread
+for(const o of cells){
+if(o.state!==S&&o.state!==V)continue;
+const dx=c.x-o.x,dy=c.y-o.y,d=Math.sqrt(dx*dx+dy*dy);
+if(d<params.infRadius){
+let rate=params.infRate;
+if(o.state===V)rate*=(1-params.vaxEff);
+if(Math.random()<rate*0.02){
+o.state=I;o.infTimer=0;o.pulse=15;
+totalInfections++;
+}
+}
+}
+}
+
+if(c.pulse>0)c.pulse-=0.5;
+}
+
+// Graph data
+if(frame%3===0){
+const h=cells.filter(c=>c.state===S).length;
+const i=cells.filter(c=>c.state===I).length;
+const r=cells.filter(c=>c.state===R).length;
+const d=cells.filter(c=>c.state===D).length;
+const v=cells.filter(c=>c.state===V).length;
+graphData.push({h,i,r,d,v});
+if(graphData.length>300)graphData.shift();
+}
+
+updateStats();
+}
+
+function render(){
+const W=simC.width,H=simC.height;
+// Algodoo-style background
+ctx.fillStyle='#f8f6f2';
+ctx.fillRect(0,0,W,H);
+
+// Grid dots
+ctx.fillStyle='rgba(0,0,0,0.03)';
+for(let x=0;x<W;x+=20)for(let y=0;y<H;y+=20)ctx.fillRect(x,y,1,1);
+
+// Draw walls
+ctx.strokeStyle='#8a857c';ctx.lineWidth=6;ctx.lineCap='round';
+for(const w of walls){ctx.beginPath();ctx.moveTo(w.x1,w.y1);ctx.lineTo(w.x2,w.y2);ctx.stroke();}
+ctx.strokeStyle='#aaa69e';ctx.lineWidth=3;
+for(const w of walls){ctx.beginPath();ctx.moveTo(w.x1,w.y1);ctx.lineTo(w.x2,w.y2);ctx.stroke();}
+
+// Draw infection radius indicators for infected
+for(const c of cells){
+if(c.state===I){
+ctx.beginPath();ctx.arc(c.x,c.y,params.infRadius,0,Math.PI*2);
+ctx.fillStyle='rgba(232,93,93,0.04)';ctx.fill();
+ctx.strokeStyle='rgba(232,93,93,0.08)';ctx.lineWidth=0.5;ctx.stroke();
+}
+}
+
+// Draw cells
+for(const c of cells){
+if(c.state===D){
+// Dead: X mark
+ctx.fillStyle='rgba(100,100,100,0.3)';
+ctx.beginPath();ctx.arc(c.x,c.y,c.r*0.7,0,Math.PI*2);ctx.fill();
+continue;
+}
+
+// Trail
+if(c.state===I&&c.trail.length>1){
+ctx.strokeStyle='rgba(232,93,93,0.08)';ctx.lineWidth=2;
+ctx.beginPath();ctx.moveTo(c.trail[0].x,c.trail[0].y);
+for(let i=1;i<c.trail.length;i++)ctx.lineTo(c.trail[i].x,c.trail[i].y);
+ctx.stroke();
+}
+
+const pr=c.r+(c.pulse>0?c.pulse*0.3:0);
+
+// Shadow
+ctx.beginPath();ctx.arc(c.x+1,c.y+2,pr,0,Math.PI*2);
+ctx.fillStyle='rgba(0,0,0,0.08)';ctx.fill();
+
+// Body
+ctx.beginPath();ctx.arc(c.x,c.y,pr,0,Math.PI*2);
+ctx.fillStyle=colors[c.state];ctx.fill();
+ctx.strokeStyle=outlines[c.state];ctx.lineWidth=1.5;ctx.stroke();
+
+// Highlight
+ctx.beginPath();ctx.arc(c.x-pr*0.25,c.y-pr*0.25,pr*0.35,0,Math.PI*2);
+ctx.fillStyle='rgba(255,255,255,0.35)';ctx.fill();
+
+// Infection pulse ring
+if(c.state===I&&c.pulse>0){
+ctx.beginPath();ctx.arc(c.x,c.y,pr+c.pulse,0,Math.PI*2);
+ctx.strokeStyle=`rgba(232,93,93,${c.pulse/15*0.3})`;ctx.lineWidth=2;ctx.stroke();
+}
+
+// Vaccinated shield
+if(c.state===V){
+ctx.beginPath();ctx.arc(c.x,c.y,pr+3,0,Math.PI*2);
+ctx.strokeStyle='rgba(160,80,200,0.25)';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
+}
+}
+
+// Drawing wall preview
+if(drawingWall&&wallStart){
+ctx.strokeStyle='rgba(138,133,124,0.4)';ctx.lineWidth=6;ctx.lineCap='round';ctx.setLineDash([8,8]);
+ctx.beginPath();ctx.moveTo(wallStart.x,wallStart.y);ctx.lineTo(wallCur.x,wallCur.y);ctx.stroke();ctx.setLineDash([]);
+}
+}
+
+function renderGraph(){
+const W=grC.width,H=grC.height;
+gctx.fillStyle='#f8f6f2';gctx.fillRect(0,0,W,H);
+if(graphData.length<2)return;
+const total=params.pop;
+const dx=W/300;
+
+function drawLine(key,color){
+gctx.beginPath();gctx.strokeStyle=color;gctx.lineWidth=1.5;
+for(let i=0;i<graphData.length;i++){
+const v=graphData[i][key]/total*H;
+if(i===0)gctx.moveTo(i*dx,H-v);else gctx.lineTo(i*dx,H-v);
+}
+gctx.stroke();
+}
+
+// Stacked area for infected
+gctx.beginPath();gctx.moveTo(0,H);
+for(let i=0;i<graphData.length;i++)gctx.lineTo(i*dx,H-graphData[i].i/total*H);
+gctx.lineTo((graphData.length-1)*dx,H);gctx.closePath();
+gctx.fillStyle='rgba(232,93,93,0.12)';gctx.fill();
+
+drawLine('h','#6ecf6e');
+drawLine('i','#e85d5d');
+drawLine('r','#5d9de8');
+drawLine('d','#888');
+}
+
+function updateStats(){
+const h=cells.filter(c=>c.state===S).length;
+const i=cells.filter(c=>c.state===I).length;
+const r=cells.filter(c=>c.state===R).length;
+const d=cells.filter(c=>c.state===D).length;
+const v=cells.filter(c=>c.state===V).length;
+document.getElementById('sH').textContent=h;
+document.getElementById('sI').textContent=i;
+document.getElementById('sR').textContent=r;
+document.getElementById('sD').textContent=d;
+document.getElementById('sV').textContent=v;
+
+// R0 estimate
+if(totalInfections>params.initInf&&params.initInf>0){
+const r0=(totalInfections/params.initInf).toFixed(1);
+document.getElementById('sR0').textContent=r0;
+}
+}
+
+function vaccinate(){
+let count=0;
+for(const c of cells){
+if(c.state===S&&count<10){c.state=V;c.pulse=10;count++;}
+}
+}
+
+let quarantineOn=false;
+function toggleQuarantine(){
+quarantineOn=!quarantineOn;
+if(quarantineOn){
+const W=simC.width,H=simC.height;
+const cx=W/2,cy=H/2,s=100;
+walls.push({x1:cx-s,y1:cy-s,x2:cx+s,y2:cy-s});
+walls.push({x1:cx+s,y1:cy-s,x2:cx+s,y2:cy+s});
+walls.push({x1:cx+s,y1:cy+s,x2:cx-s,y2:cy+s});
+walls.push({x1:cx-s,y1:cy+s,x2:cx-s,y2:cy-s});
+}else{
+walls=walls.filter(w=>{
+const cx=simC.width/2,cy=simC.height/2;
+return!(Math.abs((w.x1+w.x2)/2-cx)<120&&Math.abs((w.y1+w.y2)/2-cy)<120);
+});
+}
+}
+
+function setTool(t){
+tool=t;
+document.querySelectorAll('.tool').forEach(el=>el.classList.remove('active'));
+document.getElementById('t'+t.charAt(0).toUpperCase()+t.slice(1)).classList.add('active');
+}
+
+let wallCur={x:0,y:0};
+simC.addEventListener('mousedown',e=>{
+const r=simC.getBoundingClientRect();
+const mx=e.clientX-r.left,my=e.clientY-r.top;
+if(tool==='wall'){drawingWall=true;wallStart={x:mx,y:my};wallCur={x:mx,y:my};return;}
+if(tool==='add'){cells.push(createCell(mx,my,S));return;}
+for(const c of cells){
+const dx=c.x-mx,dy=c.y-my;
+if(dx*dx+dy*dy<(c.r+5)*(c.r+5)){
+if(tool==='infect'&&(c.state===S||c.state===V)){c.state=I;c.infTimer=0;c.pulse=15;totalInfections++;}
+if(tool==='heal'&&c.state===I){c.state=R;c.pulse=10;}
+if(tool==='kill'){c.state=D;}
+return;
+}
+}
+});
+simC.addEventListener('mousemove',e=>{
+const r=simC.getBoundingClientRect();
+wallCur={x:e.clientX-r.left,y:e.clientY-r.top};
+});
+simC.addEventListener('mouseup',e=>{
+if(drawingWall&&wallStart){
+const r=simC.getBoundingClientRect();
+const mx=e.clientX-r.left,my=e.clientY-r.top;
+walls.push({x1:wallStart.x,y1:wallStart.y,x2:mx,y2:my});
+drawingWall=false;wallStart=null;
+}
+});
+
+function loop(){
+if(!running)return;
+update();render();renderGraph();
+requestAnimationFrame(loop);
+}
+
+resize();initSim();render();renderGraph();
+</script>
+</body>
+</html>
