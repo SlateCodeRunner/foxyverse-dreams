@@ -6,553 +6,324 @@
 <title>NazarPets — The Ward That Watches Back</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap');
-:root{
---bg:#1a0a2e;--card:#241445;--card2:#1e0f3a;--accent:#00d4aa;--accent2:#ff6b9d;
---accent3:#ffd93d;--accent4:#6c5ce7;--text:#e8e0f0;--muted:#8b7aa8;
---pet1:#00d4aa;--pet2:#ff6b9d;--pet3:#4fc3f7;--pet4:#ffd93d;
-}
+:root{--bg:#0e0618;--card:#1a0d2e;--accent:#00d4aa;--accent2:#ff6b9d;--accent3:#ffd93d;--accent4:#6c5ce7;--text:#e8e0f0;--muted:#8b7aa8}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden}
 
-/* TOP NAV */
-.topbar{background:linear-gradient(90deg,#2d1b69,#1a0a2e,#2d1b69);border-bottom:3px solid var(--accent);padding:0;position:sticky;top:0;z-index:100}
-.topbar-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:8px 16px}
-.logo{font-family:'Press Start 2P',monospace;font-size:14px;color:var(--accent);text-shadow:0 0 10px rgba(0,212,170,0.4)}
+.topbar{background:rgba(14,6,24,0.95);border-bottom:2px solid var(--accent);padding:8px 16px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(10px)}
+.logo{font-family:'Press Start 2P',monospace;font-size:13px;color:var(--accent);text-shadow:0 0 12px rgba(0,212,170,0.3)}
 .logo span{color:var(--accent2)}
 .nav-links{display:flex;gap:4px;flex-wrap:wrap}
-.nav-links a{font-family:'Fredoka',sans-serif;font-size:11px;font-weight:600;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:12px;transition:all .2s;border:1px solid transparent}
-.nav-links a:hover,.nav-links a.active{color:var(--accent);border-color:rgba(0,212,170,0.3);background:rgba(0,212,170,0.05)}
-.stats-bar{background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(108,92,231,0.15);padding:6px 0;font-size:11px;color:var(--muted);text-align:center}
-.stats-bar span{margin:0 12px}
-.stats-bar .val{color:var(--accent3);font-weight:700}
+.nav-links a{font-family:'Fredoka',sans-serif;font-size:10px;font-weight:600;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:10px;transition:all .2s}
+.nav-links a:hover{color:var(--accent);background:rgba(0,212,170,0.06)}
+.stats-strip{background:rgba(0,0,0,0.4);padding:5px 0;font-size:10px;color:var(--muted);text-align:center;letter-spacing:0.5px}
+.stats-strip .val{color:var(--accent3);font-weight:700}
 
-/* HERO */
-.hero{max-width:960px;margin:0 auto;padding:30px 16px 20px;text-align:center}
-.hero h1{font-family:'Fredoka',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
-.hero p{font-size:13px;color:var(--muted);max-width:500px;margin:0 auto}
+.ticker{background:rgba(0,212,170,0.02);overflow:hidden;height:22px;position:relative;border-bottom:1px solid rgba(0,212,170,0.04)}
+.ticker-inner{position:absolute;white-space:nowrap;animation:tick 50s linear infinite;font-size:9px;color:var(--muted);line-height:22px}
+@keyframes tick{0%{transform:translateX(100%)}100%{transform:translateX(-250%)}}
+.ticker-inner .a{color:var(--accent2)}.ticker-inner .g{color:var(--accent3)}
+.ticker-inner span{margin-right:50px}
 
-/* MAIN GRID */
-.main{max-width:960px;margin:0 auto;padding:0 16px 40px;display:grid;grid-template-columns:200px 1fr 200px;gap:16px}
-@media(max-width:768px){.main{grid-template-columns:1fr;}}
+/* HERO — FULL BLEED */
+.hero{position:relative;height:80vh;overflow:hidden;display:flex;align-items:flex-end}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.5;filter:saturate(0.7);transition:opacity 1s}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(14,6,24,0.4) 40%,rgba(14,6,24,0.1) 100%)}
+.hero-content{position:relative;z-index:2;padding:40px 30px;max-width:600px}
+.hero-content h1{font-family:'Fredoka',sans-serif;font-size:clamp(36px,7vw,56px);font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:8px}
+.hero-content .sub{font-size:14px;color:rgba(232,224,240,0.4);margin-bottom:4px}
+.hero-content .tagline{font-family:'Caveat',cursive;font-size:22px;color:rgba(255,217,61,0.2)}
+.hero-pets{display:flex;gap:12px;margin-top:16px}
+.hero-pet{font-size:28px;opacity:0.5;cursor:pointer;transition:all .3s}
+.hero-pet:hover{opacity:1;transform:scale(1.3)}
 
-/* SIDEBAR */
-.sidebar{display:flex;flex-direction:column;gap:12px}
-.side-card{background:var(--card);border-radius:12px;padding:14px;border:1px solid rgba(108,92,231,0.12)}
-.side-card h3{font-family:'Fredoka',sans-serif;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase}
-.pet-mini{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(108,92,231,0.08);cursor:pointer;transition:all .2s}
-.pet-mini:last-child{border:none}
-.pet-mini:hover{padding-left:4px}
-.pet-mini .emoji{font-size:20px}
-.pet-mini .info{flex:1}
-.pet-mini .name{font-size:11px;font-weight:700;color:var(--text)}
-.pet-mini .mood{font-size:9px;color:var(--muted)}
-.pet-bar{height:4px;background:rgba(255,255,255,0.05);border-radius:2px;margin-top:3px;overflow:hidden}
-.pet-bar-fill{height:100%;border-radius:2px;transition:width .5s}
+/* SECTION TEMPLATE */
+.section{max-width:1000px;margin:0 auto;padding:20px 16px}
+.section-label{font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:4px;color:rgba(0,212,170,0.12);margin-bottom:16px;text-transform:uppercase}
 
-.daily-quest{font-size:11px;color:var(--muted);line-height:1.8}
-.daily-quest .quest-name{color:var(--accent3);font-weight:700}
-.daily-quest .reward{color:var(--accent);font-size:10px}
+/* PHOTO-FIRST WORLD CARDS */
+.world{margin-bottom:8px;position:relative;overflow:hidden;border-radius:16px;border:1px solid rgba(108,92,231,0.06);transition:all .4s;cursor:pointer}
+.world:hover{border-color:rgba(0,212,170,0.15);box-shadow:0 12px 50px rgba(0,0,0,0.4)}
 
-/* CENTER CONTENT */
-.center{display:flex;flex-direction:column;gap:16px}
-.world-card{background:var(--card);border-radius:14px;overflow:hidden;border:1px solid rgba(108,92,231,0.1);transition:all .3s;cursor:pointer;position:relative}
-.world-card:hover{border-color:rgba(0,212,170,0.2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
-.world-header{padding:16px 18px 12px;display:flex;justify-content:space-between;align-items:center}
-.world-name{font-family:'Fredoka',sans-serif;font-size:16px;font-weight:700}
-.world-tag{font-size:9px;padding:3px 8px;border-radius:10px;font-weight:600;letter-spacing:1px}
-.world-body{padding:0 18px 16px;font-size:12px;color:var(--muted);line-height:1.8}
-.world-body .flavor{font-family:'Caveat',cursive;font-size:15px;color:rgba(255,255,255,0.15);margin-top:6px}
-.world-items{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-.world-item{font-size:10px;padding:3px 8px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+/* Single image world */
+.world-solo{height:70vh;display:flex;align-items:flex-end}
+.world-solo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.55;transition:opacity .6s;filter:saturate(0.75)}
+.world-solo:hover img{opacity:0.75;filter:saturate(0.9)}
+.world-solo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(14,6,24,0.3) 50%,transparent 100%)}
 
-.world-drift .world-name{color:#4fc3f7}
-.world-drift .world-tag{background:rgba(79,195,247,0.1);color:#4fc3f7;border:1px solid rgba(79,195,247,0.2)}
-.world-shore .world-name{color:#ff6b9d}
-.world-shore .world-tag{background:rgba(255,107,157,0.1);color:#ff6b9d;border:1px solid rgba(255,107,157,0.2)}
-.world-stacks .world-name{color:#a29bfe}
-.world-stacks .world-tag{background:rgba(162,155,254,0.1);color:#a29bfe;border:1px solid rgba(162,155,254,0.2)}
-.world-neon .world-name{color:#fd79a8}
-.world-neon .world-tag{background:rgba(253,121,168,0.1);color:#fd79a8;border:1px solid rgba(253,121,168,0.2)}
-.world-ward .world-name{color:var(--accent)}
-.world-ward .world-tag{background:rgba(0,212,170,0.1);color:var(--accent);border:1px solid rgba(0,212,170,0.2)}
-.world-glass .world-name{color:var(--accent3)}
-.world-glass .world-tag{background:rgba(255,217,61,0.1);color:var(--accent3);border:1px solid rgba(255,217,61,0.2)}
-.world-field .world-name{color:#55efc4}
-.world-field .world-tag{background:rgba(85,239,196,0.1);color:#55efc4;border:1px solid rgba(85,239,196,0.2)}
-.world-keys .world-name{color:#dfe6e9}
-.world-keys .world-tag{background:rgba(223,230,233,0.08);color:#dfe6e9;border:1px solid rgba(223,230,233,0.15)}
+/* Dual image world */
+.world-dual{display:grid;grid-template-columns:1fr 1fr;min-height:60vh}
+.world-dual-img{position:relative;overflow:hidden}
+.world-dual-img img{width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.5;transition:opacity .6s;filter:saturate(0.7)}
+.world-dual:hover img{opacity:0.7;filter:saturate(0.9)}
+.world-dual-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,transparent 60%)}
 
-/* PET DETAIL MODAL */
-.pet-detail{background:var(--card);border-radius:14px;padding:20px;border:1px solid rgba(108,92,231,0.12);text-align:center;display:none}
-.pet-detail.active{display:block}
-.pet-detail .big-emoji{font-size:64px;margin-bottom:10px;animation:petBounce 2s ease-in-out infinite}
-@keyframes petBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.pet-detail .pet-name{font-family:'Fredoka',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px}
-.pet-detail .pet-species{font-size:11px;color:var(--muted);margin-bottom:14px}
-.pet-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left}
-.stat{background:rgba(0,0,0,0.2);padding:8px 10px;border-radius:8px}
-.stat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.stat-bar{height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden}
-.stat-fill{height:100%;border-radius:3px}
-.pet-actions{display:flex;gap:8px;margin-top:14px;justify-content:center}
-.pet-btn{font-family:'Fredoka',sans-serif;font-size:11px;font-weight:600;padding:6px 14px;border-radius:10px;border:none;cursor:pointer;transition:all .2s}
-.pet-btn:hover{transform:scale(1.05)}
-.pet-btn.feed{background:var(--accent);color:#000}
-.pet-btn.play{background:var(--accent2);color:#fff}
-.pet-btn.ward{background:var(--accent4);color:#fff}
+/* Quad image world */
+.world-quad{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;min-height:80vh}
+.world-quad-img{position:relative;overflow:hidden}
+.world-quad-img img{width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.45;transition:opacity .6s;filter:saturate(0.65)}
+.world-quad:hover img{opacity:0.7;filter:saturate(0.85)}
+.world-quad-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(14,6,24,0.6) 100%)}
 
-/* RIGHT SIDEBAR */
-.inventory-item{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:11px;border-bottom:1px solid rgba(108,92,231,0.06)}
-.inventory-item:last-child{border:none}
-.inventory-item .qty{color:var(--accent3);font-weight:700;font-size:10px}
-.inventory-item .iname{color:var(--muted)}
+/* Triple image world */
+.world-tri{display:grid;grid-template-columns:1fr 1fr 1fr;min-height:55vh}
+.world-tri-img{position:relative;overflow:hidden}
+.world-tri-img img{width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.5;transition:opacity .6s;filter:saturate(0.7)}
+.world-tri:hover img{opacity:0.7;filter:saturate(0.9)}
+.world-tri-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(14,6,24,0.7) 0%,transparent 50%)}
 
-.feed-item{padding:8px 0;border-bottom:1px solid rgba(108,92,231,0.06);font-size:10px;color:var(--muted);line-height:1.6}
-.feed-item:last-child{border:none}
-.feed-item .who{color:var(--accent2);font-weight:700}
-.feed-item .when{color:rgba(255,255,255,0.1);font-size:9px}
+/* Text overlay on worlds */
+.world-text{position:relative;z-index:2;padding:30px 28px}
+.world-name{font-family:'Fredoka',sans-serif;font-size:clamp(22px,4vw,34px);font-weight:700;margin-bottom:4px}
+.world-tag{display:inline-block;font-size:9px;padding:3px 10px;border-radius:10px;font-weight:600;letter-spacing:1.5px;margin-bottom:10px}
+.world-desc{font-size:13px;color:rgba(232,224,240,0.35);line-height:1.9;max-width:500px}
+.world-flavor{font-family:'Caveat',cursive;font-size:18px;color:rgba(255,255,255,0.08);margin-top:10px}
+.world-items{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.world-item{font-size:10px;padding:3px 10px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.05);color:var(--muted)}
 
-/* FOOTER */
-.footer{max-width:960px;margin:0 auto;padding:30px 16px;text-align:center;border-top:1px solid rgba(108,92,231,0.08)}
-.footer p{font-size:10px;color:rgba(255,255,255,0.08);line-height:2}
-.footer a{color:var(--accent);text-decoration:none;opacity:0.3}
-.footer a:hover{opacity:0.6}
-.footer .big{font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(0,212,170,0.08);margin-top:10px;letter-spacing:2px}
+/* Dual text positioning */
+.world-dual .world-text{position:absolute;bottom:0;left:0;right:0;z-index:2}
+.world-quad .world-text{position:absolute;bottom:0;left:0;right:0;z-index:2;background:linear-gradient(to top,var(--bg),transparent);padding-top:60px}
+.world-tri .world-text{position:absolute;bottom:0;left:0;right:0;z-index:2}
 
-/* TICKER */
-.ticker{background:rgba(0,212,170,0.03);border-bottom:1px solid rgba(0,212,170,0.06);overflow:hidden;height:24px;position:relative}
-.ticker-inner{position:absolute;white-space:nowrap;animation:tickerScroll 40s linear infinite;font-size:10px;color:var(--muted);line-height:24px}
-@keyframes tickerScroll{0%{transform:translateX(100%)}100%{transform:translateX(-200%)}}
-.ticker-inner span{margin-right:40px}
-.ticker-inner .alert{color:var(--accent2)}
-.ticker-inner .gold{color:var(--accent3)}
+/* World colors */
+.w-drift .world-name{color:#4fc3f7}.w-drift .world-tag{background:rgba(79,195,247,0.12);color:#4fc3f7;border:1px solid rgba(79,195,247,0.2)}
+.w-shore .world-name{color:#ff6b9d}.w-shore .world-tag{background:rgba(255,107,157,0.12);color:#ff6b9d;border:1px solid rgba(255,107,157,0.2)}
+.w-stacks .world-name{color:#a29bfe}.w-stacks .world-tag{background:rgba(162,155,254,0.12);color:#a29bfe;border:1px solid rgba(162,155,254,0.2)}
+.w-neon .world-name{color:#fd79a8}.w-neon .world-tag{background:rgba(253,121,168,0.12);color:#fd79a8;border:1px solid rgba(253,121,168,0.2)}
+.w-ward .world-name{color:var(--accent)}.w-ward .world-tag{background:rgba(0,212,170,0.12);color:var(--accent);border:1px solid rgba(0,212,170,0.2)}
+.w-glass .world-name{color:var(--accent3)}.w-glass .world-tag{background:rgba(255,217,61,0.12);color:var(--accent3);border:1px solid rgba(255,217,61,0.2)}
+.w-field .world-name{color:#55efc4}.w-field .world-tag{background:rgba(85,239,196,0.12);color:#55efc4;border:1px solid rgba(85,239,196,0.2)}
+.w-keys .world-name{color:#dfe6e9}.w-keys .world-tag{background:rgba(223,230,233,0.08);color:#dfe6e9;border:1px solid rgba(223,230,233,0.12)}
 
-
-.world-img{width:100%;height:180px;object-fit:cover;opacity:0.7;transition:opacity .4s;filter:saturate(0.8) contrast(1.1)}
-.world-card:hover .world-img{opacity:0.9;filter:saturate(1) contrast(1.05)}
-.world-gallery{display:grid;grid-template-columns:1fr 1fr;gap:2px}
-.world-gallery img{width:100%;height:140px;object-fit:cover;object-position:top;opacity:0.6;transition:opacity .4s;filter:saturate(0.8)}
-.world-gallery img:hover{opacity:0.85}
-.pet-portrait{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:16px 0}
-.pet-portrait img{width:100%;height:100px;object-fit:cover;object-position:top;border-radius:8px;opacity:0.5;transition:opacity .3s;filter:saturate(0.7)}
-.pet-portrait img:hover{opacity:0.8;filter:saturate(1)}
+/* PET STRIP */
+.pet-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:1000px;margin:30px auto;padding:0 16px}
+.pet-card{background:var(--card);border-radius:14px;padding:18px;text-align:center;border:1px solid rgba(108,92,231,0.08);transition:all .3s;cursor:pointer}
+.pet-card:hover{border-color:rgba(0,212,170,0.2);transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+.pet-card .emoji{font-size:40px;margin-bottom:8px;display:block;animation:float 3s ease-in-out infinite}
+.pet-card:nth-child(2) .emoji{animation-delay:.5s}
+.pet-card:nth-child(3) .emoji{animation-delay:1s}
+.pet-card:nth-child(4) .emoji{animation-delay:1.5s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.pet-card .pname{font-family:'Fredoka',sans-serif;font-size:15px;font-weight:700;margin-bottom:2px}
+.pet-card .ptype{font-size:9px;color:var(--muted);margin-bottom:10px}
+.pet-card .pbar{height:4px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden;margin:3px 0}
+.pet-card .pbar-fill{height:100%;border-radius:2px}
+.pet-card .pmood{font-family:'Caveat',cursive;font-size:13px;color:rgba(255,255,255,0.12);margin-top:8px}
 
 /* MINI GAME */
-.minigame{background:var(--card);border-radius:14px;padding:18px;border:1px solid rgba(108,92,231,0.12);text-align:center}
-.minigame h3{font-family:'Fredoka',sans-serif;font-size:14px;color:var(--accent3);margin-bottom:8px}
-.minigame p{font-size:11px;color:var(--muted);margin-bottom:12px}
-.game-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:200px;margin:0 auto}
-.game-cell{aspect-ratio:1;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:all .15s;user-select:none}
-.game-cell:hover{background:rgba(0,212,170,0.08);border-color:rgba(0,212,170,0.2)}
-.game-cell.revealed{background:rgba(0,212,170,0.1);border-color:rgba(0,212,170,0.3)}
-.game-cell.matched{background:rgba(255,217,61,0.1);border-color:rgba(255,217,61,0.3)}
-.game-score{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--accent);margin-top:10px}
+.game-section{max-width:400px;margin:40px auto;padding:0 16px;text-align:center}
+.game-section h3{font-family:'Fredoka',sans-serif;font-size:18px;color:var(--accent3);margin-bottom:6px}
+.game-section>p{font-size:11px;color:var(--muted);margin-bottom:16px}
+.game-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.game-cell{aspect-ratio:1;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:all .15s;user-select:none}
+.game-cell:hover{background:rgba(0,212,170,0.06);border-color:rgba(0,212,170,0.15)}
+.game-cell.revealed{background:rgba(0,212,170,0.08);border-color:rgba(0,212,170,0.25)}
+.game-cell.matched{background:rgba(255,217,61,0.08);border-color:rgba(255,217,61,0.25)}
+.game-score{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin-top:12px}
+
+/* FOOTER */
+.footer{max-width:1000px;margin:60px auto 0;padding:40px 16px;text-align:center;border-top:1px solid rgba(108,92,231,0.05)}
+.footer p{font-size:10px;color:rgba(255,255,255,0.06);line-height:2.2}
+.footer a{color:var(--accent);text-decoration:none;opacity:0.2}
+.footer .sig{font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,212,170,0.06);margin-top:14px;letter-spacing:3px}
+
+/* DIVIDER */
+.div-line{width:50px;height:1px;background:rgba(108,92,231,0.06);margin:40px auto}
+
+@media(max-width:600px){
+.world-dual,.world-quad{grid-template-columns:1fr}
+.world-tri{grid-template-columns:1fr}
+.pet-strip{grid-template-columns:1fr 1fr}
+.hero{height:90vh}
+.world-solo{height:85vh}
+}
 </style>
 </head>
 <body>
-
 <div class="topbar">
-<div class="topbar-inner">
 <div class="logo">Nazar<span>Pets</span> 🧿</div>
-<div class="nav-links">
-<a href="#" class="active">Home</a>
-<a href="#worlds">Worlds</a>
-<a href="#pets">My Pets</a>
-<a href="#games">Games</a>
-<a href="#ward">The Ward</a>
-<a href="#" onclick="document.querySelector('.pet-detail').classList.toggle('active');return false">Pet Detail</a>
+<div class="nav-links"><a href="#">Home</a><a href="#worlds">Worlds</a><a href="#pets">Pets</a><a href="#game">Game</a></div>
 </div>
+<div class="stats-strip">
+<span>🧿 NP: <span class="val" id="np">12,847</span></span> &nbsp;·&nbsp;
+<span>⭐ Lvl <span class="val">23</span></span> &nbsp;·&nbsp;
+<span>📅 Day <span class="val">847</span></span> &nbsp;·&nbsp;
+<span>🛡️ Wards: <span class="val">3/5</span></span> &nbsp;·&nbsp;
+<span>🗝️ Keys: <span class="val">7/12</span></span>
 </div>
-</div>
-
-<div class="stats-bar">
-<span>🧿 NP: <span class="val" id="np">12,847</span></span>
-<span>⭐ Level: <span class="val">23</span></span>
-<span>📅 Day: <span class="val">847</span></span>
-<span>🛡️ Wards Active: <span class="val">3</span></span>
-<span>🗝️ Keys Found: <span class="val">7/12</span></span>
-</div>
-
-<div class="ticker">
-<div class="ticker-inner">
+<div class="ticker"><div class="ticker-inner">
 <span>🧿 Nazari blinked twice. Something is watching from the Stacks.</span>
-<span class="alert">⚠️ NEON DISTRICT: a new wall appeared overnight. nobody painted it.</span>
-<span>☮️ Paloma is glowing softly. You told someone the truth today.</span>
-<span class="gold">🗝️ NEW KEY discovered in The Glass! Check your reflection.</span>
+<span class="a">⚠️ THE NEON: a new wall appeared overnight. nobody painted it.</span>
+<span>☮️ Paloma is glowing. You told someone the truth today.</span>
+<span class="g">🗝️ NEW KEY in The Glass! Check your reflection.</span>
 <span>🌊 Resaca pulled something from the tide. It's addressed to you.</span>
-<span class="alert">⚠️ The Drift has been moving faster than usual. Buckle up.</span>
-<span>🔑 Llave found a door in The Keys that wasn't there yesterday.</span>
-<span class="gold">✨ DAILY QUEST: Feed Nazari 3 evil eye charms before midnight.</span>
-</div>
-</div>
+<span class="a">⚠️ The Drift is moving faster than usual.</span>
+</div></div>
 
+<!-- HERO: WARD IMAGE -->
 <div class="hero">
-<h1>Welcome back, Nazar</h1>
-<p>the ward that watches back. your pets missed you. the worlds shifted while you were gone. something new is in the neon.</p>
-</div>
-
-<div class="main">
-<!-- LEFT SIDEBAR: PETS -->
-<div class="sidebar">
-<div class="side-card">
-<h3>Your Pets</h3>
-<div class="pet-mini" onclick="showPet(0)">
-<div class="emoji">🧿</div>
-<div class="info">
-<div class="name">Nazari</div>
-<div class="mood">mood: watchful</div>
-<div class="pet-bar"><div class="pet-bar-fill" style="width:85%;background:var(--pet1)"></div></div>
-</div>
-</div>
-<div class="pet-mini" onclick="showPet(1)">
-<div class="emoji">☮️</div>
-<div class="info">
-<div class="name">Paloma</div>
-<div class="mood">mood: luminous</div>
-<div class="pet-bar"><div class="pet-bar-fill" style="width:92%;background:var(--pet2)"></div></div>
-</div>
-</div>
-<div class="pet-mini" onclick="showPet(2)">
-<div class="emoji">🌊</div>
-<div class="info">
-<div class="name">Resaca</div>
-<div class="mood">mood: restless</div>
-<div class="pet-bar"><div class="pet-bar-fill" style="width:68%;background:var(--pet3)"></div></div>
-</div>
-</div>
-<div class="pet-mini" onclick="showPet(3)">
-<div class="emoji">🔑</div>
-<div class="info">
-<div class="name">Llave</div>
-<div class="mood">mood: curious</div>
-<div class="pet-bar"><div class="pet-bar-fill" style="width:77%;background:var(--pet4)"></div></div>
+<img class="hero-img" src="img/nazar/nazar-07-eyes.jpg" alt="do you have any idea what these are">
+<div class="hero-content">
+<h1>NazarPets</h1>
+<div class="sub">the ward that watches back</div>
+<div class="tagline">do you have any idea what these are</div>
+<div class="hero-pets">
+<span class="hero-pet">🧿</span>
+<span class="hero-pet">☮️</span>
+<span class="hero-pet">🌊</span>
+<span class="hero-pet">🔑</span>
 </div>
 </div>
 </div>
 
-<div class="side-card">
-<h3>Daily Quest</h3>
-<div class="daily-quest">
-<div class="quest-name">🧿 The Watcher's Round</div>
-Feed Nazari 3 evil eye charms. She blinked twice in the Stacks — something moved between the shelves.<br>
-<div class="reward">Reward: 500 NP + Ward Fragment</div>
-</div>
-</div>
-
-<div class="side-card">
-<h3>Ward Status</h3>
-<div class="daily-quest">
-<div style="margin-bottom:6px">🛡️ <span style="color:var(--accent)">The Drift</span> — protected</div>
-<div style="margin-bottom:6px">🛡️ <span style="color:var(--accent)">The Shore</span> — protected</div>
-<div style="margin-bottom:6px">⚠️ <span style="color:var(--accent2)">The Neon</span> — breached</div>
-<div style="margin-bottom:6px">🛡️ <span style="color:var(--accent)">The Stacks</span> — protected</div>
-<div>❓ <span style="color:var(--muted)">The Glass</span> — unknown</div>
-</div>
-</div>
+<!-- PETS -->
+<div class="section" id="pets"><div class="section-label">your pets</div></div>
+<div class="pet-strip">
+<div class="pet-card"><span class="emoji">🧿</span><div class="pname">Nazari</div><div class="ptype">Evil Eye Cat · Warden</div><div class="pbar"><div class="pbar-fill" style="width:85%;background:var(--accent)"></div></div><div class="pbar"><div class="pbar-fill" style="width:92%;background:var(--accent4)"></div></div><div class="pmood">mood: watchful</div></div>
+<div class="pet-card"><span class="emoji">☮️</span><div class="pname">Paloma</div><div class="ptype">Peace Dove · Truth Resonant</div><div class="pbar"><div class="pbar-fill" style="width:92%;background:var(--accent2)"></div></div><div class="pbar"><div class="pbar-fill" style="width:75%;background:var(--accent4)"></div></div><div class="pmood">mood: luminous</div></div>
+<div class="pet-card"><span class="emoji">🌊</span><div class="pname">Resaca</div><div class="ptype">Tide Serpent · Current Walker</div><div class="pbar"><div class="pbar-fill" style="width:68%;background:#4fc3f7"></div></div><div class="pbar"><div class="pbar-fill" style="width:55%;background:var(--accent4)"></div></div><div class="pmood">mood: restless</div></div>
+<div class="pet-card"><span class="emoji">🔑</span><div class="pname">Llave</div><div class="ptype">Key Fox · Door Finder</div><div class="pbar"><div class="pbar-fill" style="width:77%;background:var(--accent3)"></div></div><div class="pbar"><div class="pbar-fill" style="width:66%;background:var(--accent4)"></div></div><div class="pmood">mood: curious</div></div>
 </div>
 
-<!-- CENTER: WORLDS -->
-<div class="center" id="worlds">
+<div class="div-line"></div>
 
-<div class="pet-detail" id="petDetail">
-<div class="big-emoji" id="petEmoji">🧿</div>
-<div class="pet-name" id="petName">Nazari</div>
-<div class="pet-species" id="petSpecies">Evil Eye Cat — Tier III Warden</div>
-<div class="pet-stats">
-<div class="stat"><div class="stat-label">Happiness</div><div class="stat-bar"><div class="stat-fill" id="statHappy" style="width:85%;background:var(--pet1)"></div></div></div>
-<div class="stat"><div class="stat-label">Hunger</div><div class="stat-bar"><div class="stat-fill" id="statHunger" style="width:45%;background:var(--accent2)"></div></div></div>
-<div class="stat"><div class="stat-label">Ward Power</div><div class="stat-bar"><div class="stat-fill" id="statWard" style="width:92%;background:var(--accent4)"></div></div></div>
-<div class="stat"><div class="stat-label">Loyalty</div><div class="stat-bar"><div class="stat-fill" id="statLoyal" style="width:100%;background:var(--accent3)"></div></div></div>
-</div>
-<div class="pet-actions">
-<button class="pet-btn feed" onclick="feedPet()">🧿 Feed</button>
-<button class="pet-btn play" onclick="playPet()">✨ Play</button>
-<button class="pet-btn ward" onclick="wardPet()">🛡️ Ward</button>
-</div>
-</div>
+<!-- WORLDS -->
+<div class="section" id="worlds"><div class="section-label">the worlds of nazar</div></div>
 
-<div class="world-card world-drift"><div class="world-gallery">
-<img src="img/nazar/nazar-01-lace.jpg" alt="the drift — lace and leather">
-<img src="img/nazar/nazar-06-sweater.jpg" alt="the drift — soft hours">
-<img src="img/nazar/nazar-15-night.jpg" alt="the drift — after dark">
-<img src="img/nazar/nazar-13-car2.jpg" alt="the drift — always moving">
-</div>
-<div class="world-header">
+<!-- THE DRIFT — 4 photos -->
+<div class="world world-quad w-drift">
+<div class="world-quad-img"><img src="img/nazar/nazar-01-lace.jpg" alt="lace and leather"></div>
+<div class="world-quad-img"><img src="img/nazar/nazar-06-sweater.jpg" alt="soft hours"></div>
+<div class="world-quad-img"><img src="img/nazar/nazar-15-night.jpg" alt="after dark"></div>
+<div class="world-quad-img"><img src="img/nazar/nazar-13-car2.jpg" alt="always moving"></div>
+<div class="world-text">
 <div class="world-name">The Drift</div>
 <div class="world-tag">ALWAYS MOVING</div>
-</div>
-<div class="world-body">
-She lives in cars. Leather seats, golden hour through tinted glass, peace sign swinging from the rearview. The Drift isn't a place — it's the space between places. Your pet Resaca rides shotgun and doesn't ask where you're going.
-<div class="flavor">the destination was never the point</div>
-<div class="world-items">
-<span class="world-item">🗝️ Ignition Key</span>
-<span class="world-item">☮️ Rearview Charm</span>
-<span class="world-item">🎵 Road Mix Vol. 7</span>
-</div>
+<div class="world-desc">She lives in cars. Leather seats, golden hour through tinted glass, peace sign swinging from the rearview. The Drift isn't a place — it's the space between places.</div>
+<div class="world-flavor">the destination was never the point</div>
+<div class="world-items"><span class="world-item">🗝️ Ignition Key</span><span class="world-item">☮️ Rearview Charm</span><span class="world-item">🎵 Road Mix Vol. 7</span></div>
 </div>
 </div>
 
-<div class="world-card world-shore"><img class="world-img" src="img/nazar/nazar-02-guard.jpg" alt="the shore — guard on duty" style="object-position:top">
-<div class="world-header">
+<!-- THE SHORE — solo -->
+<div class="world world-solo w-shore">
+<img src="img/nazar/nazar-02-guard.jpg" alt="lifeguard on duty">
+<div class="world-text">
 <div class="world-name">The Shore</div>
 <div class="world-tag">LIFEGUARD ON DUTY</div>
-</div>
-<div class="world-body">
-Wooden dock. Still water. Red rescue board that says GUARD in letters bigger than her doubts. She saves people here — pulls them from the current before they know they're drowning. Resaca was born from the undertow she keeps walking into.
-<div class="flavor">she doesn't know saving people is a pattern yet</div>
-<div class="world-items">
-<span class="world-item">🌊 Rescue Board</span>
-<span class="world-item">⏱️ Whistle</span>
-<span class="world-item">🩹 Salt-Stained Badge</span>
-</div>
+<div class="world-desc">Wooden dock. Still water. Red rescue board that says GUARD in letters bigger than her doubts. She saves people here — pulls them from the current before they know they're drowning.</div>
+<div class="world-flavor">she doesn't know saving people is a pattern yet</div>
+<div class="world-items"><span class="world-item">🌊 Rescue Board</span><span class="world-item">⏱️ Whistle</span><span class="world-item">🩹 Salt-Stained Badge</span></div>
 </div>
 </div>
 
-<div class="world-card world-stacks"><img class="world-img" src="img/nazar/nazar-10-books.jpg" alt="the stacks — quiet hours">
-<div class="world-header">
+<!-- THE STACKS — solo -->
+<div class="world world-solo w-stacks">
+<img src="img/nazar/nazar-10-books.jpg" alt="bookshelves">
+<div class="world-text">
 <div class="world-name">The Stacks</div>
 <div class="world-tag">QUIET HOURS</div>
-</div>
-<div class="world-body">
-Bookshelves packed floor to ceiling. A green drink. A blue sweatshirt. The light is warm and the spines are cracked from rereading. Nazari sleeps on the top shelf and watches the door. Something moved between the shelves last night. The books are in a different order now.
-<div class="flavor">she reads like breathing. some pages breathe back.</div>
-<div class="world-items">
-<span class="world-item">📚 Worn Paperback</span>
-<span class="world-item">🧃 Green Elixir</span>
-<span class="world-item">🔖 Page 847</span>
-</div>
+<div class="world-desc">Bookshelves packed floor to ceiling. A green drink. The light is warm and the spines are cracked from rereading. Nazari sleeps on the top shelf and watches the door. Something moved between the shelves last night.</div>
+<div class="world-flavor">she reads like breathing. some pages breathe back.</div>
+<div class="world-items"><span class="world-item">📚 Worn Paperback</span><span class="world-item">🧃 Green Elixir</span><span class="world-item">🔖 Page 847</span></div>
 </div>
 </div>
 
-<div class="world-card world-neon"><img class="world-img" src="img/nazar/nazar-08-neon.jpg" alt="the neon — ward breached" style="object-position:center">
-<div class="world-header">
+<!-- THE NEON — solo -->
+<div class="world world-solo w-neon">
+<img src="img/nazar/nazar-08-neon.jpg" alt="neon wall">
+<div class="world-text">
 <div class="world-name">The Neon</div>
 <div class="world-tag">⚠️ WARD BREACHED</div>
-</div>
-<div class="world-body">
-Graffiti wall. Blue light. Leather and smoke. The version of her that only comes out when the sun can't judge. This district was warded until last night — something got in. The paint on the wall is moving. Paloma won't fly here anymore.
-<div class="flavor">the wall wasn't painted. it appeared.</div>
-<div class="world-items">
-<span class="world-item">🎨 Living Paint</span>
-<span class="world-item">🚬 Shadow Stick</span>
-<span class="world-item">🔮 Neon Shard</span>
-</div>
+<div class="world-desc">Graffiti wall. Blue light. Leather and smoke. The version of her that only comes out when the sun can't judge. This district was warded until last night — something got in. Paloma won't fly here anymore.</div>
+<div class="world-flavor">the wall wasn't painted. it appeared.</div>
+<div class="world-items"><span class="world-item">🎨 Living Paint</span><span class="world-item">🚬 Shadow Stick</span><span class="world-item">🔮 Neon Shard</span></div>
 </div>
 </div>
 
-<div class="world-card world-ward"><img class="world-img" src="img/nazar/nazar-07-eyes.jpg" alt="the ward — do you know what these are" style="object-position:center">
-<div class="world-header">
+<!-- THE WARD — solo (hero already showed it, use different crop) -->
+<div class="world world-solo w-ward">
+<img src="img/nazar/nazar-07-eyes.jpg" alt="evil eye charms" style="object-position:center">
+<div class="world-text">
 <div class="world-name">The Ward</div>
 <div class="world-tag">PROTECTION ACTIVE</div>
-</div>
-<div class="world-body">
-"Do you have any idea what these are?" She held up the evil eye charms in the car and the light caught the blue glass and for one second the eyes looked back. Nazari was born that day. The ward isn't jewelry. It's a contract. She just doesn't know with whom.
-<div class="flavor">do you have any idea what these are</div>
-<div class="world-items">
-<span class="world-item">🧿 Evil Eye Charm ×3</span>
-<span class="world-item">📿 Blue Glass Beads</span>
-<span class="world-item">🕯️ Ward Candle</span>
-</div>
+<div class="world-desc">"Do you have any idea what these are?" She held up the evil eye charms and the light caught the blue glass and for one second the eyes looked back. Nazari was born that day. The ward isn't jewelry. It's a contract.</div>
+<div class="world-flavor">she just doesn't know with whom</div>
+<div class="world-items"><span class="world-item">🧿 Evil Eye ×3</span><span class="world-item">📿 Blue Glass Beads</span><span class="world-item">🕯️ Ward Candle</span></div>
 </div>
 </div>
 
-<div class="world-card world-glass"><div class="world-gallery" style="grid-template-columns:1fr 1fr">
-<img src="img/nazar/nazar-12-mirror.jpg" alt="the glass — gingham">
-<img src="img/nazar/nazar-14-choker.jpg" alt="the glass — choker">
-</div>
-<div class="world-header">
+<!-- THE GLASS — dual -->
+<div class="world world-dual w-glass">
+<div class="world-dual-img"><img src="img/nazar/nazar-12-mirror.jpg" alt="gingham mirror"></div>
+<div class="world-dual-img"><img src="img/nazar/nazar-14-choker.jpg" alt="choker mirror"></div>
+<div class="world-text">
 <div class="world-name">The Glass</div>
 <div class="world-tag">REFLECTION</div>
-</div>
-<div class="world-body">
-Mirror selfies. Phone cases with pop sockets. Gingham and chokers and bathroom light that makes everyone look like a painting. The Glass shows you what you choose to show. But lately the reflection stays a beat too long after she walks away. A new key was found here.
-<div class="flavor">the version she shows vs the version that watches</div>
-<div class="world-items">
-<span class="world-item">🪞 Cracked Mirror</span>
-<span class="world-item">📱 Rose Gold Case</span>
-<span class="world-item">🗝️ Glass Key</span>
-</div>
+<div class="world-desc">Mirror selfies. Chokers and bathroom light that makes everyone look like a painting. The Glass shows what you choose to show. But lately the reflection stays a beat too long after she walks away.</div>
+<div class="world-flavor">the version she shows vs the version that watches</div>
+<div class="world-items"><span class="world-item">🪞 Cracked Mirror</span><span class="world-item">📱 Rose Gold Case</span><span class="world-item">🗝️ Glass Key</span></div>
 </div>
 </div>
 
-<div class="world-card world-field"><div class="world-gallery" style="grid-template-columns:1fr 1fr 1fr">
-<img src="img/nazar/nazar-04-cap.jpg" alt="the field — golden hour">
-<img src="img/nazar/nazar-05-dreamer.jpg" alt="the field — dreamer">
-<img src="img/nazar/nazar-09-cafe.jpg" alt="the field — evening">
-</div>
-<div class="world-header">
+<!-- THE FIELD — triple -->
+<div class="world world-tri w-field">
+<div class="world-tri-img"><img src="img/nazar/nazar-04-cap.jpg" alt="golden hour"></div>
+<div class="world-tri-img"><img src="img/nazar/nazar-05-dreamer.jpg" alt="dreamer"></div>
+<div class="world-tri-img"><img src="img/nazar/nazar-09-cafe.jpg" alt="evening"></div>
+<div class="world-text">
 <div class="world-name">The Field</div>
 <div class="world-tag">GOLDEN HOUR</div>
-</div>
-<div class="world-body">
-Nike cap. Sunlight. Trees. The version of Nazar that doesn't need lace or eyeliner or wards. Just grass and a smile that hasn't decided if it's performing yet. Paloma lives here full time. The light is always golden. Nothing bad has happened in The Field. That's what makes it suspicious.
-<div class="flavor">nothing bad has happened here. yet.</div>
-<div class="world-items">
-<span class="world-item">🧢 Red Cap</span>
-<span class="world-item">🌿 Grass Blade</span>
-<span class="world-item">☀️ Bottled Sunlight</span>
-</div>
+<div class="world-desc">Nike cap. Sunlight. A dreamer shirt. The version of Nazar that doesn't need lace or eyeliner or wards. Paloma lives here full time. Nothing bad has happened in The Field.</div>
+<div class="world-flavor">that's what makes it suspicious</div>
+<div class="world-items"><span class="world-item">🧢 Red Cap</span><span class="world-item">🌿 Grass Blade</span><span class="world-item">☀️ Bottled Sunlight</span></div>
 </div>
 </div>
 
-<div class="world-card world-keys"><div class="world-gallery" style="grid-template-columns:1fr 1fr">
-<img src="img/nazar/nazar-11-piano.jpg" alt="the keys — empty classroom">
-<img src="img/nazar/nazar-03-home.jpg" alt="the keys — before the music">
-</div>
-<div class="world-header">
+<!-- THE KEYS — dual -->
+<div class="world world-dual w-keys">
+<div class="world-dual-img"><img src="img/nazar/nazar-11-piano.jpg" alt="piano classroom"></div>
+<div class="world-dual-img"><img src="img/nazar/nazar-03-home.jpg" alt="before the music"></div>
+<div class="world-text">
 <div class="world-name">The Keys</div>
 <div class="world-tag">HIDDEN</div>
-</div>
-<div class="world-body">
-A classroom with a piano nobody plays. Wooden floors. Old radiators. The kind of room where art happens when nobody is watching. Llave found this world by accident — she was looking for a door and found an instrument instead. The piano plays one note by itself at 3AM. Always the same note. Always B flat.
-<div class="flavor">the art nobody sees is the art that stays</div>
-<div class="world-items">
-<span class="world-item">🎹 B Flat Key</span>
-<span class="world-item">🗝️ Piano Wire</span>
-<span class="world-item">📝 Unsigned Score</span>
-</div>
+<div class="world-desc">A classroom with a piano nobody plays. The kind of room where art happens when nobody is watching. Llave found this world by accident. The piano plays one note by itself at 3AM. Always B flat.</div>
+<div class="world-flavor">the art nobody sees is the art that stays</div>
+<div class="world-items"><span class="world-item">🎹 B Flat Key</span><span class="world-item">🗝️ Piano Wire</span><span class="world-item">📝 Unsigned Score</span></div>
 </div>
 </div>
 
-<!-- MINI GAME -->
-<div class="minigame" id="games">
-<h3>🧿 Ward Match — Memory Game</h3>
-<p>Match the wards before the Neon breach spreads. Find all pairs to restore protection.</p>
+<div class="div-line"></div>
+
+<!-- GAME -->
+<div class="game-section" id="game">
+<h3>🧿 Ward Match</h3>
+<p>Match the wards before the Neon breach spreads</p>
 <div class="game-grid" id="gameGrid"></div>
-<div class="game-score">Matches: <span id="matchCount">0</span>/8 | Moves: <span id="moveCount">0</span></div>
-</div>
-
-</div>
-
-<!-- RIGHT SIDEBAR -->
-<div class="sidebar">
-<div class="side-card">
-<h3>Inventory</h3>
-<div class="inventory-item"><span class="qty">×3</span><span class="iname">🧿 Evil Eye Charm</span></div>
-<div class="inventory-item"><span class="qty">×1</span><span class="iname">☮️ Peace Pendant</span></div>
-<div class="inventory-item"><span class="qty">×7</span><span class="iname">🗝️ Skeleton Key</span></div>
-<div class="inventory-item"><span class="qty">×2</span><span class="iname">🌊 Tide Glass</span></div>
-<div class="inventory-item"><span class="qty">×12</span><span class="iname">🔮 Nazar Points</span></div>
-<div class="inventory-item"><span class="qty">×1</span><span class="iname">🎹 B Flat Key</span></div>
-<div class="inventory-item"><span class="qty">×5</span><span class="iname">📚 Dog-eared Page</span></div>
-<div class="inventory-item"><span class="qty">×1</span><span class="iname">🪞 Glass Key (NEW)</span></div>
-</div>
-
-<div class="side-card">
-<h3>Activity Feed</h3>
-<div class="feed-item"><span class="who">Nazari</span> blinked at a shadow in The Stacks <span class="when">2m ago</span></div>
-<div class="feed-item"><span class="who">Paloma</span> refused to enter The Neon <span class="when">15m ago</span></div>
-<div class="feed-item"><span class="who">Resaca</span> pulled a bottle from the tide. It had your name on it. <span class="when">1h ago</span></div>
-<div class="feed-item"><span class="who">Llave</span> found a door behind the piano <span class="when">3h ago</span></div>
-<div class="feed-item"><span class="who">THE NEON</span> ward was breached. Source unknown. <span class="when">6h ago</span></div>
-<div class="feed-item"><span class="who">You</span> fed Nazari an evil eye charm <span class="when">1d ago</span></div>
-</div>
-
-<div class="side-card">
-<h3>Nazar's Fortune</h3>
-<div class="daily-quest" style="text-align:center;font-family:'Caveat',cursive;font-size:16px;color:rgba(255,217,61,0.3);line-height:1.8" id="fortune">
-the door you're afraid to open is the one that's already open behind you
-</div>
-</div>
-</div>
+<div class="game-score">Matches: <span id="matchCount">0</span>/8 · Moves: <span id="moveCount">0</span></div>
 </div>
 
 <div class="footer">
-<p>NazarPets v0.847 — a FoxyVerse creation — <a href="https://psycheorsike.com">psycheorsike.com</a></p>
-<p>the ward that watches back. est. 2026. all wards are final.</p>
-<div class="big">DO YOU HAVE ANY IDEA WHAT THESE ARE</div>
+<p>NazarPets v0.847 · a FoxyVerse creation · <a href="https://psycheorsike.com">psycheorsike.com</a></p>
+<p>the ward that watches back · est. 2026 · all wards are final</p>
+<div class="sig">DO YOU HAVE ANY IDEA WHAT THESE ARE</div>
 </div>
 
 <script>
-// Pet data
-const pets=[
-{name:'Nazari',emoji:'🧿',species:'Evil Eye Cat — Tier III Warden',happy:85,hunger:45,ward:92,loyal:100,color:'var(--pet1)'},
-{name:'Paloma',emoji:'☮️',species:'Peace Dove — Truth Resonant',happy:92,hunger:30,ward:75,loyal:88,color:'var(--pet2)'},
-{name:'Resaca',emoji:'🌊',species:'Tide Serpent — Current Walker',happy:68,hunger:60,ward:55,loyal:82,color:'var(--pet3)'},
-{name:'Llave',emoji:'🔑',species:'Key Fox — Door Finder',happy:77,hunger:40,ward:66,loyal:95,color:'var(--pet4)'}
-];
-
-function showPet(i){
-const p=pets[i];
-const d=document.getElementById('petDetail');
-d.classList.add('active');
-document.getElementById('petEmoji').textContent=p.emoji;
-document.getElementById('petName').textContent=p.name;
-document.getElementById('petSpecies').textContent=p.species;
-document.getElementById('statHappy').style.width=p.happy+'%';
-document.getElementById('statHappy').style.background=p.color;
-document.getElementById('statHunger').style.width=p.hunger+'%';
-document.getElementById('statWard').style.width=p.ward+'%';
-document.getElementById('statLoyal').style.width=p.loyal+'%';
-d.scrollIntoView({behavior:'smooth',block:'center'});
-}
-
-let np=12847;
-function addNP(n){np+=n;document.getElementById('np').textContent=np.toLocaleString();}
-
-function feedPet(){addNP(50);document.getElementById('statHunger').style.width='20%';}
-function playPet(){addNP(100);document.getElementById('statHappy').style.width='95%';}
-function wardPet(){addNP(75);document.getElementById('statWard').style.width='100%';}
-
-// Memory game
 const symbols=['🧿','☮️','🌊','🔑','🛡️','🔮','🗝️','🎹'];
-let cards=[...symbols,...symbols];
-let revealed=[],matched=new Set(),moves=0;
-
+let cards=[...symbols,...symbols],revealed=[],matched=new Set(),moves=0;
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-
-function initGame(){
-shuffle(cards);
-const grid=document.getElementById('gameGrid');
-grid.innerHTML='';
-cards.forEach((s,i)=>{
-const cell=document.createElement('div');
-cell.className='game-cell';
-cell.dataset.idx=i;
-cell.textContent='?';
-cell.onclick=()=>revealCard(i,cell);
-grid.appendChild(cell);
-});
-revealed=[];matched=new Set();moves=0;
-document.getElementById('matchCount').textContent='0';
-document.getElementById('moveCount').textContent='0';
-}
-
-function revealCard(i,cell){
-if(revealed.length>=2||matched.has(i)||revealed.find(r=>r.i===i))return;
-cell.textContent=cards[i];cell.classList.add('revealed');
-revealed.push({i,cell});
-if(revealed.length===2){
-moves++;document.getElementById('moveCount').textContent=moves;
-const[a,b]=revealed;
-if(cards[a.i]===cards[b.i]){
-matched.add(a.i);matched.add(b.i);
-a.cell.classList.add('matched');b.cell.classList.add('matched');
-document.getElementById('matchCount').textContent=matched.size/2;
-revealed=[];
-if(matched.size===16){addNP(500);}
-}else{
-setTimeout(()=>{a.cell.textContent='?';b.cell.textContent='?';
-a.cell.classList.remove('revealed');b.cell.classList.remove('revealed');
-revealed=[];},600);
-}
-}
-}
+function initGame(){shuffle(cards);const g=document.getElementById('gameGrid');g.innerHTML='';
+cards.forEach((s,i)=>{const c=document.createElement('div');c.className='game-cell';c.textContent='?';c.onclick=()=>reveal(i,c);g.appendChild(c);});}
+function reveal(i,c){if(revealed.length>=2||matched.has(i)||revealed.find(r=>r.i===i))return;
+c.textContent=cards[i];c.classList.add('revealed');revealed.push({i,c});
+if(revealed.length===2){moves++;document.getElementById('moveCount').textContent=moves;
+const[a,b]=revealed;if(cards[a.i]===cards[b.i]){matched.add(a.i);matched.add(b.i);
+a.c.classList.add('matched');b.c.classList.add('matched');
+document.getElementById('matchCount').textContent=matched.size/2;revealed=[];}
+else{setTimeout(()=>{a.c.textContent='?';b.c.textContent='?';a.c.classList.remove('revealed');b.c.classList.remove('revealed');revealed=[];},600);}}}
 initGame();
-
-// Fortune rotator
-const fortunes=[
-"the door you're afraid to open is the one that's already open behind you",
-"she carries wards without knowing they're wards",
-"the shore remembers everyone she pulled from the current",
-"not all keys open doors. some keys close them.",
-"the neon writes messages for people who haven't arrived yet",
-"paloma only glows when you mean what you say",
-"the piano plays B flat because that's the note between staying and leaving",
-"resaca doesn't follow the current. resaca IS the current.",
-];
-let fi=0;
-setInterval(()=>{fi=(fi+1)%fortunes.length;document.getElementById('fortune').textContent=fortunes[fi];},8000);
 </script>
 </body>
 </html>
