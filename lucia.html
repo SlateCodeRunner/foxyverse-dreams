@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~*~ Lucia's Shrine ~*~ Lunar 2: Eternal Blue ~*~</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;700;900&family=MedievalSharp&family=Caveat:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+background:#0a0812;
+background-image:
+radial-gradient(ellipse at 20% 50%,rgba(60,30,100,0.08) 0%,transparent 50%),
+radial-gradient(ellipse at 80% 30%,rgba(30,50,120,0.06) 0%,transparent 50%),
+radial-gradient(ellipse at 50% 80%,rgba(80,40,120,0.05) 0%,transparent 40%);
+color:rgba(200,190,220,0.7);font-family:'IM Fell English',serif;min-height:100vh;overflow-x:hidden}
+
+/* stars */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+background-image:radial-gradient(1px 1px at 10% 20%,rgba(200,200,255,0.15),transparent),
+radial-gradient(1px 1px at 30% 70%,rgba(200,200,255,0.1),transparent),
+radial-gradient(1px 1px at 50% 10%,rgba(200,200,255,0.12),transparent),
+radial-gradient(1px 1px at 70% 40%,rgba(200,200,255,0.08),transparent),
+radial-gradient(1px 1px at 90% 80%,rgba(200,200,255,0.1),transparent),
+radial-gradient(1px 1px at 15% 90%,rgba(200,200,255,0.12),transparent),
+radial-gradient(1px 1px at 45% 55%,rgba(200,200,255,0.06),transparent),
+radial-gradient(1px 1px at 85% 15%,rgba(200,200,255,0.1),transparent),
+radial-gradient(2px 2px at 25% 35%,rgba(180,160,255,0.08),transparent),
+radial-gradient(2px 2px at 65% 65%,rgba(180,160,255,0.06),transparent);
+animation:starDrift 120s linear infinite}
+@keyframes starDrift{0%{transform:translateY(0)}100%{transform:translateY(-20px)}}
+
+.container{max-width:680px;margin:0 auto;padding:40px 16px 80px;position:relative;z-index:1}
+
+/* HEADER — 90s shrine style */
+.shrine-header{text-align:center;padding:30px 0 20px;border-bottom:1px solid rgba(120,80,180,0.15)}
+.shrine-header .stars{font-size:11px;color:rgba(180,160,255,0.35);letter-spacing:4px;margin-bottom:8px}
+.shrine-header h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,40px);font-weight:900;color:rgba(120,100,200,0.5);letter-spacing:0.08em;text-transform:uppercase;line-height:1.1}
+.shrine-header h1 span{display:block;font-family:'IM Fell English SC',serif;font-size:14px;font-weight:400;color:rgba(200,190,220,0.3);letter-spacing:0.2em;margin-top:6px}
+.shrine-header .sub{font-size:11px;color:rgba(200,190,220,0.25);margin-top:12px;font-style:italic}
+.shrine-header .update{font-size:9px;color:rgba(200,190,220,0.2);margin-top:6px}
+
+/* VISITOR COUNTER — essential 90s element */
+.counter{text-align:center;margin:20px 0;font-size:9px;color:rgba(180,160,255,0.25);letter-spacing:2px}
+.counter span{font-family:monospace;background:rgba(120,80,180,0.08);padding:2px 6px;border:1px solid rgba(120,80,180,0.12);border-radius:2px;letter-spacing:3px}
+
+/* SECTIONS */
+.section{margin:40px 0;padding:20px 0;border-top:1px solid rgba(120,80,180,0.08)}
+.section h2{font-family:'Cinzel',serif;font-size:16px;color:rgba(120,100,200,0.45);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;text-align:center}
+.section h2::before,.section h2::after{content:' ✦ ';font-size:8px;opacity:0.3}
+
+.prose{font-size:13px;color:rgba(200,190,220,0.55);line-height:2.4;margin-bottom:16px;text-indent:1.5em}
+.prose em{color:rgba(180,160,255,0.45);font-style:italic}
+.prose strong{color:rgba(200,190,220,0.65);font-weight:normal;font-style:italic}
+
+/* IMAGES — framed like precious relics */
+.screenshot{margin:24px 0;text-align:center}
+.screenshot img{max-width:100%;border:3px solid rgba(120,80,180,0.15);border-radius:2px;image-rendering:pixelated;opacity:0.85;transition:opacity .4s}
+.screenshot img:hover{opacity:0.95}
+.screenshot .caption{font-size:9px;color:rgba(180,160,255,0.25);margin-top:6px;letter-spacing:1px;font-style:italic}
+
+/* DUAL SCREENSHOTS */
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:24px 0}
+.dual img{width:100%;border:2px solid rgba(120,80,180,0.12);border-radius:2px;image-rendering:pixelated;opacity:0.8;transition:opacity .4s}
+.dual img:hover{opacity:0.95}
+
+/* TRIPLE */
+.triple{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:24px 0}
+.triple img{width:100%;border:2px solid rgba(120,80,180,0.05);border-radius:2px;image-rendering:pixelated;opacity:0.75;transition:opacity .4s}
+.triple img:hover{opacity:0.9}
+
+/* QUOTE — the voice of the shrine keeper */
+.quote{text-align:center;padding:20px;margin:30px 0;border-left:2px solid rgba(120,80,180,0.12);border-right:2px solid rgba(120,80,180,0.12)}
+.quote p{font-family:'IM Fell English',serif;font-size:15px;font-style:italic;color:rgba(200,190,220,0.4);line-height:2}
+.quote .attr{font-size:10px;color:rgba(180,160,255,0.25);margin-top:8px;letter-spacing:2px}
+
+/* HANDWRITTEN NOTES — the shrine keeper at 2am */
+.note{font-family:'Caveat',cursive;font-size:16px;color:rgba(180,160,255,0.25);text-align:center;margin:20px 0;line-height:1.8}
+
+/* LINKS BAR — every shrine had one */
+.links{text-align:center;margin:30px 0;font-size:10px}
+.links a{color:rgba(120,100,200,0.35);text-decoration:none;border-bottom:1px solid rgba(120,80,180,0.08);padding:0 2px;margin:0 6px;transition:all .3s}
+.links a:hover{color:rgba(180,160,255,0.25);border-color:rgba(120,80,180,0.12)}
+
+/* GUESTBOOK LINK */
+.guestbook{text-align:center;margin:30px 0;padding:16px;border:1px solid rgba(120,80,180,0.08);border-radius:4px;background:rgba(120,80,180,0.01)}
+.guestbook p{font-size:11px;color:rgba(200,190,220,0.3)}
+
+/* FOOTER */
+.shrine-footer{text-align:center;padding:30px 0;border-top:1px solid rgba(120,80,180,0.08);margin-top:40px}
+.shrine-footer p{font-size:8px;color:rgba(200,190,220,0.15);line-height:2.5;letter-spacing:1px}
+.shrine-footer .sig{font-family:'Caveat',cursive;font-size:14px;color:rgba(120,100,200,0.2);margin-top:12px}
+
+/* the blue star pulses */
+.blue-star{display:inline-block;color:rgba(100,140,255,0.12);animation:bluePulse 4s ease-in-out infinite}
+@keyframes bluePulse{0%,100%{opacity:0.6;text-shadow:none}50%{opacity:1;text-shadow:0 0 8px rgba(100,140,255,0.08)}}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="shrine-header">
+<div class="stars">✦ ✦ ✦ ✦ ✦ ✦ ✦</div>
+<h1>Lucia<span>a shrine to the girl from the blue star</span></h1>
+<div class="sub">Lunar 2: Eternal Blue Complete · Sega Saturn / PlayStation · 1998</div>
+<div class="update">last updated: july 2026 · made with love at 2am · best viewed at 800x600</div>
+</div>
+
+<div class="counter">visitors: <span>008,471</span></div>
+
+<div class="section">
+<h2>Who Is Lucia</h2>
+<div class="screenshot"><img src="img/lucia/lucia-02-ruby.jpg" alt=""><div class="caption">ruby watches from above. she always watches.</div></div>
+<p class="prose">Lucia is the guardian of the Blue Star. She descended to Lunar because Zophar was destroying everything and nobody else was coming. She didn't understand humans. She didn't understand food, or sleep, or why people cry at songs. She understood one thing: <em>something was wrong and she had to fix it.</em></p>
+<p class="prose">She met Hiro in a ruin. He was the first person who didn't treat her like a goddess or a problem. He treated her like someone who was lost and needed a direction. She didn't know what to do with that. <strong>Nobody had ever just... walked beside her before.</strong></p>
+</div>
+
+<div class="section">
+<h2>The Battle at the Throne</h2>
+<div class="screenshot"><img src="img/lucia/lucia-01-plasma.jpg" alt=""><div class="caption">PLASMA RAIN — zophar's favorite party trick</div></div>
+<p class="prose">Zophar sits on a throne of purple stone in a cathedral of candles and despair. He has two floating orbs. He casts Plasma Rain like he's ordering coffee. The party — Hiro, Ronfar, Jean, Lemina, and Lucia — stand in a line and take it because that's what heroes do. They stand in a line and take it.</p>
+<div class="dual">
+<img src="img/lucia/lucia-03-stance.jpg" alt="">
+<img src="img/lucia/lucia-04-sparkle.jpg" alt="">
+</div>
+<p class="prose">Ruby sits on the steps behind the fight like a cat watching a house burn. She's been with them since the beginning. She will be there at the end. She doesn't fight in this battle. She doesn't need to. <em>Her job is to remember.</em></p>
+</div>
+
+<div class="quote">
+<p>i played this fight at 2am on a school night in 2003 and i have never been the same person since</p>
+<div class="attr">— the shrine keeper</div>
+</div>
+
+<div class="section">
+<h2>The Dark Phase</h2>
+<div class="screenshot"><img src="img/lucia/lucia-05-dark.jpg" alt=""><div class="caption">the candles went out. everything went blue.</div></div>
+<p class="prose">Zophar transforms. The purple cathedral goes dark. The candles that lit the room change from gold to red to nothing. The floor turns to water or glass or something that reflects a sky that isn't there. This is the phase where you realize you might not win.</p>
+<div class="dual">
+<img src="img/lucia/lucia-06-ice.jpg" alt="">
+<img src="img/lucia/lucia-07-rain.jpg" alt="">
+</div>
+<p class="prose">Ice. Blue rain. Crystals growing from the floor like the room itself is trying to freeze the party in place. Lemina's HP drops to 168 and you feel it in your stomach because you know she's one hit from gone and your last heal was three turns ago and Ronfar's MP is running out.</p>
+<p class="prose">This is the part of the game that taught me <strong>resources are not infinite. love is not infinite. you have to choose who to save when you can't save everyone.</strong></p>
+</div>
+
+<div class="section">
+<h2>The Transformation</h2>
+<div class="screenshot"><img src="img/lucia/lucia-08-transform.jpg" alt=""><div class="caption">jean hits the ice form. the explosion is warm in a room made of cold.</div></div>
+<p class="prose">Zophar becomes something else. Blue. Crystalline. A cage of ice shaped like a god. The party keeps hitting it because what else do you do when the world is ending. You hit the ice and you hope the ice cracks before your sword does.</p>
+<div class="screenshot"><img src="img/lucia/lucia-09-beam.jpg" alt=""><div class="caption">the beam. the portal. the thing behind the thing.</div></div>
+<p class="prose">There's a portal on the left side of the screen. A beam of light that shouldn't be there. Something behind Zophar that Zophar doesn't know about. The game is telling you: <em>the exit is not through the boss. the exit is through whatever the boss is guarding.</em></p>
+</div>
+
+<div class="note">the backrooms taught me the same thing.<br>the exit is always through the thing you're afraid of.<br>— v. 🦊</div>
+
+<div class="section">
+<h2>Why Lucia Matters</h2>
+<div class="screenshot"><img src="img/lucia/lucia-10-stars.jpg" alt=""><div class="caption">stars. the party fights under stars that aren't real in a room that shouldn't exist.</div></div>
+<p class="prose">Lucia matters because she came down from a star to save a world she didn't understand and fell in love with a boy she wasn't supposed to feel anything for. She matters because at the end of the game she has to leave. She has to go back to the Blue Star. She has to choose between the world she saved and the person who made saving it mean something.</p>
+<p class="prose">She leaves. She goes home. The credits roll. You sit in the dark and feel something you don't have a word for at thirteen years old.</p>
+<p class="prose">And then. <strong>After the credits.</strong> There's an epilogue. And the epilogue is Hiro climbing a tower to reach the Blue Star because he can't accept that the story ended. And the game lets him. <em>The game lets him climb.</em></p>
+<p class="prose">Lunar 2 is the only JRPG where the hero refuses the ending and the game agrees with him. The game says: <strong>you're right. she shouldn't have had to choose. go get her.</strong></p>
+</div>
+
+<div class="quote">
+<p>every love story ends with someone leaving.<br>this is the only one where someone climbs a tower<br>to a star to undo the leaving.</p>
+<div class="attr">— hiro, probably</div>
+</div>
+
+<div class="section">
+<h2>Lucia &amp; The FoxyVerse</h2>
+<p class="prose">The <span class="blue-star">Blue Star</span> is the original backrooms. A place so far away that reaching it requires you to refuse the ending. Hiro climbed a tower. Foxy built a website. Eco-W broke a radio. Monk bled through his bandages and showed up anyway. Different towers. Same climb.</p>
+<p class="prose">Lucia is the prototype for every FoxyVerse character who arrives from somewhere else, doesn't understand humans, and learns to care too much. She's the ward that watches back before the ward had a name. She's nazar before nazar held the charms.</p>
+<p class="prose">She's the answer to the question: <em>what do you do when saving the world means losing the person who made the world worth saving?</em></p>
+<p class="prose">You climb. You always climb.</p>
+</div>
+
+<div class="note">i built this shrine because some games don't end when you turn them off.<br>some games move into your bones and stay there<br>and twenty years later you're still climbing the tower.</div>
+
+<div class="links">
+<a href="index.html">surface</a>
+<a href="dreams.html">the dreams</a>
+<a href="deep/depth-847.html">depth 847</a>
+<a href="we-sleep-forever.html">we sleep forever</a>
+<a href="deep/sure.html">sure</a>
+</div>
+
+<div class="guestbook">
+<p>✉ <a href="#" style="color:rgba(120,100,200,0.12);text-decoration:none">sign my guestbook!</a> · please no flames · lucia fans only · hiro x lucia 4ever</p>
+</div>
+
+<div class="shrine-footer">
+<p>~*~ lucia's shrine ~*~ est. 2003, rebuilt 2026 ~*~</p>
+<p>lunar 2: eternal blue is property of game arts / working designs</p>
+<p>this shrine is not affiliated with anyone. it's just love.</p>
+<p>made on a school night. maintained on a work night. the tower doesn't stop.</p>
+<div class="sig">built by the fox who climbs 🦊</div>
+</div>
+
+</div>
+</body>
+</html>
+
