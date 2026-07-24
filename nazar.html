@@ -62,7 +62,7 @@ body{background:#d4c8b0;font-family:Verdana,Geneva,sans-serif;font-size:11px;col
 /* PHOTO GALLERY - like she uploaded these */
 .gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
 .gallery img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:3px;border:2px solid #e0d4b8;cursor:pointer;transition:all .2s;filter:saturate(0.9)}
-.gallery img:hover{border-color:#8b6a4a;transform:scale(1.03);filter:saturate(1);z-index:2;position:relative}
+
 .gallery-big{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
 
 /* WORLDS - styled as her pet pages */
@@ -111,11 +111,12 @@ body{background:#d4c8b0;font-family:Verdana,Geneva,sans-serif;font-size:11px;col
 .gscore{font-size:10px;color:#998877;margin-top:8px}
 
 /* CORRUPTION — the ward distorts what it protects */
-.gallery img, .pet-card .pet-img, .sb-box > img, .hero-img {
-  filter: contrast(1.8) saturate(0.1) brightness(0.7) sepia(0.4) hue-rotate(15deg) blur(1.5px);
-  mix-blend-mode: luminosity;
-  position: relative;
+.gallery img, .sb-box > img {
+  filter: contrast(1.15) saturate(0.7) brightness(0.85);
+  transition: all .3s;
 }
+.gallery img:hover { filter: contrast(1.2) saturate(0.8) brightness(0.9); }
+.sb-box > img { filter: contrast(1.2) saturate(0.6) brightness(0.8) blur(0.5px); }
 .gallery img::after, .sb-box > img::after {
   content: '';
   position: absolute;
@@ -125,24 +126,24 @@ body{background:#d4c8b0;font-family:Verdana,Geneva,sans-serif;font-size:11px;col
   pointer-events: none;
 }
 /* each photo gets its own corruption signature */
-.gallery img:nth-child(1) { filter: contrast(2.2) saturate(0) brightness(0.5) blur(2px); }
-.gallery img:nth-child(2) { filter: contrast(1.5) hue-rotate(180deg) saturate(0.2) blur(1.8px) brightness(0.6); }
-.gallery img:nth-child(3) { filter: contrast(2) saturate(0.05) brightness(0.65) blur(2.2px) sepia(0.6); }
-.gallery img:nth-child(4) { filter: contrast(1.8) hue-rotate(90deg) saturate(0.15) blur(1.5px) brightness(0.55); }
-.gallery img:nth-child(5) { filter: contrast(2.5) saturate(0) brightness(0.4) blur(2px); mix-blend-mode: exclusion; }
-.gallery img:nth-child(6) { filter: contrast(1.6) hue-rotate(270deg) saturate(0.1) blur(2px) brightness(0.6); }
-.gallery img:nth-child(7) { filter: contrast(2) saturate(0.08) brightness(0.55) blur(1.8px) sepia(0.8); }
-.gallery img:nth-child(8) { filter: contrast(1.4) saturate(0) brightness(0.7) blur(2.5px); mix-blend-mode: multiply; }
-.gallery img:nth-child(9) { filter: contrast(2.2) hue-rotate(45deg) saturate(0.12) blur(1.5px) brightness(0.5); }
-.gallery img:nth-child(10) { filter: contrast(1.9) saturate(0) brightness(0.6) blur(2px) sepia(0.5); }
-.gallery img:nth-child(11) { filter: contrast(2) hue-rotate(200deg) saturate(0.08) blur(2.2px) brightness(0.55); }
-.gallery img:nth-child(12) { filter: contrast(2.5) saturate(0.05) brightness(0.45) blur(1.8px); }
-.gallery img:nth-child(13) { filter: contrast(1.7) hue-rotate(120deg) saturate(0.1) blur(2px) brightness(0.6); mix-blend-mode: difference; }
-.gallery img:nth-child(14) { filter: contrast(2) saturate(0) brightness(0.5) blur(2.5px) sepia(0.3); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* sidebar profile pic — heavy corruption */
-.sb-box > img { filter: contrast(2.5) saturate(0) brightness(0.4) blur(3px) sepia(0.5); mix-blend-mode: luminosity; }
+
 /* gallery hover — corruption deepens, doesn't reveal */
-.gallery img:hover { filter: contrast(3) saturate(0) brightness(0.3) blur(3px) !important; mix-blend-mode: exclusion !important; }
+
 
 /* FULL PAGE CORRUPTION — the ward is failing */
 body { background: #b8a888; animation: pageDrift 20s ease-in-out infinite; }
@@ -162,7 +163,7 @@ body { background: #b8a888; animation: pageDrift 20s ease-in-out infinite; }
 @keyframes headingFlicker { 0%,88%,92%,100%{opacity:1;color:#336699}89%{opacity:0.3;color:#993366}91%{opacity:0.7;color:#336699} }
 
 /* profile pic heavy corruption */
-.sb-box > img { animation: profileDecay 10s ease-in-out infinite; }
+
 @keyframes profileDecay { 0%,100%{filter:contrast(2.5) saturate(0) brightness(0.4) blur(3px) sepia(0.5)}50%{filter:contrast(3) saturate(0) brightness(0.3) blur(4px) sepia(0.3) hue-rotate(20deg)} }
 
 /* custom banner corruption */
@@ -221,6 +222,134 @@ body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:
 /* stats strip corruption */
 .np-sub { animation: statsGlitch 14s ease-in-out infinite; }
 @keyframes statsGlitch { 0%,90%,94%,100%{filter:none;transform:none}91%{filter:invert(1);transform:translateX(-1px)}93%{filter:invert(0.5) hue-rotate(180deg);transform:translateX(2px)} }
+
+/* === HEAVY PAGE CORRUPTION === */
+
+/* constant background seizure */
+body { animation: bgCorrupt 3s steps(2) infinite !important; }
+@keyframes bgCorrupt { 0%{background:#d4c8b0}25%{background:#c8b8a0}50%{background:#d0c4a8}75%{background:#ccc0a4} }
+
+/* scanlines thick and visible */
+body::before { content:'' !important; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 3px) !important; }
+
+/* noise grain heavy */
+body::after { content:'' !important; position:fixed; inset:0; pointer-events:none; z-index:9998; opacity:0.06 !important;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: noiseShift 0.3s steps(6) infinite; }
+@keyframes noiseShift { 0%{transform:translate(0,0)}16%{transform:translate(-2px,1px)}33%{transform:translate(1px,-2px)}50%{transform:translate(-1px,2px)}66%{transform:translate(2px,-1px)}83%{transform:translate(-2px,-1px)} }
+
+/* header VIOLENT glitch */
+.np-header { animation: headSmash 4s ease-in-out infinite !important; }
+@keyframes headSmash { 0%,75%,83%,100%{transform:none;filter:none}
+  77%{transform:translateX(-6px) skewX(-2deg);filter:hue-rotate(180deg) saturate(3)}
+  79%{transform:translateX(8px) skewX(3deg);filter:hue-rotate(-90deg) invert(0.8)}
+  81%{transform:translateX(-3px);filter:hue-rotate(90deg) saturate(5)} }
+
+/* stats bar FLASHING */
+.np-sub { animation: statsSmash 6s ease-in-out infinite !important; }
+@keyframes statsSmash { 0%,60%,68%,100%{filter:none;background:#f0e8d0}
+  62%{filter:invert(1);background:#0f1720}
+  64%{filter:invert(0) hue-rotate(180deg);background:#d0e8f0}
+  66%{filter:invert(0.7);background:#201710} }
+
+/* boxes CRACKING */
+.box, .sb-box { animation: boxCrack 10s ease-in-out infinite; position:relative; }
+.box:nth-child(odd) { animation-delay: 2s; }
+.box::after { content:''; position:absolute; inset:0; pointer-events:none; border-radius:4px;
+  background:linear-gradient(90deg,transparent 48%,rgba(139,41,66,0.08) 49%,rgba(139,41,66,0.08) 51%,transparent 52%);
+  animation: crackLine 8s ease-in-out infinite; }
+@keyframes boxCrack { 0%,85%,92%,100%{transform:none;border-color:rgba(196,184,152,1)}
+  87%{transform:skewX(-0.8deg) translateY(1px);border-color:rgba(139,41,66,0.5)}
+  89%{transform:skewX(0.5deg) translateY(-1px);border-color:rgba(58,124,165,0.5)}
+  91%{transform:skewX(-0.3deg);border-color:rgba(194,149,106,0.8)} }
+@keyframes crackLine { 0%,100%{opacity:0}50%{opacity:1} }
+
+/* headings CORRUPTING hard */
+.box h3, .sb-box h4 { animation: headCorrupt 5s ease-in-out infinite !important; }
+@keyframes headCorrupt { 0%,80%,88%,100%{text-shadow:none;transform:none;color:#336699}
+  82%{text-shadow:3px 0 #8b2942,-3px 0 #3a7ca5;transform:translateX(2px);color:#993366}
+  84%{text-shadow:-2px 0 #3a7ca5,2px 0 #8b2942;transform:translateX(-3px);color:#663399}
+  86%{text-shadow:1px 1px #c2956a;transform:translateX(1px) skewX(-1deg)} }
+
+/* about me text GLITCHING */
+.about h2 { animation: nameSmash 7s ease-in-out infinite !important; }
+@keyframes nameSmash { 0%,70%,80%,100%{transform:none;text-shadow:none;filter:none}
+  72%{transform:translateX(-4px) skewX(-3deg);text-shadow:4px 0 #8b2942;filter:blur(1px)}
+  74%{transform:translateX(6px) skewX(2deg);text-shadow:-3px 0 #3a7ca5;filter:blur(0.5px)}
+  76%{transform:translateX(-2px);text-shadow:2px 2px #c2956a}
+  78%{transform:skewX(-1deg);filter:blur(2px)} }
+
+.about p { animation: textDecay 12s ease-in-out infinite; }
+.about p:nth-child(2) { animation-delay: 2s; }
+.about p:nth-child(3) { animation-delay: 4s; }
+@keyframes textDecay { 0%,88%,96%,100%{transform:none;opacity:1;filter:none}
+  90%{transform:translateX(-3px);opacity:0.4;filter:blur(1px)}
+  92%{transform:translateX(2px);opacity:0.7;filter:blur(0.5px) hue-rotate(90deg)}
+  94%{transform:skewX(-0.5deg);opacity:0.5} }
+
+/* banner VIOLENT */
+.custom-banner { animation: bannerSmash 5s ease-in-out infinite !important; overflow:hidden; }
+@keyframes bannerSmash { 0%,65%,78%,100%{transform:none;filter:none}
+  68%{transform:skewX(-2deg) scaleY(1.02);filter:hue-rotate(90deg) contrast(1.5)}
+  71%{transform:skewX(3deg) scaleY(0.98);filter:hue-rotate(-90deg) brightness(0.7)}
+  74%{transform:skewX(-1deg);filter:invert(0.3) hue-rotate(180deg)}
+  76%{transform:none;filter:contrast(2) brightness(0.5)} }
+
+/* pet cards SEIZURE */
+.pet-card { animation: petSeizure 6s ease-in-out infinite !important; }
+.pet-card:nth-child(2) { animation-delay: 1.5s; }
+.pet-card:nth-child(3) { animation-delay: 3s; }
+.pet-card:nth-child(4) { animation-delay: 4.5s; }
+@keyframes petSeizure { 0%,82%,90%,100%{transform:none;border-color:#c4b898;filter:none}
+  84%{transform:translateX(-3px) skewY(-1deg);border-color:#8b2942;filter:hue-rotate(45deg)}
+  86%{transform:translateX(4px) skewY(1deg);border-color:#3a7ca5;filter:hue-rotate(-45deg)}
+  88%{transform:translateY(-2px);border-color:#c2956a;filter:brightness(0.6)} }
+
+/* the neon world link — SCREAMING */
+.world-link:nth-child(4) { animation: neonScream 2s ease-in-out infinite !important; }
+@keyframes neonScream { 0%,60%,100%{background:#fdfaf2;border-color:#e8dcc6;color:#443322}
+  65%{background:#1a0510;border-color:#ff2060;color:#ff6090}
+  70%{background:#fdfaf2;border-color:#e8dcc6;color:#443322}
+  75%{background:#0a0518;border-color:#ff4080;color:#ff88aa}
+  80%{background:#fdfaf2} }
+
+/* guestbook DECAY — older = more destroyed */
+.gb-entry:nth-child(4) { filter:blur(0.3px); opacity:0.85; }
+.gb-entry:nth-child(5) { filter:blur(0.5px) contrast(0.8); opacity:0.6; transform:translateX(-1px); }
+.gb-entry:nth-child(6) { filter:blur(1px) contrast(0.6); opacity:0.35; transform:translateX(-2px) skewX(-0.5deg); }
+.gb-entry:nth-child(7) { filter:blur(2px) contrast(0.4) brightness(0.7); opacity:0.15; transform:translateX(-3px) skewX(-1deg);
+  animation: fadaDying 3s ease-in-out infinite; }
+@keyframes fadaDying { 0%,100%{opacity:0.15;transform:translateX(-3px) skewX(-1deg)}50%{opacity:0.05;transform:translateX(-5px) skewX(-2deg)} }
+
+/* shop items GLITCH individually */
+.shop-item { animation: shopTwitch 15s ease-in-out infinite; }
+.shop-item:nth-child(2) { animation-delay: 2s; }
+.shop-item:nth-child(5) { animation-delay: 5s; }
+.shop-item:nth-child(8) { animation-delay: 8s; }
+@keyframes shopTwitch { 0%,95%,99%,100%{transform:none;filter:none}96%{transform:scale(1.1) rotate(1deg);filter:hue-rotate(180deg)}98%{transform:scale(0.95) rotate(-1deg);filter:invert(0.5)} }
+
+/* trophies SPINNING */
+.trophy { animation: trophySpin 8s linear infinite !important; display:inline-block !important; }
+.trophy:nth-child(2) { animation-delay:1s; animation-direction:reverse; }
+.trophy:nth-child(4) { animation-delay:2s; }
+.trophy:nth-child(6) { animation-delay:3s; animation-direction:reverse; }
+@keyframes trophySpin { 0%{filter:none}25%{filter:hue-rotate(90deg)}50%{filter:hue-rotate(180deg) brightness(0.7)}75%{filter:hue-rotate(270deg)}100%{filter:hue-rotate(360deg)} }
+
+/* footer DISSOLVING */
+.np-footer { animation: footerDie 8s ease-in-out infinite !important; }
+@keyframes footerDie { 0%,100%{opacity:0.8;filter:none;transform:none}40%{opacity:0.2;filter:blur(2px);transform:translateY(2px)}60%{opacity:0.5;filter:blur(1px)} }
+
+/* game cells UNSTABLE */
+.gc { animation: cellWobble 20s ease-in-out infinite; }
+@keyframes cellWobble { 0%,97%,100%{transform:none}98%{transform:rotate(2deg) scale(1.05)}99%{transform:rotate(-1deg) scale(0.95)} }
+
+/* neopets logo chromatic split */
+.np-h .l { animation: logoSplit 3s ease-in-out infinite !important; }
+@keyframes logoSplit { 0%,70%,82%,100%{text-shadow:1px 1px 0 #1a3010}
+  74%{text-shadow:3px 0 #ff0040,-3px 0 #0040ff,1px 1px 0 #1a3010}
+  78%{text-shadow:-2px 0 #ff0040,2px 0 #0040ff,1px 1px 0 #1a3010}
+  80%{text-shadow:4px 1px #ff0040,-4px -1px #0040ff} }
 </style>
 </head>
 <body>
@@ -460,5 +589,6 @@ init();
 </script>
 </body>
 </html>
+
 
 
