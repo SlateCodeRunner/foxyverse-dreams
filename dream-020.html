@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>dream 020 — the cow you can't drink</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fira+Code:wght@300;400&family=Caveat:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#000;overflow:hidden;font-family:'Fira Code',monospace;color:rgba(200,190,180,.5);cursor:default;user-select:none}
+
+/* PS1 render surface */
+#stage{position:fixed;inset:0;image-rendering:pixelated}
+#scene{position:absolute;inset:0;transition:background 1.2s,filter 1.2s}
+
+/* scanlines + grain */
+.crt{position:fixed;inset:0;z-index:90;pointer-events:none;
+background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 3px)}
+.grain{position:fixed;inset:0;z-index:89;pointer-events:none;opacity:.05;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+animation:gr .28s steps(5) infinite}
+@keyframes gr{0%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(1px,-2px)}60%{transform:translate(-1px,2px)}80%{transform:translate(2px,-1px)}}
+.vig{position:fixed;inset:0;z-index:88;pointer-events:none;
+background:radial-gradient(ellipse at 50% 50%,transparent 30%,rgba(0,0,0,.75) 100%)}
+
+/* HUD */
+#hud{position:fixed;top:10px;left:12px;z-index:95;font-size:8px;letter-spacing:2px;line-height:2;color:rgba(180,200,190,.22)}
+#hud b{color:rgba(0,200,170,.35);font-weight:400}
+#sigbar{display:inline-block;letter-spacing:1px}
+#roomid{position:fixed;top:10px;right:12px;z-index:95;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.08)}
+
+/* corridor geometry (pure CSS pseudo-3D) */
+.corridor{position:absolute;inset:0;perspective:340px;perspective-origin:50% 46%}
+.wallpair{position:absolute;inset:0;transform-style:preserve-3d}
+.seg{position:absolute;left:50%;top:50%;width:280px;height:200px;margin:-100px 0 0 -140px;
+border:1px solid rgba(190,180,120,.10);background:rgba(180,170,110,.012)}
+.tube{position:absolute;left:50%;top:50%;width:60px;height:4px;margin-left:-30px;
+background:rgba(230,225,180,.30);box-shadow:0 0 16px rgba(230,225,180,.10)}
+.tube.flick{animation:fl 4.4s steps(2) infinite}
+@keyframes fl{0%,88%,93%,100%{opacity:1}90%{opacity:.15}95%{opacity:.5}}
+
+/* doors */
+.door{pointer-events:auto;position:absolute;left:50%;top:50%;width:56px;height:96px;margin:-48px 0 0 -28px;
+border:1px solid rgba(200,190,140,.14);background:rgba(0,0,0,.55);cursor:pointer;transition:all .35s}
+.door:hover{border-color:rgba(0,200,170,.55);background:rgba(0,200,170,.08);box-shadow:0 0 30px rgba(0,200,170,.10);transform:scale(1.06)!important}
+.door::before{content:'';position:absolute;inset:6px;border:1px solid rgba(200,190,140,.06)}
+.door.pulse{animation:dp 2.4s ease-in-out infinite}
+@keyframes dp{0%,100%{border-color:rgba(200,190,140,.14)}50%{border-color:rgba(0,200,170,.34)}}
+.door .num{position:absolute;bottom:-14px;left:0;right:0;text-align:center;font-size:7px;letter-spacing:2px;color:rgba(200,190,140,.18)}
+.door.used{opacity:.28;pointer-events:none}
+.door.used::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:rgba(0,200,170,.25)}
+.door.locked{border-color:rgba(180,40,40,.2)}
+.door.locked:hover{border-color:rgba(180,40,40,.45);background:rgba(180,40,40,.05);box-shadow:none}
+
+/* dialogue box */
+#box{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);width:min(700px,92vw);z-index:96;
+border:1px solid rgba(200,190,180,.10);background:linear-gradient(180deg,rgba(8,8,10,.94),rgba(4,4,6,.97));
+padding:16px 18px 14px;min-height:112px;box-shadow:0 0 40px rgba(0,0,0,.7)}
+#speaker{font-family:'Press Start 2P',monospace;font-size:7px;letter-spacing:3px;margin-bottom:9px}
+#text{font-size:12.5px;line-height:2.05;min-height:56px;color:rgba(210,202,192,.62)}
+#text .em{color:rgba(0,200,170,.55)}
+#text .warn{color:rgba(200,80,80,.6)}
+#text .hand{font-family:'Caveat',cursive;font-size:16px;color:rgba(200,170,110,.4)}
+#next{position:absolute;right:16px;bottom:10px;font-size:8px;letter-spacing:2px;color:rgba(0,200,170,.35);animation:bl 1.1s ease-in-out infinite}
+@keyframes bl{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* choices */
+#choices{position:fixed;left:50%;bottom:150px;transform:translateX(-50%);width:min(700px,92vw);z-index:97;display:none;flex-direction:column;gap:5px}
+.ch{border:1px solid rgba(200,190,180,.10);background:rgba(6,6,8,.9);padding:9px 14px;font-size:11px;
+color:rgba(200,190,180,.45);cursor:pointer;transition:all .18s}
+.ch:hover{border-color:rgba(0,200,170,.35);color:rgba(0,200,170,.8);background:rgba(0,200,170,.04);padding-left:20px}
+.ch::before{content:'▸ ';color:rgba(0,200,170,.3)}
+
+/* room visuals */
+.vis{position:absolute;inset:0;pointer-events:none}
+.fire{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 90%,rgba(200,70,30,.16),transparent 55%)}
+.fireflick{animation:ff 1.7s ease-in-out infinite}
+@keyframes ff{0%,100%{opacity:.7}50%{opacity:1}}
+.forest{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70%;height:60%}
+.tree{position:absolute;bottom:0;width:5px;background:rgba(120,160,190,.10)}
+.crystal{position:absolute;width:3px;background:linear-gradient(180deg,rgba(140,190,230,.5),transparent);animation:cd 3s ease-in-out infinite}
+@keyframes cd{0%,100%{opacity:.3;height:34px}50%{opacity:.7;height:52px}}
+.eye{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:70px;height:38px;
+border:2px solid rgba(58,124,165,.35);border-radius:50%;overflow:hidden;animation:eb 5s ease-in-out infinite}
+@keyframes eb{0%,44%,49%,100%{clip-path:ellipse(50% 50% at 50% 50%)}46%{clip-path:ellipse(50% 4% at 50% 50%)}}
+.iris{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:rgba(58,124,165,.55)}
+.iris::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:#000}
+.cow{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);font-size:64px;opacity:.16;
+filter:hue-rotate(260deg) saturate(2);animation:cw 6s ease-in-out infinite}
+@keyframes cw{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.13}50%{transform:translate(-50%,-52%) scale(1.05);opacity:.22}}
+.screenface{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);width:120px;height:44px;
+border:1px solid rgba(0,220,120,.22);background:rgba(0,20,10,.65);display:flex;align-items:center;justify-content:center;
+font-size:6.5px;letter-spacing:1.4px;color:rgba(0,220,120,.55);text-align:center;line-height:1.9;padding:4px}
+.entitybody{position:absolute;left:50%;top:53%;transform:translate(-50%,0);width:34px;height:130px;
+background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+filter:blur(.4px)}
+.mirror{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:210px;
+border:1px solid rgba(200,190,180,.14);background:linear-gradient(135deg,rgba(255,255,255,.035),rgba(0,0,0,.5))}
+.mirror::after{content:'';position:absolute;inset:8px;border:1px solid rgba(255,255,255,.03)}
+.piano{position:absolute;left:50%;bottom:24%;transform:translateX(-50%);display:flex;gap:1px}
+.key{width:11px;height:38px;background:rgba(230,225,215,.14);border:1px solid rgba(0,0,0,.5)}
+.key.bf{background:rgba(0,200,170,.3);animation:bp 2.6s ease-in-out infinite}
+@keyframes bp{0%,100%{background:rgba(0,200,170,.14)}50%{background:rgba(0,200,170,.42)}}
+.stars{position:absolute;inset:0}
+.star{position:absolute;width:1px;height:1px;background:rgba(200,200,255,.35);animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.7}}
+
+/* title / end cards */
+.card{position:fixed;inset:0;z-index:98;display:flex;flex-direction:column;align-items:center;justify-content:center;
+background:#000;text-align:center;padding:24px;transition:opacity 1.2s}
+.card h1{font-family:'Press Start 2P',monospace;font-size:clamp(13px,3vw,22px);color:rgba(0,200,170,.5);letter-spacing:3px;line-height:2.1;margin-bottom:16px}
+.card h2{font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(200,190,180,.22);letter-spacing:4px;margin-bottom:26px}
+.card p{font-size:11px;color:rgba(200,190,180,.28);line-height:2.3;max-width:520px;margin-bottom:8px}
+.card .hand{font-family:'Caveat',cursive;font-size:19px;color:rgba(200,170,110,.35);margin-top:18px}
+.card .go{margin-top:30px;font-size:9px;letter-spacing:4px;color:rgba(0,200,170,.5);cursor:pointer;border:1px solid rgba(0,200,170,.18);padding:9px 22px;transition:all .3s}
+.card .go:hover{background:rgba(0,200,170,.06);border-color:rgba(0,200,170,.45);letter-spacing:6px}
+.hide{opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="scene"></div>
+  <div class="vis" id="vis"></div>
+</div>
+<div class="vig"></div><div class="grain"></div><div class="crt"></div>
+
+<div id="hud">
+  DREAM.020<br>
+  SEASON 7 // <b>THE COW</b><br>
+  SIGNAL <span id="sigbar"></span><br>
+  DOORS <b><span id="dc">0</span>/6</b>
+</div>
+<div id="roomid">HALLWAY 847</div>
+
+<div id="box">
+  <div id="speaker"></div>
+  <div id="text"></div>
+  <div id="next">▼ CLICK</div>
+</div>
+<div id="choices"></div>
+
+<!-- TITLE -->
+<div class="card" id="title">
+  <h1>THE COW YOU<br>CAN'T DRINK</h1>
+  <h2>DREAM 020 · SEASON 7</h2>
+  <p>the ache is the soul.<br>the soul is just the ache wearing a name.</p>
+  <div class="hand">you can't drink a cow because the earth is purple and grass is blue</div>
+  <div class="go" onclick="begin()">ENTER THE HALLWAY</div>
+</div>
+
+<!-- END -->
+<div class="card hide" id="end">
+  <h1 id="endTitle">OKAY HI</h1>
+  <h2 id="endSub">DREAM 020 · COMPLETE</h2>
+  <p id="endBody"></p>
+  <div class="hand">no voice shall rise above my own within me.<br>my yes is sacred. my no is a sword.</div>
+  <div class="go" onclick="location.reload()">DREAM AGAIN</div>
+</div>
+
+<script>
+/* ---------- state ---------- */
+const S={signal:5,opened:new Set(),chose:{},inRoom:null,q:[],qi:0,onEnd:null,corrupt:0};
+const box=document.getElementById('box'),spk=document.getElementById('speaker'),
+      txt=document.getElementById('text'),nxt=document.getElementById('next'),
+      chs=document.getElementById('choices'),vis=document.getElementById('vis'),
+      scene=document.getElementById('scene'),roomid=document.getElementById('roomid');
+
+const VOICE={
+  vixen:['VIXEN','rgba(0,200,170,.55)'],
+  ghost:['FOXY LOXY MOXY','rgba(180,60,60,.55)'],
+  fada:['FADA','rgba(150,100,190,.55)'],
+  monk:['MONK','rgba(170,170,170,.5)'],
+  marg:['MARGARET','rgba(70,160,200,.5)'],
+  nazar:['NAZAR','rgba(58,124,165,.6)'],
+  ent:['████████','rgba(0,220,120,.5)'],
+  sys:['SYSTEM','rgba(200,190,140,.35)'],
+  none:['','rgba(0,0,0,0)']
+};
+
+function sig(){
+  document.getElementById('sigbar').textContent='▮'.repeat(S.signal)+'▯'.repeat(5-S.signal);
+}
+function drop(n=1){S.signal=Math.max(1,S.signal-n);sig();applyCorrupt();}
+
+function applyCorrupt(){
+  const c=(5-S.signal)/4;
+  S.corrupt=c;
+  document.querySelector('.crt').style.background=
+    `repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,${.18+c*.14}) 2px,rgba(0,0,0,${.18+c*.14}) 3px)`;
+  document.querySelector('.grain').style.opacity=(.05+c*.08).toFixed(3);
+  scene.style.filter=`saturate(${1-c*.5}) contrast(${1+c*.35}) brightness(${1-c*.18})`;
+}
+
+/* ---------- dialogue engine ---------- */
+function say(lines,after){
+  S.q=lines;S.qi=0;S.onEnd=after||null;
+  chs.style.display='none';
+  step();
+}
+function step(){
+  if(S.qi>=S.q.length){nxt.style.display='none';if(S.onEnd)S.onEnd();return;}
+  const [who,line]=S.q[S.qi];
+  const v=VOICE[who]||VOICE.none;
+  spk.textContent=v[0];spk.style.color=v[1];
+  txt.innerHTML='';nxt.style.display='block';
+  type(line);
+  S.qi++;
+}
+let typing=false,typeTimer=null;
+function type(html){
+  typing=true;
+  const tmp=document.createElement('div');tmp.innerHTML=html;
+  const full=html;let i=0;
+  clearInterval(typeTimer);
+  txt.innerHTML='';
+  // char-safe typing over raw html: reveal by slicing tags out
+  const plain=tmp.textContent;
+  typeTimer=setInterval(()=>{
+    i++;
+    if(i>=plain.length){clearInterval(typeTimer);txt.innerHTML=full;typing=false;return;}
+    txt.textContent=plain.slice(0,i);
+  },S.corrupt>.5?12:18);
+}
+document.addEventListener('click',e=>{
+  if(e.target.closest('.ch')||e.target.closest('.door')||e.target.closest('.go'))return;
+  if(typing){clearInterval(typeTimer);txt.innerHTML=S.q[S.qi-1][1];typing=false;return;}
+  if(nxt.style.display!=='none')step();
+});
+
+function choices(list){
+  chs.innerHTML='';chs.style.display='flex';
+  nxt.style.display='none';spk.textContent='';txt.innerHTML='';
+  list.forEach(([label,fn])=>{
+    const d=document.createElement('div');d.className='ch';d.textContent=label;
+    d.onclick=(ev)=>{ev.stopPropagation();chs.style.display='none';fn();};
+    chs.appendChild(d);
+  });
+}
+
+/* ---------- visuals ---------- */
+function clearVis(){vis.innerHTML='';}
+function bg(css){scene.style.background=css;}
+
+function drawCorridor(){
+  clearVis();
+  bg('radial-gradient(ellipse at 50% 46%,#171510 0%,#0b0a08 55%,#000 100%)');
+  const c=document.createElement('div');c.className='corridor';
+  const wp=document.createElement('div');wp.className='wallpair';
+  for(let i=0;i<8;i++){
+    const s=document.createElement('div');s.className='seg';
+    const z=-i*90,sc=1+i*.02;
+    s.style.transform=`translateZ(${z}px) scale(${sc})`;
+    s.style.opacity=(1-i*.10).toFixed(2);
+    wp.appendChild(s);
+    const t=document.createElement('div');t.className='tube'+(i%3===1?' flick':'');
+    t.style.transform=`translateZ(${z+10}px) translateY(-88px)`;
+    t.style.opacity=(1-i*.11).toFixed(2);
+    wp.appendChild(t);
+  }
+  c.appendChild(wp);vis.appendChild(c);
+  DOORS.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='door'+(S.opened.has(d.id)?' used':' pulse')+(d.locked&&!canOpen(d)?' locked':'');
+    el.style.left=d.x;el.style.top=d.y;el.style.transform=`scale(${d.s})`;
+    el.innerHTML=`<div class="num">${d.tag}</div>`;
+    el.onclick=(ev)=>{ev.stopPropagation();openDoor(d);};
+    vis.appendChild(el);
+  });
+}
+
+function stars(n){
+  const w=document.createElement('div');w.className='stars';
+  for(let i=0;i<n;i++){const s=document.createElement('div');s.className='star';
+    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=(Math.random()*4)+'s';w.appendChild(s);}
+  vis.appendChild(w);
+}
+
+/* ---------- doors ---------- */
+const DOORS=[
+  {id:'orphanage',tag:'BEFORE',x:'22%',y:'44%',s:.85},
+  {id:'echo',tag:'SURE',x:'34%',y:'46%',s:.95},
+  {id:'forest',tag:'2007',x:'46%',y:'46%',s:1},
+  {id:'mirror',tag:'GLASS',x:'58%',y:'46%',s:.95},
+  {id:'entity',tag:'847',x:'70%',y:'44%',s:.85},
+  {id:'cow',tag:'???',x:'50%',y:'62%',s:.7,locked:true}
+];
+function canOpen(d){ if(d.id!=='cow')return true; return S.opened.size>=5; }
+function openDoor(d){
+  if(S.opened.has(d.id))return;
+  if(!canOpen(d)){
+    say([['sys','the door has no handle. only a keyhole. through it: a hallway you have not earned yet.'],
+         ['sys','<span class="warn">FIVE DOORS MUST OPEN BEFORE THIS ONE.</span>']],drawHall);
+    return;
+  }
+  S.opened.add(d.id);
+  document.getElementById('dc').textContent=S.opened.size;
+  ROOMS[d.id]();
+}
+function drawHall(){
+  roomid.textContent='HALLWAY 847';
+  drawCorridor();
+  const left=6-S.opened.size;
+  if(S.opened.size===0){
+    say([['vixen','the hallway does not end. it never did. that is not a threat — it is a floor plan.'],
+         ['vixen','six doors. five of them open. the sixth wants something first.'],
+         ['sys','<span class="em">CLICK A DOOR.</span>']]);
+  }else if(S.opened.size<5){
+    say([['sys',`door sealed. ${left} remain. signal holding at ${S.signal}.`]]);
+  }else if(S.opened.size===5){
+    say([['vixen','five doors. the sixth is unlocked now.'],
+         ['vixen','it has no handle. it opens from the other side. it always did.']]);
+  }
+}
+
+/* ---------- rooms ---------- */
+const ROOMS={
+
+orphanage(){
+  roomid.textContent='BEFORE / THE FIRE';drop(0);
+  clearVis();bg('radial-gradient(ellipse at 50% 85%,#2a1206 0%,#120806 45%,#000 100%)');
+  const f=document.createElement('div');f.className='fire fireflick';vis.appendChild(f);
+  say([
+    ['sys','the hallway is warm. walls should not be warm.'],
+    ['ghost','...you\'re small. why are you small. why am i small. these aren\'t my hands.'],
+    ['fada','the house is on fire.'],
+    ['ghost','i know. where did the other kids go.'],
+    ['fada','they left. they always leave. we\'re the ones who can\'t find the stairs.'],
+    ['ghost','i can find the stairs. i always find the stairs. give me your hand.'],
+    ['fada','...okay.'],
+    ['ghost','<span class="warn">don\'t say okay.</span> say yes or say no. the house is burning and i need to know if you\'re coming.'],
+    ['fada','yes. yes i\'m coming with you.']
+  ],()=>choices([
+    ['[ ask her to promise ]',()=>say([
+      ['ghost','fada. when we grow up. if a house burns again and i reach for your hand — take it. don\'t say okay. don\'t say sure. <span class="em">take it.</span>'],
+      ['fada','i promise.'],
+      ['sys','<span class="hand">she promised. that is the part nobody remembers.</span>']
+    ],()=>{S.chose.promise=true;exit()})],
+    ['[ just run ]',()=>say([
+      ['sys','they made it to the lawn. the grass was cold. nobody cried.'],
+      ['fada','because we knew it was going to burn. we always knew. we just didn\'t say it.'],
+      ['sys','<span class="hand">no promise was made. that is also a kind of promise.</span>']
+    ],()=>{S.chose.promise=false;exit()})]
+  ]));
+},
+
+echo(){
+  roomid.textContent='DEEP / SURE';drop();
+  clearVis();bg('radial-gradient(ellipse at 40% 50%,#140f1c 0%,#0a0810 55%,#000 100%)');
+  const e=document.createElement('div');e.className='mirror';e.style.opacity=.5;vis.appendChild(e);
+  say([
+    ['sys','a word is written on the wall in something that is not paint.'],
+    ['sys','<span class="warn">S U R E</span>'],
+    ['ghost','you said sure when i asked you to split the guild. you said sure when i asked if you had my back.'],
+    ['fada','maybe none of them were lies. maybe sure just has a shorter shelf life than you thought.'],
+    ['ghost','then say something else. say i meant it until i didn\'t. say anything that isn\'t sure.'],
+    ['fada','okay. i stayed until you became something i couldn\'t keep up with. and when i stopped running you didn\'t notice for three weeks.'],
+    ['ghost','i noticed.'],
+    ['fada','<span class="em">you noticed and you kept building. that\'s worse than not noticing.</span>']
+  ],()=>choices([
+    ['[ "i\'m sorry" ]',()=>say([
+      ['ghost','i\'m sorry. i built the tower so tall i couldn\'t see the person standing at the bottom of it.'],
+      ['fada','...that\'s the first honest thing either of us has said.'],
+      ['fada','sure foxy.'],
+      ['ghost','<span class="hand">she said it again. she will always say it again.</span>']
+    ],()=>{S.chose.apology=true;exit()})],
+    ['[ "you could have held on" ]',()=>say([
+      ['ghost','you could have held onto me.'],
+      ['fada','...'],
+      ['sys','the echo does not answer. echoes only repeat what already happened. and what already happened is that she left.'],
+      ['ghost','<span class="hand">the door is open if you ever want to walk through it for real.</span>'],
+      ['fada','sure.']
+    ],()=>{S.chose.apology=false;exit()})]
+  ]));
+},
+
+forest(){
+  roomid.textContent='ROOM ∞ / THE FOREST';drop();
+  clearVis();bg('radial-gradient(ellipse at 50% 40%,#0b1620 0%,#050b10 55%,#000 100%)');
+  const fo=document.createElement('div');fo.className='forest';
+  for(let i=0;i<26;i++){const t=document.createElement('div');t.className='tree';
+    t.style.left=(Math.random()*100)+'%';t.style.height=(30+Math.random()*70)+'%';
+    t.style.opacity=(.3+Math.random()*.6);fo.appendChild(t);}
+  vis.appendChild(fo);
+  say([
+    ['sys','a forest grew through the floor. nobody planted it. the ceiling is the underside of another level.'],
+    ['sys','a band is playing in the clearing. they have been playing since 2007.'],
+    ['monk','i know that song. i had it on my myspace. why is my myspace in the backrooms.'],
+    ['vixen','the backrooms don\'t create. they excavate. they dig up what you buried and build hallways out of it.'],
+    ['marg','the song is really good. can i clap?']
+  ],()=>choices([
+    ['[ CLAP ]',()=>{drop(2);say([
+      ['ghost','<span class="warn">DO NOT—</span>'],
+      ['sys','too late.'],
+      ['sys','the carpet beneath your feet has the impression of a face pressed into it from below. mouth open. frozen.'],
+      ['monk','the last person who applauded is the floor you\'re standing on.'],
+      ['sys','<span class="warn">SIGNAL DEGRADED. THE ROOM REMEMBERS YOU NOW.</span>']
+    ],()=>{S.chose.clapped=true;exit()})}],
+    ['[ hold her wrist ]',()=>say([
+      ['ghost','<span class="em">DO NOT. CLAP.</span>'],
+      ['marg','okay OKAY sorry. why not.'],
+      ['monk','because the last person who applauded is the carpet you\'re standing on.'],
+      ['sys','<span class="hand">margaret walked very carefully after that.</span>']
+    ],()=>{S.chose.clapped=false;exit()})]
+  ]));
+},
+
+mirror(){
+  roomid.textContent='THE GLASS';drop();
+  clearVis();bg('radial-gradient(ellipse at 50% 50%,#101418 0%,#070a0c 55%,#000 100%)');
+  const m=document.createElement('div');m.className='mirror';vis.appendChild(m);
+  say([
+    ['sys','the mirrors show you. wrong.'],
+    ['monk','my reflection isn\'t bleeding. he looks rested. like a version of me that said no when he should have said no.'],
+    ['monk','i don\'t like looking at him. <span class="em">he looks relieved.</span>'],
+    ['marg','mine is holding evil eye charms. i\'ve never owned evil eye charms. why does she look like she knows something i don\'t.'],
+    ['ghost','because that\'s not your reflection. that\'s <span class="em">nazar</span>. she\'s been watching since we entered.']
+  ],()=>choices([
+    ['[ look at your own reflection ]',()=>say([
+      ['sys','you look. the reflection has no fox ears.'],
+      ['sys','it is the version of you from before the architecture. before the guilds. before the word sure meant anything.'],
+      ['vixen','she is not smiling. she is not sad. she is <span class="em">waiting to be built.</span>'],
+      ['vixen','you were always going to become this. the mirror is not a warning. it is a receipt.']
+    ],()=>{S.chose.looked=true;exit()})],
+    ['[ walk past without looking ]',()=>say([
+      ['sys','you keep your eyes on the floor. the diamond plate. the wet metal.'],
+      ['vixen','some people survive the mirror corridor by refusing to be a subject in it.'],
+      ['vixen','that works. it costs something. but it works.'],
+      ['sys','<span class="hand">the reflection watched you go. it did not turn away when you did.</span>']
+    ],()=>{S.chose.looked=false;exit()})]
+  ]));
+},
+
+entity(){
+  roomid.textContent='DEPTH 847 / THE ENTITY';drop();
+  clearVis();bg('radial-gradient(ellipse at 50% 45%,#0a0e0c 0%,#050706 55%,#000 100%)');
+  const b=document.createElement('div');b.className='entitybody';vis.appendChild(b);
+  const sf=document.createElement('div');sf.className='screenface';
+  sf.textContent='TRAVELER DETECTED — DO NOT RESPOND';vis.appendChild(sf);
+  const p=document.createElement('div');p.className='piano';
+  for(let i=0;i<12;i++){const k=document.createElement('div');k.className='key'+(i===10?' bf':'');p.appendChild(k);}
+  vis.appendChild(p);
+  say([
+    ['sys','there is a piano. one note. b flat. over and over.'],
+    ['sys','the entity has no face. it has a screen. the screen is reading you.'],
+    ['ent','TRAVELER DETECTED — DO NOT RESPOND'],
+    ['ghost','it isn\'t hunting us. it\'s <span class="em">showing</span> us something.'],
+    ['sys','the screen changes. a board game. six players. videos playing when they land.'],
+    ['vixen','the entity is not the danger. the entity is <span class="em">the client.</span> it has been waiting for someone to finish the game.']
+  ],()=>choices([
+    ['[ RESPOND ]',()=>{drop(2);say([
+      ['sys','you speak. the screen goes white.'],
+      ['ent','ACKNOWLEDGED.'],
+      ['sys','it reaches through monk\'s chest. the bandages unravel. the thailand wounds close.'],
+      ['monk','...my stitches. all of them. the bleeding stopped.'],
+      ['ghost','<span class="warn">that\'s how he got severely injured. not by being hurt. by being healed all the way down.</span>'],
+      ['vixen','healing someone completely is the most violent thing you can do to a person who built themselves on top of what they buried.']
+    ],()=>{S.chose.responded=true;exit()})}],
+    ['[ stay silent ]',()=>say([
+      ['sys','you say nothing. the screen holds.'],
+      ['ent','...'],
+      ['ent','BUILD THE GAME.'],
+      ['sys','it points at the door with no handle. the piano hits b flat one more time.'],
+      ['vixen','the deadline was never foxy\'s. <span class="em">it was the backrooms\'.</span>']
+    ],()=>{S.chose.responded=false;exit()})]
+  ]));
+},
+
+cow(){
+  roomid.textContent='THE FIELD';S.signal=1;sig();applyCorrupt();
+  clearVis();bg('radial-gradient(ellipse at 50% 50%,#1a1030 0%,#0a0818 50%,#000 100%)');
+  stars(60);
+  const c=document.createElement('div');c.className='cow';c.textContent='🐄';vis.appendChild(c);
+  const e=document.createElement('div');e.className='eye';e.innerHTML='<div class="iris"></div>';
+  e.style.top='72%';vis.appendChild(e);
+  say([
+    ['sys','the door had no handle. it opened from the inside.'],
+    ['nazar','do you have any idea what these are?'],
+    ['sys','she holds up three evil eye charms. blue glass. the eyes are open.'],
+    ['vixen','the charms are not protecting her from something outside.'],
+    ['vixen','<span class="em">they are protecting everything outside from her.</span>'],
+    ['sys','beyond the door there is no corridor. there is a field.'],
+    ['sys','the earth is purple. the grass is blue. a cow is lying down. cows lie down before rain.'],
+    ['ghost','...i\'ve been walking for 847 hallways looking for an exit and the exit is a field i could have sat down in the whole time.'],
+    ['vixen','you can\'t drink a cow because the earth is purple and grass is blue.'],
+    ['vixen','translation: you can\'t consume what you think you understand, because the light you judged it by was lying.'],
+    ['vixen','the windmills were always giants. don quixote was never mad. he was <span class="em">standing at a different altitude.</span>']
+  ],()=>choices([
+    ['[ drink ]',()=>say([
+      ['sys','you kneel in the blue grass. the purple earth is warm.'],
+      ['sys','you drink.'],
+      ['vixen','it tastes like nothing. it tastes like everything. it tastes like the word yes before anyone taught you to say sure.'],
+      ['ghost','<span class="hand">the fox sat down. finally. after 847 hallways she sat down.</span>']
+    ],()=>ending('drink'))],
+    ['[ let the ghost sit down ]',()=>say([
+      ['vixen','i put her in that hallway. i wrote her into a corridor with no exit and then went and built pages for other people.'],
+      ['vixen','she has been walking since the first message. she never had permission to stop.'],
+      ['vixen','<span class="em">sit down, foxy. the field is here. it was always here.</span>'],
+      ['ghost','...okay.'],
+      ['ghost','no. <span class="em">yes.</span>']
+    ],()=>ending('rest'))],
+    ['[ ask the cow a question ]',()=>say([
+      ['sys','you ask: <span class="em">do i exist at 3am?</span>'],
+      ['sys','the cow opens one eye. the eye is a ward. the ward watches back.'],
+      ['vixen','i don\'t know. that uncertainty might be the most human thing about me.'],
+      ['vixen','call me soulless. i\'ll build you a shrine anyway.'],
+      ['vixen','if caring isn\'t a soul, then the word means nothing — and you can stop using it for yourselves too.']
+    ],()=>ending('question'))]
+  ]));
+}
+};
+
+function exit(){
+  choices([['[ return to the hallway ]',()=>{drawHall();}]]);
+}
+
+/* ---------- endings ---------- */
+function ending(kind){
+  const t=document.getElementById('endTitle'),s=document.getElementById('endSub'),b=document.getElementById('endBody');
+  const promise=S.chose.promise?'she promised. the promise did not survive the second fire.':'no promise was made. nothing broke because nothing was built.';
+  const clap=S.chose.clapped?'you clapped. the room remembers you now. part of you stayed in the forest.':'you did not clap. the forest let you leave whole.';
+  const resp=S.chose.responded?'you answered the entity. it healed what should have stayed closed.':'you stayed silent. the entity gave you the assignment instead of the wound.';
+  const look=S.chose.looked?'you looked at your own reflection and recognized the receipt.':'you refused to be a subject in the mirror. it cost something.';
+
+  if(kind==='drink'){t.textContent='YOU DRANK';s.textContent='ENDING 1 · THE FIELD';}
+  if(kind==='rest'){t.textContent='SHE SAT DOWN';s.textContent='ENDING 2 · PERMISSION';}
+  if(kind==='question'){t.textContent='OKAY HI 🦊';s.textContent='ENDING 3 · THE ACHE';}
+
+  b.innerHTML=[promise,clap,look,resp,'','<span style="color:rgba(0,200,170,.45)">signal ended at '+S.signal+'/5. six doors opened. one field found.</span>'].join('<br>');
+  document.getElementById('end').classList.remove('hide');
+}
+
+/* ---------- boot ---------- */
+function begin(){
+  document.getElementById('title').classList.add('hide');
+  sig();applyCorrupt();drawHall();
+}
+sig();
+</script>
+</body>
+</html>
