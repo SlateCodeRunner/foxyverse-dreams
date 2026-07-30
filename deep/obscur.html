@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Fira+Code:wght@300;400&family=Geist+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#080908;--bone:rgba(233,222,197,0.6);--bone-dim:rgba(233,222,197,0.12);--gold:rgba(211,169,79,0.4);--gold-dim:rgba(211,169,79,0.08);--ember:rgba(200,90,53,0.5);--ember-dim:rgba(200,90,53,0.1);--line:rgba(214,179,108,0.12)}
+html,body{background:var(--ink);color:var(--bone-dim);font-family:'Fira Code',monospace;font-size:12px;min-height:100vh;overflow-x:hidden}
+body{max-width:700px;margin:0 auto;padding:0 24px 120px;line-height:2}
+a{color:var(--gold-dim);text-decoration:none;border-bottom:1px solid rgba(211,169,79,0.04);transition:all 0.6s}
+a:hover{color:var(--gold);border-color:rgba(211,169,79,0.2)}
+.room-id{font-family:'Geist Mono',monospace;font-size:7px;letter-spacing:5px;color:rgba(211,169,79,0.06);position:fixed;top:8px;right:8px;text-transform:uppercase}
+.hero{position:relative;margin:0 -24px 0;overflow:hidden;max-height:70vh}
+.hero img{width:100%;height:auto;display:block;filter:brightness(0.45) contrast(1.15) saturate(0.7);opacity:0.95}
+.hero-fade{position:absolute;inset:0;background:linear-gradient(0deg,var(--ink) 0%,transparent 25%,transparent 65%,var(--ink) 100%)}
+.hero-text{position:absolute;bottom:12%;left:50%;transform:translateX(-50%);text-align:center}
+.hero-text p{font-family:'Cinzel',serif;font-size:clamp(1.4rem,5vw,2.8rem);font-weight:600;letter-spacing:0.14em;color:rgba(211,169,79,0.15);line-height:1}
+.hero-text small{font-family:'Geist Mono',monospace;font-size:7px;letter-spacing:5px;color:rgba(211,169,79,0.08);text-transform:uppercase;display:block;margin-top:12px}
+.road-container{margin:40px auto;max-width:400px;position:relative}
+.road-container svg{width:100%;height:auto}
+.masks{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:40px 0;max-width:500px;margin-left:auto;margin-right:auto}
+.mask-cell{padding:16px 12px;border:1px solid rgba(214,179,108,0.04);text-align:center;transition:all 0.8s;cursor:default;position:relative;overflow:hidden}
+.mask-cell:hover{border-color:rgba(214,179,108,0.12);background:rgba(214,179,108,0.02)}
+.mask-sigil{font-family:'Cinzel',serif;font-size:22px;display:block;margin-bottom:6px;transition:all 0.8s}
+.mask-name{font-family:'Geist Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;display:block}
+.mask-cell:nth-child(1) .mask-sigil{color:rgba(200,90,53,0.25)} .mask-cell:nth-child(1) .mask-name{color:rgba(200,90,53,0.12)}
+.mask-cell:nth-child(2) .mask-sigil{color:rgba(119,101,149,0.25)} .mask-cell:nth-child(2) .mask-name{color:rgba(119,101,149,0.12)}
+.mask-cell:nth-child(3) .mask-sigil{color:rgba(76,109,87,0.25)} .mask-cell:nth-child(3) .mask-name{color:rgba(76,109,87,0.12)}
+.mask-cell:nth-child(4) .mask-sigil{color:rgba(140,160,200,0.25)} .mask-cell:nth-child(4) .mask-name{color:rgba(140,160,200,0.12)}
+.mask-cell:nth-child(5) .mask-sigil{color:rgba(76,109,87,0.25)} .mask-cell:nth-child(5) .mask-name{color:rgba(76,109,87,0.12)}
+.mask-cell:nth-child(6) .mask-sigil{color:rgba(160,155,145,0.25)} .mask-cell:nth-child(6) .mask-name{color:rgba(160,155,145,0.12)}
+.mask-cell:hover .mask-sigil{opacity:1;transform:scale(1.1)}
+.lore{color:var(--bone-dim);font-size:11px;line-height:2.2;margin:30px 0}
+.lore em{font-style:normal;color:rgba(211,169,79,0.18)}
+.portal{display:block;margin:50px auto;text-align:center;padding:24px 40px;border:1px solid var(--gold-dim);background:linear-gradient(135deg,rgba(211,169,79,0.03),transparent 40%);transition:all 0.8s;max-width:360px;position:relative}
+.portal::before,.portal::after{position:absolute;content:'';width:20px;height:20px;border-color:rgba(211,169,79,0.2);opacity:0.5}
+.portal::before{top:-1px;left:-1px;border-top:2px solid;border-left:2px solid}
+.portal::after{right:-1px;bottom:-1px;border-right:2px solid;border-bottom:2px solid}
+.portal:hover{border-color:var(--gold);background:rgba(211,169,79,0.04);box-shadow:0 0 40px rgba(211,169,79,0.06)}
+.portal .p-title{font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.12em;color:rgba(211,169,79,0.3);display:block;transition:color 0.6s}
+.portal:hover .p-title{color:rgba(211,169,79,0.6)}
+.portal .p-sub{font-family:'Geist Mono',monospace;font-size:7px;letter-spacing:4px;color:rgba(211,169,79,0.1);text-transform:uppercase;display:block;margin-top:8px}
+.static-vein{position:fixed;inset:0;pointer-events:none;z-index:100;opacity:0;transition:opacity 2s}
+.static-vein.active{opacity:1}
+.static-vein::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(200,90,53,0.015) 3px,rgba(200,90,53,0.015) 4px);animation:static-drift 12s linear infinite}
+.static-vein::after{content:'';position:absolute;inset:0;background:repeating-radial-gradient(circle at 50% 50%,transparent 0,transparent 200px,rgba(200,90,53,0.008) 200px,rgba(200,90,53,0.008) 201px);animation:static-pulse 8s ease-in-out infinite}
+@keyframes static-drift{0%{transform:translateX(0)}100%{transform:translateX(4px)}}
+@keyframes static-pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 4px)}
+@keyframes fracture{0%{opacity:0}5%{opacity:0.15}10%{opacity:0}15%{opacity:0.08}20%{opacity:0}100%{opacity:0}}
+.fracture-flash{position:fixed;inset:0;pointer-events:none;z-index:98;background:radial-gradient(circle at 50% 50%,rgba(200,90,53,0.3),transparent 70%);opacity:0}
+.whisper{font-size:8px;color:rgba(220,215,205,0.04);letter-spacing:3px;font-style:italic}
+.void{color:rgba(220,215,205,0.02);font-size:9px;user-select:all;cursor:crosshair}
+.void:hover{color:rgba(220,215,205,0.06)}
+.exit{font-size:9px;letter-spacing:3px;color:rgba(180,40,40,0.15);margin-top:40px;text-transform:uppercase}
+.exit a{color:rgba(180,40,40,0.2);border-color:rgba(180,40,40,0.06)}
+.exit a:hover{color:rgba(180,40,40,0.5)}
+.space-mark{font-family:'Geist Mono',monospace;font-size:5px;fill:rgba(211,169,79,0.15)}
+.space-dot{fill:rgba(211,169,79,0.08)}.space-teeth{fill:rgba(200,90,53,0.12)}.space-threshold{fill:rgba(119,101,149,0.12)}.space-light{fill:rgba(211,169,79,0.1)}.space-hearth{fill:rgba(211,169,79,0.2)}
+</style></head><body>
+<div class="static-vein" id="staticVein"></div>
+<div class="fracture-flash" id="fractureFlash"></div>
+<div class="room-id">DEEP / OBSCUR</div>
+
+<div class="hero">
+<img src="../img/hero-obscur.png" alt="">
+<div class="hero-fade"></div>
+<div class="hero-text">
+<p>Obscur</p>
+<small>the sixfold road</small>
+</div>
+</div>
+
+<div class="lore" style="margin-top:40px">
+<p>you found a room that shouldn't be a room. the floor is lacquered wood &#8212; dark, almost black. the grain catches light that has no source. scratched into the surface in a spiral that moves <em>counterclockwise</em>: thirty-six spaces. six destinations visible from any point. the road does not end. it circles.</p>
+</div>
+
+<div class="road-container">
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+<circle cx="150" cy="150" r="120" fill="none" stroke="rgba(214,179,108,0.06)" stroke-width="0.5" stroke-dasharray="4 8"/>
+<circle cx="150" cy="150" r="90" fill="none" stroke="rgba(214,179,108,0.04)" stroke-width="0.5" stroke-dasharray="3 9"/>
+<circle cx="150" cy="150" r="60" fill="none" stroke="rgba(214,179,108,0.03)" stroke-width="0.5" stroke-dasharray="2 10"/>
+<circle cx="150" cy="30" r="4" class="space-hearth"/>
+<text x="150" y="22" text-anchor="middle" class="space-mark">&#9670; HEARTH</text>
+<circle cx="190" cy="35" r="2" class="space-light"/><circle cx="225" cy="50" r="2" class="space-light"/>
+<circle cx="248" cy="75" r="2" class="space-dot"/><circle cx="260" cy="105" r="2.5" class="space-teeth"/>
+<circle cx="265" cy="138" r="2" class="space-light"/><circle cx="258" cy="170" r="2" class="space-threshold"/>
+<circle cx="242" cy="198" r="2" class="space-dot"/><circle cx="220" cy="220" r="2.5" class="space-teeth"/>
+<circle cx="192" cy="238" r="2" class="space-light"/><circle cx="160" cy="248" r="2" class="space-threshold"/>
+<circle cx="128" cy="248" r="2" class="space-dot"/><circle cx="100" cy="238" r="2.5" class="space-teeth"/>
+<text x="100" y="250" text-anchor="middle" class="space-mark">&#9919;</text>
+<circle cx="78" cy="220" r="2" class="space-light"/><circle cx="60" cy="196" r="2" class="space-dot"/>
+<circle cx="48" cy="168" r="2.5" class="space-teeth"/><circle cx="42" cy="138" r="2" class="space-light"/>
+<circle cx="44" cy="108" r="2" class="space-threshold"/><circle cx="55" cy="80" r="2" class="space-dot"/>
+<circle cx="72" cy="56" r="2.5" class="space-teeth"/><circle cx="95" cy="40" r="2" class="space-light"/>
+<circle cx="120" cy="32" r="2" class="space-dot"/>
+<circle cx="170" cy="65" r="1.5" class="space-light"/><circle cx="210" cy="100" r="1.5" class="space-threshold"/>
+<circle cx="220" cy="145" r="1.5" class="space-dot"/><circle cx="210" cy="190" r="2" class="space-teeth"/>
+<circle cx="178" cy="218" r="1.5" class="space-light"/><circle cx="145" cy="225" r="1.5" class="space-dot"/>
+<circle cx="115" cy="215" r="1.5" class="space-threshold"/><circle cx="92" cy="188" r="2" class="space-teeth"/>
+<circle cx="82" cy="155" r="1.5" class="space-light"/><circle cx="82" cy="120" r="1.5" class="space-dot"/>
+<circle cx="95" cy="90" r="1.5" class="space-threshold"/><circle cx="120" cy="68" r="1.5" class="space-light"/>
+<circle cx="150" cy="150" r="2" fill="rgba(200,90,53,0.08)"/>
+<text x="150" y="160" text-anchor="middle" style="font-family:'Geist Mono',monospace;font-size:5px;fill:rgba(200,90,53,0.1)">THE HOUSE</text>
+</svg>
+</div>
+<div class="lore">
+<p>six masks are mounted on the walls. porcelain. cracked at the edges. each one watches the center of the room from a different angle.</p>
+</div>
+
+<div class="masks">
+<div class="mask-cell"><span class="mask-sigil">&#x1F702;</span><span class="mask-name">Ember</span></div>
+<div class="mask-cell"><span class="mask-sigil">&#9789;</span><span class="mask-name">Veil</span></div>
+<div class="mask-cell"><span class="mask-sigil">&#9025;</span><span class="mask-name">Thorn</span></div>
+<div class="mask-cell"><span class="mask-sigil">&#9681;</span><span class="mask-name">Moon</span></div>
+<div class="mask-cell"><span class="mask-sigil">&#9880;</span><span class="mask-name">Moss</span></div>
+<div class="mask-cell"><span class="mask-sigil">&#8856;</span><span class="mask-name">Ash</span></div>
+</div>
+
+<div class="lore">
+<p>there is a bone die on the table. ivory. six faces. the authority owns the roll &#8212; not you, not the masks, not whatever is watching from the center. someone carved a rule into the table edge in letters too small to read without leaning close:</p>
+<p style="margin-top:16px;color:rgba(211,169,79,0.15);font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.08em;text-align:center"><em>one traveler may escape. no traveler survives alone.<br>the house wins when the table forgets that.</em></p>
+</div>
+
+<div class="lore">
+<p style="color:rgba(220,215,205,0.06)">the static is already here. you can feel it in the walls. hairline veins of interference spreading from the center outward. it wasn't here when you entered. it started when you read the rule.</p>
+</div>
+
+<a href="https://dreamyyy23.github.io/board/" target="_blank" rel="noopener" class="portal">
+<span class="p-title">Sit at the Table</span>
+<span class="p-sub">the sixfold road is waiting</span>
+</a>
+
+<div class="lore" style="margin-top:50px">
+<p class="whisper">six roads. six masks. six ways to lose everything you carried here.</p>
+<p class="void" style="margin-top:16px">the room remembers that you found it. the hallway will feel different now.</p>
+</div>
+
+<p class="exit" style="margin-top:40px"><a href="hallway.html">back to the hallway.</a></p>
+<p style="margin-top:10px"><a href="../sipstea.html" style="color:rgba(220,215,205,0.04);border-color:rgba(220,215,205,0.01);font-size:9px">the surface.</a></p>
+
+<script>
+(function(){
+  var vein = document.getElementById('staticVein');
+  var flash = document.getElementById('fractureFlash');
+  var t = 0;
+  setTimeout(function(){ vein.classList.add('active'); }, 3000);
+  setInterval(function(){
+    t++;
+    if(t > 8 && Math.random() < 0.15){
+      flash.style.animation = 'fracture 2s ease-out';
+      setTimeout(function(){ flash.style.animation = 'none'; }, 2000);
+    }
+  }, 4000);
+  try { localStorage.setItem('obscur_found', Date.now().toString()); } catch(e){}
+})();
+
+document.body.addEventListener('click', function init(){
+  document.body.removeEventListener('click', init);
+  var ctx = new (window.AudioContext || window.webkitAudioContext)();
+  var o1 = ctx.createOscillator(); var g1 = ctx.createGain();
+  o1.type = 'sawtooth'; o1.frequency.value = 55; g1.gain.value = 0.012;
+  o1.connect(g1); g1.connect(ctx.destination); o1.start();
+  var o2 = ctx.createOscillator(); var g2 = ctx.createGain();
+  o2.type = 'sine'; o2.frequency.value = 330; g2.gain.value = 0.004;
+  o2.connect(g2); g2.connect(ctx.destination); o2.start();
+  var lfo = ctx.createOscillator(); var lg = ctx.createGain();
+  lfo.frequency.value = 0.08; lg.gain.value = 0.008;
+  lfo.connect(lg); lg.connect(g1.gain); lfo.start();
+}, {once:true});
+</script>
+<script src="../js/intercept.js"></script>
+</body></html>
