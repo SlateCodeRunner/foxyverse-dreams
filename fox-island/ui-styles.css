@@ -1,4 +1,4 @@
-﻿/* UI PANEL ASSETS */
+/* UI PANEL ASSETS */
 #verbs{background-image:url('ui-verbs.png')!important;background-size:100% 100%!important;background-color:transparent!important;border-top:none!important}
 #inv{background-image:url('ui-inventory.png')!important;background-size:100% 100%!important;background-color:transparent!important;border-top:none!important}
 #si{background-image:url('ui-speech.png')!important;background-size:100% 100%!important;background-color:rgba(8,4,18,.93)!important;background-blend-mode:multiply!important;border:none!important;padding:16px 24px 20px 24px!important}
@@ -61,3 +61,10 @@ filter:drop-shadow(0 3px 6px rgba(0,0,0,0.7))!important}
 /* GLOBAL WHITE BG NUKE */
 #speech *{background-color:transparent!important}
 .is img,.is svg{background:transparent!important}
+
+/* PLAYER SPRITE BRIDGE: game sets .idle/.walk/.fl (+ .wu/.wd for vertical). map them onto the 6x? sheet rows */
+#player.walk{animation:spr-walk-r 0.5s steps(6) infinite!important}
+#player.walk.fl{animation:spr-walk-l 0.5s steps(6) infinite!important}
+#player.walk.wd{animation:spr-walk-d 0.5s steps(6) infinite!important}
+#player.walk.wu{animation:spr-walk-u 0.5s steps(6) infinite!important}
+#player.idle.fl{scale:-1 1}

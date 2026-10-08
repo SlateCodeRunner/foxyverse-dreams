@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -301,7 +301,7 @@ function updSpeech(){const vp=$('vp'),sw=$('speech'),vpW=vp.offsetWidth,vpH=vp.o
 function walkTo(tx,ty,cb){
   if(walkAnim){cancelAnimationFrame(walkAnim);walkAnim=null;}
   ty=Math.max(48,Math.min(86,ty));tx=Math.max(4,Math.min(96,tx));
-  player.className=(tx<px?'walk fl':'walk');
+  {const _dx=tx-px,_dy=ty-py;player.className=(Math.abs(_dy)>Math.abs(_dx)*1.2)?(_dy<0?'walk wu':'walk wd'):(tx<px?'walk fl':'walk');}
   const vp=$('vp'),vpW=vp.offsetWidth,vpH=vp.offsetHeight;
   const sx=px/100*vpW,sy=py/100*vpH,ex=tx/100*vpW,ey=ty/100*vpH;
   const dist=Math.sqrt((ex-sx)**2+(ey-sy)**2),dur=dist/SPEED*1000;
