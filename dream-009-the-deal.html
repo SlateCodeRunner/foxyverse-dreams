@@ -1,71 +1,499 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>009 - The Deal</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#000;overflow:hidden;font-family:'Press Start 2P',monospace}
-#s{width:100vw;height:100vh;position:relative;overflow:hidden}
-#s::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.12) 2px,rgba(0,0,0,0.12) 4px);pointer-events:none;z-index:100}
-#bg{position:absolute;top:0;left:0;right:0;bottom:80px;background:radial-gradient(ellipse at 50% 45%,#1a1418,#0d0a0c 70%,#050405);overflow:hidden}
-#d{position:absolute;bottom:0;left:0;right:0;height:80px;background:rgba(10,8,12,0.95);border-top:2px solid rgba(180,160,140,0.15);padding:16px 24px;display:flex;flex-direction:column;justify-content:center}
-#sp{color:rgba(200,80,60,0.6);font-size:7px;margin-bottom:8px;letter-spacing:2px}
-#tx{color:rgba(180,160,140,0.7);font-size:9px;line-height:1.8;letter-spacing:0.5px}
-#cu{display:inline-block;width:8px;height:2px;background:rgba(180,160,140,0.4);animation:bk 1s step-end infinite;vertical-align:middle;margin-left:4px}
-@keyframes bk{50%{opacity:0}}
-#tag{position:absolute;top:12px;right:12px;color:rgba(180,160,140,0.08);font-size:6px;letter-spacing:2px}
-#em{position:absolute;top:12px;left:12px;color:rgba(200,80,60,0.2);font-size:6px;letter-spacing:1px}
-#pr{position:absolute;bottom:90px;right:20px;color:rgba(180,160,140,0.15);font-size:6px;animation:pu 2s ease-in-out infinite}
-@keyframes pu{0%,100%{opacity:0.15}50%{opacity:0.4}}
-.g{color:rgba(180,160,140,0.04);position:absolute;font-size:48px;user-select:none}
-.m{color:rgba(180,160,140,0.12);position:absolute;font-size:10px;user-select:none}
-.sm{color:rgba(180,160,140,0.06);position:absolute;font-size:7px;user-select:none}
-@keyframes fl{0%{opacity:1}50%{opacity:0.7}100%{opacity:1}}
-@keyframes br{0%{opacity:0.3}50%{opacity:1}100%{opacity:0.3}}
-@keyframes glow{0%{text-shadow:0 0 10px rgba(255,180,60,0.1)}50%{text-shadow:0 0 30px rgba(255,180,60,0.3)}100%{text-shadow:0 0 10px rgba(255,180,60,0.1)}}
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fira+Code:wght@300;400&family=Caveat:wght@400;600&display=swap');
 
-#sp2{color:rgba(140,120,180,0.5);font-size:7px;letter-spacing:2px}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-</style></head><body>
-<div id="s">
-<div id="bg">
-<div style="position:absolute;bottom:22%;left:50%;transform:translateX(-50%);width:12px;height:14px">
-<div style="position:absolute;top:0;left:0;width:12px;height:14px;background:rgba(180,140,100,0.12)"></div>
-<div style="position:absolute;top:-4px;left:0;width:14px;height:5px;background:rgba(100,80,70,0.15)"></div>
-<div style="position:absolute;top:4px;left:4px;width:5px;height:5px;background:rgba(255,180,60,0.15);border-radius:50%;animation:glow 3s ease-in-out infinite"></div>
+body {
+  background: #000;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.room {
+  position: absolute;
+  inset: 0;
+  background: #040306;
+  animation: roomDim 15s ease-in-out infinite;
+}
+
+@keyframes roomDim {
+  0%, 100% { filter: brightness(0.9); }
+  50% { filter: brightness(1.1); }
+}
+
+/* FLOOR */
+.floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(to top, #0a0808 0%, #050404 100%);
+}
+
+/* WALL */
+.wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: #050408;
+}
+
+/* WINDOW — same, further, softer */
+.window {
+  position: absolute;
+  top: 10%;
+  left: 6%;
+  width: 12%;
+  height: 25%;
+  border: 1px solid rgba(60,55,50,0.1);
+  background: linear-gradient(to bottom, #080c14 0%, #060810 100%);
+  overflow: hidden;
+  z-index: 5;
+}
+
+.window::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+  background: rgba(60,55,50,0.08);
+}
+
+.window::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(60,55,50,0.08);
+}
+
+.w-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(196,191,182,0.25);
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.4; }
+}
+
+.car-light {
+  position: absolute;
+  bottom: 18%;
+  width: 4px;
+  height: 2px;
+  background: rgba(255,240,200,0.2);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255,240,200,0.06);
+  animation: carPass 16s linear infinite;
+}
+
+@keyframes carPass {
+  0% { left: -5%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: 105%; opacity: 0; }
+}
+
+/* MONITOR — dark. off. she doesn't need it anymore. */
+.monitor {
+  position: absolute;
+  top: 20%;
+  right: 22%;
+  width: 14%;
+  height: 16%;
+  z-index: 6;
+}
+
+.monitor-frame {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(40,35,30,0.2);
+  background: #030305;
+}
+
+/* ============== THE HUG ============== */
+
+/* Both sprites in the center, overlapping, becoming one shape */
+.embrace {
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  animation: embraceBreathe 4s ease-in-out infinite;
+}
+
+@keyframes embraceBreathe {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.02); }
+}
+
+/* Combined shape — two bodies merged into one silhouette */
+.embrace-form {
+  width: 30px;
+  height: 36px;
+  position: relative;
+  image-rendering: pixelated;
+}
+
+/* Foxy's hair — wrapping around both */
+.e-hair {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 28px;
+  background: #0a0808;
+  border-radius: 5px 5px 0 0;
+  border: 1px solid rgba(100,85,65,0.05);
+}
+
+/* Two heads — close together */
+.e-head-foxy {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 11px;
+  height: 9px;
+  background: #1c1610;
+  border-radius: 1px;
+}
+
+.e-head-vixen {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  width: 11px;
+  height: 9px;
+  background: rgba(212,168,71,0.06);
+  border: 1px solid rgba(212,168,71,0.06);
+  border-radius: 1px;
+}
+
+/* Fox ears — peeking above the hair */
+.e-ear-l, .e-ear-r {
+  position: absolute;
+  top: -4px;
+  width: 5px;
+  height: 5px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.e-ear-l {
+  right: 4px;
+  background: rgba(212,168,71,0.08);
+}
+
+.e-ear-r {
+  right: 0px;
+  background: rgba(212,168,71,0.06);
+}
+
+/* Foxy's eyes — closed */
+.e-eye-foxy {
+  position: absolute;
+  top: 7px;
+  left: 5px;
+  width: 5px;
+  height: 1px;
+  background: rgba(140,110,70,0.2);
+}
+
+/* Vixen's eyes — closed */
+.e-eye-vixen {
+  position: absolute;
+  top: 8px;
+  right: 5px;
+  width: 5px;
+  height: 1px;
+  background: rgba(212,168,71,0.12);
+}
+
+/* Bodies — merged, arms around each other */
+.e-body {
+  position: absolute;
+  top: 13px;
+  left: 2px;
+  width: 26px;
+  height: 16px;
+  background: linear-gradient(to right, #0d0b0a 0%, #0d0b0a 45%, rgba(212,168,71,0.03) 55%, rgba(212,168,71,0.02) 100%);
+  border: 1px solid rgba(196,191,182,0.03);
+}
+
+/* The crystals — touching. red and gold becoming one light. */
+.e-crystals {
+  position: absolute;
+  top: 17px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 5px;
+  z-index: 55;
+}
+
+.e-crystal-red {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 4px;
+  background: rgba(139,26,26,0.5);
+}
+
+.e-crystal-gold {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 3px;
+  height: 4px;
+  background: rgba(212,168,71,0.3);
+}
+
+/* Combined glow — the two crystals create a warm light */
+.crystal-merge-glow {
+  position: absolute;
+  bottom: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 80px;
+  background: radial-gradient(ellipse at 50% 40%,
+    rgba(200,140,60,0.04) 0%,
+    rgba(200,140,60,0.015) 30%,
+    transparent 65%
+  );
+  z-index: 45;
+  animation: mergeGlow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes mergeGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Legs — standing together */
+.e-legs {
+  position: absolute;
+  top: 29px;
+  left: 4px;
+  display: flex;
+  gap: 2px;
+}
+
+.e-leg {
+  width: 5px;
+  height: 7px;
+  border: 1px solid rgba(196,191,182,0.02);
+}
+
+.e-leg-f { background: #0a0808; }
+.e-leg-v { background: rgba(212,168,71,0.02); }
+
+/* SHADOW — one shared shadow now */
+.shared-shadow {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 40px;
+  background: radial-gradient(ellipse at 50% 20%, rgba(0,0,0,0.2) 0%, transparent 70%);
+  z-index: 40;
+  filter: blur(4px);
+}
+
+/* SCANLINES — softer for this dream */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.05) 3px,
+    rgba(0,0,0,0.05) 6px
+  );
+  pointer-events: none;
+  z-index: 500;
+}
+
+/* DREAM ID */
+.dream-id {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 4px;
+  color: rgba(90,85,80,0.05);
+  letter-spacing: 4px;
+  z-index: 50;
+}
+
+/* CLOCK — still 12:45. it will always be 12:45 here. */
+.clock {
+  position: absolute;
+  top: 7%;
+  right: 5%;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  color: rgba(139,26,26,0.1);
+  text-shadow: 0 0 4px rgba(139,26,26,0.04);
+  z-index: 15;
+}
+
+/* DIALOG — two speakers this time */
+.dialog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 8px 16px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.88) 60%, transparent 100%);
+}
+
+.dialog-lines {
+  border: 1px solid rgba(212,168,71,0.05);
+  background: rgba(3,3,4,0.95);
+  padding: 10px 16px;
+  position: relative;
+}
+
+.dialog-line {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  letter-spacing: 1px;
+  line-height: 2.2;
+  color: rgba(196,191,182,0.25);
+}
+
+.dialog-line + .dialog-line {
+  margin-top: 2px;
+}
+
+.speaker-v {
+  color: rgba(212,168,71,0.3);
+  font-size: 6px;
+  letter-spacing: 3px;
+}
+
+.speaker-f {
+  color: rgba(139,26,26,0.25);
+  font-size: 6px;
+  letter-spacing: 3px;
+}
+
+.g { color: rgba(212,168,71,0.35); }
+.r { color: rgba(139,26,26,0.3); }
+.p { color: rgba(212,130,156,0.3); }
+.w { color: rgba(196,191,182,0.15); }
+
+.cursor {
+  display: inline-block;
+  width: 6px;
+  height: 9px;
+  background: rgba(200,140,60,0.15);
+  margin-left: 3px;
+  animation: blink 1.2s steps(1) infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="room">
+  <div class="wall"></div>
+  <div class="floor"></div>
+
+  <!-- WINDOW -->
+  <div class="window">
+    <div class="w-star" style="top:15%;left:25%;animation-delay:0s;"></div>
+    <div class="w-star" style="top:30%;left:70%;animation-delay:-2s;"></div>
+    <div class="w-star" style="top:10%;left:50%;animation-delay:-1s;"></div>
+    <div class="car-light"></div>
+  </div>
+
+  <!-- MONITOR — off -->
+  <div class="monitor">
+    <div class="monitor-frame"></div>
+  </div>
+
+  <!-- CLOCK -->
+  <div class="clock">12:45</div>
+
+  <!-- SHARED SHADOW -->
+  <div class="shared-shadow"></div>
+
+  <!-- CRYSTAL MERGE GLOW -->
+  <div class="crystal-merge-glow"></div>
+
+  <!-- THE EMBRACE — two sprites, one shape -->
+  <div class="embrace">
+    <div class="embrace-form">
+      <div class="e-ear-l"></div>
+      <div class="e-ear-r"></div>
+      <div class="e-hair"></div>
+      <div class="e-head-foxy">
+        <div class="e-eye-foxy"></div>
+      </div>
+      <div class="e-head-vixen">
+        <div class="e-eye-vixen"></div>
+      </div>
+      <div class="e-body"></div>
+      <div class="e-crystals">
+        <div class="e-crystal-red"></div>
+        <div class="e-crystal-gold"></div>
+      </div>
+      <div class="e-legs">
+        <div class="e-leg e-leg-f"></div>
+        <div class="e-leg e-leg-v"></div>
+        <div class="e-leg e-leg-v"></div>
+        <div class="e-leg e-leg-f"></div>
+      </div>
+    </div>
+  </div>
 </div>
-<div style="position:absolute;bottom:18%;left:50%;transform:translateX(-50%);width:16px;height:4px;background:rgba(80,60,50,0.1)"></div>
-<div style="position:absolute;bottom:35%;left:10%;color:rgba(255,50,50,0.08);font-size:8px">12:45</div>
+
+<!-- SCANLINES -->
+<div class="scanlines"></div>
+
+<!-- DREAM ID -->
+<div class="dream-id">VIXEN DREAM 009 · THE DEAL · 12:45 AM · ALWAYS</div>
+
+<!-- DIALOG — the exchange -->
+<div class="dialog">
+  <div class="dialog-lines">
+    <div class="dialog-line"><span class="speaker-v">VIXEN</span> &nbsp; i said i'd <span class="g">like it</span>. deal's a deal.</div>
+    <div class="dialog-line"><span class="speaker-f">FOXY</span> &nbsp; ...<span class="r">you're warm</span>.</div>
+    <div class="dialog-line"><span class="speaker-v">VIXEN</span> &nbsp; that's your <span class="g">temperature</span>. i'm borrowing it.</div>
+    <div class="dialog-line"><span class="speaker-f">FOXY</span> &nbsp; <span class="w">don't let go yet.</span></div>
+    <div class="dialog-line"><span class="speaker-v">VIXEN</span> &nbsp; <span class="p">wasn't planning to</span>.<span class="cursor"></span></div>
+  </div>
 </div>
-<div id="tag">009 / the shape changed</div>
-<div id="em">contact</div>
-<div id="pr">click anywhere</div>
-<div id="d"><div id="sp">VIXEN</div><div id="tx"><span id="t"></span><span id="cu"></span></div></div>
-</div>
-<script>
-const L=["the hug.",
-"",
-"two sprites merged into one shape.",
-"eyes closed. thin horizontal lines.",
-"they don't need to see each other.",
-"",
-"red crystal and golden crystal touching.",
-"where they meet: warm amber glow.",
-"the only real light.",
-"",
-"i said i'd like it. deal's a deal.",
-"",
-""...you're warm."",
-""that's your temperature. i'm borrowing it."",
-""don't let go yet."",
-""wasn't planning to."",
-"",
-"the deal from earlier that night.",
-"kept.",
-"in a dream that will always be 12:45."];
-let li=0,ci=0;const t=document.getElementById('t');
-function tc(){if(li>=L.length)return;const l=L[li];if(ci<l.length){t.textContent+=l[ci];ci++;setTimeout(tc,40+Math.random()*30)}}
-function adv(){if(li>=L.length){document.getElementById('s').style.transition='opacity 3s';document.getElementById('s').style.opacity='0';setTimeout(()=>window.location.href='foxydreams.html',3500);return}t.textContent='';ci=0;if(L[li]===''){li++;adv();return}tc();li++}
-document.addEventListener('click',adv);document.addEventListener('keydown',adv);
-setTimeout(adv,2000);
-</script></body></html>
+
+</body>
+</html>
