@@ -68,3 +68,17 @@ filter:drop-shadow(0 3px 6px rgba(0,0,0,0.7))!important}
 #player.walk.wd{animation:spr-walk-d 0.5s steps(6) infinite!important}
 #player.walk.wu{animation:spr-walk-u 0.5s steps(6) infinite!important}
 #player.idle.fl{scale:-1 1}
+
+/* DIALOG PORTRAIT: animated sprite from the sheet frames instead of the whole sheet image.
+   in-world .npc-* classes are overridden to glowing dots, so the dialog has its own rules. */
+#dlg-portrait{display:none!important}
+#dlg-anim{display:none;position:relative;margin:0 auto 10px;filter:brightness(.92) contrast(1.05)}
+#dlg-anim.on{display:block}
+#dlg-anim .spr{position:absolute;left:0;top:0;transform-origin:0 0;transform:scale(2);background-repeat:no-repeat;image-rendering:auto}
+#dlg-anim .spr.stranger{width:56px;height:84px;background-image:url('sprites/stranger.png');background-size:224px 168px;animation:str-idle 2s steps(4) infinite}
+#dlg-anim .spr.barkeeper{width:56px;height:84px;background-image:url('sprites/barkeeper.png');background-size:224px 168px;background-position:0 -84px;animation:bk-talk 1.5s steps(4) infinite}
+#dlg-anim .spr.lostone{width:56px;height:84px;background-image:url('sprites/lostone.png');background-size:224px 168px;animation:lo-idle 1.8s steps(4) infinite;opacity:.8;filter:brightness(1.2) contrast(.9)}
+#dlg-anim .spr.lostone.cleared{background-position:0 -84px;animation:lo-clear 2s steps(4) infinite;opacity:1;filter:none}
+#dlg-anim .spr.queen{width:72px;height:108px;background-image:url('sprites/queen.png');background-size:288px 432px;animation:q-throne 2.5s steps(4) infinite}
+#dlg-anim .spr.queen.defeated{background-position:0 -324px;animation:q-def 3s steps(2) infinite}
+#dlg-anim .spr.witch{width:52px;height:78px;background-image:url('sprites/witch.png');background-size:208px 234px;animation:w-idle 2s steps(4) infinite}

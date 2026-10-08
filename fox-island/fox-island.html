@@ -230,7 +230,7 @@ body{background:#0a0a0f;color:#e0d4c0;font-family:'VT323',monospace;overflow:hid
   <div id="verb-hint"></div>
 </div>
 <div id="inv"></div>
-<div id="dlg"><img id="dlg-portrait" src="" alt=""><div id="dlg-sp"></div><div id="dlg-tx"></div><div id="dlg-ch"></div></div>
+<div id="dlg"><img id="dlg-portrait" src="" alt=""><div id="dlg-anim"></div><div id="dlg-sp"></div><div id="dlg-tx"></div><div id="dlg-ch"></div></div>
 <div id="duel"><div class="dh">⚔️ INSULT SPELL DUEL ⚔️</div><div class="ds" id="d-score"></div><div id="d-atk"></div><div id="d-opts"></div><div id="d-res"></div></div>
 <div id="map"><h3>🗺 Fox Island</h3><div class="map-grid" id="map-grid"></div><button id="map-close" onclick="toggleMap()">Close</button></div>
 <div id="end"><h2 id="end-t"></h2><p id="end-p"></p><button onclick="location.reload()">🦊 PLAY AGAIN</button></div>
@@ -729,11 +729,13 @@ function notif(t,ty){const el=document.createElement('div');el.className='notif 
 
 // ── DIALOGUES ──
 let curDlg=null;
-function startDlg(id){curDlg=DLG[id];var pImg=NPC_IMG[id];var pEl=document.getElementById('dlg-portrait');if(pImg){pEl.src=pImg;pEl.style.display='block';}else{pEl.style.display='none';}showDN(0);$('dlg').classList.add('active');}
+function startDlg(id){curDlg=DLG[id];setPortrait(NPC_IMG[id]?id:null);showDN(0);$('dlg').classList.add('active');}
+var PORTRAIT_DIM={stranger:[56,84],barkeeper:[56,84],lostone:[56,84],queen:[72,108],witch:[52,78]},PORTRAIT_K=2,_portraitKey=null;
+function setPortrait(key){var a=document.getElementById('dlg-anim');if(!a)return;if(!key||!PORTRAIT_DIM[key]){a.className='';a.innerHTML='';_portraitKey=null;return;}var st=(key==='lostone'&&S.flags.descentDone)?' cleared':(key==='queen'&&S.flags.queenWon)?' defeated':(key==='barkeeper')?' talking':'';var sig=key+st;if(_portraitKey===sig)return;_portraitKey=sig;var d=PORTRAIT_DIM[key];a.style.width=(d[0]*PORTRAIT_K)+'px';a.style.height=(d[1]*PORTRAIT_K)+'px';a.className='on';a.innerHTML='<div class="spr '+key+st+'"></div>';}
 var NPC_IMG={stranger:'sprites/stranger.png',barkeeper:'sprites/barkeeper.png',queen:'sprites/queen.png',lostone:'sprites/lostone.png',witch:'sprites/witch.png'};
-function showDN(i){const n=curDlg[i];if(!n){closeDlg();return;}var spk=n.s?n.s.toLowerCase().replace(/ /g,''):'';var pEl=document.getElementById('dlg-portrait');var pKeys=Object.keys(NPC_IMG);for(var pk=0;pk<pKeys.length;pk++){if(spk.indexOf(pKeys[pk])>-1){pEl.src=NPC_IMG[pKeys[pk]];pEl.style.display='block';break;}}$('dlg-sp').textContent=n.s;const tx=$('dlg-tx');tx.textContent='';let ci=0;const tmr=setInterval(()=>{if(ci<n.t.length){tx.textContent+=n.t[ci];ci++;}else{clearInterval(tmr);showCH(n);}},12);tx.onclick=()=>{clearInterval(tmr);tx.textContent=n.t;showCH(n);tx.onclick=null;};}
+function showDN(i){const n=curDlg[i];if(!n){closeDlg();return;}var spk=n.s?n.s.toLowerCase().replace(/ /g,''):'';var pKeys=Object.keys(NPC_IMG);for(var pk=0;pk<pKeys.length;pk++){if(spk.indexOf(pKeys[pk])>-1){setPortrait(pKeys[pk]);break;}}$('dlg-sp').textContent=n.s;const tx=$('dlg-tx');tx.textContent='';let ci=0;const tmr=setInterval(()=>{if(ci<n.t.length){tx.textContent+=n.t[ci];ci++;}else{clearInterval(tmr);showCH(n);}},12);tx.onclick=()=>{clearInterval(tmr);tx.textContent=n.t;showCH(n);tx.onclick=null;};}
 function showCH(n){const c=$('dlg-ch');c.innerHTML='';if(n.a)n.a();n.ch.forEach(ch=>{if(ch.c&&!ch.c())return;const b=document.createElement('button');b.className='dc';b.textContent=ch.t;b.onclick=()=>{sfx('click');if(ch.a)ch.a();if(ch.x)closeDlg();else if(ch.n!==undefined)showDN(ch.n);};c.appendChild(b);});}
-function closeDlg(){document.getElementById('dlg-portrait').style.display='none';$('dlg').classList.remove('active');renderHS();updateQuest();}
+function closeDlg(){document.getElementById('dlg-portrait').style.display='none';setPortrait(null);$('dlg').classList.remove('active');renderHS();updateQuest();}
 
 // ── SCENE BUILDERS ──
 function bDock(c){if(!S.flags.dockTalked)c.innerHTML+='<div class="npc npc-stranger" style="left:40%;top:35%"></div>';}
