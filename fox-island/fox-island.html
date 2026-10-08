@@ -399,7 +399,7 @@ const HINTS=[
   ()=>S.flags.knowTemple&&!has('grimoire-page-1')?'the temple should be open now. head east from the village.':null,
   ()=>S.spells.length===1&&!S.flags.descent?'the barkeeper mentioned something about a "descent"...':null,
   ()=>S.flags.descent&&!S.flags.descentDone?'try the five-question descent on the lost one in the tavern.':null,
-  ()=>S.spells.length>=2&&!S.spells.includes('kitsune-party')?'two spells learned. the third pedestal in the temple might work now.':null,
+  ()=>S.spells.length>=2&&!S.spells.includes('kp')?'two spells learned. the third pedestal in the temple might work now.':null,
   ()=>S.spells.length>=3&&!S.flags.garden?'the garden is north of the village. three gates, one truth.':null,
   ()=>S.flags.garden&&!S.flags.queenWon?'the throne room is beyond the garden. bring everything you have.':null,
   ()=>has('crystal-shard')&&has('moonwater')&&!has('charged-crystal')?'hmm... moonwater and crystal. what if you combined them?':null,
@@ -454,7 +454,7 @@ const SC={
       H('dck',36,86,28,14,'Dock ↓','exit',{walk:()=>{fadeGo('dock');return 0;}},48,86),
       H('ftn',30,32,36,35,'Fox Fountain','obj',{
         look:'nine-tailed fox fountain. moonwater pools in the basin.',
-        take:()=>has('moonwater')?'gave what it was willing to.':(addI('moonwater'),'<span class="g">moonwater collected!</span> the fox smirked.'),
+        take:()=>(has('moonwater')||S.flags.gotMoon)?'gave what it was willing to.':(S.flags.gotMoon=1,addI('moonwater'),'<span class="g">moonwater collected!</span> the fox smirked.'),
         use:()=>{
           if(has('charged-crystal')&&!S.flags.fwell){S.flags.fwell=1;S.secrets++;sfx('secret');flash('flash-pink');notif('🔮 SECRET ROOM!','secret');return '<span class="s">charged crystal pulses. the fountain OPENS. stairs. music below...</span>';}
           return 'you splash your face. for a second — everything enormous. then normal.';
@@ -473,13 +473,13 @@ const SC={
     hs:()=>{const a=[
       H('bk',12,18,14,22,'Barkeeper','npc',{look:'faintly amused. cleans the same glass forever.',talk:()=>{startDlg('barkeeper');return 0;},take:0}),
       H('lo',65,32,12,18,'Lost One','npc',{look:'flickering like a bad signal. mumbling about "the loop."',talk:()=>{startDlg(S.flags.descent?'descent-start':'lost-one');return 0;},take:0}),
-      H('msk',82,2,15,18,'Fox Mask','item',{look:'expression shifts — playful, menacing, sad.',take:()=>has('fox-mask')?'one mask is enough.':(addI('fox-mask'),'<span class="g">fox mask taken!</span> "it was waiting."')},12,40,'fox-mask'),
+      H('msk',82,2,15,18,'Fox Mask','item',{look:'expression shifts — playful, menacing, sad.',take:()=>has('fox-mask')?'one mask is enough.':(addI('fox-mask'),'<span class="g">fox mask taken!</span> "it was waiting."')},89,48,'fox-mask'),
       H('fire',68,45,28,35,'Fireplace','obj',{
         look:'eternal flame. heat older than the building.',
         use:()=>has('fox-mask')&&!S.flags.fhearth?(S.flags.fhearth=1,S.secrets++,sfx('secret'),flash('flash-pink'),notif('🔮 SECRET ROOM!','secret'),'<span class="s">mask to fire. flames part. a room. music from stone...</span>'):(has('fox-mask')?'the mask grows warm but nothing else happens. <span class="h">maybe USE the mask here?</span>':'crackles. nothing else.'),
         talk:0
       }),
-      H('exit',38,82,24,16,'Exit ←','exit',{walk:()=>{fadeGo('village');return 0;}},14,58)
+      H('exit',38,82,24,16,'Exit ↓','exit',{walk:()=>{fadeGo('village');return 0;}},48,86)
     ];
     if(S.flags.fhearth)a.push(H('hr',85,68,12,14,'Hearth ⬇','exit',{walk:()=>{fadeGo('hearth');return 0;}},88,78));
     return a;}},
@@ -573,7 +573,7 @@ const DLG={
     {s:'Lost One',t:'"NOT. doing instead of feeling."',ch:[{t:'> "How defeat a spinning narrative?"',n:3}]},
     {s:'Lost One',t:'"...stop spinning. let it hit you." eyes clear.',ch:[{t:'> "Control. Why?"',n:4}]},
     {s:'Lost One',t:'"if i\'m IN CONTROL it can\'t hurt me. except—" cracks.',ch:[{t:'> THE KNIFE. "Scared of what happens when the loop ends?"',n:5}]},
-    {s:'Lost One',t:'"...yes." real eyes. crystal appears. "take it."',a:()=>{if(!has('crystal-shard'))addI('crystal-shard');S.flags.descentDone=1;},ch:[{t:'> [Take Crystal Shard]',x:1}]}
+    {s:'Lost One',t:'"...yes." real eyes. crystal appears. "take it."',a:()=>{if(!S.flags.gotShard){S.flags.gotShard=1;addI('crystal-shard');}S.flags.descentDone=1;},ch:[{t:'> [Take Crystal Shard]',x:1}]}
   ],
   witch:[
     {s:'Scrappy Witch',t:'"oh! you have spells! wanna practice duel? i\'m not great but i know the counters. 😬"',ch:[{t:'> "Yeah, teach me."',n:1},{t:'> "Not now."',x:1}]},
