@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faith's Desk</title>
+<meta name="description" content="Faith's desk. Faith's desk. Faith's desk.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c1612;--paper:#fbf5ea;--sun:#ffe0ab;--carpet:#6e1b2b;--note:#f3e07c;--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--hand:"Caveat","Comic Sans MS",cursive}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--serif);color:var(--ink);background:var(--paper);font-size:1.2rem;line-height:1.6;letter-spacing:.02em}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+
+.hero{position:relative;min-height:100vh;padding:clamp(2rem,6vw,5rem) clamp(1.2rem,6vw,5rem) 3rem;overflow:hidden;
+background:radial-gradient(circle at 60% 40%,rgba(255,228,176,.95),rgba(255,228,176,0) 42%),linear-gradient(180deg,#e6edf3 0%,#fbf3e6 55%,#f5d9bb 100%)}
+.hero::before{content:"";position:absolute;left:46%;top:36%;width:34vmin;height:34vmin;border-radius:50%;
+background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,236,196,0) 68%);animation:glow 7s ease-in-out infinite alternate}
+@keyframes glow{from{transform:scale(.9);opacity:.75}to{transform:scale(1.15);opacity:1}}
+.hills{position:absolute;left:0;right:0;bottom:0;width:100%;height:22vh}
+.title{position:relative;display:flex;justify-content:space-between;width:100%;max-width:1100px;margin:0 auto;font-size:clamp(3.4rem,12vw,9.5rem);font-weight:500;line-height:1}
+.sub{position:relative;display:flex;justify-content:space-between;width:36%;max-width:420px;margin:.4em auto 0;font-size:clamp(1.6rem,5vw,3.4rem);line-height:1}
+.copy{position:relative;max-width:20rem;margin:3rem 0 0 auto;font-size:1.15rem;line-height:1.55;letter-spacing:.04em}
+.copy p+p{margin-top:1.6em}
+.seal{position:relative;margin:3rem 0 0 auto;width:min(16rem,100%);text-align:center}
+.logo{display:grid;place-items:center;width:13rem;height:13rem;margin:0 auto;border:2px solid var(--ink);border-radius:50%;font-size:2.7rem;line-height:.95;letter-spacing:0}
+.visit{display:flex;align-items:center;gap:.8rem;margin:1.2rem 0 .6rem;font-size:.8rem;letter-spacing:.22em}
+.visit::before,.visit::after{content:"";flex:1;border-top:1px solid var(--ink)}
+.btn{display:block;padding:.55rem 1rem;border:1px solid var(--ink);border-radius:.7rem;background:rgba(255,255,255,.55);text-decoration:none;font-size:1.25rem}
+.btn:hover{background:#fff}
+
+section.band{padding:clamp(3rem,8vw,6rem) clamp(1.2rem,6vw,5rem)}
+.wrap{max-width:62rem;margin:0 auto}
+h2{font-weight:500;font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin-bottom:1.5rem}
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:2.5rem}
+blockquote{border-left:1px solid var(--ink);padding-left:1.2rem;font-size:1.5rem;line-height:1.35}
+blockquote cite{display:block;margin-top:.8rem;font-size:.95rem;font-style:normal;letter-spacing:.12em}
+.services{background:#f1e6d3}
+.service{display:flex;justify-content:space-between;gap:2rem;padding:1.2rem 0;border-bottom:1px solid rgba(28,22,18,.35)}
+.service h3{font-weight:600;font-size:1.6rem}
+.service p{max-width:26rem}
+.chant{font-size:1.05rem;line-height:1.9;text-align:justify;opacity:.85}
+
+.wall{background:var(--carpet);padding:2rem 1rem 3rem;text-align:center}
+.wall h2{color:#fbe9a8}
+.notes{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;max-width:70rem;margin:0 auto}
+.note{width:6.4rem;height:6.4rem;padding:.7rem .4rem;background:var(--note);color:#3a2f10;font-family:var(--hand);font-size:1.25rem;line-height:1.1;box-shadow:0 2px 3px rgba(0,0,0,.35)}
+footer{padding:2rem 1.2rem;text-align:center;font-size:.95rem;background:var(--ink);color:#e9dcc3}
+
+@media (max-width:640px){.copy,.seal{margin-left:0}.sub{width:60%}.service{flex-direction:column;gap:.3rem}.chant{text-align:left}}
+@media (prefers-reduced-motion:reduce){.hero::before{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1 class="title" aria-label="Faith desk"><span>F</span><span>A</span><span>I</span><span>T</span><span>H</span></h1>
+  <div class="sub" aria-hidden="true"><span>d</span><span>e</span><span>s</span><span>k</span></div>
+  <div class="copy">
+    <p>Faith's desk isn't just a place &mdash; it's a reminder. It's where the chaos of life meets a little bit of calm. Where big dreams, messy thoughts, and everyday to-do's all land at once.</p>
+    <p>It's not a traditional desk, but it holds more than just papers and pens. It holds intentions, plans, and the quiet belief that things can get better. Faith's desk has seen late nights, early mornings, and a lot of overthinking. But it's also seen progress, small wins, and moments of clarity.</p>
+    <p>Faith's desk isn't perfect, but it's real. And it's a place where she keeps showing up &mdash; for her goals, her peace, and the life she's building.</p>
+  </div>
+  <div class="seal">
+    <div class="logo"><span>Faiths<br>Desk.</span></div>
+    <div class="visit">VISIT OUR WEBSITE</div>
+    <a class="btn" href="#wall">Faithsdesk.org</a>
+  </div>
+  <svg class="hills" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120 C150 60 260 130 420 90 C600 40 720 120 900 80 C1030 50 1120 70 1200 40 L1200 200 L0 200Z" fill="rgba(122,134,108,.32)"/><path d="M0 160 C200 120 330 170 520 140 C720 110 900 170 1200 120 L1200 200 L0 200Z" fill="rgba(98,112,84,.4)"/></svg>
+</header>
+
+<section class="band">
+  <div class="wrap">
+    <h2>What people are saying about Faith's Desk</h2>
+    <div class="quotes">
+      <blockquote>&ldquo;Faith's desk.&rdquo;<cite>Faith's Desk Weekly</cite></blockquote>
+      <blockquote>&ldquo;I came for Faith's desk and stayed for Faith's desk.&rdquo;<cite>A satisfied desk enthusiast</cite></blockquote>
+      <blockquote>&ldquo;Truly, a desk. Faith's.&rdquo;<cite>The Desk Review</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="band services">
+  <div class="wrap">
+    <h2>Everything Faith's Desk has to offer</h2>
+    <div class="service"><h3>Faith's Desk</h3><p>The original. Faith's desk, exactly as Faith's desk intended.</p></div>
+    <div class="service"><h3>Faith's Desk for Teams</h3><p>All the calm of Faith's desk, now available at Faith's desk.</p></div>
+    <div class="service"><h3>Faith's Desk Premium</h3><p>Faith's desk, but more. Includes Faith's desk.</p></div>
+    <div class="service"><h3>Faith's Desk Wellness</h3><p>Stretch. Breathe. Return to Faith's desk.</p></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>A note from the founder</h2>
+    <p class="chant" id="chant"></p>
+  </div>
+</section>
+
+<section class="wall" id="wall">
+  <h2>Faith's Desk is everywhere</h2>
+  <div class="notes" id="notes" aria-label="Many sticky notes that all say Faith's Desk"></div>
+</section>
+
+<footer>&copy; Faith's Desk. All rights reserved. Faith's Desk is a registered state of mind.</footer>
+
+<script>
+(function(){
+  var c=document.getElementById('chant'),s='',i;
+  for(i=0;i<90;i++){s+="Faith's desk. ";}
+  c.textContent=s;
+  var n=document.getElementById('notes'),d;
+  for(i=0;i<150;i++){
+    d=document.createElement('div');
+    d.className='note';
+    d.style.transform='rotate('+(Math.random()*16-8).toFixed(1)+'deg)';
+    d.innerHTML="Faith's Desk<br>&#9825;";
+    n.appendChild(d);
+  }
+})();
+</script>
+</body>
+</html>
