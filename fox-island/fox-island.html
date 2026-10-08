@@ -440,7 +440,7 @@ const SC={
           return 'warm. shouldn\'t be.';
         }
       },50,75),
-      H('path',42,0,30,32,'Path North ↑','exit',{walk:()=>{fadeGo('village');return 0;}},12,55)
+      H('path',42,0,30,32,'Path North ↑','exit',{walk:()=>{fadeGo('village');return 0;}},57,48)
     ];
     if(S.flags.fdock)a.push(H('ud',50,80,30,18,'Descend ⬇','exit',{walk:()=>{fadeGo('underdock');return 0;}},48,82));
     if(!S.flags.dockTalked)a.push(H('stranger',38,28,12,22,'Hooded Stranger','npc',{look:'cloaked figure. foxy ears poke through.',talk:()=>{S.flags.dockTalked=1;startDlg('stranger');return 0;},take:0},48,58));
