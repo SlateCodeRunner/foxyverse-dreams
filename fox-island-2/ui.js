@@ -80,7 +80,7 @@ function ending(kind){
 const KD={ArrowUp:'u',KeyW:'u',ArrowDown:'d',KeyS:'d',ArrowLeft:'l',KeyA:'l',ArrowRight:'r',KeyD:'r'};
 const held=[];
 const hold=(d,on)=>{const i=held.indexOf(d);if(on&&i<0)held.push(d);if(!on&&i>=0)held.splice(i,1);};
-function startGame(cont){$('title').classList.add('hide');ctxA();if(cont&&A.load()){toast('welcome back. 🦊');}else A.newGame();}
+function startGame(cont){if(S.mode!=='title')return;$('title').classList.add('hide');ctxA();if(cont&&A.load()){toast('welcome back. 🦊');}else A.newGame();}
 addEventListener('keydown',e=>{
   if(S.mode==='title'){if(e.code==='Enter'||e.code==='Space'){startGame(false);}return;}
   ctxA();
