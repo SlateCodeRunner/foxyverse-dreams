@@ -127,12 +127,12 @@ FX.duels={
     good:[`...that cracked something.`,`no.`,`how.`,`stop doing that.`],bad:[`louder.`,`see? you don't even know.`,`wrong. as usual.`]}
 };
 
-/* THE QUIZ (the descent, again) */
+/* THE QUIZ: the Five-Question Descent, as written in the grimoire (strip, redirect, meta, personal, knife) */
 FX.quiz=[
-  {q:`a story keeps spinning in my head. first move?`,o:[`feed it more detail`,`strip it to what's actually dangerous`,`argue with it`],c:1,ok:`...yes. where's the actual danger. only that.`,no:`no. that feeds it. again.`},
-  {q:`it wants my attention. what do i point it at?`,o:[`why did this happen`,`wait it out`,`what can i do in the next hour`],c:2,ok:`redirect. give the loop a job.`,no:`no. that's just more loop.`},
-  {q:`step back. what do i ask?`,o:[`who's to blame?`,`will it ever end?`,`how am i processing this?`],c:2,ok:`meta. watching the watcher.`,no:`no. that's still inside it.`},
-  {q:`closer. what's the personal part?`,o:[`it's about them`,`it's about what i'm scared of`,`it's about nothing`],c:1,ok:`...yes. that one stings. good.`,no:`no. look at yourself, not the room.`},
-  {q:`the knife.`,o:[`how do i make it stop?`,`who's right?`,`what happens when the loop ends?`],c:2,ok:`...yes. real eyes.`,no:`no. that's the dodge. again.`}
+  {q:`someone is buried in five stories at once. cases, rumors, reputations. first question?`,o:[`which story is right?`,`where is the danger?`,`tell me everything.`],c:1,ok:`strip. remove the story, find the nerve.`,no:`no. that follows the story. strip it.`},
+  {q:`layer two. you don't touch the trauma itself. what do you ask about?`,o:[`what happened in the story?`,`who did it?`,`how are you processing this?`],c:2,ok:`redirect. ask about the processing, not the content. that separates the story from the person.`,no:`no. that's still inside the story.`},
+  {q:`layer three. name the pattern without accusing them of being caught in it.`,o:[`how does one defeat a spinning narrative?`,`you're stuck in a loop.`,`why can't you stop?`],c:0,ok:`meta. philosophical, not personal. they recognize themselves without being cornered.`,no:`no. that's an accusation. frame it as a question about the pattern, not the person.`},
+  {q:`layer four. now make it specific. curious, not diagnosing.`,o:[`you have a control problem.`,`everyone worries about control.`,`control keeps coming up. why is control important to you?`],c:2,ok:`personal. their pattern, named as curiosity.`,no:`no. that's a verdict, or it dodges them. name their pattern and ask.`},
+  {q:`layer five. the knife. one question with nowhere to hide.`,o:[`do you want to talk about it?`,`are you scared of being controlled?`,`what would help?`],c:1,ok:`...yes. simple. personal. truth or visible evasion.`,no:`no. that leaves a door open. the knife has nowhere to hide.`}
 ];
 })();
