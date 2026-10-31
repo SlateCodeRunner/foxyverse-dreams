@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 // FOX ISLAND — PATCH v3
 // Fixes: save system, map secrets, mobile UX
 // Removed: destructive CSS overrides that broke
@@ -12,6 +12,7 @@ if(!p)return;
 var SAVE_KEY='fox-island-save';
 
 function saveGame(){
+  var tt=document.getElementById('title');if(tt&&getComputedStyle(tt).display!=='none')return; // nothing to save on the main menu
   try{
     localStorage.setItem(SAVE_KEY,JSON.stringify({
       scene:S.scene, inv:S.inv.slice(), flags:Object.assign({},S.flags),
@@ -59,6 +60,43 @@ setTimeout(function(){
   }
 },500);
 
+// ═══ 1b. DELETE SAVE (main menu) ═══
+(function(){
+  var titleEl=document.getElementById('title');
+  if(!titleEl)return;
+  var LABEL='\uD83D\uDDD1 DELETE SAVE';
+  var del=document.createElement('button');
+  del.id='del-save';del.type='button';del.textContent=LABEL;
+  del.style.cssText="font-family:'Press Start 2P',cursive;font-size:8px;color:#c9708a;background:transparent;border:1px solid #6a3050;padding:9px 14px;margin-top:22px;cursor:pointer;position:relative;z-index:2;transition:all .2s;display:none";
+  titleEl.appendChild(del);
+  function hasSave(){try{return !!localStorage.getItem(SAVE_KEY);}catch(e){return false;}}
+  function refresh(){del.style.display=hasSave()?'':'none';}
+  var armTimer=null;
+  function disarm(){armTimer=null;del.textContent=LABEL;del.style.color='#c9708a';del.style.borderColor='#6a3050';del.style.background='transparent';}
+  function wipe(){
+    try{localStorage.removeItem(SAVE_KEY);}catch(e){}
+    // reset the running game back to a clean new game
+    S.inv.length=0;S.spells.length=0;S.secrets=0;S.selItem=null;S.duelS={p:0,q:0};S.duelR=0;S.visited=new Set();
+    Object.keys(S.flags).forEach(function(k){delete S.flags[k];});
+    if(typeof renderInv==='function')renderInv();
+    if(typeof loadScene==='function')loadScene('dock');
+    if(typeof setPos==='function')setPos(50,78);
+    del.textContent='\u2713 SAVE DELETED';del.style.color='#8fd08f';del.style.borderColor='#3a6a3a';
+    setTimeout(function(){disarm();refresh();},1500);
+  }
+  del.onclick=function(e){
+    e.stopPropagation();
+    if(del.textContent.indexOf('DELETED')>-1)return;
+    if(armTimer===null){
+      del.textContent='\u26A0 SURE? CLICK AGAIN';del.style.color='#fff';del.style.borderColor='#ff6b8a';del.style.background='rgba(255,107,138,.18)';
+      armTimer=setTimeout(disarm,4000);return;
+    }
+    clearTimeout(armTimer);armTimer=null;wipe();
+  };
+  // the save is read ~500ms after load; check for it just after that, and again in case storage changes
+  setTimeout(refresh,700);setTimeout(refresh,3000);
+  window.addEventListener('storage',refresh);
+})();
 // ═══ 2. MAP SECRETS COUNTER ═══
 var mapGrid=document.getElementById('map-grid');
 if(mapGrid){
